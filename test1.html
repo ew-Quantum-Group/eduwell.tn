@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Planner</title>
+    <style>
+        :root {
+            --primary-green: #A5E67D;
+            --secondary-purple: #E6C2F9;
+            --secondary-blue: #B3E6FF;
+            --secondary-yellow: #FFF2B3;
+            --secondary-pink: #FFCCE6;
+            --secondary-orange: #FFE0B3;
+            --white: #FFFFFF;
+            --gray: #F5F5F5;
+            --dark-gray: #333333;
+            --border-color: #DDDDDD;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--gray);
+            padding: 20px;
+            max-width: 100%;
+            margin: 0 auto;
+            line-height: 1.5;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .container {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.6s ease-out 0.2s both;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .search-section {
+            background-color: var(--primary-green);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .search-section:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .search-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        
+        .ew-logo {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: logoPulse 2s infinite alternate;
+        }
+        
+        .ew-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        @keyframes logoPulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+        
+        .search-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+        
+        .search-input {
+            display: flex;
+            align-items: center;
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 12px 16px;
+            gap: 10px;
+            transition: box-shadow 0.2s ease;
+        }
+        
+        .search-input:focus-within {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-icon {
+            width: 20px;
+            height: 20px;
+            fill: var(--dark-gray);
+        }
+        
+        .search-input input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            background: transparent;
+            caret-color: var(--dark-gray);
+        }
+        
+        .destination-section {
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease-out 0.4s both;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            color: var(--dark-gray);
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+        
+        .destination-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background-color: var(--white);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 12px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .destination-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-green);
+        }
+        
+        .destination-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .flag {
+            width: 24px;
+            height: 16px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        
+        .destination-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+        
+        .arrow-icon {
+            width: 24px;
+            height: 24px;
+            fill: var(--dark-gray);
+            transition: transform 0.2s ease;
+        }
+        
+        .destination-card:hover .arrow-icon {
+            transform: translateX(4px);
+        }
+        
+        /* Horizontal slider for activities */
+        .activities-slider {
+            display: flex;
+            overflow-x: auto;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-color) var(--white);
+            animation: fadeIn 0.5s ease-out 0.5s both;
+        }
+        
+        .activities-slider::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .activities-slider::-webkit-scrollbar-thumb {
+            background-color: var(--border-color);
+            border-radius: 6px;
+        }
+        
+        .activity-card {
+            min-width: 200px;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 120px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .activity-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .activity-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .activity-card:hover::before {
+            opacity: 1;
+        }
+        
+        .activity-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark-gray);
+        }
+        
+        .activity-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .activity-icon {
+            width: 20px;
+            height: 20px;
+            fill: var(--dark-gray);
+        }
+        
+        .activity-button {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+        
+        .activity-card:hover .activity-button {
+            background-color: rgba(0, 0, 0, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .next-trips-section {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease-out 0.6s both;
+        }
+        
+        .next-trips-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--dark-gray);
+        }
+        
+        .trips-list {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-color) var(--white);
+        }
+        
+        .trips-list::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .trips-list::-webkit-scrollbar-thumb {
+            background-color: var(--border-color);
+            border-radius: 6px;
+        }
+        
+        .trip-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background-color: var(--white);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            min-width: 100px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        
+        .trip-item:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-green);
+        }
+        
+        .trip-flag {
+            width: 20px;
+            height: 14px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        
+        .trip-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark-gray);
+        }
+        
+        /* Books Section */
+        .books-section {
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease-out 0.7s both;
+        }
+        
+        .books-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--dark-gray);
+        }
+        
+        .book-card {
+            min-width: 100%;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 140px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+            margin-bottom: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .book-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .book-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .book-card:hover::before {
+            opacity: 1;
+        }
+        
+        .book-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark-gray);
+        }
+        
+        .book-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .book-icon {
+            width: 22px;
+            height: 22px;
+            fill: var(--dark-gray);
+        }
+        
+        .book-button {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+        
+        .book-card:hover .book-button {
+            background-color: rgba(0, 0, 0, 0.2);
+            transform: scale(1.1);
+        }
+        
+        /* Book card colors - using the website's color palette */
+        .book-card:nth-child(1) {
+            background-color: var(--secondary-purple);
+        }
+        
+        .book-card:nth-child(2) {
+            background-color: var(--secondary-blue);
+        }
+        
+        .book-card:nth-child(3) {
+            background-color: var(--secondary-yellow);
+        }
+        
+        /* Flag backgrounds */
+        .germany-flag {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIxNiI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjE2IiBmaWxsPSIjMzEzMTI5Ii8+PHJlY3QgeT0iOCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjgiIGZpbGw9IiNGRkYiLz48cmVjdCB5PSI4IiB3aWR0aD0iMjQiIGhlaWdodD0iOCIgZmlsbD0iI0ZGRkYwMCIvPjwvc3ZnPg==');
+        }
+        
+        .switzerland-flag {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIxNiI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjE2IiBmaWxsPSIjRkZGIi8+PHJlY3QgeD0iNiIgeT0iMiIgd2lkdGg9IjEyIiBoZWlnaHQ9IjEyIiBmaWxsPSIjMDAwIi8+PHJlY3QgeD0iOCIgeT0iNSIgd2lkdGg9IjgiIGhlaWdodD0iNiIgZmlsbD0iI0ZGRiIvPjwvc3ZnPg==');
+        }
+        
+        .belgium-flag {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIxNiI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjE2IiBmaWxsPSIjRUUwMDAwIi8+PHJlY3QgeD0iOCIgd2lkdGg9IjgiIGhlaWdodD0iMTYiIGZpbGw9IiMwMDAwMDAiLz48cmVjdCB4PSIxNiIgd2lkdGg9IjgiIGhlaWdodD0iMTYiIGZpbGw9IiNGRkYiLz48L3N2Zz4=');
+        }
+        
+        .netherlands-flag {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIxNiI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjE2IiBmaWxsPSIjRkZGIi8+PHJlY3QgeT0iOCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjgiIGZpbGw9IiMwMDAwMDAiLz48cmVjdCB5PSIxMiIgd2lkdGg9IjI0IiBoZWlnaHQ9IjQiIGZpbGw9IiNGRkYiLz48cmVjdCB5PSI4IiB3aWR0aD0iMjQiIGhlaWdodD0iNCIgZmlsbD0iI0ZGRkYwMCIvPjwvc3ZnPg==');
+        }
+        
+        /* Activity card colors */
+        .purple-card {
+            background-color: var(--secondary-purple);
+        }
+        
+        .blue-card {
+            background-color: var(--secondary-blue);
+        }
+        
+        .yellow-card {
+            background-color: var(--secondary-yellow);
+        }
+        
+        /* Loading state */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--dark-gray);
+            font-size: 16px;
+        }
+        
+        .empty-state svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 16px;
+            fill: var(--border-color);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 10px 0;
+            font-size: 12px;
+            color: var(--dark-gray);
+            opacity: 0.7;
+            animation: fadeIn 0.5s ease-out 0.8s both;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+            
+            .container {
+                padding: 16px;
+                border-radius: 12px;
+            }
+            
+            .search-section {
+                padding: 12px;
+                border-radius: 12px;
+            }
+            
+            .ew-logo {
+                width: 38px;
+                height: 38px;
+            }
+            
+            .search-title {
+                font-size: 16px;
+                margin-bottom: 8px;
+            }
+            
+            .search-input {
+                padding: 10px 12px;
+            }
+            
+            .destination-card {
+                padding: 12px;
+            }
+            
+            .destination-name {
+                font-size: 16px;
+            }
+            
+            .activity-card {
+                min-width: 160px;
+                height: 100px;
+                padding: 12px;
+            }
+            
+            .activity-title {
+                font-size: 14px;
+            }
+            
+            .next-trips-title, .books-title {
+                font-size: 16px;
+                margin-bottom: 12px;
+            }
+            
+            .trip-item {
+                min-width: 80px;
+                padding: 10px 12px;
+                gap: 6px;
+            }
+            
+            .trip-name {
+                font-size: 12px;
+            }
+            
+            .book-card {
+                height: 120px;
+                padding: 16px;
+            }
+            
+            .book-title {
+                font-size: 16px;
+            }
+            
+            .footer {
+                margin-top: 20px;
+                font-size: 11px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 12px;
+                border-radius: 8px;
+            }
+            
+            .search-section {
+                padding: 10px;
+                border-radius: 8px;
+            }
+            
+            .ew-logo {
+                width: 34px;
+                height: 34px;
+            }
+            
+            .search-title {
+                font-size: 14px;
+                margin-bottom: 6px;
+            }
+            
+            .search-input {
+                padding: 8px 10px;
+            }
+            
+            .destination-card {
+                padding: 10px;
+            }
+            
+            .destination-name {
+                font-size: 14px;
+            }
+            
+            .activity-card {
+                min-width: 140px;
+                height: 80px;
+                padding: 10px;
+            }
+            
+            .activity-title {
+                font-size: 14px;
+            }
+            
+            .next-trips-title, .books-title {
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+            
+            .trip-item {
+                min-width: 70px;
+                padding: 8px 10px;
+                gap: 4px;
+            }
+            
+            .trip-name {
+                font-size: 12px;
+            }
+            
+            .book-card {
+                height: 100px;
+                padding: 12px;
+            }
+            
+            .book-title {
+                font-size: 14px;
+            }
+            
+            .footer {
+                margin-top: 15px;
+                font-size: 10px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 24px;
+            }
+            
+            .search-section {
+                padding: 20px;
+                border-radius: 16px;
+            }
+            
+            .ew-logo {
+                width: 46px;
+                height: 46px;
+            }
+            
+            .search-title {
+                font-size: 20px;
+                margin-bottom: 16px;
+            }
+            
+            .search-input {
+                padding: 14px 18px;
+            }
+            
+            .destination-card {
+                padding: 20px;
+            }
+            
+            .destination-name {
+                font-size: 20px;
+            }
+            
+            .activity-card {
+                min-width: 220px;
+                height: 140px;
+                padding: 20px;
+            }
+            
+            .activity-title {
+                font-size: 18px;
+            }
+            
+            .next-trips-title, .books-title {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .trip-item {
+                min-width: 120px;
+                padding: 14px 18px;
+                gap: 10px;
+            }
+            
+            .trip-name {
+                font-size: 16px;
+            }
+            
+            .book-card {
+                height: 160px;
+                padding: 24px;
+            }
+            
+            .book-title {
+                font-size: 20px;
+            }
+            
+            .footer {
+                margin-top: 40px;
+                font-size: 13px;
+            }
+        }
+        
+        /* Hide elements that don't match search */
+        .hidden {
+            display: none !important;
+        }
+        
+        /* Smooth transitions for all elements */
+        * {
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-header">
+                <div class="ew-logo"><img src="assets/images/logoo.png" alt="EW Logo"></div>
+                <br><br>
+                <div class="search-title">
+                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    Where are you traveling next?
+                </div>
+            </div>
+            <div class="search-input">
+                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M15.5 14h-.79l-.28-.27C18.02 10.24 19.15 5.68 16.82 2.27A12.2 12.2 0 0012 0C7.58 0 4 3.58 4 8c0 3.25 2.03 5.98 4.8 7.15A20.6 20.6 0 0012 20c4.28 0 8.08-2.17 10.24-5.68a12.1 12.1 0 002.27-6.82C24.12 6.34 23.26 5.35 22 4.77z"/>
+                </svg>
+                <input type="text" id="searchInput" placeholder="Enter a city or any place you want">
+            </div>
+        </div>
+        
+        <!-- Destination Section -->
+        <div class="destination-section">
+            <div class="section-title">In 25 days</div>
+            <div class="destination-card" data-search="Berlin, Germany Berlin">
+                <div class="destination-info">
+                    <div class="flag germany-flag"></div>
+                    <div class="destination-name">Berlin, Germany</div>
+                </div>
+                <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 4l1.41 1.41L18.83 11H12v2h6.83l-5.42 5.41L12 20l8-8z"/>
+                </svg>
+            </div>
+        </div>
+        
+        <!-- Activities Slider -->
+        <div class="activities-slider" id="activitiesSlider">
+            <a href="#" class="activity-card purple-card" data-search="East Side Gallery">
+                <div class="activity-title">East Side Gallery</div>
+                <div class="activity-footer">
+                    <div class="activity-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                    </div>
+                    <div class="activity-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M16 8l2 2-6 6-6-6 2-2 4 4z"/>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="#" class="activity-card blue-card" data-search="Da Giuseppe Pizzeria">
+                <div class="activity-title">Da Giuseppe Pizzeria</div>
+                <div class="activity-footer">
+                    <div class="activity-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 17.25c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                    </div>
+                    <div class="activity-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M16 8l2 2-6 6-6-6 2-2 4 4z"/>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="#" class="activity-card yellow-card" data-search="Rex Club Disco Rex club Disco">
+                <div class="activity-title">Rex Club Disco</div>
+                <div class="activity-footer">
+                    <div class="activity-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4c0-2.21-1.79-4-4-4-1.3 0-2.42.62-3.12 1.5L12 13.55V3zm6 14c0 2.21-1.79 4-4 4s-4-1.79-4-4 1.79-4 4-4 4 1.79 4 4z"/>
+                        </svg>
+                    </div>
+                    <div class="activity-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M16 8l2 2-6 6-6-6 2-2 4 4z"/>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Next Trips Section -->
+        <div class="next-trips-section">
+            <div class="next-trips-title">Next trips</div>
+            <div class="trips-list">
+                <div class="trip-item" data-search="Berlin">
+                    <div class="trip-flag germany-flag"></div>
+                    <div class="trip-name">Berlin</div>
+                </div>
+                <div class="trip-item" data-search="Geneve">
+                    <div class="trip-flag switzerland-flag"></div>
+                    <div class="trip-name">Geneve</div>
+                </div>
+                <div class="trip-item" data-search="Bruges">
+                    <div class="trip-flag belgium-flag"></div>
+                    <div class="trip-name">Bruges</div>
+                </div>
+                <div class="trip-item" data-search="Amsterdam">
+                    <div class="trip-flag netherlands-flag"></div>
+                    <div class="trip-name">Amsterdam</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Books Section -->
+        <div class="books-section">
+            <div class="books-title">Books</div>
+            <a href="#" class="book-card">
+                <div class="book-title">The Berlin Stories</div>
+                <div class="book-footer">
+                    <div class="book-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 17.25c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                    </div>
+                    <div class="book-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M16 8l2 2-6 6-6-6 2-2 4 4z"/>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="book-card">
+                <div class="book-title">Eat Pray Love</div>
+                <div class="book-footer">
+                    <div class="book-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 17.25c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                    </div>
+                    <div class="book-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M16 8l2 2-6 6-6-6 2-2 4 4z"/>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="book-card">
+                <div class="book-title">The Art of Travel</div>
+                <div class="book-footer">
+                    <div class="book-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 17.25c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                    </div>
+                    <div class="book-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M16 8l2 2-6 6-6-6 2-2 4 4z"/>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            Created by Eduwell
+        </div>
+    </div>
+
+    <script>
+        // Utility function for smooth animations
+        const animateElement = (element, animationClass, duration = 200) => {
+            element.classList.add(animationClass);
+            setTimeout(() => {
+                element.classList.remove(animationClass);
+            }, duration);
+        };
+        
+        // Enhanced interactivity for search input
+        const searchInput = document.querySelector('.search-input input');
+        const searchContainer = document.querySelector('.search-input');
+        
+        searchInput.addEventListener('focus', function() {
+            searchContainer.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.15)';
+            animateElement(searchContainer, 'loading', 100);
+        });
+        
+        searchInput.addEventListener('blur', function() {
+            searchContainer.style.boxShadow = 'none';
+        });
+        
+        // Enhanced click events with better feedback
+        const addCardClickEvent = (selector, titleSelector) => {
+            document.querySelectorAll(selector).forEach(card => {
+                card.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const title = this.querySelector(titleSelector).textContent;
+                    
+                    // Visual feedback
+                    this.style.transform = 'scale(0.98)';
+                    this.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.15)';
+                    
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        this.style.boxShadow = '';
+                        // In a real app, this would navigate to the destination
+                        console.log(`Navigating to: ${title}`);
+                    }, 150);
+                });
+            });
+        };
+        
+        // Add click events to all interactive cards
+        addCardClickEvent('.activity-card', '.activity-title');
+        addCardClickEvent('.book-card', '.book-title');
+        addCardClickEvent('.destination-card', '.destination-name');
+        
+        // Trip items click handling
+        document.querySelectorAll('.trip-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const title = this.querySelector('.trip-name').textContent;
+                
+                // Visual feedback
+                this.style.transform = 'scale(0.98)';
+                this.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.15)';
+                
+                setTimeout(() => {
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
+                    console.log(`Selected trip: ${title}`);
+                }, 150);
+            });
+        });
+        
+        // Enhanced search functionality with debouncing
+        const activityCards = document.querySelectorAll('.activity-card');
+        let searchTimeout;
+        
+        const handleSearch = () => {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            
+            let visibleCount = 0;
+            activityCards.forEach(card => {
+                const searchContent = card.getAttribute('data-search').toLowerCase();
+                
+                if (searchTerm === '') {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else if (searchContent.includes(searchTerm)) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+            
+            // Optional: Show empty state message (currently handled by CSS)
+            if (visibleCount === 0 && searchTerm !== '') {
+                // Could add empty state UI here if needed
+                console.log('No matches found');
+            }
+        };
+        
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(handleSearch, 150); // Debounce search
+        });
+        
+        // Keyboard navigation support
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                searchInput.value = '';
+                handleSearch();
+                searchInput.blur();
+            }
+        });
+        
+        // Enhanced responsive behavior
+        const updateContainerPadding = () => {
+            const container = document.querySelector('.container');
+            if (window.innerWidth <= 480) {
+                container.style.padding = '12px';
+            } else if (window.innerWidth <= 768) {
+                container.style.padding = '16px';
+            } else {
+                container.style.padding = '20px';
+            }
+        };
+        
+        // Initialize responsive padding
+        updateContainerPadding();
+        window.addEventListener('resize', updateContainerPadding);
+        
+        // Performance optimization: Use passive event listeners where possible
+        const enablePassiveEvents = () => {
+            const supportsPassive = (() => {
+                let passive = false;
+                try {
+                    const options = Object.defineProperty({}, 'passive', {
+                        get: () => {
+                            passive = true;
+                            return true;
+                        }
+                    });
+                    window.addEventListener('test', null, options);
+                    window.removeEventListener('test', null, options);
+                } catch (err) {
+                    // Passive not supported
+                }
+                return passive;
+            })();
+            
+            return supportsPassive ? { passive: true } : false;
+        };
+        
+        // Apply passive event listeners for better scrolling performance
+        const passiveOption = enablePassiveEvents();
+        
+        // Touch feedback for mobile devices
+        const addTouchFeedback = () => {
+            const touchElements = document.querySelectorAll('.activity-card, .book-card, .trip-item, .destination-card');
+            touchElements.forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    this.style.opacity = '0.9';
+                }, passiveOption);
+                
+                element.addEventListener('touchend', function() {
+                    this.style.opacity = '1';
+                }, passiveOption);
+            });
+        };
+        
+        // Initialize touch feedback on mobile
+        if ('ontouchstart' in window || navigator.maxTouchPoints) {
+            addTouchFeedback();
+        }
+        
+        // Console message for development (can be removed in production)
+        console.log('Travel Planner loaded successfully!');
+    </script>
+</body>
+</html>

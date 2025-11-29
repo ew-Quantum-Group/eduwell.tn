@@ -3,1093 +3,1597 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel Planner</title>
+    <title>LearnHub | Professional Learning Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-green: #A5E67D;
-            --secondary-purple: #E6C2F9;
-            --secondary-blue: #B3E6FF;
-            --secondary-yellow: #FFF2B3;
-            --secondary-pink: #FFCCE6;
-            --secondary-orange: #FFE0B3;
+            --primary-color: #4F46E5;
+            --primary-dark: #3730A3;
+            --primary-light: #C7D2FE;
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --science-gradient: linear-gradient(135deg, #4A90E2 0%, #50E3C2 100%);
+            --secondary-color: #10B981;
+            --accent-color: #F59E0B;
+            --light-bg: #F8FAFC;
+            --dark-text: #1E293B;
+            --medium-text: #475569;
+            --light-text: #94A3B8;
             --white: #FFFFFF;
-            --gray: #F5F5F5;
-            --dark-gray: #333333;
-            --border-color: #DDDDDD;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            --shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.1);
+            --gray-50: #F8FAFC;
+            --gray-100: #F1F5F9;
+            --gray-200: #E2E8F0;
+            --gray-300: #CBD5E1;
+            --gray-400: #94A3B8;
+            --green-50: #ECFDF5;
+            --green-100: #D1FAE5;
+            --purple-50: #FAF5FF;
+            --purple-100: #E9D5FF;
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+            --border-radius-xl: 24px;
+            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --box-shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.1);
+            --box-shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.15);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            --transition-fast: all 0.2s ease;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
-        
+
         body {
-            background-color: var(--gray);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: var(--dark-text);
+            line-height: 1.7;
             padding: 20px;
-            max-width: 100%;
+            max-width: 1400px;
             margin: 0 auto;
-            line-height: 1.5;
-            opacity: 0;
-            animation: fadeIn 0.8s ease-out forwards;
+            min-height: 100vh;
+            font-weight: 400;
+            letter-spacing: -0.01em;
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
+
         .container {
-            background-color: var(--white);
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: var(--shadow);
-            animation: slideUp 0.6s ease-out 0.2s both;
+            max-width: 1400px;
+            margin: 0 auto;
         }
-        
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+
+        /* Header Section */
+        .header {
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
         }
-        
-        .search-section {
-            background-color: var(--primary-green);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 20px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        .header-content h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        
-        .search-section:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
+
+        .header-content p {
+            font-size: 16px;
+            color: var(--medium-text);
+            font-weight: 400;
         }
-        
-        .search-header {
+
+        .user-section {
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
+            gap: 20px;
         }
-        
-        .ew-logo {
-            width: 32px;
-            height: 32px;
+
+        .notification-bell {
+            position: relative;
+            width: 44px;
+            height: 44px;
+            background: var(--white);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: logoPulse 2s infinite alternate;
+            color: var(--medium-text);
+            font-size: 20px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            cursor: pointer;
         }
-        
-        .ew-logo img {
+
+        .notification-bell:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow-lg);
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 8px;
+            height: 8px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+        }
+
+        .user-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            background: var(--science-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 20px;
+            box-shadow: var(--box-shadow-lg);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .user-avatar:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: var(--box-shadow-xl);
+        }
+
+        /* Trial Card with Science Theme */
+        .trial-card {
+            background: var(--science-gradient);
+            border-radius: var(--border-radius-xl);
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            box-shadow: var(--box-shadow-xl);
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+            color: white;
+        }
+
+        .trial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10zm10 8c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm40 40c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: 1;
+        }
+
+        .trial-content {
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+
+        .trial-content h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        .trial-content p {
+            font-size: 17px;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            opacity: 0.9;
+            max-width: 500px;
+        }
+
+        .trial-btn {
+            background-color: white;
+            color: #4A90E2;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .trial-btn:hover {
+            background-color: var(--gray-50);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .trial-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 20px;
+            overflow: hidden;
+            flex-shrink: 0;
+            position: relative;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+            z-index: 2;
+            transition: var(--transition);
+        }
+
+        .trial-image:hover {
+            transform: translateY(-5px) rotate(2deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .trial-image img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
+            transition: transform 0.7s ease;
         }
-        
-        @keyframes logoPulse {
-            from { transform: scale(1); }
-            to { transform: scale(1.05); }
+
+        .trial-image:hover img {
+            transform: scale(1.08);
         }
-        
-        .search-title {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--dark-gray);
+
+        /* Search Section */
+        .search-container {
+            margin-bottom: 40px;
+            position: relative;
+            max-width: 600px;
         }
-        
+
         .search-input {
-            display: flex;
-            align-items: center;
+            width: 100%;
+            padding: 18px 25px 18px 60px;
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            font-size: 16px;
             background-color: var(--white);
-            border-radius: 12px;
-            padding: 12px 16px;
-            gap: 10px;
-            transition: box-shadow 0.2s ease;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            font-weight: 400;
         }
-        
-        .search-input:focus-within {
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        .search-icon {
-            width: 20px;
-            height: 20px;
-            fill: var(--dark-gray);
-        }
-        
-        .search-input input {
-            flex: 1;
-            border: none;
+
+        .search-input:focus {
             outline: none;
-            font-size: 16px;
-            background: transparent;
-            caret-color: var(--dark-gray);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1), var(--box-shadow);
         }
-        
-        .destination-section {
-            margin-bottom: 20px;
-            animation: fadeIn 0.5s ease-out 0.4s both;
+
+        .search-icon {
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--medium-text);
+            font-size: 20px;
+            transition: var(--transition-fast);
         }
-        
+
+        .search-input:focus + .search-icon {
+            color: var(--primary-color);
+        }
+
+        /* Popular Courses Section */
         .section-title {
-            font-size: 16px;
-            color: var(--dark-gray);
-            margin-bottom: 12px;
-            font-weight: 500;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
         }
-        
-        .destination-card {
+
+        /* Horizontal Slider for Popular Courses */
+        .slider-container {
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .courses-slider {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px;
-            background-color: var(--white);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 12px;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-        
-        .destination-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--primary-green);
-        }
-        
-        .destination-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .flag {
-            width: 24px;
-            height: 16px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-        
-        .destination-name {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--dark-gray);
-        }
-        
-        .arrow-icon {
-            width: 24px;
-            height: 24px;
-            fill: var(--dark-gray);
-            transition: transform 0.2s ease;
-        }
-        
-        .destination-card:hover .arrow-icon {
-            transform: translateX(4px);
-        }
-        
-        /* Horizontal slider for activities */
-        .activities-slider {
-            display: flex;
+            gap: 25px;
             overflow-x: auto;
-            gap: 12px;
-            margin-bottom: 20px;
-            padding-bottom: 8px;
+            scroll-behavior: smooth;
+            padding: 15px 10px 30px;
             scrollbar-width: thin;
-            scrollbar-color: var(--border-color) var(--white);
-            animation: fadeIn 0.5s ease-out 0.5s both;
+            scrollbar-color: var(--gray-300) transparent;
         }
-        
-        .activities-slider::-webkit-scrollbar {
-            height: 6px;
+
+        .courses-slider::-webkit-scrollbar {
+            height: 8px;
         }
-        
-        .activities-slider::-webkit-scrollbar-thumb {
-            background-color: var(--border-color);
-            border-radius: 6px;
+
+        .courses-slider::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 4px;
         }
-        
-        .activity-card {
-            min-width: 200px;
-            border-radius: 12px;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 120px;
+
+        .courses-slider::-webkit-scrollbar-thumb {
+            background-color: var(--gray-300);
+            border-radius: 4px;
+        }
+
+        .courses-slider::-webkit-scrollbar-thumb:hover {
+            background-color: var(--gray-400);
+        }
+
+        /* Square Course Cards for Popular Courses */
+        .square-course-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius-xl);
+            padding: 28px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
             cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            color: inherit;
-            flex-shrink: 0;
             position: relative;
             overflow: hidden;
+            border: 1px solid var(--gray-100);
+            width: 300px;
+            height: 300px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
         }
-        
-        .activity-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-hover);
-        }
-        
-        .activity-card::before {
+
+        .square-course-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 4px;
-            background-color: rgba(0, 0, 0, 0.1);
-            opacity: 0;
-            transition: opacity 0.2s ease;
+            background: var(--science-gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
         }
-        
-        .activity-card:hover::before {
-            opacity: 1;
+
+        .square-course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--box-shadow-xl);
+            border-color: var(--primary-light);
         }
-        
-        .activity-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--dark-gray);
+
+        .square-course-card:hover::before {
+            transform: scaleX(1);
         }
-        
-        .activity-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .activity-icon {
-            width: 20px;
-            height: 20px;
-            fill: var(--dark-gray);
-        }
-        
-        .activity-button {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background-color: rgba(0, 0, 0, 0.1);
+
+        .course-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gray-50);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.2s ease;
+            margin-bottom: 24px;
+            color: var(--dark-text);
+            font-size: 26px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
         }
-        
-        .activity-card:hover .activity-button {
-            background-color: rgba(0, 0, 0, 0.2);
+
+        .square-course-card:hover .course-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .square-course-card.green .course-icon {
+            background: var(--green-50);
+            color: var(--secondary-color);
+        }
+
+        .square-course-card.purple .course-icon {
+            background: var(--purple-50);
+            color: var(--primary-color);
+        }
+
+        .square-course-card.blue .course-icon {
+            background: #EFF6FF;
+            color: #3B82F6;
+        }
+
+        .square-course-card.orange .course-icon {
+            background: #FFF7ED;
+            color: #F97316;
+        }
+
+        .square-course-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
+        }
+
+        .square-course-card p {
+            font-size: 15px;
+            color: var(--medium-text);
+            margin-bottom: 24px;
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+
+        .course-meta {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-size: 14px;
+            color: var(--medium-text);
+        }
+
+        .course-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .course-meta i {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+
+        /* Your Courses Section - Rectangular Cards */
+        .your-courses {
+            margin-top: 30px;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 28px;
+            margin-bottom: 50px;
+        }
+
+        .course-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius-xl);
+            padding: 28px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--gray-100);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--science-gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--box-shadow-xl);
+            border-color: var(--primary-light);
+        }
+
+        .course-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .course-card .course-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gray-50);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: var(--dark-text);
+            font-size: 26px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .course-card:hover .course-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-card.green .course-icon {
+            background: var(--green-50);
+            color: var(--secondary-color);
+        }
+
+        .course-card.purple .course-icon {
+            background: var(--purple-50);
+            color: var(--primary-color);
+        }
+
+        .course-card.blue .course-icon {
+            background: #EFF6FF;
+            color: #3B82F6;
+        }
+
+        .course-card.orange .course-icon {
+            background: #FFF7ED;
+            color: #F97316;
+        }
+
+        .course-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
+        }
+
+        .course-card p {
+            font-size: 15px;
+            color: var(--medium-text);
+            margin-bottom: 24px;
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: var(--gray-200);
+            border-radius: 4px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--science-gradient);
+            border-radius: 4px;
+            width: 65%;
+            transition: width 1s ease;
+        }
+
+        /* Popup Overlay */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Popup Content */
+        .popup-content {
+            background-color: var(--white);
+            width: 100%;
+            max-width: 1200px;
+            height: 75%;
+            border-top-left-radius: var(--border-radius-xl);
+            border-top-right-radius: var(--border-radius-xl);
+            padding: 35px;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: var(--gray-100);
+            border: none;
+            font-size: 22px;
+            color: var(--medium-text);
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .popup-close:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        /* Popular Courses Popup */
+        .popup-header {
+            margin-bottom: 30px;
+            padding-right: 60px;
+        }
+
+        .popup-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
+        }
+
+        .popup-description {
+            font-size: 17px;
+            color: var(--medium-text);
+            line-height: 1.6;
+        }
+
+        .options-section {
+            margin-top: 25px;
+            flex-grow: 1;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .options-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
+        }
+
+        .options-slider {
+            display: flex;
+            gap: 25px;
+            overflow-x: auto;
+            padding: 15px 10px 30px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gray-300) transparent;
+            flex-grow: 1;
+        }
+
+        .options-slider::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .options-slider::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 4px;
+        }
+
+        .options-slider::-webkit-scrollbar-thumb {
+            background-color: var(--gray-300);
+            border-radius: 4px;
+        }
+
+        .options-slider::-webkit-scrollbar-thumb:hover {
+            background-color: var(--gray-400);
+        }
+
+        .option-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: 25px;
+            width: 220px;
+            height: 220px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid var(--gray-200);
+            transition: var(--transition);
+            cursor: pointer;
+            box-shadow: var(--box-shadow);
+        }
+
+        .option-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--box-shadow-lg);
+            border-color: var(--primary-light);
+        }
+
+        .option-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--primary-light);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 26px;
+            margin-bottom: 18px;
+            transition: var(--transition);
+        }
+
+        .option-card:hover .option-icon {
             transform: scale(1.1);
         }
-        
-        .next-trips-section {
-            margin-top: 20px;
-            margin-bottom: 20px;
-            animation: fadeIn 0.5s ease-out 0.6s both;
+
+        .option-card.green .option-icon {
+            background: var(--green-100);
+            color: var(--secondary-color);
         }
-        
-        .next-trips-title {
+
+        .option-card.purple .option-icon {
+            background: var(--purple-100);
+            color: var(--primary-color);
+        }
+
+        .option-card.blue .option-icon {
+            background: #DBEAFE;
+            color: #3B82F6;
+        }
+
+        .option-card.orange .option-icon {
+            background: #FED7AA;
+            color: #F97316;
+        }
+
+        .option-title {
             font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--dark-gray);
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
         }
-        
-        .trips-list {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-            scrollbar-width: thin;
-            scrollbar-color: var(--border-color) var(--white);
-        }
-        
-        .trips-list::-webkit-scrollbar {
-            height: 6px;
-        }
-        
-        .trips-list::-webkit-scrollbar-thumb {
-            background-color: var(--border-color);
-            border-radius: 6px;
-        }
-        
-        .trip-item {
-            display: flex;
+
+        .option-link {
+            display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 12px 16px;
-            background-color: var(--white);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            min-width: 100px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            flex-shrink: 0;
-        }
-        
-        .trip-item:hover {
-            background-color: rgba(0, 0, 0, 0.05);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--primary-green);
-        }
-        
-        .trip-flag {
-            width: 20px;
-            height: 14px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-        
-        .trip-name {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--dark-gray);
-        }
-        
-        /* Books Section */
-        .books-section {
-            margin-top: 20px;
-            animation: fadeIn 0.5s ease-out 0.7s both;
-        }
-        
-        .books-title {
-            font-size: 18px;
+            color: var(--primary-color);
+            font-size: 15px;
             font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--dark-gray);
+            text-decoration: none;
+            margin-top: auto;
+            transition: var(--transition);
+            padding: 8px 0;
         }
-        
-        .book-card {
-            min-width: 100%;
-            border-radius: 12px;
-            padding: 20px;
+
+        .option-link:hover {
+            color: var(--primary-dark);
+            gap: 12px;
+        }
+
+        /* PDF Viewer Popup */
+        .pdf-popup-content {
+            background-color: var(--white);
+            width: 100%;
+            max-width: 1200px;
+            height: 85%;
+            border-top-left-radius: var(--border-radius-xl);
+            border-top-right-radius: var(--border-radius-xl);
+            padding: 35px;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            height: 140px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            color: inherit;
-            margin-bottom: 12px;
             position: relative;
-            overflow: hidden;
         }
-        
-        .book-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-hover);
-        }
-        
-        .book-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background-color: rgba(0, 0, 0, 0.1);
-            opacity: 0;
-            transition: opacity 0.2s ease;
-        }
-        
-        .book-card:hover::before {
-            opacity: 1;
-        }
-        
-        .book-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--dark-gray);
-        }
-        
-        .book-footer {
+
+        .pdf-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 25px;
+            padding-right: 60px;
         }
-        
-        .book-icon {
-            width: 22px;
-            height: 22px;
-            fill: var(--dark-gray);
+
+        .pdf-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
         }
-        
-        .book-button {
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            background-color: rgba(0, 0, 0, 0.1);
+
+        .pdf-controls {
+            display: flex;
+            gap: 12px;
+        }
+
+        .pdf-control-btn {
+            background: var(--gray-100);
+            border: none;
+            font-size: 18px;
+            color: var(--medium-text);
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.2s ease;
+            transition: var(--transition);
         }
-        
-        .book-card:hover .book-button {
-            background-color: rgba(0, 0, 0, 0.2);
+
+        .pdf-control-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
             transform: scale(1.1);
         }
-        
-        /* Book card colors - using the website's color palette */
-        .book-card:nth-child(1) {
-            background-color: var(--secondary-purple);
+
+        .pdf-viewer-container {
+            flex-grow: 1;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--gray-200);
+            background-color: var(--gray-50);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
         }
-        
-        .book-card:nth-child(2) {
-            background-color: var(--secondary-blue);
+
+        .pdf-viewer {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
-        
-        .book-card:nth-child(3) {
-            background-color: var(--secondary-yellow);
+
+        .loading-spinner {
+            display: none;
+            width: 60px;
+            height: 60px;
+            border: 5px solid var(--gray-200);
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
-        
-        /* Flag backgrounds */
-        .germany-flag {
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIxNiI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjE2IiBmaWxsPSIjMzEzMTI5Ii8+PHJlY3QgeT0iOCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjgiIGZpbGw9IiNGRkYiLz48cmVjdCB5PSI4IiB3aWR0aD0iMjQiIGhlaWdodD0iOCIgZmlsbD0iI0ZGRkYwMCIvPjwvc3ZnPg==');
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-        
-        .switzerland-flag {
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIxNiI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjE2IiBmaWxsPSIjRkZGIi8+PHJlY3QgeD0iNiIgeT0iMiIgd2lkdGg9IjEyIiBoZWlnaHQ9IjEyIiBmaWxsPSIjMDAwIi8+PHJlY3QgeD0iOCIgeT0iNSIgd2lkdGg9IjgiIGhlaWdodD0iNiIgZmlsbD0iI0ZGRiIvPjwvc3ZnPg==');
+
+        .pdf-viewer-container.loading .loading-spinner {
+            display: block;
         }
-        
-        .belgium-flag {
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIxNiI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjE2IiBmaWxsPSIjRUUwMDAwIi8+PHJlY3QgeD0iOCIgd2lkdGg9IjgiIGhlaWdodD0iMTYiIGZpbGw9IiMwMDAwMDAiLz48cmVjdCB4PSIxNiIgd2lkdGg9IjgiIGhlaWdodD0iMTYiIGZpbGw9IiNGRkYiLz48L3N2Zz4=');
+
+        .pdf-viewer-container.loading .pdf-viewer {
+            display: none;
         }
-        
-        .netherlands-flag {
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIxNiI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjE2IiBmaWxsPSIjRkZGIi8+PHJlY3QgeT0iOCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjgiIGZpbGw9IiMwMDAwMDAiLz48cmVjdCB5PSIxMiIgd2lkdGg9IjI0IiBoZWlnaHQ9IjQiIGZpbGw9IiNGRkYiLz48cmVjdCB5PSI4IiB3aWR0aD0iMjQiIGhlaWdodD0iNCIgZmlsbD0iI0ZGRkYwMCIvPjwvc3ZnPg==');
-        }
-        
-        /* Activity card colors */
-        .purple-card {
-            background-color: var(--secondary-purple);
-        }
-        
-        .blue-card {
-            background-color: var(--secondary-blue);
-        }
-        
-        .yellow-card {
-            background-color: var(--secondary-yellow);
-        }
-        
-        /* Loading state */
-        .loading {
-            opacity: 0.6;
-            pointer-events: none;
-        }
-        
-        /* Empty state */
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--dark-gray);
-            font-size: 16px;
-        }
-        
-        .empty-state svg {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 16px;
-            fill: var(--border-color);
-        }
-        
+
         /* Footer */
         .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid var(--gray-200);
             text-align: center;
-            margin-top: 30px;
-            padding: 10px 0;
-            font-size: 12px;
-            color: var(--dark-gray);
-            opacity: 0.7;
-            animation: fadeIn 0.5s ease-out 0.8s both;
+            color: var(--medium-text);
+            font-size: 14px;
         }
-        
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: var(--medium-text);
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
         /* Responsive Design */
+        @media (max-width: 1024px) {
+            .courses-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
         @media (max-width: 768px) {
-            body {
-                padding: 12px;
+            .trial-card {
+                flex-direction: column;
+                padding: 30px;
+                text-align: center;
             }
             
-            .container {
-                padding: 16px;
-                border-radius: 12px;
+            .header h1 {
+                font-size: 28px;
             }
             
-            .search-section {
-                padding: 12px;
-                border-radius: 12px;
+            .section-title {
+                font-size: 22px;
             }
             
-            .ew-logo {
-                width: 38px;
-                height: 38px;
-            }
-            
-            .search-title {
-                font-size: 16px;
-                margin-bottom: 8px;
-            }
-            
-            .search-input {
-                padding: 10px 12px;
-            }
-            
-            .destination-card {
-                padding: 12px;
-            }
-            
-            .destination-name {
-                font-size: 16px;
-            }
-            
-            .activity-card {
-                min-width: 160px;
-                height: 100px;
-                padding: 12px;
-            }
-            
-            .activity-title {
-                font-size: 14px;
-            }
-            
-            .next-trips-title, .books-title {
-                font-size: 16px;
-                margin-bottom: 12px;
-            }
-            
-            .trip-item {
-                min-width: 80px;
-                padding: 10px 12px;
-                gap: 6px;
-            }
-            
-            .trip-name {
-                font-size: 12px;
-            }
-            
-            .book-card {
-                height: 120px;
-                padding: 16px;
-            }
-            
-            .book-title {
-                font-size: 16px;
-            }
-            
-            .footer {
-                margin-top: 20px;
-                font-size: 11px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .container {
-                padding: 12px;
-                border-radius: 8px;
-            }
-            
-            .search-section {
-                padding: 10px;
-                border-radius: 8px;
-            }
-            
-            .ew-logo {
-                width: 34px;
-                height: 34px;
-            }
-            
-            .search-title {
-                font-size: 14px;
-                margin-bottom: 6px;
-            }
-            
-            .search-input {
-                padding: 8px 10px;
-            }
-            
-            .destination-card {
-                padding: 10px;
-            }
-            
-            .destination-name {
-                font-size: 14px;
-            }
-            
-            .activity-card {
-                min-width: 140px;
-                height: 80px;
-                padding: 10px;
-            }
-            
-            .activity-title {
-                font-size: 14px;
-            }
-            
-            .next-trips-title, .books-title {
-                font-size: 14px;
-                margin-bottom: 10px;
-            }
-            
-            .trip-item {
-                min-width: 70px;
-                padding: 8px 10px;
-                gap: 4px;
-            }
-            
-            .trip-name {
-                font-size: 12px;
-            }
-            
-            .book-card {
-                height: 100px;
-                padding: 12px;
-            }
-            
-            .book-title {
-                font-size: 14px;
-            }
-            
-            .footer {
-                margin-top: 15px;
-                font-size: 10px;
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .container {
-                max-width: 800px;
-                margin: 0 auto;
-                padding: 24px;
-            }
-            
-            .search-section {
-                padding: 20px;
-                border-radius: 16px;
-            }
-            
-            .ew-logo {
-                width: 46px;
-                height: 46px;
-            }
-            
-            .search-title {
-                font-size: 20px;
-                margin-bottom: 16px;
-            }
-            
-            .search-input {
-                padding: 14px 18px;
-            }
-            
-            .destination-card {
-                padding: 20px;
-            }
-            
-            .destination-name {
-                font-size: 20px;
-            }
-            
-            .activity-card {
-                min-width: 220px;
-                height: 140px;
-                padding: 20px;
-            }
-            
-            .activity-title {
-                font-size: 18px;
-            }
-            
-            .next-trips-title, .books-title {
-                font-size: 20px;
-                margin-bottom: 20px;
-            }
-            
-            .trip-item {
-                min-width: 120px;
-                padding: 14px 18px;
-                gap: 10px;
-            }
-            
-            .trip-name {
-                font-size: 16px;
-            }
-            
-            .book-card {
+            .trial-image {
+                width: 160px;
                 height: 160px;
-                padding: 24px;
             }
             
-            .book-title {
-                font-size: 20px;
+            .square-course-card {
+                width: 260px;
+                height: 260px;
             }
             
-            .footer {
-                margin-top: 40px;
-                font-size: 13px;
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .popup-content {
+                padding: 25px;
+            }
+            
+            .popup-title {
+                font-size: 24px;
+            }
+            
+            .option-card {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .pdf-popup-content {
+                height: 90%;
+                padding: 25px;
+            }
+            
+            .pdf-title {
+                font-size: 24px;
             }
         }
-        
-        /* Hide elements that don't match search */
-        .hidden {
-            display: none !important;
-        }
-        
-        /* Smooth transitions for all elements */
-        * {
-            transition: background-color 0.2s ease, color 0.2s ease;
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+            
+            .trial-card {
+                padding: 25px;
+            }
+            
+            .trial-content h2 {
+                font-size: 24px;
+            }
+            
+            .square-course-card {
+                padding: 22px;
+                width: 240px;
+                height: 240px;
+            }
+            
+            .course-card {
+                padding: 22px;
+            }
+            
+            .course-meta {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            
+            .option-card {
+                width: 180px;
+                height: 180px;
+                padding: 20px;
+            }
+            
+            .pdf-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            
+            .pdf-controls {
+                align-self: flex-end;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <div class="header-content">
+                <h1>Welcome Back, James!</h1>
+                <p>Continue your learning journey with personalized recommendations</p>
+            </div>
+            <div class="user-section">
+                <div class="notification-bell">
+                    <i class="far fa-bell"></i>
+                    <div class="notification-dot"></div>
+                </div>
+                <div class="user-avatar">J</div>
+            </div>
+        </div>
+
+        <!-- Trial Card with Science Theme -->
+        <div class="trial-card">
+            <div class="trial-content">
+                <h2>Unlock Premium Learning Experience</h2>
+                <p>Access all courses, advanced features, personalized learning paths, and expert mentorship with our exclusive 7-day free trial.</p>
+                <button class="trial-btn">
+                    <i class="fas fa-crown"></i>
+                    Start Free Trial
+                </button>
+            </div>
+            <div class="trial-image">
+                <img src="https://placehold.co/180x180/FFFFFF/4A90E2?text=🧬" alt="Science illustration">
+            </div>
+        </div>
+
         <!-- Search Section -->
-        <div class="search-section">
-            <div class="search-header">
-                <div class="ew-logo"><img src="assets/images/logoo.png" alt="EW Logo"></div>
-                <br><br>
-                <div class="search-title">
-                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                    </svg>
-                    Where are you traveling next?
-                </div>
-            </div>
-            <div class="search-input">
-                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M15.5 14h-.79l-.28-.27C18.02 10.24 19.15 5.68 16.82 2.27A12.2 12.2 0 0012 0C7.58 0 4 3.58 4 8c0 3.25 2.03 5.98 4.8 7.15A20.6 20.6 0 0012 20c4.28 0 8.08-2.17 10.24-5.68a12.1 12.1 0 002.27-6.82C24.12 6.34 23.26 5.35 22 4.77z"/>
-                </svg>
-                <input type="text" id="searchInput" placeholder="Enter a city or any place you want">
-            </div>
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search for courses, topics, or instructors..." id="searchInput">
+        </div>
+
+        <!-- Popular Courses Section with Horizontal Slider -->
+        <div class="section-title">
+            <span>Popular Courses</span>
         </div>
         
-        <!-- Destination Section -->
-        <div class="destination-section">
-            <div class="section-title">In 25 days</div>
-            <div class="destination-card" data-search="Berlin, Germany Berlin">
-                <div class="destination-info">
-                    <div class="flag germany-flag"></div>
-                    <div class="destination-name">Berlin, Germany</div>
-                </div>
-                <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M12 4l1.41 1.41L18.83 11H12v2h6.83l-5.42 5.41L12 20l8-8z"/>
-                </svg>
+        <!-- Horizontal Slider -->
+        <div class="slider-container">
+            <div class="courses-slider" id="coursesSlider">
+                <!-- Course cards will be populated by JavaScript -->
             </div>
         </div>
-        
-        <!-- Activities Slider -->
-        <div class="activities-slider" id="activitiesSlider">
-            <a href="#" class="activity-card purple-card" data-search="East Side Gallery">
-                <div class="activity-title">East Side Gallery</div>
-                <div class="activity-footer">
-                    <div class="activity-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                        </svg>
-                    </div>
-                    <div class="activity-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M16 8l2 2-6 6-6-6 2-2 4 4z"/>
-                        </svg>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="#" class="activity-card blue-card" data-search="Da Giuseppe Pizzeria">
-                <div class="activity-title">Da Giuseppe Pizzeria</div>
-                <div class="activity-footer">
-                    <div class="activity-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 17.25c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                        </svg>
-                    </div>
-                    <div class="activity-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M16 8l2 2-6 6-6-6 2-2 4 4z"/>
-                        </svg>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="#" class="activity-card yellow-card" data-search="Rex Club Disco Rex club Disco">
-                <div class="activity-title">Rex Club Disco</div>
-                <div class="activity-footer">
-                    <div class="activity-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4c0-2.21-1.79-4-4-4-1.3 0-2.42.62-3.12 1.5L12 13.55V3zm6 14c0 2.21-1.79 4-4 4s-4-1.79-4-4 1.79-4 4-4 4 1.79 4 4z"/>
-                        </svg>
-                    </div>
-                    <div class="activity-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M16 8l2 2-6 6-6-6 2-2 4 4z"/>
-                        </svg>
-                    </div>
-                </div>
-            </a>
+
+        <!-- Your Courses Section with Grid Layout -->
+        <div class="section-title">
+            <span>Your Courses</span>
         </div>
-        
-        <!-- Next Trips Section -->
-        <div class="next-trips-section">
-            <div class="next-trips-title">Next trips</div>
-            <div class="trips-list">
-                <div class="trip-item" data-search="Berlin">
-                    <div class="trip-flag germany-flag"></div>
-                    <div class="trip-name">Berlin</div>
-                </div>
-                <div class="trip-item" data-search="Geneve">
-                    <div class="trip-flag switzerland-flag"></div>
-                    <div class="trip-name">Geneve</div>
-                </div>
-                <div class="trip-item" data-search="Bruges">
-                    <div class="trip-flag belgium-flag"></div>
-                    <div class="trip-name">Bruges</div>
-                </div>
-                <div class="trip-item" data-search="Amsterdam">
-                    <div class="trip-flag netherlands-flag"></div>
-                    <div class="trip-name">Amsterdam</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Books Section -->
-        <div class="books-section">
-            <div class="books-title">Books</div>
-            <a href="#" class="book-card">
-                <div class="book-title">The Berlin Stories</div>
-                <div class="book-footer">
-                    <div class="book-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 17.25c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                        </svg>
-                    </div>
-                    <div class="book-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M16 8l2 2-6 6-6-6 2-2 4 4z"/>
-                        </svg>
-                    </div>
-                </div>
-            </a>
-            <a href="#" class="book-card">
-                <div class="book-title">Eat Pray Love</div>
-                <div class="book-footer">
-                    <div class="book-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 17.25c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                        </svg>
-                    </div>
-                    <div class="book-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M16 8l2 2-6 6-6-6 2-2 4 4z"/>
-                        </svg>
-                    </div>
-                </div>
-            </a>
-            <a href="#" class="book-card">
-                <div class="book-title">The Art of Travel</div>
-                <div class="book-footer">
-                    <div class="book-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 17.25c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                        </svg>
-                    </div>
-                    <div class="book-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M16 8l2 2-6 6-6-6 2-2 4 4z"/>
-                        </svg>
-                    </div>
-                </div>
-            </a>
+        <div class="courses-grid" id="yourCoursesGrid">
+            <!-- Course cards will be populated by JavaScript -->
         </div>
         
         <!-- Footer -->
         <div class="footer">
-            Created by Eduwell
+            <div class="footer-links">
+                <a href="#">About</a>
+                <a href="#">Careers</a>
+                <a href="#">Help Center</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            <p>© 2023 LearnHub. All rights reserved. Elevate your learning experience.</p>
+        </div>
+    </div>
+
+    <!-- Popular Courses Popup Overlay -->
+    <div class="popup-overlay" id="popularCoursesPopup">
+        <div class="popup-content">
+            <button class="popup-close" id="popularCoursesPopupClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="popup-header">
+                <h2 class="popup-title" id="popularCoursesPopupTitle">Course Title</h2>
+                <p class="popup-description" id="popularCoursesPopupDescription">Course description will appear here.</p>
+            </div>
+            <div class="options-section">
+                <h3 class="options-title">Learning Options</h3>
+                <div class="options-slider" id="popularCoursesOptions">
+                    <!-- Options will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF Viewer Popup Overlay -->
+    <div class="popup-overlay" id="pdfViewerPopup">
+        <div class="pdf-popup-content">
+            <button class="popup-close" id="pdfViewerPopupClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="pdf-header">
+                <h2 class="pdf-title" id="pdfViewerPopupTitle">Course Title</h2>
+                <div class="pdf-controls">
+                    <button class="pdf-control-btn" id="pdfFullscreenBtn" title="Fullscreen">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="pdf-viewer-container" id="pdfViewerContainer">
+                <div class="loading-spinner"></div>
+                <iframe class="pdf-viewer" id="pdfViewer" frameborder="0"></iframe>
+            </div>
         </div>
     </div>
 
     <script>
-        // Utility function for smooth animations
-        const animateElement = (element, animationClass, duration = 200) => {
-            element.classList.add(animationClass);
-            setTimeout(() => {
-                element.classList.remove(animationClass);
-            }, duration);
+        // JSON data structure for Popular Courses (Science-themed)
+        const popularCoursesData = {
+            "reproduction-humaine": {
+                title: "Reproduction Humaine",
+                description: "Comprende",
+                options: [
+                    {
+                        title: "Video Lessons",
+                        description: "Watch step-by-step video tutorials",
+                        icon: "fas fa-play-circle",
+                        link: "#",
+                        color: "blue"
+                    },
+                    {
+                        title: "Study Materials",
+                        description: "Download PDFs and resources",
+                        icon: "fas fa-file-alt",
+                        link: "#",
+                        color: "green"
+                    },
+                    {
+                        title: "Practice Exercises",
+                        description: "Test your knowledge with exercises",
+                        icon: "fas fa-tasks",
+                        link: "#",
+                        color: "purple"
+                    }
+                ]
+            },
+            "evolution-biologique": {
+                title: "Evolution Biologique",
+                description: "Explorer les mécanismes et théories de l'évolution des espèces",
+                options: [
+                    {
+                        title: "Video Lessons",
+                        description: "Watch step-by-step video tutorials",
+                        icon: "fas fa-play-circle",
+                        link: "#",
+                        color: "blue"
+                    },
+                    {
+                        title: "Study Materials",
+                        description: "Download PDFs and resources",
+                        icon: "fas fa-file-alt",
+                        link: "#",
+                        color: "green"
+                    },
+                    {
+                        title: "Practice Exercises",
+                        description: "Test your knowledge with exercises",
+                        icon: "fas fa-tasks",
+                        link: "#",
+                        color: "purple"
+                    }
+                ]
+            },
+            "genetique-humaine": {
+                title: "Génétique humaine",
+                description: "Étudier l'hérédité et la variation des caractères chez l'humain",
+                options: [
+                    {
+                        title: "Video Lessons",
+                        description: "Watch step-by-step video tutorials",
+                        icon: "fas fa-play-circle",
+                        link: "#",
+                        color: "blue"
+                    },
+                    {
+                        title: "Study Materials",
+                        description: "Download PDFs and resources",
+                        icon: "fas fa-file-alt",
+                        link: "#",
+                        color: "green"
+                    },
+                    {
+                        title: "Practice Exercises",
+                        description: "Test your knowledge with exercises",
+                        icon: "fas fa-tasks",
+                        link: "#",
+                        color: "purple"
+                    }
+                ]
+            },
+            "neurophysiologie": {
+                title: "Neurophysiologie",
+                description: "Comprendre le fonctionnement du système nerveux humain",
+                options: [
+                    {
+                        title: "Video Lessons",
+                        description: "Watch step-by-step video tutorials",
+                        icon: "fas fa-play-circle",
+                        link: "#",
+                        color: "blue"
+                    },
+                    {
+                        title: "Study Materials",
+                        description: "Download PDFs and resources",
+                        icon: "fas fa-file-alt",
+                        link: "#",
+                        color: "green"
+                    },
+                    {
+                        title: "Practice Exercises",
+                        description: "Test your knowledge with exercises",
+                        icon: "fas fa-tasks",
+                        link: "#",
+                        color: "purple"
+                    }
+                ]
+            },
+            "immunite": {
+                title: "Immunité",
+                description: "Étudier les mécanismes de défense de l'organisme contre les agents pathogènes",
+                options: [
+                    {
+                        title: "Video Lessons",
+                        description: "Watch step-by-step video tutorials",
+                        icon: "fas fa-play-circle",
+                        link: "#",
+                        color: "blue"
+                    },
+                    {
+                        title: "Study Materials",
+                        description: "Download PDFs and resources",
+                        icon: "fas fa-file-alt",
+                        link: "#",
+                        color: "green"
+                    },
+                    {
+                        title: "Practice Exercises",
+                        description: "Test your knowledge with exercises",
+                        icon: "fas fa-tasks",
+                        link: "#",
+                        color: "purple"
+                    }
+                ]
+            }
         };
-        
-        // Enhanced interactivity for search input
-        const searchInput = document.querySelector('.search-input input');
-        const searchContainer = document.querySelector('.search-input');
-        
-        searchInput.addEventListener('focus', function() {
-            searchContainer.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.15)';
-            animateElement(searchContainer, 'loading', 100);
+
+        // JSON data structure for Your Courses (PDF links)
+        const yourCoursesData = {
+            "reproduction-humaine": {
+                title: "Reproduction Humaine",
+                description: "Comprendre les processus de reproduction chez l'homme et la femme",
+                pdfUrl: "https://drive.google.com/file/d/1abc123def456ghi789jkl/preview"
+            },
+            "evolution-biologique": {
+                title: "Evolution Biologique",
+                description: "Explorer les mécanismes et théories de l'évolution des espèces",
+                pdfUrl: "https://drive.google.com/file/d/2mno345pqr678stu901vwx/preview"
+            },
+            "genetique-humaine": {
+                title: "Génétique humaine",
+                description: "Étudier l'hérédité et la variation des caractères chez l'humain",
+                pdfUrl: "https://drive.google.com/file/d/3yzab234cde567fgh890ijk/preview"
+            }
+        };
+
+        // DOM Elements
+        const coursesSlider = document.getElementById('coursesSlider');
+        const yourCoursesGrid = document.getElementById('yourCoursesGrid');
+        const searchInput = document.getElementById('searchInput');
+        const popularCoursesPopup = document.getElementById('popularCoursesPopup');
+        const popularCoursesPopupClose = document.getElementById('popularCoursesPopupClose');
+        const popularCoursesPopupTitle = document.getElementById('popularCoursesPopupTitle');
+        const popularCoursesPopupDescription = document.getElementById('popularCoursesPopupDescription');
+        const popularCoursesOptions = document.getElementById('popularCoursesOptions');
+        const pdfViewerPopup = document.getElementById('pdfViewerPopup');
+        const pdfViewerPopupClose = document.getElementById('pdfViewerPopupClose');
+        const pdfViewerPopupTitle = document.getElementById('pdfViewerPopupTitle');
+        const pdfViewerContainer = document.getElementById('pdfViewerContainer');
+        const pdfViewer = document.getElementById('pdfViewer');
+        const pdfFullscreenBtn = document.getElementById('pdfFullscreenBtn');
+
+        // Initialize the page with course data
+        document.addEventListener('DOMContentLoaded', function() {
+            renderPopularCourses();
+            renderYourCourses();
+            setupEventListeners();
         });
-        
-        searchInput.addEventListener('blur', function() {
-            searchContainer.style.boxShadow = 'none';
-        });
-        
-        // Enhanced click events with better feedback
-        const addCardClickEvent = (selector, titleSelector) => {
-            document.querySelectorAll(selector).forEach(card => {
-                card.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const title = this.querySelector(titleSelector).textContent;
+
+        // Render Popular Courses from JSON data
+        function renderPopularCourses() {
+            coursesSlider.innerHTML = '';
+            
+            Object.keys(popularCoursesData).forEach(courseId => {
+                const course = popularCoursesData[courseId];
+                const courseCard = document.createElement('div');
+                courseCard.className = `square-course-card ${getColorClass(courseId)}`;
+                courseCard.setAttribute('data-course-id', courseId);
+                courseCard.setAttribute('data-title', course.title);
+                courseCard.setAttribute('data-description', course.description);
+                
+                courseCard.innerHTML = `
+                    <div class="course-icon"><i class="${getCourseIcon(courseId)}"></i></div>
+                    <h3>${course.title}</h3>
+                    <p>${course.description}</p>
+                    <div class="course-meta">
+                        <span><i class="far fa-clock"></i> ${getCourseDuration(courseId)}</span>
+                        <span><i class="fas fa-book"></i> ${getCourseLessons(courseId)} Lessons</span>
+                    </div>
+                `;
+                
+                coursesSlider.appendChild(courseCard);
+            });
+        }
+
+        // Render Your Courses from JSON data
+        function renderYourCourses() {
+            yourCoursesGrid.innerHTML = '';
+            
+            Object.keys(yourCoursesData).forEach(courseId => {
+                const course = yourCoursesData[courseId];
+                const courseCard = document.createElement('div');
+                courseCard.className = 'course-card';
+                courseCard.setAttribute('data-course-id', courseId);
+                
+                courseCard.innerHTML = `
+                    <div class="course-icon"><i class="${getYourCourseIcon(courseId)}"></i></div>
+                    <h3>${course.title}</h3>
+                    <p>${course.description}</p>
+                    <div class="course-meta">
+                        <span><i class="far fa-clock"></i> ${getYourCourseDuration(courseId)}</span>
+                        <span><i class="fas fa-book"></i> ${getYourCourseLessons(courseId)} Lessons</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: ${getYourCourseProgress(courseId)}"></div>
+                    </div>
+                    <div class="course-meta">
+                        <span>${getYourCourseProgress(courseId)} Complete</span>
+                    </div>
+                `;
+                
+                yourCoursesGrid.appendChild(courseCard);
+            });
+        }
+
+        // Helper functions for course data
+        function getColorClass(courseId) {
+            const colors = ['green', 'purple', 'blue', 'orange', 'green'];
+            return colors[Object.keys(popularCoursesData).indexOf(courseId) % colors.length];
+        }
+
+        function getCourseIcon(courseId) {
+            const icons = {
+                'reproduction-humaine': 'fas fa-heartbeat',
+                'evolution-biologique': 'fas fa-dna',
+                'genetique-humaine': 'fas fa-flask',
+                'neurophysiologie': 'fas fa-brain',
+                'immunite': 'fas fa-shield-virus'
+            };
+            return icons[courseId] || 'fas fa-book';
+        }
+
+        function getCourseDuration(courseId) {
+            const durations = {
+                'reproduction-humaine': '3h 50min',
+                'evolution-biologique': '2h 30min',
+                'genetique-humaine': '4h 15min',
+                'neurophysiologie': '3h 20min',
+                'immunite': '2h 45min'
+            };
+            return durations[courseId] || '2h 00min';
+        }
+
+        function getCourseLessons(courseId) {
+            const lessons = {
+                'reproduction-humaine': '18',
+                'evolution-biologique': '15',
+                'genetique-humaine': '22',
+                'neurophysiologie': '16',
+                'immunite': '14'
+            };
+            return lessons[courseId] || '10';
+        }
+
+        function getYourCourseIcon(courseId) {
+            const icons = {
+                'reproduction-humaine': 'fas fa-heartbeat',
+                'evolution-biologique': 'fas fa-dna',
+                'genetique-humaine': 'fas fa-flask'
+            };
+            return icons[courseId] || 'fas fa-book';
+        }
+
+        function getYourCourseDuration(courseId) {
+            const durations = {
+                'reproduction-humaine': '3h 50min',
+                'evolution-biologique': '2h 30min',
+                'genetique-humaine': '4h 15min'
+            };
+            return durations[courseId] || '3h 00min';
+        }
+
+        function getYourCourseLessons(courseId) {
+            const lessons = {
+                'reproduction-humaine': '18',
+                'evolution-biologique': '15',
+                'genetique-humaine': '22'
+            };
+            return lessons[courseId] || '12';
+        }
+
+        function getYourCourseProgress(courseId) {
+            const progress = {
+                'reproduction-humaine': '65%',
+                'evolution-biologique': '40%',
+                'genetique-humaine': '80%'
+            };
+            return progress[courseId] || '50%';
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Search functionality for Popular Courses
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                const courseCards = coursesSlider.querySelectorAll('.square-course-card');
+                
+                courseCards.forEach(card => {
+                    const title = card.getAttribute('data-title').toLowerCase();
+                    const description = card.getAttribute('data-description').toLowerCase();
                     
-                    // Visual feedback
-                    this.style.transform = 'scale(0.98)';
-                    this.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.15)';
-                    
-                    setTimeout(() => {
-                        this.style.transform = '';
-                        this.style.boxShadow = '';
-                        // In a real app, this would navigate to the destination
-                        console.log(`Navigating to: ${title}`);
-                    }, 150);
+                    if (searchTerm === '' || title.includes(searchTerm) || description.includes(searchTerm)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
                 });
             });
-        };
-        
-        // Add click events to all interactive cards
-        addCardClickEvent('.activity-card', '.activity-title');
-        addCardClickEvent('.book-card', '.book-title');
-        addCardClickEvent('.destination-card', '.destination-name');
-        
-        // Trip items click handling
-        document.querySelectorAll('.trip-item').forEach(item => {
-            item.addEventListener('click', function() {
-                const title = this.querySelector('.trip-name').textContent;
-                
-                // Visual feedback
-                this.style.transform = 'scale(0.98)';
-                this.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.15)';
-                
-                setTimeout(() => {
-                    this.style.transform = '';
-                    this.style.boxShadow = '';
-                    console.log(`Selected trip: ${title}`);
-                }, 150);
-            });
-        });
-        
-        // Enhanced search functionality with debouncing
-        const activityCards = document.querySelectorAll('.activity-card');
-        let searchTimeout;
-        
-        const handleSearch = () => {
-            const searchTerm = searchInput.value.toLowerCase().trim();
-            
-            let visibleCount = 0;
-            activityCards.forEach(card => {
-                const searchContent = card.getAttribute('data-search').toLowerCase();
-                
-                if (searchTerm === '') {
-                    card.classList.remove('hidden');
-                    visibleCount++;
-                } else if (searchContent.includes(searchTerm)) {
-                    card.classList.remove('hidden');
-                    visibleCount++;
-                } else {
-                    card.classList.add('hidden');
+
+            // Popular Courses popup
+            coursesSlider.addEventListener('click', function(e) {
+                const courseCard = e.target.closest('.square-course-card');
+                if (courseCard) {
+                    const courseId = courseCard.getAttribute('data-course-id');
+                    openPopularCoursesPopup(courseId);
                 }
             });
-            
-            // Optional: Show empty state message (currently handled by CSS)
-            if (visibleCount === 0 && searchTerm !== '') {
-                // Could add empty state UI here if needed
-                console.log('No matches found');
-            }
-        };
-        
-        searchInput.addEventListener('input', function() {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(handleSearch, 150); // Debounce search
-        });
-        
-        // Keyboard navigation support
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                searchInput.value = '';
-                handleSearch();
-                searchInput.blur();
-            }
-        });
-        
-        // Enhanced responsive behavior
-        const updateContainerPadding = () => {
-            const container = document.querySelector('.container');
-            if (window.innerWidth <= 480) {
-                container.style.padding = '12px';
-            } else if (window.innerWidth <= 768) {
-                container.style.padding = '16px';
-            } else {
-                container.style.padding = '20px';
-            }
-        };
-        
-        // Initialize responsive padding
-        updateContainerPadding();
-        window.addEventListener('resize', updateContainerPadding);
-        
-        // Performance optimization: Use passive event listeners where possible
-        const enablePassiveEvents = () => {
-            const supportsPassive = (() => {
-                let passive = false;
-                try {
-                    const options = Object.defineProperty({}, 'passive', {
-                        get: () => {
-                            passive = true;
-                            return true;
-                        }
-                    });
-                    window.addEventListener('test', null, options);
-                    window.removeEventListener('test', null, options);
-                } catch (err) {
-                    // Passive not supported
+
+            // Your Courses PDF popup
+            yourCoursesGrid.addEventListener('click', function(e) {
+                const courseCard = e.target.closest('.course-card');
+                if (courseCard) {
+                    const courseId = courseCard.getAttribute('data-course-id');
+                    openPdfViewerPopup(courseId);
                 }
-                return passive;
-            })();
-            
-            return supportsPassive ? { passive: true } : false;
-        };
-        
-        // Apply passive event listeners for better scrolling performance
-        const passiveOption = enablePassiveEvents();
-        
-        // Touch feedback for mobile devices
-        const addTouchFeedback = () => {
-            const touchElements = document.querySelectorAll('.activity-card, .book-card, .trip-item, .destination-card');
-            touchElements.forEach(element => {
-                element.addEventListener('touchstart', function() {
-                    this.style.opacity = '0.9';
-                }, passiveOption);
-                
-                element.addEventListener('touchend', function() {
-                    this.style.opacity = '1';
-                }, passiveOption);
             });
-        };
-        
-        // Initialize touch feedback on mobile
-        if ('ontouchstart' in window || navigator.maxTouchPoints) {
-            addTouchFeedback();
+
+            // Close popups
+            popularCoursesPopupClose.addEventListener('click', closePopularCoursesPopup);
+            pdfViewerPopupClose.addEventListener('click', closePdfViewerPopup);
+
+            // Close popups when clicking outside
+            popularCoursesPopup.addEventListener('click', function(e) {
+                if (e.target === popularCoursesPopup) {
+                    closePopularCoursesPopup();
+                }
+            });
+
+            pdfViewerPopup.addEventListener('click', function(e) {
+                if (e.target === pdfViewerPopup) {
+                    closePdfViewerPopup();
+                }
+            });
+
+            // Close popups with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    if (popularCoursesPopup.classList.contains('active')) {
+                        closePopularCoursesPopup();
+                    }
+                    if (pdfViewerPopup.classList.contains('active')) {
+                        closePdfViewerPopup();
+                    }
+                }
+            });
+
+            // PDF fullscreen button
+            pdfFullscreenBtn.addEventListener('click', function() {
+                if (pdfViewer.requestFullscreen) {
+                    pdfViewer.requestFullscreen();
+                } else if (pdfViewer.webkitRequestFullscreen) {
+                    pdfViewer.webkitRequestFullscreen();
+                } else if (pdfViewer.msRequestFullscreen) {
+                    pdfViewer.msRequestFullscreen();
+                }
+            });
+
+            // PDF viewer load event
+            pdfViewer.addEventListener('load', function() {
+                pdfViewerContainer.classList.remove('loading');
+            });
         }
-        
-        // Console message for development (can be removed in production)
-        console.log('Travel Planner loaded successfully!');
+
+        // Open Popular Courses popup
+        function openPopularCoursesPopup(courseId) {
+            const course = popularCoursesData[courseId];
+            if (!course) return;
+            
+            popularCoursesPopupTitle.textContent = course.title;
+            popularCoursesPopupDescription.textContent = course.description;
+            
+            // Clear previous options
+            popularCoursesOptions.innerHTML = '';
+            
+            // Add new options
+            course.options.forEach(option => {
+                const optionCard = document.createElement('div');
+                optionCard.className = `option-card ${option.color}`;
+                
+                optionCard.innerHTML = `
+                    <div>
+                        <div class="option-icon">
+                            <i class="${option.icon}"></i>
+                        </div>
+                        <h4 class="option-title">${option.title}</h4>
+                        <p>${option.description}</p>
+                    </div>
+                    <a href="${option.link}" class="option-link" target="_blank">Explore <i class="fas fa-arrow-right"></i></a>
+                `;
+                
+                popularCoursesOptions.appendChild(optionCard);
+            });
+            
+            // Show popup
+            popularCoursesPopup.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close Popular Courses popup
+        function closePopularCoursesPopup() {
+            popularCoursesPopup.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Open PDF Viewer popup
+        function openPdfViewerPopup(courseId) {
+            const course = yourCoursesData[courseId];
+            if (!course) return;
+            
+            pdfViewerPopupTitle.textContent = course.title;
+            
+            // Show loading spinner
+            pdfViewerContainer.classList.add('loading');
+            
+            // Set PDF source (lazy loading)
+            pdfViewer.src = course.pdfUrl;
+            
+            // Show popup
+            pdfViewerPopup.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close PDF Viewer popup
+        function closePdfViewerPopup() {
+            pdfViewerPopup.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            // Reset PDF viewer
+            pdfViewer.src = '';
+        }
     </script>
 </body>
 </html>

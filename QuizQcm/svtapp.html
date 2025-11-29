@@ -1,1221 +1,1058 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduWell | SVT App</title>
+     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SVT App | EduWell</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style> 
-
-:root {
-    --primary-color: #4361ee;
-    --primary-light: #4895ef;
-    --primary-dark: #3a0ca3;
-    --primary-bg: rgba(67, 97, 238, 0.08);
-    --success-color: #4cc9f0;
-    --success-light: #4895ef;
-    --success-bg: rgba(76, 201, 240, 0.08);
-    --error-color: #f72585;
-    --error-light: #b5179e;
-    --error-bg: rgba(247, 37, 133, 0.08);
-    --warning-color: #f59e0b;
-    --background-color: #f8fafc;
-    --card-color: #ffffff;
-    --text-color: #1e293b;
-    --text-light: #64748b;
-    --border-color: #e2e8f0;
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
-    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --radius: 16px;
-    --radius-sm: 8px;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, Oxygen, sans-serif;
-    touch-action: manipulation;
-}
-
-body {
-    background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
-    color: var(--text-color);
-    line-height: 1.47059;
-    padding: 20px;
-    max-width: 1400px;
-    margin: 0 auto;
-    min-height: 100vh;
-    font-weight: 400;
-    letter-spacing: -0.022em;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
-    position: relative;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: none;
-}
-
-.container {
-    max-width: 1400px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-}
-
-/* Apple-inspired Typography Scale */
-.text-display-large {
-    font-size: 48px;
-    font-weight: 700;
-    line-height: 1.08349;
-    letter-spacing: -0.003em;
-}
-
-.text-display {
-    font-size: 40px;
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.004em;
-}
-
-.text-headline-large {
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 1.125;
-    letter-spacing: -0.006em;
-}
-
-.text-headline {
-    font-size: 28px;
-    font-weight: 700;
-    line-height: 1.14286;
-    letter-spacing: -0.008em;
-}
-
-.text-title-large {
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 1.16667;
-    letter-spacing: -0.01em;
-}
-
-.text-title {
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -0.012em;
-}
-
-.text-body-large {
-    font-size: 17px;
-    font-weight: 400;
-    line-height: 1.47059;
-    letter-spacing: -0.022em;
-}
-
-.text-body {
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 1.47059;
-    letter-spacing: -0.022em;
-}
-
-.text-caption {
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 1.38462;
-    letter-spacing: -0.006em;
-}
-
-.text-micro {
-    font-size: 11px;
-    font-weight: 400;
-    line-height: 1.36364;
-    letter-spacing: 0.002em;
-}
-
-/* Hero Section */
-.hero-section {
-    background: var(--card-color);
-    border-radius: var(--radius);
-    padding: 60px 40px;
-    display: flex;
-    align-items: center;
-    gap: 40px;
-    box-shadow: var(--shadow-lg);
-    margin-bottom: 60px;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid var(--border-color);
-    animation: cardEntrance 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-.hero-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 30% 30%, var(--primary-color) 0%, transparent 50%),
-                radial-gradient(circle at 70% 70%, var(--success-color) 0%, transparent 50%);
-    opacity: 0.03;
-    z-index: 1;
-}
-
-.hero-content {
-    flex: 1;
-    position: relative;
-    z-index: 2;
-}
-
-.hero-content h2 {
-    font-size: 48px;
-    font-weight: 700;
-    margin-bottom: 16px;
-    letter-spacing: -0.003em;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1.08349;
-}
-
-.hero-content p {
-    font-size: 21px;
-    margin-bottom: 32px;
-    line-height: 1.38105;
-    color: var(--text-light);
-    max-width: 500px;
-    font-weight: 400;
-    letter-spacing: -0.021em;
-}
-
-.hero-btn {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-    color: white;
-    border: none;
-    padding: 16px 32px;
-    border-radius: var(--radius-sm);
-    font-size: 17px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-    box-shadow: 0 4px 16px rgba(67, 97, 238, 0.3);
-    position: relative;
-    z-index: 2;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    letter-spacing: -0.016em;
-}
-
-.hero-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(67, 97, 238, 0.4);
-    background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
-}
-
-.hero-image {
-    width: 200px;
-    height: 200px;
-    border-radius: 24px;
-    overflow: hidden;
-    flex-shrink: 0;
-    position: relative;
-    box-shadow: var(--shadow-lg);
-    z-index: 2;
-    transition: var(--transition);
-    background: linear-gradient(135deg, var(--primary-color), var(--success-color));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 88px;
-}
-
-.hero-image:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-}
-
-/* Search Section */
-.search-container {
-    margin-bottom: 48px;
-    position: relative;
-    max-width: 600px;
-}
-
-.search-input {
-    width: 100%;
-    padding: 18px 25px 18px 60px;
-    border: 1.5px solid var(--border-color);
-    border-radius: var(--radius);
-    font-size: 17px;
-    background-color: var(--card-color);
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-    font-weight: 400;
-    letter-spacing: -0.022em;
-}
-
-.search-input:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 4px var(--primary-bg), var(--shadow);
-}
-
-.search-icon {
-    position: absolute;
-    left: 25px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-light);
-    font-size: 20px;
-    transition: var(--transition);
-}
-
-.search-input:focus + .search-icon {
-    color: var(--primary-color);
-}
-
-/* Section Headers */
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 28px;
-    position: relative;
-}
-
-.section-header::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 0;
-    width: 60px;
-    height: 3px;
-    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
-    border-radius: 2px;
-}
-
-.section-title {
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--text-color);
-    letter-spacing: -0.008em;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    line-height: 1.14286;
-}
-
-.section-title i {
-    color: var(--primary-color);
-}
-
-.view-all {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--primary-color);
-    font-weight: 600;
-    font-size: 15px;
-    text-decoration: none;
-    transition: var(--transition);
-    letter-spacing: -0.016em;
-    background: var(--primary-bg);
-    padding: 8px 16px;
-    border-radius: 20px;
-    border: 1px solid rgba(67, 97, 238, 0.1);
-}
-
-.view-all:hover {
-    gap: 12px;
-    background: rgba(67, 97, 238, 0.12);
-}
-
-/* Horizontal Slider for Popular Courses */
-.slider-container {
-    position: relative;
-    margin-bottom: 60px;
-}
-
-.courses-slider {
-    display: flex;
-    gap: 24px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    padding: 16px 8px 32px;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border-color) transparent;
-}
-
-.courses-slider::-webkit-scrollbar {
-    height: 6px;
-}
-
-.courses-slider::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 3px;
-}
-
-.courses-slider::-webkit-scrollbar-thumb {
-    background-color: var(--border-color);
-    border-radius: 3px;
-}
-
-.courses-slider::-webkit-scrollbar-thumb:hover {
-    background-color: var(--text-light);
-}
-
-/* Square Course Cards for Popular Courses */
-.square-course-card {
-    background-color: var(--card-color);
-    border-radius: var(--radius);
-    padding: 28px;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid var(--border-color);
-    width: 300px;
-    height: 300px;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    animation: cardEntrance 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-.square-course-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.5s ease;
-}
-
-.square-course-card:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-hover);
-    border-color: var(--primary-light);
-}
-
-.square-course-card:hover::before {
-    transform: scaleX(1);
-}
-
-.course-icon {
-    width: 60px;
-    height: 60px;
-    background: var(--primary-bg);
-    border-radius: var(--radius);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 24px;
-    color: var(--primary-color);
-    font-size: 26px;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-}
-
-.square-course-card:hover .course-icon {
-    transform: scale(1.08);
-    box-shadow: var(--shadow-hover);
-}
-
-.square-course-card.green .course-icon {
-    background: var(--success-bg);
-    color: var(--success-color);
-}
-
-.square-course-card.purple .course-icon {
-    background: rgba(106, 76, 240, 0.1);
-    color: #6a4cf0;
-}
-
-.square-course-card.blue .course-icon {
-    background: rgba(59, 130, 246, 0.1);
-    color: #3b82f6;
-}
-
-.square-course-card.orange .course-icon {
-    background: rgba(249, 115, 22, 0.1);
-    color: #f97316;
-}
-
-.square-course-card h3 {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    color: var(--text-color);
-    letter-spacing: -0.012em;
-    line-height: 1.2;
-}
-
-.square-course-card p {
-    font-size: 15px;
-    color: var(--text-light);
-    margin-bottom: 24px;
-    flex-grow: 1;
-    line-height: 1.47059;
-    letter-spacing: -0.022em;
-}
-
-.course-meta {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    font-size: 14px;
-    color: var(--text-light);
-}
-
-.course-meta span {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: -0.006em;
-    background: rgba(0, 0, 0, 0.03);
-    padding: 4px 10px;
-    border-radius: 20px;
-}
-
-.course-meta i {
-    font-size: 16px;
-    opacity: 0.8;
-}
-
-/* Your Courses Section - Rectangular Cards */
-.your-courses {
-    margin-top: 40px;
-}
-
-.courses-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 24px;
-    margin-bottom: 60px;
-}
-
-.course-card {
-    background-color: var(--card-color);
-    border-radius: var(--radius);
-    padding: 28px;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid var(--border-color);
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    animation: cardEntrance 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-.course-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.5s ease;
-}
-
-.course-card:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-hover);
-    border-color: var(--primary-light);
-}
-
-.course-card:hover::before {
-    transform: scaleX(1);
-}
-
-.course-card .course-icon {
-    width: 60px;
-    height: 60px;
-    background: var(--primary-bg);
-    border-radius: var(--radius);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 24px;
-    color: var(--primary-color);
-    font-size: 26px;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-}
-
-.course-card:hover .course-icon {
-    transform: scale(1.08);
-    box-shadow: var(--shadow-hover);
-}
-
-.course-card.green .course-icon {
-    background: var(--success-bg);
-    color: var(--success-color);
-}
-
-.course-card.purple .course-icon {
-    background: rgba(106, 76, 240, 0.1);
-    color: #6a4cf0;
-}
-
-.course-card.blue .course-icon {
-    background: rgba(59, 130, 246, 0.1);
-    color: #3b82f6;
-}
-
-.course-card.orange .course-icon {
-    background: rgba(249, 115, 22, 0.1);
-    color: #f97316;
-}
-
-.course-card h3 {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    color: var(--text-color);
-    letter-spacing: -0.012em;
-    line-height: 1.2;
-}
-
-.course-card p {
-    font-size: 15px;
-    color: var(--text-light);
-    margin-bottom: 24px;
-    flex-grow: 1;
-    line-height: 1.47059;
-    letter-spacing: -0.022em;
-}
-
-.progress-bar {
-    height: 6px;
-    background-color: var(--border-color);
-    border-radius: 3px;
-    margin-top: 12px;
-    overflow: hidden;
-}
-
-.progress {
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
-    border-radius: 3px;
-    width: 65%;
-    transition: width 1s ease;
-}
-
-/* Popup Overlay */
-.popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(8px);
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.4s ease, visibility 0.4s ease;
-}
-
-.popup-overlay.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* Popup Content */
-.popup-content {
-    background-color: var(--card-color);
-    width: 100%;
-    max-width: 1200px;
-    height: 75%;
-    border-top-left-radius: var(--radius);
-    border-top-right-radius: var(--radius);
-    padding: 35px;
-    box-shadow: var(--shadow-lg);
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    transform: translateY(100%);
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.popup-overlay.active .popup-content {
-    transform: translateY(0);
-}
-
-.popup-close {
-    position: absolute;
-    top: 25px;
-    right: 25px;
-    background: var(--primary-bg);
-    border: none;
-    font-size: 22px;
-    color: var(--text-light);
-    cursor: pointer;
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--transition);
-    z-index: 10;
-}
-
-.popup-close:hover {
-    background-color: var(--primary-color);
-    color: white;
-    transform: rotate(90deg);
-}
-
-/* Popular Courses Popup */
-.popup-header {
-    margin-bottom: 30px;
-    padding-right: 60px;
-    position: relative;
-}
-
-.popup-header::after {
-    content: '';
-    position: absolute;
-    bottom: -12px;
-    left: 0;
-    width: 40px;
-    height: 2px;
-    background: linear-gradient(90deg, var(--primary-color), transparent);
-    border-radius: 2px;
-}
-
-.popup-title {
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    color: var(--text-color);
-    letter-spacing: -0.008em;
-    line-height: 1.14286;
-}
-
-.popup-description {
-    font-size: 17px;
-    color: var(--text-light);
-    line-height: 1.47059;
-    letter-spacing: -0.022em;
-}
-
-.options-section {
-    margin-top: 25px;
-    flex-grow: 1;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
-
-.options-title {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 25px;
-    color: var(--text-color);
-    letter-spacing: -0.012em;
-    line-height: 1.2;
-}
-
-.options-slider {
-    display: flex;
-    gap: 24px;
-    overflow-x: auto;
-    padding: 16px 8px 32px;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border-color) transparent;
-    flex-grow: 1;
-}
-
-.options-slider::-webkit-scrollbar {
-    height: 6px;
-}
-
-.options-slider::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 3px;
-}
-
-.options-slider::-webkit-scrollbar-thumb {
-    background-color: var(--border-color);
-    border-radius: 3px;
-}
-
-.options-slider::-webkit-scrollbar-thumb:hover {
-    background-color: var(--text-light);
-}
-
-.option-card {
-    background-color: var(--card-color);
-    border-radius: var(--radius);
-    padding: 24px;
-    width: 220px;
-    height: 220px;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border: 1px solid var(--border-color);
-    transition: var(--transition);
-    cursor: pointer;
-    box-shadow: var(--shadow);
-    animation: cardEntrance 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-.option-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-hover);
-    border-color: var(--primary-light);
-}
-
-.option-icon {
-    width: 56px;
-    height: 56px;
-    background: var(--primary-bg);
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--primary-color);
-    font-size: 26px;
-    margin-bottom: 18px;
-    transition: var(--transition);
-}
-
-.option-card:hover .option-icon {
-    transform: scale(1.08);
-}
-
-.option-card.green .option-icon {
-    background: var(--success-bg);
-    color: var(--success-color);
-}
-
-.option-card.purple .option-icon {
-    background: rgba(106, 76, 240, 0.1);
-    color: #6a4cf0;
-}
-
-.option-card.blue .option-icon {
-    background: rgba(59, 130, 246, 0.1);
-    color: #3b82f6;
-}
-
-.option-card.orange .option-icon {
-    background: rgba(249, 115, 22, 0.1);
-    color: #f97316;
-}
-
-.option-title {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: var(--text-color);
-    letter-spacing: -0.014em;
-    line-height: 1.22222;
-}
-
-.option-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--primary-color);
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-    margin-top: auto;
-    transition: var(--transition);
-    padding: 8px 0;
-    letter-spacing: -0.016em;
-}
-
-.option-link:hover {
-    color: var(--primary-dark);
-    gap: 12px;
-}
-
-/* PDF Viewer Popup */
-.pdf-popup-content {
-    background-color: var(--card-color);
-    width: 100%;
-    max-width: 1200px;
-    height: 85%;
-    border-top-left-radius: var(--radius);
-    border-top-right-radius: var(--radius);
-    padding: 35px;
-    box-shadow: var(--shadow-lg);
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    transform: translateY(100%);
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.popup-overlay.active .pdf-popup-content {
-    transform: translateY(0);
-}
-
-.pdf-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-    padding-right: 60px;
-}
-
-.pdf-title {
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--text-color);
-    letter-spacing: -0.008em;
-    line-height: 1.14286;
-}
-
-.pdf-controls {
-    display: flex;
-    gap: 12px;
-}
-
-.pdf-control-btn {
-    background: var(--primary-bg);
-    border: none;
-    font-size: 18px;
-    color: var(--text-light);
-    cursor: pointer;
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--transition);
-}
-
-.pdf-control-btn:hover {
-    background-color: var(--primary-color);
-    color: white;
-    transform: scale(1.1);
-}
-
-.pdf-viewer-container {
-    flex-grow: 1;
-    border-radius: var(--radius);
-    overflow: hidden;
-    border: 1px solid var(--border-color);
-    background-color: var(--background-color);
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-.pdf-viewer {
-    width: 100%;
-    height: 100%;
-    border: none;
-}
-
-.loading-spinner {
-    display: none;
-    width: 60px;
-    height: 60px;
-    border: 5px solid var(--border-color);
-    border-top: 5px solid var(--primary-color);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.pdf-viewer-container.loading .loading-spinner {
-    display: block;
-}
-
-.pdf-viewer-container.loading .pdf-viewer {
-    display: none;
-}
-
-/* Footer */
-.footer {
-    margin-top: 80px;
-    padding-top: 40px;
-    border-top: 1px solid var(--border-color);
-    text-align: center;
-    color: var(--text-light);
-    font-size: 15px;
-    position: relative;
-}
-
-.footer-links {
-    display: flex;
-    justify-content: center;
-    gap: 28px;
-    margin-bottom: 20px;
-}
-
-.footer-links a {
-    color: var(--text-light);
-    text-decoration: none;
-    transition: var(--transition);
-    font-weight: 500;
-    letter-spacing: -0.016em;
-}
-
-.footer-links a:hover {
-    color: var(--primary-color);
-}
-
-/* Floating Elements */
-.floating-element {
-    position: fixed;
-    border-radius: 50%;
-    opacity: 0.4;
-    z-index: -1;
-}
-
-.floating-1 {
-    width: 120px;
-    height: 120px;
-    background: radial-gradient(circle, rgba(67, 97, 238, 0.08) 0%, transparent 70%);
-    top: 5%;
-    left: 5%;
-    animation: float 15s ease-in-out infinite;
-}
-
-.floating-2 {
-    width: 80px;
-    height: 80px;
-    background: radial-gradient(circle, rgba(76, 201, 240, 0.08) 0%, transparent 70%);
-    bottom: 15%;
-    right: 5%;
-    animation: float 20s ease-in-out infinite;
-}
-
-.floating-3 {
-    width: 60px;
-    height: 60px;
-    background: radial-gradient(circle, rgba(247, 37, 133, 0.08) 0%, transparent 70%);
-    bottom: 25%;
-    left: 8%;
-    animation: float 18s ease-in-out infinite;
-}
-
-@keyframes float {
-    0% {
-        transform: translateY(0px) rotate(0deg);
-    }
-    50% {
-        transform: translateY(-15px) rotate(180deg);
-    }
-    100% {
-        transform: translateY(0px) rotate(360deg);
-    }
-}
-
-/* Animation for card entrance */
-@keyframes cardEntrance {
-    0% {
-        opacity: 0;
-        transform: translateY(20px) scale(0.95);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-.card-entrance {
-    animation: cardEntrance 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .courses-grid {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    }
-    
-    .hero-content h2 {
-        font-size: 40px;
-        line-height: 1.1;
-    }
-    
-    .hero-content p {
-        font-size: 19px;
-        line-height: 1.42105;
-    }
-}
-
-@media (max-width: 768px) {
-    .hero-section {
-        flex-direction: column;
-        padding: 40px 28px;
-        text-align: center;
-    }
-
-    .hero-image {
-        display: none;
-    }
-
-    .square-course-card {
-        width: 260px;
-        height: 260px;
-    }
-
-    .courses-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .popup-content {
-        padding: 28px;
-    }
-
-    .popup-title {
-        font-size: 24px;
-        line-height: 1.16667;
-    }
-
-    .option-card {
-        width: 200px;
-        height: 250px;
-    }
-
-    .pdf-popup-content {
-        height: 95%;
-        padding: 28px;
-    }
-
-    .pdf-title {
-        font-size: 24px;
-        line-height: 1.16667;
-    }
-    
-    .hero-content h2 {
-        font-size: 32px;
-        line-height: 1.125;
-    }
-    
-    .hero-content p {
-        font-size: 17px;
-        line-height: 1.47059;
-    }
-}
-
-@media (min-width: 769px) {
-    .hero-image {
-        display: flex;
-    }
-}
-
-@media (max-width: 480px) {
-    body {
-        padding: 16px;
-    }
-
-    .hero-section {
-        padding: 32px 24px;
-    }
-
-    .hero-content h2 {
-        font-size: 28px;
-        line-height: 1.14286;
-    }
-
-    .square-course-card {
-        padding: 24px;
-        width: 240px;
-        height: 240px;
-    }
-
-    .course-card {
-        padding: 24px;
-    }
-
-    .course-meta {
-        flex-direction: column;
-        gap: 10px;
-        align-items: flex-start;
-    }
-
-    .option-card {
-        width: 180px;
-        height: 230px;
-        padding: 20px;
-    }
-
-    .pdf-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
-    }
-
-    .pdf-controls {
-        align-self: flex-end;
-    }
-    
-    .footer-links {
-        flex-direction: column;
-        gap: 16px;
-    }
-    
-    .section-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
-    
-    .section-header::after {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-}
-
+    <style>
+        :root {
+            --primary-color: #4F46E5;
+            --primary-dark: #3730A3;
+            --primary-light: #C7D2FE;
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --science-gradient: linear-gradient(135deg, #4A90E2 0%, #50E3C2 100%);
+            --secondary-color: #10B981;
+            --accent-color: #F59E0B;
+            --light-bg: #F8FAFC;
+            --dark-text: #1E293B;
+            --medium-text: #475569;
+            --light-text: #94A3B8;
+            --white: #FFFFFF;
+            --gray-50: #F8FAFC;
+            --gray-100: #F1F5F9;
+            --gray-200: #E2E8F0;
+            --gray-300: #CBD5E1;
+            --gray-400: #94A3B8;
+            --green-50: #ECFDF5;
+            --green-100: #D1FAE5;
+            --purple-50: #FAF5FF;
+            --purple-100: #E9D5FF;
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+            --border-radius-xl: 24px;
+            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --box-shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.1);
+            --box-shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.15);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            --transition-fast: all 0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+          background: linear-gradient(135deg, #f7f8fa 0%, #dfe3e8 100%);
+
+
+
+            color: var(--dark-text);
+            line-height: 1.7;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: 100vh;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header Section */
+        .header {
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .header-content h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-content p {
+            font-size: 16px;
+            color: var(--medium-text);
+            font-weight: 400;
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .notification-bell {
+            position: relative;
+            width: 44px;
+            height: 44px;
+            background: var(--white);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--medium-text);
+            font-size: 20px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .notification-bell:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow-lg);
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 8px;
+            height: 8px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+        }
+
+        .user-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            background: var(--science-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 20px;
+            box-shadow: var(--box-shadow-lg);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .user-avatar:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: var(--box-shadow-xl);
+        }
+
+        /* Trial Card with Science Theme */
+        .trial-card {
+            background: var(--science-gradient);
+            border-radius: var(--border-radius-xl);
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            box-shadow: var(--box-shadow-xl);
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+            color: white;
+        }
+
+        .trial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10zm10 8c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm40 40c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: 1;
+        }
+
+        .trial-content {
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+
+        .trial-content h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        .trial-content p {
+            font-size: 17px;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            opacity: 0.9;
+            max-width: 500px;
+        }
+
+        .trial-btn {
+            background-color: white;
+            color: #4A90E2;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .trial-btn:hover {
+            background-color: var(--gray-50);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .trial-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 20px;
+            overflow: hidden;
+            flex-shrink: 0;
+            position: relative;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+            z-index: 2;
+            transition: var(--transition);
+        }
+
+        .trial-image:hover {
+            transform: translateY(-5px) rotate(2deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .trial-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+
+        .trial-image:hover img {
+            transform: scale(1.08);
+        }
+
+        /* Search Section */
+        .search-container {
+            margin-bottom: 40px;
+            position: relative;
+            max-width: 600px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 18px 25px 18px 60px;
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            font-size: 16px;
+            background-color: var(--white);
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            font-weight: 400;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1), var(--box-shadow);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--medium-text);
+            font-size: 20px;
+            transition: var(--transition-fast);
+        }
+
+        .search-input:focus + .search-icon {
+            color: var(--primary-color);
+        }
+
+        /* Popular Courses Section */
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
+        }
+
+        /* Horizontal Slider for Popular Courses */
+        .slider-container {
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .courses-slider {
+            display: flex;
+            gap: 25px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 15px 10px 30px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gray-300) transparent;
+        }
+
+        .courses-slider::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .courses-slider::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 4px;
+        }
+
+        .courses-slider::-webkit-scrollbar-thumb {
+            background-color: var(--gray-300);
+            border-radius: 4px;
+        }
+
+        .courses-slider::-webkit-scrollbar-thumb:hover {
+            background-color: var(--gray-400);
+        }
+
+        /* Square Course Cards for Popular Courses */
+        .square-course-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius-xl);
+            padding: 28px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--gray-100);
+            width: 300px;
+            height: 300px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .square-course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--science-gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .square-course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--box-shadow-xl);
+            border-color: var(--primary-light);
+        }
+
+        .square-course-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .course-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gray-50);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: var(--dark-text);
+            font-size: 26px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .square-course-card:hover .course-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .square-course-card.green .course-icon {
+            background: var(--green-50);
+            color: var(--secondary-color);
+        }
+
+        .square-course-card.purple .course-icon {
+            background: var(--purple-50);
+            color: var(--primary-color);
+        }
+
+        .square-course-card.blue .course-icon {
+            background: #EFF6FF;
+            color: #3B82F6;
+        }
+
+        .square-course-card.orange .course-icon {
+            background: #FFF7ED;
+            color: #F97316;
+        }
+
+        .square-course-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
+        }
+
+        .square-course-card p {
+            font-size: 15px;
+            color: var(--medium-text);
+            margin-bottom: 24px;
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+
+        .course-meta {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-size: 14px;
+            color: var(--medium-text);
+        }
+
+        .course-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .course-meta i {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+
+        /* Your Courses Section - Rectangular Cards */
+        .your-courses {
+            margin-top: 30px;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 28px;
+            margin-bottom: 50px;
+        }
+
+        .course-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius-xl);
+            padding: 28px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--gray-100);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--science-gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--box-shadow-xl);
+            border-color: var(--primary-light);
+        }
+
+        .course-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .course-card .course-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gray-50);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: var(--dark-text);
+            font-size: 26px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .course-card:hover .course-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-card.green .course-icon {
+            background: var(--green-50);
+            color: var(--secondary-color);
+        }
+
+        .course-card.purple .course-icon {
+            background: var(--purple-50);
+            color: var(--primary-color);
+        }
+
+        .course-card.blue .course-icon {
+            background: #EFF6FF;
+            color: #3B82F6;
+        }
+
+        .course-card.orange .course-icon {
+            background: #FFF7ED;
+            color: #F97316;
+        }
+
+        .course-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
+        }
+
+        .course-card p {
+            font-size: 15px;
+            color: var(--medium-text);
+            margin-bottom: 24px;
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: var(--gray-200);
+            border-radius: 4px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--science-gradient);
+            border-radius: 4px;
+            width: 65%;
+            transition: width 1s ease;
+        }
+
+        /* Popup Overlay */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Popup Content */
+        .popup-content {
+            background-color: var(--white);
+            width: 100%;
+            max-width: 1200px;
+            height: 75%;
+            border-top-left-radius: var(--border-radius-xl);
+            border-top-right-radius: var(--border-radius-xl);
+            padding: 35px;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+
+        .popup-overlay.active .popup-content {
+            transform: translateY(0);
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: var(--gray-100);
+            border: none;
+            font-size: 22px;
+            color: var(--medium-text);
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .popup-close:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        /* Popular Courses Popup */
+        .popup-header {
+            margin-bottom: 30px;
+            padding-right: 60px;
+        }
+
+        .popup-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
+        }
+
+        .popup-description {
+            font-size: 13px;
+            color: var(--medium-text);
+            line-height: 1.6;
+        }
+
+        .options-section {
+            margin-top: 25px;
+            flex-grow: 1;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .options-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
+        }
+
+        .options-slider {
+            display: flex;
+            gap: 25px;
+            overflow-x: auto;
+            padding: 15px 10px 30px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gray-300) transparent;
+            flex-grow: 1;
+        }
+
+        .options-slider::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .options-slider::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 4px;
+        }
+
+        .options-slider::-webkit-scrollbar-thumb {
+            background-color: var(--gray-300);
+            border-radius: 4px;
+        }
+
+        .options-slider::-webkit-scrollbar-thumb:hover {
+            background-color: var(--gray-400);
+        }
+
+        .option-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: 25px;
+            width: 220px;
+            height: 220px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid var(--gray-200);
+            transition: var(--transition);
+            cursor: pointer;
+            box-shadow: var(--box-shadow);
+        }
+
+        .option-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--box-shadow-lg);
+            border-color: var(--primary-light);
+        }
+
+        .option-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--primary-light);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 26px;
+            margin-bottom: 18px;
+            transition: var(--transition);
+        }
+
+        .option-card:hover .option-icon {
+            transform: scale(1.1);
+        }
+
+        .option-card.green .option-icon {
+            background: var(--green-100);
+            color: var(--secondary-color);
+        }
+
+        .option-card.purple .option-icon {
+            background: var(--purple-100);
+            color: var(--primary-color);
+        }
+
+        .option-card.blue .option-icon {
+            background: #DBEAFE;
+            color: #3B82F6;
+        }
+
+        .option-card.orange .option-icon {
+            background: #FED7AA;
+            color: #F97316;
+        }
+
+        .option-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
+        }
+
+        .option-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-color);
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: auto;
+            transition: var(--transition);
+            padding: 8px 0;
+        }
+
+        .option-link:hover {
+            color: var(--primary-dark);
+            gap: 12px;
+        }
+
+        /* PDF Viewer Popup */
+        .pdf-popup-content {
+            background-color: var(--white);
+            width: 100%;
+            max-width: 1200px;
+            height: 85%;
+            border-top-left-radius: var(--border-radius-xl);
+            border-top-right-radius: var(--border-radius-xl);
+            padding: 35px;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+
+        .popup-overlay.active .pdf-popup-content {
+            transform: translateY(0);
+        }
+
+        .pdf-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-right: 60px;
+        }
+
+        .pdf-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
+        }
+
+        .pdf-controls {
+            display: flex;
+            gap: 12px;
+        }
+
+        .pdf-control-btn {
+            background: var(--gray-100);
+            border: none;
+            font-size: 18px;
+            color: var(--medium-text);
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .pdf-control-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .pdf-viewer-container {
+            flex-grow: 1;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--gray-200);
+            background-color: var(--gray-50);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .pdf-viewer {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 60px;
+            height: 60px;
+            border: 5px solid var(--gray-200);
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .pdf-viewer-container.loading .loading-spinner {
+            display: block;
+        }
+
+        .pdf-viewer-container.loading .pdf-viewer {
+            display: none;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid var(--gray-200);
+            text-align: center;
+            color: var(--medium-text);
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: var(--medium-text);
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .courses-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .trial-card {
+                flex-direction: column;
+                padding: 30px;
+                text-align: center;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .section-title {
+                font-size: 22px;
+            }
+
+            .trial-image {
+                width: 160px;
+                height: 160px;
+            }
+
+            .square-course-card {
+                width: 260px;
+                height: 260px;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .popup-content {
+                padding: 25px;
+            }
+
+            .popup-title {
+                font-size: 24px;
+            }
+
+            .option-card {
+                width: 200px;
+                height: 250px;
+            }
+
+            .pdf-popup-content {
+                height: 95%;
+                padding: 25px;
+            }
+
+            .pdf-title {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            .trial-card {
+                padding: 25px;
+            }
+
+            .trial-content h2 {
+                font-size: 24px;
+            }
+
+            .square-course-card {
+                padding: 22px;
+                width: 240px;
+                height: 240px;
+            }
+
+            .course-card {
+                padding: 22px;
+            }
+
+            .course-meta {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .option-card {
+                width: 180px;
+                height: 230px;
+                padding: 20px;
+            }
+
+            .pdf-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .pdf-controls {
+                align-self: flex-end;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Hero Section -->
-        <div class="hero-section">
-            <div class="hero-content">
-                <h2>Eduwell | SVT App</h2>
-                <p>
-Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à utiliser.</p>
-                <button class="hero-btn" id="startButton">
+        <!-- Header Section -->
+
+
+        <!-- Trial Card with Science Theme -->
+        <div class="trial-card">
+            <div class="trial-content">
+                <h2>Eduwell  | SVT App
+                </h2>
+                <p>Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à utiliser </p>
+                <button class="trial-btn">
                     <i class="fa-solid fa-play"></i>
-                    Commencer maintenant
+                    RevisUp
                 </button>
             </div>
-            <div class="hero-image">
-                <i class="fas fa-dna"></i>
-            </div>
+            
         </div>
 
         <!-- Search Section -->
@@ -1225,12 +1062,9 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
         </div>
 
         <!-- Popular Courses Section with Horizontal Slider -->
-        <div class="section-header" id="quizSection">
-            <h2 class="section-title">
-                <i class="fa-solid fa-fire"></i>
-                <span>Quiz par thème</span>
-            </h2>
-            
+        <div class="section-title">
+            <i class="fa-solid fa-flag"></i>
+            <span>  Quiz Card</span>
         </div>
 
         <!-- Horizontal Slider -->
@@ -1241,12 +1075,9 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
         </div>
 
         <!-- Your Courses Section with Grid Layout -->
-        <div class="section-header">
-            <h2 class="section-title">
-                <i class="fa-solid fa-book"></i>
-                <span>Mes révisions</span>
-            </h2>
-           
+        <div class="section-title">
+            <i class="fa-solid fa-book"></i>
+            <span>Ma révision</span>
         </div>
         <div class="courses-grid" id="yourCoursesGrid">
             <!-- Course cards will be populated by JavaScript -->
@@ -1254,8 +1085,8 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
 
         <!-- Footer -->
         <div class="footer">
-           
-            <p>© 2025 EduWell Quantum Group</p>
+
+            <p>© 2025 Eduwell Quantum Group</p>
         </div>
     </div>
 
@@ -1266,8 +1097,8 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
                 <i class="fas fa-times"></i>
             </button>
             <div class="popup-header">
-                <h2 class="popup-title" id="popularCoursesPopupTitle">Titre du cours</h2>
-                <p class="popup-description" id="popularCoursesPopupDescription">Description du cours.</p>
+                <h2 class="popup-title" id="popularCoursesPopupTitle">Course Title</h2>
+                <p class="popup-description" id="popularCoursesPopupDescription">Course description will appear here.</p>
             </div>
             <div class="options-section">
                 <h3 class="options-title">Sélectionnez une carte quiz</h3>
@@ -1285,9 +1116,9 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
                 <i class="fas fa-times"></i>
             </button>
             <div class="pdf-header">
-                <h2 class="pdf-title" id="pdfViewerPopupTitle">Titre du cours</h2>
+                <h2 class="pdf-title" id="pdfViewerPopupTitle">Course Title</h2>
                 <div class="pdf-controls">
-                    <button class="pdf-control-btn" id="pdfFullscreenBtn" title="Plein écran">
+                    <button class="pdf-control-btn" id="pdfFullscreenBtn" title="Fullscreen">
                         <i class="fas fa-expand"></i>
                     </button>
                 </div>
@@ -1307,42 +1138,43 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
                 description: "",
                 options: [
                     {
-                        title: "Chez l'Homme (1)",
+                        title: " Chez l'Homme (1)",
                         description: "",
                         icon: "fas fa-file-alt",
                         link: "seek1.html",
                         color: "blue"
                     },
                     {
-                        title: "Chez l'Homme (2)",
+                        title: " Chez l'Homme (2)",
                         description: "",
                         icon: "fas fa-file-alt",
                         link: "seek2",
                         color: "blue"
                     },
+
                     {
-                        title: "Chez la Femme (1)",
+                        title: " Chez la Femmes (1)",
                         description: "",
                         icon: "fas fa-file-alt",
                         link: "seek3",
                         color: "green"
                     },
-                    {
-                        title: "Chez la Femme (2)",
+                     {
+                        title: " Chez la Femmes (2)",
                         description: "",
                         icon: "fas fa-file-alt",
                         link: "seek4",
                         color: "green"
                     },
-                    {
-                        title: "Procréation (1)",
+                     {
+                        title: " Procréation (1)",
                         description: "",
                         icon: "fas fa-file-alt",
                         link: "seek5",
                         color: "purple"
                     },
                     {
-                        title: "Procréation (2)",
+                        title: " Procréation (2)",
                         description: "",
                         icon: "fas fa-tasks",
                         link: "seek6",
@@ -1351,18 +1183,19 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
                 ]
             },
             "evolution-biologique": {
-                title: "Évolution Biologique",
+                title: "Evolution Biologique",
                 description: "",
                 options: [
                     {
-                        title: "Arguments",
+                        title: " Arguments",
                         description: "",
                         icon: "fas fa-tasks",
                         link: "seek7",
                         color: "blue"
                     },
+
                     {
-                        title: "Mécanismes",
+                        title: " Mécanismes",
                         description: "",
                         icon: "fas fa-tasks",
                         link: "seek8",
@@ -1371,32 +1204,35 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
                 ]
             },
             "genetique-humaine": {
-                title: "Génétique Humaine",
+                title: "Génétique humaine",
                 description: "",
                 options: [
+
                     {
-                        title: "Génétique des diploïdes (P1)",
+                        title: "Génétiques des diploïdes (P1)",
                         description: "",
                         icon: "fas fa-file-alt",
                         link: "seek11",
                         color: "green"
                     },
+
                     {
-                        title: "Génétique des diploïdes (P2)",
+                        title: "Génétiques des diploïdes (P2)",
                         description: "",
                         icon: "fas fa-file-alt",
                         link: "#",
                         color: "blue"
                     },
+
                     {
-                        title: "Génétique Humaine (1)",
+                        title: "Génétique Humaines (1)",
                         description: "",
                         icon: "fas fa-file-alt",
                         link: "#",
                         color: "green"
                     },
                     {
-                        title: "Génétique Humaine (2)",
+                        title: "Génétique Humaines (2)",
                         description: "",
                         icon: "fas fa-file-alt",
                         link: "#",
@@ -1408,13 +1244,15 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
                 title: "Neurophysiologie",
                 description: "",
                 options: [
+
                     {
-                        title: "Tissu Nerveux",
+                        title: "Tissu Nerveux ",
                         description: "",
                         icon: "fas fa-file-alt",
                         link: "#",
                         color: "green"
                     },
+
                     {
                         title: "Réflexe myotatique (1)",
                         description: "",
@@ -1422,9 +1260,10 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
                         link: "#",
                         color: "blue"
                     },
+
                     {
                         title: "Réflexe myotatique (2)",
-                        description: "n",
+                        description: "",
                         icon: "fas fa-file-alt",
                         link: "#",
                         color: "green"
@@ -1436,7 +1275,7 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
                         link: "#",
                         color: "blue"
                     },
-                    {
+                     {
                         title: "Régulation de la pression artérielle",
                         description: "",
                         icon: "fas fa-file-alt",
@@ -1444,7 +1283,7 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
                         color: "green"
                     },
                     {
-                        title: "Hygiène du système nerveux",
+                        title: "Hygiéne du système nerveux",
                         description: "",
                         icon: "fas fa-file-alt",
                         link: "#",
@@ -1463,6 +1302,7 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
                         link: "#",
                         color: "green"
                     },
+
                     {
                         title: "Réponse immunitaire spécifique (2)",
                         description: "",
@@ -1470,16 +1310,24 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
                         link: "#",
                         color: "blue"
                     },
+
                     {
                         title: "Allergies",
-                        description: "",
+                        description: "Pack 1 (Défi SVT)",
                         icon: "fas fa-file-alt",
                         link: "#",
                         color: "green"
                     },
                     {
-                        title: "SIDA",
-                        description: "",
+                        title: "Allergies",
+                        description: "Pack 1 (Défi SVT)",
+                        icon: "fas fa-file-alt",
+                        link: "#",
+                        color: "blue"
+                    },
+                     {
+                        title: " SIDA",
+                        description: "Pack 1 (Défi SVT)",
                         icon: "fas fa-file-alt",
                         link: "#",
                         color: "green"
@@ -1495,13 +1343,11 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
                 description: "Comprendre les processus de reproduction chez l'homme et la femme",
                 pdfUrl: "https://drive.google.com/file/d/1abc123def456ghi789jkl/preview"
             },
-            "evolution-biologique": {
-                title: "Évolution Biologique",
-                description: "Découvrir les mécanismes de l'évolution et la diversité du vivant",
-                pdfUrl: "https://drive.google.com/file/d/2xyz456abc789def012ghi/preview"
-            },
+
+
+
             "genetique-humaine": {
-                title: "Génétique Humaine",
+                title: "Génétique humaine",
                 description: "Étudier l'hérédité et la variation des caractères chez l'humain",
                 pdfUrl: "https://drive.google.com/file/d/3yzab234cde567fgh890ijk/preview"
             }
@@ -1522,8 +1368,6 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
         const pdfViewerContainer = document.getElementById('pdfViewerContainer');
         const pdfViewer = document.getElementById('pdfViewer');
         const pdfFullscreenBtn = document.getElementById('pdfFullscreenBtn');
-        const startButton = document.getElementById('startButton');
-        const quizSection = document.getElementById('quizSection');
 
         // Initialize the page with course data
         document.addEventListener('DOMContentLoaded', function() {
@@ -1550,7 +1394,7 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
                     <p>${course.description}</p>
                     <div class="course-meta">
                         <span><i class="far fa-clock"></i> ${getCourseDuration(courseId)}</span>
-                        <span><i class="fas fa-book"></i> ${getCourseLessons(courseId)} Quiz</span>
+                        <span><i class="fas fa-book"></i> ${getCourseLessons(courseId)} Quiz à faire</span>
                     </div>
                 `;
 
@@ -1580,7 +1424,7 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
                         <div class="progress" style="width: ${getYourCourseProgress(courseId)}"></div>
                     </div>
                     <div class="course-meta">
-                        <span>${getYourCourseProgress(courseId)} Terminé</span>
+                        <span>${getYourCourseProgress(courseId)} Complete</span>
                     </div>
                 `;
 
@@ -1607,9 +1451,9 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
 
         function getCourseDuration(courseId) {
             const durations = {
-                'reproduction-humaine': '50 min',
-                'evolution-biologique': '30 min',
-                'genetique-humaine': '45 min',
+                'reproduction-humaine': ' 50min',
+                'evolution-biologique': ' 30min',
+                'genetique-humaine': ' 45min',
                 'neurophysiologie': '1h 20min',
                 'immunite': '1h 45min'
             };
@@ -1618,9 +1462,9 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
 
         function getCourseLessons(courseId) {
             const lessons = {
-                'reproduction-humaine': '46',
-                'evolution-biologique': '22',
-                'genetique-humaine': '44',
+                'reproduction-humaine': '48',
+                'evolution-biologique': '15',
+                'genetique-humaine': '22',
                 'neurophysiologie': '56',
                 'immunite': '34'
             };
@@ -1630,17 +1474,17 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
         function getYourCourseIcon(courseId) {
             const icons = {
                 'reproduction-humaine': 'fas fa-heartbeat',
-                'evolution-biologique': 'fas fa-flask',
-                'genetique-humaine': 'fas fa-dna'
+                'evolution-biologique': 'fas fa-dna',
+                'genetique-humaine': 'fas fa-flask'
             };
             return icons[courseId] || 'fas fa-book';
         }
 
         function getYourCourseDuration(courseId) {
             const durations = {
-                'reproduction-humaine': '2h 30min',
-                'evolution-biologique': '1h 45min',
-                'genetique-humaine': '2h 15min'
+                'reproduction-humaine': ' ',
+                'evolution-biologique': ' ',
+                'genetique-humaine': ' '
             };
             return durations[courseId] || '3h 00min';
         }
@@ -1648,7 +1492,7 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
         function getYourCourseLessons(courseId) {
             const lessons = {
                 'reproduction-humaine': '7',
-                'evolution-biologique': '2',
+                'evolution-biologique': '15',
                 'genetique-humaine': '2'
             };
             return lessons[courseId] || '12';
@@ -1657,7 +1501,7 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
         function getYourCourseProgress(courseId) {
             const progress = {
                 'reproduction-humaine': '100%',
-                'evolution-biologique': '0%',
+                'evolution-biologique': '40%',
                 'genetique-humaine': '50%'
             };
             return progress[courseId] || '50%';
@@ -1665,11 +1509,6 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
 
         // Setup event listeners
         function setupEventListeners() {
-            // Start button scroll to quiz section
-            startButton.addEventListener('click', function() {
-                quizSection.scrollIntoView({ behavior: 'smooth' });
-            });
-
             // Search functionality for Popular Courses
             searchInput.addEventListener('input', function() {
                 const searchTerm = this.value.toLowerCase().trim();
@@ -1775,7 +1614,7 @@ Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à u
                         <h4 class="option-title">${option.title}</h4>
                         <p>${option.description}</p>
                     </div>
-                    <a href="${option.link}" class="option-link" target="_blank">Commencer<i class="fas fa-arrow-right"></i></a>
+                    <a href="${option.link}" class="option-link" target="_blank">Essayer<i class="fas fa-arrow-ri"></i></a>
                 `;
 
                 popularCoursesOptions.appendChild(optionCard);

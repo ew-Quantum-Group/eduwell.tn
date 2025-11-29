@@ -1,12 +1,10 @@
-
-
-        // Éléments DOM
+  // Éléments DOM
         const currentCard = document.getElementById('current-card');
         const questionText = document.getElementById('question-text');
+        const questionNumber = document.getElementById('question-number');
         const progressFill = document.getElementById('progress-fill');
-        const currentQuestionElement = document.getElementById('current-question');
-        const totalQuestionsElement = document.getElementById('total-questions');
         const feedbackPopup = document.getElementById('feedback-popup');
+        const feedbackIcon = document.getElementById('feedback-icon');
         const feedbackTitle = document.getElementById('feedback-title');
         const feedbackMessage = document.getElementById('feedback-message');
         const correctAnswerElement = document.getElementById('correct-answer');
@@ -38,7 +36,6 @@
             currentQuestionIndex = 0;
             correctAnswers = 0;
             incorrectAnswers = 0;
-            totalQuestionsElement.textContent = quizQuestions.length;
             loadQuestion(currentQuestionIndex);
             updateProgress();
             
@@ -57,16 +54,16 @@
             }
             
             questionText.textContent = quizQuestions[index].question;
-            currentQuestionElement.textContent = index + 1;
+            questionNumber.textContent = `Question ${index + 1}/${quizQuestions.length}`;
             
             // Réinitialiser la position de la carte avec animation
             resetCard();
             
-            // Ajouter une animation de pulsation pour attirer l'attention
-            currentCard.classList.add('pulse');
+            // Ajouter une animation d'entrée
+            currentCard.classList.add('card-entrance');
             setTimeout(() => {
-                currentCard.classList.remove('pulse');
-            }, 2000);
+                currentCard.classList.remove('card-entrance');
+            }, 400);
         }
 
         // Réinitialiser la carte à sa position d'origine
@@ -92,21 +89,19 @@
             if (isCorrect) {
                 feedbackPopup.classList.add('correct');
                 feedbackPopup.classList.remove('incorrect');
+                feedbackIcon.textContent = '✓';
                 feedbackTitle.textContent = 'Correct !';
                 feedbackMessage.textContent = 'Parfait ! Vous avez trouvé la bonne réponse.';
                 correctAnswerElement.textContent = `La bonne réponse est : ${correctAnswer ? 'Vrai' : 'Faux'}`;
-                feedbackTitle.style.color = 'var(--success-color)';
                 explanationElement.textContent = currentQuestion.explanation;
-                explanationElement.style.borderLeftColor = 'var(--success-color)';
             } else {
                 feedbackPopup.classList.add('incorrect');
                 feedbackPopup.classList.remove('correct');
+                feedbackIcon.textContent = '✗';
                 feedbackTitle.textContent = 'Incorrect !';
                 feedbackMessage.textContent = 'Permettez-moi de vous expliquer cela.';
                 correctAnswerElement.textContent = `La bonne réponse est : ${correctAnswer ? 'Vrai' : 'Faux'}`;
-                feedbackTitle.style.color = 'var(--error-color)';
                 explanationElement.textContent = currentQuestion.explanation;
-                explanationElement.style.borderLeftColor = 'var(--error-color)';
             }
         }
 
@@ -135,15 +130,15 @@
 
         // Créer une animation de confettis pour un score parfait
         function createConfetti() {
-            const colors = ['#ff4081', '#3f51b5', '#009688', '#ff9800', '#e91e63', '#2196f3', '#4caf50'];
+            const colors = ['#4361ee', '#4cc9f0', '#f72585', '#f59e0b', '#7209b7', '#06b6d4', '#84cc16'];
             
-            for (let i = 0; i < 100; i++) {
+            for (let i = 0; i < 60; i++) {
                 const confetti = document.createElement('div');
                 confetti.classList.add('confetti');
                 confetti.style.left = Math.random() * 100 + 'vw';
                 confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.width = (Math.random() * 10 + 5) + 'px';
-                confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                confetti.style.width = (Math.random() * 8 + 4) + 'px';
+                confetti.style.height = (Math.random() * 8 + 4) + 'px';
                 confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
                 confetti.style.animation = `confettiFall ${Math.random() * 3 + 2}s linear forwards`;
                 confetti.style.animationDelay = Math.random() * 3 + 's';
@@ -180,8 +175,8 @@
             requestAnimationFrame(() => {
                 const translateAmount = window.innerWidth * 0.8;
                 currentCard.style.transform = isRightSwipe ? 
-                    `translateX(${translateAmount}px) rotate(25deg) scale(0.9)` : 
-                    `translateX(-${translateAmount}px) rotate(-25deg) scale(0.9)`;
+                    `translateX(${translateAmount}px) rotate(15deg) scale(0.9)` : 
+                    `translateX(-${translateAmount}px) rotate(-15deg) scale(0.9)`;
                 currentCard.style.opacity = '0';
                 
                 // Afficher le feedback après l'animation
@@ -238,7 +233,7 @@
                 }
                 
                 // Appliquer la transformation
-                currentCard.style.transform = `translateX(${diff}px) rotate(${diff * 0.06}deg)`;
+                currentCard.style.transform = `translateX(${diff}px) rotate(${diff * 0.04}deg)`;
                 currentCard.style.opacity = 1 - Math.abs(diff) / (window.innerWidth * 0.4);
             }
         }, { passive: false });
@@ -298,7 +293,7 @@
                 }
                 
                 // Appliquer la transformation
-                currentCard.style.transform = `translateX(${diff}px) rotate(${diff * 0.06}deg)`;
+                currentCard.style.transform = `translateX(${diff}px) rotate(${diff * 0.04}deg)`;
                 currentCard.style.opacity = 1 - Math.abs(diff) / 500;
             }
         });
@@ -330,13 +325,6 @@
         retryBtn.addEventListener('click', () => {
             resultsScreen.classList.remove('active');
             setTimeout(initQuiz, 300);
-        });
-
-        // Fonctionnalité du bouton retour
-        backBtn.addEventListener('click', () => {
-            if (confirm('Êtes-vous sûr de vouloir revenir en arrière ? Votre progression sera perdue.')) {
-                window.history.back();
-            }
         });
 
         // Empêcher la sélection de texte pendant le glissement

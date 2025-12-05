@@ -13,6 +13,7 @@
             --primary-light: #C7D2FE;
             --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --science-gradient: linear-gradient(135deg, #4A90E2 0%, #50E3C2 100%);
+            --biology-gradient: linear-gradient(135deg, #10B981 0%, #059669 100%);
             --secondary-color: #10B981;
             --accent-color: #F59E0B;
             --light-bg: #F8FAFC;
@@ -237,7 +238,24 @@
             animation: slideInUp 0.8s ease;
         }
 
-        .trial-card::before {
+        /* NEW: Biology-themed card for Exercises section */
+        .biology-card {
+            background: var(--biology-gradient);
+            border-radius: var(--border-radius-xl);
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            box-shadow: var(--box-shadow-xl);
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+            color: white;
+            animation: slideInUp 0.8s ease;
+        }
+
+        .trial-card::before,
+        .biology-card::before {
             content: '';
             position: absolute;
             top: 0;
@@ -248,20 +266,23 @@
             z-index: 1;
         }
 
-        .trial-content {
+        .trial-content,
+        .biology-content {
             flex: 1;
             position: relative;
             z-index: 2;
         }
 
-        .trial-content h2 {
+        .trial-content h2,
+        .biology-content h2 {
             font-size: 28px;
             font-weight: 700;
             margin-bottom: 12px;
             letter-spacing: -0.02em;
         }
 
-        .trial-content p {
+        .trial-content p,
+        .biology-content p {
             font-size: 17px;
             margin-bottom: 25px;
             line-height: 1.6;
@@ -269,7 +290,8 @@
             max-width: 500px;
         }
 
-        .trial-btn {
+        .trial-btn,
+        .biology-btn {
             background-color: white;
             color: #4A90E2;
             border: none;
@@ -287,13 +309,19 @@
             gap: 8px;
         }
 
-        .trial-btn:hover {
+        .biology-btn {
+            color: #10B981;
+        }
+
+        .trial-btn:hover,
+        .biology-btn:hover {
             background-color: var(--gray-50);
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .trial-image {
+        .trial-image,
+        .biology-image {
             width: 180px;
             height: 180px;
             border-radius: 20px;
@@ -305,19 +333,22 @@
             transition: var(--transition);
         }
 
-        .trial-image:hover {
+        .trial-image:hover,
+        .biology-image:hover {
             transform: translateY(-5px) rotate(2deg);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
-        .trial-image img {
+        .trial-image img,
+        .biology-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.7s ease;
         }
 
-        .trial-image:hover img {
+        .trial-image:hover img,
+        .biology-image:hover img {
             transform: scale(1.08);
         }
 
@@ -807,6 +838,283 @@
             50% { 
                 transform: translateY(-15px);
             }
+        }
+
+        /* NEW: Models Gallery Popup Styles */
+        .models-popup-content {
+            background-color: var(--white);
+            width: 100%;
+            max-width: 1200px;
+            height: 85%;
+            border-top-left-radius: var(--border-radius-xl);
+            border-top-right-radius: var(--border-radius-xl);
+            padding: 35px;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+
+        .popup-overlay.active .models-popup-content {
+            transform: translateY(0);
+        }
+
+        .models-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            padding-right: 60px;
+        }
+
+        .models-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
+            margin-bottom: 10px;
+        }
+
+        .models-description {
+            font-size: 16px;
+            color: var(--medium-text);
+        }
+
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            overflow-y: auto;
+            padding: 10px 5px 20px 0;
+            flex-grow: 1;
+        }
+
+        .models-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .models-grid::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 3px;
+        }
+
+        .models-grid::-webkit-scrollbar-thumb {
+            background-color: var(--gray-300);
+            border-radius: 3px;
+        }
+
+        .models-grid::-webkit-scrollbar-thumb:hover {
+            background-color: var(--gray-400);
+        }
+
+        .model-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid var(--gray-200);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .model-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--box-shadow-lg);
+            border-color: var(--primary-light);
+        }
+
+        .model-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gray-50);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: var(--dark-text);
+            font-size: 32px;
+            transition: var(--transition);
+        }
+
+        .model-card:hover .model-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: var(--biology-gradient);
+            color: white;
+        }
+
+        .model-card h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
+        }
+
+        .model-card p {
+            font-size: 14px;
+            color: var(--medium-text);
+            line-height: 1.5;
+        }
+
+        /* NEW: Gallery Popup Styles */
+        .gallery-popup-content {
+            background-color: var(--white);
+            width: 100%;
+            max-width: 1200px;
+            height: 85%;
+            border-top-left-radius: var(--border-radius-xl);
+            border-top-right-radius: var(--border-radius-xl);
+            padding: 35px;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+
+        .popup-overlay.active .gallery-popup-content {
+            transform: translateY(0);
+        }
+
+        .gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-right: 60px;
+        }
+
+        .gallery-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
+            margin-bottom: 10px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            overflow-y: auto;
+            padding: 10px 5px 20px 0;
+            flex-grow: 1;
+        }
+
+        .gallery-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .gallery-grid::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 3px;
+        }
+
+        .gallery-grid::-webkit-scrollbar-thumb {
+            background-color: var(--gray-300);
+            border-radius: 3px;
+        }
+
+        .gallery-grid::-webkit-scrollbar-thumb:hover {
+            background-color: var(--gray-400);
+        }
+
+        .gallery-item {
+            background-color: var(--gray-50);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--gray-200);
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--box-shadow);
+            border-color: var(--primary-light);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.05);
+        }
+
+        /* NEW: Fullscreen Image Viewer */
+        .fullscreen-viewer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .fullscreen-viewer.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .fullscreen-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+
+        .fullscreen-viewer.active .fullscreen-image {
+            transform: scale(1);
+        }
+
+        .back-button {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--white);
+            color: var(--dark-text);
+            border: none;
+            padding: 14px 32px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+        }
+
+        .back-button:hover {
+            background-color: var(--gray-100);
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         /* EXERCISE MODAL STYLES - UPDATED */
@@ -1339,6 +1647,14 @@
                 grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             }
             
+            .models-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+            
             .coming-soon-title {
                 font-size: 36px;
             }
@@ -1349,7 +1665,8 @@
         }
 
         @media (max-width: 768px) {
-            .trial-card {
+            .trial-card,
+            .biology-card {
                 flex-direction: column;
                 padding: 30px;
                 text-align: center;
@@ -1363,7 +1680,8 @@
                 font-size: 22px;
             }
 
-            .trial-image {
+            .trial-image,
+            .biology-image {
                 width: 160px;
                 height: 160px;
             }
@@ -1377,11 +1695,27 @@
                 grid-template-columns: 1fr;
             }
 
-            .popup-content, .exercise-modal-content {
+            .models-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+            }
+
+            .popup-content, 
+            .exercise-modal-content,
+            .models-popup-content,
+            .gallery-popup-content {
                 padding: 25px;
             }
 
-            .popup-title, .exercise-title {
+            .popup-title, 
+            .exercise-title,
+            .models-title,
+            .gallery-title {
                 font-size: 24px;
             }
 
@@ -1390,7 +1724,10 @@
                 height: 250px;
             }
 
-            .pdf-popup-content, .exercise-modal-content {
+            .pdf-popup-content, 
+            .exercise-modal-content,
+            .models-popup-content,
+            .gallery-popup-content {
                 height: 95%;
                 padding: 25px;
             }
@@ -1422,11 +1759,13 @@
                 padding: 15px;
             }
 
-            .trial-card {
+            .trial-card,
+            .biology-card {
                 padding: 25px;
             }
 
-            .trial-content h2 {
+            .trial-content h2,
+            .biology-content h2 {
                 font-size: 24px;
             }
 
@@ -1458,7 +1797,10 @@
                 padding: 20px;
             }
 
-            .pdf-header, .exercise-header {
+            .pdf-header, 
+            .exercise-header,
+            .models-header,
+            .gallery-header {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 20px;
@@ -1466,6 +1808,15 @@
 
             .pdf-controls {
                 align-self: flex-end;
+            }
+
+            .models-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 12px;
             }
 
             .bottom-navigation {
@@ -1590,6 +1941,18 @@
             <!-- Header Section -->
            
 
+            <!-- NEW: Biology-themed card for Exercises section -->
+            <div class="biology-card">
+                <div class="biology-content">
+                    <h2>Schémas & Modèles SVT</h2>
+                    <p>Accédez à tous les schémas et modèles scientifiques pour mieux comprendre les concepts</p>
+                    <button class="biology-btn" id="viewSchemasButton">
+                        <i class="fa-solid fa-eye"></i>
+                        Voir tous les schémas
+                    </button>
+                </div>
+            </div>
+
             <!-- Exercises Grid -->
             <div class="section-header">
                 <div class="section-title">
@@ -1631,6 +1994,48 @@
     </div>
 
     <!-- POPUPS -->
+
+    <!-- NEW: Models Popup Overlay -->
+    <div class="popup-overlay" id="modelsPopup">
+        <div class="models-popup-content">
+            <button class="popup-close" id="modelsPopupClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="models-header">
+                <div>
+                    <h2 class="models-title">Schémas & Modèles SVT</h2>
+                    <p class="models-description">Sélectionnez un modèle pour voir tous les schémas associés</p>
+                </div>
+            </div>
+            <div class="models-grid" id="modelsGrid">
+                <!-- Model cards will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: Gallery Popup Overlay -->
+    <div class="popup-overlay" id="galleryPopup">
+        <div class="gallery-popup-content">
+            <button class="popup-close" id="galleryPopupClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="gallery-header">
+                <div>
+                    <h2 class="gallery-title" id="galleryTitle">Gallery Title</h2>
+                    <p class="models-description">Cliquez sur une image pour l'agrandir</p>
+                </div>
+            </div>
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Gallery items will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: Fullscreen Image Viewer -->
+    <div class="fullscreen-viewer" id="fullscreenViewer">
+        <img class="fullscreen-image" id="fullscreenImage" src="" alt="Fullscreen Image">
+        <button class="back-button" id="backFromFullscreen">Retour</button>
+    </div>
 
     <!-- Popular Courses Popup Overlay -->
     <div class="popup-overlay" id="popularCoursesPopup">
@@ -1941,6 +2346,81 @@
             }
         };
 
+        // NEW: JSON data structure for Models and Images
+        const modelsData = {
+            "reproduction": {
+                title: "Système Reproducteur",
+                description: "Schémas anatomiques du système reproducteur masculin et féminin",
+                icon: "fas fa-heartbeat",
+                images: [
+                    { src: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Schéma 1" },
+                    { src: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Schéma 2" },
+                    { src: "https://images.unsplash.com/photo-1559757149-e4b93e1a1e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Schéma 3" },
+                    { src: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Schéma 4" },
+                    { src: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Schéma 5" },
+                    { src: "https://images.unsplash.com/photo-1559757149-e4b93e1a1e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Schéma 6" }
+                ]
+            },
+            "cellule": {
+                title: "Cellule & ADN",
+                description: "Structure cellulaire et modèles d'ADN",
+                icon: "fas fa-dna",
+                images: [
+                    { src: "https://images.unsplash.com/photo-1559757149-e4b93e1a1e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Cellule 1" },
+                    { src: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Cellule 2" },
+                    { src: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Cellule 3" },
+                    { src: "https://images.unsplash.com/photo-1559757149-e4b93e1a1e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Cellule 4" },
+                    { src: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Cellule 5" }
+                ]
+            },
+            "cerveau": {
+                title: "Système Nerveux",
+                description: "Anatomie du cerveau et du système nerveux",
+                icon: "fas fa-brain",
+                images: [
+                    { src: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Cerveau 1" },
+                    { src: "https://images.unsplash.com/photo-1559757149-e4b93e1a1e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Cerveau 2" },
+                    { src: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Cerveau 3" },
+                    { src: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Cerveau 4" }
+                ]
+            },
+            "evolution": {
+                title: "Évolution",
+                description: "Arbres phylogénétiques et schémas évolutifs",
+                icon: "fas fa-project-diagram",
+                images: [
+                    { src: "https://images.unsplash.com/photo-1559757149-e4b93e1a1e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Évolution 1" },
+                    { src: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Évolution 2" },
+                    { src: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Évolution 3" },
+                    { src: "https://images.unsplash.com/photo-1559757149-e4b93e1a1e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Évolution 4" },
+                    { src: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Évolution 5" },
+                    { src: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Évolution 6" }
+                ]
+            },
+            "ecologie": {
+                title: "Écologie",
+                description: "Écosystèmes et chaînes alimentaires",
+                icon: "fas fa-leaf",
+                images: [
+                    { src: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Écologie 1" },
+                    { src: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Écologie 2" },
+                    { src: "https://images.unsplash.com/photo-1559757149-e4b93e1a1e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Écologie 3" }
+                ]
+            },
+            "genetique": {
+                title: "Génétique",
+                description: "Schémas de croisement et arbres généalogiques",
+                icon: "fas fa-sitemap",
+                images: [
+                    { src: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Génétique 1" },
+                    { src: "https://images.unsplash.com/photo-1559757149-e4b93e1a1e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Génétique 2" },
+                    { src: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Génétique 3" },
+                    { src: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Génétique 4" },
+                    { src: "https://images.unsplash.com/photo-1559757149-e4b93e1a1e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", alt: "Génétique 5" }
+                ]
+            }
+        };
+
         // DOM Elements
         const bottomNavItems = document.querySelectorAll('.nav-item');
         const pageSections = document.querySelectorAll('.page-section');
@@ -1950,6 +2430,21 @@
         const searchInput = document.getElementById('searchInput');
         const startButton = document.getElementById('startButton');
         const quizSection = document.getElementById('quizSection');
+        
+        // NEW: Models & Gallery elements
+        const viewSchemasButton = document.getElementById('viewSchemasButton');
+        const modelsPopup = document.getElementById('modelsPopup');
+        const modelsPopupClose = document.getElementById('modelsPopupClose');
+        const modelsGrid = document.getElementById('modelsGrid');
+        
+        const galleryPopup = document.getElementById('galleryPopup');
+        const galleryPopupClose = document.getElementById('galleryPopupClose');
+        const galleryTitle = document.getElementById('galleryTitle');
+        const galleryGrid = document.getElementById('galleryGrid');
+        
+        const fullscreenViewer = document.getElementById('fullscreenViewer');
+        const fullscreenImage = document.getElementById('fullscreenImage');
+        const backFromFullscreen = document.getElementById('backFromFullscreen');
         
         // Popup elements
         const popularCoursesPopup = document.getElementById('popularCoursesPopup');
@@ -1973,12 +2468,14 @@
 
         // State variables
         let currentExerciseId = null;
+        let currentModelId = null;
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
             renderPopularCourses();
             renderYourCourses();
             renderExercises();
+            renderModels();
             setupEventListeners();
         });
 
@@ -2090,6 +2587,28 @@
             });
         }
 
+        // NEW: Render Models from JSON data
+        function renderModels() {
+            modelsGrid.innerHTML = '';
+
+            Object.keys(modelsData).forEach(modelId => {
+                const model = modelsData[modelId];
+                const modelCard = document.createElement('div');
+                modelCard.className = 'model-card';
+                modelCard.setAttribute('data-model-id', modelId);
+
+                modelCard.innerHTML = `
+                    <div class="model-icon">
+                        <i class="${model.icon}"></i>
+                    </div>
+                    <h4>${model.title}</h4>
+                    <p>${model.description}</p>
+                `;
+
+                modelsGrid.appendChild(modelCard);
+            });
+        }
+
         // Helper functions for course data
         function getColorClass(courseId) {
             const colors = ['green', 'purple', 'blue', 'orange', 'green'];
@@ -2193,6 +2712,9 @@
                 quizSection.scrollIntoView({ behavior: 'smooth' });
             });
 
+            // NEW: View schemas button
+            viewSchemasButton.addEventListener('click', openModelsPopup);
+
             // Search functionality for Popular Courses
             searchInput.addEventListener('input', function() {
                 const searchTerm = this.value.toLowerCase().trim();
@@ -2208,6 +2730,15 @@
                         card.style.display = 'none';
                     }
                 });
+            });
+
+            // NEW: Models popup
+            modelsGrid.addEventListener('click', function(e) {
+                const modelCard = e.target.closest('.model-card');
+                if (modelCard) {
+                    const modelId = modelCard.getAttribute('data-model-id');
+                    openGalleryPopup(modelId);
+                }
             });
 
             // Popular Courses popup
@@ -2237,12 +2768,38 @@
                 }
             });
 
+            // NEW: Gallery image click
+            galleryGrid.addEventListener('click', function(e) {
+                const galleryItem = e.target.closest('.gallery-item');
+                if (galleryItem) {
+                    const img = galleryItem.querySelector('.gallery-image');
+                    openFullscreenImage(img.src, img.alt);
+                }
+            });
+
             // Close popups
+            modelsPopupClose.addEventListener('click', closeModelsPopup);
+            galleryPopupClose.addEventListener('click', closeGalleryPopup);
             popularCoursesPopupClose.addEventListener('click', closePopularCoursesPopup);
             exerciseModalClose.addEventListener('click', closeExerciseModal);
             pdfViewerPopupClose.addEventListener('click', closePdfViewerPopup);
 
+            // NEW: Fullscreen back button
+            backFromFullscreen.addEventListener('click', closeFullscreenImage);
+
             // Close popups when clicking outside
+            modelsPopup.addEventListener('click', function(e) {
+                if (e.target === modelsPopup) {
+                    closeModelsPopup();
+                }
+            });
+
+            galleryPopup.addEventListener('click', function(e) {
+                if (e.target === galleryPopup) {
+                    closeGalleryPopup();
+                }
+            });
+
             popularCoursesPopup.addEventListener('click', function(e) {
                 if (e.target === popularCoursesPopup) {
                     closePopularCoursesPopup();
@@ -2261,16 +2818,27 @@
                 }
             });
 
+            // NEW: Fullscreen viewer close when clicking outside image
+            fullscreenViewer.addEventListener('click', function(e) {
+                if (e.target === fullscreenViewer) {
+                    closeFullscreenImage();
+                }
+            });
+
             // Close popups with Escape key
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
-                    if (popularCoursesPopup.classList.contains('active')) {
+                    if (fullscreenViewer.classList.contains('active')) {
+                        closeFullscreenImage();
+                    } else if (modelsPopup.classList.contains('active')) {
+                        closeModelsPopup();
+                    } else if (galleryPopup.classList.contains('active')) {
+                        closeGalleryPopup();
+                    } else if (popularCoursesPopup.classList.contains('active')) {
                         closePopularCoursesPopup();
-                    }
-                    if (exerciseModal.classList.contains('active')) {
+                    } else if (exerciseModal.classList.contains('active')) {
                         closeExerciseModal();
-                    }
-                    if (pdfViewerPopup.classList.contains('active')) {
+                    } else if (pdfViewerPopup.classList.contains('active')) {
                         closePdfViewerPopup();
                     }
                 }
@@ -2291,6 +2859,68 @@
             pdfViewer.addEventListener('load', function() {
                 pdfViewerContainer.classList.remove('loading');
             });
+        }
+
+        // NEW: Open Models popup
+        function openModelsPopup() {
+            modelsPopup.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // NEW: Close Models popup
+        function closeModelsPopup() {
+            modelsPopup.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // NEW: Open Gallery popup
+        function openGalleryPopup(modelId) {
+            const model = modelsData[modelId];
+            if (!model) return;
+
+            currentModelId = modelId;
+            galleryTitle.textContent = model.title;
+
+            // Clear previous gallery items
+            galleryGrid.innerHTML = '';
+
+            // Add gallery items
+            model.images.forEach((image, index) => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+
+                galleryItem.innerHTML = `
+                    <img src="${image.src}" alt="${image.alt}" class="gallery-image">
+                `;
+
+                galleryGrid.appendChild(galleryItem);
+            });
+
+            // Close models popup and open gallery popup
+            closeModelsPopup();
+            galleryPopup.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // NEW: Close Gallery popup
+        function closeGalleryPopup() {
+            galleryPopup.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            currentModelId = null;
+        }
+
+        // NEW: Open Fullscreen Image
+        function openFullscreenImage(src, alt) {
+            fullscreenImage.src = src;
+            fullscreenImage.alt = alt;
+            fullscreenViewer.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // NEW: Close Fullscreen Image
+        function closeFullscreenImage() {
+            fullscreenViewer.classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
 
         // Open Popular Courses popup

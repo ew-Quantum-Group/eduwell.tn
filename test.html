@@ -1,2519 +1,836 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Quiz Interactif | EduWell</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eduwell | SVT Learning Platform</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* CSS Custom Properties for consistent theming */
-        :root {
-            --primary-gradient: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
-            --secondary-gradient: linear-gradient(135deg, #7209b7 0%, #560bad 100%);
-            --success-gradient: linear-gradient(135deg, #4cc9f0 0%, #4895ef 100%);
-            --error-gradient: linear-gradient(135deg, #f72585 0%, #b5179e 100%);
-            --warning-gradient: linear-gradient(135deg, #f8961e 0%, #f3722c 100%);
-            --premium-gradient: linear-gradient(135deg, #ff9a00 0%, #ff6a00 100%);
-            
-            --primary-color: #4361ee;
-            --primary-dark: #3a56d4;
-            --primary-light: #6c8eff;
-            --secondary-color: #7209b7;
-            --accent-color: #f72585;
-            --success-color: #4cc9f0;
-            --success-dark: #2ab7d3;
-            --error-color: #f72585;
-            --error-dark: #d90429;
-            --warning-color: #f8961e;
-            --premium-color: #ff9a00;
-            
-            --text-primary: #1a1d29;
-            --text-secondary: #5a5f7d;
-            --text-light: #8d99ae;
-            --text-white: #ffffff;
-            
-            --background-color: #f8f9fa;
-            --card-color: #ffffff;
-            --card-hover: #fdfdfd;
-            
-            --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.12);
-            --shadow-lg: 0 15px 40px rgba(0, 0, 0, 0.15);
-            --shadow-xl: 0 25px 60px rgba(0, 0, 0, 0.18);
-            
-            --border-radius-sm: 12px;
-            --border-radius: 20px;
-            --border-radius-lg: 28px;
-            --border-radius-xl: 36px;
-            
-            --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            
-            --container-max-width: 1200px;
-            --card-max-width: 600px;
-        }
-
-        /* CSS Reset with modern approach */
-        *, *::before, *::after {
-            box-sizing: border-box;
+        /* Apple San Francisco font via system stack */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         }
 
-        /* Base Typography with fluid type scales */
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-        }
-
-        @media (min-width: 768px) {
-            html {
-                font-size: 17px;
-            }
-        }
-
-        @media (min-width: 1200px) {
-            html {
-                font-size: 18px;
-            }
+        /* Professional Color Palette */
+        :root {
+            --primary-bg: #f8f9fa;
+            --surface: #ffffff;
+            --surface-alt: #f8f9fa;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --text-tertiary: #a1a1a6;
+            --border: #e5e5ea;
+            --border-light: #f2f2f7;
+            --accent-blue: #0071e3;
+            --accent-blue-light: #34aadc;
+            --accent-purple: #8a2be2;
+            --shadow: rgba(0, 0, 0, 0.05);
+            --shadow-hover: rgba(0, 0, 0, 0.08);
         }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             color: var(--text-primary);
             min-height: 100vh;
-            line-height: 1.6;
             overflow-x: hidden;
             position: relative;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Container Grid Layout */
-        .app-container {
-            display: grid;
-            grid-template-rows: auto 1fr auto;
-            min-height: 100vh;
-            padding: 1.5rem;
-            gap: 2rem;
-            max-width: var(--container-max-width);
-            margin: 0 auto;
-        }
-
-        /* Header Styles */
-        .header {
-            text-align: center;
-            padding: 2.5rem 2rem;
-            position: relative;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            border-radius: var(--border-radius-lg);
-            box-shadow: var(--shadow-md);
-            margin-top: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.9);
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
+        /* ORIGINAL BACKGROUND ANIMATION - Restored */
+        .bg-animation {
+            position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            height: 6px;
-            background: var(--primary-gradient);
-            border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.6;
         }
 
-        .logo-container {
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(0, 113, 227, 0.03) 0%, rgba(52, 170, 220, 0.03) 100%);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .circle-1 {
+            width: 80vmin;
+            height: 80vmin;
+            top: -30vmin;
+            left: -30vmin;
+            animation-delay: 0s;
+        }
+
+        .circle-2 {
+            width: 60vmin;
+            height: 60vmin;
+            bottom: -20vmin;
+            right: 10%;
+            animation-delay: -7s;
+        }
+
+        .circle-3 {
+            width: 40vmin;
+            height: 40vmin;
+            top: 20%;
+            right: -15vmin;
+            animation-delay: -14s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(120deg); }
+            66% { transform: translateY(10px) rotate(240deg); }
+        }
+
+        /* Loading Animation - Professional with Original Logo Style */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--surface);
             display: flex;
-            align-items: center;
             justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
-        .logo {
-            width: 80px;
-            height: 80px;
-            background: var(--primary-gradient);
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-logo {
+            width: 90px;
+            height: 90px;
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 24px;
             display: flex;
-            align-items: center;
             justify-content: center;
-            box-shadow: var(--shadow-lg);
-            position: relative;
-            overflow: hidden;
+            align-items: center;
+            margin-bottom: 24px;
+            animation: pulse 2s infinite ease-in-out;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        .logo::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: rotate(45deg);
-            animation: logoShine 3s infinite;
-        }
-
-        @keyframes logoShine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        .logo i {
-            font-size: 2.5rem;
+        .loader-logo-inner {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #8a2be2 0%, #ba55d3 100%);
+            border-radius: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            font-weight: 600;
             color: white;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
         }
 
-        .header-content h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 800;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-            line-height: 1.1;
-            letter-spacing: -0.02em;
+        @keyframes pulse {
+            0% { transform: scale(0.98); opacity: 0.9; }
+            50% { transform: scale(1.03); opacity: 1; }
+            100% { transform: scale(0.98); opacity: 0.9; }
         }
 
-        .header-content .subtitle {
-            font-size: 1.3rem;
+        .loader-text {
+            font-size: 15px;
             color: var(--text-secondary);
             font-weight: 500;
-            max-width: 600px;
-            margin: 0 auto;
+            letter-spacing: -0.2px;
         }
 
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1.25rem;
-            background: var(--premium-gradient);
-            color: white;
-            border-radius: 100px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-top: 1rem;
-            box-shadow: 0 4px 15px rgba(255, 154, 0, 0.3);
-        }
-
-        .instructions {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 2.5rem;
-            flex-wrap: wrap;
-        }
-
-        .instruction-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem 1.75rem;
-            background: rgba(67, 97, 238, 0.08);
-            border-radius: var(--border-radius-xl);
-            font-weight: 600;
-            color: var(--primary-color);
-            transition: var(--transition);
-            border: 1px solid rgba(67, 97, 238, 0.1);
-        }
-
-        .instruction-item:hover {
-            transform: translateY(-2px);
-            background: rgba(67, 97, 238, 0.12);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .instruction-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            background: var(--primary-gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.1rem;
-        }
-
-        /* Navigation */
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 0;
-        }
-
-        .back-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid rgba(67, 97, 238, 0.1);
-            border-radius: var(--border-radius-xl);
-            color: var(--primary-color);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: var(--shadow-sm);
-            backdrop-filter: blur(10px);
-            font-size: 1rem;
-        }
-
-        .back-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
-            background: white;
-            border-color: rgba(67, 97, 238, 0.2);
-        }
-
-        .stats-container {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem 1.5rem;
-            background: rgba(255, 255, 255, 0.85);
-            border-radius: var(--border-radius);
-            font-weight: 600;
-            color: var(--text-secondary);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            transition: var(--transition);
-        }
-
-        .stat-item:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .stat-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
-
-        .stat-correct .stat-icon {
-            background: rgba(76, 201, 240, 0.15);
-            color: var(--success-color);
-        }
-
-        .stat-incorrect .stat-icon {
-            background: rgba(247, 37, 133, 0.15);
-            color: var(--error-color);
-        }
-
-        .stat-streak .stat-icon {
-            background: rgba(248, 150, 30, 0.15);
-            color: var(--warning-color);
-        }
-
-        /* Progress Section */
-        .progress-section {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            border-radius: var(--border-radius-lg);
-            padding: 2rem;
-            box-shadow: var(--shadow-md);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-        }
-
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .progress-label {
-            font-weight: 700;
-            color: var(--text-primary);
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .progress-label i {
-            color: var(--primary-color);
-        }
-
-        .progress-text {
-            font-weight: 700;
-            color: var(--primary-color);
-            font-size: 1.1rem;
-        }
-
-        .progress-bar-container {
-            width: 100%;
-            height: 16px;
-            background: rgba(67, 97, 238, 0.1);
-            border-radius: var(--border-radius-xl);
+        .progress-container {
+            width: 200px;
+            height: 4px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 2px;
+            margin-top: 24px;
             overflow: hidden;
-            position: relative;
         }
 
         .progress-bar {
             height: 100%;
-            background: var(--primary-gradient);
-            border-radius: var(--border-radius-xl);
-            transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            overflow: hidden;
+            width: 0%;
+            background: linear-gradient(90deg, #8a2be2, #ba55d3);
+            border-radius: 2px;
+            transition: width 0.4s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
-        .progress-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(255, 255, 255, 0.4), 
-                transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(400%); }
-        }
-
-        /* Quiz Content Area */
-        .quiz-content {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2.5rem;
-        }
-
-        @media (min-width: 992px) {
-            .quiz-content {
-                grid-template-columns: 1fr 340px;
-            }
-        }
-
-        /* Card Container */
-        .card-section {
+        /* Main Container */
+        .container {
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
-        }
-
-        .card-container {
+            padding: 24px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+            max-width: 800px;
+            margin: 0 auto;
             position: relative;
-            min-height: 450px;
-            perspective: 1200px;
+            z-index: 1;
         }
 
-        .quiz-card {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            min-height: 450px;
-            background: var(--card-color);
-            border-radius: var(--border-radius-lg);
-            box-shadow: var(--shadow-lg);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 3.5rem 2.5rem;
-            cursor: grab;
-            user-select: none;
-            transform: translateX(0) rotate(0) scale(1);
+        .container.visible {
             opacity: 1;
-            transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.98));
-            backdrop-filter: blur(20px);
-            overflow: hidden;
+            transform: translateY(0);
         }
 
-        .quiz-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 6px;
-            background: var(--primary-gradient);
-        }
-
-        .quiz-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .question-number {
-            position: absolute;
-            top: 2rem;
-            left: 2rem;
-            background: var(--primary-gradient);
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            box-shadow: var(--shadow-sm);
-            font-size: 1.2rem;
-        }
-
-        .question-text {
-            font-size: 1.8rem;
-            text-align: center;
-            line-height: 1.5;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 3.5rem;
-            padding: 0 1.5rem;
-        }
-
-        .swipe-hints {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            position: absolute;
-            bottom: 2.5rem;
-            padding: 0 2.5rem;
-        }
-
-        .swipe-hint {
-            padding: 1.25rem 2.5rem;
-            border-radius: var(--border-radius-xl);
-            font-weight: 700;
-            font-size: 1.2rem;
-            opacity: 0.3;
-            transition: var(--transition);
-            backdrop-filter: blur(10px);
-            border: 2px solid transparent;
-            box-shadow: var(--shadow-sm);
-            transform: scale(0.95);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .swipe-hint.true {
-            background: linear-gradient(145deg, rgba(76, 201, 240, 0.15), rgba(76, 201, 240, 0.08));
-            color: var(--success-dark);
-            border: 2px solid rgba(76, 201, 240, 0.25);
-        }
-
-        .swipe-hint.false {
-            background: linear-gradient(145deg, rgba(247, 37, 133, 0.15), rgba(247, 37, 133, 0.08));
-            color: var(--error-color);
-            border: 2px solid rgba(247, 37, 133, 0.25);
-        }
-
-        .swipe-hint.active {
-            opacity: 1;
-            transform: scale(1.05);
-            box-shadow: var(--shadow-md);
-        }
-
-        .hint-icon {
-            font-size: 1.3rem;
-        }
-
-        /* Action Buttons */
-        .action-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .action-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            padding: 1.5rem 2rem;
-            border: none;
-            border-radius: var(--border-radius);
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 1.1rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .action-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.7s;
-        }
-
-        .action-btn:hover::before {
-            left: 100%;
-        }
-
-        .false-btn {
-            background: var(--error-gradient);
-            color: white;
-            box-shadow: var(--shadow-md);
-        }
-
-        .true-btn {
-            background: var(--success-gradient);
-            color: white;
-            box-shadow: var(--shadow-md);
-        }
-
-        .action-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-icon {
-            font-size: 1.3rem;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            border-radius: var(--border-radius-lg);
-            padding: 2.5rem;
-            box-shadow: var(--shadow-md);
-            height: fit-content;
-            border: 1px solid rgba(255, 255, 255, 0.9);
-        }
-
-        .sidebar-section {
-            margin-bottom: 2.5rem;
-        }
-
-        .sidebar-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .sidebar-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .sidebar-title i {
-            color: var(--primary-color);
-        }
-
-        .category-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .category-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.25rem 1.5rem;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: var(--border-radius);
-            transition: var(--transition);
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-        }
-
-        .category-item:hover {
-            background: rgba(67, 97, 238, 0.08);
-            transform: translateX(5px);
-            border-color: rgba(67, 97, 238, 0.2);
-        }
-
-        .category-item.active {
-            background: rgba(67, 97, 238, 0.12);
-            border-left: 4px solid var(--primary-color);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .category-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--primary-gradient);
-            color: white;
-            font-size: 1.3rem;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .timer-container {
-            background: rgba(67, 97, 238, 0.08);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            text-align: center;
-            border: 1px solid rgba(67, 97, 238, 0.1);
-        }
-
-        .timer {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--primary-color);
-            margin: 1rem 0;
-            font-feature-settings: "tnum";
-            font-variant-numeric: tabular-nums;
-        }
-
-        .timer-label {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 2.5rem 2rem;
-            color: var(--text-light);
-            font-size: 0.95rem;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            border-radius: var(--border-radius-lg);
-            margin-top: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.9);
-        }
-
-        .footer-content {
+        /* Top Navigation - Minimal */
+        .nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
+            padding: 12px 0 40px;
+            margin-bottom: 16px;
         }
 
-        .footer-brand {
+        .brand {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 12px;
         }
 
-        .footer-logo {
-            width: 40px;
-            height: 40px;
-            background: var(--primary-gradient);
+        .brand-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--surface);
             border-radius: 10px;
             display: flex;
-            align-items: center;
             justify-content: center;
-            color: white;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .social-link {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            background: rgba(67, 97, 238, 0.1);
-            display: flex;
             align-items: center;
-            justify-content: center;
-            color: var(--primary-color);
-            transition: var(--transition);
-            font-size: 1.1rem;
+            box-shadow: 0 4px 12px var(--shadow);
+            border: 1px solid var(--border-light);
         }
 
-        .social-link:hover {
-            background: var(--primary-color);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-sm);
-        }
-
-        /* Background Elements */
-        .background-elements {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .floating-element {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.6;
-            filter: blur(40px);
-            z-index: -1;
-        }
-
-        .floating-1 {
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(67, 97, 238, 0.15) 0%, transparent 70%);
-            top: 5%;
-            left: 5%;
-            animation: float 25s ease-in-out infinite;
-        }
-
-        .floating-2 {
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(114, 9, 183, 0.12) 0%, transparent 70%);
-            bottom: 15%;
-            right: 5%;
-            animation: float 20s ease-in-out infinite reverse;
-        }
-
-        .floating-3 {
-            width: 150px;
-            height: 150px;
-            background: radial-gradient(circle, rgba(247, 37, 133, 0.1) 0%, transparent 70%);
-            bottom: 25%;
-            left: 8%;
-            animation: float 18s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            33% {
-                transform: translate(30px, -50px) rotate(120deg);
-            }
-            66% {
-                transform: translate(-20px, 20px) rotate(240deg);
-            }
-            100% {
-                transform: translate(0, 0) rotate(360deg);
-            }
-        }
-
-        /* Missing Elements Styles */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
-            z-index: 999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
-        }
-
-        .overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .feedback-popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
-            background: var(--card-color);
-            padding: 50px 40px;
-            border-radius: var(--border-radius-lg);
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            text-align: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: var(--transition-slow);
-            max-width: 90%;
-            width: 420px;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
-            backdrop-filter: blur(20px);
-        }
-
-        .feedback-popup.active {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-            pointer-events: auto;
-        }
-
-        .feedback-popup.correct {
-            border-top: 6px solid var(--success-color);
-            background: linear-gradient(145deg, rgba(240, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
-        }
-
-        .feedback-popup.incorrect {
-            border-top: 6px solid var(--error-color);
-            background: linear-gradient(145deg, rgba(255, 240, 245, 0.98), rgba(255, 255, 255, 0.95));
-        }
-
-        .feedback-popup h3 {
-            margin-bottom: 25px;
-            font-size: 2.2rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-
-        .feedback-popup.correct h3 {
-            color: var(--success-dark);
-            text-shadow: 0 2px 8px rgba(76, 201, 240, 0.2);
-        }
-
-        .feedback-popup.incorrect h3 {
-            color: var(--error-color);
-            text-shadow: 0 2px 8px rgba(247, 37, 133, 0.2);
-        }
-
-        .feedback-popup p {
-            margin-bottom: 30px;
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            font-weight: 500;
-        }
-
-        .feedback-popup .correct-answer {
-            font-weight: 700;
-            padding: 20px 30px;
-            border-radius: 16px;
-            margin: 25px 0;
-            background: linear-gradient(135deg, rgba(76, 201, 240, 0.15), rgba(76, 201, 240, 0.08));
-            color: var(--success-dark);
-            border: 2px solid rgba(76, 201, 240, 0.25);
-            font-size: 1.2rem;
-            letter-spacing: 0.5px;
-            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.1);
-        }
-
-        .feedback-popup.incorrect .correct-answer {
-            background: linear-gradient(135deg, rgba(247, 37, 133, 0.15), rgba(247, 37, 133, 0.08));
-            color: var(--error-color);
-            border: 2px solid rgba(247, 37, 133, 0.25);
-            box-shadow: 0 5px 15px rgba(247, 37, 133, 0.1);
-        }
-
-        .explanation {
-            font-size: 1.15rem;
+        .brand-text {
+            font-size: 17px;
+            font-weight: 600;
             color: var(--text-primary);
-            line-height: 1.6;
-            margin: 20px 0;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.03);
-            border-radius: 12px;
-            border-left: 4px solid var(--primary-color);
+            letter-spacing: -0.3px;
         }
 
-        .feedback-popup button {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white;
-            border: none;
-            padding: 18px 45px;
-            border-radius: 50px;
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .nav-button {
+            padding: 8px 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
-            font-weight: 700;
-            font-size: 1.2rem;
-            letter-spacing: 0.8px;
-            transition: var(--transition);
-            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
-            position: relative;
-            overflow: hidden;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .feedback-popup button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(67, 97, 238, 0.5);
+        .nav-button:hover {
+            background: var(--surface-alt);
+            border-color: var(--text-tertiary);
         }
 
-        /* Simplified Results Screen */
-        .results-screen {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.95);
-            width: 70%;
-            max-width: 550px;
-            background: var(--card-color);
-            border-radius: var(--border-radius-lg);
-            box-shadow: var(--shadow-lg);
+        /* Main Content */
+        .main-content {
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 60px 40px;
             text-align: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: var(--transition-slow);
-            z-index: 1001;
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            padding: 40px 0;
         }
 
-        .results-screen.active {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .results-screen h2 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            color: var(--primary-color);
-            font-weight: 800;
-            letter-spacing: -1.2px;
-            text-shadow: 0 3px 10px rgba(67, 97, 238, 0.15);
-        }
-
-        .results-screen p {
-            font-size: 1.3rem;
-            color: var(--text-secondary);
-            margin-bottom: 45px;
-            font-weight: 500;
-            line-height: 1.5;
-        }
-
-        .percentage {
-            font-size: 5rem;
-            font-weight: 800;
-            margin: 30px 0;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
-            line-height: 1;
-            text-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
+        /* ORIGINAL LOGO STYLE - Restored with Purple */
+        .logo-container {
             position: relative;
+            width: 140px;
+            height: 140px;
+            margin-bottom: 40px;
         }
 
-        .percentage::after {
-            content: attr(data-value);
+        @media (min-width: 768px) {
+            .logo-container {
+                width: 160px;
+                height: 160px;
+            }
+        }
+
+        .logo-background {
             position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, transparent, rgba(67, 97, 238, 0.1));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: percentageGlow 2s infinite alternate;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 30px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            animation: float 6s ease-in-out infinite;
         }
 
-        @keyframes percentageGlow {
-            from { opacity: 0.7; }
-            to { opacity: 1; text-shadow: 0 0 20px rgba(67, 97, 238, 0.4); }
-        }
-
-        .score-container {
-            margin: 45px 0;
-            padding: 40px;
-            background: linear-gradient(135deg, rgba(67, 97, 238, 0.12), rgba(67, 97, 238, 0.05));
-            border-radius: var(--border-radius-lg);
-            width: 100%;
-            max-width: 400px;
-            border: 1px solid rgba(67, 97, 238, 0.15);
-            box-shadow: 0 10px 30px rgba(67, 97, 238, 0.15);
-            backdrop-filter: blur(10px);
-        }
-
-        .score-row {
+        .logo {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            top: 10px;
+            left: 10px;
+            background: linear-gradient(135deg, #8a2be2 0%, #ba55d3 100%);
+            border-radius: 24px;
             display: flex;
-            justify-content: space-between;
-            font-size: 1.5rem;
-            padding: 15px 0;
-            font-weight: 700;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 30px rgba(138, 43, 226, 0.3);
+            animation: logoPulse 3s ease-in-out infinite;
         }
 
-        .score-label {
+        @media (min-width: 768px) {
+            .logo {
+                width: 140px;
+                height: 140px;
+                top: 10px;
+                left: 10px;
+            }
+        }
+
+        .logo-inner {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            font-weight: 600;
+            color: #8a2be2;
+            box-shadow: 0 2px 10px rgba(138, 43, 226, 0.2);
+        }
+
+        @media (min-width: 768px) {
+            .logo-inner {
+                width: 120px;
+                height: 120px;
+                font-size: 36px;
+            }
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 8px 30px rgba(138, 43, 226, 0.3); }
+            50% { transform: scale(1.03); box-shadow: 0 12px 40px rgba(138, 43, 226, 0.4); }
+        }
+
+        /* Headlines */
+        .headline {
+            font-size: 32px;
+            font-weight: 600;
             color: var(--text-primary);
+            margin-bottom: 16px;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards 0.3s;
         }
 
-        .score-value {
-            color: var(--primary-color);
+        .subheadline {
+            font-size: 17px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 500px;
+            line-height: 1.5;
+            font-weight: 400;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards 0.5s;
         }
 
-        .retry-btn {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white;
-            border: none;
-            padding: 18px 45px;
-            border-radius: 50px;
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Primary Button */
+        .primary-button {
+            background: var(--surface);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 32px;
+            font-size: 16px;
+            font-weight: 500;
             cursor: pointer;
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-top: 30px;
-            transition: var(--transition);
-            box-shadow: 0 10px 30px rgba(67, 97, 238, 0.4);
-            letter-spacing: 1px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 16px var(--shadow);
             position: relative;
             overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards 0.7s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 200px;
+            justify-content: center;
         }
 
-        .retry-btn:hover {
-            transform: translateY(-7px);
-            box-shadow: 0 15px 35px rgba(67, 97, 238, 0.5);
+        .primary-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--shadow-hover);
+            background: var(--surface-alt);
         }
 
-        .retry-btn:active {
-            transform: translateY(-3px);
+        .primary-button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 12px var(--shadow);
         }
 
-        .confetti {
-            position: fixed;
-            width: 12px;
-            height: 12px;
-            background-color: #f00;
-            border-radius: 0;
-            opacity: 0.8;
+        .primary-button i {
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .primary-button:hover i {
+            transform: translateX(3px);
+        }
+
+        /* Ripple effect - Original */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
             pointer-events: none;
-            z-index: 2000;
         }
 
-        @keyframes confettiFall {
-            0% {
-                transform: translateY(-100vh) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(720deg);
+        @keyframes ripple {
+            to {
+                transform: scale(4);
                 opacity: 0;
             }
         }
 
-        /* Mobile-First CSS Optimizations */
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 60px;
+            max-width: 700px;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards 0.8s;
+        }
+
+        .feature-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border-light);
+            box-shadow: 0 4px 16px var(--shadow);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 28px var(--shadow-hover);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: var(--surface-alt);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--text-secondary);
+            font-size: 22px;
+        }
+
+        .feature-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: var(--text-tertiary);
+            line-height: 1.5;
+        }
+
+        /* Transition overlay - Original */
+        .transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--surface);
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .transition-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 60px;
+            padding-top: 24px;
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 13px;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards 1s;
+            border-top: 1px solid var(--border);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 16px;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
-            :root {
-                --border-radius: 16px;
-                --border-radius-lg: 20px;
-                --border-radius-xl: 24px;
+            .container {
+                padding: 20px;
             }
-
-            html {
-                font-size: 14px;
-                -webkit-text-size-adjust: 100%;
+            
+            .nav {
+                padding: 8px 0 32px;
             }
-
-            body {
-                padding: 0;
-                overflow-x: hidden;
-                touch-action: pan-y;
+            
+            .headline {
+                font-size: 28px;
             }
-
-            .app-container {
-                padding: 0.75rem;
-                gap: 1.25rem;
-                min-height: 100vh;
-                grid-template-rows: auto auto 1fr auto;
+            
+            .subheadline {
+                font-size: 16px;
+                padding: 0 16px;
             }
-
-            .header {
-                padding: 1.5rem 1rem;
-                margin-top: 0.5rem;
-                border-radius: var(--border-radius-lg);
-            }
-
+            
             .logo-container {
-                flex-direction: column;
-                gap: 1rem;
-                margin-bottom: 1.5rem;
+                width: 120px;
+                height: 120px;
+                margin-bottom: 32px;
             }
-
+            
             .logo {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .logo-inner {
+                width: 84px;
+                height: 84px;
+                font-size: 28px;
+            }
+            
+            .primary-button {
+                min-width: 180px;
+                padding: 13px 28px;
+                font-size: 15px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                margin-top: 48px;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 16px;
+            }
+            
+            .headline {
+                font-size: 24px;
+            }
+            
+            .logo-container {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .logo {
+                width: 84px;
+                height: 84px;
+            }
+            
+            .logo-inner {
                 width: 70px;
                 height: 70px;
-                border-radius: 18px;
+                font-size: 24px;
             }
-
-            .logo i {
-                font-size: 1.8rem;
+            
+            .nav-actions {
+                gap: 12px;
             }
-
-            .header-content h1 {
-                font-size: 2.2rem;
-                line-height: 1.1;
-                margin-bottom: 0.25rem;
-            }
-
-            .header-content .subtitle {
-                font-size: 1.1rem;
-                line-height: 1.4;
-            }
-
-            .badge {
-                padding: 0.4rem 1rem;
-                font-size: 0.85rem;
-                margin-top: 0.75rem;
-            }
-
-            .instructions {
-                flex-direction: column;
-                gap: 0.75rem;
-                margin-top: 1.5rem;
-            }
-
-            .instruction-item {
-                padding: 0.875rem 1.25rem;
-                gap: 0.625rem;
-                width: 100%;
-                max-width: 280px;
-                margin: 0 auto;
-            }
-
-            .instruction-icon {
-                width: 36px;
-                height: 36px;
-                border-radius: 10px;
-                font-size: 1rem;
-                flex-shrink: 0;
-            }
-
-            .nav-container {
-                flex-direction: column;
-                gap: 1rem;
-                padding: 1rem 0;
-            }
-
-            .back-btn {
-                width: 100%;
-                justify-content: center;
-                padding: 1rem 1.5rem;
-                font-size: 1rem;
-                border-radius: var(--border-radius);
-            }
-
-            .stats-container {
-                width: 100%;
-                justify-content: space-between;
-                gap: 0.5rem;
-            }
-
-            .stat-item {
-                flex: 1;
-                flex-direction: column;
-                text-align: center;
-                padding: 0.875rem 0.75rem;
-                gap: 0.5rem;
-                min-width: 0;
-            }
-
-            .stat-icon {
-                width: 40px;
-                height: 40px;
-                border-radius: 10px;
-                font-size: 1.1rem;
-            }
-
-            .stat-value {
-                font-size: 1.2rem;
-                line-height: 1;
-            }
-
-            .stat-label {
-                font-size: 0.8rem;
-                opacity: 0.8;
-            }
-
-            .progress-section {
-                padding: 1.25rem;
-                border-radius: var(--border-radius);
-            }
-
-            .progress-header {
-                flex-direction: column;
-                gap: 0.75rem;
-                margin-bottom: 1rem;
-                align-items: flex-start;
-            }
-
-            .progress-label {
-                font-size: 1.1rem;
-            }
-
-            .progress-text {
-                font-size: 1rem;
-                align-self: flex-end;
-            }
-
-            .progress-bar-container {
-                height: 14px;
-            }
-
-            .quiz-content {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .card-section {
-                gap: 1.5rem;
-            }
-
-            .card-container {
-                min-height: 380px;
-                margin: 0 -0.5rem;
-            }
-
-            .quiz-card {
-                min-height: 380px;
-                padding: 2.5rem 1.5rem;
-                border-radius: var(--border-radius-lg);
-                margin: 0 0.5rem;
-            }
-
-            .question-number {
-                top: 1.25rem;
-                left: 1.25rem;
-                width: 44px;
-                height: 44px;
-                border-radius: 12px;
-                font-size: 1.1rem;
-            }
-
-            .question-text {
-                font-size: 1.4rem;
-                margin-bottom: 2.5rem;
-                padding: 0 0.5rem;
-                line-height: 1.4;
-            }
-
-            .swipe-hints {
-                bottom: 1.75rem;
-                padding: 0 1.25rem;
-                gap: 1rem;
-            }
-
-            .swipe-hint {
-                padding: 1rem 1.25rem;
-                font-size: 1rem;
-                gap: 0.5rem;
-                flex: 1;
-                justify-content: center;
-            }
-
-            .hint-icon {
-                font-size: 1.1rem;
-            }
-
-            .action-buttons {
-                grid-template-columns: 1fr 1fr;
-                gap: 1rem;
-                margin-top: 1rem;
-            }
-
-            .action-btn {
-                padding: 1.25rem 1rem;
-                font-size: 1rem;
-                gap: 0.75rem;
-                border-radius: var(--border-radius);
-            }
-
-            .btn-icon {
-                font-size: 1.1rem;
-            }
-
-            .sidebar {
-                padding: 1.5rem;
-                border-radius: var(--border-radius-lg);
-                order: -1;
-            }
-
-            .sidebar-section {
-                margin-bottom: 2rem;
-            }
-
-            .sidebar-title {
-                font-size: 1.2rem;
-                margin-bottom: 1.25rem;
-            }
-
-            .category-list {
-                gap: 0.875rem;
-            }
-
-            .category-item {
-                padding: 1rem 1.25rem;
-                gap: 0.875rem;
-            }
-
-            .category-icon {
-                width: 44px;
-                height: 44px;
-                border-radius: 12px;
-                font-size: 1.2rem;
-                flex-shrink: 0;
-            }
-
-            .timer-container {
-                padding: 1.5rem;
-            }
-
-            .timer {
-                font-size: 2.5rem;
-                margin: 0.75rem 0;
-            }
-
-            .footer {
-                padding: 1.75rem 1.25rem;
-                border-radius: var(--border-radius-lg);
-                margin-top: 1.5rem;
-            }
-
-            .footer-content {
-                flex-direction: column;
-                gap: 1.25rem;
-                text-align: center;
-            }
-
-            .footer-brand {
-                flex-direction: column;
-                gap: 0.75rem;
-            }
-
-            .social-links {
-                justify-content: center;
-            }
-
-            .social-link {
-                width: 42px;
-                height: 42px;
-                border-radius: 10px;
-            }
-
-            .quiz-card {
-                cursor: default;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-                -webkit-tap-highlight-color: transparent;
-                -webkit-touch-callout: none;
-            }
-
-            .action-btn, .back-btn, .category-item {
-                -webkit-tap-highlight-color: rgba(67, 97, 238, 0.1);
-                tap-highlight-color: rgba(67, 97, 238, 0.1);
-            }
-
-            @supports(padding: max(0px)) {
-                .app-container {
-                    padding-left: max(0.75rem, env(safe-area-inset-left));
-                    padding-right: max(0.75rem, env(safe-area-inset-right));
-                    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
-                }
-            }
-
-            @media (max-height: 500px) and (orientation: landscape) {
-                .header {
-                    padding: 1rem 0.75rem;
-                }
-
-                .logo-container {
-                    flex-direction: row;
-                    margin-bottom: 1rem;
-                }
-
-                .logo {
-                    width: 50px;
-                    height: 50px;
-                }
-
-                .instructions {
-                    display: none;
-                }
-
-                .card-container {
-                    min-height: 280px;
-                }
-
-                .quiz-card {
-                    min-height: 280px;
-                    padding: 1.5rem 1rem;
-                }
-
-                .question-text {
-                    font-size: 1.2rem;
-                    margin-bottom: 1.5rem;
-                }
-
-                .swipe-hints {
-                    bottom: 1rem;
-                }
-            }
-
-            @media (max-width: 360px) {
-                .app-container {
-                    padding: 0.5rem;
-                    gap: 1rem;
-                }
-
-                .header {
-                    padding: 1.25rem 0.75rem;
-                }
-
-                .header-content h1 {
-                    font-size: 1.8rem;
-                }
-
-                .question-text {
-                    font-size: 1.2rem;
-                }
-
-                .action-buttons {
-                    grid-template-columns: 1fr;
-                }
-
-                .stats-container {
-                    flex-direction: column;
-                }
-
-                .stat-item {
-                    flex-direction: row;
-                    text-align: left;
-                }
-            }
-
-            @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-                .quiz-card {
-                    border-width: 0.5px;
-                }
-
-                .progress-bar-container {
-                    height: 13px;
-                }
-            }
-
-            @media (prefers-reduced-motion: reduce) {
-                .logo::before,
-                .progress-bar::after,
-                .floating-element {
-                    animation: none;
-                }
-
-                .quiz-card:hover,
-                .action-btn:hover,
-                .back-btn:hover,
-                .category-item:hover,
-                .instruction-item:hover,
-                .stat-item:hover {
-                    transform: none;
-                }
-            }
-
-           
-
-                .header,
-                .progress-section,
-                .sidebar,
-                .footer,
-                .stat-item,
-               
-
-                .instruction-item {
-                    background: rgba(67, 97, 238, 0.15);
-                    border-color: rgba(67, 97, 238, 0.2);
-                }
+            
+            .nav-button {
+                padding: 6px 12px;
+                font-size: 13px;
             }
         }
-
-        /* Additional mobile-specific touch improvements */
-        @media (hover: none) and (pointer: coarse) {
-            .quiz-card:hover {
-                transform: none;
-                box-shadow: var(--shadow-lg);
-            }
-
-            .action-btn:active,
-            .back-btn:active,
-            .category-item:active {
-                transform: scale(0.98);
-            }
-
-            .swipe-hint.active {
-                transform: scale(1.02);
-            }
-        }
-
-        /* Performance optimizations for mobile */
-        .quiz-card,
-        .progress-bar,
-        .floating-element {
-            will-change: transform, opacity;
-            transform: translateZ(0);
-            backface-visibility: hidden;
-        }
-
-        /* Prevent zoom on input focus for iOS */
-        @media (max-width: 768px) {
-            input, select, textarea {
-                font-size: 16px;
-            }
-        }
-
-        /* Animation for card */
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                box-shadow: var(--shadow-lg);
-            }
-            50% {
-                transform: scale(1.02);
-                box-shadow: var(--shadow-xl);
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: var(--shadow-lg);
-            }
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        /* Utility Classes */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .mt-1 { margin-top: 0.5rem; }
-        .mt-2 { margin-top: 1rem; }
-        .mt-3 { margin-top: 1.5rem; }
-        .mb-1 { margin-bottom: 0.5rem; }
-        .mb-2 { margin-bottom: 1rem; }
-        .mb-3 { margin-bottom: 1.5rem; }
     </style>
 </head>
 <body>
-    <div class="background-elements">
-        <div class="floating-element floating-1"></div>
-        <div class="floating-element floating-2"></div>
-        <div class="floating-element floating-3"></div>
+    <!-- ORIGINAL BACKGROUND ANIMATION -->
+    <div class="bg-animation">
+        <div class="bg-circle circle-1"></div>
+        <div class="bg-circle circle-2"></div>
+        <div class="bg-circle circle-3"></div>
     </div>
-    
-    <div class="app-container">
-        <header class="header">
-            <div class="logo-container">
-                <div class="logo">
-                    <i class="fas fa-atom"></i>
-                </div>
-                <div class="header-content">
-                    <h1>Défi Quiz</h1>
-                    <p class="subtitle">Testez vos connaissances avec notre quiz interactif premium</p>
-                    <div class="badge">
-                        <i class="fas fa-crown"></i>
-                        <span>Version Premium</span>
-                    </div>
-                </div>
+
+    <!-- Loading Animation -->
+    <div class="loader" id="loader">
+        <div class="loader-logo">
+            <div class="loader-logo-inner">SVT</div>
+        </div>
+        <div class="loader-text">Loading Platform</div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+    </div>
+
+    <!-- Transition overlay -->
+    <div class="transition-overlay" id="transitionOverlay"></div>
+
+    <!-- Main Content -->
+    <div class="container" id="mainContainer">
+        <!-- Top Navigation -->
+        <nav class="nav">
+            <div class="brand">
+                <div class="brand-icon">EQ</div>
+                <div class="brand-text">Eduwell</div>
             </div>
-            
-            <div class="instructions">
-                <div class="instruction-item">
-                    <div class="instruction-icon">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                    <span>Glissez à droite pour VRAI</span>
-                </div>
-                <div class="instruction-item">
-                    <div class="instruction-icon">
-                        <i class="fas fa-arrow-left"></i>
-                    </div>
-                    <span>Glissez à gauche pour FAUX</span>
-                </div>
-                <div class="instruction-item">
-                    <div class="instruction-icon">
-                        <i class="fas fa-keyboard"></i>
-                    </div>
-                    <span>Utilisez les flèches du clavier</span>
-                </div>
-            </div>
-        </header>
-        
-        <nav class="nav-container">
-            <button class="back-btn" id="backBtn">
-                <i class="fas fa-arrow-left"></i>
-                Retour à l'accueil
-            </button>
-            
-            <div class="stats-container">
-                <div class="stat-item stat-correct">
-                    <div class="stat-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div>
-                        <div class="stat-value" id="correct-count">0</div>
-                        <div class="stat-label">Correct</div>
-                    </div>
-                </div>
-                <div class="stat-item stat-incorrect">
-                    <div class="stat-icon">
-                        <i class="fas fa-times-circle"></i>
-                    </div>
-                    <div>
-                        <div class="stat-value" id="incorrect-count">0</div>
-                        <div class="stat-label">Incorrect</div>
-                    </div>
-                </div>
-                <div class="stat-item stat-streak">
-                    <div class="stat-icon">
-                        <i class="fas fa-fire"></i>
-                    </div>
-                    <div>
-                        <div class="stat-value" id="streak-count">0</div>
-                        <div class="stat-label">Série</div>
-                    </div>
-                </div>
+            <div class="nav-actions">
+                <button class="nav-button">
+                    <i class="fas fa-globe"></i>
+                    EN
+                </button>
+                <button class="nav-button">
+                    <i class="fas fa-info-circle"></i>
+                    Info
+                </button>
             </div>
         </nav>
-        
-        <main class="quiz-content">
-            <section class="card-section">
-                <div class="progress-section">
-                    <div class="progress-header">
-                        <span class="progress-label">
-                            <i class="fas fa-chart-line"></i>
-                            Progression du quiz
-                        </span>
-                        <span class="progress-text">
-                            <span id="current-question">1</span> / 
-                            <span id="total-questions">20</span>
-                        </span>
-                    </div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar" id="progress-fill" style="width: 5%;"></div>
-                    </div>
-                </div>
-                
-                <div class="card-container">
-                    <div class="quiz-card" id="current-card">
-                        <div class="question-number">1</div>
-                        <h2 class="question-text" id="question-text">
-                            Le spermatozoïde humain est une cellule caractérisée par la mobilité.
-                        </h2>
-                        <div class="swipe-hints">
-                            <div class="swipe-hint false">
-                                <i class="fas fa-times hint-icon"></i>
-                                FAUX
-                            </div>
-                            <div class="swipe-hint true">
-                                <i class="fas fa-check hint-icon"></i>
-                                VRAI
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                 <div class="action-buttons">
-                    <button class="action-btn false-btn" id="false-btn">
-                        <i class="fas fa-times btn-icon"></i>
-                        Faux
-                    </button>
-                    <button class="action-btn true-btn" id="true-btn">
-                        <i class="fas fa-check btn-icon"></i>
-                        Vrai
-                    </button>
-                </div>
-                
-               
-            </section>
-            <section>
-            <aside class="sidebar">
-                <div class="sidebar-section">
-                    <h3 class="sidebar-title">
-                        <i class="fas fa-layer-group"></i>
-                        Catégories
-                    </h3>
-                    <div class="category-list">
-                        <div class="category-item active" data-category="biologie-cellulaire">
-                            <div class="category-icon">
-                                <i class="fas fa-dna"></i>
-                            </div>
-                            <div>
-                                <div>Science</div>
-                                <small>10 questions</small>
-                            </div>
-                        </div>
-                        <div class="category-item" data-category="physiologie">
-                            <div class="category-icon">
-                                <i class="fas fa-brain"></i>
-                            </div>
-                            <div>
-                                <div>Physique</div>
-                                <small>8 questions</small>
-                            </div>
-                        </div>
-                        <div class="category-item" data-category="biochimie">
-                            <div class="category-icon">
-                                <i class="fas fa-microscope"></i>
-                            </div>
-                            <div>
-                                <div>English</div>
-                                <small>6 questions</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </section>
-                <div class="sidebar-section">
-                    <h3 class="sidebar-title">
-                        <i class="fas fa-clock"></i>
-                        Chronomètre
-                    </h3>
-                    <div class="timer-container">
-                        <div class="timer" id="timer">02:30</div>
-                        <div class="timer-label">Temps restant</div>
-                    </div>
-                </div>
-                
-                <div class="sidebar-section">
-                    <h3 class="sidebar-title">
-                        <i class="fas fa-trophy"></i>
-                        Classement
-                    </h3>
-                    <div class="category-item">
-                        <div class="category-icon">
-                            <i class="fas fa-user-graduate"></i>
-                        </div>
-                        <div>
-                            <div>Votre meilleur score</div>
-                            <small>85% - 17/20</small>
-                        </div>
-                    </div>
-                </div>
-            </aside>
-        </main>
-        
-        <footer class="footer">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <div class="footer-logo">
-                        <i class="fas fa-atom"></i>
-                    </div>
-                    <div>
-                        <strong>EduWell Quantum Group</strong><br>
-                        <span>Plateforme éducative interactive</span>
-                    </div>
-                </div>
-                <div class="social-links">
-                    <a href="#" class="social-link" aria-label="Facebook">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#" class="social-link" aria-label="Twitter">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="social-link" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a href="#" class="social-link" aria-label="Instagram">
-                        <i class="fab fa-instagram"></i>
-                    </a>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- ORIGINAL LOGO STYLE -->
+            <div class="logo-container">
+                <div class="logo-background"></div>
+                <div class="logo">
+                    <div class="logo-inner">SVT</div>
                 </div>
             </div>
+
+            <!-- Headlines -->
+            <h1 class="headline">Sciences Learning Platform</h1>
+            <p class="subheadline">Master biology and earth sciences with interactive tools and smart learning.</p>
+
+            <!-- Primary Action -->
+            <button class="primary-button" id="startButton">
+                Start Learning
+                <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <!-- Features -->
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <div class="feature-title">Virtual Lab</div>
+                    <div class="feature-desc">Interactive experiments and simulations</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="feature-title">AI Tutor</div>
+                    <div class="feature-desc">Personalized learning paths</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="feature-title">Progress Tracking</div>
+                    <div class="feature-desc">Monitor your learning journey</div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy</a>
+                <a href="#" class="footer-link">Terms</a>
+                <a href="#" class="footer-link">Support</a>
+            </div>
+            <div>© 2025 Eduwell. All rights reserved.</div>
         </footer>
     </div>
 
-    <!-- Missing HTML Elements -->
-    <div class="overlay" id="overlay"></div>
-
-    <div class="feedback-popup" id="feedback-popup">
-        <h3 id="feedback-title">Correct !</h3>
-        <p id="feedback-message">Vous avez trouvé la bonne réponse !</p>
-        <div class="correct-answer" id="correct-answer">La bonne réponse est : Vrai</div>
-        <div class="explanation" id="explanation">L'explication apparaîtra ici.</div>
-        <button id="continue-btn">Continuer</button>
-    </div>
-
-    <!-- Simplified Results Screen -->
-    <div class="results-screen" id="results-screen">
-        <h2>Quiz Terminé !</h2>
-        <p>Bravo pour avoir terminé le quiz !</p>
-        <div class="percentage" id="final-percentage" data-value="100%">100%</div>
-        <div class="score-container">
-            <div class="score-row">
-                <span class="score-label">Score :</span>
-                <span class="score-value" id="final-total-score">0/5</span>
-            </div>
-        </div>
-        <button class="retry-btn" id="retry-btn">Recommencer</button>
-    </div>
-
     <script>
-        // Quiz Questions Data by Category
-        const quizQuestionsByCategory = {
-            'biologie-cellulaire': [
-                {
-                    question: "Le spermatozoïde humain est une cellule caractérisée par la mobilité.",
-                    answer: true,
-                    explanation: "Le flagelle du spermatozoïde lui permet de se déplacer dans les voies génitales féminines, ce qui est essentiel pour atteindre l'ovule."
-                },
-                {
-                    question: "Le spermatozoïde humain est une cellule caractérisée par un nombre de chromosomes égal à 23.",
-                    answer: true,
-                    explanation: "Issu de la méiose, le spermatozoïde est haploïde et contient 23 chromosomes. Lors de la fécondation, ce nombre est rétabli à 46."
-                },
-                {
-                    question: "Le spermatozoïde humain est une cellule caractérisée par un noyau bloqué en métaphase II.",
-                    answer: false,
-                    explanation: "C'est l'ovocyte II qui reste bloqué en métaphase II jusqu'à la fécondation, et non le spermatozoïde."
-                },
-                {
-                    question: "L'inhibine est une hormone sécrétée par les cellules de Sertoli.",
-                    answer: true,
-                    explanation: "Les cellules de Sertoli produisent l'inhibine qui exerce un rétrocontrôle négatif sur la FSH pour réguler la spermatogenèse."
-                },
-                {
-                    question: "L'inhibine exerce un rétrocontrôle négatif sur la sécrétion de LH.",
-                    answer: false,
-                    explanation: "L'inhibine agit uniquement sur la FSH. La LH est régulée principalement par la testostérone."
-                },
-                {
-                    question: "Chez l'homme, les cellules hypothalamiques présentent des récepteurs à la testostérone.",
-                    answer: true,
-                    explanation: "La testostérone agit par rétrocontrôle négatif sur l'hypothalamus, réduisant la sécrétion de GnRH."
-                },
-                {
-                    question: "Chez l'homme, les cellules hypothalamiques présentent des récepteurs à la FSH.",
-                    answer: false,
-                    explanation: "La FSH cible les cellules de Sertoli dans les testicules et n'agit pas directement sur l'hypothalamus."
-                },
-                {
-                    question: "La testostérone est une hormone sécrétée par les cellules de Sertoli.",
-                    answer: false,
-                    explanation: "La production de testostérone est assurée par les cellules de Leydig, sous l'action de la LH."
-                },
-                {
-                    question: "La testostérone exerce un rétrocontrôle négatif sur la sécrétion de LH.",
-                    answer: true,
-                    explanation: "Un taux élevé de testostérone inhibe la sécrétion de GnRH et de LH pour maintenir l'équilibre hormonal."
-                },
-                {
-                    question: "La testostérone agit sur les cellules de Sertoli.",
-                    answer: true,
-                    explanation: "La testostérone se fixe sur les récepteurs des cellules de Sertoli et permet la poursuite de la spermatogenèse."
-                }
-            ],
-            'physiologie': [
-                {
-                    question: "La pression artérielle systolique correspond à la pression dans les artères lors de la contraction ventriculaire.",
-                    answer: true,
-                    explanation: "La pression systolique est la pression maximale atteinte lors de la systole ventriculaire."
-                },
-                {
-                    question: "L'insuline est sécrétée par les cellules alpha du pancréas.",
-                    answer: false,
-                    explanation: "L'insuline est sécrétée par les cellules bêta des îlots de Langerhans du pancréas."
-                },
-                {
-                    question: "Le système nerveux sympathique prépare l'organisme à l'action (fight or flight).",
-                    answer: true,
-                    explanation: "Le système sympathique augmente le rythme cardiaque, la pression artérielle et dilate les pupilles."
-                },
-                {
-                    question: "La mélatonine est produite par l'hypophyse.",
-                    answer: false,
-                    explanation: "La mélatonine est produite par la glande pinéale (épiphyse)."
-                },
-                {
-                    question: "L'hémoglobine transporte l'oxygène dans le sang.",
-                    answer: true,
-                    explanation: "L'hémoglobine des globules rouges se lie réversiblement à l'oxygène pour le transporter."
-                },
-                {
-                    question: "La ventilation pulmonaire est contrôlée uniquement par le système nerveux somatique.",
-                    answer: false,
-                    explanation: "La ventilation est principalement contrôlée par le système nerveux autonome via le centre respiratoire."
-                },
-                {
-                    question: "Le cortisol est une hormone stéroïdienne produite par les glandes surrénales.",
-                    answer: true,
-                    explanation: "Le cortisol est produit par le cortex surrénalien et joue un rôle dans la réponse au stress."
-                },
-                {
-                    question: "La rétine contient des photorécepteurs appelés cônes et bâtonnets.",
-                    answer: true,
-                    explanation: "Les cônes permettent la vision des couleurs et les bâtonnets la vision en faible luminosité."
-                }
-            ],
-            'biochimie': [
-                {
-                    question: "L'ADN polymérase lit le brin matrice dans le sens 3' vers 5'.",
-                    answer: true,
-                    explanation: "L'ADN polymérase synthétise le nouveau brin dans le sens 5' vers 3' en lisant le brin matrice 3' vers 5'."
-                },
-                {
-                    question: "Les enzymes augmentent l'énergie d'activation des réactions chimiques.",
-                    answer: false,
-                    explanation: "Les enzymes diminuent l'énergie d'activation, facilitant ainsi le déroulement des réactions."
-                },
-                {
-                    question: "Le cycle de Krebs se déroule dans la matrice mitochondriale.",
-                    answer: true,
-                    explanation: "Le cycle de Krebs a lieu dans la matrice mitochondriale et produit du NADH et du FADH2."
-                },
-                {
-                    question: "L'ATP est la principale molécule de stockage d'énergie dans les cellules.",
-                    answer: true,
-                    explanation: "L'ATP (Adénosine Triphosphate) est la principale source d'énergie pour les processus cellulaires."
-                },
-                {
-                    question: "La glycolyse nécessite de l'oxygène pour produire de l'ATP.",
-                    answer: false,
-                    explanation: "La glycolyse est anaérobie et peut se produire en absence d'oxygène."
-                },
-                {
-                    question: "Les acides aminés sont les monomères des protéines.",
-                    answer: true,
-                    explanation: "Les protéines sont des polymères d'acides aminés liés par des liaisons peptidiques."
-                }
-            ]
-        };
-
-        // DOM Elements
-        const currentCard = document.getElementById('current-card');
-        const questionText = document.getElementById('question-text');
-        const progressFill = document.getElementById('progress-fill');
-        const currentQuestionElement = document.getElementById('current-question');
-        const totalQuestionsElement = document.getElementById('total-questions');
-        const feedbackPopup = document.getElementById('feedback-popup');
-        const feedbackTitle = document.getElementById('feedback-title');
-        const feedbackMessage = document.getElementById('feedback-message');
-        const correctAnswerElement = document.getElementById('correct-answer');
-        const explanationElement = document.getElementById('explanation');
-        const continueBtn = document.getElementById('continue-btn');
-        const overlay = document.getElementById('overlay');
-        const resultsScreen = document.getElementById('results-screen');
-        const finalPercentage = document.getElementById('final-percentage');
-        const finalTotalScore = document.getElementById('final-total-score');
-        const retryBtn = document.getElementById('retry-btn');
-        const trueHint = document.querySelector('.swipe-hint.true');
-        const falseHint = document.querySelector('.swipe-hint.false');
-        const backBtn = document.getElementById('backBtn');
-        const trueBtn = document.getElementById('true-btn');
-        const falseBtn = document.getElementById('false-btn');
-        const timerElement = document.getElementById('timer');
-        const streakCount = document.getElementById('streak-count');
-        const correctCount = document.getElementById('correct-count');
-        const incorrectCount = document.getElementById('incorrect-count');
-        const categoryItems = document.querySelectorAll('.category-item');
-
-        // App State
-        let currentQuestionIndex = 0;
-        let correctAnswers = 0;
-        let incorrectAnswers = 0;
-        let currentStreak = 0;
-        let isSwiping = false;
-        let startX = 0;
-        let currentX = 0;
-        let isDragging = false;
-        let threshold = 100;
-        let timerInterval;
-        let timeLeft = 150; // 2 minutes 30 seconds in seconds
-        let currentCategory = 'biologie-cellulaire';
-        let currentQuizQuestions = [];
-
-        // Initialize Quiz
-        function initQuiz() {
-            currentQuestionIndex = 0;
-            correctAnswers = 0;
-            incorrectAnswers = 0;
-            currentStreak = 0;
-            timeLeft = 150;
+        // Simulate loading progress
+        const progressBar = document.getElementById('progressBar');
+        let progress = 0;
+        
+        const progressInterval = setInterval(() => {
+            progress += Math.random() * 10;
             
-            // Load questions for current category
-            currentQuizQuestions = quizQuestionsByCategory[currentCategory];
-            
-            // Update UI
-            updateStats();
-            totalQuestionsElement.textContent = currentQuizQuestions.length;
-            loadQuestion(currentQuestionIndex);
-            updateProgress();
-            startTimer();
-            
-            // Hide results screen if visible
-            resultsScreen.classList.remove('active');
-            overlay.classList.remove('active');
-            
-            // Reset card
-            resetCard();
-        }
-
-        // Load Question
-        function loadQuestion(index) {
-            if (index >= currentQuizQuestions.length) {
-                showResults();
-                return;
-            }
-            
-            const question = currentQuizQuestions[index];
-            questionText.textContent = question.question;
-            currentQuestionElement.textContent = index + 1;
-            
-            // Reset card with animation
-            resetCard();
-            
-            // Add pulse animation
-            currentCard.classList.add('pulse');
-            setTimeout(() => {
-                currentCard.classList.remove('pulse');
-            }, 2000);
-        }
-
-        // Reset Card Position
-        function resetCard() {
-            currentCard.style.transform = 'translateX(0) rotate(0) scale(1)';
-            currentCard.style.opacity = '1';
-            currentCard.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
-            resetHints();
-        }
-
-        // Update Progress Bar
-        function updateProgress() {
-            const progress = (currentQuestionIndex / currentQuizQuestions.length) * 100;
-            progressFill.style.width = `${progress}%`;
-        }
-
-        // Update Statistics
-        function updateStats() {
-            correctCount.textContent = correctAnswers;
-            incorrectCount.textContent = incorrectAnswers;
-            streakCount.textContent = currentStreak;
-        }
-
-        // Show Feedback Popup
-        function showFeedback(isCorrect, correctAnswer) {
-            overlay.classList.add('active');
-            feedbackPopup.classList.add('active');
-            
-            const currentQuestion = currentQuizQuestions[currentQuestionIndex];
-            
-            if (isCorrect) {
-                feedbackPopup.classList.add('correct');
-                feedbackPopup.classList.remove('incorrect');
-                feedbackTitle.textContent = 'Correct !';
-                feedbackMessage.textContent = 'Parfait ! Vous avez trouvé la bonne réponse.';
-                feedbackTitle.style.color = 'var(--success-color)';
-                currentStreak++;
-            } else {
-                feedbackPopup.classList.add('incorrect');
-                feedbackPopup.classList.remove('correct');
-                feedbackTitle.textContent = 'Incorrect !';
-                feedbackMessage.textContent = 'Permettez-moi de vous expliquer cela.';
-                feedbackTitle.style.color = 'var(--error-color)';
-                currentStreak = 0;
-            }
-            
-            correctAnswerElement.textContent = `La bonne réponse est : ${correctAnswer ? 'Vrai' : 'Faux'}`;
-            explanationElement.textContent = currentQuestion.explanation;
-            explanationElement.style.borderLeftColor = isCorrect ? 'var(--success-color)' : 'var(--error-color)';
-        }
-
-        // Handle Swipe
-        function handleSwipe(isRightSwipe) {
-            if (isSwiping) return;
-            isSwiping = true;
-            
-            const currentQuestion = currentQuizQuestions[currentQuestionIndex];
-            const userAnswer = isRightSwipe;
-            const isCorrect = userAnswer === currentQuestion.answer;
-            
-            // Update score
-            if (isCorrect) {
-                correctAnswers++;
-            } else {
-                incorrectAnswers++;
-            }
-            
-            updateStats();
-            
-            // Remove transition for smooth swipe
-            currentCard.style.transition = 'none';
-            
-            // Animate card based on swipe direction
-            requestAnimationFrame(() => {
-                const translateAmount = window.innerWidth * 0.8;
-                currentCard.style.transform = isRightSwipe ? 
-                    `translateX(${translateAmount}px) rotate(25deg) scale(0.9)` : 
-                    `translateX(-${translateAmount}px) rotate(-25deg) scale(0.9)`;
-                currentCard.style.opacity = '0';
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(progressInterval);
                 
-                // Show feedback after animation
+                // Hide loader and show main content
                 setTimeout(() => {
-                    showFeedback(isCorrect, currentQuestion.answer);
-                }, 300);
-            });
-        }
+                    document.getElementById('loader').classList.add('hidden');
+                    document.getElementById('mainContainer').classList.add('visible');
+                }, 400);
+            }
+            progressBar.style.width = `${progress}%`;
+        }, 200);
 
-        // Next Question
-        function nextQuestion() {
-            feedbackPopup.classList.remove('active');
-            overlay.classList.remove('active');
-            
-            currentQuestionIndex++;
-            updateProgress();
-            
+        // Button interaction with original ripple effect
+        const startButton = document.getElementById('startButton');
+        const transitionOverlay = document.getElementById('transitionOverlay');
+        const DESTINATION_URL = "https://edu-well.netlify.app/quizqcm/svtapp";
+
+        startButton.addEventListener('click', function(e) {
+            // Add ripple effect
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            this.appendChild(ripple);
+
+            // Get click position
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Position ripple
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+
+            // Remove ripple after animation
             setTimeout(() => {
-                loadQuestion(currentQuestionIndex);
-                isSwiping = false;
+                ripple.remove();
+            }, 600);
+
+            // Button press effect
+            startButton.style.transform = 'translateY(0)';
+            
+            // Show transition overlay
+            setTimeout(() => {
+                transitionOverlay.classList.add('active');
             }, 300);
-        }
 
-        // Reset Hints
-        function resetHints() {
-            trueHint.classList.remove('active');
-            falseHint.classList.remove('active');
-        }
-
-        // Show Results
-        function showResults() {
-            clearInterval(timerInterval);
-            
-            const totalQuestions = currentQuizQuestions.length;
-            const percentage = Math.round((correctAnswers / totalQuestions) * 100);
-            
-            // Update results screen
-            finalPercentage.textContent = `${percentage}%`;
-            finalPercentage.setAttribute('data-value', `${percentage}%`);
-            finalTotalScore.textContent = `${correctAnswers}/${totalQuestions}`;
-            
-            // Show confetti for perfect score
-            if (correctAnswers === totalQuestions) {
-                createConfetti();
-            }
-            
-            // Show results screen
+            // Navigate after transition
             setTimeout(() => {
-                resultsScreen.classList.add('active');
-                overlay.classList.add('active');
-            }, 500);
-        }
+                window.location.href = DESTINATION_URL;
+            }, 600);
+        });
 
-        // Create Confetti Animation
-        function createConfetti() {
-            const colors = ['#ff4081', '#3f51b5', '#009688', '#ff9800', '#e91e63', '#2196f3', '#4caf50'];
-            
-            for (let i = 0; i < 100; i++) {
-                const confetti = document.createElement('div');
-                confetti.classList.add('confetti');
-                confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.width = (Math.random() * 10 + 5) + 'px';
-                confetti.style.height = (Math.random() * 10 + 5) + 'px';
-                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-                confetti.style.animation = `confettiFall ${Math.random() * 3 + 2}s linear forwards`;
-                confetti.style.animationDelay = Math.random() * 3 + 's';
-                
-                document.body.appendChild(confetti);
-                
-                // Remove confetti after animation
-                setTimeout(() => {
-                    confetti.remove();
-                }, 5000);
+        // Button hover effects
+        startButton.addEventListener('mouseenter', () => {
+            startButton.style.transform = 'translateY(-2px)';
+        });
+
+        startButton.addEventListener('mouseleave', () => {
+            if (!startButton.classList.contains('clicked')) {
+                startButton.style.transform = 'translateY(0)';
             }
-        }
+        });
 
-        // Timer Functions
-        function startTimer() {
-            clearInterval(timerInterval);
-            updateTimerDisplay();
-            
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                updateTimerDisplay();
-                
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    showResults();
-                }
-            }, 1000);
-        }
-
-        function updateTimerDisplay() {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            
-            // Add warning color when time is running out
-            if (timeLeft <= 30) {
-                timerElement.style.color = 'var(--error-color)';
-            } else if (timeLeft <= 60) {
-                timerElement.style.color = 'var(--warning-color)';
-            } else {
-                timerElement.style.color = 'var(--primary-color)';
-            }
-        }
-
-        // Category Switching
-        function switchCategory(category) {
-            currentCategory = category;
-            
-            // Update active category in UI
-            categoryItems.forEach(item => {
-                if (item.dataset.category === category) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
+        // Nav buttons hover effects
+        const navButtons = document.querySelectorAll('.nav-button');
+        navButtons.forEach(button => {
+            button.addEventListener('mouseenter', () => {
+                button.style.transform = 'translateY(-1px)';
             });
             
-            // Show category notification
-            const categoryName = document.querySelector(`[data-category="${category}"] div`).textContent;
-            showCategoryNotification(categoryName);
-            
-            // Restart quiz with new category
-            initQuiz();
-        }
-
-        function showCategoryNotification(categoryName) {
-            // Create a temporary notification
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: var(--primary-gradient);
-                color: white;
-                padding: 1rem 2rem;
-                border-radius: var(--border-radius);
-                font-weight: 600;
-                z-index: 10000;
-                box-shadow: var(--shadow-lg);
-            `;
-            notification.textContent = `Catégorie "${categoryName}" sélectionnée`;
-            
-            document.body.appendChild(notification);
-            
-            // Remove notification after 2 seconds
-            setTimeout(() => {
-                notification.style.opacity = '0';
-                notification.style.transition = 'opacity 0.3s ease';
-                setTimeout(() => notification.remove(), 300);
-            }, 2000);
-        }
-
-        // Touch Events for Mobile
-        currentCard.addEventListener('touchstart', (e) => {
-            if (isSwiping) return;
-            e.preventDefault();
-            isDragging = true;
-            startX = e.touches[0].clientX;
-            currentCard.style.transition = 'none';
-        }, { passive: false });
-
-        currentCard.addEventListener('touchmove', (e) => {
-            if (!isDragging || isSwiping) return;
-            e.preventDefault();
-            currentX = e.touches[0].clientX;
-            const diff = currentX - startX;
-            
-            // Only allow swipe if moved more than 5px
-            if (Math.abs(diff) > 5) {
-                // Update hint opacity based on swipe direction
-                if (diff > 0) {
-                    trueHint.classList.add('active');
-                    falseHint.classList.remove('active');
-                } else {
-                    falseHint.classList.add('active');
-                    trueHint.classList.remove('active');
-                }
-                
-                // Apply transformation
-                currentCard.style.transform = `translateX(${diff}px) rotate(${diff * 0.06}deg)`;
-                currentCard.style.opacity = 1 - Math.abs(diff) / (window.innerWidth * 0.4);
-            }
-        }, { passive: false });
-
-        currentCard.addEventListener('touchend', (e) => {
-            if (!isDragging || isSwiping) {
-                isDragging = false;
-                resetHints();
-                return;
-            }
-            
-            const diff = currentX - startX;
-            
-            if (Math.abs(diff) > threshold) {
-                handleSwipe(diff > 0);
-            } else {
-                resetCard();
-                resetHints();
-            }
-            
-            isDragging = false;
-        });
-
-        currentCard.addEventListener('touchcancel', () => {
-            isDragging = false;
-            resetCard();
-            resetHints();
-        });
-
-        // Mouse Events for Desktop
-        let isMouseDown = false;
-        let mouseStartX = 0;
-        let mouseCurrentX = 0;
-
-        currentCard.addEventListener('mousedown', (e) => {
-            if (isSwiping) return;
-            isMouseDown = true;
-            mouseStartX = e.clientX;
-            currentCard.style.cursor = 'grabbing';
-            currentCard.style.transition = 'none';
-        });
-
-        document.addEventListener('mousemove', (e) => {
-            if (!isMouseDown || isSwiping) return;
-            mouseCurrentX = e.clientX;
-            const diff = mouseCurrentX - mouseStartX;
-            
-            if (Math.abs(diff) > 5) {
-                // Update hint opacity based on swipe direction
-                if (diff > 0) {
-                    trueHint.classList.add('active');
-                    falseHint.classList.remove('active');
-                } else {
-                    falseHint.classList.add('active');
-                    trueHint.classList.remove('active');
-                }
-                
-                // Apply transformation
-                currentCard.style.transform = `translateX(${diff}px) rotate(${diff * 0.06}deg)`;
-                currentCard.style.opacity = 1 - Math.abs(diff) / 500;
-            }
-        });
-
-        document.addEventListener('mouseup', () => {
-            if (!isMouseDown || isSwiping) {
-                isMouseDown = false;
-                currentCard.style.cursor = 'grab';
-                resetHints();
-                return;
-            }
-            
-            const diff = mouseCurrentX - mouseStartX;
-            
-            if (Math.abs(diff) > threshold) {
-                handleSwipe(diff > 0);
-            } else {
-                resetCard();
-                resetHints();
-            }
-            
-            isMouseDown = false;
-            currentCard.style.cursor = 'grab';
-        });
-
-        // Button Events
-        trueBtn.addEventListener('click', () => {
-            if (!isSwiping) {
-                handleSwipe(true);
-            }
-        });
-
-        falseBtn.addEventListener('click', () => {
-            if (!isSwiping) {
-                handleSwipe(false);
-            }
-        });
-
-        continueBtn.addEventListener('click', nextQuestion);
-
-        retryBtn.addEventListener('click', () => {
-            resultsScreen.classList.remove('active');
-            overlay.classList.remove('active');
-            setTimeout(initQuiz, 300);
-        });
-
-        // Back Button Functionality
-        backBtn.addEventListener('click', () => {
-            if (confirm('Êtes-vous sûr de vouloir revenir en arrière ? Votre progression sera perdue.')) {
-                window.history.back();
-            }
-        });
-
-        // Category Selection
-        categoryItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const category = item.dataset.category;
-                switchCategory(category);
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = 'translateY(0)';
             });
         });
 
-        // Keyboard Support
-        document.addEventListener('keydown', (e) => {
-            if (isSwiping) return;
+        // Feature card hover effects
+        const featureCards = document.querySelectorAll('.feature-card');
+        featureCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
             
-            if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
-                handleSwipe(true);
-            } else if (e.key === 'ArrowLeft' || e.key === 'q' || e.key === 'Q') {
-                handleSwipe(false);
-            } else if (e.key === 'Enter' && feedbackPopup.classList.contains('active')) {
-                nextQuestion();
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Language toggle
+        const langButton = document.querySelector('.nav-button:nth-child(1)');
+        langButton.addEventListener('click', () => {
+            const currentLang = langButton.textContent.trim();
+            langButton.innerHTML = currentLang === 'EN' ? 
+                '<i class="fas fa-globe"></i> FR' : 
+                '<i class="fas fa-globe"></i> EN';
+        });
+
+        // Responsive adjustments
+        window.addEventListener('resize', () => {
+            const container = document.getElementById('mainContainer');
+            if (window.innerWidth < 768) {
+                container.style.padding = '15px';
+            } else {
+                container.style.padding = '24px';
             }
         });
-
-        // Prevent text selection during dragging
-        currentCard.addEventListener('dragstart', (e) => {
-            e.preventDefault();
-        });
-
-        // Adjust threshold based on screen size
-        function adjustThreshold() {
-            threshold = Math.min(100, window.innerWidth * 0.2);
-        }
-
-        // Initialize quiz when page loads
-        window.addEventListener('DOMContentLoaded', () => {
-            initQuiz();
-            adjustThreshold();
-        });
-
-        // Adjust for window resize
-        window.addEventListener('resize', adjustThreshold);
     </script>
 </body>
 </html>

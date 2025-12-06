@@ -529,6 +529,172 @@
             color: var(--text-primary);
         }
 
+        /* NEW POP-UP STYLES (Added without modifying existing design) */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 3000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .popup-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .popup {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--surface);
+            border-radius: 24px 24px 0 0;
+            padding: 32px 24px;
+            z-index: 3001;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 -10px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .popup.active {
+            transform: translateY(0);
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .popup-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+        }
+
+        .popup-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--surface-alt);
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-secondary);
+        }
+
+        .popup-close:hover {
+            background: var(--surface);
+            border-color: var(--text-tertiary);
+            transform: translateY(-1px);
+        }
+
+        .popup-content {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .popup-section {
+            margin-bottom: 20px;
+        }
+
+        .popup-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .popup-section-content {
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .popup-list {
+            padding-left: 20px;
+            margin: 12px 0;
+        }
+
+        .popup-list li {
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .support-button {
+            background: var(--surface);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 24px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 16px var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .support-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--shadow-hover);
+            background: var(--surface-alt);
+        }
+
+        .support-button i {
+            font-size: 16px;
+            color: #E4405F;
+        }
+
+        .version-item {
+            background: var(--surface-alt);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-light);
+        }
+
+        .version-number {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .version-date {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .version-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .container {
@@ -581,6 +747,15 @@
                 flex-direction: column;
                 gap: 12px;
             }
+            
+            /* Responsive popup adjustments */
+            .popup {
+                padding: 24px 20px;
+            }
+            
+            .popup-title {
+                font-size: 18px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -616,6 +791,16 @@
                 padding: 6px 12px;
                 font-size: 13px;
             }
+            
+            /* Mobile popup adjustments */
+            .popup {
+                padding: 20px 16px;
+                max-height: 90vh;
+            }
+            
+            .popup-title {
+                font-size: 17px;
+            }
         }
     </style>
 </head>
@@ -641,6 +826,191 @@
     <!-- Transition overlay -->
     <div class="transition-overlay" id="transitionOverlay"></div>
 
+    <!-- NEW POP-UP OVERLAY -->
+    <div class="popup-overlay" id="popupOverlay"></div>
+
+    <!-- Privacy Pop-up -->
+    <div class="popup" id="privacyPopup">
+        <div class="popup-header">
+            <div class="popup-title">Privacy Policy</div>
+            <div class="popup-close" onclick="closePopup('privacyPopup')">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="popup-content">
+            <div class="popup-section">
+                <div class="popup-section-title">Data Collection</div>
+                <div class="popup-section-content">
+                    We collect only essential data to provide you with the best learning experience. This includes:
+                </div>
+                <ul class="popup-list">
+                    <li>Progress tracking data to personalize your learning path</li>
+                    <li>Anonymous usage statistics to improve our platform</li>
+                    <li>Account information for login and profile management</li>
+                </ul>
+            </div>
+            
+            <div class="popup-section">
+                <div class="popup-section-title">Data Usage</div>
+                <div class="popup-section-content">
+                    Your data is used exclusively to enhance your learning experience. We never sell your personal information to third parties.
+                </div>
+            </div>
+            
+            <div class="popup-section">
+                <div class="popup-section-title">Security</div>
+                <div class="popup-section-content">
+                    We implement industry-standard security measures to protect your data. All data transmission is encrypted using SSL/TLS protocols.
+                </div>
+            </div>
+            
+            <div class="popup-section">
+                <div class="popup-section-title">Your Rights</div>
+                <div class="popup-section-content">
+                    You have the right to access, modify, or delete your personal data at any time through your account settings or by contacting us.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms Pop-up -->
+    <div class="popup" id="termsPopup">
+        <div class="popup-header">
+            <div class="popup-title">Terms & Conditions</div>
+            <div class="popup-close" onclick="closePopup('termsPopup')">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="popup-content">
+            <div class="popup-section">
+                <div class="popup-section-title">Acceptance of Terms</div>
+                <div class="popup-section-content">
+                    By accessing and using the Eduwell platform, you accept and agree to be bound by these Terms & Conditions.
+                </div>
+            </div>
+            
+            <div class="popup-section">
+                <div class="popup-section-title">User Responsibilities</div>
+                <div class="popup-section-content">
+                    You agree to:
+                </div>
+                <ul class="popup-list">
+                    <li>Use the platform for educational purposes only</li>
+                    <li>Not share your account credentials</li>
+                    <li>Not attempt to reverse engineer or hack the platform</li>
+                    <li>Respect intellectual property rights</li>
+                </ul>
+            </div>
+            
+            <div class="popup-section">
+                <div class="popup-section-title">Platform Usage</div>
+                <div class="popup-section-content">
+                    The platform is provided for educational purposes. We reserve the right to modify, suspend, or discontinue any feature at any time.
+                </div>
+            </div>
+            
+            <div class="popup-section">
+                <div class="popup-section-title">Limitation of Liability</div>
+                <div class="popup-section-content">
+                    Eduwell is not liable for any indirect, incidental, or consequential damages arising from your use of the platform.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Support Pop-up -->
+    <div class="popup" id="supportPopup">
+        <div class="popup-header">
+            <div class="popup-title">Support</div>
+            <div class="popup-close" onclick="closePopup('supportPopup')">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="popup-content">
+            <div class="popup-section">
+                <div class="popup-section-content">
+                    If you need help with any issue, contact us directly from here.
+                </div>
+            </div>
+            
+            <a href="https://www.instagram.com/eduwellofficial/" target="_blank" class="support-button">
+                <i class="fab fa-instagram"></i>
+                Contact on Instagram
+            </a>
+            
+            <div class="popup-section">
+                <div class="popup-section-title">Response Time</div>
+                <div class="popup-section-content">
+                    We typically respond within 24 hours on business days. Please include detailed information about your issue for faster resolution.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Pop-up -->
+    <div class="popup" id="infoPopup">
+        <div class="popup-header">
+            <div class="popup-title">App Versions & Updates</div>
+            <div class="popup-close" onclick="closePopup('infoPopup')">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="popup-content">
+            <div class="version-item">
+                <div class="version-number">
+                    <i class="fas fa-star"></i>
+                    Version 3.2.1
+                </div>
+                <div class="version-date">Released: December 5, 2024</div>
+                <div class="version-description">
+                    • Enhanced AI tutor with better explanations<br>
+                    • Improved performance tracking dashboard<br>
+                    • Bug fixes and stability improvements
+                </div>
+            </div>
+            
+            <div class="version-item">
+                <div class="version-number">
+                    <i class="fas fa-star"></i>
+                    Version 3.1.0
+                </div>
+                <div class="version-date">Released: November 20, 2024</div>
+                <div class="version-description">
+                    • Added virtual lab simulations<br>
+                    • New biology modules added<br>
+                    • Enhanced mobile responsiveness
+                </div>
+            </div>
+            
+            <div class="version-item">
+                <div class="version-number">
+                    <i class="fas fa-star"></i>
+                    Version 3.0.0
+                </div>
+                <div class="version-date">Released: October 15, 2024</div>
+                <div class="version-description">
+                    • Complete platform redesign<br>
+                    • Added progress tracking system<br>
+                    • New interactive quizzes<br>
+                    • Performance optimization
+                </div>
+            </div>
+            
+            <div class="version-item">
+                <div class="version-number">
+                    <i class="fas fa-star"></i>
+                    Version 2.5.0
+                </div>
+                <div class="version-date">Released: September 5, 2024</div>
+                <div class="version-description">
+                    • Added earth sciences content<br>
+                    • Improved user interface<br>
+                    • Fixed known issues
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Main Content -->
     <div class="container" id="mainContainer">
         <!-- Top Navigation -->
@@ -654,7 +1024,7 @@
                     <i class="fas fa-globe"></i>
                     EN
                 </button>
-                <button class="nav-button">
+                <button class="nav-button" onclick="openPopup('infoPopup')">
                     <i class="fas fa-info-circle"></i>
                     Info
                 </button>
@@ -710,9 +1080,9 @@
         <!-- Footer -->
         <footer class="footer">
             <div class="footer-links">
-                <a href="#" class="footer-link">Privacy</a>
-                <a href="#" class="footer-link">Terms</a>
-                <a href="#" class="footer-link">Support</a>
+                <a href="#" class="footer-link" onclick="openPopup('privacyPopup'); return false;">Privacy</a>
+                <a href="#" class="footer-link" onclick="openPopup('termsPopup'); return false;">Terms</a>
+                <a href="#" class="footer-link" onclick="openPopup('supportPopup'); return false;">Support</a>
             </div>
             <div>© 2025 Eduwell. All rights reserved.</div>
         </footer>
@@ -820,6 +1190,51 @@
             langButton.innerHTML = currentLang === 'EN' ? 
                 '<i class="fas fa-globe"></i> FR' : 
                 '<i class="fas fa-globe"></i> EN';
+        });
+
+        // NEW POP-UP FUNCTIONS
+        function openPopup(popupId) {
+            const overlay = document.getElementById('popupOverlay');
+            const popup = document.getElementById(popupId);
+            
+            overlay.classList.add('active');
+            popup.classList.add('active');
+            
+            // Prevent body scroll when popup is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePopup(popupId) {
+            const overlay = document.getElementById('popupOverlay');
+            const popup = document.getElementById(popupId);
+            
+            popup.classList.remove('active');
+            
+            // Close overlay after popup animation
+            setTimeout(() => {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        // Close popup when clicking overlay
+        document.getElementById('popupOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                const activePopup = document.querySelector('.popup.active');
+                if (activePopup) {
+                    closePopup(activePopup.id);
+                }
+            }
+        });
+
+        // Close popup with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const activePopup = document.querySelector('.popup.active');
+                if (activePopup) {
+                    closePopup(activePopup.id);
+                }
+            }
         });
 
         // Responsive adjustments

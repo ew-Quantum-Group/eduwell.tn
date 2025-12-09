@@ -1,1228 +1,1088 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="google-site-verification" content="7-FD479xFj_8HbH9UlwHCnnMl0gziIaCUqk5R_oU6L4" />
-  <title>EduWell</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eduwell | SVT Learning Platform</title>
+     <link rel="shortcut icon" href="./assets/images/appicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Apple San Francisco font via system stack */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
 
-  <!--
-    - favicon
-  -->
-  <link rel="shortcut icon" href="./assets/images/logoo.png" type="image/x-icon">
+        /* Professional Color Palette - Updated to Microsoft Blue */
+        :root {
+            --primary-bg: #f8f9fa;
+            --surface: #ffffff;
+            --surface-alt: #f8f9fa;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --text-tertiary: #a1a1a6;
+            --border: #e5e5ea;
+            --border-light: #f2f2f7;
+            --accent-blue: #0078D4; /* Microsoft Blue */
+            --accent-blue-light: #50E6FF;
+            --accent-purple: #0078D4; /* Updated to Microsoft Blue */
+            --shadow: rgba(0, 0, 0, 0.05);
+            --shadow-hover: rgba(0, 0, 0, 0.08);
+        }
 
-  <!--
-    - custom css link
-  -->
-  <link rel="stylesheet" href="./assets/css/style.css">
-  <link rel="stylesheet" href="pop.css">
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            opacity: 0;
+            animation: fadeInBody 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+        }
 
-  <!--
-    - google font link
-  -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+        @keyframes fadeInBody {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* ORIGINAL BACKGROUND ANIMATION - Restored */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0;
+            animation: fadeInBackground 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) forwards 0.1s;
+        }
+
+        @keyframes fadeInBackground {
+            to {
+                opacity: 0.6;
+            }
+        }
+
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(0, 120, 212, 0.03) 0%, rgba(80, 230, 255, 0.03) 100%); /* Updated to Microsoft Blue */
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .circle-1 {
+            width: 80vmin;
+            height: 80vmin;
+            top: -30vmin;
+            left: -30vmin;
+            animation-delay: 0s;
+        }
+
+        .circle-2 {
+            width: 60vmin;
+            height: 60vmin;
+            bottom: -20vmin;
+            right: 10%;
+            animation-delay: -7s;
+        }
+
+        .circle-3 {
+            width: 40vmin;
+            height: 40vmin;
+            top: 20%;
+            right: -15vmin;
+            animation-delay: -14s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(120deg); }
+            66% { transform: translateY(10px) rotate(240deg); }
+        }
+
+        /* Main Container */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUpContainer 0.7s cubic-bezier(0.215, 0.61, 0.355, 1) forwards 0.2s;
+        }
+
+        @keyframes fadeInUpContainer {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Top Navigation - Minimal */
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0 40px;
+            margin-bottom: 16px;
+            opacity: 0;
+            animation: fadeInNav 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) forwards 0.4s;
+        }
+
+        @keyframes fadeInNav {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--surface);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px var(--shadow);
+            border: 1px solid var(--border-light);
+        }
+
+        .brand-text {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .nav-button {
+            padding: 8px 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-button:hover {
+            background: var(--surface-alt);
+            border-color: var(--text-tertiary);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        /* ORIGINAL LOGO STYLE - Updated to Microsoft Blue */
+        .logo-container {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInLogo 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards 0.3s;
+        }
+
+        @keyframes fadeInLogo {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .logo-container {
+                width: 160px;
+                height: 160px;
+            }
+        }
+
+        .logo-background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 30px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .logo {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            top: 10px;
+            left: 10px;
+            background: linear-gradient(135deg, #0078D4 0%, #50E6FF 100%); /* Updated to Microsoft Blue */
+            border-radius: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 30px rgba(0, 120, 212, 0.3); /* Updated to Microsoft Blue */
+            animation: logoPulse 3s ease-in-out infinite;
+        }
+
+        @media (min-width: 768px) {
+            .logo {
+                width: 140px;
+                height: 140px;
+                top: 10px;
+                left: 10px;
+            }
+        }
+
+        .logo-inner {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            font-weight: 600;
+            color: #0078D4; /* Updated to Microsoft Blue */
+            box-shadow: 0 2px 10px rgba(0, 120, 212, 0.2); /* Updated to Microsoft Blue */
+        }
+
+        @media (min-width: 768px) {
+            .logo-inner {
+                width: 120px;
+                height: 120px;
+                font-size: 36px;
+            }
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 8px 30px rgba(0, 120, 212, 0.3); }
+            50% { transform: scale(1.03); box-shadow: 0 12px 40px rgba(0, 120, 212, 0.4); }
+        }
+
+        /* Headlines */
+        .headline {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+            opacity: 0;
+            animation: fadeInUp 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards 0.5s;
+        }
+
+        .subheadline {
+            font-size: 17px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 500px;
+            line-height: 1.5;
+            font-weight: 400;
+            opacity: 0;
+            animation: fadeInUp 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards 0.6s;
+        }
+
+        @keyframes fadeInUp {
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+            from { 
+                opacity: 0; 
+                transform: translateY(10px); 
+            }
+        }
+
+        /* Primary Button */
+        .primary-button {
+            background: var(--surface);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 32px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 16px var(--shadow);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards 0.7s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 200px;
+            justify-content: center;
+        }
+
+        .primary-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--shadow-hover);
+            background: var(--surface-alt);
+        }
+
+        .primary-button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .primary-button i {
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .primary-button:hover i {
+            transform: translateX(3px);
+        }
+
+        /* Ripple effect - Original */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 60px;
+            max-width: 700px;
+            opacity: 0;
+            animation: fadeInUp 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards 0.8s;
+        }
+
+        .feature-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border-light);
+            box-shadow: 0 4px 16px var(--shadow);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 28px var(--shadow-hover);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: var(--surface-alt);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--text-secondary);
+            font-size: 22px;
+        }
+
+        .feature-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: var(--text-tertiary);
+            line-height: 1.5;
+        }
+
+        /* Transition overlay - Original */
+        .transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--surface);
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .transition-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 60px;
+            padding-top: 24px;
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 13px;
+            opacity: 0;
+            animation: fadeInUp 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards 0.9s;
+            border-top: 1px solid var(--border);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 16px;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+
+        /* NEW POP-UP STYLES (Added without modifying existing design) */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 3000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .popup-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .popup {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--surface);
+            border-radius: 24px 24px 0 0;
+            padding: 32px 24px;
+            z-index: 3001;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 -10px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .popup.active {
+            transform: translateY(0);
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .popup-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+        }
+
+        .popup-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--surface-alt);
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-secondary);
+        }
+
+        .popup-close:hover {
+            background: var(--surface);
+            border-color: var(--text-tertiary);
+            transform: translateY(-1px);
+        }
+
+        .popup-content {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .popup-section {
+            margin-bottom: 20px;
+        }
+
+        .popup-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .popup-section-content {
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .popup-list {
+            padding-left: 20px;
+            margin: 12px 0;
+        }
+
+        .popup-list li {
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .support-button {
+            background: var(--surface);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 24px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 16px var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .support-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--shadow-hover);
+            background: var(--surface-alt);
+        }
+
+        .support-button i {
+            font-size: 16px;
+            color: #E4405F;
+        }
+
+        .version-item {
+            background: var(--surface-alt);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-light);
+        }
+
+        .version-number {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .version-date {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .version-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .nav {
+                padding: 8px 0 32px;
+            }
+            
+            .headline {
+                font-size: 28px;
+            }
+            
+            .subheadline {
+                font-size: 16px;
+                padding: 0 16px;
+            }
+            
+            .logo-container {
+                width: 120px;
+                height: 120px;
+                margin-bottom: 32px;
+            }
+            
+            .logo {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .logo-inner {
+                width: 84px;
+                height: 84px;
+                font-size: 28px;
+            }
+            
+            .primary-button {
+                min-width: 180px;
+                padding: 13px 28px;
+                font-size: 15px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                margin-top: 48px;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            /* Responsive popup adjustments */
+            .popup {
+                padding: 24px 20px;
+            }
+            
+            .popup-title {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 16px;
+            }
+            
+            .headline {
+                font-size: 24px;
+            }
+            
+            .logo-container {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .logo {
+                width: 84px;
+                height: 84px;
+            }
+            
+            .logo-inner {
+                width: 70px;
+                height: 70px;
+                font-size: 24px;
+            }
+            
+            .nav-actions {
+                gap: 12px;
+            }
+            
+            .nav-button {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+            
+            /* Mobile popup adjustments */
+            .popup {
+                padding: 20px 16px;
+                max-height: 90vh;
+            }
+            
+            .popup-title {
+                font-size: 17px;
+            }
+        }
+    </style>
 </head>
-
 <body>
-
-
-  <div class="popup-screen1">
-    <div class="popup-box1">
-      <i class="fas fa-times close-btn1"></i>
-      <h2>Notification</h2>
-      <p>Nous sommes actuellement en train de développer le site,<br> ce qui peut entraîner certains dysfonctionnements.</p>
-      <a href="#" class="btn">Masquer</a>
+    <!-- ORIGINAL BACKGROUND ANIMATION -->
+    <div class="bg-animation">
+        <div class="bg-circle circle-1"></div>
+        <div class="bg-circle circle-2"></div>
+        <div class="bg-circle circle-3"></div>
     </div>
-  </div>
 
-  <!--
-    - #MAIN
-  -->
+    <!-- Transition overlay -->
+    <div class="transition-overlay" id="transitionOverlay"></div>
 
-  <main>
+    <!-- NEW POP-UP OVERLAY -->
+    <div class="popup-overlay" id="popupOverlay"></div>
 
-    <!--
-      - #SIDEBAR
-    -->
-
-    <aside class="sidebar" data-sidebar>
-
-      <div class="sidebar-info">
-
-        <figure class="avatar-box">
-          <img src="./img/avp.png" alt="Richard hanrick" width="80">
-        </figure>
-
-        <div class="info-content">
-          <h1 class="name" title="Richard hanrick">EduWell</h1>
-
-          <p class="title"> Personnages virtuels
-
-
-
-
-
-
-
-
-          </p>
-        </div>
-
-        <button class="info_more-btn" data-sidebar-btn>
-          <span>Voir la notification</span>
-
-          <ion-icon name="chevron-down"></ion-icon>
-        </button>
-
-      </div>
-
-
-
-      <div class="sidebar-info_more">
-
-        <div class="separator"></div>
-
-        <ul class="contacts-list">
-
-          <li class="contact-item">
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="calendar-outline"></ion-icon>
+    <!-- Privacy Pop-up -->
+    <div class="popup" id="privacyPopup">
+        <div class="popup-header">
+            <div class="popup-title">Politique de Confidentialité</div>
+            <div class="popup-close" onclick="closePopup('privacyPopup')">
+                <i class="fas fa-times"></i>
             </div>
+        </div>
+        <div class="popup-content">
+            <div class="popup-section">
+                <div class="popup-section-content">
+                    Ce site est entièrement statique et ne collecte aucune donnée personnelle.
+                    Aucune inscription, aucun compte, aucun système de suivi, et aucune information utilisateur n'est enregistrée.
+                    Vous pouvez utiliser le site en toute confidentialité.
+                </div>
+            </div>
+        </div>
+    </div>
 
-            <div class="contact-info">
-              <p class="contact-title">Notification</p>
+    <!-- Terms Pop-up -->
+    <div class="popup" id="termsPopup">
+        <div class="popup-header">
+            <div class="popup-title">Conditions d'Utilisation</div>
+            <div class="popup-close" onclick="closePopup('termsPopup')">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="popup-content">
+            <div class="popup-section">
+                <div class="popup-section-content">
+                    Ce site fournit uniquement du contenu éducatif (cours, exercices, fiches, quiz).
+                    L'accès est gratuit et aucune donnée privée n'est demandée.
+                    En utilisant le site, vous acceptez d'utiliser le contenu uniquement à des fins personnelles et éducatives.
+                </div>
+            </div>
+        </div>
+    </div>
 
-              <address> Rien à signaler aujourd’hui </address>
-
-              </div>
-
-         </li> 
-
-        </ul>
-
-
-
-
-        <div class="separator"></div>
-
-        <ul class="social-list">
-
-
-
-          <li class="social-item">
-            <a href="https://www.instagram.com/eduWellofficial" class="social-link">
-              <ion-icon name="logo-instagram"></ion-icon>
+    <!-- Support Pop-up -->
+    <div class="popup" id="supportPopup">
+        <div class="popup-header">
+            <div class="popup-title">Support</div>
+            <div class="popup-close" onclick="closePopup('supportPopup')">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="popup-content">
+            <div class="popup-section">
+                <div class="popup-section-content">
+                    Si vous avez besoin d'aide pour un problème quelconque, contactez-nous directement ici.
+                </div>
+            </div>
+            
+            <a href="https://www.instagram.com/eduwellofficial/" target="_blank" class="support-button">
+                <i class="fab fa-instagram"></i>
+                Contactez-nous sur Instagram
             </a>
-          </li>
-
-        </ul>
-
-     </div> 
-
-
-    </aside>
-
-
-
-
-
-    <!--
-      - #main-content
-    -->
-
-    <div class="main-content">
-
-      <!--
-        - #NAVBAR
-      -->
-
-      <nav class="navbar">
-
-        <ul class="navbar-list">
-
-          <li class="navbar-item">
-            <button class="navbar-link  active" data-nav-link>Accueil</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Espaces Interactifs</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Matieres</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Espace etudiant</button>
-          </li>
-
-
-
-        </ul>
-
-      </nav>
-
-
-
-
-
-      <!--
-        - #ABOUT
-      -->
-
-      <article class="about  active" data-page="accueil">
-
-        <header>
-          <h2 class="h2 article-title">" Eduwell "
-            <br> 
-            Donnez de la force à votre parcours éducatif
-          </h2>
-        </header>
-
-        <section class="about-text">
-          <p>
-            EduWell Academy est une plateforme éducative gratuite et interactive qui propose des cours de qualité adaptés aux besoins et au rythme de chaque apprenant.
-
-          </p>
-        </section>
-
-
-        <!--
-          - service
-        -->
-
-        <section class="service">
-
-          <h3 class="h3 service-title">"Apprenez encore plus"</h3>
-
-          <ul class="service-list">
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./img/course-3.png
-                " alt="icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Science</h4>
-
-                <p class="service-item-text">
-                  Des leçons claires, des outils interactifs pour expérimenter et mieux comprendre.
-
-                </p>
-              </div>
-
-            </li>
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./img/course-6.png" alt="icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Mathématiques</h4>
-
-                <p class="service-item-text">
-                  Accédez à des résumés clairs, des exercices pratiques et des outils interactifs pour calculer, visualiser les courbes et mieux comprendre les concepts. </p>
-              </div>
-
-            </li>
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./img/course-1.png" alt=" icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Informatique</h4>
-
-                <p class="service-item-text">
-                  Apprenez Python avec des leçons pratiques, testez votre code en direct et recevez des corrections instantanées pour progresser efficacement.
-
-                </p>
-              </div>
-
-            </li>
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./img/course-2.png" alt="icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Analyse & Suivi</h4>
-
-                <p class="service-item-text">
-                  Le site évalue votre niveau, suit vos progrès et vous propose des contenus adaptés pour vous aider à progresser à chaque étape. </p>
-              </div>
-
-            </li>
-
-          </ul>
-
-        </section>
-
-
-        <!--
-          - testimonials
-        -->
-
-        <section class="testimonials">
-
-          <h3 class="h3 testimonials-title">Espaces virtuels</h3>
-
-
-          <ul class="testimonials-list has-scrollbar">
-
-           <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-                <figure class="testimonials-avatar-box">
-                  <img src="img/QuizQcm icon png.png"  width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>QuizQcm </h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>des cartes QCM à la façon Tinder — glisse à droite pour Vrai, à gauche pour Faux. Après chaque réponse, la correction et une explication claire t’aident à comprendre. </p>
-                </div>
-
-
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-                <figure class="testimonials-avatar-box">
-                  <img src="img/icont1.png"  width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>SpeakWell  </h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    SpeakWell est une plateforme innovante qui accompagne tous les apprenants dans leur progression en anglais, quel que soit leur niveau. Grâce à des jeux interactifs, des cours en tunisien et des contenus variés, elle rend l’apprentissage actif, motivant et accessible. </p>
-                  </p>
-                </div>
-
-
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="img/serche ew.png" alt="edu virtual m2" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Eduwell Archive</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p> "Bibliothèque complète de séries, cours, vidéos, fiches méthodologiques et exercices adaptés aux lycées tunisiens (Sfax, Tunis, Sousse). Trouvez rapidement ce dont vous avez besoin et obtenez des réponses précises."
-
-
-⁣
-
-</p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-                <figure class="testimonials-avatar-box">
-                  <img src="img/icont2.png"  width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Quis Sti - EduWell</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>Une plateforme de quiz innovante qui accompagne les élèves du Bac Info dans leur préparation.
-                    Explore, pratique et maîtrise HTML, CSS, JavaScript, Bases de données et PHP avec une expérience claire et motivante.
-                    </div>
-
-
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-                <figure class="testimonials-avatar-box">
-                  <img src="img/mathew.png"  width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>X-Well Calcule </h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Calculez les limites, dérivées, tangentes et plus encore. Visualisez vos fonctions grâce à des graphiques interactifs pour mieux comprendre vos cours de mathématiques.  </div>
-
-
-
-              </div>
-            </li>
-
-
-
-
-          </ul>
-
-        </section>
-
-
-        <!--
-          - testimonials modal
-        -->
-
-        <div class="modal-container" data-modal-container>
-
-          <div class="overlay" data-overlay></div>
-
-          <section class="testimonials-modal">
-
-            <button class="modal-close-btn" data-modal-close-btn>
-              <ion-icon name="close-outline"></ion-icon>
-            </button>
-
-            <div class="modal-img-wrapper">
-              <figure class="modal-avatar-box">
-                <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="80" data-modal-img>
-              </figure>
-
-              <img src="./assets/images/icon-quote.svg" alt="quote icon">
-            </div>
-
-            <div class="modal-content">
-
-              <h4 class="h3 modal-title" data-modal-title></h4>
-
-              <time datetime="2021-06-14"></time>
-
-              <div data-modal-text>
-                <p>
-
-                </p>
-              </div>
-
-            </div>
-
-          </section>
         </div>
-
-
-
-
-      </article>
-
-
-
-
-
-      <!--
-        - #Espaces Interactifs
-      -->
-
-      <article class="espaces interactifs" data-page="espaces interactifs">
-
-        <header>
-          <h2 class="h2 article-title">EPS Interactifs</h2>
-        </header>
-
-
-
-
-
-
-
-
-        <section class="projects">
-
-
-          <ul class="filter-list">
-
-
-            <li class="filter-item">
-              <button class="active" data-filter-btn></button>
-            </li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <li class="filter-item">
-              <button data-filter-btn></button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn></button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn></button>
-            </li>
-               <li class="filter-item">
-              <button data-filter-btn></button>
-            </li>
-
-          </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-         <div class="filter-select-bo0x">
-
-            <button class="filter-sel0ect" data-select>
-
-              <div class="select-va0lue" data-selecct-value></div>
-
-              <div class="sele0ct-icon">
-                <ion-icon name="chevro0n-down"></ion-icon>
-              </div>
-
-            </button>
-
-            <ul class="select-li0st">
-
-              <li class="select-it0em">
-                <button data-select-item></button>
-              </li>
-
-              <li class="select-it0em">
-                <button data-select-item></button>
-              </li>
-
-              <li class="select-it0em">
-                <button data-select-item></button>
-              </li>
-
-              <li class="select-it0em">
-                <button data-select-item></button>
-              </li>
-              <li class="select-it0em">
-                <button data-select-item></button>
-              </li>
-
-            </ul>
-
-
-          </div>
-
-
-
-
-
-
-
-
-
-
-
-          <ul class="project-list">
-
-
-
-
-               <!-- -----  subject   ---- -->
-
-
-
-
-
-             <li class="project-item  active" data-filter-item data-category="math">
-              <a href="QuizQcm/main">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-
-                  <img src="assets/images/f132.png" alt="math" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">QuizQcm</h3>
-
-                <p class="project-category">BAC</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="math">
-              <a href="speakwell">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-
-                  <img src="img/z1.png" alt="math" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">SpeakWell</h3>
-
-                <p class="project-category">BAC</p>
-
-              </a>
-            </li>
-
-
-
-
-
-              <li class="project-item  active" data-filter-item data-category="sciencs">
-              <a href="search-ew">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./img/z2.png" >
-                   </figure>
-
-                <h3 class="project-title">Eduwell Archive    </h3>
-
-                <p class="project-category">BAC</p>
-
-              </a>
-            </li>
-
-
-
-
-               <li class="project-item  active" data-filter-item data-category="serexalab">
-              <a href="sti">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./img/z3.png" alt="physique" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Quis Sti - EduWell</h3>
-
-                <p class="project-category">BAC</p>
-
-              </a>
-            </li>
-
-
-
-
-
-
-
-
-
-
-          </ul>
-
-        </section>
-
-
-
-        <section class="timeline">
-
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="book-outline"></ion-icon>
-            </div>
-
-            <h3 class="h3">Découvrez nos outils </h3>
-          </div>
-
-          <ol class="timeline-list">
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">SpeakWell </h4>
-
-              <span>Avantage principal</span>
-
-              <p class="timeline-text">
-                "Améliorez votre anglais à tout niveau grâce à des jeux, des cours en tunisien, et une approche interactive.
-
-                "
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Eduwell Archive </h4>
-
-              <span>Fonction clé</span>
-
-              <p class="timeline-text">
-                "Accédez rapidement à des séries, fiches, vidéos et exercices issus des meilleurs lycées tunisiens." </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 cla class="h4 timeline-item-title"> Quis Sti - EduWell</h4>
-
-              <span> Bénéfice pour l’élève </span>
-
-              <p class="timeline-text">Une plateforme de quiz interactive dédiée aux élèves du Bac Info pour réviser et progresser en toute confiance.
-                Apprends et pratique HTML, CSS, JavaScript, Bases de données et PHP de manière claire et motivante.
-                </p>
-
-            </li>
-             <li class="timeline-item">
-
-              <h4 cla class="h4 timeline-item-title"> QuizQcm - EduWell</h4>
-
-              <span> Révise malin, réussis ton bac </span>
-
-              <p class="timeline-text">QuizQCM — Swipe ta science, maîtrise ton bac </p>
-
-            </li>
-
-
-          </ol>
-
-        </section>
-
-
-        <section class="skill">
-
-          <h3 class="h3 skills-title">Progression</h3>
-
-          <ul class="skills-list content-card">
-
-
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">SpeakWell</h5>
-                <data value="09">63%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 63%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Eduwell Search</h5>
-                <data value="10">35%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 35%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5"> Quis Sti - EduWell</h5>
-                <data value="2">100%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 100%;"></div>
-              </div>
-
-            </li>
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5"> QuizQCM - EduWell</h5>
-                <data value="2">23%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 23%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5"> X-Well Calcule</h5>
-                <data value="2">3%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 3%;"></div>
-              </div>
-
-            </li>
-
-
-
-          </ul>
-
-
-
-        </section>
-
-      </article>
-
-
-
-      <!--
-        - #SUBJECT SECTION MODIFAI 3 TIME 
-      -->
-
-
-      <article class="matieres" data-page="matieres">
-
-        <header>
-          <h2 class="h2 article-title">Matieres</h2>
-        </header>
-
-
-
-        <section class="projects">
-
-
-          <ul class="filter-list">
-
-
-            <li class="filter-item">
-              <button class="active" data-filter-btn></button>
-            </li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <li class="filter-item">
-              <button data-filter-btn></button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn></button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn></button>
-            </li>
-               <li class="filter-item">
-              <button data-filter-btn></button>
-            </li>
-
-          </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-         <div class="filter-select-bo0x">
-
-            <button class="filter-sel0ect" data-select>
-
-              <div class="select-va0lue" data-selecct-value></div>
-
-              <div class="sele0ct-icon">
-                <ion-icon name="chevro0n-down"></ion-icon>
-              </div>
-
-            </button>
-
-            <ul class="select-li0st">
-
-              <li class="select-it0em">
-                <button data-select-item></button>
-              </li>
-
-              <li class="select-it0em">
-                <button data-select-item></button>
-              </li>
-
-              <li class="select-it0em">
-                <button data-select-item></button>
-              </li>
-
-              <li class="select-it0em">
-                <button data-select-item></button>
-              </li>
-              <li class="select-it0em">
-                <button data-select-item></button>
-              </li>
-
-            </ul>
-
-
-          </div>
-
-
-
-
-
-
-
-
-
-
-
-          <ul class="project-list">
-
-
-
-
-               <!-- -----  subject   ---- -->
-
-
-
-
-
-
-            <li class="project-item  active" data-filter-item data-category="math">
-              <a href="error">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-
-                  <img src="img/173.jpg" alt="math" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Math</h3>
-
-                <p class="project-category">BAC</p>
-
-              </a>
-            </li>
-
-
-
-
-
-              <li class="project-item  active" data-filter-item data-category="sciencs">
-              <a href="error">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./img/p2.png" >
-                   </figure>
-
-                <h3 class="project-title">SCIENCES</h3>
-
-                <p class="project-category">BAC</p>
-
-              </a>
-            </li>
-
-
-
-
-               <li class="project-item  active" data-filter-item data-category="physique">
-              <a href="error">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./img/phys.jpg" alt="physique" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">PHYSIQUE</h3>
-
-                <p class="project-category">BAC</p>
-
-              </a>
-            </li>
-
-
-
-
-             <li class="project-item  active" data-filter-item data-category="philo">
-              <a href="error">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./img/0201485.jpg" alt="physique" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">فلسفة</h3>
-
-                <p class="project-category">BAC</p>
-
-              </a>
-            </li>
-
-
-
-            <li class="project-item  active" data-filter-item data-category="info">
-              <a href="error">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                   <img src="./img/p3.png" alt="physique" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">informatique</h3>
-
-                <p class="project-category">BAC</p>
-
-              </a>
-            </li>
-
-
-
-
-
-
-
-
-
-
-          </ul>
-
-        </section>
-
-      </article>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- docements -->
-
-      <article class="espace etudiant" data-page="espace etudiant">
-
-        <header>
-          <h2 class="h2 article-title">EPS étudiant</h2>
-        </header>
-
-        <section class="blog-posts">
-          <ul class="blog-posts-list">
-
-            <li class="blog-post-item">
-              <a href="inscription">
-
-                <figure class="blog-banner-box">
-                  <img src="assets/images/img_1757443753003.webp" alt="sciencs" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">EduWell</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2025-02-23">Classroom</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Rejoignez notre Classroom BAC</h3>
-
-                  <p class="blog-text">
-                     votre espace exclusif pour apprendre, réviser et réussir avec méthode et efficacité
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-
-            <li class="blog-post-item">
-              <a href="https://www.instagram.com/channel/AbaBYC91mHSBFtUn/?igsh=MTcyOXUydWh2cWVmdQ==">
-
-                <figure class="blog-banner-box">
-                  <img src="assets/images/img_1758056736447__01.webp" alt="sciencs" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">EduWell</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Channel</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Espace BAC - Instagram </h3>
-
-                  <p class="blog-text">
-                    Ici, tu trouves toutes les nouveautés du BAC : cours, infos, révisions et news en un seul endroit
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="https://t.me/+2fUiQPH5IuljM2Y0">
-
-                <figure class="blog-banner-box">
-                  <img src="assets/images/img_1758066903556.webp" alt="sciencs" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Eduwell Developers 
-</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Community</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">  Communauté des Développeurs Eduwell</h3>
-
-                  <p class="blog-text">
-                  – Un groupe d’étudiants en informatique travaillant sur des projets comme Eduwell, ouvert aux nouveaux membres  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-
-          </ul>
-
-        </section>
-
-      </article>
-
-
-
-
-
-
     </div>
 
-  </main>
+    <!-- Info Pop-up -->
+    <div class="popup" id="infoPopup">
+        <div class="popup-header">
+            <div class="popup-title">Historique des Versions</div>
+            <div class="popup-close" onclick="closePopup('infoPopup')">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="popup-content">
+            <div class="version-item">
+                <div class="version-number">
+                    <i class="fas fa-star"></i>
+                    Version 1.0
+                </div>
+                <div class="version-date">Publiée le : 23 November 2025</div>
+                <div class="version-description">
+                  • Lancement du premier modèle  <br>
+                  • Interface utilisateur interactive et claire  <br>
+                  • Lancement des Quiz Cards
+                </div>
+            </div>
+            
+           
+            
+            <div class="version-item">
+                <div class="version-number">
+                    <i class="fas fa-star"></i>
+                    Version 1.3 
+                </div>
+                <div class="version-date">Publiée le : 6 Septembre 2025</div>
+                <div class="version-description">
+                   • Mise à jour de l'UI et du design des Quiz, Flash Cards et pages principales <br>
+                   • Ajout de tous les cours de sciences pour le Bac <br>
+                   • Ajout des devoirs et exercices de sciences Bac  <br>
+                   • Nouvelle section Vidéos avec playlist et barre de navigation  <br>
+                   • Mise à jour majeure de la section Flash Cards
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Main Content -->
+    <div class="container" id="mainContainer">
+        <!-- Top Navigation -->
+        <nav class="nav">
+            <div class="brand">
+                <div class="brand-icon">ew</div>
+                <div class="brand-text">Eduwell</div>
+            </div>
+            <div class="nav-actions">
+                <!-- Bouton de langue supprimé, seul le bouton Info reste -->
+                <button class="nav-button" onclick="openPopup('infoPopup')">
+                    <i class="fas fa-info-circle"></i>
+                    Info
+                </button>
+            </div>
+        </nav>
 
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- ORIGINAL LOGO STYLE -->
+            <div class="logo-container">
+                <div class="logo-background"></div>
+                <div class="logo">
+                    <div class="logo-inner">SVT</div>
+                </div>
+            </div>
 
+            <!-- Headlines -->
+            <h1 class="headline">Plateforme d'apprentissage scientifique</h1>
+            <p class="subheadline">Maîtrisez les sciences et les sciences de la Terre avec des outils interactifs et un apprentissage intelligent</p>
 
+            <!-- Primary Action -->
+            <button class="primary-button" id="startButton">
+                Commencer à apprendre
+                <i class="fas fa-arrow-right"></i>
+            </button>
 
+            <!-- Features Grid mis à jour -->
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="feature-title">Cours & Devoirs</div>
+                    <div class="feature-desc">Cours de sciences + devoirs pour toutes les sections Bac.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="feature-title">Quiz & Cartes</div>
+                    <div class="feature-desc">Quiz & cartes pour rester toujours prêt et réviser efficacement.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="feature-title">Flash Cards</div>
+                    <div class="feature-desc">Flash Cards pour comprendre plus vite et mémoriser mieux.</div>
+                </div>
+            </div>
+        </main>
 
-  <!--
-    - custom js link
-  -->
-  <script src="./assets/js/script.js"></script>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link" onclick="openPopup('privacyPopup'); return false;">Confidentialité</a>
+                <a href="#" class="footer-link" onclick="openPopup('termsPopup'); return false;">Conditions</a>
+                <a href="#" class="footer-link" onclick="openPopup('supportPopup'); return false;">Support</a>
+            </div>
+            <div>© 2025 Eduwell Quantum Group</div>
+        </footer>
+    </div>
 
-  <!--
-    - ionicon link
-  -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+        // Button interaction with original ripple effect
+        const startButton = document.getElementById('startButton');
+        const transitionOverlay = document.getElementById('transitionOverlay');
+        const DESTINATION_URL = "https://edu-well.netlify.app/quizqcm/svtapp";
 
-  <script type="text/javascript">
-    const popupScreen = document.querySelector(".popup-screen1");
-    const popupBox = document.querySelector(".popup-box1");
-    const closeBtn = document.querySelector(".popup-box1");
+        startButton.addEventListener('click', function(e) {
+            // Add ripple effect
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            this.appendChild(ripple);
 
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        popupScreen.classList.add("active");
-      }, 2000); //Popup the screen in 02 seconds after the page is loaded.
-    });
+            // Get click position
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
 
-    closeBtn.addEventListener("click", () => {
-      popupScreen.classList.remove("active"); //Close the popup screen on click the close button.
-      //Create a cookie for a day (to expire within a day) on click the close button.
-      document.cookie = "WebsiteName=testWebsite; max-age=" + 24 * 60 * 60; //1 day = 24 hours = 24*60*60
-    });
+            // Position ripple
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
 
-    //Use the created cookie to hide or show the popup screen.
-    const WebsiteCookie = document.cookie.indexOf("WebsiteName=");
+            // Remove ripple after animation
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
 
-    if(WebsiteCookie != -1){
-      popupScreen.style.display = "none"; //Hide the popup screen if the cookie is not expired.
-    }
-    else{
-      popupScreen.style.display = "flex"; //Show the popup screen if the cookie is expired.
-    }
+            // Button press effect
+            startButton.style.transform = 'translateY(0)';
+            
+            // Show transition overlay
+            setTimeout(() => {
+                transitionOverlay.classList.add('active');
+            }, 300);
+
+            // Navigate after transition
+            setTimeout(() => {
+                window.location.href = DESTINATION_URL;
+            }, 600);
+        });
+
+        // Button hover effects
+        startButton.addEventListener('mouseenter', () => {
+            startButton.style.transform = 'translateY(-2px)';
+        });
+
+        startButton.addEventListener('mouseleave', () => {
+            if (!startButton.classList.contains('clicked')) {
+                startButton.style.transform = 'translateY(0)';
+            }
+        });
+
+        // Nav buttons hover effects
+        const navButtons = document.querySelectorAll('.nav-button');
+        navButtons.forEach(button => {
+            button.addEventListener('mouseenter', () => {
+                button.style.transform = 'translateY(-1px)';
+            });
+            
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Feature card hover effects
+        const featureCards = document.querySelectorAll('.feature-card');
+        featureCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+
+        // NEW POP-UP FUNCTIONS
+        function openPopup(popupId) {
+            const overlay = document.getElementById('popupOverlay');
+            const popup = document.getElementById(popupId);
+            
+            overlay.classList.add('active');
+            popup.classList.add('active');
+            
+            // Prevent body scroll when popup is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePopup(popupId) {
+            const overlay = document.getElementById('popupOverlay');
+            const popup = document.getElementById(popupId);
+            
+            popup.classList.remove('active');
+            
+            // Close overlay after popup animation
+            setTimeout(() => {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        // Close popup when clicking overlay
+        document.getElementById('popupOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                const activePopup = document.querySelector('.popup.active');
+                if (activePopup) {
+                    closePopup(activePopup.id);
+                }
+            }
+        });
+
+        // Close popup with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const activePopup = document.querySelector('.popup.active');
+                if (activePopup) {
+                    closePopup(activePopup.id);
+                }
+            }
+        });
+
+        // Responsive adjustments
+        window.addEventListener('resize', () => {
+            const container = document.getElementById('mainContainer');
+            if (window.innerWidth < 768) {
+                container.style.padding = '15px';
+            } else {
+                container.style.padding = '24px';
+            }
+        });
     </script>
-
-
 </body>
-
 </html>

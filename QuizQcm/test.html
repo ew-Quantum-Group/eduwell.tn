@@ -1,0 +1,2394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SVT App | EduWell</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="./assets/images/appicon.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="./assets/css/stylesvtapp.css">
+     <style>
+        /* MODIFICATION FOR E-BOOK SECTION - CSS Additions */
+
+        /* E-Book Biology Card - Similar to QCM but different color */
+        .ebook-biology-card {
+            background: linear-gradient(135deg, #2d9d78 0%, #1a7d5e 100%);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            color: white;
+            box-shadow: 0 10px 30px rgba(45, 157, 120, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ebook-biology-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(30%, -30%);
+        }
+
+        .ebook-biology-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .ebook-biology-text h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .ebook-biology-text p {
+            font-size: 14px;
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .ebook-biology-btn {
+            background: white;
+            color: #2d9d78;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .ebook-biology-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        /* E-Book Slider - Same as home slider */
+        .ebook-slider-container {
+            margin: 20px 0 30px;
+            position: relative;
+        }
+
+        .ebook-slider {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 10px 0;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .ebook-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .ebook-card {
+            flex: 0 0 280px;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #eef2f7;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .ebook-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .ebook-thumbnail {
+            width: 100%;
+            height: 180px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2d9d78;
+            font-size: 48px;
+        }
+
+        .ebook-info h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .ebook-info p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .ebook-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* E-Book Modal - Same as existing popups */
+        .ebook-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .ebook-modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .ebook-modal-container {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(50px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .ebook-modal-overlay.active .ebook-modal-container {
+            transform: translateY(0);
+        }
+
+        .ebook-modal-header {
+            padding: 25px 30px 20px;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            background: white;
+            border-radius: 20px 20px 0 0;
+            z-index: 10;
+        }
+
+        .ebook-modal-close {
+            position: absolute;
+            top: 25px;
+            right: 30px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #666;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .ebook-modal-close:hover {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .ebook-modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .ebook-modal-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .ebook-modal-content {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+
+        .ebook-pdf-viewer {
+            width: 100%;
+            height: 500px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+        }
+
+        .ebook-pdf-viewer iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .ebook-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .ebook-details-card {
+            background: #f9f9f9;
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid #eee;
+        }
+
+        .ebook-details-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ebook-details-card h4 i {
+            color: #2d9d78;
+        }
+
+        .ebook-details-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .ebook-price {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2d9d78;
+            margin-bottom: 5px;
+        }
+
+        .ebook-price-note {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        .ebook-action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .ebook-buy-btn {
+            background: linear-gradient(135deg, #2d9d78 0%, #1a7d5e 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .ebook-buy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(45, 157, 120, 0.4);
+        }
+
+        /* MODIFICATION: WhatsApp Popup */
+        .whatsapp-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1100;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .whatsapp-popup-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .whatsapp-popup-container {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(50px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .whatsapp-popup-overlay.active .whatsapp-popup-container {
+            transform: translateY(0);
+        }
+
+        .whatsapp-popup-header {
+            padding: 25px 30px 20px;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            background: white;
+            border-radius: 20px 20px 0 0;
+            z-index: 10;
+        }
+
+        .whatsapp-popup-close {
+            position: absolute;
+            top: 25px;
+            right: 30px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #666;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-popup-close:hover {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .whatsapp-popup-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .whatsapp-popup-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .whatsapp-popup-content {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .whatsapp-contact-section {
+            text-align: center;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 15px;
+            border: 1px solid #eee;
+        }
+
+        .whatsapp-contact-section h4 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .whatsapp-contact-section h4 i {
+            color: #25D366;
+        }
+
+        .whatsapp-contact-section p {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .whatsapp-btn {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 18px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3);
+            text-decoration: none;
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            color: white;
+        }
+
+        .whatsapp-note {
+            font-size: 13px;
+            color: #888;
+            text-align: center;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        /* Slider Controls */
+        .ebook-slider-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .ebook-slider-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid #2d9d78;
+            color: #2d9d78;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        .ebook-slider-btn:hover {
+            background: #2d9d78;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .ebook-slider-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .ebook-modal-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .ebook-pdf-viewer {
+                height: 400px;
+            }
+            
+            .ebook-card {
+                flex: 0 0 250px;
+            }
+            
+            .ebook-modal-header {
+                padding: 20px;
+            }
+            
+            .ebook-modal-close {
+                top: 20px;
+                right: 20px;
+            }
+            
+            .whatsapp-popup-container {
+                max-width: 90%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .ebook-card {
+                flex: 0 0 220px;
+            }
+            
+            .ebook-pdf-viewer {
+                height: 300px;
+            }
+            
+            .ebook-thumbnail {
+                height: 150px;
+            }
+            
+            .whatsapp-btn {
+                padding: 15px 20px;
+                font-size: 16px;
+            }
+        }
+     </style>
+</head>
+<body>
+    <!-- Bottom Navigation - MODIFICATION: Changed Videos to E-Book -->
+    <nav class="bottom-navigation">
+        <a href="#home" class="nav-item active" data-page="home">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="#exercises" class="nav-item" data-page="exercises">
+            <i class="fas fa-file-alt"></i>
+            <span>Exercises</span>
+        </a>
+        <a href="#qcm" class="nav-item" data-page="qcm">
+            <i class="fas fa-question-circle"></i>
+            <span>QCM</span>
+        </a>
+        <a href="#ebooks" class="nav-item" data-page="ebooks">
+            <i class="fas fa-book"></i>
+            <span>E-Book</span>
+        </a>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="home-page" class="page-section active">
+        <div class="container">
+            <!-- Trial Card with Science Theme -->
+            <div class="trial-card">
+                <div class="trial-content">
+                    <h2>Eduwell | SVT App</h2>
+                    <p>Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à utiliser</p>
+                    <button class="trial-btn" id="startButton">
+                        <i class="fa-solid fa-play"></i>
+                        Commencer maintenant
+                    </button>
+                </div>
+            </div>
+
+            <!-- Search Section -->
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Trouvez un cours et quiz..." id="searchInput">
+            </div>
+
+            <!-- Popular Courses Section with Horizontal Slider -->
+            <div class="section-header" id="quizSection">
+                <div class="section-title">
+                    <i class="fa-solid fa-fire"></i>
+                    <span>Quiz Cards</span>
+                </div>
+            </div>
+
+            <!-- Horizontal Slider -->
+            <div class="slider-container">
+                <div class="courses-slider" id="coursesSlider">
+                    <!-- Course cards will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Your Courses Section with Grid Layout -->
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fa-solid fa-book"></i>
+                    <span>Ma révision</span>
+                </div>
+            </div>
+            <div class="courses-grid" id="yourCoursesGrid">
+                <!-- Course cards will be populated by JavaScript -->
+            </div>
+
+
+            <div class="footer">
+                <p>© 2025 EduWell Quantum Group</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXERCISES PAGE -->
+    <div id="exercises-page" class="page-section">
+        <div class="container">
+            <!-- Biology-themed card for Exercises section -->
+            <div class="biology-card">
+                <div class="biology-content">
+                    <h2>FlashUp </h2>
+                    <p> FlashCart : cartes Bac rapides & astuces smart pour réviser mieux en moins de temps.</p>
+                    <button class="biology-btn" id="viewSchemasButton">
+                        <i class="fa-solid fa-eye"></i>
+                       Explore tes FlashUp
+                    </button>
+                </div>
+            </div>
+
+            <!-- Exercises Grid -->
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Exercices & Modèles</span>
+                </div>
+            </div>
+            <div class="exercises-grid" id="exercisesGrid">
+                <!-- Exercise cards will be populated by JavaScript -->
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <p>© 2025 EduWell Quantum Group</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- QCM PAGE - ENHANCED DESIGN -->
+    <div id="qcm-page" class="page-section">
+        <div class="container">
+            <!-- Enhanced Biology Card -->
+            <div class="qcm-biology-card">
+                <div class="qcm-biology-content">
+                    <div class="qcm-biology-text">
+                        <h2>QCM Lab Science</h2>
+                        <p>Révise SVT avec des quiz fun + explications claires.
+Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
+                    </div>
+                    <button class="qcm-biology-btn" id="qcmBiologyBtn">
+                        <i class="fas fa-play-circle"></i>
+                      Commencer le Quiz Bio
+                    </button>
+                </div>
+            </div>
+
+            <!-- QCM Models Container -->
+            <div class="qcm-models-container" id="qcmModelsContainer">
+                <!-- Models will be populated by JavaScript -->
+            </div>
+
+            <!-- QCM Footer -->
+            <div class="qcm-footer">
+                <p>© 2025 EduWell Quantum Group</p>
+                <p class="qcm-footer-note">Tous les quiz sont mis à jour régulièrement avec le programme officiel</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODIFICATION FOR E-BOOK SECTION: E-BOOKS PAGE -->
+    <div id="ebooks-page" class="page-section">
+        <div class="container">
+            <!-- MODIFICATION: Changed title to "Vidéo de cours" -->
+            <div class="ebook-biology-card">
+                <div class="ebook-biology-content">
+                    <div class="ebook-biology-text">
+                        <h2>Vidéo de cours</h2>
+                        <p>Accédez à notre collection complète de manuels numériques, guides de révision et ressources pédagogiques pour exceller en SVT.</p>
+                    </div>
+                    <!-- MODIFICATION: Button opens external website -->
+                    <button class="ebook-biology-btn" id="ebookBiologyBtn" onclick="window.open('https://your-external-website-link.com', '_blank')">
+                        <i class="fas fa-external-link-alt"></i>
+                        Accéder aux vidéos
+                    </button>
+                </div>
+            </div>
+
+            <!-- E-Book Slider Section -->
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-book"></i>
+                    <span>Nos Manuels Recommandés</span>
+                </div>
+            </div>
+
+            <!-- E-Book Slider -->
+            <div class="ebook-slider-container">
+                <div class="ebook-slider" id="ebookSlider">
+                    <!-- E-Book cards will be populated by JavaScript -->
+                </div>
+                <div class="ebook-slider-controls">
+                    <button class="ebook-slider-btn" id="ebookSliderPrev">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="ebook-slider-btn" id="ebookSliderNext">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- E-Book Footer -->
+            <div class="footer">
+                <p>© 2025 EduWell Quantum Group</p>
+                <p class="qcm-footer-note">Tous les e-books sont disponibles en format PDF et compatible mobile</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODIFICATION: E-BOOK MODAL OVERLAY -->
+    <div class="ebook-modal-overlay" id="ebookModalOverlay">
+        <div class="ebook-modal-container">
+            <div class="ebook-modal-header">
+                <button class="ebook-modal-close" id="ebookModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h3 class="ebook-modal-title" id="ebookModalTitle">E-Book Title</h3>
+                <p class="ebook-modal-description" id="ebookModalDescription">E-Book description will appear here.</p>
+            </div>
+            <div class="ebook-modal-content">
+                <div class="ebook-main-content">
+                    <div class="ebook-pdf-viewer">
+                        <iframe id="ebookPdfViewer" frameborder="0"></iframe>
+                    </div>
+                </div>
+                <div class="ebook-sidebar">
+                    <div class="ebook-details-card">
+                        <h4><i class="fas fa-info-circle"></i> Description</h4>
+                        <p id="ebookDetailsText">Detailed description of the e-book will appear here.</p>
+                        
+                        <div class="ebook-price" id="ebookPrice">$24.99</div>
+                        <div class="ebook-price-note">Format PDF • Accès immédiat</div>
+                        
+                        <div class="ebook-action-buttons">
+                            <!-- MODIFICATION: Only one button - Acheter maintenant -->
+                            <button class="ebook-buy-btn" id="ebookBuyBtn">
+                                <i class="fas fa-shopping-cart"></i>
+                                Acheter maintenant
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="ebook-details-card">
+                        <h4><i class="fas fa-bookmark"></i> Détails</h4>
+                        <div class="ebook-meta-details" id="ebookMetaDetails">
+                            <!-- Meta details will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODIFICATION: WhatsApp Popup Overlay -->
+    <div class="whatsapp-popup-overlay" id="whatsappPopupOverlay">
+        <div class="whatsapp-popup-container">
+            <div class="whatsapp-popup-header">
+                <button class="whatsapp-popup-close" id="whatsappPopupClose">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h3 class="whatsapp-popup-title">Contactez-nous sur WhatsApp</h3>
+                <p class="whatsapp-popup-description">Pour acheter cet e-book ou pour toute question</p>
+            </div>
+            <div class="whatsapp-popup-content">
+                <div class="whatsapp-contact-section">
+                    <h4><i class="fab fa-whatsapp"></i> WhatsApp Support</h4>
+                    <p>Cliquez sur le bouton ci-dessous pour nous contacter directement sur WhatsApp. Nous répondrons dans les plus brefs délais pour finaliser votre achat.</p>
+                    
+                    <!-- MODIFICATION: WhatsApp link with +21647050644 -->
+                    <a href="https://wa.me/21647050644" class="whatsapp-btn" target="_blank" rel="noopener">
+                        <i class="fab fa-whatsapp"></i>
+                        Ouvrir WhatsApp Chat
+                    </a>
+                    
+                    <p class="whatsapp-note">Le chat s'ouvrira automatiquement avec notre numéro : +216 47 050 644</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUIZ MODAL OVERLAY -->
+    <div class="qcm-quiz-overlay" id="qcmQuizOverlay">
+        <div class="qcm-quiz-container">
+            <div class="qcm-quiz-header">
+                <button class="qcm-quiz-close" id="qcmQuizClose">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h3 class="qcm-quiz-title" id="qcmQuizTitle">Quiz Title</h3>
+                <div class="qcm-quiz-meta">
+                    <span id="qcmQuizQuestionCount">Question 1 of 10</span>
+                    <span id="qcmQuizInstruction"></span>
+                </div>
+                <div class="qcm-quiz-progress-bar">
+                    <div class="qcm-quiz-progress-fill" id="qcmQuizProgress"></div>
+                </div>
+            </div>
+            <div class="qcm-quiz-content" id="qcmQuizContent">
+                <!-- Quiz content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUPS -->
+
+    <!-- Models Popup Overlay -->
+    <div class="popup-overlay" id="modelsPopup">
+        <div class="models-popup-content">
+            <button class="popup-close" id="modelsPopupClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="models-header">
+                <div>
+                    <h2 class="models-title">Schémas & Modèles SVT</h2>
+                    <p class="models-description">Sélectionnez un modèle pour voir tous les schémas associés</p>
+                </div>
+            </div>
+            <div class="models-grid" id="modelsGrid">
+                <!-- Model cards will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Popup Overlay -->
+    <div class="popup-overlay" id="galleryPopup">
+        <div class="gallery-popup-content">
+            <button class="popup-close" id="galleryPopupClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="gallery-header">
+                <div>
+                    <h2 class="gallery-title" id="galleryTitle">Gallery Title</h2>
+                    <p class="models-description">Cliquez sur une image pour l'agrandir</p>
+                </div>
+            </div>
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Gallery items will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Fullscreen Image Viewer -->
+    <div class="fullscreen-viewer" id="fullscreenViewer">
+        <img class="fullscreen-image" id="fullscreenImage" src="" alt="Fullscreen Image">
+        <button class="back-button" id="backFromFullscreen">Retour</button>
+    </div>
+
+    <!-- Popular Courses Popup Overlay -->
+    <div class="popup-overlay" id="popularCoursesPopup">
+        <div class="popup-content">
+            <button class="popup-close" id="popularCoursesPopupClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="popup-header">
+                <h2 class="popup-title" id="popularCoursesPopupTitle">Course Title</h2>
+                <p class="popup-description" id="popularCoursesPopupDescription">Course description will appear here.</p>
+            </div>
+            <div class="options-section">
+                <h3 class="options-title">Sélectionnez une carte quiz</h3>
+                <div class="options-slider" id="popularCoursesOptions">
+                    <!-- Options will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exercise Modal Overlay -->
+    <div class="popup-overlay" id="exerciseModal">
+        <div class="exercise-modal-content">
+            <button class="popup-close" id="exerciseModalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="exercise-header">
+                <div>
+                    <h2 class="exercise-title" id="exerciseModalTitle">Exercise Title</h2>
+                    <p class="exercise-description" id="exerciseModalDescription">Exercise description will appear here.</p>
+                </div>
+            </div>
+            <div class="pdfs-section">
+                <h3 class="pdfs-title">
+                    <i class="fas fa-file-pdf"></i>
+                    Documents PDF
+                </h3>
+                <div class="pdfs-list" id="exercisePdfsList">
+                    <!-- PDF items will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF Viewer Popup Overlay -->
+    <div class="popup-overlay" id="pdfViewerPopup">
+        <div class="pdf-popup-content">
+            <button class="popup-close" id="pdfViewerPopupClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="pdf-header">
+                <h2 class="pdf-title" id="pdfViewerPopupTitle">Course Title</h2>
+                <div class="pdf-controls">
+                    <button class="pdf-control-btn" id="pdfFullscreenBtn" title="Fullscreen">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="pdf-viewer-container" id="pdfViewerContainer">
+                <div class="loading-spinner"></div>
+                <iframe class="pdf-viewer" id="pdfViewer" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // MODIFICATION: E-Book Section JavaScript Implementation
+
+        // DOM Elements for E-Book Section
+        const ebooksPage = document.getElementById('ebooks-page');
+        const ebookSlider = document.getElementById('ebookSlider');
+        const ebookSliderPrev = document.getElementById('ebookSliderPrev');
+        const ebookSliderNext = document.getElementById('ebookSliderNext');
+        const ebookModalOverlay = document.getElementById('ebookModalOverlay');
+        const ebookModalClose = document.getElementById('ebookModalClose');
+        const ebookModalTitle = document.getElementById('ebookModalTitle');
+        const ebookModalDescription = document.getElementById('ebookModalDescription');
+        const ebookPdfViewer = document.getElementById('ebookPdfViewer');
+        const ebookDetailsText = document.getElementById('ebookDetailsText');
+        const ebookPrice = document.getElementById('ebookPrice');
+        const ebookMetaDetails = document.getElementById('ebookMetaDetails');
+        const ebookBuyBtn = document.getElementById('ebookBuyBtn');
+
+        // MODIFICATION: WhatsApp Popup Elements
+        const whatsappPopupOverlay = document.getElementById('whatsappPopupOverlay');
+        const whatsappPopupClose = document.getElementById('whatsappPopupClose');
+
+        // E-Book Data with Google Drive PDF Links
+        const ebookData = {
+            books: [
+                {
+                    id: 'ebook-1',
+                    title: 'Anatomie Humaine Complète',
+                    shortDescription: 'Guide illustré de l\'anatomie du corps humain',
+                    description: 'Ce manuel complet couvre tous les systèmes du corps humain avec des illustrations détaillées, des schémas annotés et des explications claires pour les étudiants en SVT.',
+                    thumbnailIcon: 'fas fa-heartbeat',
+                    pdfUrl: 'https://drive.google.com/file/d/1tW5J2qyVYXqZ7oN8jQkLmPpR9sT6uVwX/preview',
+                    price: '29.99€',
+                    pages: '320',
+                    level: 'Terminale',
+                    author: 'Dr. Marie Laurent',
+                    year: '2024',
+                    rating: '4.8',
+                    deepLink: '#ebook-anatomie'
+                },
+                {
+                    id: 'ebook-2',
+                    title: 'Génétique Moléculaire',
+                    shortDescription: 'De l\'ADN aux protéines',
+                    description: 'Comprendre les mécanismes de la génétique moléculaire, la réplication de l\'ADN, la transcription et la traduction avec des exemples concrets.',
+                    thumbnailIcon: 'fas fa-dna',
+                    pdfUrl: 'https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZzAbCdE/preview',
+                    price: '24.99€',
+                    pages: '256',
+                    level: 'Première & Terminale',
+                    author: 'Prof. Jean Dubois',
+                    year: '2023',
+                    rating: '4.6',
+                    deepLink: '#ebook-genetique'
+                },
+                {
+                    id: 'ebook-3',
+                    title: 'Écologie & Environnement',
+                    shortDescription: 'Écosystèmes et développement durable',
+                    description: 'Explorez les relations entre les organismes et leur environnement, avec un focus sur les enjeux écologiques contemporains.',
+                    thumbnailIcon: 'fas fa-leaf',
+                    pdfUrl: 'https://drive.google.com/file/d/2xYzAbCdEfGhIjKlMnO1pQrStUvWxYzA/preview',
+                    price: '27.50€',
+                    pages: '280',
+                    level: 'Terminale',
+                    author: 'Dr. Sophie Martin',
+                    year: '2024',
+                    rating: '4.7',
+                    deepLink: '#ebook-ecologie'
+                },
+                {
+                    id: 'ebook-4',
+                    title: 'Physiologie Végétale',
+                    shortDescription: 'Photosynthèse et croissance',
+                    description: 'Découvrez les processus physiologiques des plantes, de la photosynthèse à la reproduction, avec des expériences pratiques.',
+                    thumbnailIcon: 'fas fa-seedling',
+                    pdfUrl: 'https://drive.google.com/file/d/3mNoPqRsTuVwXyZzAbCdEfGhIjK4lM5N/preview',
+                    price: '22.99€',
+                    pages: '210',
+                    level: 'Première',
+                    author: 'Prof. Alain Petit',
+                    year: '2023',
+                    rating: '4.5',
+                    deepLink: '#ebook-physiologie'
+                },
+                {
+                    id: 'ebook-5',
+                    title: 'Immunologie Fondamentale',
+                    shortDescription: 'Système immunitaire et défenses',
+                    description: 'Comprendre le fonctionnement du système immunitaire, les cellules impliquées et les mécanismes de défense contre les pathogènes.',
+                    thumbnailIcon: 'fas fa-shield-virus',
+                    pdfUrl: 'https://drive.google.com/file/d/4pQrStUvWxYzAbCdEfGhIjKlM5nO6pQr/preview',
+                    price: '26.99€',
+                    pages: '245',
+                    level: 'Terminale',
+                    author: 'Dr. Claire Bernard',
+                    year: '2024',
+                    rating: '4.9',
+                    deepLink: '#ebook-immunologie'
+                },
+                {
+                    id: 'ebook-6',
+                    title: 'Évolution des Espèces',
+                    shortDescription: 'De Darwin à la génétique moderne',
+                    description: 'Retracez l\'histoire de la théorie de l\'évolution et découvrez les preuves scientifiques qui la soutiennent.',
+                    thumbnailIcon: 'fas fa-frog',
+                    pdfUrl: 'https://drive.google.com/file/d/5sTuVwXyZzAbCdEfGhIjKlM5nO6pQrSt/preview',
+                    price: '25.50€',
+                    pages: '230',
+                    level: 'Terminale',
+                    author: 'Prof. Robert Durand',
+                    year: '2023',
+                    rating: '4.4',
+                    deepLink: '#ebook-evolution'
+                }
+            ]
+        };
+
+        // Slider state
+        let currentEbookIndex = 0;
+        let currentEbook = null;
+
+        // Initialize E-Book Section
+        function initializeEbookSection() {
+            renderEbookSlider();
+            setupEbookEventListeners();
+            
+            // FIX: Removed the auto-popup trigger on page load
+            // The issue was here - it was checking for hash links and auto-opening the popup
+            // This code has been removed to prevent auto-opening on page load
+        }
+
+        // Render E-Book Slider
+        function renderEbookSlider() {
+            ebookSlider.innerHTML = '';
+            
+            ebookData.books.forEach((book, index) => {
+                const ebookCard = document.createElement('div');
+                ebookCard.className = 'ebook-card';
+                ebookCard.setAttribute('data-ebook-id', book.id);
+                ebookCard.setAttribute('data-ebook-index', index);
+                
+                ebookCard.innerHTML = `
+                    <div class="ebook-thumbnail">
+                        <i class="${book.thumbnailIcon}"></i>
+                    </div>
+                    <div class="ebook-info">
+                        <h3>${book.title}</h3>
+                        <p>${book.shortDescription}</p>
+                    </div>
+                    <div class="ebook-meta">
+                        <span><i class="fas fa-book"></i> ${book.pages} pages</span>
+                        <span><i class="fas fa-star"></i> ${book.rating}/5</span>
+                    </div>
+                `;
+                
+                ebookSlider.appendChild(ebookCard);
+            });
+            
+            updateSliderControls();
+        }
+
+        // Update slider controls state
+        function updateSliderControls() {
+            const slider = ebookSlider;
+            const maxScroll = slider.scrollWidth - slider.clientWidth;
+            
+            ebookSliderPrev.classList.toggle('disabled', slider.scrollLeft <= 0);
+            ebookSliderNext.classList.toggle('disabled', slider.scrollLeft >= maxScroll - 10);
+        }
+
+        // Setup E-Book Event Listeners
+        function setupEbookEventListeners() {
+            // Slider navigation
+            ebookSliderPrev.addEventListener('click', () => {
+                ebookSlider.scrollBy({ left: -300, behavior: 'smooth' });
+            });
+            
+            ebookSliderNext.addEventListener('click', () => {
+                ebookSlider.scrollBy({ left: 300, behavior: 'smooth' });
+            });
+            
+            // Update controls on scroll
+            ebookSlider.addEventListener('scroll', updateSliderControls);
+            
+            // E-Book card click
+            ebookSlider.addEventListener('click', (e) => {
+                const ebookCard = e.target.closest('.ebook-card');
+                if (ebookCard) {
+                    const ebookId = ebookCard.getAttribute('data-ebook-id');
+                    openEbookModal(ebookId);
+                    
+                    // Update URL with deep link
+                    const book = ebookData.books.find(b => b.id === ebookId);
+                    if (book) {
+                        window.history.pushState(null, null, book.deepLink);
+                    }
+                }
+            });
+            
+            // Modal close button
+            ebookModalClose.addEventListener('click', closeEbookModal);
+            
+            // Modal overlay click to close
+            ebookModalOverlay.addEventListener('click', (e) => {
+                if (e.target === ebookModalOverlay) {
+                    closeEbookModal();
+                }
+            });
+            
+            // MODIFICATION: Buy button opens WhatsApp popup
+            ebookBuyBtn.addEventListener('click', openWhatsappPopup);
+            
+            // MODIFICATION: WhatsApp popup close button
+            whatsappPopupClose.addEventListener('click', closeWhatsappPopup);
+            
+            // MODIFICATION: WhatsApp popup overlay click to close
+            whatsappPopupOverlay.addEventListener('click', (e) => {
+                if (e.target === whatsappPopupOverlay) {
+                    closeWhatsappPopup();
+                }
+            });
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (whatsappPopupOverlay.classList.contains('active')) {
+                        closeWhatsappPopup();
+                    } else if (ebookModalOverlay.classList.contains('active')) {
+                        closeEbookModal();
+                    }
+                }
+            });
+            
+            // Touch swipe for slider
+            let startX = 0;
+            let scrollLeft = 0;
+            
+            ebookSlider.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].pageX;
+                scrollLeft = ebookSlider.scrollLeft;
+            });
+            
+            ebookSlider.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                const x = e.touches[0].pageX;
+                const walk = (x - startX) * 2;
+                ebookSlider.scrollLeft = scrollLeft - walk;
+            });
+            
+            // Handle browser back/forward for deep links
+            window.addEventListener('popstate', () => {
+                const hash = window.location.hash;
+                if (hash && hash.startsWith('#ebook-')) {
+                    const book = ebookData.books.find(b => b.deepLink === hash);
+                    if (book) {
+                        // FIX: Only navigate to the page, don't auto-open the modal
+                        navigateToEbookPage();
+                        // Removed the auto-open modal on back/forward
+                    }
+                } else if (ebookModalOverlay.classList.contains('active')) {
+                    closeEbookModal();
+                }
+            });
+        }
+
+        // Navigate to E-Book page
+        function navigateToEbookPage() {
+            bottomNavItems.forEach(nav => nav.classList.remove('active'));
+            document.querySelector('[data-page="ebooks"]').classList.add('active');
+            
+            pageSections.forEach(section => section.classList.remove('active'));
+            ebooksPage.classList.add('active');
+            
+            window.scrollTo(0, 0);
+        }
+
+        // Open E-Book Modal
+        function openEbookModal(ebookId) {
+            const book = ebookData.books.find(b => b.id === ebookId);
+            if (!book) return;
+            
+            currentEbook = book;
+            
+            // Update modal content
+            ebookModalTitle.textContent = book.title;
+            ebookModalDescription.textContent = book.shortDescription;
+            ebookDetailsText.textContent = book.description;
+            ebookPrice.textContent = book.price;
+            
+            // Set PDF viewer
+            ebookPdfViewer.src = book.pdfUrl;
+            
+            // Update meta details
+            ebookMetaDetails.innerHTML = `
+                <div style="margin-bottom: 10px;">
+                    <strong><i class="fas fa-user-graduate"></i> Niveau:</strong> ${book.level}
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <strong><i class="fas fa-user-edit"></i> Auteur:</strong> ${book.author}
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <strong><i class="fas fa-calendar-alt"></i> Année:</strong> ${book.year}
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <strong><i class="fas fa-file-alt"></i> Pages:</strong> ${book.pages}
+                </div>
+                <div>
+                    <strong><i class="fas fa-star"></i> Note:</strong> ${book.rating}/5
+                </div>
+            `;
+            
+            // Show modal with animation
+            ebookModalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Set deep link URL
+            window.history.pushState(null, null, book.deepLink);
+        }
+
+        // Close E-Book Modal
+        function closeEbookModal() {
+            ebookModalOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            // Clear PDF viewer to stop loading
+            ebookPdfViewer.src = '';
+            
+            // Restore original URL if needed
+            if (window.location.hash.startsWith('#ebook-')) {
+                window.history.back();
+            }
+        }
+
+        // MODIFICATION: Open WhatsApp Popup
+        function openWhatsappPopup() {
+            // Close ebook modal first
+            closeEbookModal();
+            
+            // Show WhatsApp popup with animation
+            whatsappPopupOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // MODIFICATION: Close WhatsApp Popup
+        function closeWhatsappPopup() {
+            whatsappPopupOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // DOM Elements
+        const bottomNavItems = document.querySelectorAll('.nav-item');
+        const pageSections = document.querySelectorAll('.page-section');
+        const coursesSlider = document.getElementById('coursesSlider');
+        const yourCoursesGrid = document.getElementById('yourCoursesGrid');
+        const exercisesGrid = document.getElementById('exercisesGrid');
+        const searchInput = document.getElementById('searchInput');
+        const startButton = document.getElementById('startButton');
+        const quizSection = document.getElementById('quizSection');
+
+        // QCM Elements
+        const qcmModelsContainer = document.getElementById('qcmModelsContainer');
+        const qcmBiologyBtn = document.getElementById('qcmBiologyBtn');
+        const qcmQuizOverlay = document.getElementById('qcmQuizOverlay');
+        const qcmQuizClose = document.getElementById('qcmQuizClose');
+        const qcmQuizTitle = document.getElementById('qcmQuizTitle');
+        const qcmQuizQuestionCount = document.getElementById('qcmQuizQuestionCount');
+        const qcmQuizInstruction = document.getElementById('qcmQuizInstruction');
+        const qcmQuizProgress = document.getElementById('qcmQuizProgress');
+        const qcmQuizContent = document.getElementById('qcmQuizContent');
+
+        // Models & Gallery elements
+        const viewSchemasButton = document.getElementById('viewSchemasButton');
+        const modelsPopup = document.getElementById('modelsPopup');
+        const modelsPopupClose = document.getElementById('modelsPopupClose');
+        const modelsGrid = document.getElementById('modelsGrid');
+
+        const galleryPopup = document.getElementById('galleryPopup');
+        const galleryPopupClose = document.getElementById('galleryPopupClose');
+        const galleryTitle = document.getElementById('galleryTitle');
+        const galleryGrid = document.getElementById('galleryGrid');
+
+        const fullscreenViewer = document.getElementById('fullscreenViewer');
+        const fullscreenImage = document.getElementById('fullscreenImage');
+        const backFromFullscreen = document.getElementById('backFromFullscreen');
+
+        // Popup elements
+        const popularCoursesPopup = document.getElementById('popularCoursesPopup');
+        const popularCoursesPopupClose = document.getElementById('popularCoursesPopupClose');
+        const popularCoursesPopupTitle = document.getElementById('popularCoursesPopupTitle');
+        const popularCoursesPopupDescription = document.getElementById('popularCoursesPopupDescription');
+        const popularCoursesOptions = document.getElementById('popularCoursesOptions');
+
+        const exerciseModal = document.getElementById('exerciseModal');
+        const exerciseModalClose = document.getElementById('exerciseModalClose');
+        const exerciseModalTitle = document.getElementById('exerciseModalTitle');
+        const exerciseModalDescription = document.getElementById('exerciseModalDescription');
+        const exercisePdfsList = document.getElementById('exercisePdfsList');
+
+        const pdfViewerPopup = document.getElementById('pdfViewerPopup');
+        const pdfViewerPopupClose = document.getElementById('pdfViewerPopupClose');
+        const pdfViewerPopupTitle = document.getElementById('pdfViewerPopupTitle');
+        const pdfViewerContainer = document.getElementById('pdfViewerContainer');
+        const pdfViewer = document.getElementById('pdfViewer');
+        const pdfFullscreenBtn = document.getElementById('pdfFullscreenBtn');
+
+        // State variables
+        let currentExerciseId = null;
+        let currentModelId = null;
+
+        // QCM State Variables
+        let currentQuiz = null;
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let quizScore = 0;
+        let selectedChoices = new Set();
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderPopularCourses();
+            renderYourCourses();
+            renderExercises();
+            renderModels();
+            renderQCM();
+            setupEventListeners();
+            // MODIFICATION: Initialize E-Book section
+            initializeEbookSection();
+        });
+
+        // Navigation
+        function setupNavigation() {
+            bottomNavItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = this.getAttribute('data-page');
+
+                    // Update active nav item
+                    bottomNavItems.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Show corresponding page
+                    pageSections.forEach(section => section.classList.remove('active'));
+                    document.getElementById(`${page}-page`).classList.add('active');
+
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                });
+            });
+        }
+
+        // Render QCM Models and Chapters
+        function renderQCM() {
+            qcmModelsContainer.innerHTML = '';
+
+            qcmData.models.forEach(model => {
+                const modelCard = document.createElement('div');
+                modelCard.className = 'qcm-model-card';
+                modelCard.setAttribute('data-model-id', model.id);
+
+                // Create model header
+                const modelHeader = document.createElement('div');
+                modelHeader.className = 'qcm-model-header';
+                modelHeader.innerHTML = `
+                    <div class="qcm-model-title">
+                        <div class="qcm-model-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        ${model.title}
+                    </div>
+                    <div class="qcm-model-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                `;
+
+                // Create chapters container
+                const chaptersContainer = document.createElement('div');
+                chaptersContainer.className = 'qcm-chapters-container';
+
+                // Add chapters
+                model.chapters.forEach(chapter => {
+                    const chapterItem = document.createElement('div');
+                    chapterItem.className = 'qcm-chapter-item';
+                    chapterItem.setAttribute('data-chapter-id', chapter.id);
+                    chapterItem.setAttribute('data-model-id', model.id);
+                    chapterItem.innerHTML = `
+                        <div class="qcm-chapter-title">${chapter.title}</div>
+                        <div class="qcm-chapter-meta">
+                            <i class="fas fa-question-circle"></i>
+                            <span>${chapter.questions.length} questions</span>
+                        </div>
+                    `;
+                    chaptersContainer.appendChild(chapterItem);
+                });
+
+                // Assemble model card
+                modelCard.appendChild(modelHeader);
+                modelCard.appendChild(chaptersContainer);
+
+                // Add toggle functionality
+                modelHeader.addEventListener('click', function() {
+                    const isActive = modelHeader.classList.contains('active');
+
+                    // Close all other model cards
+                    document.querySelectorAll('.qcm-model-header').forEach(header => {
+                        if (header !== modelHeader) {
+                            header.classList.remove('active');
+                            header.nextElementSibling.classList.remove('active');
+                        }
+                    });
+
+                    // Toggle current model
+                    modelHeader.classList.toggle('active');
+                    chaptersContainer.classList.toggle('active');
+                });
+
+                qcmModelsContainer.appendChild(modelCard);
+            });
+        }
+
+        // Scroll to QCM models
+        function scrollToQCM() {
+            const qcmPage = document.getElementById('qcm-page');
+            if (qcmPage.classList.contains('active')) {
+                const modelsContainer = document.querySelector('.qcm-models-container');
+                if (modelsContainer) {
+                    modelsContainer.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        }
+
+        // Start Quiz
+        function startQuiz(modelId, chapterId) {
+            const model = qcmData.models.find(m => m.id === modelId);
+            if (!model) return;
+
+            const chapter = model.chapters.find(c => c.id === chapterId);
+            if (!chapter) return;
+
+            currentQuiz = chapter;
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            quizScore = 0;
+            selectedChoices.clear();
+
+            // Update quiz title
+            qcmQuizTitle.textContent = `${model.title} - ${chapter.title}`;
+
+            // Show quiz overlay
+            qcmQuizOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            // Load first question
+            loadQuestion();
+        }
+
+        // Load Question
+        function loadQuestion() {
+            if (!currentQuiz || currentQuestionIndex >= currentQuiz.questions.length) {
+                showResults();
+                return;
+            }
+
+            const question = currentQuiz.questions[currentQuestionIndex];
+            const progressPercentage = ((currentQuestionIndex) / currentQuiz.questions.length) * 100;
+            const isMultiSelect = Array.isArray(question.correct_index);
+
+            // Update progress bar
+            qcmQuizProgress.style.width = `${progressPercentage}%`;
+
+            // Update question count
+            qcmQuizQuestionCount.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuiz.questions.length}`;
+
+            // Update instruction based on question type
+            if (isMultiSelect) {
+                const correctCount = question.correct_index.length;
+                qcmQuizInstruction.innerHTML = `<i class="fas fa-check-double"></i> Sélectionnez ${correctCount} réponse(s)`;
+            } else {
+                qcmQuizInstruction.innerHTML = `<i class="fas fa-check"></i> Sélectionnez 1 réponse`;
+            }
+
+            // Reset selected choices
+            selectedChoices.clear();
+
+            // Create question HTML
+            const questionHTML = `
+                <div class="qcm-quiz-question-container">
+                    <div class="qcm-quiz-question">${question.question}</div>
+                </div>
+                <div class="qcm-quiz-choices" id="qcmQuizChoices">
+                    ${question.choices.map((choice, index) => `
+                        <div class="qcm-quiz-choice" data-choice-index="${index}">
+                            <div class="qcm-quiz-choice-letter">${String.fromCharCode(65 + index)}</div>
+                            <div class="qcm-quiz-choice-text">${choice}</div>
+                            <div class="qcm-quiz-choice-check"></div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="qcm-quiz-actions">
+                    <button class="qcm-quiz-submit" id="qcmQuizSubmit" disabled>
+                        <i class="fas fa-paper-plane"></i>
+                        ${isMultiSelect ? 'Soumettre les réponses' : 'Soumettre la réponse'}
+                    </button>
+                </div>
+            `;
+
+            qcmQuizContent.innerHTML = questionHTML;
+
+            // Add event listeners to choices
+            const choices = document.querySelectorAll('.qcm-quiz-choice');
+            const submitButton = document.getElementById('qcmQuizSubmit');
+
+            choices.forEach(choice => {
+                choice.addEventListener('click', function() {
+                    const choiceIndex = parseInt(this.getAttribute('data-choice-index'));
+
+                    if (isMultiSelect) {
+                        // Toggle selection for multi-select
+                        if (selectedChoices.has(choiceIndex)) {
+                            selectedChoices.delete(choiceIndex);
+                            this.classList.remove('selected');
+                        } else {
+                            selectedChoices.add(choiceIndex);
+                            this.classList.add('selected');
+                        }
+                    } else {
+                        // Single selection for single-answer questions
+                        selectedChoices.clear();
+                        choices.forEach(c => c.classList.remove('selected'));
+                        selectedChoices.add(choiceIndex);
+                        this.classList.add('selected');
+                    }
+
+                    // Enable submit button if at least one choice is selected
+                    submitButton.disabled = selectedChoices.size === 0;
+                });
+            });
+
+            // Add event listener to submit button
+            submitButton.addEventListener('click', submitAnswer);
+        }
+
+        // Submit Answer with multi-select support
+        function submitAnswer() {
+            const question = currentQuiz.questions[currentQuestionIndex];
+            const isMultiSelect = Array.isArray(question.correct_index);
+
+            // Convert selectedChoices Set to sorted array
+            const userSelected = Array.from(selectedChoices).sort((a, b) => a - b);
+
+            // Determine if answer is correct
+            let isCorrect = false;
+
+            if (isMultiSelect) {
+                const correctAnswers = question.correct_index.sort((a, b) => a - b);
+                // Check if arrays are identical
+                isCorrect = userSelected.length === correctAnswers.length && 
+                           userSelected.every((value, index) => value === correctAnswers[index]);
+            } else {
+                // Single answer
+                isCorrect = userSelected.length === 1 && userSelected[0] === question.correct_index;
+            }
+
+            // Store user answer with correct answer(s)
+            const userChoices = userSelected.map(idx => question.choices[idx]);
+            const correctChoices = isMultiSelect 
+                ? question.correct_index.map(idx => question.choices[idx])
+                : [question.choices[question.correct_index]];
+
+            userAnswers.push({
+                question: question.question,
+                userChoices: userChoices,
+                correctChoices: correctChoices,
+                isCorrect: isCorrect,
+                isMultiSelect: isMultiSelect
+            });
+
+            // Update score
+            if (isCorrect) {
+                quizScore++;
+            }
+
+            // Show feedback
+            const choices = document.querySelectorAll('.qcm-quiz-choice');
+            const correctIndices = isMultiSelect ? question.correct_index : [question.correct_index];
+
+            choices.forEach((choice, index) => {
+                const choiceIndex = parseInt(choice.getAttribute('data-choice-index'));
+
+                if (correctIndices.includes(choiceIndex)) {
+                    choice.classList.add('correct');
+                }
+
+                if (userSelected.includes(choiceIndex) && !correctIndices.includes(choiceIndex)) {
+                    choice.classList.add('incorrect');
+                }
+            });
+
+            // Disable all choices
+            choices.forEach(choice => {
+                choice.style.pointerEvents = 'none';
+            });
+
+            // Show feedback message
+            const feedback = document.createElement('div');
+            feedback.className = `qcm-quiz-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+
+            let feedbackText = '';
+            if (isCorrect) {
+                feedbackText = 'Bonne réponse !';
+            } else {
+                if (isMultiSelect) {
+                    const correctAnswersList = correctChoices.map((choice, idx) => 
+                        `${String.fromCharCode(65 + question.choices.indexOf(choice))}. ${choice}`
+                    ).join(', ');
+                    feedbackText = `Incorrect. Les bonnes réponses étaient: ${correctAnswersList}`;
+                } else {
+                    feedbackText = `Incorrect. La bonne réponse était: ${correctChoices[0]}`;
+                }
+            }
+
+            feedback.innerHTML = `
+                <div class="qcm-quiz-feedback-icon">
+                    <i class="fas ${isCorrect ? 'fa-check-circle' : 'fa-times-circle'}"></i>
+                </div>
+                <div>${feedbackText}</div>
+            `;
+
+            qcmQuizContent.insertBefore(feedback, document.querySelector('.qcm-quiz-actions'));
+
+            // Replace submit button with next button
+            const submitButton = document.getElementById('qcmQuizSubmit');
+            submitButton.style.display = 'none';
+
+            const nextButton = document.createElement('button');
+            nextButton.className = 'qcm-quiz-next';
+            nextButton.innerHTML = `
+                <i class="fas fa-arrow-right"></i>
+                ${currentQuestionIndex < currentQuiz.questions.length - 1 ? 'Question suivante' : 'Voir les résultats'}
+            `;
+            nextButton.addEventListener('click', nextQuestion);
+
+            document.querySelector('.qcm-quiz-actions').innerHTML = '';
+            document.querySelector('.qcm-quiz-actions').appendChild(nextButton);
+        }
+
+        // Next Question
+        function nextQuestion() {
+            currentQuestionIndex++;
+            selectedChoices.clear();
+
+            if (currentQuestionIndex < currentQuiz.questions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        // Show Results with multi-select support
+        function showResults() {
+            const scorePercentage = Math.round((quizScore / currentQuiz.questions.length) * 100);
+
+            // Generate detailed corrections
+            const correctionsHTML = userAnswers.map((answer, index) => {
+                const questionNumber = index + 1;
+                const userChoicesList = answer.userChoices.map((choice, idx) => 
+                    `<div class="qcm-results-answer your-answer">
+                        <div class="qcm-results-answer-marker">${String.fromCharCode(65 + idx)}</div>
+                        <div>${choice}</div>
+                    </div>`
+                ).join('');
+
+                const correctChoicesList = answer.correctChoices.map((choice, idx) => 
+                    `<div class="qcm-results-answer correct-answer">
+                        <div class="qcm-results-answer-marker">${String.fromCharCode(65 + idx)}</div>
+                        <div>${choice}</div>
+                    </div>`
+                ).join('');
+
+                return `
+                    <div class="qcm-results-correction-item ${answer.isCorrect ? 'correct' : 'incorrect'}">
+                        <div class="qcm-results-question">Question ${questionNumber}: ${answer.question}</div>
+                        ${!answer.isCorrect ? `
+                            <div class="qcm-results-answers">
+                                <div style="font-size: 13px; color: var(--medium-text); margin-bottom: 4px;">Vos réponses:</div>
+                                ${userChoicesList}
+                                <div style="font-size: 13px; color: var(--secondary-color); margin: 8px 0 4px;">Réponses correctes:</div>
+                                ${correctChoicesList}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            const resultsHTML = `
+                <div class="qcm-results-container">
+                    <div class="qcm-results-score-container">
+                        <div class="qcm-results-score">${quizScore}/${currentQuiz.questions.length}</div>
+                        <div class="qcm-results-message">
+                            ${scorePercentage >= 80 ? 'Excellent travail !' : 
+                              scorePercentage >= 60 ? 'Bon travail !' : 
+                              'Continuez à vous entraîner !'}
+                        </div>
+                        <div class="qcm-results-percentage">${scorePercentage}% de bonnes réponses</div>
+                    </div>
+                    
+                    <div class="qcm-results-corrections">
+                        <div class="qcm-results-corrections-title">Détail des réponses :</div>
+                        ${correctionsHTML}
+                    </div>
+                    
+                    <div class="qcm-results-actions">
+                        <button class="qcm-results-retry" id="qcmRetryButton">
+                            <i class="fas fa-redo"></i>
+                            Recommencer ce chapitre
+                        </button>
+                        <button class="qcm-results-close" id="qcmCloseResultsButton">
+                            <i class="fas fa-times"></i>
+                            Fermer
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            qcmQuizContent.innerHTML = resultsHTML;
+
+            // Add event listeners to result buttons
+            document.getElementById('qcmRetryButton').addEventListener('click', function() {
+                const modelId = currentQuiz.id.split('_')[0];
+                const chapterId = currentQuiz.id;
+                startQuiz(modelId, chapterId);
+            });
+
+            document.getElementById('qcmCloseResultsButton').addEventListener('click', closeQuiz);
+        }
+
+        // Close Quiz
+        function closeQuiz() {
+            qcmQuizOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            currentQuiz = null;
+            selectedChoices.clear();
+        }
+
+        // Render Popular Courses from JSON data
+        function renderPopularCourses() {
+            coursesSlider.innerHTML = '';
+
+            Object.keys(popularCoursesData).forEach(courseId => {
+                const course = popularCoursesData[courseId];
+                const courseCard = document.createElement('div');
+                courseCard.className = `square-course-card ${getColorClass(courseId)}`;
+                courseCard.setAttribute('data-course-id', courseId);
+                courseCard.setAttribute('data-title', course.title);
+                courseCard.setAttribute('data-description', course.description);
+
+                courseCard.innerHTML = `
+                    <div class="course-icon"><i class="${getCourseIcon(courseId)}"></i></div>
+                    <h3>${course.title}</h3>
+                    <p>${course.description}</p>
+                    <div class="course-meta">
+                        <span><i class="far fa-clock"></i> ${getCourseDuration(courseId)}</span>
+                        <span><i class="fas fa-book"></i> ${getCourseLessons(courseId)} Quiz à faire</span>
+                    </div>
+                `;
+
+                coursesSlider.appendChild(courseCard);
+            });
+        }
+
+        // Render Your Courses from JSON data
+        function renderYourCourses() {
+            yourCoursesGrid.innerHTML = '';
+
+            Object.keys(yourCoursesData).forEach(courseId => {
+                const course = yourCoursesData[courseId];
+                const courseCard = document.createElement('div');
+                courseCard.className = 'course-card';
+                courseCard.setAttribute('data-course-id', courseId);
+
+                courseCard.innerHTML = `
+                    <div class="course-icon"><i class="${getYourCourseIcon(courseId)}"></i></div>
+                    <h3>${course.title}</h3>
+                    <p>${course.description}</p>
+                    <div class="course-meta">
+                        <span><i class="far fa-clock"></i> ${getYourCourseDuration(courseId)}</span>
+                        <span><i class="fas fa-book"></i> ${getYourCourseLessons(courseId)} leçons</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: ${getYourCourseProgress(courseId)}"></div>
+                    </div>
+                    <div class="course-meta">
+                        <span>${getYourCourseProgress(courseId)} Complete</span>
+                    </div>
+                `;
+
+                yourCoursesGrid.appendChild(courseCard);
+            });
+        }
+
+        // Render Exercises from JSON data
+        function renderExercises() {
+            exercisesGrid.innerHTML = '';
+
+            Object.keys(exercisesData).forEach(exerciseId => {
+                const exercise = exercisesData[exerciseId];
+
+                const exerciseCard = document.createElement('div');
+                exerciseCard.className = `exercise-card`;
+                exerciseCard.setAttribute('data-exercise-id', exerciseId);
+
+                exerciseCard.innerHTML = `
+                    <div class="course-icon"><i class="${getExerciseIcon(exerciseId)}"></i></div>
+                    <h3>${exercise.title}</h3>
+                    <p>${exercise.description}</p>
+                    <div class="course-meta">
+                        <span><i class="far fa-clock"></i> ${exercise.duration}</span>
+                        <span><i class="fas fa-tasks"></i> ${exercise.exerciseCount} exercices</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: ${exercise.progress}%"></div>
+                    </div>
+                    <div class="course-meta">
+                        <span>${exercise.progress}% Complete</span>
+                    </div>
+                `;
+
+                exercisesGrid.appendChild(exerciseCard);
+            });
+        }
+
+        // NEW: Render Models from JSON data
+        function renderModels() {
+            modelsGrid.innerHTML = '';
+
+            Object.keys(modelsData).forEach(modelId => {
+                const model = modelsData[modelId];
+                const modelCard = document.createElement('div');
+                modelCard.className = 'model-card';
+                modelCard.setAttribute('data-model-id', modelId);
+
+                modelCard.innerHTML = `
+                    <div class="model-icon">
+                        <i class="${model.icon}"></i>
+                    </div>
+                    <h4>${model.title}</h4>
+                    <p>${model.description}</p>
+                `;
+
+                modelsGrid.appendChild(modelCard);
+            });
+        }
+
+        // Helper functions for course data
+        function getColorClass(courseId) {
+            const colors = ['green', 'purple', 'blue', 'orange', 'green'];
+            return colors[Object.keys(popularCoursesData).indexOf(courseId) % colors.length];
+        }
+
+        function getCourseIcon(courseId) {
+            const icons = {
+                'reproduction-humaine': 'fas fa-heartbeat',
+                'evolution-biologique': 'fas fa-flask',
+                'genetique-humaine': 'fas fa-dna',
+                'neurophysiologie': 'fas fa-brain',
+                'immunite': 'fas fa-shield-virus'
+            };
+            return icons[courseId] || 'fas fa-book';
+        }
+
+        function getCourseDuration(courseId) {
+            const durations = {
+                'reproduction-humaine': ' 50min',
+                'evolution-biologique': ' 30min',
+                'genetique-humaine': ' 45min',
+                'neurophysiologie': '1h 20min',
+                'immunite': '1h 45min'
+            };
+            return durations[courseId] || '2h 00min';
+        }
+
+        function getCourseLessons(courseId) {
+            const lessons = {
+                'reproduction-humaine': '48',
+                'evolution-biologique': '15',
+                'genetique-humaine': '22',
+                'neurophysiologie': '56',
+                'immunite': '34'
+            };
+            return lessons[courseId] || '10';
+        }
+
+        function getYourCourseIcon(courseId) {
+            const icons = {
+                'reproduction-humaine1': 'fas fa-heartbeat',
+                'reproduction-humaine2': 'fas fa-heartbeat',
+                'reproduction-humaine3': 'fas fa-heartbeat',
+                'evolution-biologique': 'fas fa-dna',
+                'genetique-humaine': 'fas fa-flask'
+            };
+            return icons[courseId] || 'fas fa-book';
+        }
+
+        function getYourCourseDuration(courseId) {
+            const durations = {
+                'reproduction-humaine1': ' ',
+                'reproduction-humaine2': ' ',
+                'reproduction-humaine3': ' ',
+                'evolution-biologique': ' ',
+                'genetique-humaine': ' '
+            };
+            return durations[courseId] || '3h 00min';
+        }
+
+        function getYourCourseLessons(courseId) {
+            const lessons = {
+                'reproduction-humaine1': '2',
+                'reproduction-humaine2': '7',
+                'reproduction-humaine3': '3',
+                'evolution-biologique': '15',
+                'genetique-humaine': '2'
+            };
+            return lessons[courseId] || '12';
+        }
+
+        function getYourCourseProgress(courseId) {
+            const progress = {
+                'reproduction-humaine1': '100%',
+                'reproduction-humaine2': '100%',
+                'reproduction-humaine3': '100%',
+                'evolution-biologique': '40%',
+                'genetique-humaine': '50%'
+            };
+            return progress[courseId] || '50%';
+        }
+
+        function getExerciseIcon(exerciseId) {
+            const icons = {
+                'ex01': 'fas fa-file-pdf',
+                'ex02': 'fas fa-file-pdf',
+                'ex03': 'fas fa-flask',
+                'ex04': 'fas fa-shield-virus'
+            };
+            return icons[exerciseId] || 'fas fa-file-alt';
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Navigation
+            setupNavigation();
+
+            // Start button scroll to quiz section
+            startButton.addEventListener('click', function() {
+                quizSection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            // NEW: Biology QCM button
+            qcmBiologyBtn.addEventListener('click', scrollToQCM);
+
+            // NEW: View schemas button
+            viewSchemasButton.addEventListener('click', openModelsPopup);
+
+            // NEW: QCM chapter click
+            qcmModelsContainer.addEventListener('click', function(e) {
+                const chapterItem = e.target.closest('.qcm-chapter-item');
+                if (chapterItem) {
+                    const modelId = chapterItem.getAttribute('data-model-id');
+                    const chapterId = chapterItem.getAttribute('data-chapter-id');
+                    startQuiz(modelId, chapterId);
+                }
+            });
+
+            // NEW: QCM quiz close
+            qcmQuizClose.addEventListener('click', closeQuiz);
+
+            // NEW: QCM quiz overlay close
+            qcmQuizOverlay.addEventListener('click', function(e) {
+                if (e.target === qcmQuizOverlay) {
+                    closeQuiz();
+                }
+            });
+
+            // Search functionality for Popular Courses
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                const courseCards = coursesSlider.querySelectorAll('.square-course-card');
+
+                courseCards.forEach(card => {
+                    const title = card.getAttribute('data-title').toLowerCase();
+                    const description = card.getAttribute('data-description').toLowerCase();
+
+                    if (searchTerm === '' || title.includes(searchTerm) || description.includes(searchTerm)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+
+            // NEW: Models popup
+            modelsGrid.addEventListener('click', function(e) {
+                const modelCard = e.target.closest('.model-card');
+                if (modelCard) {
+                    const modelId = modelCard.getAttribute('data-model-id');
+                    openGalleryPopup(modelId);
+                }
+            });
+
+            // Popular Courses popup
+            coursesSlider.addEventListener('click', function(e) {
+                const courseCard = e.target.closest('.square-course-card');
+                if (courseCard) {
+                    const courseId = courseCard.getAttribute('data-course-id');
+                    openPopularCoursesPopup(courseId);
+                }
+            });
+
+            // Your Courses PDF popup
+            yourCoursesGrid.addEventListener('click', function(e) {
+                const courseCard = e.target.closest('.course-card');
+                if (courseCard) {
+                    const courseId = courseCard.getAttribute('data-course-id');
+                    openPdfViewerPopup(courseId, 'course');
+                }
+            });
+
+            // Exercises modal
+            exercisesGrid.addEventListener('click', function(e) {
+                const exerciseCard = e.target.closest('.exercise-card');
+                if (exerciseCard) {
+                    const exerciseId = exerciseCard.getAttribute('data-exercise-id');
+                    openExerciseModal(exerciseId);
+                }
+            });
+
+            // NEW: Gallery image click
+            galleryGrid.addEventListener('click', function(e) {
+                const galleryItem = e.target.closest('.gallery-item');
+                if (galleryItem) {
+                    const img = galleryItem.querySelector('.gallery-image');
+                    openFullscreenImage(img.src, img.alt);
+                }
+            });
+
+            // Close popups
+            modelsPopupClose.addEventListener('click', closeModelsPopup);
+            galleryPopupClose.addEventListener('click', closeGalleryPopup);
+            popularCoursesPopupClose.addEventListener('click', closePopularCoursesPopup);
+            exerciseModalClose.addEventListener('click', closeExerciseModal);
+            pdfViewerPopupClose.addEventListener('click', closePdfViewerPopup);
+
+            // NEW: Fullscreen back button
+            backFromFullscreen.addEventListener('click', closeFullscreenImage);
+
+            // Close popups when clicking outside
+            modelsPopup.addEventListener('click', function(e) {
+                if (e.target === modelsPopup) {
+                    closeModelsPopup();
+                }
+            });
+
+            galleryPopup.addEventListener('click', function(e) {
+                if (e.target === galleryPopup) {
+                    closeGalleryPopup();
+                }
+            });
+
+            popularCoursesPopup.addEventListener('click', function(e) {
+                if (e.target === popularCoursesPopup) {
+                    closePopularCoursesPopup();
+                }
+            });
+
+            exerciseModal.addEventListener('click', function(e) {
+                if (e.target === exerciseModal) {
+                    closeExerciseModal();
+                }
+            });
+
+            pdfViewerPopup.addEventListener('click', function(e) {
+                if (e.target === pdfViewerPopup) {
+                    closePdfViewerPopup();
+                }
+            });
+
+            // NEW: Fullscreen viewer close when clicking outside image
+            fullscreenViewer.addEventListener('click', function(e) {
+                if (e.target === fullscreenViewer) {
+                    closeFullscreenImage();
+                }
+            });
+
+            // Close popups with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    if (qcmQuizOverlay.classList.contains('active')) {
+                        closeQuiz();
+                    } else if (fullscreenViewer.classList.contains('active')) {
+                        closeFullscreenImage();
+                    } else if (modelsPopup.classList.contains('active')) {
+                        closeModelsPopup();
+                    } else if (galleryPopup.classList.contains('active')) {
+                        closeGalleryPopup();
+                    } else if (popularCoursesPopup.classList.contains('active')) {
+                        closePopularCoursesPopup();
+                    } else if (exerciseModal.classList.contains('active')) {
+                        closeExerciseModal();
+                    } else if (pdfViewerPopup.classList.contains('active')) {
+                        closePdfViewerPopup();
+                    } else if (whatsappPopupOverlay.classList.contains('active')) {
+                        closeWhatsappPopup();
+                    } else if (ebookModalOverlay.classList.contains('active')) {
+                        closeEbookModal();
+                    }
+                }
+            });
+
+            // PDF fullscreen button
+            pdfFullscreenBtn.addEventListener('click', function() {
+                if (pdfViewer.requestFullscreen) {
+                    pdfViewer.requestFullscreen();
+                } else if (pdfViewer.webkitRequestFullscreen) {
+                    pdfViewer.webkitRequestFullscreen();
+                } else if (pdfViewer.msRequestFullscreen) {
+                    pdfViewer.msRequestFullscreen();
+                }
+            });
+
+            // PDF viewer load event
+            pdfViewer.addEventListener('load', function() {
+                pdfViewerContainer.classList.remove('loading');
+            });
+        }
+
+        // NEW: Open Models popup
+        function openModelsPopup() {
+            modelsPopup.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // NEW: Close Models popup
+        function closeModelsPopup() {
+            modelsPopup.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // NEW: Open Gallery popup
+        function openGalleryPopup(modelId) {
+            const model = modelsData[modelId];
+            if (!model) return;
+
+            currentModelId = modelId;
+            galleryTitle.textContent = model.title;
+
+            // Clear previous gallery items
+            galleryGrid.innerHTML = '';
+
+            // Add gallery items
+            model.images.forEach((image, index) => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+
+                galleryItem.innerHTML = `
+                    <img src="${image.src}" alt="${image.alt}" class="gallery-image">
+                `;
+
+                galleryGrid.appendChild(galleryItem);
+            });
+
+            // Close models popup and open gallery popup
+            closeModelsPopup();
+            galleryPopup.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // NEW: Close Gallery popup
+        function closeGalleryPopup() {
+            galleryPopup.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            currentModelId = null;
+        }
+
+        // NEW: Open Fullscreen Image
+        function openFullscreenImage(src, alt) {
+            fullscreenImage.src = src;
+            fullscreenImage.alt = alt;
+            fullscreenViewer.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // NEW: Close Fullscreen Image
+        function closeFullscreenImage() {
+            fullscreenViewer.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Open Popular Courses popup
+        function openPopularCoursesPopup(courseId) {
+            const course = popularCoursesData[courseId];
+            if (!course) return;
+
+            popularCoursesPopupTitle.textContent = course.title;
+            popularCoursesPopupDescription.textContent = course.description;
+
+            // Clear previous options
+            popularCoursesOptions.innerHTML = '';
+
+            // Add new options
+            course.options.forEach(option => {
+                const optionCard = document.createElement('div');
+                optionCard.className = `option-card ${option.color}`;
+
+                optionCard.innerHTML = `
+                    <div>
+                        <div class="option-icon">
+                            <i class="${option.icon}"></i>
+                        </div>
+                        <h4 class="option-title">${option.title}</h4>
+                        <p>${option.description}</p>
+                    </div>
+                    <a href="${option.link}" class="option-link" target="_blank">Essayer<i class="fas fa-arrow-right"></i></a>
+                `;
+
+                popularCoursesOptions.appendChild(optionCard);
+            });
+
+            // Show popup
+            popularCoursesPopup.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close Popular Courses popup
+        function closePopularCoursesPopup() {
+            popularCoursesPopup.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Open Exercise modal
+        function openExerciseModal(exerciseId) {
+            const exercise = exercisesData[exerciseId];
+            if (!exercise) return;
+
+            currentExerciseId = exerciseId;
+
+            exerciseModalTitle.textContent = exercise.title;
+            exerciseModalDescription.textContent = exercise.description;
+
+            // Clear previous PDFs
+            exercisePdfsList.innerHTML = '';
+
+            // Add PDFs - entire PDF item is clickable
+            exercise.pdfs.forEach((pdf, index) => {
+                const pdfItem = document.createElement('div');
+                pdfItem.className = 'pdf-item';
+                pdfItem.setAttribute('data-pdf-url', pdf.url);
+                pdfItem.setAttribute('data-pdf-title', pdf.title);
+
+                pdfItem.innerHTML = `
+                    <div class="pdf-info">
+                        <div class="pdf-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <h4>${pdf.title}</h4>
+                    </div>
+                `;
+
+                // Add click event to the entire PDF item
+                pdfItem.addEventListener('click', function() {
+                    const pdfUrl = this.getAttribute('data-pdf-url');
+                    const pdfTitle = this.getAttribute('data-pdf-title');
+                    openPdfViewerPopup(pdfUrl, 'pdf', pdfTitle);
+                });
+
+                exercisePdfsList.appendChild(pdfItem);
+            });
+
+            // Show modal
+            exerciseModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close Exercise modal
+        function closeExerciseModal() {
+            exerciseModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            currentExerciseId = null;
+        }
+
+        // Open PDF Viewer popup
+        function openPdfViewerPopup(resource, type, customTitle = null) {
+            let title = customTitle || '';
+            let pdfUrl = resource;
+
+            if (type === 'course') {
+                const course = yourCoursesData[resource];
+                if (!course) return;
+                title = course.title;
+                pdfUrl = course.pdfUrl;
+            } else if (type === 'exercise') {
+                const exercise = exercisesData[resource];
+                if (!exercise) return;
+                title = exercise.title;
+                pdfUrl = exercise.pdfs[0].url;
+            }
+
+            pdfViewerPopupTitle.textContent = title || 'PDF Viewer';
+
+            // Show loading spinner
+            pdfViewerContainer.classList.add('loading');
+
+            // Set PDF source (lazy loading)
+            pdfViewer.src = pdfUrl;
+
+            // Show popup
+            pdfViewerPopup.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close PDF Viewer popup
+        function closePdfViewerPopup() {
+            pdfViewerPopup.classList.remove('active');
+            document.body.style.overflow = 'auto';
+
+            // Reset PDF viewer
+            pdfViewer.src = '';
+        }
+    </script>
+     <script src="./assets/js/qcm.js"></script>
+      <script src="./assets/js/exercice.js"></script>
+       <script src="./assets/js/flashcarts.js"></script>
+        <script src="./assets/js/quizcart.js"></script>
+         <script src="./assets/js/cours.js"></script>
+</body>
+</html>

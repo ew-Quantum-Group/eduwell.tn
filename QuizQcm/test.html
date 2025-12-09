@@ -8,72 +8,249 @@
     <link rel="shortcut icon" href="./assets/images/appicon.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
      <link rel="stylesheet" href="./assets/css/stylesvtapp.css">
-     <style>
-        /* MODIFICATION FOR E-BOOK SECTION - CSS Additions */
+    <style>
+        /* MODIFICATION: UPDATED BIOLOGY CARD DESIGN TO MATCH QCM STYLE */
 
-        /* E-Book Biology Card - Similar to QCM but different color */
+        /* MODIFICATION: UPDATED BIOLOGY CARD DESIGN TO MATCH QCM STYLE */
+        /* REMOVED: The original .biology-card selector here should not exist */
+        /* We need to keep this design only for E-Book section */
+        
+        /* MODIFICATION: E-BOOK BIOLOGY CARD UPDATED TO MATCH QCM STYLE */
         .ebook-biology-card {
-            background: linear-gradient(135deg, #2d9d78 0%, #1a7d5e 100%);
-            border-radius: 20px;
-            padding: 25px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.95) 100%);
+            border-radius: 24px;
+            padding: 28px;
             margin: 20px 0;
-            color: white;
-            box-shadow: 0 10px 30px rgba(45, 157, 120, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.8);
             position: relative;
             overflow: hidden;
+            transition: var(--transition);
+            box-shadow: var(--qcm-shadow-soft);
+            backdrop-filter: blur(20px);
         }
 
         .ebook-biology-card::before {
             content: '';
             position: absolute;
             top: 0;
+            left: 0;
             right: 0;
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            transform: translate(30%, -30%);
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(45, 157, 120, 0.08) 0%, 
+                rgba(79, 70, 229, 0.04) 50%,
+                rgba(255, 255, 255, 0) 100%);
+            z-index: 1;
+        }
+
+        .ebook-biology-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .ebook-biology-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--qcm-shadow-soft-hover);
+            border-color: rgba(53, 45, 157, 0.2);
         }
 
         .ebook-biology-content {
             position: relative;
-            z-index: 1;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
         }
 
         .ebook-biology-text h2 {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
-            margin-bottom: 10px;
-            color: white;
+            margin-bottom: 12px;
+            color: var(--dark-text);
+            letter-spacing: -0.01em;
+            line-height: 1.3;
         }
 
         .ebook-biology-text p {
             font-size: 14px;
-            opacity: 0.9;
-            line-height: 1.6;
-            margin-bottom: 20px;
+            color: var(--medium-text);
+            line-height: 1.5;
+            margin-bottom: 0;
+            max-width: 500px;
         }
 
         .ebook-biology-btn {
-            background: white;
-            color: #2d9d78;
+            background: linear-gradient(135deg, var(--qcm-accent-bio) 0%, #0DA271 100%);
+            color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-weight: 600;
+            padding: 14px 24px;
+            border-radius: 16px;
             font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 6px 24px rgba(16, 185, 129, 0.25);
+            position: relative;
+            z-index: 2;
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .ebook-biology-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.2), 
+                transparent);
+            transition: left 0.6s ease;
         }
 
         .ebook-biology-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 32px rgba(16, 185, 129, 0.35);
         }
+
+        .ebook-biology-btn:hover::before {
+            left: 100%;
+        }
+
+        /* MODIFICATION: BIOLOGY CARDS GRID UPDATED TO MATCH QCM STYLE */
+        .biology-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 25px 0 40px;
+        }
+
+        .biology-card-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.95) 100%);
+            border-radius: 24px;
+            padding: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: var(--qcm-shadow-soft);
+            backdrop-filter: blur(20px);
+        }
+
+        .biology-card-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(74, 144, 226, 0.08) 0%, 
+                rgba(79, 70, 229, 0.04) 50%,
+                rgba(255, 255, 255, 0) 100%);
+            z-index: 1;
+        }
+
+        .biology-card-section::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .biology-card-section:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--qcm-shadow-soft-hover);
+            border-color: rgba(74, 144, 226, 0.2);
+        }
+
+        .biology-card-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .biology-card-content h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--dark-text);
+            letter-spacing: -0.01em;
+            line-height: 1.3;
+        }
+
+        .biology-card-content p {
+            font-size: 15px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            color: var(--medium-text);
+        }
+
+        .biology-card-link {
+            background: linear-gradient(135deg, var(--qcm-primary) 0%, var(--qcm-primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 6px 24px rgba(79, 70, 229, 0.25);
+            position: relative;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .biology-card-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.2), 
+                transparent);
+            transition: left 0.6s ease;
+        }
+
+        .biology-card-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 32px rgba(79, 70, 229, 0.35);
+            color: white;
+        }
+
+        .biology-card-link:hover::before {
+            left: 100%;
+        }
+
+        /* MODIFICATION FOR E-BOOK SECTION - CSS Additions */
 
         /* E-Book Slider - Same as home slider */
         .ebook-slider-container {
@@ -150,39 +327,43 @@
             color: #888;
         }
 
-        /* E-Book Modal - Same as existing popups */
+        /* MODIFICATION: E-Book Modal - Updated structure */
         .ebook-modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            align-items: center;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: flex-end;
             justify-content: center;
             z-index: 1000;
-            padding: 20px;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
         .ebook-modal-overlay.active {
-            display: flex;
             opacity: 1;
+            visibility: visible;
         }
 
         .ebook-modal-container {
-            background: white;
-            border-radius: 20px;
+            background-color: var(--white);
             width: 100%;
-            max-width: 900px;
-            max-height: 90vh;
-            overflow-y: auto;
+            max-width: 1200px;
+            height: 75%;
+            border-top-left-radius: var(--border-radius-xl);
+            border-top-right-radius: var(--border-radius-xl);
+            padding: 35px;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
             position: relative;
-            transform: translateY(50px);
-            transition: transform 0.3s ease;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
         }
 
         .ebook-modal-overlay.active .ebook-modal-container {
@@ -190,117 +371,104 @@
         }
 
         .ebook-modal-header {
-            padding: 25px 30px 20px;
-            border-bottom: 1px solid #eee;
-            position: sticky;
-            top: 0;
-            background: white;
-            border-radius: 20px 20px 0 0;
-            z-index: 10;
+            margin-bottom: 30px;
+            padding-right: 60px;
         }
 
         .ebook-modal-close {
             position: absolute;
             top: 25px;
-            right: 30px;
-            background: none;
+            right: 25px;
+            background: var(--gray-100);
             border: none;
-            font-size: 20px;
-            color: #666;
+            font-size: 22px;
+            color: var(--medium-text);
             cursor: pointer;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            z-index: 10;
         }
 
         .ebook-modal-close:hover {
-            background: #f5f5f5;
-            color: #333;
+            background-color: var(--primary-color);
+            color: white;
+            transform: rotate(90deg);
         }
 
         .ebook-modal-title {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
-            color: #333;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
         }
 
         .ebook-modal-description {
-            color: #666;
-            font-size: 14px;
-            line-height: 1.5;
+            font-size: 13px;
+            color: var(--medium-text);
+            line-height: 1.6;
         }
 
         .ebook-modal-content {
-            padding: 30px;
-            display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 30px;
-        }
-
-        .ebook-pdf-viewer {
-            width: 100%;
-            height: 500px;
-            border-radius: 10px;
+            flex-grow: 1;
             overflow: hidden;
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-        }
-
-        .ebook-pdf-viewer iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
         }
 
         .ebook-sidebar {
             display: flex;
             flex-direction: column;
             gap: 20px;
+            flex-shrink: 0;
         }
 
         .ebook-details-card {
-            background: #f9f9f9;
-            border-radius: 15px;
-            padding: 20px;
-            border: 1px solid #eee;
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            border: 1px solid var(--gray-200);
+            transition: var(--transition);
         }
 
         .ebook-details-card h4 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark-text);
             margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 10px;
+            letter-spacing: -0.02em;
         }
 
         .ebook-details-card h4 i {
-            color: #2d9d78;
+            color: var(--primary-color);
         }
 
         .ebook-details-card p {
             font-size: 14px;
-            color: #666;
+            color: var(--medium-text);
             line-height: 1.6;
             margin-bottom: 20px;
         }
 
         .ebook-price {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 700;
-            color: #2d9d78;
+            color: var(--primary-color);
             margin-bottom: 5px;
         }
 
         .ebook-price-note {
             font-size: 12px;
-            color: #888;
+            color: var(--light-text);
             margin-bottom: 20px;
         }
 
@@ -310,12 +478,13 @@
             gap: 12px;
         }
 
-        .ebook-buy-btn {
-            background: linear-gradient(135deg, #2d9d78 0%, #1a7d5e 100%);
+        /* MODIFICATION: Added Preview button style */
+        .ebook-preview-btn {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
             color: white;
             border: none;
-            padding: 15px;
-            border-radius: 10px;
+            padding: 16px 28px;
+            border-radius: 16px;
             font-weight: 600;
             font-size: 16px;
             cursor: pointer;
@@ -323,47 +492,178 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            width: 100%;
+            box-shadow: 0 6px 24px rgba(16, 185, 129, 0.3);
+        }
+
+        .ebook-preview-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 32px rgba(16, 185, 129, 0.4);
+        }
+
+        .ebook-buy-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 16px 28px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: var(--transition);
+            width: 100%;
+            box-shadow: 0 6px 24px rgba(79, 70, 229, 0.3);
         }
 
         .ebook-buy-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(45, 157, 120, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 32px rgba(79, 70, 229, 0.4);
         }
 
-        /* MODIFICATION: WhatsApp Popup */
+        /* MODIFICATION: PDF Viewer Popup for E-Books */
+        .ebook-pdf-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            z-index: 1100;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .ebook-pdf-popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .ebook-pdf-popup-container {
+            background-color: var(--white);
+            width: 100%;
+            max-width: 1200px;
+            height: 85%;
+            border-top-left-radius: var(--border-radius-xl);
+            border-top-right-radius: var(--border-radius-xl);
+            padding: 35px;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+
+        .ebook-pdf-popup-overlay.active .ebook-pdf-popup-container {
+            transform: translateY(0);
+        }
+
+        .ebook-pdf-popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-right: 60px;
+        }
+
+        .ebook-pdf-popup-close {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: var(--gray-100);
+            border: none;
+            font-size: 22px;
+            color: var(--medium-text);
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .ebook-pdf-popup-close:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .ebook-pdf-popup-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
+        }
+
+        .ebook-pdf-viewer-container {
+            flex-grow: 1;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--gray-200);
+            background-color: var(--gray-50);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .ebook-pdf-viewer {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* MODIFICATION: WhatsApp Popup updated to match general popup design */
         .whatsapp-popup-overlay {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            align-items: center;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: flex-end;
             justify-content: center;
-            z-index: 1100;
-            padding: 20px;
+            z-index: 1200;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
         .whatsapp-popup-overlay.active {
-            display: flex;
             opacity: 1;
+            visibility: visible;
         }
 
         .whatsapp-popup-container {
-            background: white;
-            border-radius: 20px;
+            background-color: var(--white);
             width: 100%;
             max-width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
+            height: 75%;
+            border-top-left-radius: var(--border-radius-xl);
+            border-top-right-radius: var(--border-radius-xl);
+            padding: 35px;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
             position: relative;
-            transform: translateY(50px);
-            transition: transform 0.3s ease;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
         }
 
         .whatsapp-popup-overlay.active .whatsapp-popup-container {
@@ -371,53 +671,51 @@
         }
 
         .whatsapp-popup-header {
-            padding: 25px 30px 20px;
-            border-bottom: 1px solid #eee;
-            position: sticky;
-            top: 0;
-            background: white;
-            border-radius: 20px 20px 0 0;
-            z-index: 10;
+            margin-bottom: 30px;
+            padding-right: 60px;
         }
 
         .whatsapp-popup-close {
             position: absolute;
             top: 25px;
-            right: 30px;
-            background: none;
+            right: 25px;
+            background: var(--gray-100);
             border: none;
-            font-size: 20px;
-            color: #666;
+            font-size: 22px;
+            color: var(--medium-text);
             cursor: pointer;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            z-index: 10;
         }
 
         .whatsapp-popup-close:hover {
-            background: #f5f5f5;
-            color: #333;
+            background-color: var(--primary-color);
+            color: white;
+            transform: rotate(90deg);
         }
 
         .whatsapp-popup-title {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
-            color: #333;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
         }
 
         .whatsapp-popup-description {
-            color: #666;
-            font-size: 14px;
-            line-height: 1.5;
+            font-size: 13px;
+            color: var(--medium-text);
+            line-height: 1.6;
         }
 
         .whatsapp-popup-content {
-            padding: 30px;
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
             gap: 25px;
@@ -425,21 +723,26 @@
 
         .whatsapp-contact-section {
             text-align: center;
-            padding: 20px;
-            background: #f9f9f9;
-            border-radius: 15px;
-            border: 1px solid #eee;
+            padding: 30px;
+            background: var(--gray-50);
+            border-radius: var(--border-radius-lg);
+            border: 1px solid var(--gray-200);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .whatsapp-contact-section h4 {
             font-size: 20px;
-            font-weight: 600;
-            color: #333;
+            font-weight: 700;
+            color: var(--dark-text);
             margin-bottom: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
+            letter-spacing: -0.02em;
         }
 
         .whatsapp-contact-section h4 i {
@@ -448,7 +751,7 @@
 
         .whatsapp-contact-section p {
             font-size: 15px;
-            color: #666;
+            color: var(--medium-text);
             line-height: 1.6;
             margin-bottom: 25px;
         }
@@ -457,30 +760,30 @@
             background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
             color: white;
             border: none;
-            padding: 18px 30px;
-            border-radius: 12px;
+            padding: 16px 28px;
+            border-radius: 16px;
             font-weight: 600;
-            font-size: 18px;
+            font-size: 16px;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             width: 100%;
-            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3);
+            box-shadow: 0 6px 24px rgba(37, 211, 102, 0.3);
             text-decoration: none;
         }
 
         .whatsapp-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            box-shadow: 0 10px 32px rgba(37, 211, 102, 0.4);
             color: white;
         }
 
         .whatsapp-note {
             font-size: 13px;
-            color: #888;
+            color: var(--light-text);
             text-align: center;
             margin-top: 15px;
             font-style: italic;
@@ -521,54 +824,109 @@
             pointer-events: none;
         }
 
-        /* Responsive */
+        /* Responsive adjustments for E-Book modal to match popup behavior */
         @media (max-width: 768px) {
-            .ebook-modal-content {
+            .biology-cards-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .ebook-biology-content {
+                flex-direction: column;
+                text-align: center;
                 gap: 20px;
             }
             
-            .ebook-pdf-viewer {
-                height: 400px;
+            .ebook-biology-text {
+                text-align: center;
+                width: 100%;
+                margin-bottom: 0;
             }
             
-            .ebook-card {
-                flex: 0 0 250px;
+            .ebook-biology-btn {
+                width: 100%;
+                justify-content: center;
+                order: 2;
             }
             
-            .ebook-modal-header {
-                padding: 20px;
+            .ebook-biology-text p {
+                margin-bottom: 20px;
             }
             
-            .ebook-modal-close {
-                top: 20px;
-                right: 20px;
+            .ebook-modal-container {
+                height: 95%;
+                padding: 25px;
+            }
+            
+            .ebook-modal-title {
+                font-size: 24px;
+            }
+            
+            .ebook-modal-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .ebook-pdf-popup-container {
+                height: 95%;
+                padding: 25px;
+            }
+            
+            .ebook-pdf-popup-title {
+                font-size: 24px;
             }
             
             .whatsapp-popup-container {
                 max-width: 90%;
+                height: 95%;
+                padding: 25px;
+            }
+            
+            .whatsapp-popup-title {
+                font-size: 24px;
             }
         }
 
         @media (max-width: 480px) {
-            .ebook-card {
-                flex: 0 0 220px;
+            .ebook-modal-container,
+            .ebook-pdf-popup-container,
+            .whatsapp-popup-container {
+                height: 95%;
+                padding: 20px;
             }
             
-            .ebook-pdf-viewer {
-                height: 300px;
-            }
-            
-            .ebook-thumbnail {
-                height: 150px;
+            .ebook-modal-header,
+            .ebook-pdf-popup-header,
+            .whatsapp-popup-header {
+                padding-right: 50px;
             }
             
             .whatsapp-btn {
-                padding: 15px 20px;
-                font-size: 16px;
+                padding: 14px 20px;
+                font-size: 15px;
+            }
+            
+            .ebook-biology-card {
+                padding: 20px;
+            }
+            
+            .ebook-biology-text h2 {
+                font-size: 20px;
+            }
+            
+            .ebook-biology-btn {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+            
+            .biology-card-section {
+                padding: 25px;
+            }
+            
+            .biology-card-content h3 {
+                font-size: 20px;
             }
         }
-     </style>
+      </style>
 </head>
 <body>
     <!-- Bottom Navigation - MODIFICATION: Changed Videos to E-Book -->
@@ -717,7 +1075,7 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
                 <div class="ebook-biology-content">
                     <div class="ebook-biology-text">
                         <h2>Vidéo de cours</h2>
-                        <p>Accédez à notre collection complète de manuels numériques, guides de révision et ressources pédagogiques pour exceller en SVT.</p>
+                        <p>.</p>
                     </div>
                     <!-- MODIFICATION: Button opens external website -->
                     <button class="ebook-biology-btn" id="ebookBiologyBtn" onclick="window.open('https://your-external-website-link.com', '_blank')">
@@ -730,8 +1088,8 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
             <!-- E-Book Slider Section -->
             <div class="section-header">
                 <div class="section-title">
-                    <i class="fas fa-book"></i>
-                    <span>Nos Manuels Recommandés</span>
+                   
+                    <span>E-Books Store</span>
                 </div>
             </div>
 
@@ -750,6 +1108,18 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
                 </div>
             </div>
 
+            <!-- MODIFICATION: Added new biology-card section under Nos Manuels Recommandés -->
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Ressources Complémentaires</span>
+                </div>
+            </div>
+
+            <div class="biology-cards-grid" id="biologyCardsGrid">
+                <!-- Biology cards will be populated by JavaScript -->
+            </div>
+
             <!-- E-Book Footer -->
             <div class="footer">
                 <p>© 2025 EduWell Quantum Group</p>
@@ -758,7 +1128,7 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
         </div>
     </div>
 
-    <!-- MODIFICATION: E-BOOK MODAL OVERLAY -->
+    <!-- MODIFICATION: E-BOOK MODAL OVERLAY - Updated structure -->
     <div class="ebook-modal-overlay" id="ebookModalOverlay">
         <div class="ebook-modal-container">
             <div class="ebook-modal-header">
@@ -769,11 +1139,6 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
                 <p class="ebook-modal-description" id="ebookModalDescription">E-Book description will appear here.</p>
             </div>
             <div class="ebook-modal-content">
-                <div class="ebook-main-content">
-                    <div class="ebook-pdf-viewer">
-                        <iframe id="ebookPdfViewer" frameborder="0"></iframe>
-                    </div>
-                </div>
                 <div class="ebook-sidebar">
                     <div class="ebook-details-card">
                         <h4><i class="fas fa-info-circle"></i> Description</h4>
@@ -782,8 +1147,12 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
                         <div class="ebook-price" id="ebookPrice">$24.99</div>
                         <div class="ebook-price-note">Format PDF • Accès immédiat</div>
                         
+                        <!-- MODIFICATION: Added Preview button -->
                         <div class="ebook-action-buttons">
-                            <!-- MODIFICATION: Only one button - Acheter maintenant -->
+                            <button class="ebook-preview-btn" id="ebookPreviewBtn">
+                                <i class="fas fa-eye"></i>
+                                Aperçu du livre
+                            </button>
                             <button class="ebook-buy-btn" id="ebookBuyBtn">
                                 <i class="fas fa-shopping-cart"></i>
                                 Acheter maintenant
@@ -798,6 +1167,21 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODIFICATION: PDF Viewer Popup for E-Books -->
+    <div class="ebook-pdf-popup-overlay" id="ebookPdfPopupOverlay">
+        <div class="ebook-pdf-popup-container">
+            <div class="ebook-pdf-popup-header">
+                <h3 class="ebook-pdf-popup-title" id="ebookPdfPopupTitle">Aperçu du livre</h3>
+                <button class="ebook-pdf-popup-close" id="ebookPdfPopupClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="ebook-pdf-viewer-container">
+                <iframe class="ebook-pdf-viewer" id="ebookPdfViewer" frameborder="0"></iframe>
             </div>
         </div>
     </div>
@@ -960,7 +1344,7 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
     </div>
 
     <script>
-        // MODIFICATION: E-Book Section JavaScript Implementation
+        // MODIFICATION: E-Book Section JavaScript Implementation with updated structure
 
         // DOM Elements for E-Book Section
         const ebooksPage = document.getElementById('ebooks-page');
@@ -971,17 +1355,24 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
         const ebookModalClose = document.getElementById('ebookModalClose');
         const ebookModalTitle = document.getElementById('ebookModalTitle');
         const ebookModalDescription = document.getElementById('ebookModalDescription');
-        const ebookPdfViewer = document.getElementById('ebookPdfViewer');
         const ebookDetailsText = document.getElementById('ebookDetailsText');
         const ebookPrice = document.getElementById('ebookPrice');
         const ebookMetaDetails = document.getElementById('ebookMetaDetails');
+        const ebookPreviewBtn = document.getElementById('ebookPreviewBtn');
         const ebookBuyBtn = document.getElementById('ebookBuyBtn');
+        const biologyCardsGrid = document.getElementById('biologyCardsGrid');
+
+        // MODIFICATION: New PDF Viewer Popup Elements
+        const ebookPdfPopupOverlay = document.getElementById('ebookPdfPopupOverlay');
+        const ebookPdfPopupClose = document.getElementById('ebookPdfPopupClose');
+        const ebookPdfPopupTitle = document.getElementById('ebookPdfPopupTitle');
+        const ebookPdfViewer = document.getElementById('ebookPdfViewer');
 
         // MODIFICATION: WhatsApp Popup Elements
         const whatsappPopupOverlay = document.getElementById('whatsappPopupOverlay');
         const whatsappPopupClose = document.getElementById('whatsappPopupClose');
 
-        // E-Book Data with Google Drive PDF Links
+        // MODIFICATION: Updated E-Book Data with PDF preview links
         const ebookData = {
             books: [
                 {
@@ -989,8 +1380,7 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
                     title: 'Anatomie Humaine Complète',
                     shortDescription: 'Guide illustré de l\'anatomie du corps humain',
                     description: 'Ce manuel complet couvre tous les systèmes du corps humain avec des illustrations détaillées, des schémas annotés et des explications claires pour les étudiants en SVT.',
-                    thumbnailIcon: 'fas fa-heartbeat',
-                    pdfUrl: 'https://drive.google.com/file/d/1tW5J2qyVYXqZ7oN8jQkLmPpR9sT6uVwX/preview',
+                    pdfPreviewUrl: 'https://drive.google.com/file/d/1tW5J2qyVYXqZ7oN8jQkLmPpR9sT6uVwX/preview',
                     price: '29.99€',
                     pages: '320',
                     level: 'Terminale',
@@ -1004,8 +1394,7 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
                     title: 'Génétique Moléculaire',
                     shortDescription: 'De l\'ADN aux protéines',
                     description: 'Comprendre les mécanismes de la génétique moléculaire, la réplication de l\'ADN, la transcription et la traduction avec des exemples concrets.',
-                    thumbnailIcon: 'fas fa-dna',
-                    pdfUrl: 'https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZzAbCdE/preview',
+                    pdfPreviewUrl: 'https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZzAbCdE/preview',
                     price: '24.99€',
                     pages: '256',
                     level: 'Première & Terminale',
@@ -1019,8 +1408,7 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
                     title: 'Écologie & Environnement',
                     shortDescription: 'Écosystèmes et développement durable',
                     description: 'Explorez les relations entre les organismes et leur environnement, avec un focus sur les enjeux écologiques contemporains.',
-                    thumbnailIcon: 'fas fa-leaf',
-                    pdfUrl: 'https://drive.google.com/file/d/2xYzAbCdEfGhIjKlMnO1pQrStUvWxYzA/preview',
+                    pdfPreviewUrl: 'https://drive.google.com/file/d/2xYzAbCdEfGhIjKlMnO1pQrStUvWxYzA/preview',
                     price: '27.50€',
                     pages: '280',
                     level: 'Terminale',
@@ -1034,8 +1422,7 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
                     title: 'Physiologie Végétale',
                     shortDescription: 'Photosynthèse et croissance',
                     description: 'Découvrez les processus physiologiques des plantes, de la photosynthèse à la reproduction, avec des expériences pratiques.',
-                    thumbnailIcon: 'fas fa-seedling',
-                    pdfUrl: 'https://drive.google.com/file/d/3mNoPqRsTuVwXyZzAbCdEfGhIjK4lM5N/preview',
+                    pdfPreviewUrl: 'https://drive.google.com/file/d/3mNoPqRsTuVwXyZzAbCdEfGhIjK4lM5N/preview',
                     price: '22.99€',
                     pages: '210',
                     level: 'Première',
@@ -1049,8 +1436,7 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
                     title: 'Immunologie Fondamentale',
                     shortDescription: 'Système immunitaire et défenses',
                     description: 'Comprendre le fonctionnement du système immunitaire, les cellules impliquées et les mécanismes de défense contre les pathogènes.',
-                    thumbnailIcon: 'fas fa-shield-virus',
-                    pdfUrl: 'https://drive.google.com/file/d/4pQrStUvWxYzAbCdEfGhIjKlM5nO6pQr/preview',
+                    pdfPreviewUrl: 'https://drive.google.com/file/d/4pQrStUvWxYzAbCdEfGhIjKlM5nO6pQr/preview',
                     price: '26.99€',
                     pages: '245',
                     level: 'Terminale',
@@ -1064,8 +1450,7 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
                     title: 'Évolution des Espèces',
                     shortDescription: 'De Darwin à la génétique moderne',
                     description: 'Retracez l\'histoire de la théorie de l\'évolution et découvrez les preuves scientifiques qui la soutiennent.',
-                    thumbnailIcon: 'fas fa-frog',
-                    pdfUrl: 'https://drive.google.com/file/d/5sTuVwXyZzAbCdEfGhIjKlM5nO6pQrSt/preview',
+                    pdfPreviewUrl: 'https://drive.google.com/file/d/5sTuVwXyZzAbCdEfGhIjKlM5nO6pQrSt/preview',
                     price: '25.50€',
                     pages: '230',
                     level: 'Terminale',
@@ -1073,6 +1458,37 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
                     year: '2023',
                     rating: '4.4',
                     deepLink: '#ebook-evolution'
+                }
+            ],
+            // MODIFICATION: Added biology cards data for new section
+            biologyCards: [
+                {
+                    id: 'bio-card-1',
+                    title: 'Ressources Interactives',
+                    description: 'Accédez à des simulations interactives et des expériences virtuelles pour mieux comprendre les concepts scientifiques.',
+                    link: 'https://interactive-science-resources.com',
+                    linkText: 'Explorer les ressources'
+                },
+                {
+                    id: 'bio-card-2',
+                    title: 'Révisions Bac',
+                    description: 'Fiches de révision, annales corrigées et conseils méthodologiques pour réussir votre examen de SVT.',
+                    link: 'https://bac-revision-svt.com',
+                    linkText: 'Commencer les révisions'
+                },
+                {
+                    id: 'bio-card-3',
+                    title: 'Laboratoire Virtuel',
+                    description: 'Réalisez des expériences de biologie dans notre laboratoire virtuel avec des outils et matériels simulés.',
+                    link: 'https://virtual-lab-svt.com',
+                    linkText: 'Accéder au labo'
+                },
+                {
+                    id: 'bio-card-4',
+                    title: 'Communauté Étudiants',
+                    description: 'Rejoignez notre communauté d\'étudiants en SVT pour échanger, poser des questions et s\'entraider.',
+                    link: 'https://svt-student-community.com',
+                    linkText: 'Rejoindre la communauté'
                 }
             ]
         };
@@ -1084,11 +1500,10 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
         // Initialize E-Book Section
         function initializeEbookSection() {
             renderEbookSlider();
+            renderBiologyCards(); // MODIFICATION: Added biology cards rendering
             setupEbookEventListeners();
             
             // FIX: Removed the auto-popup trigger on page load
-            // The issue was here - it was checking for hash links and auto-opening the popup
-            // This code has been removed to prevent auto-opening on page load
         }
 
         // Render E-Book Slider
@@ -1103,7 +1518,7 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
                 
                 ebookCard.innerHTML = `
                     <div class="ebook-thumbnail">
-                        <i class="${book.thumbnailIcon}"></i>
+                        <i class="${getEbookIcon(book.id)}"></i>
                     </div>
                     <div class="ebook-info">
                         <h3>${book.title}</h3>
@@ -1119,6 +1534,43 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
             });
             
             updateSliderControls();
+        }
+
+        // Helper function for ebook icons
+        function getEbookIcon(ebookId) {
+            const icons = {
+                'ebook-1': 'fas fa-heartbeat',
+                'ebook-2': 'fas fa-dna',
+                'ebook-3': 'fas fa-leaf',
+                'ebook-4': 'fas fa-seedling',
+                'ebook-5': 'fas fa-shield-virus',
+                'ebook-6': 'fas fa-frog'
+            };
+            return icons[ebookId] || 'fas fa-book';
+        }
+
+        // MODIFICATION: Render Biology Cards for new section
+        function renderBiologyCards() {
+            biologyCardsGrid.innerHTML = '';
+            
+            ebookData.biologyCards.forEach((card) => {
+                const biologyCard = document.createElement('div');
+                biologyCard.className = 'biology-card-section';
+                biologyCard.setAttribute('data-card-id', card.id);
+                
+                biologyCard.innerHTML = `
+                    <div class="biology-card-content">
+                        <h3>${card.title}</h3>
+                        <p>${card.description}</p>
+                        <a href="${card.link}" class="biology-card-link" target="_blank" rel="noopener">
+                            <i class="fas fa-external-link-alt"></i>
+                            ${card.linkText}
+                        </a>
+                    </div>
+                `;
+                
+                biologyCardsGrid.appendChild(biologyCard);
+            });
         }
 
         // Update slider controls state
@@ -1169,6 +1621,19 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
                 }
             });
             
+            // MODIFICATION: Preview button opens PDF viewer popup
+            ebookPreviewBtn.addEventListener('click', openEbookPdfPopup);
+            
+            // MODIFICATION: PDF popup close button
+            ebookPdfPopupClose.addEventListener('click', closeEbookPdfPopup);
+            
+            // MODIFICATION: PDF popup overlay click to close
+            ebookPdfPopupOverlay.addEventListener('click', (e) => {
+                if (e.target === ebookPdfPopupOverlay) {
+                    closeEbookPdfPopup();
+                }
+            });
+            
             // MODIFICATION: Buy button opens WhatsApp popup
             ebookBuyBtn.addEventListener('click', openWhatsappPopup);
             
@@ -1187,6 +1652,8 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
                 if (e.key === 'Escape') {
                     if (whatsappPopupOverlay.classList.contains('active')) {
                         closeWhatsappPopup();
+                    } else if (ebookPdfPopupOverlay.classList.contains('active')) {
+                        closeEbookPdfPopup();
                     } else if (ebookModalOverlay.classList.contains('active')) {
                         closeEbookModal();
                     }
@@ -1215,9 +1682,7 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
                 if (hash && hash.startsWith('#ebook-')) {
                     const book = ebookData.books.find(b => b.deepLink === hash);
                     if (book) {
-                        // FIX: Only navigate to the page, don't auto-open the modal
                         navigateToEbookPage();
-                        // Removed the auto-open modal on back/forward
                     }
                 } else if (ebookModalOverlay.classList.contains('active')) {
                     closeEbookModal();
@@ -1248,9 +1713,6 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
             ebookModalDescription.textContent = book.shortDescription;
             ebookDetailsText.textContent = book.description;
             ebookPrice.textContent = book.price;
-            
-            // Set PDF viewer
-            ebookPdfViewer.src = book.pdfUrl;
             
             // Update meta details
             ebookMetaDetails.innerHTML = `
@@ -1284,13 +1746,34 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
             ebookModalOverlay.classList.remove('active');
             document.body.style.overflow = 'auto';
             
-            // Clear PDF viewer to stop loading
-            ebookPdfViewer.src = '';
-            
             // Restore original URL if needed
             if (window.location.hash.startsWith('#ebook-')) {
                 window.history.back();
             }
+        }
+
+        // MODIFICATION: Open E-Book PDF Popup
+        function openEbookPdfPopup() {
+            if (!currentEbook) return;
+            
+            // Update PDF viewer title
+            ebookPdfPopupTitle.textContent = `Aperçu : ${currentEbook.title}`;
+            
+            // Set PDF viewer source
+            ebookPdfViewer.src = currentEbook.pdfPreviewUrl;
+            
+            // Show PDF viewer popup
+            ebookPdfPopupOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // MODIFICATION: Close E-Book PDF Popup
+        function closeEbookPdfPopup() {
+            ebookPdfPopupOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            // Clear PDF viewer to stop loading
+            ebookPdfViewer.src = '';
         }
 
         // MODIFICATION: Open WhatsApp Popup
@@ -2169,6 +2652,8 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
                         closePdfViewerPopup();
                     } else if (whatsappPopupOverlay.classList.contains('active')) {
                         closeWhatsappPopup();
+                    } else if (ebookPdfPopupOverlay.classList.contains('active')) {
+                        closeEbookPdfPopup();
                     } else if (ebookModalOverlay.classList.contains('active')) {
                         closeEbookModal();
                     }

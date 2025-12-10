@@ -16,7 +16,7 @@
                 pdfUrl: "https://drive.google.com/file/d/1Ghhgmb0qbvHbbOxwse8EVre0b3tkWy9F/preview"
             },
             "genetique-humaine": {
-                title: "Génétique humaine",
+                title: "Génétique des dipoides",
                 description: "Étudier l'hérédité et la variation des caractères chez l'humain",
                 pdfUrl: "https://drive.google.com/file/d/1hze7Bz3wn3mDRyn1qYQNU92QOLoDTCMf/preview"
             }

@@ -3,7 +3,7 @@ const qcmData = {
     "models": [
         {
             "id": "model1",
-            "title": "Reproduction Humaine — Part I",
+            "title": "Reproduction — Part I",
             "chapters": [
                 {
                     "id": "ch1",
@@ -258,7 +258,7 @@ const qcmData = {
         },
         {
             "id": "model2",
-            "title": "Reproduction Humaine — Part II",
+            "title": "Reproduction — Part II",
             "chapters": [
                 {
                     "id": "ch1",

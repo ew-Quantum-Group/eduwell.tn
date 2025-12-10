@@ -1,12 +1,12 @@
  // JSON data structure for Your Courses (PDF links)
         const yourCoursesData = {
             "reproduction-humaine1": {
-                title: "Reproduction Humaine – Partie Homme",
+                title: "Reproduction – Partie Homme",
                 description: "Découvrir, de manière simple et claire, les étapes et les organes impliqués dans la reproduction masculine.",
                 pdfUrl: "https://drive.google.com/file/d/19CprFYa7_ftc-DYKdnYF4JV1MJV_BZjO/preview"
             },
             "reproduction-humaine2": {
-                title: "Reproduction Humaine – Partie Femme",
+                title: "Reproduction – Partie Femme",
                 description: "Comprendre facilement le rôle des organes reproducteurs féminins et les différentes étapes du cycle reproductif.",
                 pdfUrl: "https://drive.google.com/file/d/1GnOnoA_T_MIFNmuYBq8DjqqxrEzoeEfX/preview"
             },
@@ -21,3 +21,4 @@
                 pdfUrl: "https://drive.google.com/file/d/1hze7Bz3wn3mDRyn1qYQNU92QOLoDTCMf/preview"
             }
         };
+

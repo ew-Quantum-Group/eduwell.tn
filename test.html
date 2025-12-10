@@ -8,11 +8,9 @@
     <style>
         /* ============================================
            MODERN INTERACTIVE DESIGN - COMPLETE STYLES
-           Updated: April 2025
            ============================================ */
 
         :root {
-            /* Core Color System - Monochromatic */
             --white: #ffffff;
             --black: #000000;
             --gray-50: #fafafa;
@@ -26,39 +24,25 @@
             --gray-800: #262626;
             --gray-900: #171717;
             
-            /* Spacing Scale */
             --spacing-xs: 0.5rem;
             --spacing-sm: 0.875rem;
             --spacing-md: 1.25rem;
             --spacing-lg: 1.75rem;
             --spacing-xl: 2.5rem;
             
-            /* Border Radius */
             --border-radius-sm: 4px;
             --border-radius-md: 8px;
             --border-radius-lg: 12px;
             --border-radius-xl: 16px;
-            --border-radius-2xl: 20px;
+            --border-radius-full: 9999px;
             
-            /* Shadows */
             --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
             --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
             --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
             --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.15);
             
-            /* Transitions */
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            
-            /* Typography Scale */
-            --text-xs: 0.75rem;
-            --text-sm: 0.875rem;
-            --text-base: 1rem;
-            --text-lg: 1.125rem;
-            --text-xl: 1.25rem;
-            --text-2xl: 1.5rem;
-            --text-3xl: 1.875rem;
-            --text-4xl: 2.25rem;
         }
 
         * {
@@ -70,76 +54,85 @@
         html, body {
             height: 100%;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             background-color: var(--white);
             color: var(--gray-900);
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
             padding-bottom: 75px;
         }
 
         /* ============================================
-           ENTRY ANIMATION (Non-blocking, CSS-first)
+           HEADER FOR HOME SECTION ONLY
            ============================================ */
-        @media (prefers-reduced-motion: no-preference) {
-            .content-section {
-                animation: subtle-fade-up 0.6s ease-out both;
-            }
-            
-            .container {
-                animation-delay: 0.1s;
-            }
-            
-            .bottom-nav {
-                animation: fade-in 0.8s ease-out 0.3s both;
-            }
+        .home-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--black);
+            height: 60px;
+            display: flex;
+            align-items: center;
+            padding: 0 var(--spacing-lg);
+            z-index: 1000;
+            transition: var(--transition-slow);
+            transform: translateY(0);
+            opacity: 1;
         }
 
-        @media (prefers-reduced-motion: reduce) {
-            .content-section,
-            .container,
-            .bottom-nav {
-                animation: none;
-                opacity: 1;
-            }
+        .home-header.hidden {
+            transform: translateY(-100%);
+            opacity: 0;
         }
 
-        @keyframes subtle-fade-up {
-            from {
+        .home-logo {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+
+        /* ============================================
+           ENTRY ANIMATION
+           ============================================ */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
                 opacity: 0;
-                transform: translateY(12px);
+                transform: translateY(30px);
             }
-            to {
+            to { 
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        @keyframes fade-in {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .animate-on-load {
+            animation: fadeIn 1s ease-out;
         }
 
-        /* ============================================
-           MAIN LAYOUT & STRUCTURE
-           ============================================ */
-        body.modal-open {
-            overflow: hidden;
+        .animate-slide-up {
+            animation: slideUp 0.8s ease-out;
         }
 
+        /* Main Layout */
         .container {
             max-width: 1280px;
             margin: 0 auto;
             padding: var(--spacing-xl) var(--spacing-md);
         }
 
-        /* ============================================
-           HEADER & TYPOGRAPHY
-           ============================================ */
+        /* Header & Typography */
         header {
             text-align: center;
             margin-bottom: var(--spacing-xl);
@@ -156,7 +149,7 @@
         }
 
         .subtitle {
-            font-size: var(--text-lg);
+            font-size: 1.125rem;
             color: var(--gray-600);
             max-width: 600px;
             margin: 0 auto;
@@ -164,9 +157,7 @@
             line-height: 1.4;
         }
 
-        /* ============================================
-           SECTION STYLES (Home Section)
-           ============================================ */
+        /* Sections */
         .section {
             margin-bottom: var(--spacing-xl);
         }
@@ -181,7 +172,7 @@
         }
 
         .section-title {
-            font-size: var(--text-2xl);
+            font-size: 1.5rem;
             font-weight: 600;
             color: var(--black);
             letter-spacing: -0.015em;
@@ -190,39 +181,15 @@
 
         .section-description {
             color: var(--gray-600);
-            font-size: var(--text-sm);
+            font-size: 0.875rem;
             max-width: 500px;
             line-height: 1.4;
         }
 
-        .swipe-hint {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--spacing-xs);
-            color: var(--gray-500);
-            font-size: var(--text-xs);
-            padding: 0.375rem var(--spacing-sm);
-            background-color: var(--gray-100);
-            border-radius: var(--border-radius-md);
-            line-height: 1;
-        }
-
-        .swipe-hint i {
-            font-size: 0.75rem;
-        }
-
-        /* ============================================
-           HORIZONTAL SWIPE CARDS (Section 1)
-           ============================================ */
-        .cards-scroll-container {
-            position: relative;
-        }
-
+        /* App Cards */
         .cards-wrapper {
             display: flex;
             overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scroll-behavior: smooth;
             gap: var(--spacing-lg);
             padding: var(--spacing-md) var(--spacing-sm) var(--spacing-lg);
             -webkit-overflow-scrolling: touch;
@@ -235,7 +202,6 @@
 
         .app-card {
             flex: 0 0 auto;
-            scroll-snap-align: start;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -276,13 +242,11 @@
             font-weight: 500;
             color: var(--gray-900);
             text-align: center;
-            font-size: var(--text-sm);
+            font-size: 0.875rem;
             line-height: 1.3;
         }
 
-        /* ============================================
-           VISUAL COMPONENTS (Section 2)
-           ============================================ */
+        /* Stack Cards */
         .stack-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -317,11 +281,11 @@
             justify-content: center;
             margin-bottom: var(--spacing-md);
             color: var(--gray-900);
-            font-size: var(--text-base);
+            font-size: 1rem;
         }
 
         .stack-card-title {
-            font-size: var(--text-lg);
+            font-size: 1.125rem;
             font-weight: 600;
             color: var(--black);
             margin-bottom: 0.5rem;
@@ -331,17 +295,11 @@
 
         .stack-card-text {
             color: var(--gray-600);
-            font-size: var(--text-sm);
+            font-size: 0.875rem;
             line-height: 1.5;
         }
 
-        .mobile-stack-container {
-            display: none;
-        }
-
-        /* ============================================
-           POSTER/BLOBER CARDS (Section 3)
-           ============================================ */
+        /* Poster Cards */
         .poster-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -406,7 +364,7 @@
         }
 
         .poster-title {
-            font-size: var(--text-xl);
+            font-size: 1.25rem;
             font-weight: 600;
             color: var(--black);
             margin-bottom: 0.5rem;
@@ -418,13 +376,11 @@
         .poster-text {
             color: var(--gray-600);
             text-align: center;
-            font-size: var(--text-sm);
+            font-size: 0.875rem;
             line-height: 1.5;
         }
 
-        /* ============================================
-           ADDITIONAL CONTENT (Section 4)
-           ============================================ */
+        /* Features */
         .features-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -456,7 +412,7 @@
         }
 
         .feature-title {
-            font-size: var(--text-lg);
+            font-size: 1.125rem;
             font-weight: 600;
             color: var(--black);
             margin-bottom: 0.5rem;
@@ -465,12 +421,522 @@
 
         .feature-text {
             color: var(--gray-600);
-            font-size: var(--text-sm);
+            font-size: 0.875rem;
             line-height: 1.5;
         }
 
         /* ============================================
-           SEARCH SECTION - REDESIGNED TO MATCH HOME
+           SPEAKWELL SECTION - UPDATED WITH EXTERNAL LINKS
+           ============================================ */
+        #speakwell {
+            background-color: var(--white);
+            min-height: calc(100vh - 75px);
+        }
+
+        .speakwell-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+            position: relative;
+        }
+
+        .speakwell-page {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .speakwell-page.active {
+            display: block;
+        }
+
+        .speakwell-header {
+            text-align: center;
+            padding: var(--spacing-xl) 0;
+            margin-bottom: var(--spacing-xl);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .speakwell-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .speakwell-logo-icon {
+            font-size: 2.5rem;
+            color: var(--black);
+        }
+
+        .speakwell-logo-text {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--black);
+            letter-spacing: -0.025em;
+            line-height: 1.1;
+        }
+
+        .speakwell-tagline {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto var(--spacing-md);
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .speakwell-subtagline {
+            font-size: 1rem;
+            color: var(--gray-500);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .speakwell-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md) var(--spacing-xl);
+            background-color: var(--black);
+            color: var(--white);
+            border: none;
+            border-radius: var(--border-radius-lg);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            text-decoration: none;
+        }
+
+        .speakwell-btn:hover {
+            background-color: var(--gray-800);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Focus Cards */
+        .focus-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-xl) 0;
+        }
+
+        .focus-card {
+            background-color: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-xl);
+            transition: var(--transition);
+            cursor: pointer;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .focus-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--gray-300);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .focus-card-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--white);
+            border: 1px solid var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--spacing-lg);
+            transition: var(--transition);
+            box-shadow: var(--shadow-md);
+        }
+
+        .focus-card:hover .focus-card-icon {
+            border-width: 1.5px;
+            box-shadow: var(--shadow-lg);
+            transform: scale(1.05);
+        }
+
+        .focus-card-icon i {
+            font-size: 2rem;
+            color: var(--gray-900);
+        }
+
+        .focus-card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: var(--spacing-sm);
+            letter-spacing: -0.015em;
+            line-height: 1.3;
+        }
+
+        .focus-card-description {
+            color: var(--gray-600);
+            font-size: 1rem;
+            line-height: 1.5;
+            max-width: 320px;
+        }
+
+        /* Tenses Cards */
+        .tenses-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-xl) 0;
+        }
+
+        .tense-card {
+            background-color: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            transition: var(--transition);
+            cursor: pointer;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            min-height: 240px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tense-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--gray-300);
+            box-shadow: var(--shadow-md);
+        }
+
+        .tense-card-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--white);
+            border: 1px solid var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--spacing-md);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--black);
+            transition: var(--transition);
+        }
+
+        .tense-card:hover .tense-card-number {
+            background-color: var(--black);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+
+        .tense-card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.3;
+        }
+
+        .tense-card-description {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            line-height: 1.5;
+            max-width: 280px;
+        }
+
+        /* Difficulty Level Cards - Updated with External Links */
+        .difficulty-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-xl) 0;
+        }
+
+        .difficulty-card {
+            background-color: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-xl);
+            transition: var(--transition);
+            cursor: pointer;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none !important;
+            color: inherit;
+        }
+
+        .difficulty-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--gray-300);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .difficulty-card-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--spacing-lg);
+            transition: var(--transition);
+            box-shadow: var(--shadow-md);
+        }
+
+        .difficulty-card.easy .difficulty-card-icon {
+            background-color: #f0f9ff;
+            border: 1px solid #38bdf8;
+        }
+
+        .difficulty-card.medium .difficulty-card-icon {
+            background-color: #fefce8;
+            border: 1px solid #fbbf24;
+        }
+
+        .difficulty-card.hard .difficulty-card-icon {
+            background-color: #fef2f2;
+            border: 1px solid #ef4444;
+        }
+
+        .difficulty-card:hover .difficulty-card-icon {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .difficulty-card-icon i {
+            font-size: 1.75rem;
+            transition: var(--transition);
+        }
+
+        .difficulty-card.easy .difficulty-card-icon i {
+            color: #0284c7;
+        }
+
+        .difficulty-card.medium .difficulty-card-icon i {
+            color: #d97706;
+        }
+
+        .difficulty-card.hard .difficulty-card-icon i {
+            color: #dc2626;
+        }
+
+        .difficulty-card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.3;
+        }
+
+        .difficulty-card-description {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            line-height: 1.5;
+            max-width: 300px;
+        }
+
+        .difficulty-card-level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--border-radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: var(--spacing-sm);
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty-card.easy .difficulty-card-level {
+            background-color: #e0f2fe;
+            color: #0369a1;
+        }
+
+        .difficulty-card.medium .difficulty-card-level {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .difficulty-card.hard .difficulty-card-level {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Grammar Cards - Updated with External Links */
+        .grammar-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-xl) 0;
+        }
+
+        .grammar-card {
+            background-color: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            min-height: 280px;
+            cursor: pointer;
+            text-decoration: none !important;
+            color: inherit;
+        }
+
+        .grammar-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--gray-300);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .grammar-card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .grammar-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--border-radius-md);
+            background-color: var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-900);
+            font-size: 1.125rem;
+            flex-shrink: 0;
+        }
+
+        .grammar-card-title-section {
+            flex: 1;
+        }
+
+        .grammar-card-number {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            font-weight: 500;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .grammar-card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: var(--spacing-xs);
+            line-height: 1.3;
+        }
+
+        .grammar-card-description {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-bottom: var(--spacing-lg);
+            flex: 1;
+        }
+
+        .grammar-card-footer {
+            margin-top: auto;
+            border-top: 1px solid var(--gray-200);
+            padding-top: var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .grammar-card-duration {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* SpeakWell Navigation */
+        .speakwell-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-md) 0;
+            margin-bottom: var(--spacing-xl);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .speakwell-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-sm) var(--spacing-md);
+            background-color: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius-md);
+            color: var(--gray-700);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .speakwell-back-btn:hover {
+            background-color: var(--gray-200);
+            border-color: var(--gray-400);
+            transform: translateX(-2px);
+        }
+
+        .speakwell-nav-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--black);
+            text-align: center;
+            flex: 1;
+        }
+
+        .speakwell-progress {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* Content Pages */
+        .content-page {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Practice Content (Kept for structure but will be replaced by external links) */
+        .practice-content {
+            display: none;
+        }
+
+        /* ============================================
+           SEARCH SECTION
            ============================================ */
         .search-header {
             text-align: center;
@@ -478,15 +944,8 @@
             padding-top: var(--spacing-md);
         }
 
-        .search-logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: var(--spacing-md);
-        }
-
         .search-logo-text {
-            font-size: var(--text-3xl);
+            font-size: 1.875rem;
             font-weight: 700;
             color: var(--black);
             letter-spacing: -0.025em;
@@ -494,7 +953,7 @@
         }
 
         .search-tagline {
-            font-size: var(--text-base);
+            font-size: 1rem;
             color: var(--gray-600);
             max-width: 600px;
             margin: 0 auto;
@@ -502,7 +961,6 @@
             line-height: 1.4;
         }
 
-        /* Search Box - Matched to Home styling */
         .search-box-container {
             width: 100%;
             max-width: 600px;
@@ -519,7 +977,7 @@
             width: 100%;
             height: 3.5rem;
             padding: 0 3.5rem 0 var(--spacing-lg);
-            font-size: var(--text-base);
+            font-size: 1rem;
             border: 1px solid var(--gray-300);
             border-radius: var(--border-radius-lg);
             transition: var(--transition);
@@ -547,9 +1005,8 @@
             top: 50%;
             transform: translateY(-50%);
             color: var(--gray-500);
-            font-size: var(--text-base);
+            font-size: 1rem;
             pointer-events: none;
-            transition: var(--transition);
         }
 
         .search-actions {
@@ -566,7 +1023,7 @@
             background: var(--gray-100);
             border: none;
             color: var(--gray-400);
-            font-size: var(--text-base);
+            font-size: 1rem;
             cursor: pointer;
             transition: var(--transition);
             width: 2rem;
@@ -587,7 +1044,6 @@
             display: none;
         }
 
-        /* Search Results - Matched to Home card styling */
         .search-results-container {
             width: 100%;
             max-width: 600px;
@@ -599,8 +1055,6 @@
             display: none;
             max-height: 400px;
             overflow-y: auto;
-            transform-origin: top;
-            animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
             z-index: 100;
         }
 
@@ -611,6 +1065,7 @@
 
         .search-results-container.visible {
             display: block;
+            animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
         .search-result-item {
@@ -633,7 +1088,6 @@
             transform: translateY(-1px);
         }
 
-        /* Search result icon - smaller to match Home */
         .search-result-icon {
             width: 2.5rem;
             height: 2.5rem;
@@ -643,7 +1097,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: var(--text-lg);
+            font-size: 1.125rem;
             flex-shrink: 0;
             transition: var(--transition);
         }
@@ -658,7 +1112,7 @@
         }
 
         .search-result-title {
-            font-size: var(--text-base);
+            font-size: 1rem;
             font-weight: 600;
             margin-bottom: 0.25rem;
             color: var(--gray-900);
@@ -667,7 +1121,7 @@
         }
 
         .search-result-description {
-            font-size: var(--text-sm);
+            font-size: 0.875rem;
             color: var(--gray-600);
             line-height: 1.5;
         }
@@ -676,30 +1130,23 @@
             display: flex;
             gap: var(--spacing-md);
             margin-top: var(--spacing-xs);
-            font-size: var(--text-xs);
+            font-size: 0.75rem;
             color: var(--gray-500);
-        }
-
-        .search-result-meta i {
-            width: 1rem;
-            text-align: center;
-            color: var(--gray-400);
         }
 
         .search-result-badge {
             display: inline-block;
             padding: 0.125rem 0.5rem;
             border-radius: var(--border-radius-sm);
-            font-size: var(--text-xs);
+            font-size: 0.75rem;
             font-weight: 600;
             margin-left: var(--spacing-xs);
             letter-spacing: 0.5px;
-            transition: var(--transition);
             background-color: var(--gray-100);
             color: var(--gray-700);
         }
 
-        /* Subjects Filter - Matched to Home */
+        /* Subjects Filter */
         .subjects-filter {
             width: 100%;
             max-width: 600px;
@@ -721,7 +1168,7 @@
             background-color: var(--gray-100);
             border: 1px solid var(--gray-200);
             cursor: pointer;
-            font-size: var(--text-sm);
+            font-size: 0.875rem;
             font-weight: 500;
             color: var(--gray-900);
             white-space: nowrap;
@@ -740,7 +1187,7 @@
             border-color: var(--black);
         }
 
-        /* Popular Searches - Matched to Home */
+        /* Popular Searches */
         .popular-searches {
             width: 100%;
             max-width: 600px;
@@ -750,21 +1197,16 @@
             padding: var(--spacing-lg);
             box-shadow: var(--shadow-sm);
             border: 1px solid var(--gray-200);
-            transition: var(--transition);
         }
 
         .popular-title {
-            font-size: var(--text-base);
+            font-size: 1rem;
             font-weight: 600;
             margin-bottom: var(--spacing-md);
             color: var(--gray-900);
             display: flex;
             align-items: center;
             gap: var(--spacing-xs);
-        }
-
-        .popular-title i {
-            color: var(--gray-500);
         }
 
         .popular-list {
@@ -779,7 +1221,7 @@
             border-radius: var(--border-radius-md);
             cursor: pointer;
             transition: var(--transition);
-            font-size: var(--text-sm);
+            font-size: 0.875rem;
             display: flex;
             align-items: center;
             gap: var(--spacing-xs);
@@ -793,12 +1235,7 @@
             transform: translateY(-1px);
         }
 
-        .popular-item i {
-            color: var(--gray-500);
-            font-size: var(--text-sm);
-        }
-
-        /* Featured Resources - Matched to Home card styling */
+        /* Featured Resources */
         .featured-resources {
             width: 100%;
             max-width: 1280px;
@@ -806,7 +1243,7 @@
         }
 
         .featured-title {
-            font-size: var(--text-2xl);
+            font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: var(--spacing-lg);
             color: var(--black);
@@ -816,11 +1253,6 @@
             position: relative;
             padding-bottom: var(--spacing-sm);
             border-bottom: 1px solid var(--gray-200);
-        }
-
-        .featured-title i {
-            color: var(--gray-500);
-            font-size: var(--text-lg);
         }
 
         .featured-grid {
@@ -865,15 +1297,10 @@
             color: var(--white);
             padding: 0.25rem 0.75rem;
             border-radius: var(--border-radius-full);
-            font-size: var(--text-xs);
+            font-size: 0.75rem;
             font-weight: 600;
             box-shadow: var(--shadow-sm);
             z-index: 2;
-            transition: var(--transition);
-        }
-
-        .search-featured-card:hover .search-card-badge {
-            transform: translateY(-2px);
         }
 
         .search-card-content {
@@ -881,19 +1308,14 @@
         }
 
         .search-card-title {
-            font-size: var(--text-lg);
+            font-size: 1.125rem;
             font-weight: 600;
             margin-bottom: var(--spacing-sm);
             color: var(--gray-900);
-            transition: var(--transition);
-        }
-
-        .search-featured-card:hover .search-card-title {
-            color: var(--black);
         }
 
         .search-card-description {
-            font-size: var(--text-sm);
+            font-size: 0.875rem;
             color: var(--gray-600);
             margin-bottom: var(--spacing-sm);
             line-height: 1.5;
@@ -903,16 +1325,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: var(--text-xs);
+            font-size: 0.75rem;
             color: var(--gray-500);
         }
 
-        .search-card-meta i {
-            margin-right: 0.25rem;
-            color: var(--gray-400);
-        }
-
-        /* No Results Styling */
+        /* No Results */
         .no-results {
             padding: var(--spacing-xl) var(--spacing-lg);
             text-align: center;
@@ -922,28 +1339,8 @@
             align-items: center;
         }
 
-        .no-results i {
-            font-size: 2rem;
-            margin-bottom: var(--spacing-md);
-            color: var(--gray-400);
-            opacity: 0.6;
-        }
-
-        .no-results-title {
-            font-size: var(--text-lg);
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            color: var(--gray-900);
-        }
-
-        .no-results-text {
-            max-width: 300px;
-            margin: 0 auto;
-            font-size: var(--text-sm);
-        }
-
         /* ============================================
-           MODAL/POPUP STYLES (Consistent across both sections)
+           MODAL STYLES
            ============================================ */
         .modal-overlay {
             position: fixed;
@@ -998,11 +1395,10 @@
             top: 0;
             background-color: var(--white);
             z-index: 10;
-            border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
         }
 
         .modal-title {
-            font-size: var(--text-2xl);
+            font-size: 1.5rem;
             font-weight: 600;
             color: var(--black);
             display: flex;
@@ -1011,15 +1407,10 @@
             line-height: 1.2;
         }
 
-        .modal-icon {
-            font-size: var(--text-xl);
-            color: var(--gray-700);
-        }
-
         .close-btn {
             background: none;
             border: none;
-            font-size: var(--text-xl);
+            font-size: 1.25rem;
             color: var(--gray-500);
             cursor: pointer;
             width: 36px;
@@ -1043,50 +1434,7 @@
             overflow-y: auto;
         }
 
-        .app-description, .poster-description, .resource-description {
-            color: var(--gray-700);
-            font-size: var(--text-base);
-            line-height: 1.5;
-            margin-bottom: var(--spacing-xl);
-        }
-
-        /* Resource-specific modal content */
-        .resource-container {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-lg);
-        }
-
-        .resource-box {
-            border: 1px solid var(--gray-200);
-            border-radius: var(--border-radius-lg);
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-        }
-
-        .resource-box:hover {
-            box-shadow: var(--shadow-md);
-        }
-
-        .resource-header {
-            padding: var(--spacing-md) var(--spacing-lg);
-            background-color: var(--gray-50);
-            border-bottom: 1px solid var(--gray-200);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .resource-title {
-            font-size: var(--text-base);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            color: var(--gray-900);
-        }
-
+        /* Resource Modal */
         .pdf-container {
             display: flex;
             flex-direction: column;
@@ -1098,28 +1446,19 @@
             margin: 0;
             text-align: center;
             border: 1px dashed var(--gray-300);
-            transition: var(--transition);
-        }
-
-        .pdf-container:hover {
-            border-color: var(--gray-400);
-            background-color: var(--gray-100);
         }
 
         .pdf-icon {
             font-size: 3rem;
             color: var(--gray-700);
             margin-bottom: var(--spacing-md);
-            transition: var(--transition);
         }
 
         .pdf-name {
-            font-size: var(--text-lg);
+            font-size: 1.125rem;
             font-weight: 500;
             color: var(--gray-900);
             margin-bottom: var(--spacing-md);
-            word-break: break-word;
-            max-width: 100%;
         }
 
         .pdf-link {
@@ -1137,7 +1476,7 @@
             box-shadow: var(--shadow-sm);
             border: none;
             cursor: pointer;
-            font-size: var(--text-sm);
+            font-size: 0.875rem;
         }
 
         .pdf-link:hover {
@@ -1147,31 +1486,7 @@
         }
 
         /* ============================================
-           NAVIGATION DOTS
-           ============================================ */
-        .nav-dots {
-            display: flex;
-            justify-content: center;
-            gap: var(--spacing-xs);
-            margin-top: var(--spacing-lg);
-        }
-
-        .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background-color: var(--gray-300);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .dot.active {
-            background-color: var(--black);
-            transform: scale(1.2);
-        }
-
-        /* ============================================
-           BOTTOM NAVIGATION (iOS Style with Glass Effect)
+           BOTTOM NAVIGATION
            ============================================ */
         .bottom-nav {
             position: fixed;
@@ -1179,8 +1494,8 @@
             left: 0;
             right: 0;
             background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-top: 1px solid rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: space-around;
@@ -1250,7 +1565,7 @@
         }
 
         /* ============================================
-           CONTENT SECTIONS FOR NAVIGATION
+           CONTENT SECTIONS
            ============================================ */
         .content-section {
             display: none;
@@ -1260,9 +1575,7 @@
             display: block;
         }
 
-        /* ============================================
-           ABOUT CONTENT
-           ============================================ */
+        /* About Content */
         .about-content {
             text-align: center;
             padding: var(--spacing-xl) var(--spacing-md);
@@ -1282,67 +1595,21 @@
         }
 
         .about-content p {
-            font-size: var(--text-base);
+            font-size: 1rem;
             color: var(--gray-600);
             max-width: 600px;
             margin: 0 auto;
             line-height: 1.4;
         }
 
-        .about-features {
-            margin-top: var(--spacing-xl);
-            display: flex;
-            gap: var(--spacing-lg);
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .about-feature {
-            text-align: center;
-            max-width: 280px;
-        }
-
-        .feature-icon-container {
-            width: 56px;
-            height: 56px;
-            background-color: var(--gray-100);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto var(--spacing-sm);
-        }
-
-        .feature-icon-container i {
-            font-size: var(--text-xl);
-            color: var(--gray-700);
-        }
-
-        .about-feature h3 {
-            font-size: var(--text-lg);
-            font-weight: 600;
-            color: var(--black);
-            margin-bottom: 0.375rem;
-            line-height: 1.3;
-        }
-
-        .about-feature p {
-            color: var(--gray-600);
-            font-size: var(--text-sm);
-            line-height: 1.4;
-            max-width: 250px;
-        }
-
-        /* ============================================
-           FOOTER
-           ============================================ */
+        /* Footer */
         footer {
             margin-top: var(--spacing-xl);
             padding-top: var(--spacing-xl);
             border-top: 1px solid var(--gray-200);
             text-align: center;
             color: var(--gray-600);
-            font-size: var(--text-sm);
+            font-size: 0.875rem;
             line-height: 1.4;
         }
 
@@ -1351,77 +1618,12 @@
             font-weight: 600;
         }
 
-        /* ============================================
-           UTILITY CLASSES
-           ============================================ */
-        .visually-hidden {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
-        }
-
+        /* Utility */
         .hidden {
             display: none !important;
         }
 
-        /* ============================================
-           ACCESSIBILITY
-           ============================================ */
-        *:focus-visible {
-            outline: 2px solid var(--gray-600);
-            outline-offset: 2px;
-        }
-
-        /* Improved scrollbar for modal content */
-        .modal-content::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .modal-content::-webkit-scrollbar-track {
-            background: var(--gray-100);
-            border-radius: 3px;
-        }
-
-        .modal-content::-webkit-scrollbar-thumb {
-            background: var(--gray-400);
-            border-radius: 3px;
-        }
-
-        .modal-content::-webkit-scrollbar-thumb:hover {
-            background: var(--gray-500);
-        }
-
-        /* ============================================
-           RESPONSIVE DESIGN
-           ============================================ */
-        @media (max-width: 1024px) {
-            .container {
-                padding: var(--spacing-lg) var(--spacing-md);
-            }
-            
-            h1, .search-logo-text {
-                font-size: 2rem;
-            }
-            
-            .section-title, .featured-title {
-                font-size: 1.375rem;
-            }
-            
-            .bottom-nav {
-                height: 70px;
-            }
-            
-            .search-input-box {
-                height: 3rem;
-            }
-        }
-
+        /* Responsive */
         @media (max-width: 768px) {
             .container {
                 padding: var(--spacing-md) var(--spacing-sm);
@@ -1431,233 +1633,100 @@
                 font-size: 1.75rem;
             }
             
-            .subtitle, .search-tagline {
-                font-size: var(--text-base);
+            .subtitle, .search-tagline, .speakwell-tagline {
+                font-size: 1rem;
             }
             
-            .section-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: var(--spacing-sm);
-            }
-            
-            /* Mobile swipe for section 2 */
-            .stack-container {
-                display: none;
-            }
-            
-            .mobile-stack-container {
-                display: block;
-            }
-            
-            .mobile-stack-wrapper {
-                display: flex;
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-                gap: var(--spacing-md);
-                padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-lg);
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            .mobile-stack-wrapper::-webkit-scrollbar {
-                display: none;
-            }
-            
-            .mobile-stack-card {
-                flex: 0 0 auto;
-                scroll-snap-align: start;
-                width: calc(85vw - 2rem);
-                max-width: 360px;
-            }
-            
-            /* Adjust sections for mobile */
+            .focus-cards, .tenses-cards, .difficulty-cards, .grammar-cards,
             .poster-container, .featured-grid {
                 grid-template-columns: 1fr;
                 gap: var(--spacing-md);
             }
             
             .features-container {
-                grid-template-columns: 1fr;
-                gap: var(--spacing-md);
-            }
-            
-            .modal {
-                max-height: 90vh;
-                border-radius: var(--border-radius-lg);
-            }
-            
-            .modal-header {
-                padding: var(--spacing-md);
-            }
-            
-            .modal-content {
-                padding: var(--spacing-md);
-            }
-            
-            .search-logo-text {
-                font-size: 1.75rem;
-            }
-            
-            .popular-list {
                 grid-template-columns: 1fr 1fr;
             }
             
-            .featured-grid {
-                grid-template-columns: 1fr;
+            .speakwell-logo-text {
+                font-size: 2rem;
             }
             
-            .swipe-hint {
-                align-self: flex-start;
-                margin-top: var(--spacing-sm);
-            }
-            
-            /* Adjust bottom nav for mobile */
             .bottom-nav {
                 height: 68px;
-                padding: 0.375rem 0;
             }
             
-            .nav-icon {
-                font-size: 1rem;
+            .home-header {
+                height: 50px;
+                padding: 0 var(--spacing-md);
             }
             
-            .nav-label {
-                font-size: 0.625rem;
-            }
-            
-            body {
-                padding-bottom: 68px;
-            }
-            
-            .about-content h2 {
-                font-size: 1.75rem;
-            }
-            
-            .about-features {
-                gap: var(--spacing-md);
-            }
-            
-            .about-feature {
-                max-width: 240px;
+            .home-logo {
+                font-size: 1.25rem;
             }
         }
 
         @media (max-width: 480px) {
-            h1 {
-                font-size: 1.5rem;
-            }
-            
-            .subtitle {
-                font-size: 0.9375rem;
-            }
-            
-            .app-icon-circle {
-                width: 80px;
-                height: 80px;
-            }
-            
-            .app-icon {
-                font-size: 1.75rem;
-            }
-            
-            .app-card {
-                width: 108px;
-            }
-            
-            .poster-icon-container {
-                width: 90px;
-                height: 90px;
-            }
-            
-            .poster-icon {
-                font-size: 2rem;
-            }
-            
-            .modal-title {
-                font-size: 1.375rem;
-            }
-            
-            .search-logo-text {
-                font-size: 1.5rem;
-            }
-            
-            .search-input-box {
-                height: 2.5rem;
-                padding: 0 3rem 0 var(--spacing-md);
-                font-size: var(--text-sm);
-            }
-            
-            .popular-list {
+            .features-container {
                 grid-template-columns: 1fr;
             }
             
-            .featured-title {
-                font-size: 1.25rem;
-            }
-            
-            .search-featured-card {
-                max-width: 100%;
+            .speakwell-logo-text {
+                font-size: 1.75rem;
             }
             
             .bottom-nav {
                 height: 64px;
             }
             
-            .nav-icon {
-                font-size: 0.9375rem;
+            .home-header {
+                height: 45px;
+                padding: 0 var(--spacing-sm);
             }
             
-            .nav-label {
-                font-size: 0.6rem;
-            }
-            
-            body {
-                padding-bottom: 64px;
-            }
-            
-            .about-content h2 {
-                font-size: 1.5rem;
-            }
-            
-            .about-features {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .about-feature {
-                max-width: 100%;
+            .home-logo {
+                font-size: 1.125rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Home Section Header (Only in Home) -->
+    <div class="home-header" id="homeHeader">
+        <a href="#" class="home-logo">ew</a>
+    </div>
+
     <!-- Bottom Navigation -->
     <nav class="bottom-nav" aria-label="Main navigation">
-        <div class="nav-item active" data-target="home" role="button" tabindex="0" aria-label="Home section">
+        <div class="nav-item active" data-target="home" role="button" tabindex="0">
             <i class="fas fa-home nav-icon"></i>
             <span class="nav-label">Home</span>
         </div>
-        <div class="nav-item" data-target="search" role="button" tabindex="0" aria-label="Search section">
+        <div class="nav-item" data-target="search" role="button" tabindex="0">
             <i class="fas fa-search nav-icon"></i>
             <span class="nav-label">Search</span>
         </div>
-        <div class="nav-item" data-target="about" role="button" tabindex="0" aria-label="About section">
+        <div class="nav-item" data-target="speakwell" role="button" tabindex="0">
+            <i class="fas fa-book nav-icon"></i>
+            <span class="nav-label">SpeakWell</span>
+        </div>
+        <div class="nav-item" data-target="about" role="button" tabindex="0">
             <i class="fas fa-info-circle nav-icon"></i>
             <span class="nav-label">About</span>
         </div>
     </nav>
 
-    <!-- Home Content (Main Content) -->
-    <div id="home" class="content-section active" aria-labelledby="home-title">
+    <!-- Home Content -->
+    <div id="home" class="content-section active animate-on-load">
         <div class="container">
            
 
             <!-- Section 1: Horizontal Swipe Cards -->
-            <section class="section">
+            <section class="section animate-slide-up">
                 <div class="section-header">
                     <div>
+                        <br><br>
                         <h2 class="section-title">App Collection</h2>
-                    </div>
+                         </div>
                     <div class="swipe-hint">
                         <i class="fas fa-arrow-right"></i>
                         <span>Swipe to explore</span>
@@ -1666,50 +1735,42 @@
                 
                 <div class="cards-scroll-container">
                     <div class="cards-wrapper" id="section1">
-                        <!-- App Cards -->
-                        <div class="app-card" data-app="analytics" role="button" tabindex="0" aria-label="Analytics Pro app">
+                        <div class="app-card" data-app="analytics">
                             <div class="app-icon-circle">
                                 <i class="fas fa-chart-line app-icon"></i>
                             </div>
                             <h3 class="app-title">Analytics Pro</h3>
                         </div>
-                        <div class="app-card" data-app="security" role="button" tabindex="0" aria-label="Secure Vault app">
+                        <div class="app-card" data-app="security">
                             <div class="app-icon-circle">
                                 <i class="fas fa-lock app-icon"></i>
                             </div>
                             <h3 class="app-title">Secure Vault</h3>
                         </div>
-                        <div class="app-card" data-app="cloud" role="button" tabindex="0" aria-label="Cloud Sync app">
+                        <div class="app-card" data-app="cloud">
                             <div class="app-icon-circle">
                                 <i class="fas fa-cloud-upload-alt app-icon"></i>
                             </div>
                             <h3 class="app-title">Cloud Sync</h3>
                         </div>
-                        <div class="app-card" data-app="design" role="button" tabindex="0" aria-label="Design Studio app">
+                        <div class="app-card" data-app="design">
                             <div class="app-icon-circle">
                                 <i class="fas fa-palette app-icon"></i>
                             </div>
                             <h3 class="app-title">Design Studio</h3>
                         </div>
                     </div>
-                    
-                    <div class="nav-dots" id="dots1"></div>
                 </div>
             </section>
 
             <!-- Section 2: Visual Components -->
-            <section class="section">
+            <section class="section animate-slide-up">
                 <div class="section-header">
                     <div>
                         <h2 class="section-title">Visual Components</h2>
-                         </div>
-                    <div class="swipe-hint mobile-only">
-                        <i class="fas fa-arrow-right"></i>
-                        <span>Swipe on mobile</span>
-                    </div>
+                      </div>
                 </div>
                 
-                <!-- Desktop/Tablet View -->
                 <div class="stack-container">
                     <div class="stack-card">
                         <div class="stack-icon">
@@ -1733,53 +1794,19 @@
                         <p class="stack-card-text">Changes update instantly across all connected devices with conflict resolution and version history.</p>
                     </div>
                 </div>
-                
-                <!-- Mobile Swipe View -->
-                <div class="mobile-stack-container">
-                    <div class="mobile-stack-wrapper" id="section2">
-                        <div class="mobile-stack-card">
-                            <div class="stack-card">
-                                <div class="stack-icon">
-                                    <i class="fas fa-bolt"></i>
-                                </div>
-                                <h3 class="stack-card-title">Performance</h3>
-                                <p class="stack-card-text">Optimized for speed with minimal loading times and smooth interactions across all devices and platforms.</p>
-                            </div>
-                        </div>
-                        <div class="mobile-stack-card">
-                            <div class="stack-card">
-                                <div class="stack-icon">
-                                    <i class="fas fa-shield-alt"></i>
-                                </div>
-                                <h3 class="stack-card-title">Security</h3>
-                                <p class="stack-card-text">Enterprise-grade security protocols with end-to-end encryption and multi-factor authentication.</p>
-                            </div>
-                        </div>
-                        <div class="mobile-stack-card">
-                            <div class="stack-card">
-                                <div class="stack-icon">
-                                    <i class="fas fa-sync-alt"></i>
-                                </div>
-                                <h3 class="stack-card-title">Real-time Sync</h3>
-                                <p class="stack-card-text">Changes update instantly across all connected devices with conflict resolution and version history.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="nav-dots" id="dots2"></div>
-                </div>
             </section>
 
-            <!-- Section 3: Poster/Blober Cards -->
-            <section class="section">
+            <!-- Section 3: Poster Cards -->
+            <section class="section animate-slide-up">
                 <div class="section-header">
                     <div>
                         <h2 class="section-title">Poster Elements</h2>
-                      </div>
+                        <p class="section-description">Visually distinctive cards with animated blob-style iconography. Click to learn more.</p>
+                    </div>
                 </div>
                 
-                <div class="poster-container" id="section3">
-                    <div class="poster-card" data-poster="3d" role="button" tabindex="0" aria-label="3D Elements poster">
+                <div class="poster-container">
+                    <div class="poster-card" data-poster="3d">
                         <div class="poster-icon-container">
                             <div class="blob-shape"></div>
                             <i class="fas fa-cube poster-icon"></i>
@@ -1787,7 +1814,7 @@
                         <h3 class="poster-title">3D Elements</h3>
                         <p class="poster-text">Click to learn more about our immersive three-dimensional components</p>
                     </div>
-                    <div class="poster-card" data-poster="wave" role="button" tabindex="0" aria-label="Wave Forms poster">
+                    <div class="poster-card" data-poster="wave">
                         <div class="poster-icon-container">
                             <div class="blob-shape"></div>
                             <i class="fas fa-wave-square poster-icon"></i>
@@ -1795,7 +1822,7 @@
                         <h3 class="poster-title">Wave Forms</h3>
                         <p class="poster-text">Click to explore our smooth wave animations and fluid transitions</p>
                     </div>
-                    <div class="poster-card" data-poster="ai" role="button" tabindex="0" aria-label="Smart AI poster">
+                    <div class="poster-card" data-poster="ai">
                         <div class="poster-icon-container">
                             <div class="blob-shape"></div>
                             <i class="fas fa-lightbulb poster-icon"></i>
@@ -1807,7 +1834,7 @@
             </section>
 
             <!-- Section 4: Additional Content -->
-            <section class="section">
+            <section class="section animate-slide-up">
                 <div class="section-header">
                     <div>
                         <h2 class="section-title">Key Features</h2>
@@ -1815,7 +1842,7 @@
                     </div>
                 </div>
                 
-                <div class="features-container" id="section4">
+                <div class="features-container">
                     <div class="feature-card">
                         <div class="feature-number">01</div>
                         <h3 class="feature-title">Modern Aesthetics</h3>
@@ -1841,31 +1868,31 @@
         </div>
     </div>
 
-    <!-- Search Content (Redesigned to match Home) -->
-    <div id="search" class="content-section" aria-labelledby="search-title">
+    <!-- Search Content -->
+    <div id="search" class="content-section">
         <div class="container">
             <header class="search-header">
                 <div class="search-logo">
-                    <h1 id="search-title" class="search-logo-text">EduWell Archive</h1>
+                    <h1 class="search-logo-text">EduWell Archive</h1>
                 </div>
                 <p class="search-tagline">The intelligent educational resources platform for Baccalaureate</p>
             </header>
 
             <div class="search-box-container">
                 <div class="search-input-container">
-                    <input type="text" class="search-input-box" id="searchInput" placeholder="Search for courses, exercises, revision sheets..." aria-label="Search educational resources">
+                    <input type="text" class="search-input-box" id="searchInput" placeholder="Search for courses, exercises, revision sheets...">
                     <div class="search-actions">
-                        <button class="search-clear hidden" id="searchClear" aria-label="Clear search">
+                        <button class="search-clear hidden" id="searchClear">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
                     <div class="search-input-icon"><i class="fas fa-search"></i></div>
                 </div>
 
-                <div class="search-results-container" id="searchResults" aria-live="polite"></div>
+                <div class="search-results-container" id="searchResults"></div>
             </div>
 
-            <div class="subjects-filter" id="subjectsFilter" aria-label="Filter by subject">
+            <div class="subjects-filter" id="subjectsFilter">
                 <button class="subject-btn active" data-subject="all">All Subjects</button>
                 <button class="subject-btn" data-subject="math">Mathematics</button>
                 <button class="subject-btn" data-subject="physics">Physics</button>
@@ -1879,21 +1906,21 @@
             <div class="popular-searches">
                 <div class="popular-title"><i class="fas fa-chart-line"></i> Popular Searches</div>
                 <div class="popular-list">
-                    <div class="popular-item" role="button" tabindex="0"><i class="fas fa-square-root-alt"></i> Complex numbers</div>
-                    <div class="popular-item" role="button" tabindex="0"><i class="fas fa-flask"></i> Acids and bases</div>
-                    <div class="popular-item" role="button" tabindex="0"><i class="fas fa-calculator"></i> Integral calculus</div>
-                    <div class="popular-item" role="button" tabindex="0"><i class="fas fa-dna"></i> Human genetics</div>
-                    <div class="popular-item" role="button" tabindex="0"><i class="fas fa-atom"></i> Atomic nucleus</div>
-                    <div class="popular-item" role="button" tabindex="0"><i class="fas fa-brain"></i> Neurophysiology</div>
-                    <div class="popular-item" role="button" tabindex="0"><i class="fas fa-language"></i> English grammar</div>
-                    <div class="popular-item" role="button" tabindex="0"><i class="fas fa-landmark"></i> Summary of Freedom</div>
+                    <div class="popular-item"><i class="fas fa-square-root-alt"></i> Complex numbers</div>
+                    <div class="popular-item"><i class="fas fa-flask"></i> Acids and bases</div>
+                    <div class="popular-item"><i class="fas fa-calculator"></i> Integral calculus</div>
+                    <div class="popular-item"><i class="fas fa-dna"></i> Human genetics</div>
+                    <div class="popular-item"><i class="fas fa-atom"></i> Atomic nucleus</div>
+                    <div class="popular-item"><i class="fas fa-brain"></i> Neurophysiology</div>
+                    <div class="popular-item"><i class="fas fa-language"></i> English grammar</div>
+                    <div class="popular-item"><i class="fas fa-landmark"></i> Summary of Freedom</div>
                 </div>
             </div>
 
             <div class="featured-resources">
                 <h2 class="featured-title"><i class="fas fa-star"></i> Featured Resources</h2>
                 <div class="featured-grid">
-                    <div class="search-featured-card" data-search="Complex numbers" role="button" tabindex="0" aria-label="Complex numbers resource">
+                    <div class="search-featured-card" data-search="Complex numbers">
                         <div class="search-card-image">
                             <i class="fas fa-square-root-alt"></i>
                             <span class="search-card-badge">Mathematics</span>
@@ -1908,7 +1935,7 @@
                         </div>
                     </div>
 
-                    <div class="search-featured-card" data-search="Acids and bases" role="button" tabindex="0" aria-label="Acids and bases resource">
+                    <div class="search-featured-card" data-search="Acids and bases">
                         <div class="search-card-image">
                             <i class="fas fa-flask"></i>
                             <span class="search-card-badge">Chemistry</span>
@@ -1923,7 +1950,7 @@
                         </div>
                     </div>
 
-                    <div class="search-featured-card" data-search="Human genetics" role="button" tabindex="0" aria-label="Human genetics resource">
+                    <div class="search-featured-card" data-search="Human genetics">
                         <div class="search-card-image">
                             <i class="fas fa-dna"></i>
                             <span class="search-card-badge">Biology</span>
@@ -1946,57 +1973,328 @@
         </div>
     </div>
 
-    <!-- About Content -->
-    <div id="about" class="content-section" aria-labelledby="about-title">
-        <div class="about-content">
-            <h2 id="about-title">About</h2>
-            <p>Hello! Welcome to Modern Interactive UI.</p>
-            <p style="margin-top: var(--spacing-md);">This is a professional, responsive website showcasing modern design principles with smooth interactions and clean aesthetics.</p>
-            <div class="about-features">
-                <div class="about-feature">
-                    <div class="feature-icon-container">
-                        <i class="fas fa-palette"></i>
+    <!-- SpeakWell Section -->
+    <div id="speakwell" class="content-section">
+        <div class="speakwell-container">
+            <!-- Page 1: Opening Section -->
+            <div class="speakwell-page active" id="speakwell-home">
+                <header class="speakwell-header">
+                    <div class="speakwell-logo">
+                        <i class="fas fa-language speakwell-logo-icon"></i>
+                        <h1 class="speakwell-logo-text">SpeakWell</h1>
                     </div>
-                    <h3>Modern Design</h3>
-                    <p>Clean, minimalist aesthetic with careful attention to detail</p>
+                    <p class="speakwell-tagline">SpeakWell. Say More with Less.</p>
+                    <p class="speakwell-subtagline">Grammar and tenses designed to make you stand out.</p>
+                    <button class="speakwell-btn" id="beginJourneyBtn">
+                        <i class="fas fa-play"></i>
+                        <span>Begin Journey</span>
+                    </button>
+                </header>
+            </div>
+
+            <!-- Page 2: Choose Your Focus -->
+            <div class="speakwell-page" id="speakwell-focus">
+                <div class="speakwell-nav">
+                    <button class="speakwell-back-btn" data-back-to="home">
+                        <i class="fas fa-chevron-left"></i>
+                        <span>Back</span>
+                    </button>
+                    <h2 class="speakwell-nav-title">Choose Your Focus</h2>
+                    <div class="speakwell-progress">
+                        <i class="fas fa-circle"></i>
+                        <span>Step 1</span>
+                    </div>
                 </div>
-                <div class="about-feature">
-                    <div class="feature-icon-container">
-                        <i class="fas fa-mobile-alt"></i>
+
+                <div class="content-page">
+                    <div class="focus-cards">
+                        <div class="focus-card" data-target="tenses">
+                            <div class="focus-card-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <h3 class="focus-card-title">Tenses Mastery</h3>
+                            <p class="focus-card-description">Master all English verb tenses with progressive exercises and real-world applications</p>
+                        </div>
+
+                        <div class="focus-card" data-target="grammar">
+                            <div class="focus-card-icon">
+                                <i class="fas fa-pen-fancy"></i>
+                            </div>
+                            <h3 class="focus-card-title">Grammar Precision</h3>
+                            <p class="focus-card-description">Perfect your sentence construction and grammatical accuracy with detailed lessons</p>
+                        </div>
                     </div>
-                    <h3>Fully Responsive</h3>
-                    <p>Optimized for all devices from mobile to desktop</p>
                 </div>
-                <div class="about-feature">
-                    <div class="feature-icon-container">
-                        <i class="fas fa-hand-pointer"></i>
+            </div>
+
+            <!-- Page 3: Tenses Mastery -->
+            <div class="speakwell-page" id="speakwell-tenses">
+                <div class="speakwell-nav">
+                    <button class="speakwell-back-btn" data-back-to="focus">
+                        <i class="fas fa-chevron-left"></i>
+                        <span>Back</span>
+                    </button>
+                    <h2 class="speakwell-nav-title">Tenses Mastery</h2>
+                    <div class="speakwell-progress">
+                        <i class="fas fa-circle"></i>
+                        <span>Tenses</span>
                     </div>
-                    <h3>Interactive</h3>
-                    <p>Smooth swipe interactions and animated elements</p>
+                </div>
+
+                <div class="content-page">
+                    <div class="tenses-cards">
+                        <div class="tense-card" data-target="difficulty">
+                            <div class="tense-card-number">1</div>
+                            <h3 class="tense-card-title">Past Tenses</h3>
+                            <p class="tense-card-description">Master past simple, continuous, perfect, and perfect continuous tenses</p>
+                        </div>
+
+                        <div class="tense-card" data-target="difficulty">
+                            <div class="tense-card-number">2</div>
+                            <h3 class="tense-card-title">Present Tenses</h3>
+                            <p class="tense-card-description">Learn present simple, continuous, perfect, and perfect continuous tenses</p>
+                        </div>
+
+                        <div class="tense-card" data-target="difficulty">
+                            <div class="tense-card-number">3</div>
+                            <h3 class="tense-card-title">Future Tenses</h3>
+                            <p class="tense-card-description">Explore future simple, continuous, perfect, and perfect continuous tenses</p>
+                        </div>
+
+                        <div class="tense-card" data-target="difficulty">
+                            <div class="tense-card-number">4</div>
+                            <h3 class="tense-card-title">Mixed Tenses</h3>
+                            <p class="tense-card-description">Advanced exercises combining all tenses for complete mastery</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 4: Difficulty Levels (Now at the end with external links) -->
+            <div class="speakwell-page" id="speakwell-difficulty">
+                <div class="speakwell-nav">
+                    <button class="speakwell-back-btn" data-back-to="tenses">
+                        <i class="fas fa-chevron-left"></i>
+                        <span>Back</span>
+                    </button>
+                    <h2 class="speakwell-nav-title">Select Difficulty Level</h2>
+                    <div class="speakwell-progress">
+                        <i class="fas fa-circle"></i>
+                        <span>Difficulty</span>
+                    </div>
+                </div>
+
+                <div class="content-page">
+                    <div class="difficulty-cards">
+                        <!-- Easy Difficulty with External Link -->
+                        <a href="https://learnenglish.britishcouncil.org/grammar/english-grammar-reference/past-simple" target="_blank" class="difficulty-card easy">
+                            <div class="difficulty-card-icon">
+                                <i class="fas fa-seedling"></i>
+                            </div>
+                            <h3 class="difficulty-card-title">Easy Level</h3>
+                            <p class="difficulty-card-description">Basic tense forms and simple sentence construction for foundational learning</p>
+                            <div class="difficulty-card-level">Beginner Friendly</div>
+                        </a>
+
+                        <!-- Medium Difficulty with External Link -->
+                        <a href="https://learnenglish.britishcouncil.org/grammar/english-grammar-reference/past-continuous" target="_blank" class="difficulty-card medium">
+                            <div class="difficulty-card-icon">
+                                <i class="fas fa-mountain"></i>
+                            </div>
+                            <h3 class="difficulty-card-title">Medium Level</h3>
+                            <p class="difficulty-card-description">Complex tense usage and paragraph construction for confident communication</p>
+                            <div class="difficulty-card-level">Intermediate Level</div>
+                        </a>
+
+                        <!-- Hard Difficulty with External Link -->
+                        <a href="https://learnenglish.britishcouncil.org/grammar/english-grammar-reference/past-perfect" target="_blank" class="difficulty-card hard">
+                            <div class="difficulty-card-icon">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <h3 class="difficulty-card-title">Hard Level</h3>
+                            <p class="difficulty-card-description">Master-level tense application and nuanced expression for fluency</p>
+                            <div class="difficulty-card-level">Advanced Level</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 5: Grammar Precision with External Links -->
+            <div class="speakwell-page" id="speakwell-grammar">
+                <div class="speakwell-nav">
+                    <button class="speakwell-back-btn" data-back-to="focus">
+                        <i class="fas fa-chevron-left"></i>
+                        <span>Back</span>
+                    </button>
+                    <h2 class="speakwell-nav-title">Grammar Precision</h2>
+                    <div class="speakwell-progress">
+                        <i class="fas fa-circle"></i>
+                        <span>Grammar Lessons</span>
+                    </div>
+                </div>
+
+                <div class="content-page">
+                    <div class="grammar-cards">
+                        <!-- Grammar Lesson 1 with External Link -->
+                        <a href="https://learnenglish.britishcouncil.org/grammar/english-grammar-reference" target="_blank" class="grammar-card">
+                            <div class="grammar-card-header">
+                                <div class="grammar-card-icon">
+                                    <i class="fas fa-font"></i>
+                                </div>
+                                <div class="grammar-card-title-section">
+                                    <div class="grammar-card-number">Lesson 1</div>
+                                    <h3 class="grammar-card-title">Parts of Speech</h3>
+                                </div>
+                            </div>
+                            <p class="grammar-card-description">
+                                Learn about nouns, verbs, adjectives, adverbs, pronouns, prepositions, conjunctions, and interjections.
+                            </p>
+                            <div class="grammar-card-footer">
+                                <div class="grammar-card-duration">
+                                    <i class="fas fa-clock"></i>
+                                    <span>15 min</span>
+                                </div>
+                                <div class="grammar-card-link">
+                                    <span>Start Lesson</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Grammar Lesson 2 with External Link -->
+                        <a href="https://learnenglish.britishcouncil.org/grammar/english-grammar-reference/sentence-structure" target="_blank" class="grammar-card">
+                            <div class="grammar-card-header">
+                                <div class="grammar-card-icon">
+                                    <i class="fas fa-sitemap"></i>
+                                </div>
+                                <div class="grammar-card-title-section">
+                                    <div class="grammar-card-number">Lesson 2</div>
+                                    <h3 class="grammar-card-title">Sentence Structure</h3>
+                                </div>
+                            </div>
+                            <p class="grammar-card-description">
+                                Master subject-verb agreement, clause types, and sentence patterns.
+                            </p>
+                            <div class="grammar-card-footer">
+                                <div class="grammar-card-duration">
+                                    <i class="fas fa-clock"></i>
+                                    <span>20 min</span>
+                                </div>
+                                <div class="grammar-card-link">
+                                    <span>Start Lesson</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Grammar Lesson 3 with External Link -->
+                        <a href="https://learnenglish.britishcouncil.org/grammar/english-grammar-reference/articles" target="_blank" class="grammar-card">
+                            <div class="grammar-card-header">
+                                <div class="grammar-card-icon">
+                                    <i class="fas fa-newspaper"></i>
+                                </div>
+                                <div class="grammar-card-title-section">
+                                    <div class="grammar-card-number">Lesson 3</div>
+                                    <h3 class="grammar-card-title">Articles</h3>
+                                </div>
+                            </div>
+                            <p class="grammar-card-description">
+                                Understand the proper use of definite and indefinite articles (a, an, the).
+                            </p>
+                            <div class="grammar-card-footer">
+                                <div class="grammar-card-duration">
+                                    <i class="fas fa-clock"></i>
+                                    <span>12 min</span>
+                                </div>
+                                <div class="grammar-card-link">
+                                    <span>Start Lesson</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Grammar Lesson 4 with External Link -->
+                        <a href="https://learnenglish.britishcouncil.org/grammar/english-grammar-reference/modal-verbs" target="_blank" class="grammar-card">
+                            <div class="grammar-card-header">
+                                <div class="grammar-card-icon">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <div class="grammar-card-title-section">
+                                    <div class="grammar-card-number">Lesson 4</div>
+                                    <h3 class="grammar-card-title">Modal Verbs</h3>
+                                </div>
+                            </div>
+                            <p class="grammar-card-description">
+                                Master the use of modal verbs (can, could, may, might, must, shall, should, will, would).
+                            </p>
+                            <div class="grammar-card-footer">
+                                <div class="grammar-card-duration">
+                                    <i class="fas fa-clock"></i>
+                                    <span>18 min</span>
+                                </div>
+                                <div class="grammar-card-link">
+                                    <span>Start Lesson</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Grammar Lesson 5 with External Link -->
+                        <a href="https://learnenglish.britishcouncil.org/grammar/english-grammar-reference/passive-voice" target="_blank" class="grammar-card">
+                            <div class="grammar-card-header">
+                                <div class="grammar-card-icon">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </div>
+                                <div class="grammar-card-title-section">
+                                    <div class="grammar-card-number">Lesson 5</div>
+                                    <h3 class="grammar-card-title">Passive Voice</h3>
+                                </div>
+                            </div>
+                            <p class="grammar-card-description">
+                                Learn to transform active voice sentences into passive voice.
+                            </p>
+                            <div class="grammar-card-footer">
+                                <div class="grammar-card-duration">
+                                    <i class="fas fa-clock"></i>
+                                    <span>16 min</span>
+                                </div>
+                                <div class="grammar-card-link">
+                                    <span>Start Lesson</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- App Modals (Original Project) -->
-    <div class="modal-overlay" id="analytics-modal" aria-hidden="true" aria-label="Analytics Pro details modal">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="analytics-modal-title">
+    <!-- About Content -->
+    <div id="about" class="content-section">
+        <div class="about-content">
+            <h2>About</h2>
+            <p>Hello! Welcome to Modern Interactive UI.</p>
+            <p style="margin-top: var(--spacing-md);">This is a professional, responsive website showcasing modern design principles with smooth interactions and clean aesthetics.</p>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal-overlay" id="analytics-modal">
+        <div class="modal">
             <div class="modal-header">
-                <h2 class="modal-title" id="analytics-modal-title">
+                <h2 class="modal-title">
                     <i class="fas fa-chart-line modal-icon"></i>
                     Analytics Pro
                 </h2>
-                <button class="close-btn" aria-label="Close modal" data-modal="analytics-modal">
+                <button class="close-btn" data-modal="analytics-modal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-content">
                 <p class="app-description">
-                    Analytics Pro transforms raw data into actionable insights with powerful visualization tools. 
-                    Track performance metrics, user behavior, and business trends in real-time. Our advanced 
-                    algorithms identify patterns and opportunities to optimize your strategy and drive growth.
+                    Analytics Pro transforms raw data into actionable insights with powerful visualization tools.
                 </p>
-                
                 <div class="get-app-section">
                     <a href="https://example.com/analytics-pro" class="pdf-link" target="_blank" rel="noopener">
                         <i class="fas fa-download"></i>
@@ -2007,26 +2305,21 @@
         </div>
     </div>
 
-    <!-- Secure Vault Modal -->
-    <div class="modal-overlay" id="security-modal" aria-hidden="true" aria-label="Secure Vault details modal">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="security-modal-title">
+    <div class="modal-overlay" id="security-modal">
+        <div class="modal">
             <div class="modal-header">
-                <h2 class="modal-title" id="security-modal-title">
+                <h2 class="modal-title">
                     <i class="fas fa-lock modal-icon"></i>
                     Secure Vault
                 </h2>
-                <button class="close-btn" aria-label="Close modal" data-modal="security-modal">
+                <button class="close-btn" data-modal="security-modal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-content">
                 <p class="app-description">
-                    Secure Vault provides military-grade encryption for your sensitive data. 
-                    Store passwords, documents, and private information with confidence. 
-                    Featuring biometric authentication, zero-knowledge architecture, and 
-                    automatic backup to ensure your data remains private and accessible only to you.
+                    Secure Vault provides military-grade encryption for your sensitive data.
                 </p>
-                
                 <div class="get-app-section">
                     <a href="https://example.com/secure-vault" class="pdf-link" target="_blank" rel="noopener">
                         <i class="fas fa-download"></i>
@@ -2037,137 +2330,21 @@
         </div>
     </div>
 
-    <!-- 3D Elements Modal -->
-    <div class="modal-overlay" id="3d-modal" aria-hidden="true" aria-label="3D Elements details modal">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="3d-modal-title">
+    <div class="modal-overlay" id="cloud-modal">
+        <div class="modal">
             <div class="modal-header">
-                <h2 class="modal-title" id="3d-modal-title">
-                    <i class="fas fa-cube modal-icon"></i>
-                    3D Elements
-                </h2>
-                <button class="close-btn" aria-label="Close modal" data-modal="3d-modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-content">
-                <p class="poster-description">
-                    Our 3D Elements system brings depth and realism to digital interfaces through 
-                    sophisticated three-dimensional components. Using advanced rendering techniques 
-                    and realistic lighting models, we create immersive experiences that engage users 
-                    on a deeper level. Each element is carefully crafted with attention to shadows, 
-                    reflections, and perspective to maintain visual harmony while providing functional 
-                    value.
-                </p>
-                <p class="poster-description">
-                    These components are fully interactive, supporting rotation, zoom, and contextual 
-                    animations that respond to user input. Performance-optimized for smooth rendering 
-                    across all devices, our 3D elements maintain frame rates while delivering stunning 
-                    visual fidelity.
-                </p>
-                
-                <div class="get-app-section">
-                    <button class="pdf-link" onclick="alert('3D Elements feature activated!')" aria-label="Explore 3D Elements">
-                        <i class="fas fa-cube"></i>
-                        Explore 3D Elements
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Wave Forms Modal -->
-    <div class="modal-overlay" id="wave-modal" aria-hidden="true" aria-label="Wave Forms details modal">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="wave-modal-title">
-            <div class="modal-header">
-                <h2 class="modal-title" id="wave-modal-title">
-                    <i class="fas fa-wave-square modal-icon"></i>
-                    Wave Forms
-                </h2>
-                <button class="close-btn" aria-label="Close modal" data-modal="wave-modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-content">
-                <p class="poster-description">
-                    Wave Forms introduce organic motion and fluid transitions to digital interfaces, 
-                    creating a sense of natural movement that guides users through their experience. 
-                    Based on principles of fluid dynamics and natural motion, these animations provide 
-                    visual continuity between interface states while maintaining performance efficiency.
-                </p>
-                <p class="poster-description">
-                    Each wave pattern is mathematically generated to ensure smooth, consistent motion 
-                    that responds to user interaction. Whether indicating loading states, transitioning 
-                    between screens, or visualizing data, Wave Forms add a layer of sophistication that 
-                    elevates the overall user experience while maintaining our minimalist design ethos.
-                </p>
-                
-                <div class="get-app-section">
-                    <button class="pdf-link" onclick="alert('Wave Forms feature activated!')" aria-label="Experience Wave Forms">
-                        <i class="fas fa-wave-square"></i>
-                        Experience Wave Forms
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Smart AI Modal -->
-    <div class="modal-overlay" id="ai-modal" aria-hidden="true" aria-label="Smart AI details modal">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="ai-modal-title">
-            <div class="modal-header">
-                <h2 class="modal-title" id="ai-modal-title">
-                    <i class="fas fa-lightbulb modal-icon"></i>
-                    Smart AI
-                </h2>
-                <button class="close-btn" aria-label="Close modal" data-modal="ai-modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-content">
-                <p class="poster-description">
-                    Our Smart AI components adapt intelligently to user behavior, preferences, and 
-                    context to deliver personalized experiences. Using machine learning algorithms 
-                    that operate entirely on-device for privacy, these components learn from interactions 
-                    to anticipate needs and streamline workflows without compromising user control.
-                </p>
-                <p class="poster-description">
-                    From predictive text input to adaptive interface layouts that rearrange based on 
-                    usage patterns, Smart AI enhances usability while maintaining transparency. Users 
-                    retain full control with clear indicators of when AI is active and simple methods 
-                    to override suggestions. The system continuously improves its recommendations 
-                    while respecting user privacy and preferences.
-                </p>
-                
-                <div class="get-app-section">
-                    <button class="pdf-link" onclick="alert('Smart AI feature activated!')" aria-label="Activate Smart AI">
-                        <i class="fas fa-lightbulb"></i>
-                        Activate Smart AI
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Cloud Sync Modal -->
-    <div class="modal-overlay" id="cloud-modal" aria-hidden="true" aria-label="Cloud Sync details modal">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="cloud-modal-title">
-            <div class="modal-header">
-                <h2 class="modal-title" id="cloud-modal-title">
+                <h2 class="modal-title">
                     <i class="fas fa-cloud-upload-alt modal-icon"></i>
                     Cloud Sync
                 </h2>
-                <button class="close-btn" aria-label="Close modal" data-modal="cloud-modal">
+                <button class="close-btn" data-modal="cloud-modal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-content">
                 <p class="app-description">
-                    Cloud Sync seamlessly synchronizes your files across all devices in real-time. 
-                    Access your documents, photos, and projects from anywhere with automatic versioning 
-                    and collaborative editing features. Enterprise-grade infrastructure ensures 99.9% 
-                    uptime and lightning-fast transfer speeds.
+                    Cloud Sync seamlessly synchronizes your files across all devices in real-time.
                 </p>
-                
                 <div class="get-app-section">
                     <a href="https://example.com/cloud-sync" class="pdf-link" target="_blank" rel="noopener">
                         <i class="fas fa-download"></i>
@@ -2178,12 +2355,86 @@
         </div>
     </div>
 
-    <!-- Resource Modal (for search section) -->
-    <div class="modal-overlay resource-modal" id="resource-modal" aria-hidden="true" aria-label="Resource details modal">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="resource-modal-title">
+    <div class="modal-overlay" id="3d-modal">
+        <div class="modal">
             <div class="modal-header">
-                <h2 class="modal-title" id="resource-modal-title">Document Viewer</h2>
-                <button class="close-btn" id="modalClose" aria-label="Close modal" data-modal="resource-modal">&times;</button>
+                <h2 class="modal-title">
+                    <i class="fas fa-cube modal-icon"></i>
+                    3D Elements
+                </h2>
+                <button class="close-btn" data-modal="3d-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-content">
+                <p class="poster-description">
+                    Our 3D Elements system brings depth and realism to digital interfaces.
+                </p>
+                <div class="get-app-section">
+                    <button class="pdf-link" onclick="alert('3D Elements feature activated!')">
+                        <i class="fas fa-cube"></i>
+                        Explore 3D Elements
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="wave-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-wave-square modal-icon"></i>
+                    Wave Forms
+                </h2>
+                <button class="close-btn" data-modal="wave-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-content">
+                <p class="poster-description">
+                    Wave Forms introduce organic motion and fluid transitions to digital interfaces.
+                </p>
+                <div class="get-app-section">
+                    <button class="pdf-link" onclick="alert('Wave Forms feature activated!')">
+                        <i class="fas fa-wave-square"></i>
+                        Experience Wave Forms
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="ai-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-lightbulb modal-icon"></i>
+                    Smart AI
+                </h2>
+                <button class="close-btn" data-modal="ai-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-content">
+                <p class="poster-description">
+                    Our Smart AI components adapt intelligently to user behavior, preferences, and context.
+                </p>
+                <div class="get-app-section">
+                    <button class="pdf-link" onclick="alert('Smart AI feature activated!')">
+                        <i class="fas fa-lightbulb"></i>
+                        Activate Smart AI
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay resource-modal" id="resource-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Document Viewer</h2>
+                <button class="close-btn" id="modalClose" data-modal="resource-modal">&times;</button>
             </div>
             <div class="modal-content">
                 <div class="resource-container" id="resourceContainer"></div>
@@ -2192,39 +2443,38 @@
     </div>
 
     <script>
-        // ============================================
-        // MODERN INTERACTIVE DESIGN - COMPLETE JAVASCRIPT
-        // ============================================
-
+        // Wait for DOM to be fully loaded
         document.addEventListener('DOMContentLoaded', function() {
             // ============================================
-            // ENTRY ANIMATION HANDLING
+            // HOME SECTION HEADER SCROLL BEHAVIOR
             // ============================================
-            // CSS handles the animation via prefers-reduced-motion media query
-            // No blocking JavaScript needed
+            const homeHeader = document.getElementById('homeHeader');
+            let lastScrollY = window.scrollY;
             
-            // ============================================
-            // SECTION SWIPE FUNCTIONALITY (Home Section)
-            // ============================================
-            initSwipeSection('section1', 'dots1', 140, 24);
-            initSwipeSection('section2', 'dots2', 340, 16);
-            
-            // Handle responsive behavior for section 2
-            const mobileStackContainer = document.querySelector('.mobile-stack-container');
-            const desktopStackContainer = document.querySelector('.stack-container');
-            
-            function checkScreenSize() {
-                if (window.innerWidth <= 768) {
-                    if (mobileStackContainer) mobileStackContainer.style.display = 'block';
-                    if (desktopStackContainer) desktopStackContainer.style.display = 'none';
+            function handleHeaderScroll() {
+                const currentScrollY = window.scrollY;
+                
+                // Show header at the top, hide when scrolling down
+                if (currentScrollY > 50) {
+                    homeHeader.classList.add('hidden');
                 } else {
-                    if (mobileStackContainer) mobileStackContainer.style.display = 'none';
-                    if (desktopStackContainer) desktopStackContainer.style.display = 'grid';
+                    homeHeader.classList.remove('hidden');
                 }
+                
+                lastScrollY = currentScrollY;
             }
             
-            checkScreenSize();
-            window.addEventListener('resize', checkScreenSize);
+            // Only add scroll listener when on home section
+            function setupHeaderForSection(sectionId) {
+                if (sectionId === 'home') {
+                    window.addEventListener('scroll', handleHeaderScroll);
+                    // Initial check
+                    handleHeaderScroll();
+                } else {
+                    window.removeEventListener('scroll', handleHeaderScroll);
+                    homeHeader.classList.add('hidden');
+                }
+            }
             
             // ============================================
             // BOTTOM NAVIGATION
@@ -2237,134 +2487,93 @@
                     const target = this.getAttribute('data-target');
                     
                     // Update active navigation item
-                    navItems.forEach(nav => {
-                        nav.classList.remove('active');
-                        nav.setAttribute('aria-current', 'false');
-                    });
+                    navItems.forEach(nav => nav.classList.remove('active'));
                     this.classList.add('active');
-                    this.setAttribute('aria-current', 'true');
                     
                     // Show corresponding content section
                     contentSections.forEach(section => {
                         section.classList.remove('active');
-                        section.setAttribute('aria-hidden', 'true');
                         if (section.id === target) {
                             section.classList.add('active');
-                            section.setAttribute('aria-hidden', 'false');
+                            
+                            // Reset SpeakWell to home page when navigating to it
+                            if (section.id === 'speakwell') {
+                                resetSpeakwellToHome();
+                            }
                         }
                     });
                     
-                    // Scroll to top when switching sections
+                    // Set up header behavior for home section
+                    setupHeaderForSection(target);
+                    
+                    // Scroll to top
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
-                
-                // Keyboard navigation support
-                item.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        this.click();
-                    }
-                });
             });
             
+            // Initial header setup
+            setupHeaderForSection('home');
+            
             // ============================================
-            // APP & POSTER MODAL FUNCTIONALITY (Home Section)
+            // APP CARD MODALS
             // ============================================
-            const appData = {
-                'analytics': { modalId: 'analytics-modal' },
-                'security': { modalId: 'security-modal' },
-                'cloud': { modalId: 'cloud-modal' },
-                'design': { modalId: 'analytics-modal' }
+            const appCards = document.querySelectorAll('.app-card');
+            const appModals = {
+                'analytics': 'analytics-modal',
+                'security': 'security-modal',
+                'cloud': 'cloud-modal',
+                'design': 'analytics-modal'
             };
             
-            const posterData = {
-                '3d': { modalId: '3d-modal' },
-                'wave': { modalId: 'wave-modal' },
-                'ai': { modalId: 'ai-modal' }
-            };
-            
-            // Add click event to app cards
-            document.querySelectorAll('.app-card').forEach(card => {
+            appCards.forEach(card => {
                 card.addEventListener('click', function() {
                     const appId = this.dataset.app;
-                    openModal(appData[appId].modalId);
-                });
-                
-                card.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        const appId = this.dataset.app;
-                        openModal(appData[appId].modalId);
-                    }
+                    openModal(appModals[appId]);
                 });
             });
             
-            // Add click event to poster cards
-            document.querySelectorAll('.poster-card').forEach(card => {
+            // ============================================
+            // POSTER CARD MODALS
+            // ============================================
+            const posterCards = document.querySelectorAll('.poster-card');
+            const posterModals = {
+                '3d': '3d-modal',
+                'wave': 'wave-modal',
+                'ai': 'ai-modal'
+            };
+            
+            posterCards.forEach(card => {
                 card.addEventListener('click', function() {
                     const posterId = this.dataset.poster;
-                    openModal(posterData[posterId].modalId);
-                });
-                
-                card.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        const posterId = this.dataset.poster;
-                        openModal(posterData[posterId].modalId);
-                    }
+                    openModal(posterModals[posterId]);
                 });
             });
             
             // ============================================
-            // MODAL MANAGEMENT (Shared by both sections)
+            // MODAL FUNCTIONALITY
             // ============================================
             let activeModal = null;
-            let focusBeforeModal = null;
             
             function openModal(modalId) {
                 const modal = document.getElementById(modalId);
                 if (!modal) return;
                 
-                // Store current focus
-                focusBeforeModal = document.activeElement;
-                
-                // Show modal
                 modal.classList.add('active');
-                modal.setAttribute('aria-hidden', 'false');
-                document.body.classList.add('modal-open');
+                document.body.style.overflow = 'hidden';
                 activeModal = modal;
                 
-                // Set focus to close button for accessibility
-                setTimeout(() => {
-                    const closeBtn = modal.querySelector('.close-btn');
-                    if (closeBtn) {
-                        closeBtn.focus();
-                        closeBtn.setAttribute('tabindex', '0');
-                    }
-                }, 100);
-                
-                // Trap focus inside modal
-                trapFocus(modal);
+                // Focus trap
+                const closeBtn = modal.querySelector('.close-btn');
+                if (closeBtn) closeBtn.focus();
             }
             
             function closeModal(modal) {
-                if (!modal) return;
-                
                 modal.classList.remove('active');
-                modal.setAttribute('aria-hidden', 'true');
-                document.body.classList.remove('modal-open');
+                document.body.style.overflow = '';
                 activeModal = null;
-                
-                // Return focus to the element that opened the modal
-                if (focusBeforeModal) {
-                    setTimeout(() => {
-                        focusBeforeModal.focus();
-                        focusBeforeModal = null;
-                    }, 100);
-                }
             }
             
-            // Close modal functionality
+            // Close modal buttons
             document.querySelectorAll('.close-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const modal = this.closest('.modal-overlay');
@@ -2388,127 +2597,85 @@
                 }
             });
             
-            // Focus trap for accessibility
-            function trapFocus(modal) {
-                const focusableElements = modal.querySelectorAll(
-                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-                );
-                const firstFocusable = focusableElements[0];
-                const lastFocusable = focusableElements[focusableElements.length - 1];
-                
-                modal.addEventListener('keydown', function(e) {
-                    if (e.key !== 'Tab') return;
-                    
-                    if (e.shiftKey) {
-                        if (document.activeElement === firstFocusable) {
-                            e.preventDefault();
-                            lastFocusable.focus();
-                        }
-                    } else {
-                        if (document.activeElement === lastFocusable) {
-                            e.preventDefault();
-                            firstFocusable.focus();
-                        }
-                    }
+            // ============================================
+            // SPEAKWELL SECTION - UPDATED WITH EXTERNAL LINKS
+            // ============================================
+            
+            // SpeakWell navigation
+            const beginJourneyBtn = document.getElementById('beginJourneyBtn');
+            if (beginJourneyBtn) {
+                beginJourneyBtn.addEventListener('click', function() {
+                    showSpeakwellPage('focus');
                 });
             }
             
-            // ============================================
-            // SWIPE SECTION INITIALIZATION
-            // ============================================
-            function initSwipeSection(sectionId, dotsId, cardWidth, gap) {
-                const container = document.getElementById(sectionId);
-                if (!container) return;
+            // Back buttons
+            document.querySelectorAll('.speakwell-back-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const targetPage = this.getAttribute('data-back-to');
+                    showSpeakwellPage(targetPage);
+                });
+            });
+            
+            // Focus cards
+            document.querySelectorAll('.focus-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const target = this.getAttribute('data-target');
+                    showSpeakwellPage(target);
+                });
+            });
+            
+            // Tense cards - all go to difficulty page
+            document.querySelectorAll('.tense-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    showSpeakwellPage('difficulty');
+                });
+            });
+            
+            // IMPORTANT: Difficulty cards and Grammar cards now have external links
+            // and will open in new tabs when clicked. No need for click handlers.
+            
+            function showSpeakwellPage(pageId) {
+                // Hide all SpeakWell pages
+                const allPages = document.querySelectorAll('.speakwell-page');
+                allPages.forEach(page => page.classList.remove('active'));
                 
-                const dotsContainer = document.getElementById(dotsId);
-                if (!dotsContainer) return;
-                
-                // Calculate number of items visible at once
-                const containerWidth = container.offsetWidth;
-                const items = container.querySelectorAll('.app-card, .mobile-stack-card');
-                const itemWidth = cardWidth;
-                const visibleItems = Math.floor(containerWidth / (itemWidth + gap));
-                const totalItems = items.length;
-                const totalPages = Math.max(1, Math.ceil(totalItems / Math.max(1, visibleItems)));
-                
-                // Create navigation dots
-                dotsContainer.innerHTML = '';
-                for (let i = 0; i < totalPages; i++) {
-                    const dot = document.createElement('div');
-                    dot.className = 'dot' + (i === 0 ? ' active' : '');
-                    dot.dataset.page = i;
-                    dot.setAttribute('role', 'button');
-                    dot.setAttribute('aria-label', `Go to page ${i + 1}`);
-                    
-                    dot.addEventListener('click', function() {
-                        const page = parseInt(this.dataset.page);
-                        scrollToPage(container, page, visibleItems, itemWidth, gap);
-                        updateDots(dotsContainer, page);
-                    });
-                    
-                    dotsContainer.appendChild(dot);
+                // Show target page
+                const targetPage = document.getElementById(`speakwell-${pageId}`);
+                if (targetPage) {
+                    targetPage.classList.add('active');
                 }
                 
-                // Add scroll event listener to update dots
-                container.addEventListener('scroll', function() {
-                    const scrollPos = container.scrollLeft;
-                    const currentPage = Math.round(scrollPos / (visibleItems * (itemWidth + gap)));
-                    updateDots(dotsContainer, Math.min(currentPage, totalPages - 1));
-                });
-                
-                // Add touch/swipe events
-                let startX = 0;
-                let scrollLeft = 0;
-                
-                container.addEventListener('touchstart', function(e) {
-                    startX = e.touches[0].pageX - container.offsetLeft;
-                    scrollLeft = container.scrollLeft;
-                });
-                
-                container.addEventListener('touchmove', function(e) {
-                    const x = e.touches[0].pageX - container.offsetLeft;
-                    const walk = (x - startX) * 1.5;
-                    container.scrollLeft = scrollLeft - walk;
-                });
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
             
-            function scrollToPage(container, page, visibleItems, itemWidth, gap) {
-                const scrollPosition = page * visibleItems * (itemWidth + gap);
-                container.scrollTo({
-                    left: scrollPosition,
-                    behavior: 'smooth'
-                });
-            }
-            
-            function updateDots(dotsContainer, activePage) {
-                const dots = dotsContainer.querySelectorAll('.dot');
-                dots.forEach((dot, index) => {
-                    const isActive = index === activePage;
-                    dot.classList.toggle('active', isActive);
-                    dot.setAttribute('aria-current', isActive ? 'true' : 'false');
-                });
+            function resetSpeakwellToHome() {
+                const allPages = document.querySelectorAll('.speakwell-page');
+                allPages.forEach(page => page.classList.remove('active'));
+                
+                const homePage = document.getElementById('speakwell-home');
+                if (homePage) {
+                    homePage.classList.add('active');
+                }
             }
             
             // ============================================
-            // SEARCH SECTION FUNCTIONALITY
+            // SEARCH SECTION
             // ============================================
+            
             const searchInput = document.getElementById('searchInput');
-            const searchResults = document.getElementById('searchResults');
             const searchClear = document.getElementById('searchClear');
-            const popularItems = document.querySelectorAll('.popular-item');
+            const searchResults = document.getElementById('searchResults');
             const subjectBtns = document.querySelectorAll('.subject-btn');
+            const popularItems = document.querySelectorAll('.popular-item');
             const featuredCards = document.querySelectorAll('.search-featured-card');
-            const resourceModal = document.getElementById('resource-modal');
-            const modalClose = document.getElementById('modalClose');
-            const modalTitle = document.getElementById('resource-modal-title');
-            const resourceContainer = document.getElementById('resourceContainer');
-
-            // Current filter state
+            
             let currentSubjectFilter = 'all';
             let currentSearchQuery = '';
-
-            // Search input clear button functionality
-            if (searchInput && searchClear) {
+            
+            // Search input
+            if (searchInput) {
                 searchInput.addEventListener('input', function() {
                     if (this.value.length > 0) {
                         searchClear.classList.remove('hidden');
@@ -2517,7 +2684,16 @@
                         hideResults();
                     }
                 });
-
+                
+                searchInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        performSearch(this.value);
+                    }
+                });
+            }
+            
+            // Search clear
+            if (searchClear) {
                 searchClear.addEventListener('click', function() {
                     searchInput.value = '';
                     searchInput.focus();
@@ -2525,161 +2701,68 @@
                     hideResults();
                 });
             }
-
-            // Subject filter functionality
-            if (subjectBtns.length > 0) {
-                subjectBtns.forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        // Update active state
-                        subjectBtns.forEach(b => {
-                            b.classList.remove('active');
-                            b.setAttribute('aria-pressed', 'false');
-                        });
-                        this.classList.add('active');
-                        this.setAttribute('aria-pressed', 'true');
-                        
-                        // Update current filter
-                        currentSubjectFilter = this.dataset.subject;
-                        
-                        // Perform search with current query and new filter
-                        if (currentSearchQuery.length > 0) {
-                            const results = performSearch(currentSearchQuery);
-                            displayResults(results, currentSearchQuery);
-                        }
-                    });
-                });
-            }
-
-            // Featured cards functionality - trigger search when clicked
-            if (featuredCards.length > 0) {
-                featuredCards.forEach(card => {
-                    card.addEventListener('click', function() {
-                        const searchText = this.dataset.search;
-                        if (searchInput) {
-                            searchInput.value = searchText;
-                            searchInput.focus();
-                            
-                            // Trigger search
-                            const results = performSearch(searchText);
-                            displayResults(results, searchText);
-                            
-                            // Scroll to search results
-                            setTimeout(() => {
-                                if (searchResults) {
-                                    searchResults.scrollIntoView({ behavior: 'smooth' });
-                                }
-                            }, 100);
-                        }
-                    });
+            
+            // Subject filter
+            subjectBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    subjectBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentSubjectFilter = this.dataset.subject;
                     
-                    // Keyboard support
-                    card.addEventListener('keydown', function(e) {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            this.click();
-                        }
-                    });
-                });
-            }
-
-            // Improved search functionality with better matching and subject filtering
-            function performSearch(query) {
-                if (query.length === 0) {
-                    return [];
-                }
-
-                // Normalize the query
-                const normalizedQuery = query.toLowerCase().trim();
-                currentSearchQuery = normalizedQuery;
-
-                // Split into individual words
-                const queryWords = normalizedQuery.split(/\s+/);
-
-                return educationalResources
-                    .filter(resource => {
-                        // Apply subject filter
-                        if (currentSubjectFilter !== 'all' && resource.subject !== currentSubjectFilter) {
-                            return false;
-                        }
-                        return true;
-                    })
-                    .map(resource => {
-                        // Calculate a score for this resource
-                        let score = 0;
-
-                        // Check for exact matches in title (highest weight)
-                        if (resource.title.toLowerCase().includes(normalizedQuery)) {
-                            score += 50;
-                        }
-
-                        // Check for matches in description
-                        if (resource.description.toLowerCase().includes(normalizedQuery)) {
-                            score += 20;
-                        }
-
-                        // Check for matches in author
-                        if (resource.author.toLowerCase().includes(normalizedQuery)) {
-                            score += 15;
-                        }
-
-                        // Check for keyword matches
-                        const keywordMatches = resource.keywords.filter(kw => 
-                            kw.toLowerCase().includes(normalizedQuery)
-                        ).length;
-                        score += keywordMatches * 10;
-
-                        // Check for individual word matches
-                        queryWords.forEach(word => {
-                            if (word.length < 3) return; // ignore very short words
-                            if (resource.title.toLowerCase().includes(word)) score += 10;
-                            if (resource.description.toLowerCase().includes(word)) score += 5;
-                            if (resource.keywords.some(kw => kw.toLowerCase().includes(word))) score += 7;
-                        });
-
-                        return {
-                            ...resource,
-                            score
-                        };
-                    })
-                    .filter(resource => resource.score > 0)
-                    .sort((a, b) => b.score - a.score);
-            }
-
-            // Search functionality
-            let searchTimeout;
-            if (searchInput) {
-                searchInput.addEventListener('input', function() {
-                    clearTimeout(searchTimeout);
-                    const query = this.value.trim();
-
-                    if (query.length === 0) {
-                        hideResults();
-                        return;
+                    if (currentSearchQuery.length > 0) {
+                        performSearch(currentSearchQuery);
                     }
-
-                    searchTimeout = setTimeout(() => {
-                        const results = performSearch(query);
-                        displayResults(results, query);
-                    }, 400);
+                });
+            });
+            
+            // Popular searches
+            popularItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const text = this.textContent.replace(/^[^a-zA-Z]+/, '').trim();
+                    searchInput.value = text;
+                    searchInput.focus();
+                    performSearch(text);
+                });
+            });
+            
+            // Featured cards
+            featuredCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const searchText = this.dataset.search;
+                    searchInput.value = searchText;
+                    searchInput.focus();
+                    performSearch(searchText);
+                });
+            });
+            
+            function performSearch(query) {
+                currentSearchQuery = query;
+                
+                if (query.length === 0) {
+                    hideResults();
+                    return;
+                }
+                
+                // Simulate search results
+                const results = educationalResources.filter(resource => {
+                    if (currentSubjectFilter !== 'all' && resource.subject !== currentSubjectFilter) {
+                        return false;
+                    }
+                    
+                    const searchLower = query.toLowerCase();
+                    return resource.title.toLowerCase().includes(searchLower) ||
+                           resource.description.toLowerCase().includes(searchLower) ||
+                           resource.keywords.some(kw => kw.toLowerCase().includes(searchLower));
                 });
                 
-                // Allow Enter key to trigger search
-                searchInput.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter') {
-                        const query = this.value.trim();
-                        if (query.length > 0) {
-                            const results = performSearch(query);
-                            displayResults(results, query);
-                        }
-                    }
-                });
+                displayResults(results, query);
             }
-
+            
             function displayResults(results, query) {
                 if (!searchResults) return;
                 
                 searchResults.innerHTML = '';
-
+                
                 if (results.length === 0) {
                     searchResults.innerHTML = `
                         <div class="no-results">
@@ -2691,62 +2774,45 @@
                     showResults();
                     return;
                 }
-
+                
                 results.forEach(result => {
                     const resultItem = document.createElement('div');
                     resultItem.className = 'search-result-item';
-                    resultItem.dataset.id = result.id;
-                    resultItem.setAttribute('role', 'button');
-                    resultItem.setAttribute('tabindex', '0');
-                    resultItem.setAttribute('aria-label', `Open ${result.title} resource`);
-
-                    const typeIcon = getTypeIcon(result.type);
-                    const typeBadge = getTypeBadge(result.type);
-
                     resultItem.innerHTML = `
-                        <div class="search-result-icon">${typeIcon}</div>
+                        <div class="search-result-icon">${getTypeIcon(result.type)}</div>
                         <div class="search-result-content">
                             <div class="search-result-title">
-                                ${highlightMatches(result.title, query)}
-                                <span class="search-result-badge">${typeBadge}</span>
+                                ${result.title}
+                                <span class="search-result-badge">${getTypeBadge(result.type)}</span>
                             </div>
-                            <div class="search-result-description">${highlightMatches(result.description, query)}</div>
+                            <div class="search-result-description">${result.description}</div>
                             <div class="search-result-meta">
                                 <span><i class="fas fa-user"></i> ${result.author}</span>
-                                <span><i class="fas fa-calendar-alt"></i> ${new Date(result.date).toLocaleDateString('en-US')}</span>
+                                <span><i class="fas fa-calendar-alt"></i> ${new Date(result.date).toLocaleDateString()}</span>
                                 <span><i class="fas fa-tag"></i> ${capitalizeFirstLetter(result.subject)}</span>
                             </div>
                         </div>
                     `;
-
+                    
                     resultItem.addEventListener('click', () => openResourceModal(result));
-                    resultItem.addEventListener('keydown', (e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            openResourceModal(result);
-                        }
-                    });
                     searchResults.appendChild(resultItem);
                 });
-
+                
                 showResults();
             }
-
-            // Highlight matching text in search results
-            function highlightMatches(text, query) {
-                if (!query) return text;
-                const regex = new RegExp(`(${escapeRegExp(query)})`, 'gi');
-                return text.replace(regex, '<span style="background-color: var(--gray-100); color: var(--gray-900); padding: 0 2px; border-radius: 2px;">$1</span>');
+            
+            function showResults() {
+                if (searchResults) {
+                    searchResults.classList.add('visible');
+                }
             }
-
-            function escapeRegExp(string) {
-                return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            
+            function hideResults() {
+                if (searchResults) {
+                    searchResults.classList.remove('visible');
+                }
             }
-
-            function capitalizeFirstLetter(string) {
-                return string.charAt(0).toUpperCase() + string.slice(1);
-            }
-
+            
             function getTypeIcon(type) {
                 const icons = {
                     'course': '<i class="fas fa-graduation-cap"></i>',
@@ -2756,7 +2822,7 @@
                 };
                 return icons[type] || '<i class="fas fa-file"></i>';
             }
-
+            
             function getTypeBadge(type) {
                 const badges = {
                     'course': 'Course',
@@ -2766,60 +2832,25 @@
                 };
                 return badges[type] || 'Resource';
             }
-
-            function showResults() {
-                if (searchResults) {
-                    searchResults.classList.add('visible');
-                }
+            
+            function capitalizeFirstLetter(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
             }
-
-            function hideResults() {
-                if (searchResults) {
-                    searchResults.classList.remove('visible');
-                }
-            }
-
-            // Popular searches functionality
-            if (popularItems.length > 0) {
-                popularItems.forEach(item => {
-                    item.addEventListener('click', function() {
-                        const searchText = this.textContent.replace(/^[^a-zA-Z]+/, '').trim();
-                        if (searchInput) {
-                            searchInput.value = searchText;
-                            searchInput.focus();
-                            searchInput.dispatchEvent(new Event('input'));
-                        }
-                    });
-                    
-                    // Keyboard support
-                    item.addEventListener('keydown', function(e) {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            this.click();
-                        }
-                    });
-                });
-            }
-
-            // Resource modal functionality
+            
+            // Resource modal
             function openResourceModal(resource) {
-                if (!resourceModal || !modalTitle || !resourceContainer) return;
+                const modal = document.getElementById('resource-modal');
+                const modalTitle = modal.querySelector('.modal-title');
+                const resourceContainer = document.getElementById('resourceContainer');
                 
                 modalTitle.textContent = resource.title;
                 resourceContainer.innerHTML = '';
-
+                
                 if (resource.pdfs) {
-                    resource.pdfs.forEach((item, index) => {
+                    resource.pdfs.forEach(item => {
                         const resourceBox = document.createElement('div');
                         resourceBox.className = 'resource-box';
-
                         resourceBox.innerHTML = `
-                            <div class="resource-header">
-                                <div class="resource-title">
-                                    <i class="fas fa-file-pdf"></i>
-                                    ${item.title}
-                                </div>
-                            </div>
                             <div class="pdf-container">
                                 <div class="pdf-icon">
                                     <i class="fas fa-file-pdf"></i>
@@ -2830,158 +2861,18 @@
                                 </a>
                             </div>
                         `;
-
                         resourceContainer.appendChild(resourceBox);
                     });
                 }
-
-                // Open the modal
+                
                 openModal('resource-modal');
             }
-
-            // ============================================
-            // EDUCATIONAL RESOURCES DATA
-            // ============================================
-            const educationalResources = [
-                {
-                    id: 1,
-                    title: "Complex Numbers",
-                    description: "Complete course with corrected exercises on complex numbers for the scientific Baccalaureate.",
-                    type: "course",
-                    subject: "math",
-                    author: "Prof. Dupont",
-                    date: "2025-03-15",
-                    keywords: ["mathematics", "bac", "complex", "numbers", "scientific"],
-                    pdfs: [
-                        {
-                            title: "Course: Complex Numbers",
-                            url: "https://drive.google.com/file/d/example1/preview"
-                        },
-                        {
-                            title: "Exercise Series: Analysis N1",
-                            url: "https://drive.google.com/file/d/example2/preview"
-                        }
-                    ]
-                },
-                {
-                    id: 2,
-                    title: "Acids and Bases",
-                    description: "Complete revision sheet on acids and bases with typical Bac exercises.",
-                    type: "summary",
-                    subject: "chemistry",
-                    author: "Prof. Martin",
-                    date: "2025-02-22",
-                    keywords: ["chemistry", "bac", "acids", "bases", "revision"],
-                    pdfs: [
-                        {
-                            title: "Revision Sheet: Acids and Bases",
-                            url: "https://drive.google.com/file/d/example3/preview"
-                        }
-                    ]
-                },
-                {
-                    id: 3,
-                    title: "Human Genetics",
-                    description: "Video course and interactive exercises on human genetics and hereditary diseases.",
-                    type: "video",
-                    subject: "biology",
-                    author: "Prof. Leclerc",
-                    date: "2025-04-10",
-                    keywords: ["biology", "bac", "video", "genetics", "human"],
-                    pdfs: [
-                        {
-                            title: "Video Course: Human Genetics",
-                            url: "https://drive.google.com/file/d/example4/preview"
-                        }
-                    ]
-                },
-                {
-                    id: 4,
-                    title: "Integral Calculus",
-                    description: "Advanced exercises and solutions for integral calculus problems.",
-                    type: "exercise",
-                    subject: "math",
-                    author: "Prof. Smith",
-                    date: "2025-01-30",
-                    keywords: ["mathematics", "calculus", "integral", "exercises"],
-                    pdfs: [
-                        {
-                            title: "Integral Calculus Exercises",
-                            url: "https://drive.google.com/file/d/example5/preview"
-                        }
-                    ]
-                },
-                {
-                    id: 5,
-                    title: "Atomic Structure",
-                    description: "Detailed course on atomic nucleus structure and properties.",
-                    type: "course",
-                    subject: "physics",
-                    author: "Prof. Johnson",
-                    date: "2025-03-05",
-                    keywords: ["physics", "atomic", "nucleus", "structure"],
-                    pdfs: [
-                        {
-                            title: "Atomic Structure Course",
-                            url: "https://drive.google.com/file/d/example6/preview"
-                        }
-                    ]
-                },
-                {
-                    id: 6,
-                    title: "Neurophysiology",
-                    description: "Comprehensive guide to neurophysiology for advanced biology students.",
-                    type: "summary",
-                    subject: "biology",
-                    author: "Prof. Williams",
-                    date: "2025-02-18",
-                    keywords: ["biology", "neurophysiology", "nervous", "system"],
-                    pdfs: [
-                        {
-                            title: "Neurophysiology Guide",
-                            url: "https://drive.google.com/file/d/example7/preview"
-                        }
-                    ]
-                },
-                {
-                    id: 7,
-                    title: "English Grammar",
-                    description: "Complete English grammar reference with exercises and examples.",
-                    type: "course",
-                    subject: "english",
-                    author: "Prof. Brown",
-                    date: "2025-03-22",
-                    keywords: ["english", "grammar", "language", "reference"],
-                    pdfs: [
-                        {
-                            title: "English Grammar Reference",
-                            url: "https://drive.google.com/file/d/example8/preview"
-                        }
-                    ]
-                },
-                {
-                    id: 8,
-                    title: "Philosophy of Freedom",
-                    description: "Summary and analysis of philosophical concepts of freedom.",
-                    type: "summary",
-                    subject: "philosophy",
-                    author: "Prof. Davis",
-                    date: "2025-02-28",
-                    keywords: ["philosophy", "freedom", "summary", "analysis"],
-                    pdfs: [
-                        {
-                            title: "Philosophy of Freedom Summary",
-                            url: "https://drive.google.com/file/d/example9/preview"
-                        }
-                    ]
-                }
-            ];
             
-            // ============================================
-            // INITIALIZATION COMPLETE
-            // ============================================
-            console.log('Modern Interactive Design with Search Section initialized successfully.');
+           
+            
+            console.log('Modern Interactive Design initialized successfully.');
         });
     </script>
+     <script src="./assets/js/rsewdata1.js"></script>
 </body>
 </html>

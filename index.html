@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,24 +23,24 @@
             --gray-700: #404040;
             --gray-800: #262626;
             --gray-900: #171717;
-
+            
             --spacing-xs: 0.5rem;
             --spacing-sm: 0.875rem;
             --spacing-md: 1.25rem;
             --spacing-lg: 1.75rem;
             --spacing-xl: 2.5rem;
-
+            
             --border-radius-sm: 4px;
             --border-radius-md: 8px;
             --border-radius-lg: 12px;
             --border-radius-xl: 16px;
             --border-radius-full: 9999px;
-
+            
             --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
             --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
             --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
             --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.15);
-
+            
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -246,15 +246,28 @@
             line-height: 1.3;
         }
 
-        /* Stack Cards */
-        .stack-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: var(--spacing-md);
+        /* Stack Cards - UPDATED FOR HORIZONTAL SCROLL */
+        .stack-container-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
             margin-bottom: var(--spacing-lg);
         }
 
+        .stack-container-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+        .stack-container {
+            display: flex;
+            gap: var(--spacing-md);
+            padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-lg);
+            min-width: min-content;
+        }
+
         .stack-card {
+            flex: 0 0 auto;
+            width: 280px;
             background-color: var(--white);
             border: 1px solid var(--gray-200);
             border-radius: var(--border-radius-lg);
@@ -1434,6 +1447,132 @@
             overflow-y: auto;
         }
 
+        /* NEW APP CARD MODAL STYLES - Google Play Store Style */
+        .app-modal-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: var(--spacing-lg);
+        }
+
+        .app-modal-icon-large {
+            width: 120px;
+            height: 120px;
+            border-radius: var(--border-radius-xl);
+            background-color: var(--white);
+            border: 2px solid var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: var(--gray-900);
+            margin-bottom: var(--spacing-sm);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .app-modal-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .app-modal-description {
+            font-size: 1rem;
+            color: var(--gray-600);
+            line-height: 1.6;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .app-screenshot {
+            width: 100%;
+            max-width: 400px;
+            height: 240px;
+            background: linear-gradient(135deg, var(--gray-100) 0%, var(--gray-200) 100%);
+            border-radius: var(--border-radius-lg);
+            border: 1px solid var(--gray-300);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin: var(--spacing-md) 0;
+            position: relative;
+        }
+
+        .app-screenshot-content {
+            width: 90%;
+            height: 85%;
+            background: var(--white);
+            border-radius: var(--border-radius-md);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-md);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .app-screenshot-header {
+            width: 100%;
+            height: 20px;
+            background: var(--gray-300);
+            border-radius: var(--border-radius-sm);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .app-screenshot-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gray-200);
+            border-radius: var(--border-radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--gray-700);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .app-screenshot-text {
+            width: 80%;
+            height: 12px;
+            background: var(--gray-200);
+            border-radius: var(--border-radius-sm);
+            margin: var(--spacing-xs) 0;
+        }
+
+        .app-screenshot-text:nth-child(4) {
+            width: 60%;
+        }
+
+        .app-modal-try-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md) var(--spacing-xl);
+            background-color: var(--black);
+            color: var(--white);
+            border: none;
+            border-radius: var(--border-radius-lg);
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: var(--spacing-sm);
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .app-modal-try-btn:hover {
+            background-color: var(--gray-800);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
         /* Resource Modal */
         .pdf-container {
             display: flex;
@@ -1628,40 +1767,50 @@
             .container {
                 padding: var(--spacing-md) var(--spacing-sm);
             }
-
+            
             h1 {
                 font-size: 1.75rem;
             }
-
+            
             .subtitle, .search-tagline, .speakwell-tagline {
                 font-size: 1rem;
             }
-
+            
             .focus-cards, .tenses-cards, .difficulty-cards, .grammar-cards,
             .poster-container, .featured-grid {
                 grid-template-columns: 1fr;
                 gap: var(--spacing-md);
             }
-
+            
             .features-container {
                 grid-template-columns: 1fr 1fr;
             }
-
+            
             .speakwell-logo-text {
                 font-size: 2rem;
             }
-
+            
             .bottom-nav {
                 height: 68px;
             }
-
+            
             .home-header {
                 height: 50px;
                 padding: 0 var(--spacing-md);
             }
-
+            
             .home-logo {
                 font-size: 1.25rem;
+            }
+            
+            .stack-card {
+                width: 250px;
+            }
+            
+            .app-modal-icon-large {
+                width: 100px;
+                height: 100px;
+                font-size: 2.75rem;
             }
         }
 
@@ -1669,22 +1818,36 @@
             .features-container {
                 grid-template-columns: 1fr;
             }
-
+            
             .speakwell-logo-text {
                 font-size: 1.75rem;
             }
-
+            
             .bottom-nav {
                 height: 64px;
             }
-
+            
             .home-header {
                 height: 45px;
                 padding: 0 var(--spacing-sm);
             }
-
+            
             .home-logo {
                 font-size: 1.125rem;
+            }
+            
+            .stack-card {
+                width: 220px;
+            }
+            
+            .app-modal-icon-large {
+                width: 80px;
+                height: 80px;
+                font-size: 2.25rem;
+            }
+            
+            .app-screenshot {
+                height: 200px;
             }
         }
     </style>
@@ -1699,11 +1862,11 @@
     <nav class="bottom-nav" aria-label="Main navigation">
         <div class="nav-item active" data-target="home" role="button" tabindex="0">
             <i class="fas fa-home nav-icon"></i>
-            <span class="nav-label">Home</span>
+            <span class="nav-label">Accueil</span>
         </div>
         <div class="nav-item" data-target="search" role="button" tabindex="0">
             <i class="fas fa-search nav-icon"></i>
-            <span class="nav-label">Search</span>
+            <span class="nav-label">Recherche</span>
         </div>
         <div class="nav-item" data-target="speakwell" role="button" tabindex="0">
             <i class="fas fa-book nav-icon"></i>
@@ -1711,54 +1874,50 @@
         </div>
         <div class="nav-item" data-target="about" role="button" tabindex="0">
             <i class="fas fa-info-circle nav-icon"></i>
-            <span class="nav-label">About</span>
+            <span class="nav-label">À propos</span>
         </div>
     </nav>
 
     <!-- Home Content -->
     <div id="home" class="content-section active animate-on-load">
         <div class="container">
-
+            <header class="animate-slide-up">
+               </header>
 
             <!-- Section 1: Horizontal Swipe Cards -->
             <section class="section animate-slide-up">
                 <div class="section-header">
                     <div>
-                        <br><br>
-                        <h2 class="section-title">App Collection</h2>
-                         </div>
+                        <h2 class="section-title">Collection d'Applications</h2>
+                       
+                    </div>
                     <div class="swipe-hint">
                         <i class="fas fa-arrow-right"></i>
-                        <span>Swipe to explore</span>
+                        <span>Glissez pour explorer</span>
                     </div>
                 </div>
-
+                
                 <div class="cards-scroll-container">
                     <div class="cards-wrapper" id="section1">
                         <div class="app-card" data-app="analytics">
                             <div class="app-icon-circle">
-                                <i class="fas fa-chart-line app-icon"></i>
+                                <i class="fas fa-dna app-icon"></i>
                             </div>
-                            <h3 class="app-title">Analytics Pro</h3>
+                            <h3 class="app-title">SVT App</h3>
                         </div>
                         <div class="app-card" data-app="security">
                             <div class="app-icon-circle">
-                                <i class="fas fa-lock app-icon"></i>
+                                <i class="fas fa-desktop app-icon"></i>
                             </div>
-                            <h3 class="app-title">Secure Vault</h3>
+                            <h3 class="app-title">STI App</h3>
                         </div>
                         <div class="app-card" data-app="cloud">
                             <div class="app-icon-circle">
-                                <i class="fas fa-cloud-upload-alt app-icon"></i>
+                                <i class="fas fa-infinity app-icon"></i>
                             </div>
-                            <h3 class="app-title">Cloud Sync</h3>
+                            <h3 class="app-title">infinity</h3>
                         </div>
-                        <div class="app-card" data-app="design">
-                            <div class="app-icon-circle">
-                                <i class="fas fa-palette app-icon"></i>
-                            </div>
-                            <h3 class="app-title">Design Studio</h3>
-                        </div>
+                        
                     </div>
                 </div>
             </section>
@@ -1767,31 +1926,34 @@
             <section class="section animate-slide-up">
                 <div class="section-header">
                     <div>
-                        <h2 class="section-title">Visual Components</h2>
-                      </div>
+                        <h2 class="section-title">Composants Visuels</h2>
+                        <p class="section-description">Composants modulaires avec hiérarchie claire et structure de contenu organisée</p>
+                    </div>
                 </div>
-
-                <div class="stack-container">
-                    <div class="stack-card">
-                        <div class="stack-icon">
-                            <i class="fas fa-bolt"></i>
+                
+                <div class="stack-container-wrapper">
+                    <div class="stack-container">
+                        <div class="stack-card">
+                            <div class="stack-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h3 class="stack-card-title">Performance</h3>
+                            <p class="stack-card-text">Optimisé pour la vitesse avec des temps de chargement minimaux et des interactions fluides sur tous les appareils et plateformes.</p>
                         </div>
-                        <h3 class="stack-card-title">Performance</h3>
-                        <p class="stack-card-text">Optimized for speed with minimal loading times and smooth interactions across all devices and platforms.</p>
-                    </div>
-                    <div class="stack-card">
-                        <div class="stack-icon">
-                            <i class="fas fa-shield-alt"></i>
+                        <div class="stack-card">
+                            <div class="stack-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3 class="stack-card-title">Sécurité</h3>
+                            <p class="stack-card-text">Protocoles de sécurité de niveau entreprise avec chiffrement de bout en bout et authentification multi-facteurs.</p>
                         </div>
-                        <h3 class="stack-card-title">Security</h3>
-                        <p class="stack-card-text">Enterprise-grade security protocols with end-to-end encryption and multi-factor authentication.</p>
-                    </div>
-                    <div class="stack-card">
-                        <div class="stack-icon">
-                            <i class="fas fa-sync-alt"></i>
+                        <div class="stack-card">
+                            <div class="stack-icon">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                            <h3 class="stack-card-title">Synchronisation Temps Réel</h3>
+                            <p class="stack-card-text">Les modifications se mettent à jour instantanément sur tous les appareils connectés avec résolution des conflits et historique des versions.</p>
                         </div>
-                        <h3 class="stack-card-title">Real-time Sync</h3>
-                        <p class="stack-card-text">Changes update instantly across all connected devices with conflict resolution and version history.</p>
                     </div>
                 </div>
             </section>
@@ -1800,35 +1962,35 @@
             <section class="section animate-slide-up">
                 <div class="section-header">
                     <div>
-                        <h2 class="section-title">Poster Elements</h2>
-                        <p class="section-description">Visually distinctive cards with animated blob-style iconography. Click to learn more.</p>
+                        <h2 class="section-title">Éléments d'Affiche</h2>
+                        <p class="section-description">Cartes visuellement distinctives avec iconographie de style blob animé. Cliquez pour en savoir plus.</p>
                     </div>
                 </div>
-
+                
                 <div class="poster-container">
                     <div class="poster-card" data-poster="3d">
                         <div class="poster-icon-container">
                             <div class="blob-shape"></div>
                             <i class="fas fa-cube poster-icon"></i>
                         </div>
-                        <h3 class="poster-title">3D Elements</h3>
-                        <p class="poster-text">Click to learn more about our immersive three-dimensional components</p>
+                        <h3 class="poster-title">Éléments 3D</h3>
+                        <p class="poster-text">Cliquez pour en savoir plus sur nos composants tridimensionnels immersifs</p>
                     </div>
                     <div class="poster-card" data-poster="wave">
                         <div class="poster-icon-container">
                             <div class="blob-shape"></div>
                             <i class="fas fa-wave-square poster-icon"></i>
                         </div>
-                        <h3 class="poster-title">Wave Forms</h3>
-                        <p class="poster-text">Click to explore our smooth wave animations and fluid transitions</p>
+                        <h3 class="poster-title">Formes d'Onde</h3>
+                        <p class="poster-text">Cliquez pour explorer nos animations d'onde fluides et nos transitions</p>
                     </div>
                     <div class="poster-card" data-poster="ai">
                         <div class="poster-icon-container">
                             <div class="blob-shape"></div>
                             <i class="fas fa-lightbulb poster-icon"></i>
                         </div>
-                        <h3 class="poster-title">Smart AI</h3>
-                        <p class="poster-text">Click to discover our intelligent adaptive components</p>
+                        <h3 class="poster-title">IA Intelligente</h3>
+                        <p class="poster-text">Cliquez pour découvrir nos composants adaptatifs intelligents</p>
                     </div>
                 </div>
             </section>
@@ -1837,33 +1999,33 @@
             <section class="section animate-slide-up">
                 <div class="section-header">
                     <div>
-                        <h2 class="section-title">Key Features</h2>
-                        <p class="section-description">Essential characteristics that define our design approach and technical excellence</p>
+                        <h2 class="section-title">Fonctionnalités Clés</h2>
+                        <p class="section-description">Caractéristiques essentielles qui définissent notre approche de design et notre excellence technique</p>
                     </div>
                 </div>
-
+                
                 <div class="features-container">
                     <div class="feature-card">
                         <div class="feature-number">01</div>
-                        <h3 class="feature-title">Modern Aesthetics</h3>
-                        <p class="feature-text">Clean, minimal design with careful attention to typography, spacing, and visual hierarchy.</p>
+                        <h3 class="feature-title">Esthétique Moderne</h3>
+                        <p class="feature-text">Design épuré et minimal avec une attention particulière à la typographie, l'espacement et la hiérarchie visuelle.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-number">02</div>
-                        <h3 class="feature-title">Seamless Interactions</h3>
-                        <p class="feature-text">Smooth animations and intuitive swipe gestures for enhanced user experience.</p>
+                        <h3 class="feature-title">Interactions Transparentes</h3>
+                        <p class="feature-text">Animations fluides et gestes de glissement intuitifs pour une expérience utilisateur améliorée.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-number">03</div>
-                        <h3 class="feature-title">Full Responsiveness</h3>
-                        <p class="feature-text">Perfectly adapted layouts for all screen sizes from mobile to desktop displays.</p>
+                        <h3 class="feature-title">Responsivité Complète</h3>
+                        <p class="feature-text">Mises en page parfaitement adaptées à toutes les tailles d'écran, du mobile au bureau.</p>
                     </div>
                 </div>
             </section>
-
+            
             <footer>
-                <p>Modern Interactive UI &copy; <span class="footer-highlight">2023</span> | Professional Black & White Design</p>
-                <p>Fully responsive with smooth swipe interactions | Clean, minimal aesthetic</p>
+                <p>Modern Interactive UI &copy; <span class="footer-highlight">2023</span> | Design Professionnel Noir & Blanc</p>
+                <p>Entièrement réactif avec des interactions fluides par glissement | Esthétique épurée et minimaliste</p>
             </footer>
         </div>
     </div>
@@ -1875,12 +2037,12 @@
                 <div class="search-logo">
                     <h1 class="search-logo-text">EduWell Archive</h1>
                 </div>
-                <p class="search-tagline">The intelligent educational resources platform for Baccalaureate</p>
+                <p class="search-tagline">La plateforme intelligente de ressources éducatives pour le Baccalauréat</p>
             </header>
 
             <div class="search-box-container">
                 <div class="search-input-container">
-                    <input type="text" class="search-input-box" id="searchInput" placeholder="Search for courses, exercises, revision sheets...">
+                    <input type="text" class="search-input-box" id="searchInput" placeholder="Rechercher des cours, exercices, fiches de révision...">
                     <div class="search-actions">
                         <button class="search-clear hidden" id="searchClear">
                             <i class="fas fa-times"></i>
@@ -1893,44 +2055,44 @@
             </div>
 
             <div class="subjects-filter" id="subjectsFilter">
-                <button class="subject-btn active" data-subject="all">All Subjects</button>
-                <button class="subject-btn" data-subject="math">Mathematics</button>
-                <button class="subject-btn" data-subject="physics">Physics</button>
-                <button class="subject-btn" data-subject="chemistry">Chemistry</button>
-                <button class="subject-btn" data-subject="biology">Biology</button>
-                <button class="subject-btn" data-subject="philosophy">Philosophy</button>
-                <button class="subject-btn" data-subject="french">French</button>
-                <button class="subject-btn" data-subject="english">English</button>
+                <button class="subject-btn active" data-subject="all">Toutes les Matières</button>
+                <button class="subject-btn" data-subject="math">Mathématiques</button>
+                <button class="subject-btn" data-subject="physics">Physique</button>
+                <button class="subject-btn" data-subject="chemistry">Chimie</button>
+                <button class="subject-btn" data-subject="biology">Biologie</button>
+                <button class="subject-btn" data-subject="philosophy">Philosophie</button>
+                <button class="subject-btn" data-subject="french">Français</button>
+                <button class="subject-btn" data-subject="english">Anglais</button>
             </div>
 
             <div class="popular-searches">
-                <div class="popular-title"><i class="fas fa-chart-line"></i> Popular Searches</div>
+                <div class="popular-title"><i class="fas fa-chart-line"></i> Recherches Populaires</div>
                 <div class="popular-list">
-                    <div class="popular-item"><i class="fas fa-square-root-alt"></i> Complex numbers</div>
-                    <div class="popular-item"><i class="fas fa-flask"></i> Acids and bases</div>
-                    <div class="popular-item"><i class="fas fa-calculator"></i> Integral calculus</div>
-                    <div class="popular-item"><i class="fas fa-dna"></i> Human genetics</div>
-                    <div class="popular-item"><i class="fas fa-atom"></i> Atomic nucleus</div>
-                    <div class="popular-item"><i class="fas fa-brain"></i> Neurophysiology</div>
-                    <div class="popular-item"><i class="fas fa-language"></i> English grammar</div>
-                    <div class="popular-item"><i class="fas fa-landmark"></i> Summary of Freedom</div>
+                    <div class="popular-item"><i class="fas fa-square-root-alt"></i> Nombres complexes</div>
+                    <div class="popular-item"><i class="fas fa-flask"></i> Acides et bases</div>
+                    <div class="popular-item"><i class="fas fa-calculator"></i> Calcul intégral</div>
+                    <div class="popular-item"><i class="fas fa-dna"></i> Génétique humaine</div>
+                    <div class="popular-item"><i class="fas fa-atom"></i> Noyau atomique</div>
+                    <div class="popular-item"><i class="fas fa-brain"></i> Neurophysiologie</div>
+                    <div class="popular-item"><i class="fas fa-language"></i> Grammaire anglaise</div>
+                    <div class="popular-item"><i class="fas fa-landmark"></i> Résumé de la Liberté</div>
                 </div>
             </div>
 
             <div class="featured-resources">
-                <h2 class="featured-title"><i class="fas fa-star"></i> Featured Resources</h2>
+                <h2 class="featured-title"><i class="fas fa-star"></i> Ressources en Vedette</h2>
                 <div class="featured-grid">
                     <div class="search-featured-card" data-search="Complex numbers">
                         <div class="search-card-image">
                             <i class="fas fa-square-root-alt"></i>
-                            <span class="search-card-badge">Mathematics</span>
+                            <span class="search-card-badge">Mathématiques</span>
                         </div>
                         <div class="search-card-content">
-                            <h3 class="search-card-title">Complex Numbers</h3>
-                            <p class="search-card-description">Complete course with corrected exercises on complex numbers for the scientific Baccalaureate.</p>
+                            <h3 class="search-card-title">Nombres Complexes</h3>
+                            <p class="search-card-description">Cours complet avec exercices corrigés sur les nombres complexes pour le Baccalauréat scientifique.</p>
                             <div class="search-card-meta">
                                 <span><i class="fas fa-user"></i> Prof. Dupont</span>
-                                <span><i class="fas fa-calendar-alt"></i> 03/15/2025</span>
+                                <span><i class="fas fa-calendar-alt"></i> 15/03/2025</span>
                             </div>
                         </div>
                     </div>
@@ -1938,14 +2100,14 @@
                     <div class="search-featured-card" data-search="Acids and bases">
                         <div class="search-card-image">
                             <i class="fas fa-flask"></i>
-                            <span class="search-card-badge">Chemistry</span>
+                            <span class="search-card-badge">Chimie</span>
                         </div>
                         <div class="search-card-content">
-                            <h3 class="search-card-title">Acids and Bases</h3>
-                            <p class="search-card-description">Complete revision sheet on acids and bases with typical Bac exercises.</p>
+                            <h3 class="search-card-title">Acides et Bases</h3>
+                            <p class="search-card-description">Fiche de révision complète sur les acides et bases avec exercices types du Bac.</p>
                             <div class="search-card-meta">
                                 <span><i class="fas fa-user"></i> Prof. Martin</span>
-                                <span><i class="fas fa-calendar-alt"></i> 02/22/2025</span>
+                                <span><i class="fas fa-calendar-alt"></i> 22/02/2025</span>
                             </div>
                         </div>
                     </div>
@@ -1953,20 +2115,20 @@
                     <div class="search-featured-card" data-search="Human genetics">
                         <div class="search-card-image">
                             <i class="fas fa-dna"></i>
-                            <span class="search-card-badge">Biology</span>
+                            <span class="search-card-badge">Biologie</span>
                         </div>
                         <div class="search-card-content">
-                            <h3 class="search-card-title">Human Genetics</h3>
-                            <p class="search-card-description">Video course and interactive exercises on human genetics and hereditary diseases.</p>
+                            <h3 class="search-card-title">Génétique Humaine</h3>
+                            <p class="search-card-description">Cours vidéo et exercices interactifs sur la génétique humaine et les maladies héréditaires.</p>
                             <div class="search-card-meta">
                                 <span><i class="fas fa-user"></i> Prof. Leclerc</span>
-                                <span><i class="fas fa-calendar-alt"></i> 04/10/2025</span>
+                                <span><i class="fas fa-calendar-alt"></i> 10/04/2025</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+            
             <footer>
                 <p>Eduwell Quantum Group &copy; <span class="footer-highlight">2023</span></p>
             </footer>
@@ -1975,6 +2137,9 @@
 
     <!-- SpeakWell Section -->
     <div id="speakwell" class="content-section">
+
+         <header class="animate-slide-up">
+               </header>
         <div class="speakwell-container">
             <!-- Page 1: Opening Section -->
             <div class="speakwell-page active" id="speakwell-home">
@@ -2273,34 +2438,37 @@
     <!-- About Content -->
     <div id="about" class="content-section">
         <div class="about-content">
-            <h2>About</h2>
-            <p>Hello! Welcome to Modern Interactive UI.</p>
-            <p style="margin-top: var(--spacing-md);">This is a professional, responsive website showcasing modern design principles with smooth interactions and clean aesthetics.</p>
+            <h2>À Propos</h2>
+            <p>Bonjour ! Bienvenue sur Modern Interactive UI.</p>
+            <p style="margin-top: var(--spacing-md);">Ceci est un site web professionnel et réactif mettant en avant les principes de design modernes avec des interactions fluides et une esthétique épurée.</p>
         </div>
     </div>
 
-    <!-- Modals -->
+    <!-- NEW APP CARD MODALS - Google Play Store Style -->
     <div class="modal-overlay" id="analytics-modal">
         <div class="modal">
             <div class="modal-header">
                 <h2 class="modal-title">
-                    <i class="fas fa-chart-line modal-icon"></i>
-                    Analytics Pro
+                    <i class="fas fa-dna modal-icon"></i>
+                    SVT App
                 </h2>
                 <button class="close-btn" data-modal="analytics-modal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="modal-content">
-                <p class="app-description">
+            <div class="modal-content app-modal-content">
+                <div class="app-modal-icon-large">
+                   <i class="fas fa-dna modal-icon"></i>
+                </div>
+                <h3 class="app-modal-title">SVT App</h3>
+                <p class="app-modal-description">
                     Analytics Pro transforms raw data into actionable insights with powerful visualization tools.
                 </p>
-                <div class="get-app-section">
-                    <a href="https://example.com/analytics-pro" class="pdf-link" target="_blank" rel="noopener">
-                        <i class="fas fa-download"></i>
-                        Get Analytics Pro
-                    </a>
-                </div>
+               
+                <button class="app-modal-try-btn" onclick="alert('Analytics Pro launching soon!')">
+                    <i class="fas fa-play-circle"></i>
+                    <span>Try Now</span>
+                </button>
             </div>
         </div>
     </div>
@@ -2309,23 +2477,26 @@
         <div class="modal">
             <div class="modal-header">
                 <h2 class="modal-title">
-                    <i class="fas fa-lock modal-icon"></i>
-                    Secure Vault
+                    <i class="fas fa-desktop modal-icon"></i>
+                    STI App
                 </h2>
                 <button class="close-btn" data-modal="security-modal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="modal-content">
-                <p class="app-description">
+            <div class="modal-content app-modal-content">
+                <div class="app-modal-icon-large">
+                    <i class="fas fa-desktop"></i>
+                </div>
+                <h3 class="app-modal-title">STI App</h3>
+                <p class="app-modal-description">
                     Secure Vault provides military-grade encryption for your sensitive data.
                 </p>
-                <div class="get-app-section">
-                    <a href="https://example.com/secure-vault" class="pdf-link" target="_blank" rel="noopener">
-                        <i class="fas fa-download"></i>
-                        Get Secure Vault
-                    </a>
-                </div>
+                
+                <button class="app-modal-try-btn" onclick="alert('Secure Vault launching soon!')">
+                    <i class="fas fa-play-circle"></i>
+                    <span>Try Now</span>
+                </button>
             </div>
         </div>
     </div>
@@ -2334,26 +2505,32 @@
         <div class="modal">
             <div class="modal-header">
                 <h2 class="modal-title">
-                    <i class="fas fa-cloud-upload-alt modal-icon"></i>
-                    Cloud Sync
+                    <i class="fas fa-infinity modal-icon"></i>
+                    infinity
                 </h2>
                 <button class="close-btn" data-modal="cloud-modal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="modal-content">
-                <p class="app-description">
+            <div class="modal-content app-modal-content">
+                <div class="app-modal-icon-large">
+                    <i class="fas fa-infinity"></i>
+                </div>
+                <h3 class="app-modal-title">infinity</h3>
+                <p class="app-modal-description">
                     Cloud Sync seamlessly synchronizes your files across all devices in real-time.
                 </p>
-                <div class="get-app-section">
-                    <a href="https://example.com/cloud-sync" class="pdf-link" target="_blank" rel="noopener">
-                        <i class="fas fa-download"></i>
-                        Get Cloud Sync
-                    </a>
-                </div>
+                
+                <button class="app-modal-try-btn" onclick="alert('Cloud Sync launching soon!')">
+                    <i class="fas fa-play-circle"></i>
+                    <span>Try Now</span>
+                </button>
             </div>
         </div>
     </div>
+
+   
+   
 
     <div class="modal-overlay" id="3d-modal">
         <div class="modal">
@@ -2450,20 +2627,20 @@
             // ============================================
             const homeHeader = document.getElementById('homeHeader');
             let lastScrollY = window.scrollY;
-
+            
             function handleHeaderScroll() {
                 const currentScrollY = window.scrollY;
-
+                
                 // Show header at the top, hide when scrolling down
                 if (currentScrollY > 50) {
                     homeHeader.classList.add('hidden');
                 } else {
                     homeHeader.classList.remove('hidden');
                 }
-
+                
                 lastScrollY = currentScrollY;
             }
-
+            
             // Only add scroll listener when on home section
             function setupHeaderForSection(sectionId) {
                 if (sectionId === 'home') {
@@ -2475,63 +2652,63 @@
                     homeHeader.classList.add('hidden');
                 }
             }
-
+            
             // ============================================
             // BOTTOM NAVIGATION
             // ============================================
             const navItems = document.querySelectorAll('.nav-item');
             const contentSections = document.querySelectorAll('.content-section');
-
+            
             navItems.forEach(item => {
                 item.addEventListener('click', function() {
                     const target = this.getAttribute('data-target');
-
+                    
                     // Update active navigation item
                     navItems.forEach(nav => nav.classList.remove('active'));
                     this.classList.add('active');
-
+                    
                     // Show corresponding content section
                     contentSections.forEach(section => {
                         section.classList.remove('active');
                         if (section.id === target) {
                             section.classList.add('active');
-
+                            
                             // Reset SpeakWell to home page when navigating to it
                             if (section.id === 'speakwell') {
                                 resetSpeakwellToHome();
                             }
                         }
                     });
-
+                    
                     // Set up header behavior for home section
                     setupHeaderForSection(target);
-
+                    
                     // Scroll to top
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
             });
-
+            
             // Initial header setup
             setupHeaderForSection('home');
-
+            
             // ============================================
-            // APP CARD MODALS
+            // APP CARD MODALS - UPDATED FOR NEW DESIGN
             // ============================================
             const appCards = document.querySelectorAll('.app-card');
             const appModals = {
                 'analytics': 'analytics-modal',
                 'security': 'security-modal',
                 'cloud': 'cloud-modal',
-                'design': 'analytics-modal'
+                'design': 'design-modal'  // Added design modal
             };
-
+            
             appCards.forEach(card => {
                 card.addEventListener('click', function() {
                     const appId = this.dataset.app;
                     openModal(appModals[appId]);
                 });
             });
-
+            
             // ============================================
             // POSTER CARD MODALS
             // ============================================
@@ -2541,38 +2718,38 @@
                 'wave': 'wave-modal',
                 'ai': 'ai-modal'
             };
-
+            
             posterCards.forEach(card => {
                 card.addEventListener('click', function() {
                     const posterId = this.dataset.poster;
                     openModal(posterModals[posterId]);
                 });
             });
-
+            
             // ============================================
             // MODAL FUNCTIONALITY
             // ============================================
             let activeModal = null;
-
+            
             function openModal(modalId) {
                 const modal = document.getElementById(modalId);
                 if (!modal) return;
-
+                
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
                 activeModal = modal;
-
+                
                 // Focus trap
                 const closeBtn = modal.querySelector('.close-btn');
                 if (closeBtn) closeBtn.focus();
             }
-
+            
             function closeModal(modal) {
                 modal.classList.remove('active');
                 document.body.style.overflow = '';
                 activeModal = null;
             }
-
+            
             // Close modal buttons
             document.querySelectorAll('.close-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -2580,7 +2757,7 @@
                     closeModal(modal);
                 });
             });
-
+            
             // Close modal when clicking outside
             document.querySelectorAll('.modal-overlay').forEach(overlay => {
                 overlay.addEventListener('click', function(e) {
@@ -2589,18 +2766,18 @@
                     }
                 });
             });
-
+            
             // Close modal with Escape key
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && activeModal) {
                     closeModal(activeModal);
                 }
             });
-
+            
             // ============================================
             // SPEAKWELL SECTION - UPDATED WITH EXTERNAL LINKS
             // ============================================
-
+            
             // SpeakWell navigation
             const beginJourneyBtn = document.getElementById('beginJourneyBtn');
             if (beginJourneyBtn) {
@@ -2608,7 +2785,7 @@
                     showSpeakwellPage('focus');
                 });
             }
-
+            
             // Back buttons
             document.querySelectorAll('.speakwell-back-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -2616,7 +2793,7 @@
                     showSpeakwellPage(targetPage);
                 });
             });
-
+            
             // Focus cards
             document.querySelectorAll('.focus-card').forEach(card => {
                 card.addEventListener('click', function() {
@@ -2624,56 +2801,56 @@
                     showSpeakwellPage(target);
                 });
             });
-
+            
             // Tense cards - all go to difficulty page
             document.querySelectorAll('.tense-card').forEach(card => {
                 card.addEventListener('click', function() {
                     showSpeakwellPage('difficulty');
                 });
             });
-
+            
             // IMPORTANT: Difficulty cards and Grammar cards now have external links
             // and will open in new tabs when clicked. No need for click handlers.
-
+            
             function showSpeakwellPage(pageId) {
                 // Hide all SpeakWell pages
                 const allPages = document.querySelectorAll('.speakwell-page');
                 allPages.forEach(page => page.classList.remove('active'));
-
+                
                 // Show target page
                 const targetPage = document.getElementById(`speakwell-${pageId}`);
                 if (targetPage) {
                     targetPage.classList.add('active');
                 }
-
+                
                 // Scroll to top
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
-
+            
             function resetSpeakwellToHome() {
                 const allPages = document.querySelectorAll('.speakwell-page');
                 allPages.forEach(page => page.classList.remove('active'));
-
+                
                 const homePage = document.getElementById('speakwell-home');
                 if (homePage) {
                     homePage.classList.add('active');
                 }
             }
-
+            
             // ============================================
             // SEARCH SECTION
             // ============================================
-
+            
             const searchInput = document.getElementById('searchInput');
             const searchClear = document.getElementById('searchClear');
             const searchResults = document.getElementById('searchResults');
             const subjectBtns = document.querySelectorAll('.subject-btn');
             const popularItems = document.querySelectorAll('.popular-item');
             const featuredCards = document.querySelectorAll('.search-featured-card');
-
+            
             let currentSubjectFilter = 'all';
             let currentSearchQuery = '';
-
+            
             // Search input
             if (searchInput) {
                 searchInput.addEventListener('input', function() {
@@ -2684,14 +2861,14 @@
                         hideResults();
                     }
                 });
-
+                
                 searchInput.addEventListener('keydown', function(e) {
                     if (e.key === 'Enter') {
                         performSearch(this.value);
                     }
                 });
             }
-
+            
             // Search clear
             if (searchClear) {
                 searchClear.addEventListener('click', function() {
@@ -2701,20 +2878,20 @@
                     hideResults();
                 });
             }
-
+            
             // Subject filter
             subjectBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
                     subjectBtns.forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
                     currentSubjectFilter = this.dataset.subject;
-
+                    
                     if (currentSearchQuery.length > 0) {
                         performSearch(currentSearchQuery);
                     }
                 });
             });
-
+            
             // Popular searches
             popularItems.forEach(item => {
                 item.addEventListener('click', function() {
@@ -2724,7 +2901,7 @@
                     performSearch(text);
                 });
             });
-
+            
             // Featured cards
             featuredCards.forEach(card => {
                 card.addEventListener('click', function() {
@@ -2734,47 +2911,47 @@
                     performSearch(searchText);
                 });
             });
-
+            
             function performSearch(query) {
                 currentSearchQuery = query;
-
+                
                 if (query.length === 0) {
                     hideResults();
                     return;
                 }
-
+                
                 // Simulate search results
                 const results = educationalResources.filter(resource => {
                     if (currentSubjectFilter !== 'all' && resource.subject !== currentSubjectFilter) {
                         return false;
                     }
-
+                    
                     const searchLower = query.toLowerCase();
                     return resource.title.toLowerCase().includes(searchLower) ||
                            resource.description.toLowerCase().includes(searchLower) ||
                            resource.keywords.some(kw => kw.toLowerCase().includes(searchLower));
                 });
-
+                
                 displayResults(results, query);
             }
-
+            
             function displayResults(results, query) {
                 if (!searchResults) return;
-
+                
                 searchResults.innerHTML = '';
-
+                
                 if (results.length === 0) {
                     searchResults.innerHTML = `
                         <div class="no-results">
                             <i class="fas fa-search"></i>
-                            <div class="no-results-title">No results found for "${query}"</div>
-                            <div class="no-results-text">Try with different keywords</div>
+                            <div class="no-results-title">Aucun résultat trouvé pour "${query}"</div>
+                            <div class="no-results-text">Essayez avec des mots-clés différents</div>
                         </div>
                     `;
                     showResults();
                     return;
                 }
-
+                
                 results.forEach(result => {
                     const resultItem = document.createElement('div');
                     resultItem.className = 'search-result-item';
@@ -2793,26 +2970,26 @@
                             </div>
                         </div>
                     `;
-
+                    
                     resultItem.addEventListener('click', () => openResourceModal(result));
                     searchResults.appendChild(resultItem);
                 });
-
+                
                 showResults();
             }
-
+            
             function showResults() {
                 if (searchResults) {
                     searchResults.classList.add('visible');
                 }
             }
-
+            
             function hideResults() {
                 if (searchResults) {
                     searchResults.classList.remove('visible');
                 }
             }
-
+            
             function getTypeIcon(type) {
                 const icons = {
                     'course': '<i class="fas fa-graduation-cap"></i>',
@@ -2822,30 +2999,30 @@
                 };
                 return icons[type] || '<i class="fas fa-file"></i>';
             }
-
+            
             function getTypeBadge(type) {
                 const badges = {
-                    'course': 'Course',
-                    'summary': 'Sheet',
-                    'video': 'Video',
-                    'exercise': 'Exercise'
+                    'course': 'Cours',
+                    'summary': 'Fiche',
+                    'video': 'Vidéo',
+                    'exercise': 'Exercice'
                 };
-                return badges[type] || 'Resource';
+                return badges[type] || 'Ressource';
             }
-
+            
             function capitalizeFirstLetter(string) {
                 return string.charAt(0).toUpperCase() + string.slice(1);
             }
-
+            
             // Resource modal
             function openResourceModal(resource) {
                 const modal = document.getElementById('resource-modal');
                 const modalTitle = modal.querySelector('.modal-title');
                 const resourceContainer = document.getElementById('resourceContainer');
-
+                
                 modalTitle.textContent = resource.title;
                 resourceContainer.innerHTML = '';
-
+                
                 if (resource.pdfs) {
                     resource.pdfs.forEach(item => {
                         const resourceBox = document.createElement('div');
@@ -2857,19 +3034,19 @@
                                 </div>
                                 <div class="pdf-name">${item.title}</div>
                                 <a href="${item.url}" target="_blank" class="pdf-link" rel="noopener">
-                                    <i class="fas fa-external-link-alt"></i> Open PDF
+                                    <i class="fas fa-external-link-alt"></i> Ouvrir le PDF
                                 </a>
                             </div>
                         `;
                         resourceContainer.appendChild(resourceBox);
                     });
                 }
-
+                
                 openModal('resource-modal');
             }
-
-
-
+            
+           
+            
             console.log('Modern Interactive Design initialized successfully.');
         });
     </script>

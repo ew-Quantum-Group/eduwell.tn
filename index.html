@@ -6,11 +6,175 @@
     <title>Modern Interactive UI | Professional Design</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="./assets/css/styleapp.css">
+    <style>
+        /* Gradient Header Styles */
+        .gradient-header {
+            position: relative;
+            overflow: hidden;
+            margin-top: 0;
+            width: 100%;
+            display: none; /* Hidden by default */
+        }
+        
+        .gradient-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 128px;
+            background: linear-gradient(
+                90deg,
+                rgba(75, 155, 243, 0.15) 0%,
+                rgba(199, 161, 214, 0.15) 50%,
+                rgba(255, 156, 85, 0.15) 100%
+            );
+            border-bottom-left-radius: 50% 50%;
+            border-bottom-right-radius: 50% 50%;
+            animation: gradientWave 20s ease-in-out infinite;
+            background-size: 300% 100%;
+            will-change: background-position;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+        }
+        
+        .gradient-content {
+            position: relative;
+            z-index: 1;
+            padding: 64px 24px 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .gradient-text-container {
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .store-title {
+            font-size: 3rem;
+            font-weight: bold;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            background: linear-gradient(to right, #3b82f6, #f59e0b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 24px;
+            transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                       -webkit-background-clip 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                       background-clip 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: color, background-clip;
+        }
+        
+        .store-title.text-inverted {
+            color: #000000 !important;
+            background: none !important;
+            -webkit-background-clip: initial !important;
+            background-clip: initial !important;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.1);
+        }
+        
+        .store-title.text-light {
+            color: #696969 !important;
+            background: none !important;
+            -webkit-background-clip: initial !important;
+            background-clip: initial !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tagline {
+            font-size: 2rem;
+            font-weight: 500;
+            color: #494949;
+            line-height: 1.3;
+            margin-bottom: 32px;
+        }
+        
+        
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+        }
+        
+        .action-button {
+            display: flex;
+            align-items: center;
+            color: #2563eb;
+            font-weight: 500;
+            font-size: 1.125rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .action-button:hover {
+            color: #1d4ed8;
+            transform: translateX(5px);
+        }
+        
+        .arrow-icon {
+            width: 20px;
+            height: 20px;
+            margin-left: 8px;
+            stroke-width: 2;
+        }
+        
+        @keyframes gradientWave {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .gradient-bg {
+                animation: none;
+            }
+            
+            .store-title {
+                transition: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .store-title {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.1rem;
+            }
+            
+            .gradient-content {
+                padding: 48px 16px 16px;
+            }
+            
+            .gradient-bg {
+                animation-duration: 25s;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Home Section Header (Only in Home) -->
-    <div class="home-header" id="homeHeader">
-        <a href="#" class="home-logo">ew</a>
+    <!-- Home Section Header (Only in Home) - Fixed at top -->
+   
+
+    <!-- Gradient Header - Placed directly under main header, only for Home section -->
+    <div class="gradient-header" id="gradientHeader">
+        <div class="gradient-bg"></div>
+        <div class="gradient-content">
+            <div class="gradient-text-container">
+                <h1 class="store-title" id="store-title">EduWell</h1>
+                <h2 class="tagline">Give something special this holiday.</h2>
+               
+            </div>
+        </div>
     </div>
 
     <!-- Bottom Navigation -->
@@ -36,15 +200,13 @@
     <!-- Home Content -->
     <div id="home" class="content-section active animate-on-load">
         <div class="container">
-            <header class="animate-slide-up">
-               </header>
+          
 
             <!-- Section 1: Horizontal Swipe Cards -->
             <section class="section animate-slide-up">
                 <div class="section-header">
                     <div>
                         <h2 class="section-title">Collection d'Applications</h2>
-                       
                     </div>
                     <div class="swipe-hint">
                         <i class="fas fa-arrow-right"></i>
@@ -72,7 +234,6 @@
                             </div>
                             <h3 class="app-title">infinity</h3>
                         </div>
-                        
                     </div>
                 </div>
             </section>
@@ -82,7 +243,6 @@
                 <div class="section-header">
                     <div>
                         <h2 class="section-title">À la découverte de notre app</h2>
-                        
                     </div>
                 </div>
                 
@@ -102,9 +262,8 @@ Retrouve des cours, exercices, quiz et de nombreuses flashcards pour faciliter t
                             </div>
                             <h3 class="stack-card-title">Bac INO – STI App</h3>
                             <p class="stack-card-text">Une application dédiée aux élèves du Bac INO/STI.
-Elle t’accompagne pour toujours revoir tes cours passés dans le domaine des sciences et technologies, et t’aide à rester à jour facilement.</p>
+Elle t'accompagne pour toujours revoir tes cours passés dans le domaine des sciences et technologies, et t'aide à rester à jour facilement.</p>
                         </div>
-                        
                     </div>
                 </div>
             </section>
@@ -114,7 +273,7 @@ Elle t’accompagne pour toujours revoir tes cours passés dans le domaine des s
                 <div class="section-header">
                     <div>
                         <h2 class="section-title">Partenaires officiels</h2>
-                          </div>
+                    </div>
                 </div>
                 
                 <div class="poster-container">
@@ -132,7 +291,7 @@ Elle t’accompagne pour toujours revoir tes cours passés dans le domaine des s
                             <i class="fas fa-wave-square poster-icon"></i>
                         </div>
                         <h3 class="poster-title">CircuitLab</h3>
-                        <p class="poster-text">Clique pour découvrir les fonctionnalités de cette application et voir tout ce qu’elle peut faire pour toi</p>
+                        <p class="poster-text">Clique pour découvrir les fonctionnalités de cette application et voir tout ce qu'elle peut faire pour toi</p>
                     </div>
                     <div class="poster-card" data-poster="ai">
                         <div class="poster-icon-container">
@@ -150,19 +309,19 @@ Elle t’accompagne pour toujours revoir tes cours passés dans le domaine des s
                 <div class="section-header">
                     <div>
                         <h2 class="section-title">Réussis ton Bac autrement</h2>
-                         </div>
+                    </div>
                 </div>
                 
                 <div class="features-container">
                     <div class="feature-card">
                         <div class="feature-number">01</div>
                         <h3 class="feature-title">Apprentissage simplifié et efficace</h3>
-                        <p class="feature-text">Une interface intuitive qui centralise toutes les fonctionnalités essentielles pour réviser le Bac sans perdre de temps..</p>
+                        <p class="feature-text">Une interface intuitive qui centralise toutes les fonctionnalités essentielles pour réviser le Bac sans perdre de temps.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-number">02</div>
                         <h3 class="feature-title">IA personnalisée</h3>
-                        <p class="feature-text">L’application suit ton progrès, identifie tes points faibles et te propose des exercices personnalisés pour toujours t’améliorer.</p>
+                        <p class="feature-text">L'application suit ton progrès, identifie tes points faibles et te propose des exercices personnalisés pour toujours t'améliorer.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-number">03</div>
@@ -174,8 +333,7 @@ Elle t’accompagne pour toujours revoir tes cours passés dans le domaine des s
             
             <footer>
                 <p>Site développé par <span class="footer-highlight">Qentum Group</span> | Design moderne et interactif</p>
-<p>Entièrement réactif avec des interactions fluides | Esthétique épurée et minimaliste</p>
-
+                <p>Entièrement réactif avec des interactions fluides | Esthétique épurée et minimaliste</p>
             </footer>
         </div>
     </div>
@@ -222,10 +380,8 @@ Elle t’accompagne pour toujours revoir tes cours passés dans le domaine des s
                     <div class="popular-item"><i class="fas fa-flask"></i> Acides et bases</div>
                     <div class="popular-item"><i class="fas fa-calculator"></i> Calcul intégral</div>
                     <div class="popular-item"><i class="fas fa-dna"></i> Génétique humaine</div>
-                   
                 </div>
             </div>
-
             
             <footer>
                 <p>Eduwell Quantum Group &copy; <span class="footer-highlight">2025</span></p>
@@ -235,17 +391,14 @@ Elle t’accompagne pour toujours revoir tes cours passés dans le domaine des s
 
     <!-- SpeakWell Section -->
     <div id="speakwell" class="content-section">
-
-        
         <div class="speakwell-container">
             <!-- Page 1: Opening Section -->
             <div class="speakwell-page active" id="speakwell-home">
-
                 <header class="speakwell-header">
-                     <header class="animate-slide-up">
-               </header>
-                <header class="animate-slide-up">
-               </header>
+                    <header class="animate-slide-up">
+                    </header>
+                    <header class="animate-slide-up">
+                    </header>
                     <div class="speakwell-logo">
                         <i class="fas fa-language speakwell-logo-icon"></i>
                         <h1 class="speakwell-logo-text">SpeakWell</h1>
@@ -337,7 +490,7 @@ Elle t’accompagne pour toujours revoir tes cours passés dans le domaine des s
                 </div>
             </div>
 
-            <!-- Page 4: Difficulty Levels (Now at the end with external links) -->
+            <!-- Page 4: Difficulty Levels -->
             <div class="speakwell-page" id="speakwell-difficulty">
                 <div class="speakwell-nav">
                     <button class="speakwell-back-btn" data-back-to="tenses">
@@ -353,7 +506,6 @@ Elle t’accompagne pour toujours revoir tes cours passés dans le domaine des s
 
                 <div class="content-page">
                     <div class="difficulty-cards">
-                        <!-- Easy Difficulty with External Link -->
                         <a href="https://learnenglish.britishcouncil.org/grammar/english-grammar-reference/past-simple" target="_blank" class="difficulty-card easy">
                             <div class="difficulty-card-icon">
                                 <i class="fas fa-seedling"></i>
@@ -363,7 +515,6 @@ Elle t’accompagne pour toujours revoir tes cours passés dans le domaine des s
                             <div class="difficulty-card-level">Beginner Friendly</div>
                         </a>
 
-                        <!-- Medium Difficulty with External Link -->
                         <a href="https://learnenglish.britishcouncil.org/grammar/english-grammar-reference/past-continuous" target="_blank" class="difficulty-card medium">
                             <div class="difficulty-card-icon">
                                 <i class="fas fa-mountain"></i>
@@ -373,7 +524,6 @@ Elle t’accompagne pour toujours revoir tes cours passés dans le domaine des s
                             <div class="difficulty-card-level">Intermediate Level</div>
                         </a>
 
-                        <!-- Hard Difficulty with External Link -->
                         <a href="https://learnenglish.britishcouncil.org/grammar/english-grammar-reference/past-perfect" target="_blank" class="difficulty-card hard">
                             <div class="difficulty-card-icon">
                                 <i class="fas fa-fire"></i>
@@ -386,7 +536,7 @@ Elle t’accompagne pour toujours revoir tes cours passés dans le domaine des s
                 </div>
             </div>
 
-            <!-- Page 5: Grammar Precision with External Links -->
+            <!-- Page 5: Grammar Precision -->
             <div class="speakwell-page" id="speakwell-grammar">
                 <div class="speakwell-nav">
                     <button class="speakwell-back-btn" data-back-to="focus">
@@ -402,7 +552,6 @@ Elle t’accompagne pour toujours revoir tes cours passés dans le domaine des s
 
                 <div class="content-page">
                     <div class="grammar-cards">
-                        <!-- Grammar Lesson 1 with External Link -->
                         <a href="https://learnenglish.britishcouncil.org/grammar/english-grammar-reference" target="_blank" class="grammar-card">
                             <div class="grammar-card-header">
                                 <div class="grammar-card-icon">
@@ -428,7 +577,6 @@ Elle t’accompagne pour toujours revoir tes cours passés dans le domaine des s
                             </div>
                         </a>
 
-                        <!-- Grammar Lesson 2 with External Link -->
                         <a href="https://learnenglish.britishcouncil.org/grammar/english-grammar-reference/sentence-structure" target="_blank" class="grammar-card">
                             <div class="grammar-card-header">
                                 <div class="grammar-card-icon">
@@ -454,7 +602,6 @@ Elle t’accompagne pour toujours revoir tes cours passés dans le domaine des s
                             </div>
                         </a>
 
-                        <!-- Grammar Lesson 3 with External Link -->
                         <a href="https://learnenglish.britishcouncil.org/grammar/english-grammar-reference/articles" target="_blank" class="grammar-card">
                             <div class="grammar-card-header">
                                 <div class="grammar-card-icon">
@@ -480,7 +627,6 @@ Elle t’accompagne pour toujours revoir tes cours passés dans le domaine des s
                             </div>
                         </a>
 
-                        <!-- Grammar Lesson 4 with External Link -->
                         <a href="https://learnenglish.britishcouncil.org/grammar/english-grammar-reference/modal-verbs" target="_blank" class="grammar-card">
                             <div class="grammar-card-header">
                                 <div class="grammar-card-icon">
@@ -506,7 +652,6 @@ Elle t’accompagne pour toujours revoir tes cours passés dans le domaine des s
                             </div>
                         </a>
 
-                        <!-- Grammar Lesson 5 with External Link -->
                         <a href="https://learnenglish.britishcouncil.org/grammar/english-grammar-reference/passive-voice" target="_blank" class="grammar-card">
                             <div class="grammar-card-header">
                                 <div class="grammar-card-icon">
@@ -620,19 +765,16 @@ Testez vos connaissances sur les points clés du programme.
                 </div>
                 <h3 class="app-modal-title">infinity</h3>
                 <p class="app-modal-description">
-                 Appli d’IA qui corrige tes exercices de maths et t’explique la démarche pour bien résoudre.
+                 Appli d'IA qui corrige tes exercices de maths et t'explique la démarche pour bien résoudre.
                 </p>
                 
                 <button class="app-modal-try-btn"  onclick="window.location.href = 'error.html'">
                     <i class="fas fa-play-circle"></i>
-                    <span>Corriger avec l’IA</span>
+                    <span>Corriger avec l'IA</span>
                 </button>
             </div>
         </div>
     </div>
-
-   
-   
 
     <div class="modal-overlay" id="3d-modal">
         <div class="modal">
@@ -673,7 +815,7 @@ Testez vos connaissances sur les points clés du programme.
             </div>
             <div class="modal-content">
                 <p class="poster-description">
-                    Clique pour découvrir les fonctionnalités de cette application et voir tout ce qu’elle peut faire pour toi
+                    Clique pour découvrir les fonctionnalités de cette application et voir tout ce qu'elle peut faire pour toi
                 </p>
                 <div class="get-app-section">
                     <button class="pdf-link" onclick="alert('Wave Forms feature activated!')">
@@ -722,7 +864,278 @@ Testez vos connaissances sur les points clés du programme.
         </div>
     </div>
 
-  <script src="./assets/js/scriptplus.js"></script>
-     <script src="./assets/js/rsewdata1.js"></script>
+    <script src="./assets/js/scriptplus.js"></script>
+    <script src="./assets/js/rsewdata1.js"></script>
+    <script>
+        // Gradient Header JavaScript
+        class ColorContrastManager {
+            constructor() {
+                this.storeTitle = document.getElementById('store-title');
+                this.observer = null;
+                this.checkInterval = null;
+                this.isChecking = false;
+                this.lastContrastClass = '';
+                
+                this.init();
+            }
+            
+            init() {
+                // Only initialize if we're on the home page
+                if (this.storeTitle && document.getElementById('home').classList.contains('active')) {
+                    // Initial check
+                    this.updateContrast();
+                    
+                    // Set up Intersection Observer for performance
+                    this.setupIntersectionObserver();
+                    
+                    // Responsive checks (debounced)
+                    window.addEventListener('resize', this.debounce(() => this.updateContrast(), 100));
+                    window.addEventListener('scroll', this.debounce(() => this.updateContrast(), 50));
+                    
+                    // Check periodically but with longer intervals
+                    this.checkInterval = setInterval(() => this.updateContrast(), 2000);
+                    
+                    // Check when animations might affect visibility
+                    this.setupAnimationFrameCheck();
+                }
+            }
+            
+            setupIntersectionObserver() {
+                this.observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                this.updateContrast();
+                            }
+                        });
+                    },
+                    {
+                        threshold: 0.1,
+                        rootMargin: '50px'
+                    }
+                );
+                
+                this.observer.observe(this.storeTitle);
+            }
+            
+            setupAnimationFrameCheck() {
+                let lastCheck = 0;
+                const checkOnFrame = (timestamp) => {
+                    if (timestamp - lastCheck > 1000) {
+                        this.updateContrast();
+                        lastCheck = timestamp;
+                    }
+                    requestAnimationFrame(checkOnFrame);
+                };
+                requestAnimationFrame(checkOnFrame);
+            }
+            
+            getElementBackgroundColor(element) {
+                const rect = element.getBoundingClientRect();
+                const centerX = Math.floor(rect.left + rect.width / 2);
+                const centerY = Math.floor(rect.top + rect.height / 2);
+                
+                const points = [
+                    [centerX, centerY],
+                    [centerX - 10, centerY],
+                    [centerX + 10, centerY],
+                    [centerX, centerY - 10],
+                    [centerX, centerY + 10]
+                ];
+                
+                let totalR = 0, totalG = 0, totalB = 0;
+                let validSamples = 0;
+                
+                points.forEach(([x, y]) => {
+                    const elementAtPoint = document.elementFromPoint(x, y);
+                    if (elementAtPoint) {
+                        const bgColor = window.getComputedStyle(elementAtPoint).backgroundColor;
+                        const rgb = this.parseRGB(bgColor);
+                        if (rgb) {
+                            totalR += rgb[0];
+                            totalG += rgb[1];
+                            totalB += rgb[2];
+                            validSamples++;
+                        }
+                    }
+                });
+                
+                if (validSamples === 0) return [255, 255, 255];
+                
+                return [
+                    Math.floor(totalR / validSamples),
+                    Math.floor(totalG / validSamples),
+                    Math.floor(totalB / validSamples)
+                ];
+            }
+            
+            parseRGB(colorString) {
+                const match = colorString.match(/(\d+),\s*(\d+),\s*(\d+)/);
+                return match ? [parseInt(match[1]), parseInt(match[2]), parseInt(match[3])] : null;
+            }
+            
+            calculateRelativeLuminance(rgb) {
+                const [r, g, b] = rgb.map(value => {
+                    value = value / 255;
+                    return value <= 0.03928 ? value / 12.92 : Math.pow((value + 0.055) / 1.055, 2.4);
+                });
+                
+                return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+            }
+            
+            getContrastRatio(luminance1, luminance2) {
+                const lighter = Math.max(luminance1, luminance2);
+                const darker = Math.min(luminance1, luminance2);
+                return (lighter + 0.05) / (darker + 0.05);
+            }
+            
+            updateContrast() {
+                if (this.isChecking) return;
+                this.isChecking = true;
+                
+                requestAnimationFrame(() => {
+                    try {
+                        const bgColor = this.getElementBackgroundColor(this.storeTitle);
+                        const bgLuminance = this.calculateRelativeLuminance(bgColor);
+                        
+                        const blackLuminance = 0;
+                        const whiteLuminance = 1;
+                        
+                        const contrastWithBlack = this.getContrastRatio(bgLuminance, blackLuminance);
+                        const contrastWithWhite = this.getContrastRatio(whiteLuminance, bgLuminance);
+                        
+                        const MIN_CONTRAST_RATIO = 3.0;
+                        
+                        let contrastClass = '';
+                        
+                        if (contrastWithWhite >= MIN_CONTRAST_RATIO && contrastWithWhite > contrastWithBlack) {
+                            contrastClass = 'text-light';
+                        } else if (contrastWithBlack >= MIN_CONTRAST_RATIO) {
+                            contrastClass = 'text-inverted';
+                        }
+                        
+                        if (contrastClass !== this.lastContrastClass) {
+                            this.storeTitle.classList.remove('text-inverted', 'text-light');
+                            if (contrastClass) {
+                                this.storeTitle.classList.add(contrastClass);
+                            }
+                            this.lastContrastClass = contrastClass;
+                        }
+                    } catch (error) {
+                        console.error('Color contrast check failed:', error);
+                    } finally {
+                        this.isChecking = false;
+                    }
+                });
+            }
+            
+            debounce(func, wait) {
+                let timeout;
+                return (...args) => {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => func.apply(this, args), wait);
+                };
+            }
+            
+            destroy() {
+                if (this.observer) {
+                    this.observer.disconnect();
+                }
+                if (this.checkInterval) {
+                    clearInterval(this.checkInterval);
+                }
+            }
+        }
+        
+        // Initialize the color contrast manager
+        let contrastManager = null;
+        
+        // Function to show/hide gradient header based on active section
+        function toggleGradientHeader() {
+            const gradientHeader = document.getElementById('gradientHeader');
+            const homeSection = document.getElementById('home');
+            
+            if (homeSection.classList.contains('active')) {
+                gradientHeader.style.display = 'block';
+                // Initialize contrast manager if not already initialized
+                if (!contrastManager) {
+                    contrastManager = new ColorContrastManager();
+                }
+            } else {
+                gradientHeader.style.display = 'none';
+                // Destroy contrast manager when leaving home section
+                if (contrastManager) {
+                    contrastManager.destroy();
+                    contrastManager = null;
+                }
+            }
+        }
+        
+        // Wait for DOM to be fully loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                // Initial toggle based on active section
+                toggleGradientHeader();
+                
+                // Add hover effects to gradient header buttons
+                const buttons = document.querySelectorAll('.action-button');
+                buttons.forEach(button => {
+                    button.addEventListener('mouseenter', () => {
+                        button.style.transform = 'translateX(5px)';
+                    });
+                    
+                    button.addEventListener('mouseleave', () => {
+                        button.style.transform = 'translateX(0)';
+                    });
+                });
+                
+                // Listen for navigation changes (assuming your navigation script triggers section changes)
+                // This is a generic listener - you may need to adjust based on your actual navigation script
+                document.addEventListener('sectionChange', toggleGradientHeader);
+                
+                // Also check on nav item clicks
+                const navItems = document.querySelectorAll('.nav-item');
+                navItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        // Small delay to allow section change to complete
+                        setTimeout(toggleGradientHeader, 50);
+                    });
+                });
+            });
+        } else {
+            // Initial toggle based on active section
+            toggleGradientHeader();
+            
+            // Add hover effects to gradient header buttons
+            const buttons = document.querySelectorAll('.action-button');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', () => {
+                    button.style.transform = 'translateX(5px)';
+                });
+                
+                button.addEventListener('mouseleave', () => {
+                    button.style.transform = 'translateX(0)';
+                });
+            });
+            
+            // Listen for navigation changes
+            document.addEventListener('sectionChange', toggleGradientHeader);
+            
+            // Also check on nav item clicks
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    setTimeout(toggleGradientHeader, 50);
+                });
+            });
+        }
+        
+        // Clean up on page unload
+        window.addEventListener('beforeunload', () => {
+            if (contrastManager) {
+                contrastManager.destroy();
+            }
+        });
+    </script>
 </body>
 </html>

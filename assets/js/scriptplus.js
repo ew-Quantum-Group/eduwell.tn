@@ -428,3 +428,275 @@
             
             console.log('Modern Interactive Design initialized successfully.');
         });
+
+
+
+         // Gradient Header JavaScript
+        class ColorContrastManager {
+            constructor() {
+                this.storeTitle = document.getElementById('store-title');
+                this.observer = null;
+                this.checkInterval = null;
+                this.isChecking = false;
+                this.lastContrastClass = '';
+                
+                this.init();
+            }
+            
+            init() {
+                // Only initialize if we're on the home page
+                if (this.storeTitle && document.getElementById('home').classList.contains('active')) {
+                    // Initial check
+                    this.updateContrast();
+                    
+                    // Set up Intersection Observer for performance
+                    this.setupIntersectionObserver();
+                    
+                    // Responsive checks (debounced)
+                    window.addEventListener('resize', this.debounce(() => this.updateContrast(), 100));
+                    window.addEventListener('scroll', this.debounce(() => this.updateContrast(), 50));
+                    
+                    // Check periodically but with longer intervals
+                    this.checkInterval = setInterval(() => this.updateContrast(), 2000);
+                    
+                    // Check when animations might affect visibility
+                    this.setupAnimationFrameCheck();
+                }
+            }
+            
+            setupIntersectionObserver() {
+                this.observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                this.updateContrast();
+                            }
+                        });
+                    },
+                    {
+                        threshold: 0.1,
+                        rootMargin: '50px'
+                    }
+                );
+                
+                this.observer.observe(this.storeTitle);
+            }
+            
+            setupAnimationFrameCheck() {
+                let lastCheck = 0;
+                const checkOnFrame = (timestamp) => {
+                    if (timestamp - lastCheck > 1000) {
+                        this.updateContrast();
+                        lastCheck = timestamp;
+                    }
+                    requestAnimationFrame(checkOnFrame);
+                };
+                requestAnimationFrame(checkOnFrame);
+            }
+            
+            getElementBackgroundColor(element) {
+                const rect = element.getBoundingClientRect();
+                const centerX = Math.floor(rect.left + rect.width / 2);
+                const centerY = Math.floor(rect.top + rect.height / 2);
+                
+                const points = [
+                    [centerX, centerY],
+                    [centerX - 10, centerY],
+                    [centerX + 10, centerY],
+                    [centerX, centerY - 10],
+                    [centerX, centerY + 10]
+                ];
+                
+                let totalR = 0, totalG = 0, totalB = 0;
+                let validSamples = 0;
+                
+                points.forEach(([x, y]) => {
+                    const elementAtPoint = document.elementFromPoint(x, y);
+                    if (elementAtPoint) {
+                        const bgColor = window.getComputedStyle(elementAtPoint).backgroundColor;
+                        const rgb = this.parseRGB(bgColor);
+                        if (rgb) {
+                            totalR += rgb[0];
+                            totalG += rgb[1];
+                            totalB += rgb[2];
+                            validSamples++;
+                        }
+                    }
+                });
+                
+                if (validSamples === 0) return [255, 255, 255];
+                
+                return [
+                    Math.floor(totalR / validSamples),
+                    Math.floor(totalG / validSamples),
+                    Math.floor(totalB / validSamples)
+                ];
+            }
+            
+            parseRGB(colorString) {
+                const match = colorString.match(/(\d+),\s*(\d+),\s*(\d+)/);
+                return match ? [parseInt(match[1]), parseInt(match[2]), parseInt(match[3])] : null;
+            }
+            
+            calculateRelativeLuminance(rgb) {
+                const [r, g, b] = rgb.map(value => {
+                    value = value / 255;
+                    return value <= 0.03928 ? value / 12.92 : Math.pow((value + 0.055) / 1.055, 2.4);
+                });
+                
+                return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+            }
+            
+            getContrastRatio(luminance1, luminance2) {
+                const lighter = Math.max(luminance1, luminance2);
+                const darker = Math.min(luminance1, luminance2);
+                return (lighter + 0.05) / (darker + 0.05);
+            }
+            
+            updateContrast() {
+                if (this.isChecking) return;
+                this.isChecking = true;
+                
+                requestAnimationFrame(() => {
+                    try {
+                        const bgColor = this.getElementBackgroundColor(this.storeTitle);
+                        const bgLuminance = this.calculateRelativeLuminance(bgColor);
+                        
+                        const blackLuminance = 0;
+                        const whiteLuminance = 1;
+                        
+                        const contrastWithBlack = this.getContrastRatio(bgLuminance, blackLuminance);
+                        const contrastWithWhite = this.getContrastRatio(whiteLuminance, bgLuminance);
+                        
+                        const MIN_CONTRAST_RATIO = 3.0;
+                        
+                        let contrastClass = '';
+                        
+                        if (contrastWithWhite >= MIN_CONTRAST_RATIO && contrastWithWhite > contrastWithBlack) {
+                            contrastClass = 'text-light';
+                        } else if (contrastWithBlack >= MIN_CONTRAST_RATIO) {
+                            contrastClass = 'text-inverted';
+                        }
+                        
+                        if (contrastClass !== this.lastContrastClass) {
+                            this.storeTitle.classList.remove('text-inverted', 'text-light');
+                            if (contrastClass) {
+                                this.storeTitle.classList.add(contrastClass);
+                            }
+                            this.lastContrastClass = contrastClass;
+                        }
+                    } catch (error) {
+                        console.error('Color contrast check failed:', error);
+                    } finally {
+                        this.isChecking = false;
+                    }
+                });
+            }
+            
+            debounce(func, wait) {
+                let timeout;
+                return (...args) => {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => func.apply(this, args), wait);
+                };
+            }
+            
+            destroy() {
+                if (this.observer) {
+                    this.observer.disconnect();
+                }
+                if (this.checkInterval) {
+                    clearInterval(this.checkInterval);
+                }
+            }
+        }
+        
+        // Initialize the color contrast manager
+        let contrastManager = null;
+        
+        // Function to show/hide gradient header based on active section
+        function toggleGradientHeader() {
+            const gradientHeader = document.getElementById('gradientHeader');
+            const homeSection = document.getElementById('home');
+            
+            if (homeSection.classList.contains('active')) {
+                gradientHeader.style.display = 'block';
+                // Initialize contrast manager if not already initialized
+                if (!contrastManager) {
+                    contrastManager = new ColorContrastManager();
+                }
+            } else {
+                gradientHeader.style.display = 'none';
+                // Destroy contrast manager when leaving home section
+                if (contrastManager) {
+                    contrastManager.destroy();
+                    contrastManager = null;
+                }
+            }
+        }
+        
+        // Wait for DOM to be fully loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                // Initial toggle based on active section
+                toggleGradientHeader();
+                
+                // Add hover effects to gradient header buttons
+                const buttons = document.querySelectorAll('.action-button');
+                buttons.forEach(button => {
+                    button.addEventListener('mouseenter', () => {
+                        button.style.transform = 'translateX(5px)';
+                    });
+                    
+                    button.addEventListener('mouseleave', () => {
+                        button.style.transform = 'translateX(0)';
+                    });
+                });
+                
+                // Listen for navigation changes (assuming your navigation script triggers section changes)
+                // This is a generic listener - you may need to adjust based on your actual navigation script
+                document.addEventListener('sectionChange', toggleGradientHeader);
+                
+                // Also check on nav item clicks
+                const navItems = document.querySelectorAll('.nav-item');
+                navItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        // Small delay to allow section change to complete
+                        setTimeout(toggleGradientHeader, 50);
+                    });
+                });
+            });
+        } else {
+            // Initial toggle based on active section
+            toggleGradientHeader();
+            
+            // Add hover effects to gradient header buttons
+            const buttons = document.querySelectorAll('.action-button');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', () => {
+                    button.style.transform = 'translateX(5px)';
+                });
+                
+                button.addEventListener('mouseleave', () => {
+                    button.style.transform = 'translateX(0)';
+                });
+            });
+            
+            // Listen for navigation changes
+            document.addEventListener('sectionChange', toggleGradientHeader);
+            
+            // Also check on nav item clicks
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    setTimeout(toggleGradientHeader, 50);
+                });
+            });
+        }
+        
+        // Clean up on page unload
+        window.addEventListener('beforeunload', () => {
+            if (contrastManager) {
+                contrastManager.destroy();
+            }
+        });

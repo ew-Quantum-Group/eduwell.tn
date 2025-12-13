@@ -1,1158 +1,1265 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eduwell | SVT Learning Platform</title>
-     <link rel="shortcut icon" href="./assets/images/ew.png" type="image/x-icon">
+    <title>Grammar Quiz | Present Simple vs Continuous</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Apple San Francisco font via system stack */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-        }
-
-        /* Professional Color Palette */
+        /* ===== CSS Variables ===== */
         :root {
-            --primary-bg: #f8f9fa;
-            --surface: #ffffff;
-            --surface-alt: #f8f9fa;
-            --text-primary: #1d1d1f;
-            --text-secondary: #86868b;
-            --text-tertiary: #a1a1a6;
-            --border: #e5e5ea;
-            --border-light: #f2f2f7;
-            --accent-blue: #0071e3;
-            --accent-blue-light: #34aadc;
-            --accent-purple: #8a2be2;
-            --shadow: rgba(0, 0, 0, 0.05);
-            --shadow-hover: rgba(0, 0, 0, 0.08);
+            /* Colors */
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            
+            /* Neutrals */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-tertiary: #94a3b8;
+            --border: #e2e8f0;
+            
+            /* Spacing */
+            --space-xs: 0.5rem;
+            --space-sm: 0.75rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            
+            /* Border Radius */
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            
+            /* Transitions */
+            --transition: 0.2s ease;
         }
 
-        body {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        /* ===== Back Button ===== */
+        .back-button {
+            position: fixed;
+            top: var(--space-md);
+            left: var(--space-md);
+            width: 40px;
+            height: 40px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: var(--text-primary);
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* ORIGINAL BACKGROUND ANIMATION - Restored */
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.6;
-        }
-
-        .bg-circle {
-            position: absolute;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(0, 113, 227, 0.03) 0%, rgba(52, 170, 220, 0.03) 100%);
-            animation: float 20s infinite ease-in-out;
-        }
-
-        .circle-1 {
-            width: 80vmin;
-            height: 80vmin;
-            top: -30vmin;
-            left: -30vmin;
-            animation-delay: 0s;
-        }
-
-        .circle-2 {
-            width: 60vmin;
-            height: 60vmin;
-            bottom: -20vmin;
-            right: 10%;
-            animation-delay: -7s;
-        }
-
-        .circle-3 {
-            width: 40vmin;
-            height: 40vmin;
-            top: 20%;
-            right: -15vmin;
-            animation-delay: -14s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            33% { transform: translateY(-20px) rotate(120deg); }
-            66% { transform: translateY(10px) rotate(240deg); }
-        }
-
-        /* Loading Animation - Professional with Original Logo Style */
-        .loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--surface);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+            font-size: 1rem;
+            cursor: pointer;
             z-index: 1000;
-            opacity: 1;
-            transition: opacity 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
-        }
-
-        .loader.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .loader-logo {
-            width: 90px;
-            height: 90px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 24px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 24px;
-            animation: pulse 2s infinite ease-in-out;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .loader-logo-inner {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #8a2be2 0%, #ba55d3 100%);
-            border-radius: 18px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 28px;
-            font-weight: 600;
-            color: white;
-            box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(0.98); opacity: 0.9; }
-            50% { transform: scale(1.03); opacity: 1; }
-            100% { transform: scale(0.98); opacity: 0.9; }
-        }
-
-        .loader-text {
-            font-size: 15px;
-            color: var(--text-secondary);
-            font-weight: 500;
-            letter-spacing: -0.2px;
-        }
-
-        .progress-container {
-            width: 200px;
-            height: 4px;
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 2px;
-            margin-top: 24px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transform: translateX(0);
             overflow: hidden;
+        }
+
+        .back-button:hover {
+            background: var(--bg-secondary);
+            border-color: var(--primary-light);
+            color: var(--primary);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Hidden state for scrolling - FIXED */
+        .back-button.hidden {
+            transform: translateX(calc(-100% + 15px));
+            width: 40px; /* Maintain same width */
+        }
+
+        .back-button.hidden::before {
+            content: '←';
+            position: absolute;
+            left: 14px;
+            color: var(--primary);
+            font-size: 1rem;
+            font-weight: 600;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .back-button.hidden i {
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+
+        .back-button:not(.hidden)::before {
+            opacity: 0;
+        }
+
+        .back-button i {
+            transition: all 0.3s ease;
+        }
+
+        /* ===== Loading Screen ===== */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--bg-tertiary);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: var(--space-md);
+        }
+
+        .loading-text {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== App Container ===== */
+        .app-container {
+            max-width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ===== Header ===== */
+        .app-header {
+            padding: var(--space-md);
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-primary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            margin-top: 40px; /* Space for fixed back button */
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: var(--space-xs);
+        }
+
+        .quiz-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            width: 100%;
+            text-align: center;
+        }
+
+        .quiz-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .progress-indicator {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: var(--space-xs);
+        }
+
+        /* ===== Main Content ===== */
+        .main-content {
+            flex: 1;
+            padding: var(--space-md);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ===== Progress Bar ===== */
+        .progress-container {
+            margin-bottom: var(--space-lg);
         }
 
         .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #8a2be2, #ba55d3);
+            height: 4px;
+            background: var(--bg-tertiary);
             border-radius: 2px;
-            transition: width 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+            overflow: hidden;
+            margin-bottom: var(--space-xs);
         }
 
-        /* Main Container */
-        .container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            padding: 24px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.3s ease;
         }
 
-        .container.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Top Navigation - Minimal */
-        .nav {
+        .progress-text {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 12px 0 40px;
-            margin-bottom: 16px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
         }
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        /* ===== Question Container ===== */
+        .question-container {
+            margin-bottom: var(--space-lg);
         }
 
-        .brand-icon {
-            width: 36px;
-            height: 36px;
-            background: var(--surface);
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 4px 12px var(--shadow);
-            border: 1px solid var(--border-light);
-        }
-
-        .brand-text {
-            font-size: 17px;
+        .question-number {
+            display: inline-block;
+            background: var(--bg-tertiary);
+            color: var(--primary);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
             font-weight: 600;
-            color: var(--text-primary);
-            letter-spacing: -0.3px;
+            margin-bottom: var(--space-md);
         }
 
-        .nav-actions {
+        .question-text {
+            font-size: 1.125rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: var(--space-md);
+            color: var(--text-primary);
+        }
+
+        .question-hint {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-xs);
+            padding: var(--space-sm);
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            margin-top: var(--space-md);
+        }
+
+        .question-hint i {
+            color: var(--primary);
+            font-size: 0.75rem;
+            margin-top: 2px;
+        }
+
+        /* ===== Options ===== */
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-lg);
+        }
+
+        .option {
+            padding: var(--space-md);
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition);
+            position: relative;
+        }
+
+        .option:hover {
+            border-color: var(--primary-light);
+            background: var(--bg-secondary);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: var(--bg-secondary);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: #f0fdf4;
+        }
+
+        .option.incorrect {
+            border-color: var(--error);
+            background: #fef2f2;
+        }
+
+        .option-label {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: var(--space-sm);
         }
 
-        .nav-button {
-            padding: 8px 16px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 8px;
+        .option-marker {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: all var(--transition);
+        }
+
+        .option.selected .option-marker {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        .option.correct .option-marker {
+            border-color: var(--success);
+            background: var(--success);
+            color: white;
+        }
+
+        .option.incorrect .option-marker {
+            border-color: var(--error);
+            background: var(--error);
+            color: white;
+        }
+
+        .option-text {
+            font-size: 0.9375rem;
             color: var(--text-primary);
-            font-size: 14px;
+        }
+
+        .option-example {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: var(--space-xs);
+            margin-left: calc(20px + var(--space-sm));
+            font-style: italic;
+        }
+
+        /* ===== Action Buttons ===== */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-sm);
+            margin-top: auto;
+            padding-top: var(--space-md);
+            border-top: 1px solid var(--border);
+        }
+
+        .btn {
+            padding: var(--space-md);
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all var(--transition);
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
+            gap: var(--space-xs);
         }
 
-        .nav-button:hover {
-            background: var(--surface-alt);
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:not(:disabled):hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:not(:disabled):hover {
+            background: var(--bg-tertiary);
             border-color: var(--text-tertiary);
         }
 
-        /* Main Content */
-        .main-content {
+        /* ===== Explanation Panel ===== */
+        .explanation-panel {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            margin-top: var(--space-lg);
+            display: none;
+        }
+
+        .explanation-panel.show {
+            display: block;
+        }
+
+        .explanation-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            margin-bottom: var(--space-sm);
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .explanation-header i {
+            color: var(--primary);
+        }
+
+        .explanation-content {
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            line-height: 1.5;
+            margin-bottom: var(--space-sm);
+        }
+
+        .explanation-tip {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            padding: var(--space-sm);
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-xs);
+        }
+
+        .explanation-tip i {
+            color: var(--warning);
+            font-size: 0.75rem;
+            margin-top: 2px;
+        }
+
+        /* ===== Results Screen ===== */
+        .results-screen {
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            padding: var(--space-xl) var(--space-md);
             text-align: center;
-            padding: 40px 0;
         }
 
-        /* ORIGINAL LOGO STYLE - Restored with Purple */
-        .logo-container {
-            position: relative;
-            width: 140px;
-            height: 140px;
-            margin-bottom: 40px;
-        }
-
-        @media (min-width: 768px) {
-            .logo-container {
-                width: 160px;
-                height: 160px;
-            }
-        }
-
-        .logo-background {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 30px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .logo {
-            position: absolute;
-            width: 120px;
-            height: 120px;
-            top: 10px;
-            left: 10px;
-            background: linear-gradient(135deg, #8a2be2 0%, #ba55d3 100%);
-            border-radius: 24px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 8px 30px rgba(138, 43, 226, 0.3);
-            animation: logoPulse 3s ease-in-out infinite;
-        }
-
-        @media (min-width: 768px) {
-            .logo {
-                width: 140px;
-                height: 140px;
-                top: 10px;
-                left: 10px;
-            }
-        }
-
-        .logo-inner {
-            width: 100px;
-            height: 100px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 18px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 32px;
-            font-weight: 600;
-            color: #8a2be2;
-            box-shadow: 0 2px 10px rgba(138, 43, 226, 0.2);
-        }
-
-        @media (min-width: 768px) {
-            .logo-inner {
-                width: 120px;
-                height: 120px;
-                font-size: 36px;
-            }
-        }
-
-        @keyframes logoPulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 8px 30px rgba(138, 43, 226, 0.3); }
-            50% { transform: scale(1.03); box-shadow: 0 12px 40px rgba(138, 43, 226, 0.4); }
-        }
-
-        /* Headlines */
-        .headline {
-            font-size: 32px;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 16px;
-            line-height: 1.2;
-            letter-spacing: -0.5px;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards 0.3s;
-        }
-
-        .subheadline {
-            font-size: 17px;
-            color: var(--text-secondary);
-            margin-bottom: 40px;
-            max-width: 500px;
-            line-height: 1.5;
-            font-weight: 400;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards 0.5s;
-        }
-
-        @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Primary Button */
-        .primary-button {
-            background: var(--surface);
-            color: var(--text-primary);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 14px 32px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 16px var(--shadow);
-            position: relative;
-            overflow: hidden;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards 0.7s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            min-width: 200px;
-            justify-content: center;
-        }
-
-        .primary-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px var(--shadow-hover);
-            background: var(--surface-alt);
-        }
-
-        .primary-button:active {
-            transform: translateY(0);
-            box-shadow: 0 4px 12px var(--shadow);
-        }
-
-        .primary-button i {
-            font-size: 14px;
-            transition: transform 0.3s ease;
-        }
-
-        .primary-button:hover i {
-            transform: translateX(3px);
-        }
-
-        /* Ripple effect - Original */
-        .ripple {
-            position: absolute;
+        .results-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--primary);
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.6);
-            transform: scale(0);
-            animation: ripple 0.6s linear;
-            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: var(--space-lg);
         }
 
-        @keyframes ripple {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
+        .results-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+            color: var(--text-primary);
         }
 
-        /* Features Grid */
-        .features-grid {
+        .results-score {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: var(--space-md);
+        }
+
+        .results-message {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-xl);
+            max-width: 300px;
+        }
+
+        .results-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-top: 60px;
-            max-width: 700px;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards 0.8s;
-        }
-
-        .feature-card {
-            background: var(--surface);
-            border-radius: 16px;
-            padding: 24px;
-            text-align: center;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid var(--border-light);
-            box-shadow: 0 4px 16px var(--shadow);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 28px var(--shadow-hover);
-        }
-
-        .feature-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
-            background: var(--surface-alt);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            color: var(--text-secondary);
-            font-size: 22px;
-        }
-
-        .feature-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-        }
-
-        .feature-desc {
-            font-size: 14px;
-            color: var(--text-tertiary);
-            line-height: 1.5;
-        }
-
-        /* Transition overlay - Original */
-        .transition-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
             width: 100%;
-            height: 100%;
-            background: var(--surface);
-            z-index: 2000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
+            max-width: 320px;
         }
 
-        .transition-overlay.active {
-            opacity: 1;
-            pointer-events: all;
+        .stat-item {
+            padding: var(--space-md);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
         }
 
-        /* Footer */
-        .footer {
-            margin-top: 60px;
-            padding-top: 24px;
-            text-align: center;
-            color: var(--text-tertiary);
-            font-size: 13px;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards 1s;
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .results-actions {
+            display: flex;
+            gap: var(--space-md);
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .results-actions .btn {
+            flex: 1;
+        }
+
+        /* ===== Footer ===== */
+        .app-footer {
+            padding: var(--space-md);
             border-top: 1px solid var(--border);
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-bottom: 16px;
-        }
-
-        .footer-link {
+            font-size: 0.75rem;
             color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 500;
-            transition: color 0.2s ease;
+            text-align: center;
         }
 
-        .footer-link:hover {
-            color: var(--text-primary);
-        }
-
-        /* NEW POP-UP STYLES (Added without modifying existing design) */
-        .popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 3000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .popup-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .popup {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: var(--surface);
-            border-radius: 24px 24px 0 0;
-            padding: 32px 24px;
-            z-index: 3001;
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            max-height: 85vh;
-            overflow-y: auto;
-            box-shadow: 0 -10px 60px rgba(0, 0, 0, 0.1);
-        }
-
-        .popup.active {
-            transform: translateY(0);
-        }
-
-        .popup-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .popup-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--text-primary);
-            letter-spacing: -0.3px;
-        }
-
-        .popup-close {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            background: var(--surface-alt);
-            border: 1px solid var(--border);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            color: var(--text-secondary);
-        }
-
-        .popup-close:hover {
-            background: var(--surface);
-            border-color: var(--text-tertiary);
-            transform: translateY(-1px);
-        }
-
-        .popup-content {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            font-size: 15px;
-        }
-
-        .popup-section {
-            margin-bottom: 20px;
-        }
-
-        .popup-section-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-        }
-
-        .popup-section-content {
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-
-        .popup-list {
-            padding-left: 20px;
-            margin: 12px 0;
-        }
-
-        .popup-list li {
-            margin-bottom: 8px;
-            color: var(--text-secondary);
-        }
-
-        .support-button {
-            background: var(--surface);
-            color: var(--text-primary);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 14px 24px;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 16px var(--shadow);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 20px;
-            width: 100%;
-        }
-
-        .support-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px var(--shadow-hover);
-            background: var(--surface-alt);
-        }
-
-        .support-button i {
-            font-size: 16px;
-            color: #E4405F;
-        }
-
-        .version-item {
-            background: var(--surface-alt);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-            border: 1px solid var(--border-light);
-        }
-
-        .version-number {
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .version-date {
-            font-size: 13px;
-            color: var(--text-tertiary);
-            margin-bottom: 8px;
-        }
-
-        .version-description {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
+        /* ===== Responsive Design ===== */
+        @media (min-width: 768px) {
+            .app-container {
+                max-width: 600px;
+                margin: 0 auto;
+                border-left: 1px solid var(--border);
+                border-right: 1px solid var(--border);
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
             }
             
-            .nav {
-                padding: 8px 0 32px;
+            .main-content {
+                padding: var(--space-lg);
             }
             
-            .headline {
-                font-size: 28px;
-            }
-            
-            .subheadline {
-                font-size: 16px;
-                padding: 0 16px;
-            }
-            
-            .logo-container {
-                width: 120px;
-                height: 120px;
-                margin-bottom: 32px;
-            }
-            
-            .logo {
-                width: 100px;
-                height: 100px;
-            }
-            
-            .logo-inner {
-                width: 84px;
-                height: 84px;
-                font-size: 28px;
-            }
-            
-            .primary-button {
-                min-width: 180px;
-                padding: 13px 28px;
-                font-size: 15px;
-            }
-            
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 16px;
-                margin-top: 48px;
-            }
-            
-            .footer-links {
-                flex-direction: column;
-                gap: 12px;
-            }
-            
-            /* Responsive popup adjustments */
-            .popup {
-                padding: 24px 20px;
-            }
-            
-            .popup-title {
-                font-size: 18px;
+            .back-button {
+                left: calc(50% - 300px + var(--space-md));
             }
         }
 
         @media (max-width: 480px) {
-            .container {
-                padding: 16px;
+            .back-button {
+                top: var(--space-sm);
+                left: var(--space-sm);
+                width: 36px;
+                height: 36px;
+                font-size: 0.875rem;
             }
             
-            .headline {
-                font-size: 24px;
+            .back-button.hidden {
+                transform: translateX(calc(-100% + 13px));
             }
             
-            .logo-container {
-                width: 100px;
-                height: 100px;
+            .back-button.hidden::before {
+                left: 12px;
+                font-size: 0.875rem;
             }
             
-            .logo {
-                width: 84px;
-                height: 84px;
+            .app-header {
+                margin-top: 36px;
             }
-            
-            .logo-inner {
-                width: 70px;
-                height: 70px;
-                font-size: 24px;
-            }
-            
-            .nav-actions {
-                gap: 12px;
-            }
-            
-            .nav-button {
-                padding: 6px 12px;
-                font-size: 13px;
-            }
-            
-            /* Mobile popup adjustments */
-            .popup {
-                padding: 20px 16px;
-                max-height: 90vh;
-            }
-            
-            .popup-title {
-                font-size: 17px;
-            }
+        }
+
+        /* ===== Utility Classes ===== */
+        .hidden {
+            display: none !important;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
         }
     </style>
 </head>
 <body>
-    <!-- ORIGINAL BACKGROUND ANIMATION -->
-    <div class="bg-animation">
-        <div class="bg-circle circle-1"></div>
-        <div class="bg-circle circle-2"></div>
-        <div class="bg-circle circle-3"></div>
+    <!-- Back Button -->
+    <button class="back-button" id="backButton" aria-label="Go back to previous page">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading quiz...</div>
     </div>
 
-    <!-- Loading Animation -->
-    <div class="loader" id="loader">
-        <div class="loader-logo">
-            <div class="loader-logo-inner">SVT</div>
-        </div>
-        <div class="loader-text">Loading Platform</div>
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar"></div>
-        </div>
-    </div>
-
-    <!-- Transition overlay -->
-    <div class="transition-overlay" id="transitionOverlay"></div>
-
-    <!-- NEW POP-UP OVERLAY -->
-    <div class="popup-overlay" id="popupOverlay"></div>
-
-    <!-- Privacy Pop-up -->
-    <div class="popup" id="privacyPopup">
-        <div class="popup-header">
-            <div class="popup-title">Politique de Confidentialité</div>
-            <div class="popup-close" onclick="closePopup('privacyPopup')">
-                <i class="fas fa-times"></i>
-            </div>
-        </div>
-        <div class="popup-content">
-            <div class="popup-section">
-                <div class="popup-section-content">
-                    Ce site est entièrement statique et ne collecte aucune donnée personnelle.
-                    Aucune inscription, aucun compte, aucun système de suivi, et aucune information utilisateur n'est enregistrée.
-                    Vous pouvez utiliser le site en toute confidentialité.
+    <!-- Main App -->
+    <div class="app-container hidden" id="appContainer">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="quiz-title">Grammar Quiz</h1>
+                <div class="quiz-subtitle">Present Simple vs Present Continuous</div>
+                <div class="progress-indicator">
+                    <span id="currentScore">0</span> pts
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Terms Pop-up -->
-    <div class="popup" id="termsPopup">
-        <div class="popup-header">
-            <div class="popup-title">Conditions d'Utilisation</div>
-            <div class="popup-close" onclick="closePopup('termsPopup')">
-                <i class="fas fa-times"></i>
-            </div>
-        </div>
-        <div class="popup-content">
-            <div class="popup-section">
-                <div class="popup-section-content">
-                    Ce site fournit uniquement du contenu éducatif (cours, exercices, fiches, quiz).
-                    L'accès est gratuit et aucune donnée privée n'est demandée.
-                    En utilisant le site, vous acceptez d'utiliser le contenu uniquement à des fins personnelles et éducatives.
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Support Pop-up -->
-    <div class="popup" id="supportPopup">
-        <div class="popup-header">
-            <div class="popup-title">Support</div>
-            <div class="popup-close" onclick="closePopup('supportPopup')">
-                <i class="fas fa-times"></i>
-            </div>
-        </div>
-        <div class="popup-content">
-            <div class="popup-section">
-                <div class="popup-section-content">
-                    Si vous avez besoin d'aide pour un problème quelconque, contactez-nous directement ici.
-                </div>
-            </div>
-            
-            <a href="https://www.instagram.com/eduwellofficial/" target="_blank" class="support-button">
-                <i class="fab fa-instagram"></i>
-                Contactez-nous sur Instagram
-            </a>
-        </div>
-    </div>
-
-    <!-- Info Pop-up -->
-    <div class="popup" id="infoPopup">
-        <div class="popup-header">
-            <div class="popup-title">Historique des Versions</div>
-            <div class="popup-close" onclick="closePopup('infoPopup')">
-                <i class="fas fa-times"></i>
-            </div>
-        </div>
-        <div class="popup-content">
-            <div class="version-item">
-                <div class="version-number">
-                    <i class="fas fa-star"></i>
-                    Version 1.0
-                </div>
-                <div class="version-date">Publiée le : 23 November 2025</div>
-                <div class="version-description">
-                  • Lancement du premier modèle  <br>
-                  • Interface utilisateur interactive et claire  <br>
-                  • Lancement des Quiz Cards
-                </div>
-            </div>
-            
-           
-            
-            <div class="version-item">
-                <div class="version-number">
-                    <i class="fas fa-star"></i>
-                    Version 1.3 
-                </div>
-                <div class="version-date">Publiée le : 6 Septembre 2025</div>
-                <div class="version-description">
-                   • Mise à jour de l’UI et du design des Quiz, Flash Cards et pages principales <br>
-                   • Ajout de tous les cours de sciences pour le Bac <br>
-                   • Ajout des devoirs et exercices de sciences Bac  <br>
-                   • Nouvelle section Vidéos avec playlist et barre de navigation  <br>
-                   • Mise à jour majeure de la section Flash Cards
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="container" id="mainContainer">
-        <!-- Top Navigation -->
-        <nav class="nav">
-            <div class="brand">
-                <div class="brand-icon">EQ</div>
-                <div class="brand-text">Quantum Group</div>
-            </div>
-            <div class="nav-actions">
-                <!-- Bouton de langue supprimé, seul le bouton Info reste -->
-                <button class="nav-button" onclick="openPopup('infoPopup')">
-                    <i class="fas fa-info-circle"></i>
-                    Info
-                </button>
-            </div>
-        </nav>
+        </header>
 
         <!-- Main Content -->
-        <main class="main-content">
-            <!-- ORIGINAL LOGO STYLE -->
-            <div class="logo-container">
-                <div class="logo-background"></div>
-                <div class="logo">
-                    <div class="logo-inner">SVT</div>
+        <main class="main-content" id="quizContent">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text">
+                    <span>Question <span id="currentQuestionNum">1</span> of <span id="totalQuestions">10</span></span>
+                    <span id="progressPercent">10%</span>
                 </div>
             </div>
 
-            <!-- Headlines -->
-            <h1 class="headline">Plateforme d’apprentissage scientifique</h1>
-            <p class="subheadline">Maîtrisez les sciences et les sciences de la Terre avec des outils interactifs et un apprentissage intelligent</p>
+            <!-- Question Container -->
+            <div class="question-container">
+                <div class="question-number">Question <span id="questionNum">1</span></div>
+                <h2 class="question-text" id="questionText">
+                    She usually ___ (to get) up at 7 a.m.
+                </h2>
+                <div class="question-hint">
+                    <i class="fas fa-lightbulb"></i>
+                    <span id="questionHint">Look for time expressions that indicate habits</span>
+                </div>
+            </div>
 
-            <!-- Primary Action -->
-            <button class="primary-button" id="startButton">
-                Commencer à apprendre
-                <i class="fas fa-arrow-right"></i>
+            <!-- Options -->
+            <div class="options-container" id="optionsContainer">
+                <!-- Options will be inserted here -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="prevButton" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="btn btn-primary" id="submitButton" disabled>
+                    Check Answer
+                </button>
+            </div>
+
+            <!-- Next Button (separate for better flow) -->
+            <button class="btn btn-primary hidden" id="nextButton">
+                Next Question <i class="fas fa-arrow-right"></i>
             </button>
 
-            <!-- Features Grid mis à jour -->
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-book-open"></i>
-                    </div>
-                    <div class="feature-title">Cours & Devoirs</div>
-                    <div class="feature-desc">Cours de sciences + devoirs pour toutes les sections Bac.</div>
+            <!-- Explanation Panel -->
+            <div class="explanation-panel" id="explanationPanel">
+                <div class="explanation-header">
+                    <i class="fas fa-info-circle"></i>
+                    Explanation
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-question-circle"></i>
-                    </div>
-                    <div class="feature-title">Quiz & Cartes</div>
-                    <div class="feature-desc">Quiz & cartes pour rester toujours prêt et réviser efficacement.</div>
+                <div class="explanation-content" id="explanationText">
+                    <!-- Explanation will be inserted here -->
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
-                    <div class="feature-title">Flash Cards</div>
-                    <div class="feature-desc">Flash Cards pour comprendre plus vite et mémoriser mieux.</div>
+                <div class="explanation-tip" id="explanationTip">
+                    <i class="fas fa-tip"></i>
+                    <!-- Tip will be inserted here -->
                 </div>
             </div>
         </main>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-links">
-                <a href="#" class="footer-link" onclick="openPopup('privacyPopup'); return false;">Confidentialité</a>
-                <a href="#" class="footer-link" onclick="openPopup('termsPopup'); return false;">Conditions</a>
-                <a href="#" class="footer-link" onclick="openPopup('supportPopup'); return false;">Support</a>
+        <!-- Results Screen -->
+        <div class="results-screen hidden" id="resultsScreen">
+            <div class="results-icon">
+                <i class="fas fa-trophy"></i>
             </div>
-            <div>© 2025 Eduwell Quantum Group</div>
+            <h2 class="results-title">Quiz Completed!</h2>
+            <div class="results-score" id="finalScore">0/10</div>
+            <p class="results-message" id="resultsMessage">
+                Great effort! Review your answers to improve.
+            </p>
+            
+            <div class="results-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="correctAnswers">0</span>
+                    <span class="stat-label">Correct</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="scorePoints">0</span>
+                    <span class="stat-label">Points</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="completionTime">0:00</span>
+                    <span class="stat-label">Time</span>
+                </div>
+            </div>
+
+            <div class="results-actions">
+                <button class="btn btn-secondary" id="reviewButton">
+                    <i class="fas fa-redo"></i> Review
+                </button>
+                <button class="btn btn-primary" id="restartButton">
+                    <i class="fas fa-play"></i> Try Again
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div>Grammar Quiz • Educational Tool • Mistakes build champions</div>
         </footer>
     </div>
 
     <script>
-        // Simulate loading progress
-        const progressBar = document.getElementById('progressBar');
-        let progress = 0;
-        
-        const progressInterval = setInterval(() => {
-            progress += Math.random() * 10;
+        // Quiz Data
+        const quizData = [
+            {
+                question: "She usually ___ (to get) up at 7 a.m.",
+                options: [
+                    { text: "get", example: "I get up early" },
+                    { text: "gets", example: "She gets up at 7 a.m." },
+                    { text: "is getting", example: "She is getting up now" }
+                ],
+                correctAnswer: 1,
+                explanation: "The word 'usually' indicates a habit or routine, which requires the Present Simple tense. With third-person singular subjects (he/she/it), we add -s to the verb.",
+                hint: "Look for time expressions that indicate habits or routines",
+                tip: "Present Simple: habits, routines, general truths"
+            },
+            {
+                question: "Right now, they ___ (to watch) a movie.",
+                options: [
+                    { text: "watch", example: "They watch movies every weekend" },
+                    { text: "watches", example: "He watches movies alone" },
+                    { text: "are watching", example: "They are watching a movie now" }
+                ],
+                correctAnswer: 2,
+                explanation: "'Right now' indicates an action happening at this moment, which requires the Present Continuous tense (am/is/are + verb + -ing).",
+                hint: "Time expressions like 'right now' indicate actions in progress",
+                tip: "Present Continuous: actions happening now, temporary situations"
+            },
+            {
+                question: "The sun ___ (to rise) in the east.",
+                options: [
+                    { text: "rise", example: "I rise early" },
+                    { text: "rises", example: "The sun rises in the east" },
+                    { text: "is rising", example: "The sun is rising now" }
+                ],
+                correctAnswer: 1,
+                explanation: "This is a general truth or scientific fact, which requires the Present Simple tense. Third-person singular subjects require -s.",
+                hint: "General truths and facts use Present Simple",
+                tip: "Present Simple: facts, general truths, permanent situations"
+            },
+            {
+                question: "Listen! The birds ___ (to sing) beautifully.",
+                options: [
+                    { text: "sing", example: "Birds sing in the morning" },
+                    { text: "sings", example: "The bird sings sweetly" },
+                    { text: "are singing", example: "The birds are singing now" }
+                ],
+                correctAnswer: 2,
+                explanation: "'Listen!' indicates that the action is happening right now, which requires the Present Continuous tense.",
+                hint: "Imperatives like 'Listen!' often introduce actions happening now",
+                tip: "Use Present Continuous for actions you can see/hear happening"
+            },
+            {
+                question: "She ___ (to study) English every day.",
+                options: [
+                    { text: "study", example: "I study every day" },
+                    { text: "studies", example: "She studies every day" },
+                    { text: "is studying", example: "She is studying right now" }
+                ],
+                correctAnswer: 1,
+                explanation: "'Every day' indicates a routine or habit, which requires the Present Simple tense. Third-person singular requires -s.",
+                hint: "Frequency adverbs like 'every day' indicate routines",
+                tip: "Present Simple: with frequency adverbs (always, usually, often, sometimes, never)"
+            },
+            {
+                question: "I ___ (to work) on a new project at the moment.",
+                options: [
+                    { text: "am working", example: "I am working on it now" },
+                    { text: "work", example: "I work on projects regularly" },
+                    { text: "works", example: "He works on projects" }
+                ],
+                correctAnswer: 0,
+                explanation: "'At the moment' indicates an action happening now, which requires the Present Continuous tense.",
+                hint: "'At the moment' indicates current, temporary actions",
+                tip: "Present Continuous: actions happening around now"
+            },
+            {
+                question: "My friends ___ (to play) football every weekend.",
+                options: [
+                    { text: "play", example: "They play every weekend" },
+                    { text: "plays", example: "He plays every weekend" },
+                    { text: "are playing", example: "They are playing now" }
+                ],
+                correctAnswer: 0,
+                explanation: "'Every weekend' indicates a regular activity, which requires the Present Simple tense. Plural subjects use the base form.",
+                hint: "Regular time expressions indicate habits",
+                tip: "Present Simple: scheduled events, regular activities"
+            },
+            {
+                question: "Right now, he ___ (to fix) his bike.",
+                options: [
+                    { text: "fix", example: "He fixes bikes professionally" },
+                    { text: "fixes", example: "He fixes it every month" },
+                    { text: "is fixing", example: "He is fixing it now" }
+                ],
+                correctAnswer: 2,
+                explanation: "'Right now' clearly indicates an action in progress at this moment, requiring the Present Continuous tense.",
+                hint: "'Right now' is a clear indicator of Present Continuous",
+                tip: "Present Continuous: emphasizes the ongoing nature of an action"
+            },
+            {
+                question: "Water ___ (to freeze) at 0 degrees Celsius.",
+                options: [
+                    { text: "is freezing", example: "The water is freezing now" },
+                    { text: "freezes", example: "Water freezes at 0°C" },
+                    { text: "freeze", example: "I freeze water to make ice" }
+                ],
+                correctAnswer: 1,
+                explanation: "This is a scientific fact, which requires the Present Simple tense. Third-person singular requires -s.",
+                hint: "Scientific facts always use Present Simple",
+                tip: "Present Simple: laws of nature, scientific facts"
+            },
+            {
+                question: "We ___ (to plan) a trip this summer.",
+                options: [
+                    { text: "plan", example: "We plan trips regularly" },
+                    { text: "plans", example: "He plans the trips" },
+                    { text: "are planning", example: "We are planning a trip now" }
+                ],
+                correctAnswer: 2,
+                explanation: "'This summer' indicates a temporary plan or arrangement happening around now, which often uses the Present Continuous tense.",
+                hint: "Future plans and arrangements often use Present Continuous",
+                tip: "Present Continuous: future arrangements (with time expressions)"
+            }
+        ];
+
+        // App State
+        let currentQuestionIndex = 0;
+        let userScore = 0;
+        let userAnswers = new Array(quizData.length).fill(null);
+        let quizCompleted = false;
+        let startTime = null;
+        let totalTime = 0;
+
+        // DOM Elements
+        const backButton = document.getElementById('backButton');
+        const loadingScreen = document.getElementById('loadingScreen');
+        const appContainer = document.getElementById('appContainer');
+        const currentScore = document.getElementById('currentScore');
+        const totalQuestions = document.getElementById('totalQuestions');
+        const currentQuestionNum = document.getElementById('currentQuestionNum');
+        const progressFill = document.getElementById('progressFill');
+        const progressPercent = document.getElementById('progressPercent');
+        const questionNum = document.getElementById('questionNum');
+        const questionText = document.getElementById('questionText');
+        const questionHint = document.getElementById('questionHint');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const submitButton = document.getElementById('submitButton');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        const explanationPanel = document.getElementById('explanationPanel');
+        const explanationText = document.getElementById('explanationText');
+        const explanationTip = document.getElementById('explanationTip');
+        const quizContent = document.getElementById('quizContent');
+        const resultsScreen = document.getElementById('resultsScreen');
+        const finalScore = document.getElementById('finalScore');
+        const correctAnswers = document.getElementById('correctAnswers');
+        const scorePoints = document.getElementById('scorePoints');
+        const completionTime = document.getElementById('completionTime');
+        const resultsMessage = document.getElementById('resultsMessage');
+        const reviewButton = document.getElementById('reviewButton');
+        const restartButton = document.getElementById('restartButton');
+
+        // Scroll handling for back button - FIXED
+        let lastScrollTop = 0;
+        const scrollThreshold = 50;
+        let scrollTimeout;
+
+        function handleScroll() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const isAtTop = scrollTop <= 10; // Allow small tolerance
             
-            if (progress >= 100) {
-                progress = 100;
-                clearInterval(progressInterval);
+            // Clear any existing timeout
+            clearTimeout(scrollTimeout);
+            
+            // If at the top, show full button
+            if (isAtTop) {
+                backButton.classList.remove('hidden');
+            } 
+            // If scrolled down enough, hide button (show only arrow)
+            else if (scrollTop > scrollThreshold) {
+                backButton.classList.add('hidden');
+            }
+            // If scrolling up and not at top, but button is hidden, show it
+            else if (scrollTop < lastScrollTop && !isAtTop && backButton.classList.contains('hidden')) {
+                backButton.classList.remove('hidden');
+            }
+            
+            // Update last scroll position
+            lastScrollTop = Math.max(0, scrollTop);
+            
+            // Debounce scroll events
+            scrollTimeout = setTimeout(() => {
+                // Additional logic if needed
+            }, 50);
+        }
+
+        // Initialize App
+        function initApp() {
+            // Set total questions
+            totalQuestions.textContent = quizData.length;
+            
+            // Start timer
+            startTime = Date.now();
+            
+            // Load first question
+            loadQuestion(currentQuestionIndex);
+            
+            // Update progress
+            updateProgress();
+            
+            // Add scroll event listener
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            
+            // Initial check for scroll position
+            handleScroll();
+        }
+
+        // Load Question
+        function loadQuestion(index) {
+            const question = quizData[index];
+            
+            // Update question info
+            questionText.textContent = question.question;
+            questionHint.textContent = question.hint;
+            questionNum.textContent = index + 1;
+            currentQuestionNum.textContent = index + 1;
+            
+            // Clear options
+            optionsContainer.innerHTML = '';
+            
+            // Create options
+            question.options.forEach((option, i) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
                 
-                // Hide loader and show main content
-                setTimeout(() => {
-                    document.getElementById('loader').classList.add('hidden');
-                    document.getElementById('mainContainer').classList.add('visible');
-                }, 400);
-            }
-            progressBar.style.width = `${progress}%`;
-        }, 200);
-
-        // Button interaction with original ripple effect
-        const startButton = document.getElementById('startButton');
-        const transitionOverlay = document.getElementById('transitionOverlay');
-        const DESTINATION_URL = "https://edu-well.netlify.app/quizqcm/svtapp";
-
-        startButton.addEventListener('click', function(e) {
-            // Add ripple effect
-            const ripple = document.createElement('span');
-            ripple.classList.add('ripple');
-            this.appendChild(ripple);
-
-            // Get click position
-            const rect = this.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            // Position ripple
-            ripple.style.left = `${x}px`;
-            ripple.style.top = `${y}px`;
-
-            // Remove ripple after animation
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
-
-            // Button press effect
-            startButton.style.transform = 'translateY(0)';
-            
-            // Show transition overlay
-            setTimeout(() => {
-                transitionOverlay.classList.add('active');
-            }, 300);
-
-            // Navigate after transition
-            setTimeout(() => {
-                window.location.href = DESTINATION_URL;
-            }, 600);
-        });
-
-        // Button hover effects
-        startButton.addEventListener('mouseenter', () => {
-            startButton.style.transform = 'translateY(-2px)';
-        });
-
-        startButton.addEventListener('mouseleave', () => {
-            if (!startButton.classList.contains('clicked')) {
-                startButton.style.transform = 'translateY(0)';
-            }
-        });
-
-        // Nav buttons hover effects
-        const navButtons = document.querySelectorAll('.nav-button');
-        navButtons.forEach(button => {
-            button.addEventListener('mouseenter', () => {
-                button.style.transform = 'translateY(-1px)';
-            });
-            
-            button.addEventListener('mouseleave', () => {
-                button.style.transform = 'translateY(0)';
-            });
-        });
-
-        // Feature card hover effects
-        const featureCards = document.querySelectorAll('.feature-card');
-        featureCards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-4px)';
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0)';
-            });
-        });
-
-        // NEW POP-UP FUNCTIONS
-        function openPopup(popupId) {
-            const overlay = document.getElementById('popupOverlay');
-            const popup = document.getElementById(popupId);
-            
-            overlay.classList.add('active');
-            popup.classList.add('active');
-            
-            // Prevent body scroll when popup is open
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closePopup(popupId) {
-            const overlay = document.getElementById('popupOverlay');
-            const popup = document.getElementById(popupId);
-            
-            popup.classList.remove('active');
-            
-            // Close overlay after popup animation
-            setTimeout(() => {
-                overlay.classList.remove('active');
-                document.body.style.overflow = '';
-            }, 300);
-        }
-
-        // Close popup when clicking overlay
-        document.getElementById('popupOverlay').addEventListener('click', function(e) {
-            if (e.target === this) {
-                const activePopup = document.querySelector('.popup.active');
-                if (activePopup) {
-                    closePopup(activePopup.id);
+                if (userAnswers[index] !== null) {
+                    // Already answered - show results
+                    if (i === userAnswers[index]) {
+                        optionElement.classList.add('selected');
+                        if (i === question.correctAnswer) {
+                            optionElement.classList.add('correct');
+                        } else {
+                            optionElement.classList.add('incorrect');
+                        }
+                    } else if (i === question.correctAnswer) {
+                        optionElement.classList.add('correct');
+                    }
+                    optionElement.style.cursor = 'default';
+                } else {
+                    // Not answered yet
+                    optionElement.addEventListener('click', () => selectOption(i));
                 }
-            }
-        });
-
-        // Close popup with Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                const activePopup = document.querySelector('.popup.active');
-                if (activePopup) {
-                    closePopup(activePopup.id);
+                
+                optionElement.innerHTML = `
+                    <div class="option-label">
+                        <span class="option-marker">${String.fromCharCode(65 + i)}</span>
+                        <span class="option-text">${option.text}</span>
+                    </div>
+                    <div class="option-example">${option.example}</div>
+                `;
+                
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Reset explanation panel
+            explanationPanel.classList.remove('show');
+            explanationText.textContent = question.explanation;
+            explanationTip.innerHTML = `<i class="fas fa-tip"></i>${question.tip}`;
+            
+            // Update buttons
+            if (userAnswers[index] !== null) {
+                submitButton.classList.add('hidden');
+                nextButton.classList.remove('hidden');
+                if (index === quizData.length - 1) {
+                    nextButton.innerHTML = 'Finish Quiz <i class="fas fa-flag-checkered"></i>';
                 }
-            }
-        });
-
-        // Responsive adjustments
-        window.addEventListener('resize', () => {
-            const container = document.getElementById('mainContainer');
-            if (window.innerWidth < 768) {
-                container.style.padding = '15px';
             } else {
-                container.style.padding = '24px';
+                submitButton.classList.remove('hidden');
+                nextButton.classList.add('hidden');
+                submitButton.disabled = true;
+                submitButton.textContent = 'Check Answer';
             }
+            
+            // Update navigation
+            updateNavigation();
+        }
+
+        // Select Option
+        function selectOption(index) {
+            if (userAnswers[currentQuestionIndex] !== null) return;
+            
+            // Remove selected class from all options
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            const selectedOption = document.querySelectorAll('.option')[index];
+            selectedOption.classList.add('selected');
+            
+            // Store answer
+            userAnswers[currentQuestionIndex] = index;
+            
+            // Enable submit button
+            submitButton.disabled = false;
+        }
+
+        // Submit Answer
+        function submitAnswer() {
+            if (userAnswers[currentQuestionIndex] === null) return;
+            
+            const question = quizData[currentQuestionIndex];
+            const selectedOption = userAnswers[currentQuestionIndex];
+            const isCorrect = selectedOption === question.correctAnswer;
+            
+            // Update score if correct
+            if (isCorrect) {
+                userScore += 10;
+                currentScore.textContent = userScore;
+            }
+            
+            // Show correct/incorrect states
+            document.querySelectorAll('.option').forEach((option, i) => {
+                option.style.cursor = 'default';
+                
+                if (i === selectedOption) {
+                    option.classList.add(isCorrect ? 'correct' : 'incorrect');
+                } else if (i === question.correctAnswer) {
+                    option.classList.add('correct');
+                }
+            });
+            
+            // Update button
+            submitButton.classList.add('hidden');
+            nextButton.classList.remove('hidden');
+            if (currentQuestionIndex === quizData.length - 1) {
+                nextButton.innerHTML = 'Finish Quiz <i class="fas fa-flag-checkered"></i>';
+            }
+            
+            // Show explanation
+            explanationPanel.classList.add('show');
+        }
+
+        // Next Question
+        function nextQuestion() {
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion(currentQuestionIndex);
+                updateProgress();
+            } else {
+                completeQuiz();
+            }
+        }
+
+        // Previous Question
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion(currentQuestionIndex);
+                updateProgress();
+            }
+        }
+
+        // Update Progress
+        function updateProgress() {
+            const progress = ((currentQuestionIndex + 1) / quizData.length) * 100;
+            progressFill.style.width = `${progress}%`;
+            progressPercent.textContent = `${Math.round(progress)}%`;
+            
+            prevButton.disabled = currentQuestionIndex === 0;
+        }
+
+        // Complete Quiz
+        function completeQuiz() {
+            quizCompleted = true;
+            
+            // Remove scroll listener during results
+            window.removeEventListener('scroll', handleScroll);
+            
+            // Calculate total time
+            const totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            
+            // Calculate correct answers
+            const correctCount = userAnswers.reduce((count, answer, index) => {
+                return count + (answer === quizData[index].correctAnswer ? 1 : 0);
+            }, 0);
+            
+            // Update results
+            finalScore.textContent = `${correctCount}/${quizData.length}`;
+            correctAnswers.textContent = correctCount;
+            scorePoints.textContent = userScore;
+            completionTime.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Set message
+            const percentage = (correctCount / quizData.length) * 100;
+            if (percentage >= 90) {
+                resultsMessage.textContent = "Excellent! You've mastered these tenses!";
+            } else if (percentage >= 70) {
+                resultsMessage.textContent = "Great job! Solid understanding of the concepts.";
+            } else if (percentage >= 50) {
+                resultsMessage.textContent = "Good effort! Keep practicing to improve.";
+            } else {
+                resultsMessage.textContent = "Keep learning! Review the explanations.";
+            }
+            
+            // Show results screen
+            quizContent.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+            
+            // Ensure full back button is visible on results page
+            backButton.classList.remove('hidden');
+        }
+
+        // Restart Quiz
+        function restartQuiz() {
+            // Reset state
+            currentQuestionIndex = 0;
+            userScore = 0;
+            userAnswers = new Array(quizData.length).fill(null);
+            quizCompleted = false;
+            
+            // Reset UI
+            currentScore.textContent = '0';
+            quizContent.classList.remove('hidden');
+            resultsScreen.classList.add('hidden');
+            
+            // Restart timer
+            startTime = Date.now();
+            
+            // Re-add scroll listener
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            
+            // Load first question
+            loadQuestion(currentQuestionIndex);
+            updateProgress();
+        }
+
+        // Review Answers
+        function reviewAnswers() {
+            currentQuestionIndex = 0;
+            quizContent.classList.remove('hidden');
+            resultsScreen.classList.add('hidden');
+            loadQuestion(currentQuestionIndex);
+            updateProgress();
+            
+            // Re-add scroll listener
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            
+            // Disable interaction for review mode
+            submitButton.disabled = true;
+            submitButton.textContent = 'Already Answered';
+        }
+
+        // Back Button Handler
+        backButton.addEventListener('click', () => {
+            window.history.back();
+        });
+
+        // Add keyboard shortcut for back button (Alt + Left Arrow)
+        document.addEventListener('keydown', (e) => {
+            if (e.altKey && e.key === 'ArrowLeft') {
+                window.history.back();
+            }
+        });
+
+        // Event Listeners
+        submitButton.addEventListener('click', submitAnswer);
+        nextButton.addEventListener('click', nextQuestion);
+        prevButton.addEventListener('click', prevQuestion);
+        restartButton.addEventListener('click', restartQuiz);
+        reviewButton.addEventListener('click', reviewAnswers);
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (quizCompleted) return;
+            
+            switch(e.key) {
+                case '1':
+                case '2':
+                case '3':
+                    if (!submitButton.disabled && submitButton.textContent === 'Check Answer') {
+                        const index = parseInt(e.key) - 1;
+                        if (index >= 0 && index < 3) {
+                            selectOption(index);
+                        }
+                    }
+                    break;
+                case 'Enter':
+                    if (!submitButton.disabled && !submitButton.classList.contains('hidden')) {
+                        submitAnswer();
+                    } else if (!nextButton.classList.contains('hidden')) {
+                        nextQuestion();
+                    }
+                    break;
+                case 'ArrowLeft':
+                    if (e.altKey) {
+                        // Alt + Left handled above
+                    } else if (!prevButton.disabled) {
+                        prevQuestion();
+                    }
+                    break;
+                case 'ArrowRight':
+                    if (!nextButton.classList.contains('hidden')) nextQuestion();
+                    break;
+            }
+        });
+
+        // Initialize when page loads
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+                appContainer.classList.remove('hidden');
+                initApp();
+            }, 1000);
         });
     </script>
 </body>

@@ -9,171 +9,434 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
+
+
+ :root {
+            --primary-white: #fafafa;
+            --secondary-white: #f5f5f7;
+            --primary-black: #1d1d1f;
+            --secondary-black: #424245;
+            --accent-gray: #8e8e93;
+            --light-gray: #c7c7cc;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.25);
+            --shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.06);
+            --shadow-medium: 0 8px 32px rgba(0, 0, 0, 0.08);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-subtle: all 0.4s ease-out;
+        }
+
+        
+     
+
        
-        /* Gradient Header Styles */
-        .gradient-header {
-            position: relative;
-            overflow: hidden;
-            margin-top: 0;
-            width: 100%;
-            display: none; /* Hidden by default */
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        
-        .gradient-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 108px;
-          /* This one looks particularly elegant */
-background: linear-gradient(
-    90deg,
-    rgba(64, 156, 255, 0.15) 0%,      /* Clean Blue */
-    rgba(120, 119, 227, 0.15) 50%,    /* Soft Purple */
-    rgba(255, 184, 0, 0.15) 100%      /* Apple Yellow accent */
-);
-            border-bottom-left-radius: 50% 50%;
-            border-bottom-right-radius: 50% 50%;
-            animation: gradientWave 20s ease-in-out infinite;
-            background-size: 300% 100%;
-            will-change: background-position;
-            backface-visibility: hidden;
-            transform: translateZ(0);
-        }
-        
-        .gradient-content {
+
+        /* Title styling */
+        .title {
+            font-weight: 700;
+            font-size: 2.75rem;
+            margin-bottom: 2rem;
+            letter-spacing: -0.5px;
+            color: var(--primary-black);
             position: relative;
-            z-index: 1;
-            padding: 74px 24px 24px;
+            display: inline-block;
+            animation: titleAppear 0.8s ease-out;
+        }
+
+        @keyframes titleAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Motivational message */
+        .motivation {
+            font-weight: 500;
+            font-size: 1.9rem;
+            margin-bottom: 2.5rem;
+            letter-spacing: -0.3px;
+            color: var(--primary-black);
+            min-height: 68px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 0.4s ease;
+            padding: 0 24px;
+            line-height: 1.3;
+        }
+
+        .motivation.fade-out {
+            opacity: 0;
+        }
+
+        .motivation.fade-in {
+            opacity: 1;
+        }
+
+        /* Timer mode selector */
+        .mode-selector {
             display: flex;
             justify-content: center;
-            align-items: center;
+            gap: 16px;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+            opacity: 1;
+            transition: var(--transition-smooth);
+            animation: slideUp 0.5s ease-out 0.2s both;
         }
-        
-        .gradient-text-container {
-            text-align: center;
-            max-width: 600px;
-            width: 100%;
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-    .store-title {
-    font-size: 6rem;
-    font-weight: bold;
-    background: linear-gradient(to right, #3b82f6, #6b7280, #f57c00); /* Using the blue from gradient-text */
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    letter-spacing: -1px;
-    line-height: 1.1;
-    margin-bottom: 34px;
-}
-        .tagline {
-            font-size: 2rem;
+
+        .mode-selector.hidden {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+            height: 0;
+            margin-bottom: 0;
+            overflow: hidden;
+        }
+
+        .mode-btn {
+            background: var(--glass-bg);
+            color: var(--secondary-black);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 16px 28px;
+            font-size: 1rem;
             font-weight: 500;
-            color: #374151;
-       
-    direction: rtl; /* مهم للنص العربي */
-   
-            line-height: 1.3;
-            margin-bottom: 32px;
-            
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            min-width: 140px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-soft);
         }
-        
-        .action-buttons {
+
+        .mode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+            color: var(--primary-black);
+        }
+
+        .mode-btn.active {
+            background: var(--primary-black);
+            color: var(--primary-white);
+            border-color: var(--primary-black);
+            transform: translateY(-1px);
+        }
+
+        .mode-duration {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 400;
+            margin-top: 4px;
+            opacity: 0.8;
+        }
+
+        /* Timer container with premium glass effect */
+        .timer-container {
+            width: 320px;
+            height: 320px;
+            margin: 0 auto 36px;
+            border-radius: 50%;
             display: flex;
             flex-direction: column;
-            gap: 16px;
             align-items: center;
+            justify-content: center;
+            position: relative;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            box-shadow: 
+                var(--shadow-medium),
+                inset 0 1px 1px rgba(255, 255, 255, 0.8),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.05);
+            transition: var(--transition-subtle);
+            animation: scaleIn 0.6s ease-out 0.4s both;
         }
-        
-        .action-button {
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Timer display - ALWAYS BLACK */
+        .timer {
+            font-size: 4.5rem;
+            font-weight: 300;
+            letter-spacing: -3px;
+            color: var(--primary-black) !important;
+            user-select: none;
+            margin-bottom: 4px;
+            transition: transform 0.3s ease;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Mode label inside timer */
+        .mode-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-gray);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 8px;
+            opacity: 0.9;
+            transition: var(--transition-smooth);
+        }
+
+        /* Timer progress ring */
+        .progress-ring {
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            width: calc(100% + 8px);
+            height: calc(100% + 8px);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.9;
+            transition: background 0.5s ease;
+            background: conic-gradient(transparent 0deg, transparent 0deg);
+        }
+
+        /* Control buttons */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 16px;
+            opacity: 1;
+            transition: var(--transition-smooth);
+            animation: fadeIn 0.5s ease-out 0.6s both;
+        }
+
+        .control-btn {
+            background: var(--primary-black);
+            color: var(--primary-white);
+            border: none;
+            border-radius: 50px;
+            padding: 18px 36px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-soft);
+            letter-spacing: 0.5px;
+            min-width: 140px;
             display: flex;
             align-items: center;
-            color: #2563eb;
-            font-weight: 500;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .control-btn:hover {
+            background: var(--secondary-black);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .control-btn:active {
+            transform: translateY(0);
+        }
+
+        .control-btn.running {
+            background: #666666;
+        }
+
+        .control-btn.secondary {
+            background: var(--glass-bg);
+            color: var(--secondary-black);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .control-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--primary-black);
+        }
+
+        .btn-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Status indicator */
+        .status {
+            margin-top: 28px;
             font-size: 1rem;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            text-decoration: none;
+            color: var(--accent-gray);
+            font-weight: 400;
+            height: 24px;
+            transition: var(--transition-smooth);
+            letter-spacing: 0.3px;
+            animation: fadeIn 0.5s ease-out 0.8s both;
         }
-        
-        .action-button:hover {
-            color: #1d4ed8;
-            transform: translateX(5px);
+
+        .status.hidden {
+            opacity: 0;
         }
-        
-        .arrow-icon {
-            width: 20px;
-            height: 30px;
-            margin-left: 8px;
-            stroke-width: 2;
+
+        /* Progress indicator */
+        .progress-indicator {
+            width: 200px;
+            height: 4px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 2px;
+            margin: 24px auto;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-        
-        @keyframes gradientWave {
-            0%, 100% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
+
+        .progress-indicator.active {
+            opacity: 1;
         }
-        
-        @media (prefers-reduced-motion: reduce) {
-            .gradient-bg {
-                animation: none;
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #5D9CEC, #7B68EE);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 1s linear;
+        }
+
+       
+
+        /* Responsive design */
+        @media (max-width: 640px) {
+          
+            
+            .title {
+                font-size: 2.25rem;
+                margin-bottom: 1.75rem;
             }
             
-            .store-title {
-                transition: none;
-                
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .store-title {
-                font-size: 3rem;
-                 margin-bottom: 44px;
-                 
-            }
-           
-        .store-title.text-light{
-
-
-
-
-            margin-bottom: 50px;
-        }
-          .gradient-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 70px;
-            background: linear-gradient(
-                90deg,
-                rgba(75, 155, 243, 0.15) 0%,
-                rgba(190, 53, 245, 0.15) 70%,
-                rgba(255, 85, 190, 0.15) 100%
-            );
-            border-bottom-left-radius: 50% 50%;
-            border-bottom-right-radius: 50% 50%;
-            animation: gradientWave 20s ease-in-out infinite;
-            background-size: 300% 100%;
-            will-change: background-position;
-            backface-visibility: hidden;
-            transform: translateZ(0);
-        }  
-            .tagline {
-                font-size: 1.5rem;
+            .motivation {
+                font-size: 1.6rem;
+                margin-bottom: 2rem;
+                min-height: 56px;
             }
             
-            .gradient-content {
-                padding: 48px 16px 16px;
+            .mode-selector {
+                gap: 12px;
+                margin-bottom: 2rem;
             }
             
-            .gradient-bg {
-                animation-duration: 25s;
+            .mode-btn {
+                min-width: 120px;
+                padding: 14px 20px;
+                font-size: 0.95rem;
+            }
+            
+            .timer-container {
+                width: 280px;
+                height: 280px;
+                margin-bottom: 32px;
+            }
+            
+            .timer {
+                font-size: 3.75rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+                gap: 16px;
+            }
+            
+            .control-btn {
+                width: 220px;
+                padding: 16px 32px;
             }
         }
+
+        @media (max-width: 400px) {
+            .title {
+                font-size: 1.9rem;
+            }
+            
+            .motivation {
+                font-size: 1.4rem;
+            }
+            
+            .mode-btn {
+                min-width: 100%;
+                margin-bottom: 8px;
+            }
+            
+            .timer-container {
+                width: 260px;
+                height: 260px;
+            }
+            
+            .timer {
+                font-size: 3.25rem;
+            }
+            
+            .control-btn {
+                width: 200px;
+                padding: 14px 28px;
+            }
+        }
+
+        /* Subtle glow animation for progress */
+        @keyframes subtleGlow {
+            0%, 100% { 
+                box-shadow: 
+                    var(--shadow-medium),
+                    inset 0 1px 1px rgba(255, 255, 255, 0.8),
+                    inset 0 -1px 1px rgba(0, 0, 0, 0.05);
+            }
+            50% { 
+                box-shadow: 
+                    0 8px 32px rgba(0, 0, 0, 0.12),
+                    inset 0 1px 1px rgba(255, 255, 255, 0.9),
+                    inset 0 -1px 1px rgba(0, 0, 0, 0.05);
+            }
+        }
+
+        /* Smooth background transition */
+        @keyframes smoothBackground {
+            0%, 100% { 
+                background: var(--glass-bg);
+            }
+            50% { 
+                background: rgba(255, 255, 255, 0.9);
+            }
+        }
+    
     </style>
 </head>
 <body>
@@ -224,8 +487,8 @@ background: linear-gradient(
             <span class="nav-label">SpeakWell</span>
         </div>
         <div class="nav-item" data-target="about" role="button" tabindex="0">
-            <i class="fas fa-info-circle nav-icon"></i>
-            <span class="nav-label">À propos</span>
+            <i class="fas fa-brain nav-icon"></i>
+            <span class="nav-label">EduFlow</span>
         </div>
     </nav>
 
@@ -718,11 +981,61 @@ background: linear-gradient(
 
     <!-- About Content -->
     <div id="about" class="content-section">
-        <div class="about-content">
-            <h2>À Propos</h2>
-            <p>Bonjour ! Bienvenue sur Modern Interactive UI.</p>
-            <p style="margin-top: var(--spacing-md);">Ceci est un site web professionnel et réactif mettant en avant les principes de design modernes avec des interactions fluides et une esthétique épurée.</p>
+       
+    <!-- Main container -->
+    <div class="container">
+        
+        
+        <!-- Motivational message -->
+        <div class="motivation" id="motivation">لتميّز ليس فعلًا عابرًا، بل عادة تُبنى بالتركيز</div>
+        
+        <!-- Timer mode selector -->
+        <div class="mode-selector" id="modeSelector">
+            <button class="mode-btn active" data-minutes="20" id="lightBtn">
+                Révision rapide
+                <span class="mode-duration">20 minutes</span>
+            </button>
+            <button class="mode-btn" data-minutes="29" id="normalBtn">
+                Révision normale
+                <span class="mode-duration">29 minutes</span>
+            </button>
+            <button class="mode-btn" data-minutes="45" id="deepBtn">
+                Révision approfondie
+                <span class="mode-duration">45 minutes</span>
+            </button>
         </div>
+        
+        <!-- Progress indicator -->
+        <div class="progress-indicator" id="progressIndicator">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        
+        <!-- Timer container -->
+        <div class="timer-container" id="timerContainer">
+            <div class="progress-ring" id="progressRing"></div>
+            <div class="timer" id="timer">20:00</div>
+            <div class="mode-label" id="modeLabel">Révision rapide</div>
+        </div>
+        
+        <!-- Control buttons -->
+        <div class="controls" id="controls">
+            <button class="control-btn" id="startBtn">
+                <span class="btn-icon">▶</span>
+                Lancer
+            </button>
+            <button class="control-btn secondary" id="resetBtn">
+                <span class="btn-icon">↻</span>
+                Recommencer
+            </button>
+        </div>
+        
+        <!-- Status indicator -->
+        <div class="status" id="status">Sélectionnez un mode pour démarrer</div>
+    </div>
+      <footer>
+                <p>Eduwell Quantum Group &copy; <span class="footer-highlight">2025</span></p>
+            </footer>
+   
     </div>
 
     <!-- NEW APP CARD MODALS - Google Play Store Style -->
@@ -901,275 +1214,346 @@ Testez vos connaissances sur les points clés du programme.
     <script src="./assets/js/scriptplus.js"></script>
     <script src="./assets/js/rsewdata1.js"></script>
     <script>
-        // Gradient Header JavaScript
-        class ColorContrastManager {
-            constructor() {
-                this.storeTitle = document.getElementById('store-title');
-                this.observer = null;
-                this.checkInterval = null;
-                this.isChecking = false;
-                this.lastContrastClass = '';
-                
-                this.init();
+       
+        // DOM elements
+        const timerElement = document.getElementById('timer');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const timerContainer = document.getElementById('timerContainer');
+        const progressRing = document.getElementById('progressRing');
+        const progressIndicator = document.getElementById('progressIndicator');
+        const progressBar = document.getElementById('progressBar');
+        const statusElement = document.getElementById('status');
+        const modeLabel = document.getElementById('modeLabel');
+        const motivationElement = document.getElementById('motivation');
+        const modeSelector = document.getElementById('modeSelector');
+        const bodyElement = document.body;
+        
+        // Mode buttons
+        const lightBtn = document.getElementById('lightBtn');
+        const normalBtn = document.getElementById('normalBtn');
+        const deepBtn = document.getElementById('deepBtn');
+        const modeButtons = [lightBtn, normalBtn, deepBtn];
+
+        // Timer modes configuration
+        const timerModes = {
+            light: {
+                minutes: 20,
+                name: "Révision rapide",
+                color: "linear-gradient(135deg, #5D9CEC 0%, #4A77CC 100%)"
+            },
+            normal: {
+                minutes: 29,
+                name: "Révision normale",
+                color: "linear-gradient(135deg, #7B68EE 0%, #6A58D4 100%)"
+            },
+            deep: {
+                minutes: 45,
+                name: "Révision approfondie",
+                color: "linear-gradient(135deg, #FF8E53 0%, #FF6B6B 100%)"
             }
-            
-            init() {
-                // Only initialize if we're on the home page
-                if (this.storeTitle && document.getElementById('home').classList.contains('active')) {
-                    // Initial check
-                    this.updateContrast();
-                    
-                    // Set up Intersection Observer for performance
-                    this.setupIntersectionObserver();
-                    
-                    // Responsive checks (debounced)
-                    window.addEventListener('resize', this.debounce(() => this.updateContrast(), 100));
-                    window.addEventListener('scroll', this.debounce(() => this.updateContrast(), 50));
-                    
-                    // Check periodically but with longer intervals
-                    this.checkInterval = setInterval(() => this.updateContrast(), 2000);
-                    
-                    // Check when animations might affect visibility
-                    this.setupAnimationFrameCheck();
-                }
-            }
-            
-            setupIntersectionObserver() {
-                this.observer = new IntersectionObserver(
-                    (entries) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                this.updateContrast();
-                            }
-                        });
-                    },
-                    {
-                        threshold: 0.1,
-                        rootMargin: '50px'
-                    }
-                );
-                
-                this.observer.observe(this.storeTitle);
-            }
-            
-            setupAnimationFrameCheck() {
-                let lastCheck = 0;
-                const checkOnFrame = (timestamp) => {
-                    if (timestamp - lastCheck > 1000) {
-                        this.updateContrast();
-                        lastCheck = timestamp;
-                    }
-                    requestAnimationFrame(checkOnFrame);
-                };
-                requestAnimationFrame(checkOnFrame);
-            }
-            
-            getElementBackgroundColor(element) {
-                const rect = element.getBoundingClientRect();
-                const centerX = Math.floor(rect.left + rect.width / 2);
-                const centerY = Math.floor(rect.top + rect.height / 2);
-                
-                const points = [
-                    [centerX, centerY],
-                    [centerX - 10, centerY],
-                    [centerX + 10, centerY],
-                    [centerX, centerY - 10],
-                    [centerX, centerY + 10]
-                ];
-                
-                let totalR = 0, totalG = 0, totalB = 0;
-                let validSamples = 0;
-                
-                points.forEach(([x, y]) => {
-                    const elementAtPoint = document.elementFromPoint(x, y);
-                    if (elementAtPoint) {
-                        const bgColor = window.getComputedStyle(elementAtPoint).backgroundColor;
-                        const rgb = this.parseRGB(bgColor);
-                        if (rgb) {
-                            totalR += rgb[0];
-                            totalG += rgb[1];
-                            totalB += rgb[2];
-                            validSamples++;
-                        }
-                    }
-                });
-                
-                if (validSamples === 0) return [255, 255, 255];
-                
-                return [
-                    Math.floor(totalR / validSamples),
-                    Math.floor(totalG / validSamples),
-                    Math.floor(totalB / validSamples)
-                ];
-            }
-            
-            parseRGB(colorString) {
-                const match = colorString.match(/(\d+),\s*(\d+),\s*(\d+)/);
-                return match ? [parseInt(match[1]), parseInt(match[2]), parseInt(match[3])] : null;
-            }
-            
-            calculateRelativeLuminance(rgb) {
-                const [r, g, b] = rgb.map(value => {
-                    value = value / 255;
-                    return value <= 0.03928 ? value / 12.92 : Math.pow((value + 0.055) / 1.055, 2.4);
-                });
-                
-                return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-            }
-            
-            getContrastRatio(luminance1, luminance2) {
-                const lighter = Math.max(luminance1, luminance2);
-                const darker = Math.min(luminance1, luminance2);
-                return (lighter + 0.05) / (darker + 0.05);
-            }
-            
-            updateContrast() {
-                if (this.isChecking) return;
-                this.isChecking = true;
-                
-                requestAnimationFrame(() => {
-                    try {
-                        const bgColor = this.getElementBackgroundColor(this.storeTitle);
-                        const bgLuminance = this.calculateRelativeLuminance(bgColor);
-                        
-                        const blackLuminance = 0;
-                        const whiteLuminance = 1;
-                        
-                        const contrastWithBlack = this.getContrastRatio(bgLuminance, blackLuminance);
-                        const contrastWithWhite = this.getContrastRatio(whiteLuminance, bgLuminance);
-                        
-                        const MIN_CONTRAST_RATIO = 3.0;
-                        
-                        let contrastClass = '';
-                        
-                        if (contrastWithWhite >= MIN_CONTRAST_RATIO && contrastWithWhite > contrastWithBlack) {
-                            contrastClass = 'text-light';
-                        } else if (contrastWithBlack >= MIN_CONTRAST_RATIO) {
-                            contrastClass = 'text-inverted';
-                        }
-                        
-                        if (contrastClass !== this.lastContrastClass) {
-                            this.storeTitle.classList.remove('text-inverted', 'text-light');
-                            if (contrastClass) {
-                                this.storeTitle.classList.add(contrastClass);
-                            }
-                            this.lastContrastClass = contrastClass;
-                        }
-                    } catch (error) {
-                        console.error('Color contrast check failed:', error);
-                    } finally {
-                        this.isChecking = false;
-                    }
-                });
-            }
-            
-            debounce(func, wait) {
-                let timeout;
-                return (...args) => {
-                    clearTimeout(timeout);
-                    timeout = setTimeout(() => func.apply(this, args), wait);
-                };
-            }
-            
-            destroy() {
-                if (this.observer) {
-                    this.observer.disconnect();
-                }
-                if (this.checkInterval) {
-                    clearInterval(this.checkInterval);
-                }
-            }
+        };
+
+        // Motivational messages (9 messages)
+        const motivationalMessages = [
+           "التميّز ليس فعلًا عابرًا، بل عادة تُبنى بالتركيز",
+            "العمق أهم من التشتّت",
+            "الوقت الجيد يصنع الفرق",
+            "التركيز طريق التميّز.",
+            "هدأ… واغص في العمق",
+        
+            "ما تستثمره اليوم، تجنيه غدًا."
+        ];
+
+        // Timer variables
+        let isRunning = false;
+        let timerInterval = null;
+        let currentMode = 'light';
+        let totalSeconds = timerModes.light.minutes * 60;
+        let originalSeconds = timerModes.light.minutes * 60;
+        let messageIndex = 0;
+        let lastMessageTime = 0;
+
+        // Format time as MM:SS
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         }
-        
-        // Initialize the color contrast manager
-        let contrastManager = null;
-        
-        // Function to show/hide gradient header based on active section
-        function toggleGradientHeader() {
-            const gradientHeader = document.getElementById('gradientHeader');
-            const homeSection = document.getElementById('home');
+
+        // Set active mode button
+        function setActiveMode(mode) {
+            modeButtons.forEach(btn => btn.classList.remove('active'));
             
-            if (homeSection.classList.contains('active')) {
-                gradientHeader.style.display = 'block';
-                // Initialize contrast manager if not already initialized
-                if (!contrastManager) {
-                    contrastManager = new ColorContrastManager();
-                }
+            if (mode === 'light') lightBtn.classList.add('active');
+            if (mode === 'normal') normalBtn.classList.add('active');
+            if (mode === 'deep') deepBtn.classList.add('active');
+            
+            currentMode = mode;
+            originalSeconds = timerModes[mode].minutes * 60;
+            totalSeconds = originalSeconds;
+            modeLabel.textContent = timerModes[mode].name.toUpperCase();
+            timerElement.textContent = formatTime(totalSeconds);
+            
+            // Reset visual effects
+            resetVisuals();
+            statusElement.textContent = `${timerModes[mode].name} selected`;
+            
+            // Show mode selector (for when restart is clicked)
+            showModeSelector();
+        }
+
+        // Show mode selector
+        function showModeSelector() {
+            modeSelector.classList.remove('hidden');
+            statusElement.classList.remove('hidden');
+            progressIndicator.classList.remove('active');
+            motivationElement.textContent = motivationalMessages[0];
+            messageIndex = 0;
+        }
+
+        // Hide mode selector when timer starts
+        function hideModeSelector() {
+            modeSelector.classList.add('hidden');
+            statusElement.classList.add('hidden');
+            progressIndicator.classList.add('active');
+        }
+
+        // Reset visual effects
+        function resetVisuals() {
+            progressBar.style.width = "0%";
+            timerElement.style.color = "var(--primary-black)";
+            timerContainer.style.background = "var(--glass-bg)";
+            timerContainer.style.animation = "none";
+            progressRing.style.background = 'conic-gradient(transparent 0deg, transparent 0deg)';
+        }
+
+        // Show motivational message with animation
+        function showMotivationalMessage() {
+            motivationElement.classList.remove('fade-in');
+            motivationElement.classList.add('fade-out');
+            
+            setTimeout(() => {
+                motivationElement.textContent = motivationalMessages[messageIndex];
+                motivationElement.classList.remove('fade-out');
+                motivationElement.classList.add('fade-in');
+                
+                // Cycle to next message
+                messageIndex = (messageIndex + 1) % motivationalMessages.length;
+                
+                // Subtle animation for timer container
+                timerContainer.style.animation = "subtleGlow 1s ease";
+                setTimeout(() => {
+                    timerContainer.style.animation = "";
+                }, 1000);
+            }, 400);
+        }
+
+        // Update timer display
+        function updateTimer() {
+            timerElement.textContent = formatTime(totalSeconds);
+            
+            // Calculate progress
+            const progressPercentage = 100 - (totalSeconds / originalSeconds * 100);
+            
+            // Update progress ring with smooth gradient
+            progressRing.style.background = `
+                conic-gradient(
+                    ${timerModes[currentMode].color} ${progressPercentage * 3.6}deg,
+                    transparent 0deg
+                )
+            `;
+            
+            // Update progress bar
+            progressBar.style.width = `${progressPercentage}%`;
+            
+            // Timer text ALWAYS stays black
+            timerElement.style.color = "var(--primary-black)";
+            
+            // Update timer container background with subtle animation
+            const progress = 1 - (totalSeconds / originalSeconds);
+            if (progress > 0.7) {
+                timerContainer.style.animation = "smoothBackground 2s ease infinite";
             } else {
-                gradientHeader.style.display = 'none';
-                // Destroy contrast manager when leaving home section
-                if (contrastManager) {
-                    contrastManager.destroy();
-                    contrastManager = null;
-                }
+                timerContainer.style.animation = "";
+            }
+            
+            // Show motivational message every 5 minutes
+            const minutesPassed = Math.floor((originalSeconds - totalSeconds) / 60);
+            if (minutesPassed > 0 && minutesPassed % 5 === 0 && minutesPassed !== lastMessageTime) {
+                lastMessageTime = minutesPassed;
+                showMotivationalMessage();
+            }
+            
+            // Update status based on progress
+            const progressValue = 1 - (totalSeconds / originalSeconds);
+            if (progressValue < 0.25) {
+                statusElement.textContent = "Building momentum";
+            } else if (progressValue < 0.5) {
+                statusElement.textContent = "In the flow state";
+            } else if (progressValue < 0.75) {
+                statusElement.textContent = "Deep focus achieved";
+            } else if (progressValue < 0.9) {
+                statusElement.textContent = "Final stretch ahead";
+            } else {
+                statusElement.textContent = "Almost there, stay strong";
+            }
+            
+            // Check if timer reached zero
+            if (totalSeconds <= 0) {
+                clearInterval(timerInterval);
+                isRunning = false;
+                startBtn.textContent = "Start";
+                startBtn.innerHTML = '<span class="btn-icon">▶</span> Start';
+                startBtn.classList.remove('running');
+                timerElement.textContent = formatTime(originalSeconds);
+                
+                // Show completion message
+                motivationElement.textContent = "Session complete! Well done";
+                statusElement.textContent = "Take a short break";
+                
+                // Reset visuals
+                resetVisuals();
+                
+                // Show mode selector again when timer completes
+                showModeSelector();
+                
+                // Play completion sound
+                playCompletionSound();
+            }
+            
+            totalSeconds--;
+        }
+
+        // Play completion sound
+        function playCompletionSound() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                // Pleasant completion tone
+                oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(880, audioContext.currentTime + 0.5);
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 1);
+            } catch (e) {
+                console.log("Audio context not supported");
             }
         }
-        
-        // Wait for DOM to be fully loaded
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => {
-                // Initial toggle based on active section
-                toggleGradientHeader();
+
+        // Start/Pause timer
+        function toggleTimer() {
+            if (isRunning) {
+                // Pause timer
+                clearInterval(timerInterval);
+                isRunning = false;
+                startBtn.textContent = "Resume";
+                startBtn.innerHTML = '<span class="btn-icon">▶</span> Resume';
+                startBtn.classList.remove('running');
+                statusElement.textContent = "Paused";
                 
-                // Add hover effects to gradient header buttons
-                const buttons = document.querySelectorAll('.action-button');
-                buttons.forEach(button => {
-                    button.addEventListener('mouseenter', () => {
-                        button.style.transform = 'translateX(5px)';
-                    });
-                    
-                    button.addEventListener('mouseleave', () => {
-                        button.style.transform = 'translateX(0)';
-                    });
-                });
+                // Show mode selector when paused (optional - remove if you want it to stay hidden)
+                // showModeSelector();
+            } else {
+                // Start timer
+                if (totalSeconds <= 0) {
+                    totalSeconds = originalSeconds;
+                }
                 
-                // Listen for navigation changes (assuming your navigation script triggers section changes)
-                // This is a generic listener - you may need to adjust based on your actual navigation script
-                document.addEventListener('sectionChange', toggleGradientHeader);
+                timerInterval = setInterval(updateTimer, 1000);
+                isRunning = true;
+                startBtn.textContent = "Pause";
+                startBtn.innerHTML = '<span class="btn-icon">⏸</span> Pause';
+                startBtn.classList.add('running');
                 
-                // Also check on nav item clicks
-                const navItems = document.querySelectorAll('.nav-item');
-                navItems.forEach(item => {
-                    item.addEventListener('click', () => {
-                        // Small delay to allow section change to complete
-                        setTimeout(toggleGradientHeader, 50);
-                    });
-                });
-            });
-        } else {
-            // Initial toggle based on active section
-            toggleGradientHeader();
-            
-            // Add hover effects to gradient header buttons
-            const buttons = document.querySelectorAll('.action-button');
-            buttons.forEach(button => {
-                button.addEventListener('mouseenter', () => {
-                    button.style.transform = 'translateX(5px)';
-                });
+                // Hide mode selector when timer starts
+                hideModeSelector();
                 
-                button.addEventListener('mouseleave', () => {
-                    button.style.transform = 'translateX(0)';
-                });
-            });
-            
-            // Listen for navigation changes
-            document.addEventListener('sectionChange', toggleGradientHeader);
-            
-            // Also check on nav item clicks
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    setTimeout(toggleGradientHeader, 50);
-                });
-            });
+                // Show initial motivational message
+                motivationElement.textContent = motivationalMessages[0];
+                messageIndex = 1;
+                lastMessageTime = 0;
+                
+                // Update timer immediately
+                updateTimer();
+            }
         }
-        
-        // Clean up on page unload
-        window.addEventListener('beforeunload', () => {
-            if (contrastManager) {
-                contrastManager.destroy();
+
+        // Reset/Restart timer - SHOWS MODE SELECTOR
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            totalSeconds = originalSeconds;
+            timerElement.textContent = formatTime(totalSeconds);
+            startBtn.textContent = "Start";
+            startBtn.innerHTML = '<span class="btn-icon">▶</span> Start';
+            startBtn.classList.remove('running');
+            statusElement.textContent = `${timerModes[currentMode].name} ready`;
+            
+            // Reset visual effects
+            resetVisuals();
+            
+            // IMPORTANT: Show mode selector when restart is clicked
+            showModeSelector();
+        }
+
+        // Event listeners for mode buttons
+        lightBtn.addEventListener('click', () => {
+            if (!isRunning) {
+                setActiveMode('light');
             }
         });
+
+        normalBtn.addEventListener('click', () => {
+            if (!isRunning) {
+                setActiveMode('normal');
+            }
+        });
+
+        deepBtn.addEventListener('click', () => {
+            if (!isRunning) {
+                setActiveMode('deep');
+            }
+        });
+
+        // Event listeners for control buttons
+        startBtn.addEventListener('click', toggleTimer);
+        resetBtn.addEventListener('click', resetTimer);
+        
+        // Double click timer to reset
+        timerContainer.addEventListener('dblclick', resetTimer);
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                toggleTimer();
+            } else if (e.code === 'KeyR' && e.ctrlKey) {
+                e.preventDefault();
+                resetTimer();
+            } else if (e.code === 'Digit1' || e.code === 'Numpad1') {
+                e.preventDefault();
+                if (!isRunning) setActiveMode('light');
+            } else if (e.code === 'Digit2' || e.code === 'Numpad2') {
+                e.preventDefault();
+                if (!isRunning) setActiveMode('normal');
+            } else if (e.code === 'Digit3' || e.code === 'Numpad3') {
+                e.preventDefault();
+                if (!isRunning) setActiveMode('deep');
+            }
+        });
+
+        // Initialize
+        setActiveMode('light');
     </script>
 </body>
 </html>

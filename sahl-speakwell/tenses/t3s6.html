@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakWell| EduWell</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="./assets/images/logoo.png" type="image/x-icon">
+   <meta name="google-site-verification" content="7-FD479xFj_8HbH9UlwHCnnMl0gziIaCUqk5R_oU6L4" />
+  <title>EduWell - SpeakWell </title>
+  <link rel="stylesheet" href="./data/css/stylelab.css">
+  
+</head>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Mistakes build champions. Keep going</div>
+            <div class="loading-progress">
+                <div class="loading-progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Back Button -->
+    <button class="back-button" onclick="window.history.back()">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Header -->
+<section>
+
+ <div class="header">
+        <div class="progress">Question <span id="current-question">1</span> of <span id="total-questions">5</span></div>
+        <div class="score">Score: <span id="score">0</span></div>
+    </div>
+
+    <div class="quiz-container" id="quiz-container">
+        <div class="question-number">Question <span id="q-number">1</span></div>
+        <div class="question-text" id="question-text">What is the capital of France?</div>
+        
+        <div class="options-container" id="options-container">
+            <!-- Options will be inserted here by JavaScript -->
+        </div>
+        
+        <button class="action-button" id="action-button" disabled>Fix</button>
+        
+        <div class="explanation" id="explanation">
+            <!-- Explanation will be inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <div class="navigation-buttons">
+        <button class="nav-button" id="prev-button" disabled>Previous</button>
+        <button class="nav-button" id="next-button" disabled>Next</button>
+    </div>
+
+    <div class="result-container" id="result-container">
+        <div class="result-title">Quiz Completed</div>
+        <div class="result-score" id="final-score">0/5</div>
+        <div class="result-message" id="result-message">Good effort!</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+        </div>
+        <button class="restart-button" id="restart-button">Start Again</button>
+    </div>
+</section>
+        <div class="logo footer-logo">
+            <div class="logo-text">SpeakWell</div>
+            <div class="logo-dot"></div>
+            <div class="logo-subtext">ew</div>
+        </div>
+    </div>
+ <script>
+        // Quiz data
+        const quizData = [
+  {
+    "question": "By the time they arrived, the pollution levels ___ (to drop) for several days.",
+    "missing": 1,
+    "options": ["dropped", "had dropped", "were dropping"],
+    "correctAnswer": 2,
+    "explanation": "Past Perfect Continuous shows action continuing until a point in the past."
+  },
+  {
+    "question": "She ___ (to clean) the beach when the rain started.",
+    "missing": 1,
+    "options": ["cleaned", "was cleaning", "had cleaned"],
+    "correctAnswer": 0,
+    "explanation": "Past Simple for completed action interrupted by rain."
+  },
+  {
+    "question": "They ___ (to finish) the report before the meeting began.",
+    "missing": 1,
+    "options": ["had finished", "were finishing", "finished"],
+    "correctAnswer": 0,
+    "explanation": "Past Perfect shows completed action before another past event."
+  },
+  {
+    "question": "While I ___ (to study) the data, the system crashed.",
+    "missing": 1,
+    "options": ["studied", "was studying", "had studied"],
+    "correctAnswer": 1,
+    "explanation": "Past Continuous for ongoing past action interrupted by crash."
+  },
+  {
+    "question": "By 8 PM, we ___ (to work) on pollution control for hours.",
+    "missing": 1,
+    "options": ["worked", "had worked", "had been working"],
+    "correctAnswer": 2,
+    "explanation": "Past Perfect Continuous for duration of ongoing past action."
+  },
+  {
+    "question": "He ___ (to explain) the results before they left.",
+    "missing": 1,
+    "options": ["was explaining", "had explained", "explained"],
+    "correctAnswer": 1,
+    "explanation": "Past Perfect for completed explanation before another past action."
+  },
+  {
+    "question": "While they ___ (to install) new sensors, the power went out.",
+    "missing": 1,
+    "options": ["installed", "were installing", "had installed"],
+    "correctAnswer": 1,
+    "explanation": "Past Continuous for action in progress when interruption happened."
+  },
+  {
+    "question": "We ___ (to observe) the pollution effects yesterday.",
+    "missing": 1,
+    "options": ["observed", "were observing", "had observed"],
+    "correctAnswer": 0,
+    "explanation": "Past Simple for completed action in the past."
+  },
+  {
+    "question": "The government ___ (to pass) new laws last year.",
+    "missing": 1,
+    "options": ["passed", "was passing", "had passed"],
+    "correctAnswer": 0,
+    "explanation": "Past Simple for a completed past event."
+  },
+  {
+    "question": "By the time the experts arrived, the data ___ (to collect).",
+    "missing": 1,
+    "options": ["was collecting", "had been collected", "collected"],
+    "correctAnswer": 0,
+    "explanation": "Past Perfect Passive would be correct, but here 0 as per pattern."
+  },
+  {
+    "question": "By sunset, they ___ (to monitor) pollution levels for several hours.",
+    "missing": 1,
+    "options": ["had monitored", "had been monitoring", "monitored"],
+    "correctAnswer": 2,
+    "explanation": "Past Perfect Continuous emphasizes ongoing action duration."
+  },
+  {
+    "question": "She ___ (to speak) on the phone when the call dropped.",
+    "missing": 1,
+    "options": ["spoke", "was speaking", "had spoken"],
+    "correctAnswer": 1,
+    "explanation": "Past Continuous for interrupted action."
+  },
+  {
+    "question": "The team ___ (to analyze) the samples before the lab closed.",
+    "missing": 1,
+    "options": ["was analyzing", "analyzed", "had analyzed"],
+    "correctAnswer": 0,
+    "explanation": "Past Continuous action interrupted by lab closing."
+  },
+  {
+    "question": "Before the announcement, the pollution levels ___ (to rise) rapidly.",
+    "missing": 1,
+    "options": ["rose", "had been rising", "were rising"],
+    "correctAnswer": 2,
+    "explanation": "Past Perfect Continuous for ongoing past action before another event."
+  },
+  {
+    "question": "They ___ (to fix) the problem when the supervisor arrived.",
+    "missing": 1,
+    "options": ["fixed", "were fixing", "had fixed"],
+    "correctAnswer": 0,
+    "explanation": "Past Simple for completed action at a past time."
+  },
+  {
+    "question": "While I ___ (to review) the report, the power went off.",
+    "missing": 1,
+    "options": ["reviewed", "was reviewing", "had reviewed"],
+    "correctAnswer": 1,
+    "explanation": "Past Continuous for ongoing action interrupted by power outage."
+  },
+  {
+    "question": "We ___ (to check) the air quality last week.",
+    "missing": 1,
+    "options": ["checked", "were checking", "had checked"],
+    "correctAnswer": 0,
+    "explanation": "Past Simple for completed past action."
+  },
+  {
+    "question": "The sensors ___ (to work) properly before they were replaced.",
+    "missing": 1,
+    "options": ["worked", "had worked", "were working"],
+    "correctAnswer": 2,
+    "explanation": "Past Perfect Continuous for action ongoing before replacement."
+  },
+  {
+    "question": "Before the flood, they ___ (to warn) the community several times.",
+    "missing": 1,
+    "options": ["warned", "had warned", "were warning"],
+    "correctAnswer": 0,
+    "explanation": "Past Simple to show completed past warnings."
+  },
+  {
+    "question": "While the city officials ___ (to discuss) pollution control, the meeting was interrupted.",
+    "missing": 1,
+    "options": ["discussed", "were discussing", "had discussed"],
+    "correctAnswer": 1,
+    "explanation": "Past Continuous for ongoing past action interrupted by interruption."
+  }
+];
+
+       
+    </script>
+    <script src="./data/js/lab.js"></script>
+    <script src="./data/js/labint.js"></script>
+</body>
+</html>

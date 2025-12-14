@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakWell| EduWell</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="./assets/images/logoo.png" type="image/x-icon">
+   <meta name="google-site-verification" content="7-FD479xFj_8HbH9UlwHCnnMl0gziIaCUqk5R_oU6L4" />
+  <title>EduWell - SpeakWell </title>
+  <link rel="stylesheet" href="./data/css/stylelab.css">
+  
+</head>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Mistakes build champions. Keep going</div>
+            <div class="loading-progress">
+                <div class="loading-progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Back Button -->
+    <button class="back-button" onclick="window.history.back()">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Header -->
+<section>
+
+ <div class="header">
+        <div class="progress">Question <span id="current-question">1</span> of <span id="total-questions">5</span></div>
+        <div class="score">Score: <span id="score">0</span></div>
+    </div>
+
+    <div class="quiz-container" id="quiz-container">
+        <div class="question-number">Question <span id="q-number">1</span></div>
+        <div class="question-text" id="question-text">What is the capital of France?</div>
+        
+        <div class="options-container" id="options-container">
+            <!-- Options will be inserted here by JavaScript -->
+        </div>
+        
+        <button class="action-button" id="action-button" disabled>Fix</button>
+        
+        <div class="explanation" id="explanation">
+            <!-- Explanation will be inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <div class="navigation-buttons">
+        <button class="nav-button" id="prev-button" disabled>Previous</button>
+        <button class="nav-button" id="next-button" disabled>Next</button>
+    </div>
+
+    <div class="result-container" id="result-container">
+        <div class="result-title">Quiz Completed</div>
+        <div class="result-score" id="final-score">0/5</div>
+        <div class="result-message" id="result-message">Good effort!</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+        </div>
+        <button class="restart-button" id="restart-button">Start Again</button>
+    </div>
+</section>
+        <div class="logo footer-logo">
+            <div class="logo-text">SpeakWell</div>
+            <div class="logo-dot"></div>
+            <div class="logo-subtext">ew</div>
+        </div>
+    </div>
+ <script>
+        // Quiz data
+        const quizData = [
+  {
+    "question": "By next year, we ___ (to finish) the space tourism project successfully.",
+    "missing": 1,
+    "options": ["will have finished", "will finish", "will be finishing"],
+    "correctAnswer": 0,
+    "explanation": "Future Perfect: action completed before a future time."
+  },
+  {
+    "question": "Tomorrow, the company ___ (to launch) a new pollution control device.",
+    "missing": 2,
+    "options": ["will launch", "will be launching", "will have launched"],
+    "correctAnswer": 0,
+    "explanation": "Future Simple: planned future event."
+  },
+  {
+    "question": "This time next week, she ___ (to work) remotely from home.",
+    "missing": 1,
+    "options": ["will work", "will have worked", "will be working"],
+    "correctAnswer": 1,
+    "explanation": "Future Continuous: ongoing action at a specific future time."
+  },
+  {
+    "question": "By the time you arrive, we ___ (to complete) the online course.",
+    "missing": 1,
+    "options": ["will complete", "will be completing", "will have completed"],
+    "correctAnswer": 2,
+    "explanation": "Future Perfect shows the action will be finished before another future event."
+  },
+  {
+    "question": "At 8 PM tomorrow, they ___ (to discuss) pollution control measures.",
+    "missing": 1,
+    "options": ["will discuss", "will be discussing", "will have discussed"],
+    "correctAnswer": 0,
+    "explanation": "Future Simple: planned future action."
+  },
+  {
+    "question": "By next month, I ___ (to finish) all the online learning modules.",
+    "missing": 1,
+    "options": ["will have finished", "will finish", "will be finishing"],
+    "correctAnswer": 1,
+    "explanation": "Future Simple: expresses future event."
+  },
+  {
+    "question": "This time tomorrow, we ___ (to travel) to the pollution-free city.",
+    "missing": 1,
+    "options": ["will travel", "will be traveling", "will have traveled"],
+    "correctAnswer": 1,
+    "explanation": "Future Continuous: action in progress at a future time."
+  },
+  {
+    "question": "By the end of the year, the company ___ (to reduce) pollution drastically.",
+    "missing": 1,
+    "options": ["will reduce", "will be reducing", "will have reduced"],
+    "correctAnswer": 2,
+    "explanation": "Future Perfect: action completed before a specified future time."
+  },
+  {
+    "question": "At 10 AM, she ___ (to give) a presentation on space tourism.",
+    "missing": 1,
+    "options": ["will give", "will be giving", "will have given"],
+    "correctAnswer": 2,
+    "explanation": "Future Perfect: action finished by a specific time."
+  },
+  {
+    "question": "Next week, I ___ (to attend) an online seminar about pollution.",
+    "missing": 2,
+    "options": ["will attend", "will be attending", "will have attended"],
+    "correctAnswer": 0,
+    "explanation": "Future Simple: plan or decision."
+  },
+  {
+    "question": "By the time she finishes her homework, we ___ (to start) the meeting.",
+    "missing": 1,
+    "options": ["will start", "will be starting", "will have started"],
+    "correctAnswer": 2,
+    "explanation": "Future Perfect: action completed before another future event."
+  },
+  {
+    "question": "At 6 PM tomorrow, they ___ (to clean) the river near the city.",
+    "missing": 2,
+    "options": ["will clean", "will be cleaning", "will have cleaned"],
+    "correctAnswer": 0,
+    "explanation": "Future Simple: scheduled future action."
+  },
+  {
+    "question": "By the end of the day, I ___ (to complete) the pollution report.",
+    "missing": 2,
+    "options": ["will complete", "will be completing", "will have completed"],
+    "correctAnswer": 1,
+    "explanation": "Future Continuous: ongoing action at a specific future time."
+  },
+  {
+    "question": "Tomorrow, the experts ___ (to analyze) the latest pollution data.",
+    "missing": 2,
+    "options": ["will analyze", "will be analyzing", "will have analyzed"],
+    "correctAnswer": 0,
+    "explanation": "Future Simple: planned future activity."
+  },
+  {
+    "question": "By this time next year, space tourism ___ (to become) more popular worldwide.",
+    "missing": 1,
+    "options": ["will become", "will be becoming", "will have become"],
+    "correctAnswer": 2,
+    "explanation": "Future Perfect: completion before a future time."
+  }
+];
+
+       
+    </script>
+    <script src="./data/js/lab.js"></script>
+    <script src="./data/js/labint.js"></script>
+</body>
+</html>

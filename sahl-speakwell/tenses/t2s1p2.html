@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakWell | Sahl</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="../data/img/speakwell.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="../data/css/style.css">
+     
+</head>
+<body>
+    <!-- Back Button -->
+    <button class="back-button" id="backButton" aria-label="Go back to previous page">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading quiz...</div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container hidden" id="appContainer">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="quiz-title">Grammar Quiz</h1>
+                <div class="quiz-subtitle">Past Tense</div>
+                <div class="progress-indicator">
+                    <span id="currentScore">0</span> pts
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content" id="quizContent">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text">
+                    <span>Question <span id="currentQuestionNum">1</span> of <span id="totalQuestions">10</span></span>
+                    <span id="progressPercent">10%</span>
+                </div>
+            </div>
+
+            <!-- Question Container -->
+            <div class="question-container">
+                <div class="question-number">Question <span id="questionNum">1</span></div>
+                <h2 class="question-text" id="questionText">
+                    She usually ___ (to get) up at 7 a.m.
+                </h2>
+                <div class="question-hint">
+                    <i class="fas fa-lightbulb"></i>
+                    <span id="questionHint">Look for time expressions that indicate habits</span>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="options-container" id="optionsContainer">
+                <!-- Options will be inserted here -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="prevButton" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="btn btn-primary" id="submitButton" disabled>
+                    Check Answer
+                </button>
+            </div>
+
+            <!-- Next Button (separate for better flow) -->
+            <button class="btn btn-primary hidden" id="nextButton">
+                Next Question <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <!-- Explanation Panel -->
+            <div class="explanation-panel" id="explanationPanel">
+                <div class="explanation-header">
+                    <i class="fas fa-info-circle"></i>
+                    Explanation
+                </div>
+                <div class="explanation-content" id="explanationText">
+                    <!-- Explanation will be inserted here -->
+                </div>
+                <div class="explanation-tip" id="explanationTip">
+                    <i class="fas fa-tip"></i>
+                    <!-- Tip will be inserted here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Results Screen -->
+        <div class="results-screen hidden" id="resultsScreen">
+            <div class="results-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h2 class="results-title">Quiz Completed!</h2>
+            <div class="results-score" id="finalScore">0/10</div>
+            <p class="results-message" id="resultsMessage">
+                Great effort! Review your answers to improve.
+            </p>
+            
+            <div class="results-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="correctAnswers">0</span>
+                    <span class="stat-label">Correct</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="scorePoints">0</span>
+                    <span class="stat-label">Points</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="completionTime">0:00</span>
+                    <span class="stat-label">Time</span>
+                </div>
+            </div>
+
+            <div class="results-actions">
+                <button class="btn btn-secondary" id="reviewButton">
+                    <i class="fas fa-redo"></i> Review
+                </button>
+                <button class="btn btn-primary" id="restartButton">
+                    <i class="fas fa-play"></i> Try Again
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div>SpeakWell • Eduwell Quantum Group </div>
+        </footer>
+    </div>
+
+    <script>
+      const quizData = [
+    {
+        question: "The actors ___ (to rehearse) their lines when the director called for a break.",
+        options: [
+            { text: "rehearsed", example: "The actors rehearsed their lines" },
+            { text: "were rehearsing", example: "The actors were rehearsing when the director called a break" },
+            { text: "rehearse", example: "Actors rehearse lines" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes an ongoing activity interrupted by a break, requiring Past Continuous.",
+        hint: "Rehearsals interrupted by breaks use Past Continuous",
+        tip: "Past Continuous: artistic work with interruptions"
+    },
+    {
+        question: "I ___ (to complete) the marathon in under four hours last year.",
+        options: [
+            { text: "completed", example: "I completed the marathon" },
+            { text: "was completing", example: "I was completing the marathon when..." },
+            { text: "complete", example: "I complete marathons" }
+        ],
+        correctAnswer: 0,
+        explanation: "'Last year' indicates a specific past achievement, requiring Past Simple.",
+        hint: "Completed athletic achievements use Past Simple",
+        tip: "Past Simple: completed sports achievements"
+    },
+    {
+        question: "While the gardener ___ (to plant) flowers, he discovered an old coin.",
+        options: [
+            { text: "planted", example: "The gardener planted flowers" },
+            { text: "was planting", example: "The gardener was planting when he discovered a coin" },
+            { text: "plants", example: "Gardeners plant flowers" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes an activity during which a discovery occurred, requiring Past Continuous.",
+        hint: "Gardening with discoveries uses Past Continuous",
+        tip: "Past Continuous: outdoor work with discoveries"
+    },
+    {
+        question: "They ___ (to launch) the new software product in March.",
+        options: [
+            { text: "launched", example: "They launched the product in March" },
+            { text: "were launching", example: "They were launching when issues arose" },
+            { text: "launch", example: "They launch products" }
+        ],
+        correctAnswer: 0,
+        explanation: "'In March' indicates a specific past time, requiring Past Simple.",
+        hint: "Specific product launch months use Past Simple",
+        tip: "Past Simple: business launches at specific times"
+    },
+    {
+        question: "The scientist ___ (to conduct) experiments when she made a breakthrough.",
+        options: [
+            { text: "conducted", example: "The scientist conducted experiments" },
+            { text: "was conducting", example: "The scientist was conducting experiments when she made a breakthrough" },
+            { text: "conducts", example: "Scientists conduct experiments" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes an ongoing activity leading to a discovery, requiring Past Continuous.",
+        hint: "Research leading to breakthroughs uses Past Continuous",
+        tip: "Past Continuous: scientific work with discoveries"
+    },
+    {
+        question: "She ___ (to graduate) from medical school with honors.",
+        options: [
+            { text: "graduated", example: "She graduated with honors" },
+            { text: "was graduating", example: "She was graduating when she received the news" },
+            { text: "graduates", example: "She graduates soon" }
+        ],
+        correctAnswer: 0,
+        explanation: "This describes a completed educational achievement, requiring Past Simple.",
+        hint: "Completed graduations use Past Simple",
+        tip: "Past Simple: completed educational milestones"
+    },
+    {
+        question: "While I ___ (to clean) the attic, I found my childhood photographs.",
+        options: [
+            { text: "cleaned", example: "I cleaned the attic" },
+            { text: "was cleaning", example: "I was cleaning when I found photographs" },
+            { text: "clean", example: "I clean the attic" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes an activity during which something was found, requiring Past Continuous.",
+        hint: "Cleaning with discoveries uses Past Continuous",
+        tip: "Past Continuous: cleaning with unexpected finds"
+    },
+    {
+        question: "The company ___ (to earn) record profits during the pandemic.",
+        options: [
+            { text: "earned", example: "The company earned record profits" },
+            { text: "was earning", example: "The company was earning when the market changed" },
+            { text: "earns", example: "The company earns profits" }
+        ],
+        correctAnswer: 0,
+        explanation: "'During the pandemic' indicates a completed past period, requiring Past Simple.",
+        hint: "Completed financial periods use Past Simple",
+        tip: "Past Simple: completed financial performance"
+    },
+    {
+        question: "The firefighters ___ (to battle) the blaze when the roof collapsed.",
+        options: [
+            { text: "battled", example: "The firefighters battled the blaze" },
+            { text: "were battling", example: "The firefighters were battling when the roof collapsed" },
+            { text: "battle", example: "Firefighters battle fires" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes an emergency response interrupted by a dangerous event, requiring Past Continuous.",
+        hint: "Firefighting with dangerous developments uses Past Continuous",
+        tip: "Past Continuous: emergency response with developments"
+    },
+    {
+        question: "I ___ (to attend) three different schools as a child.",
+        options: [
+            { text: "attended", example: "I attended three schools" },
+            { text: "was attending", example: "I was attending when we moved" },
+            { text: "attend", example: "I attend school" }
+        ],
+        correctAnswer: 0,
+        explanation: "'As a child' indicates completed past schooling, requiring Past Simple.",
+        hint: "Completed childhood education experiences use Past Simple",
+        tip: "Past Simple: completed educational experiences"
+    },
+    {
+        question: "While the team ___ (to practice), the coach observed their techniques.",
+        options: [
+            { text: "practiced", example: "The team practiced" },
+            { text: "was practicing", example: "The team was practicing when the coach observed" },
+            { text: "practices", example: "The team practices" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes simultaneous actions, requiring Past Continuous for the ongoing activity.",
+        hint: "Practice with observation uses Past Continuous",
+        tip: "Past Continuous: training with observation"
+    },
+    {
+        question: "He ___ (to invent) a new type of solar panel in his garage workshop.",
+        options: [
+            { text: "invented", example: "He invented a solar panel" },
+            { text: "was inventing", example: "He was inventing when he had the idea" },
+            { text: "invents", example: "He invents things" }
+        ],
+        correctAnswer: 0,
+        explanation: "This describes a completed invention, requiring Past Simple.",
+        hint: "Completed inventions use Past Simple",
+        tip: "Past Simple: completed inventions and creations"
+    },
+    {
+        question: "The tourists ___ (to explore) the ancient ruins when it started to rain.",
+        options: [
+            { text: "explored", example: "The tourists explored the ruins" },
+            { text: "were exploring", example: "The tourists were exploring when it rained" },
+            { text: "explore", example: "Tourists explore ruins" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes a tourist activity interrupted by weather, requiring Past Continuous.",
+        hint: "Tourism interrupted by weather uses Past Continuous",
+        tip: "Past Continuous: tourism with weather interruptions"
+    },
+    {
+        question: "She ___ (to perform) in over fifty theatrical productions.",
+        options: [
+            { text: "performed", example: "She performed in fifty productions" },
+            { text: "was performing", example: "She was performing when she got her big break" },
+            { text: "performs", example: "She performs" }
+        ],
+        correctAnswer: 0,
+        explanation: "This describes completed career achievements, requiring Past Simple.",
+        hint: "Completed performance records use Past Simple",
+        tip: "Past Simple: completed career achievements"
+    },
+    {
+        question: "While the chef ___ (to bake) the wedding cake, the power went out.",
+        options: [
+            { text: "baked", example: "The chef baked the cake" },
+            { text: "was baking", example: "The chef was baking when the power went out" },
+            { text: "bakes", example: "Chefs bake cakes" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes baking interrupted by power failure, requiring Past Continuous.",
+        hint: "Baking interrupted by power outages uses Past Continuous",
+        tip: "Past Continuous: baking with equipment failures"
+    },
+    {
+        question: "They ___ (to climb) Mount Everest successfully on their third attempt.",
+        options: [
+            { text: "climbed", example: "They climbed Mount Everest" },
+            { text: "were climbing", example: "They were climbing when the weather worsened" },
+            { text: "climb", example: "They climb mountains" }
+        ],
+        correctAnswer: 0,
+        explanation: "This describes a completed climbing achievement, requiring Past Simple.",
+        hint: "Completed mountain climbs use Past Simple",
+        tip: "Past Simple: completed adventure achievements"
+    },
+    {
+        question: "The students ___ (to conduct) a science experiment when the chemicals reacted unexpectedly.",
+        options: [
+            { text: "conducted", example: "The students conducted an experiment" },
+            { text: "were conducting", example: "The students were conducting when the chemicals reacted" },
+            { text: "conduct", example: "Students conduct experiments" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes an ongoing experiment with an unexpected result, requiring Past Continuous.",
+        hint: "Experiments with unexpected reactions use Past Continuous",
+        tip: "Past Continuous: scientific experiments with surprises"
+    },
+    {
+        question: "He ___ (to write) his autobiography after retiring from politics.",
+        options: [
+            { text: "wrote", example: "He wrote his autobiography" },
+            { text: "was writing", example: "He was writing when he remembered events" },
+            { text: "writes", example: "He writes books" }
+        ],
+        correctAnswer: 0,
+        explanation: "'After retiring' indicates a completed post-career project, requiring Past Simple.",
+        hint: "Completed post-retirement projects use Past Simple",
+        tip: "Past Simple: completed projects after careers"
+    },
+    {
+        question: "While the orchestra ___ (to play) the symphony, a string broke on the first violin.",
+        options: [
+            { text: "played", example: "The orchestra played the symphony" },
+            { text: "was playing", example: "The orchestra was playing when a string broke" },
+            { text: "plays", example: "The orchestra plays" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes a performance interrupted by equipment failure, requiring Past Continuous.",
+        hint: "Musical performances with instrument failures use Past Continuous",
+        tip: "Past Continuous: performances with equipment issues"
+    },
+    {
+        question: "The researchers ___ (to discover) a new species in the Amazon rainforest.",
+        options: [
+            { text: "discovered", example: "The researchers discovered a new species" },
+            { text: "were discovering", example: "The researchers were discovering when they found more evidence" },
+            { text: "discover", example: "Researchers discover species" }
+        ],
+        correctAnswer: 0,
+        explanation: "This describes a completed scientific discovery, requiring Past Simple.",
+        hint: "Completed scientific discoveries use Past Simple",
+        tip: "Past Simple: completed scientific findings"
+    },
+    {
+        question: "While I ___ (to pack) for my trip, I realized I forgot my passport.",
+        options: [
+            { text: "packed", example: "I packed for my trip" },
+            { text: "was packing", example: "I was packing when I realized I forgot my passport" },
+            { text: "pack", example: "I pack for trips" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes packing interrupted by a realization, requiring Past Continuous.",
+        hint: "Packing with realizations uses Past Continuous",
+        tip: "Past Continuous: travel preparations with realizations"
+    }
+];
+
+    </script>
+     <script src="../data/js/script.js"></script>
+</body>
+</html>

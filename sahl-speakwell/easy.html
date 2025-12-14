@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Tense • Grammar Master</title>
+      <link rel="shortcut icon" href="./data/img/speakwell.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css ">
+    <link href="https://fonts.googleapis.com/css2?family=Inter :wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./data/css/level.css">
+    
+</head>
+<body>
+    <div class="container">
+        <!-- Minimal Back Button - Icon Only -->
+        <nav class="nav-back">
+            <button class="back-button" id="backButton" aria-label="Go back">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </nav>
+
+        <!-- Apple-style Header -->
+        <header class="page-header">
+            <h1 class="page-title">Select Grammar Tense</h1>
+            <p class="page-subtitle">Choose a tense category to practice. Master English grammar with structured exercises and clear explanations.</p>
+        </header>
+
+        <!-- Cards Grid -->
+        <div class="cards-grid">
+            <!-- Past Tense Card -->
+            <div class="tense-card past" id="pastCard" data-tense="past">
+                <div class="card-icon-container">
+                    <i class="fas fa-history card-icon"></i>
+                </div>
+                <h3 class="card-title">Past Tense</h3>
+                <p class="card-description">Actions and states that happened before the present moment.</p>
+                <span class="tense-tag">Simple, Continuous, Perfect</span>
+            </div>
+
+            <!-- Present Tense Card -->
+            <div class="tense-card present" id="presentCard" data-tense="present">
+                <div class="card-icon-container">
+                    <i class="fas fa-circle card-icon"></i>
+                </div>
+                <h3 class="card-title">Present Tense</h3>
+                <p class="card-description">Current actions, habits, general truths, and ongoing states.</p>
+                <span class="tense-tag">Simple, Continuous, Perfect</span>
+            </div>
+
+            <!-- Future Tense Card -->
+            <div class="tense-card future" id="futureCard" data-tense="future">
+                <div class="card-icon-container">
+                    <i class="fas fa-rocket card-icon"></i>
+                </div>
+                <h3 class="card-title">Future Tense</h3>
+                <p class="card-description">Actions and states that will happen after the present moment.</p>
+                <span class="tense-tag">Simple, Continuous, Perfect</span>
+            </div>
+
+            <!-- Mixed Tenses Card -->
+            <div class="tense-card mixed" id="mixedCard" data-tense="mixed">
+                <div class="card-icon-container">
+                    <i class="fas fa-random card-icon"></i>
+                </div>
+                <h3 class="card-title">Mixed Tenses</h3>
+                <p class="card-description">Practice all tenses together to improve overall grammar mastery.</p>
+                <span class="tense-tag">All Tense Forms</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="page-footer">
+            <p>Select a tense category to view available exercise packs. Track your progress as you master each tense.</p>
+        </footer>
+    </div>
+
+    <!-- Popup Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content" id="modalContent">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Select Exercise Pack</h3>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="packs-container" id="packsContainer">
+                <!-- Pack items will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Page load animation
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 10);
+        });
+
+        // Data for packs based on tense with specific icons
+        const packsData = {
+            past: [
+                {
+                    name: " Past Mastery",
+                    description: "Master regular and irregular verbs in simple past tense with sentence construction exercises.",
+                    exercises: 20,
+                    
+                    difficulty: "Beginner",
+                    icon: "fa-clock",
+                    pageUrl: "./tenses/t2s1.html"
+                },
+                {
+                    name: "Past Practice",
+                    description: "Learn to describe ongoing past actions with contextual examples and interactive drills.",
+                    exercises: 20,
+                    
+                    difficulty: "Intermediate",
+                    icon: "fa-hourglass-half",
+                    pageUrl: "./tenses/t2s1p1.html"
+                },
+                {
+                    name: "Past Challenge",
+                    description: "Advanced exercises on past perfect tense for describing completed past actions.",
+                    exercises: 20,
+                   
+                    difficulty: "Advanced",
+                    icon: "fa-calendar-check",
+                    pageUrl: "./tenses/t2s1p2.html"
+                },
+                {
+                    name: "Past  Review",
+                    description: "Comprehensive review of all past tense forms with mixed practice exercises.",
+                    exercises: 31,
+                    
+                    difficulty: "Mixed",
+                    icon: "fa-clipboard-check",
+                    pageUrl: "./tenses/t2s1p3.html"
+                }
+            ],
+            present: [
+                {
+                    name: "Present Simple vs Present Continuous",
+                    description: "Build foundation with present simple tense for habits, facts, and routines.",
+                    exercises: 10,
+                   
+                    difficulty: "Beginner",
+                    icon: "fa-calendar-day",
+                    pageUrl: "./tenses/t1s1.html"
+                },
+                {
+                    name: "Present Focus",
+                    description: "Practice describing current actions and temporary situations with clear examples.",
+                    exercises: 10,
+                   
+                    difficulty: "Beginner",
+                    icon: "fa-play-circle",
+                    pageUrl: "./tenses/t1s1p2.html"
+                },
+                {
+                    name: "Present Practice",
+                    description: "Master the connection between past and present with present perfect exercises.",
+                    exercises: 20,
+                   
+                    difficulty: "Intermediate",
+                    icon: "fa-check-circle",
+                    pageUrl: "./tenses/t1s1p3.html"
+                },
+                {
+                    name: "All Present Tenses",
+                    description: "Mixed exercises covering simple, continuous, and perfect present tenses.",
+                    exercises: 49,
+                    
+                    difficulty: "Intermediate",
+                    icon: "fa-layer-group",
+                    pageUrl: "./tenses/t1s1p4.html"
+                }
+            ],
+            future: [
+                {
+                    name: "Future Simple Introduction",
+                    description: "Learn will and going to for future predictions, plans, and promises.",
+                    exercises: 30,
+                 
+                    difficulty: "Beginner",
+                    icon: "fa-calendar-plus",
+                    pageUrl: "./tenses/t3s1p1.html"
+                },
+                
+                {
+                    name: "Future Forms Complete",
+                    description: "Comprehensive practice of all future tense variations and uses.",
+                    exercises: 50,
+                  
+                    difficulty: "Mixed",
+                    icon: "fa-tasks",
+                    pageUrl: "./tenses/t3s1p2.html"
+                }
+            ],
+            mixed: [
+                {
+                    name: "Tense Identification",
+                    description: "Practice identifying different tenses in sentences with immediate feedback.",
+                    exercises: 65,
+                    duration: "2 weeks",
+                    difficulty: "Intermediate",
+                    icon: "fa-search",
+                    pageUrl: "mixed-identification.html"
+                },
+                {
+                    name: "Tense Conversion",
+                    description: "Convert sentences between different tenses to build flexibility and understanding.",
+                    exercises: 48,
+                    duration: "10 days",
+                    difficulty: "Intermediate",
+                    icon: "fa-exchange-alt",
+                    pageUrl: "mixed-conversion.html"
+                },
+                {
+                    name: "Mixed Tense Paragraphs",
+                    description: "Work with paragraphs containing multiple tenses to improve comprehension.",
+                    exercises: 40,
+                    duration: "8 days",
+                    difficulty: "Advanced",
+                    icon: "fa-file-alt",
+                    pageUrl: "mixed-paragraphs.html"
+                },
+                {
+                    name: "Complete Tense Mastery",
+                    description: "Final challenge covering all tenses with complex sentence constructions.",
+                    exercises: 75,
+                    duration: "3 weeks",
+                    difficulty: "Advanced",
+                    icon: "fa-graduation-cap",
+                    pageUrl: "mixed-mastery.html"
+                }
+            ]
+        };
+    </script>
+     <script src="./data/js/level.js"></script>
+</body>
+</html>

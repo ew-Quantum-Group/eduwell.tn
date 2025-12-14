@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakWell | Sahl</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="../data/img/speakwell.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="../data/css/style.css">
+     
+</head>
+<body>
+    <!-- Back Button -->
+    <button class="back-button" id="backButton" aria-label="Go back to previous page">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading quiz...</div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container hidden" id="appContainer">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="quiz-title">Grammar Quiz</h1>
+                <div class="quiz-subtitle">Simple Future Tense</div>
+                <div class="progress-indicator">
+                    <span id="currentScore">0</span> pts
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content" id="quizContent">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text">
+                    <span>Question <span id="currentQuestionNum">1</span> of <span id="totalQuestions">10</span></span>
+                    <span id="progressPercent">10%</span>
+                </div>
+            </div>
+
+            <!-- Question Container -->
+            <div class="question-container">
+                <div class="question-number">Question <span id="questionNum">1</span></div>
+                <h2 class="question-text" id="questionText">
+                    She usually ___ (to get) up at 7 a.m.
+                </h2>
+                <div class="question-hint">
+                    <i class="fas fa-lightbulb"></i>
+                    <span id="questionHint">Look for time expressions that indicate habits</span>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="options-container" id="optionsContainer">
+                <!-- Options will be inserted here -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="prevButton" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="btn btn-primary" id="submitButton" disabled>
+                    Check Answer
+                </button>
+            </div>
+
+            <!-- Next Button (separate for better flow) -->
+            <button class="btn btn-primary hidden" id="nextButton">
+                Next Question <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <!-- Explanation Panel -->
+            <div class="explanation-panel" id="explanationPanel">
+                <div class="explanation-header">
+                    <i class="fas fa-info-circle"></i>
+                    Explanation
+                </div>
+                <div class="explanation-content" id="explanationText">
+                    <!-- Explanation will be inserted here -->
+                </div>
+                <div class="explanation-tip" id="explanationTip">
+                    <i class="fas fa-tip"></i>
+                    <!-- Tip will be inserted here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Results Screen -->
+        <div class="results-screen hidden" id="resultsScreen">
+            <div class="results-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h2 class="results-title">Quiz Completed!</h2>
+            <div class="results-score" id="finalScore">0/10</div>
+            <p class="results-message" id="resultsMessage">
+                Great effort! Review your answers to improve.
+            </p>
+            
+            <div class="results-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="correctAnswers">0</span>
+                    <span class="stat-label">Correct</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="scorePoints">0</span>
+                    <span class="stat-label">Points</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="completionTime">0:00</span>
+                    <span class="stat-label">Time</span>
+                </div>
+            </div>
+
+            <div class="results-actions">
+                <button class="btn btn-secondary" id="reviewButton">
+                    <i class="fas fa-redo"></i> Review
+                </button>
+                <button class="btn btn-primary" id="restartButton">
+                    <i class="fas fa-play"></i> Try Again
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div>SpeakWell • Eduwell Quantum Group </div>
+        </footer>
+    </div>
+
+    <script>
+        // Quiz Data
+      const quizData = [
+    {
+        question: "The weather forecast says it ___ (to snow) this weekend.",
+        options: [
+            { text: "snows", example: "It snows in winter" },
+            { text: "will snow", example: "It will snow this weekend" },
+            { text: "is snowing", example: "It is snowing now" }
+        ],
+        correctAnswer: 1,
+        explanation: "Weather forecasts express predictions about the future, requiring Simple Future.",
+        hint: "Weather forecasts use 'will'",
+        tip: "Simple Future: meteorological predictions"
+    },
+    {
+        question: "I believe technology ___ (to solve) many of our current problems.",
+        options: [
+            { text: "solves", example: "Technology solves problems" },
+            { text: "will solve", example: "Technology will solve our problems" },
+            { text: "is solving", example: "Technology is solving problems" }
+        ],
+        correctAnswer: 1,
+        explanation: "'I believe' expresses a future prediction, requiring Simple Future.",
+        hint: "Beliefs about future developments use 'will'",
+        tip: "Simple Future: predictions about technological advances"
+    },
+    {
+        question: "The doctor says you ___ (to feel) better in a few days.",
+        options: [
+            { text: "feel", example: "You feel better" },
+            { text: "will feel", example: "You will feel better soon" },
+            { text: "are feeling", example: "You are feeling better" }
+        ],
+        correctAnswer: 1,
+        explanation: "Medical predictions about recovery require Simple Future.",
+        hint: "Medical recovery predictions use 'will'",
+        tip: "Simple Future: health and recovery predictions"
+    },
+    {
+        question: "Our team ___ (to likely win) the competition next month.",
+        options: [
+            { text: "likely wins", example: "Our team likely wins" },
+            { text: "will likely win", example: "Our team will likely win the competition" },
+            { text: "is likely winning", example: "Our team is likely winning" }
+        ],
+        correctAnswer: 1,
+        explanation: "'Likely' expresses probability about a future event, requiring Simple Future.",
+        hint: "Probable future victories use 'will likely'",
+        tip: "Simple Future: probable competition outcomes"
+    },
+    {
+        question: "The new policy ___ (to affect) all employees starting next quarter.",
+        options: [
+            { text: "affects", example: "Policies affect employees" },
+            { text: "will affect", example: "The policy will affect employees next quarter" },
+            { text: "is affecting", example: "The policy is affecting employees" }
+        ],
+        correctAnswer: 1,
+        explanation: "'Starting next quarter' indicates future implementation, requiring Simple Future.",
+        hint: "Future policy implementations use 'will'",
+        tip: "Simple Future: future organizational changes"
+    },
+    {
+        question: "Scientists predict sea levels ___ (to rise) significantly this century.",
+        options: [
+            { text: "rise", example: "Sea levels rise" },
+            { text: "will rise", example: "Sea levels will rise this century" },
+            { text: "are rising", example: "Sea levels are rising" }
+        ],
+        correctAnswer: 1,
+        explanation: "Scientific predictions about the future require Simple Future.",
+        hint: "Scientific predictions use 'will'",
+        tip: "Simple Future: scientific forecasts"
+    },
+    {
+        question: "I guarantee this product ___ (to last) for years.",
+        options: [
+            { text: "lasts", example: "This product lasts" },
+            { text: "will last", example: "This product will last for years" },
+            { text: "is lasting", example: "This product is lasting" }
+        ],
+        correctAnswer: 1,
+        explanation: "'I guarantee' expresses a future assurance, requiring Simple Future.",
+        hint: "Product guarantees use 'will'",
+        tip: "Simple Future: product guarantees and warranties"
+    },
+    {
+        question: "The economy ___ (to probably recover) within the next year.",
+        options: [
+            { text: "probably recovers", example: "The economy probably recovers" },
+            { text: "will probably recover", example: "The economy will probably recover next year" },
+            { text: "is probably recovering", example: "The economy is probably recovering" }
+        ],
+        correctAnswer: 1,
+        explanation: "Economic forecasts expressing probability require Simple Future.",
+        hint: "Economic recovery predictions use 'will probably'",
+        tip: "Simple Future: economic forecasts"
+    },
+    {
+        question: "This decision ___ (to impact) our company's future direction.",
+        options: [
+            { text: "impacts", example: "Decisions impact companies" },
+            { text: "will impact", example: "This decision will impact our future" },
+            { text: "is impacting", example: "This decision is impacting us" }
+        ],
+        correctAnswer: 1,
+        explanation: "Predictions about future consequences require Simple Future.",
+        hint: "Future consequences of decisions use 'will'",
+        tip: "Simple Future: predictions about consequences"
+    },
+    {
+        question: "Experts say artificial intelligence ___ (to transform) many industries.",
+        options: [
+            { text: "transforms", example: "AI transforms industries" },
+            { text: "will transform", example: "AI will transform industries" },
+            { text: "is transforming", example: "AI is transforming industries" }
+        ],
+        correctAnswer: 1,
+        explanation: "Expert predictions about future transformations require Simple Future.",
+        hint: "Expert predictions about technology use 'will'",
+        tip: "Simple Future: expert technology predictions"
+    },
+    {
+        question: "The construction ___ (to likely finish) ahead of schedule.",
+        options: [
+            { text: "likely finishes", example: "Construction likely finishes" },
+            { text: "will likely finish", example: "Construction will likely finish early" },
+            { text: "is likely finishing", example: "Construction is likely finishing" }
+        ],
+        correctAnswer: 1,
+        explanation: "Probable predictions about project completion require Simple Future.",
+        hint: "Probable project completions use 'will likely'",
+        tip: "Simple Future: project completion predictions"
+    },
+    {
+        question: "I'm confident this investment ___ (to yield) good returns.",
+        options: [
+            { text: "yields", example: "Investments yield returns" },
+            { text: "will yield", example: "This investment will yield good returns" },
+            { text: "is yielding", example: "This investment is yielding returns" }
+        ],
+        correctAnswer: 1,
+        explanation: "Confidence about future financial outcomes requires Simple Future.",
+        hint: "Confident investment predictions use 'will'",
+        tip: "Simple Future: financial predictions"
+    },
+    {
+        question: "The vaccine ___ (to become) widely available next month.",
+        options: [
+            { text: "becomes", example: "Vaccines become available" },
+            { text: "will become", example: "The vaccine will become available next month" },
+            { text: "is becoming", example: "The vaccine is becoming available" }
+        ],
+        correctAnswer: 1,
+        explanation: "Announcements about future availability require Simple Future.",
+        hint: "Future product availability uses 'will'",
+        tip: "Simple Future: future availability announcements"
+    },
+    {
+        question: "Climate change ___ (to certainly affect) future generations.",
+        options: [
+            { text: "certainly affects", example: "Climate change affects generations" },
+            { text: "will certainly affect", example: "Climate change will certainly affect future generations" },
+            { text: "is certainly affecting", example: "Climate change is certainly affecting" }
+        ],
+        correctAnswer: 1,
+        explanation: "Certain predictions about future impacts require Simple Future.",
+        hint: "Certain future impacts use 'will certainly'",
+        tip: "Simple Future: certain environmental predictions"
+    },
+    {
+        question: "The new regulations ___ (to take) effect from January 1st.",
+        options: [
+            { text: "take", example: "Regulations take effect" },
+            { text: "will take", example: "Regulations will take effect on January 1st" },
+            { text: "are taking", example: "Regulations are taking effect" }
+        ],
+        correctAnswer: 1,
+        explanation: "Future implementation dates require Simple Future.",
+        hint: "Future regulatory changes use 'will'",
+        tip: "Simple Future: future regulatory implementations"
+    },
+    {
+        question: "I predict electric cars ___ (to dominate) the market in ten years.",
+        options: [
+            { text: "dominate", example: "Electric cars dominate" },
+            { text: "will dominate", example: "Electric cars will dominate in ten years" },
+            { text: "are dominating", example: "Electric cars are dominating" }
+        ],
+        correctAnswer: 1,
+        explanation: "Personal predictions about future trends require Simple Future.",
+        hint: "Personal market predictions use 'will'",
+        tip: "Simple Future: market trend predictions"
+    },
+    {
+        question: "The research ___ (to likely confirm) our hypothesis.",
+        options: [
+            { text: "likely confirms", example: "Research likely confirms" },
+            { text: "will likely confirm", example: "The research will likely confirm our hypothesis" },
+            { text: "is likely confirming", example: "Research is likely confirming" }
+        ],
+        correctAnswer: 1,
+        explanation: "Probable predictions about research outcomes require Simple Future.",
+        hint: "Probable research outcomes use 'will likely'",
+        tip: "Simple Future: research outcome predictions"
+    },
+    {
+        question: "This training program ___ (to improve) employee productivity.",
+        options: [
+            { text: "improves", example: "Training improves productivity" },
+            { text: "will improve", example: "This training will improve productivity" },
+            { text: "is improving", example: "Training is improving productivity" }
+        ],
+        correctAnswer: 1,
+        explanation: "Predictions about future improvements require Simple Future.",
+        hint: "Future training outcomes use 'will'",
+        tip: "Simple Future: training and development predictions"
+    },
+    {
+        question: "The new highway ___ (to reduce) commute times significantly.",
+        options: [
+            { text: "reduces", example: "Highways reduce commute times" },
+            { text: "will reduce", example: "The new highway will reduce commute times" },
+            { text: "is reducing", example: "The highway is reducing commute times" }
+        ],
+        correctAnswer: 1,
+        explanation: "Predictions about future infrastructure benefits require Simple Future.",
+        hint: "Future infrastructure benefits use 'will'",
+        tip: "Simple Future: infrastructure improvement predictions"
+    },
+    {
+        question: "I'm certain this strategy ___ (to work) for our company.",
+        options: [
+            { text: "works", example: "Strategies work" },
+            { text: "will work", example: "This strategy will work for us" },
+            { text: "is working", example: "This strategy is working" }
+        ],
+        correctAnswer: 1,
+        explanation: "Certainty about future success requires Simple Future.",
+        hint: "Certain predictions about success use 'will'",
+        tip: "Simple Future: business strategy predictions"
+    },
+    {
+        question: "The peace talks ___ (to likely result) in an agreement.",
+        options: [
+            { text: "likely result", example: "Talks likely result" },
+            { text: "will likely result", example: "The talks will likely result in agreement" },
+            { text: "are likely resulting", example: "Talks are likely resulting" }
+        ],
+        correctAnswer: 1,
+        explanation: "Probable diplomatic outcomes require Simple Future.",
+        hint: "Probable diplomatic outcomes use 'will likely'",
+        tip: "Simple Future: diplomatic predictions"
+    },
+    {
+        question: "This innovation ___ (to revolutionize) the industry.",
+        options: [
+            { text: "revolutionizes", example: "Innovations revolutionize" },
+            { text: "will revolutionize", example: "This innovation will revolutionize the industry" },
+            { text: "is revolutionizing", example: "This innovation is revolutionizing" }
+        ],
+        correctAnswer: 1,
+        explanation: "Predictions about future industry changes require Simple Future.",
+        hint: "Future industry revolutions use 'will'",
+        tip: "Simple Future: innovation predictions"
+    },
+    {
+        question: "The population ___ (to probably reach) 10 billion by 2050.",
+        options: [
+            { text: "probably reaches", example: "Population probably reaches" },
+            { text: "will probably reach", example: "Population will probably reach 10 billion by 2050" },
+            { text: "is probably reaching", example: "Population is probably reaching" }
+        ],
+        correctAnswer: 1,
+        explanation: "Statistical predictions about future populations require Simple Future.",
+        hint: "Future population predictions use 'will probably'",
+        tip: "Simple Future: demographic predictions"
+    },
+    {
+        question: "This software update ___ (to fix) all the existing bugs.",
+        options: [
+            { text: "fixes", example: "Updates fix bugs" },
+            { text: "will fix", example: "This update will fix all bugs" },
+            { text: "is fixing", example: "The update is fixing bugs" }
+        ],
+        correctAnswer: 1,
+        explanation: "Promises about future software improvements require Simple Future.",
+        hint: "Future software fixes use 'will'",
+        tip: "Simple Future: technology improvement promises"
+    },
+    {
+        question: "The new manager ___ (to likely implement) changes quickly.",
+        options: [
+            { text: "likely implements", example: "Managers likely implement changes" },
+            { text: "will likely implement", example: "The new manager will likely implement changes" },
+            { text: "is likely implementing", example: "The manager is likely implementing" }
+        ],
+        correctAnswer: 1,
+        explanation: "Probable predictions about management actions require Simple Future.",
+        hint: "Probable management changes use 'will likely'",
+        tip: "Simple Future: management prediction"
+    },
+    {
+        question: "Renewable energy ___ (to eventually replace) fossil fuels.",
+        options: [
+            { text: "eventually replaces", example: "Renewable energy replaces fuels" },
+            { text: "will eventually replace", example: "Renewable energy will eventually replace fossil fuels" },
+            { text: "is eventually replacing", example: "Renewable energy is eventually replacing" }
+        ],
+        correctAnswer: 1,
+        explanation: "Long-term predictions about energy transitions require Simple Future.",
+        hint: "Future energy transitions use 'will eventually'",
+        tip: "Simple Future: long-term energy predictions"
+    },
+    {
+        question: "The investigation ___ (to probably reveal) the truth.",
+        options: [
+            { text: "probably reveals", example: "Investigations probably reveal" },
+            { text: "will probably reveal", example: "The investigation will probably reveal the truth" },
+            { text: "is probably revealing", example: "The investigation is probably revealing" }
+        ],
+        correctAnswer: 1,
+        explanation: "Probable predictions about investigation outcomes require Simple Future.",
+        hint: "Probable investigation outcomes use 'will probably'",
+        tip: "Simple Future: investigation predictions"
+    },
+    {
+        question: "This partnership ___ (to benefit) both companies greatly.",
+        options: [
+            { text: "benefits", example: "Partnerships benefit companies" },
+            { text: "will benefit", example: "This partnership will benefit both companies" },
+            { text: "is benefiting", example: "This partnership is benefiting" }
+        ],
+        correctAnswer: 1,
+        explanation: "Predictions about future business benefits require Simple Future.",
+        hint: "Future business benefits use 'will'",
+        tip: "Simple Future: business partnership predictions"
+    },
+    {
+        question: "The new law ___ (to likely pass) in parliament next week.",
+        options: [
+            { text: "likely passes", example: "Laws likely pass" },
+            { text: "will likely pass", example: "The law will likely pass next week" },
+            { text: "is likely passing", example: "The law is likely passing" }
+        ],
+        correctAnswer: 1,
+        explanation: "Probable legislative outcomes require Simple Future.",
+        hint: "Probable law passages use 'will likely'",
+        tip: "Simple Future: legislative predictions"
+    },
+    {
+        question: "I'm sure this approach ___ (to succeed) where others failed.",
+        options: [
+            { text: "succeeds", example: "Approaches succeed" },
+            { text: "will succeed", example: "This approach will succeed" },
+            { text: "is succeeding", example: "This approach is succeeding" }
+        ],
+        correctAnswer: 1,
+        explanation: "Confidence about future success requires Simple Future.",
+        hint: "Confident success predictions use 'will'",
+        tip: "Simple Future: confident outcome predictions"
+    }
+];
+    </script>
+     <script src="../data/js/script.js"></script>
+</body>
+</html>

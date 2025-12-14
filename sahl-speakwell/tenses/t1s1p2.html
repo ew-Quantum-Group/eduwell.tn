@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakWell | Sahl</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="../data/img/speakwell.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="../data/css/style.css">
+     
+</head>
+<body>
+    <!-- Back Button -->
+    <button class="back-button" id="backButton" aria-label="Go back to previous page">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading quiz...</div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container hidden" id="appContainer">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="quiz-title">Grammar Quiz</h1>
+                <div class="quiz-subtitle">Present tenses</div>
+                <div class="progress-indicator">
+                    <span id="currentScore">0</span> pts
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content" id="quizContent">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text">
+                    <span>Question <span id="currentQuestionNum">1</span> of <span id="totalQuestions">10</span></span>
+                    <span id="progressPercent">10%</span>
+                </div>
+            </div>
+
+            <!-- Question Container -->
+            <div class="question-container">
+                <div class="question-number">Question <span id="questionNum">1</span></div>
+                <h2 class="question-text" id="questionText">
+                    She usually ___ (to get) up at 7 a.m.
+                </h2>
+                <div class="question-hint">
+                    <i class="fas fa-lightbulb"></i>
+                    <span id="questionHint">Look for time expressions that indicate habits</span>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="options-container" id="optionsContainer">
+                <!-- Options will be inserted here -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="prevButton" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="btn btn-primary" id="submitButton" disabled>
+                    Check Answer
+                </button>
+            </div>
+
+            <!-- Next Button (separate for better flow) -->
+            <button class="btn btn-primary hidden" id="nextButton">
+                Next Question <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <!-- Explanation Panel -->
+            <div class="explanation-panel" id="explanationPanel">
+                <div class="explanation-header">
+                    <i class="fas fa-info-circle"></i>
+                    Explanation
+                </div>
+                <div class="explanation-content" id="explanationText">
+                    <!-- Explanation will be inserted here -->
+                </div>
+                <div class="explanation-tip" id="explanationTip">
+                    <i class="fas fa-tip"></i>
+                    <!-- Tip will be inserted here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Results Screen -->
+        <div class="results-screen hidden" id="resultsScreen">
+            <div class="results-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h2 class="results-title">Quiz Completed!</h2>
+            <div class="results-score" id="finalScore">0/10</div>
+            <p class="results-message" id="resultsMessage">
+                Great effort! Review your answers to improve.
+            </p>
+            
+            <div class="results-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="correctAnswers">0</span>
+                    <span class="stat-label">Correct</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="scorePoints">0</span>
+                    <span class="stat-label">Points</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="completionTime">0:00</span>
+                    <span class="stat-label">Time</span>
+                </div>
+            </div>
+
+            <div class="results-actions">
+                <button class="btn btn-secondary" id="reviewButton">
+                    <i class="fas fa-redo"></i> Review
+                </button>
+                <button class="btn btn-primary" id="restartButton">
+                    <i class="fas fa-play"></i> Try Again
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div>SpeakWell • Eduwell Quantum Group </div>
+        </footer>
+    </div>
+
+    <script>
+        // Quiz Data
+       const quizData = [
+    {
+        question: "John ___ (to work) as a software engineer at Google.",
+        options: [
+            { text: "work", example: "I work from home" },
+            { text: "works", example: "John works at Google" },
+            { text: "is working", example: "John is working on a project today" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes a permanent job or long-term situation, which requires the Present Simple tense. Third-person singular subjects require -s.",
+        hint: "Permanent jobs and situations use Present Simple",
+        tip: "Present Simple: permanent states, long-term situations"
+    },
+    {
+        question: "Be quiet! The baby ___ (to sleep).",
+        options: [
+            { text: "sleep", example: "The baby sleeps through the night" },
+            { text: "sleeps", example: "She sleeps well" },
+            { text: "is sleeping", example: "The baby is sleeping right now" }
+        ],
+        correctAnswer: 2,
+        explanation: "'Be quiet!' indicates an action happening at this moment, which requires the Present Continuous tense.",
+        hint: "Requests for silence often accompany ongoing actions",
+        tip: "Present Continuous: actions in progress at the moment of speaking"
+    },
+    {
+        question: "Cats ___ (to like) to sleep in warm places.",
+        options: [
+            { text: "like", example: "Cats like warm spots" },
+            { text: "likes", example: "My cat likes sunny windows" },
+            { text: "are liking", example: "The cats are liking this new bed" }
+        ],
+        correctAnswer: 0,
+        explanation: "This is a general truth about cats' behavior, which requires the Present Simple tense. Plural subjects use the base form.",
+        hint: "General statements about animals use Present Simple",
+        tip: "Present Simple: general truths and characteristics"
+    },
+    {
+        question: "I ___ (to read) a really interesting book this week.",
+        options: [
+            { text: "read", example: "I read mystery novels" },
+            { text: "reads", example: "She reads every night" },
+            { text: "am reading", example: "I'm reading a great book this week" }
+        ],
+        correctAnswer: 2,
+        explanation: "'This week' indicates a temporary activity happening around the present time, which requires the Present Continuous tense.",
+        hint: "Temporary activities with time limits use Present Continuous",
+        tip: "Present Continuous: temporary situations (this week, this month, these days)"
+    },
+    {
+        question: "The train ___ (to depart) from platform 3 at 6:45 PM.",
+        options: [
+            { text: "depart", example: "Trains depart regularly" },
+            { text: "departs", example: "The train departs at 6:45" },
+            { text: "is departing", example: "The train is departing now" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes a scheduled event (timetable), which requires the Present Simple tense.",
+        hint: "Timetables and schedules use Present Simple",
+        tip: "Present Simple: timetables, schedules, fixed plans"
+    },
+    {
+        question: "Look outside! It ___ (to rain) heavily.",
+        options: [
+            { text: "rain", example: "It rains a lot in April" },
+            { text: "rains", example: "It always rains on Sundays" },
+            { text: "is raining", example: "It's raining heavily right now" }
+        ],
+        correctAnswer: 2,
+        explanation: "'Look outside!' indicates an action happening at this moment, which requires the Present Continuous tense.",
+        hint: "Imperatives like 'Look!' introduce current observations",
+        tip: "Present Continuous: for weather happening right now"
+    },
+    {
+        question: "He ___ (to know) the answer to every question.",
+        options: [
+            { text: "know", example: "I know the answer" },
+            { text: "knows", example: "He knows everything" },
+            { text: "is knowing", example: "He is knowing the material" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes a state or permanent characteristic (knowledge), which requires the Present Simple tense. Stative verbs like 'know' are rarely used in continuous forms.",
+        hint: "Stative verbs (know, like, love, hate) usually don't use continuous forms",
+        tip: "Present Simple: for states, feelings, thoughts, possessions"
+    },
+    {
+        question: "They ___ (to learn) Spanish for their upcoming trip to Madrid.",
+        options: [
+            { text: "learn", example: "They learn languages easily" },
+            { text: "learns", example: "She learns quickly" },
+            { text: "are learning", example: "They're learning Spanish for their trip" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes a temporary activity with a specific purpose, which requires the Present Continuous tense.",
+        hint: "Temporary learning activities use Present Continuous",
+        tip: "Present Continuous: temporary projects or activities"
+    },
+    {
+        question: "This restaurant ___ (to serve) the best pizza in town.",
+        options: [
+            { text: "serve", example: "They serve great food" },
+            { text: "serves", example: "This restaurant serves amazing pizza" },
+            { text: "is serving", example: "They're serving pizza today" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes a permanent characteristic of the restaurant, which requires the Present Simple tense.",
+        hint: "Permanent qualities of places use Present Simple",
+        tip: "Present Simple: characteristics, permanent features"
+    },
+    {
+        question: "I ___ (to write) an email to my boss at the moment.",
+        options: [
+            { text: "write", example: "I write emails every day" },
+            { text: "writes", example: "She writes professional emails" },
+            { text: "am writing", example: "I'm writing an email right now" }
+        ],
+        correctAnswer: 2,
+        explanation: "'At the moment' clearly indicates an action happening now, which requires the Present Continuous tense.",
+        hint: "'At the moment' always indicates Present Continuous",
+        tip: "Present Continuous: actions in progress at the exact present moment"
+    }
+];
+
+    </script>
+     <script src="../data/js/script.js"></script>
+</body>
+</html>

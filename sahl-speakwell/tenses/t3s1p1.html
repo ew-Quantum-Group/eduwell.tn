@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakWell | Sahl</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="../data/img/speakwell.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="../data/css/style.css">
+     
+</head>
+<body>
+    <!-- Back Button -->
+    <button class="back-button" id="backButton" aria-label="Go back to previous page">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading quiz...</div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container hidden" id="appContainer">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="quiz-title">Grammar Quiz</h1>
+                <div class="quiz-subtitle">Simple Future Tense</div>
+                <div class="progress-indicator">
+                    <span id="currentScore">0</span> pts
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content" id="quizContent">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text">
+                    <span>Question <span id="currentQuestionNum">1</span> of <span id="totalQuestions">10</span></span>
+                    <span id="progressPercent">10%</span>
+                </div>
+            </div>
+
+            <!-- Question Container -->
+            <div class="question-container">
+                <div class="question-number">Question <span id="questionNum">1</span></div>
+                <h2 class="question-text" id="questionText">
+                    She usually ___ (to get) up at 7 a.m.
+                </h2>
+                <div class="question-hint">
+                    <i class="fas fa-lightbulb"></i>
+                    <span id="questionHint">Look for time expressions that indicate habits</span>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="options-container" id="optionsContainer">
+                <!-- Options will be inserted here -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="prevButton" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="btn btn-primary" id="submitButton" disabled>
+                    Check Answer
+                </button>
+            </div>
+
+            <!-- Next Button (separate for better flow) -->
+            <button class="btn btn-primary hidden" id="nextButton">
+                Next Question <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <!-- Explanation Panel -->
+            <div class="explanation-panel" id="explanationPanel">
+                <div class="explanation-header">
+                    <i class="fas fa-info-circle"></i>
+                    Explanation
+                </div>
+                <div class="explanation-content" id="explanationText">
+                    <!-- Explanation will be inserted here -->
+                </div>
+                <div class="explanation-tip" id="explanationTip">
+                    <i class="fas fa-tip"></i>
+                    <!-- Tip will be inserted here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Results Screen -->
+        <div class="results-screen hidden" id="resultsScreen">
+            <div class="results-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h2 class="results-title">Quiz Completed!</h2>
+            <div class="results-score" id="finalScore">0/10</div>
+            <p class="results-message" id="resultsMessage">
+                Great effort! Review your answers to improve.
+            </p>
+            
+            <div class="results-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="correctAnswers">0</span>
+                    <span class="stat-label">Correct</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="scorePoints">0</span>
+                    <span class="stat-label">Points</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="completionTime">0:00</span>
+                    <span class="stat-label">Time</span>
+                </div>
+            </div>
+
+            <div class="results-actions">
+                <button class="btn btn-secondary" id="reviewButton">
+                    <i class="fas fa-redo"></i> Review
+                </button>
+                <button class="btn btn-primary" id="restartButton">
+                    <i class="fas fa-play"></i> Try Again
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div>SpeakWell • Eduwell Quantum Group </div>
+        </footer>
+    </div>
+
+    <script>
+        // Quiz Data
+       const quizData = [
+    {
+        question: "I think it ___ (to rain) tomorrow.",
+        options: [
+            { text: "rains", example: "It rains often" },
+            { text: "will rain", example: "I think it will rain tomorrow" },
+            { text: "is raining", example: "It is raining now" }
+        ],
+        correctAnswer: 1,
+        explanation: "'I think' expresses a prediction about the future, requiring Simple Future (will + base verb).",
+        hint: "Predictions about future weather use 'will'",
+        tip: "Simple Future: predictions and forecasts"
+    },
+    {
+        question: "She ___ (to finish) her project by next Friday.",
+        options: [
+            { text: "finishes", example: "She finishes projects" },
+            { text: "will finish", example: "She will finish by next Friday" },
+            { text: "is finishing", example: "She is finishing now" }
+        ],
+        correctAnswer: 1,
+        explanation: "'By next Friday' indicates a future deadline, requiring Simple Future.",
+        hint: "Future deadlines use 'will'",
+        tip: "Simple Future: future deadlines and completions"
+    },
+    {
+        question: "We ___ (to visit) our grandparents next weekend.",
+        options: [
+            { text: "visit", example: "We visit them often" },
+            { text: "will visit", example: "We will visit next weekend" },
+            { text: "are visiting", example: "We are visiting now" }
+        ],
+        correctAnswer: 1,
+        explanation: "'Next weekend' indicates a future plan, requiring Simple Future.",
+        hint: "Future family visits use 'will'",
+        tip: "Simple Future: future family plans"
+    },
+    {
+        question: "They ___ (to probably arrive) late because of traffic.",
+        options: [
+            { text: "probably arrive", example: "They probably arrive late" },
+            { text: "will probably arrive", example: "They will probably arrive late" },
+            { text: "are probably arriving", example: "They are probably arriving" }
+        ],
+        correctAnswer: 1,
+        explanation: "'Probably' expresses uncertainty about a future event, requiring Simple Future with 'will'.",
+        hint: "Future uncertainty uses 'will probably'",
+        tip: "Simple Future: uncertain future events"
+    },
+    {
+        question: "The store ___ (to close) at 9 PM tonight.",
+        options: [
+            { text: "closes", example: "The store closes at 9 PM" },
+            { text: "will close", example: "The store will close at 9 PM tonight" },
+            { text: "is closing", example: "The store is closing now" }
+        ],
+        correctAnswer: 1,
+        explanation: "'Tonight' indicates a specific future time, requiring Simple Future.",
+        hint: "Future closing times use 'will'",
+        tip: "Simple Future: scheduled future events"
+    },
+    {
+        question: "I promise I ___ (to call) you when I arrive.",
+        options: [
+            { text: "call", example: "I call you often" },
+            { text: "will call", example: "I will call when I arrive" },
+            { text: "am calling", example: "I am calling now" }
+        ],
+        correctAnswer: 1,
+        explanation: "'I promise' expresses a future commitment, requiring Simple Future.",
+        hint: "Promises about the future use 'will'",
+        tip: "Simple Future: promises and commitments"
+    },
+    {
+        question: "He ___ (to definitely pass) the exam with all that studying.",
+        options: [
+            { text: "definitely passes", example: "He definitely passes exams" },
+            { text: "will definitely pass", example: "He will definitely pass the exam" },
+            { text: "is definitely passing", example: "He is definitely passing" }
+        ],
+        correctAnswer: 1,
+        explanation: "'Definitely' expresses certainty about a future outcome, requiring Simple Future.",
+        hint: "Future certainty uses 'will definitely'",
+        tip: "Simple Future: certain future outcomes"
+    },
+    {
+        question: "The concert ___ (to start) at 8 PM sharp.",
+        options: [
+            { text: "starts", example: "Concerts start at 8" },
+            { text: "will start", example: "The concert will start at 8 PM" },
+            { text: "is starting", example: "The concert is starting now" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes a scheduled future event, requiring Simple Future.",
+        hint: "Future event schedules use 'will'",
+        tip: "Simple Future: scheduled performances"
+    },
+    {
+        question: "I'm sure you ___ (to love) the new movie.",
+        options: [
+            { text: "love", example: "You love movies" },
+            { text: "will love", example: "You will love the new movie" },
+            { text: "are loving", example: "You are loving the movie" }
+        ],
+        correctAnswer: 1,
+        explanation: "'I'm sure' expresses confidence about a future opinion, requiring Simple Future.",
+        hint: "Future opinions use 'will'",
+        tip: "Simple Future: predictions about reactions"
+    },
+    {
+        question: "We ___ (to need) more supplies for the project.",
+        options: [
+            { text: "need", example: "We need supplies" },
+            { text: "will need", example: "We will need more supplies" },
+            { text: "are needing", example: "We are needing supplies" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes a future requirement, requiring Simple Future.",
+        hint: "Future requirements use 'will need'",
+        tip: "Simple Future: future needs and requirements"
+    },
+    {
+        question: "The package ___ (to arrive) within three business days.",
+        options: [
+            { text: "arrives", example: "Packages arrive" },
+            { text: "will arrive", example: "The package will arrive in three days" },
+            { text: "is arriving", example: "The package is arriving" }
+        ],
+        correctAnswer: 1,
+        explanation: "'Within three business days' indicates a future delivery timeframe, requiring Simple Future.",
+        hint: "Future delivery estimates use 'will'",
+        tip: "Simple Future: estimated arrival times"
+    },
+    {
+        question: "They ___ (to probably win) the championship this year.",
+        options: [
+            { text: "probably win", example: "They probably win often" },
+            { text: "will probably win", example: "They will probably win the championship" },
+            { text: "are probably winning", example: "They are probably winning" }
+        ],
+        correctAnswer: 1,
+        explanation: "This expresses a probable future outcome, requiring Simple Future.",
+        hint: "Probable future victories use 'will probably'",
+        tip: "Simple Future: probable sports outcomes"
+    },
+    {
+        question: "I ___ (to help) you with your homework later.",
+        options: [
+            { text: "help", example: "I help with homework" },
+            { text: "will help", example: "I will help you later" },
+            { text: "am helping", example: "I am helping now" }
+        ],
+        correctAnswer: 1,
+        explanation: "'Later' indicates a future offer of help, requiring Simple Future.",
+        hint: "Future offers of assistance use 'will'",
+        tip: "Simple Future: offers and volunteering"
+    },
+    {
+        question: "The new restaurant ___ (to open) next month.",
+        options: [
+            { text: "opens", example: "Restaurants open" },
+            { text: "will open", example: "The restaurant will open next month" },
+            { text: "is opening", example: "The restaurant is opening" }
+        ],
+        correctAnswer: 1,
+        explanation: "'Next month' indicates a future opening, requiring Simple Future.",
+        hint: "Future business openings use 'will'",
+        tip: "Simple Future: future openings and launches"
+    },
+    {
+        question: "You ___ (to enjoy) your vacation in Hawaii.",
+        options: [
+            { text: "enjoy", example: "You enjoy vacations" },
+            { text: "will enjoy", example: "You will enjoy your vacation" },
+            { text: "are enjoying", example: "You are enjoying now" }
+        ],
+        correctAnswer: 1,
+        explanation: "This expresses a prediction about a future experience, requiring Simple Future.",
+        hint: "Future vacation enjoyment uses 'will'",
+        tip: "Simple Future: predictions about experiences"
+    },
+    {
+        question: "The company ___ (to release) the new software in December.",
+        options: [
+            { text: "releases", example: "Companies release software" },
+            { text: "will release", example: "The company will release it in December" },
+            { text: "is releasing", example: "The company is releasing it" }
+        ],
+        correctAnswer: 1,
+        explanation: "'In December' indicates a specific future release date, requiring Simple Future.",
+        hint: "Future product releases use 'will'",
+        tip: "Simple Future: scheduled product releases"
+    },
+    {
+        question: "I ___ (to probably stay) home tonight.",
+        options: [
+            { text: "probably stay", example: "I probably stay home" },
+            { text: "will probably stay", example: "I will probably stay home tonight" },
+            { text: "am probably staying", example: "I am probably staying" }
+        ],
+        correctAnswer: 1,
+        explanation: "This expresses a probable future decision, requiring Simple Future.",
+        hint: "Probable future plans use 'will probably'",
+        tip: "Simple Future: probable personal decisions"
+    },
+    {
+        question: "The flight ___ (to depart) from gate 12.",
+        options: [
+            { text: "departs", example: "Flights depart from gates" },
+            { text: "will depart", example: "The flight will depart from gate 12" },
+            { text: "is departing", example: "The flight is departing" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes future flight information, requiring Simple Future.",
+        hint: "Future flight details use 'will'",
+        tip: "Simple Future: travel arrangements"
+    },
+    {
+        question: "She ___ (to definitely remember) your birthday.",
+        options: [
+            { text: "definitely remembers", example: "She definitely remembers" },
+            { text: "will definitely remember", example: "She will definitely remember your birthday" },
+            { text: "is definitely remembering", example: "She is definitely remembering" }
+        ],
+        correctAnswer: 1,
+        explanation: "'Definitely' expresses certainty about a future action, requiring Simple Future.",
+        hint: "Future certainties use 'will definitely'",
+        tip: "Simple Future: certain future actions"
+    },
+    {
+        question: "We ___ (to need) to leave early to avoid traffic.",
+        options: [
+            { text: "need", example: "We need to leave" },
+            { text: "will need", example: "We will need to leave early" },
+            { text: "are needing", example: "We are needing to leave" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes a future necessity, requiring Simple Future.",
+        hint: "Future necessities use 'will need'",
+        tip: "Simple Future: future necessities and requirements"
+    },
+    {
+        question: "The meeting ___ (to begin) at 2 PM tomorrow.",
+        options: [
+            { text: "begins", example: "Meetings begin" },
+            { text: "will begin", example: "The meeting will begin at 2 PM" },
+            { text: "is beginning", example: "The meeting is beginning" }
+        ],
+        correctAnswer: 1,
+        explanation: "'Tomorrow' indicates a future scheduled event, requiring Simple Future.",
+        hint: "Future meeting times use 'will'",
+        tip: "Simple Future: scheduled meetings"
+    },
+    {
+        question: "I ___ (to probably buy) the blue dress.",
+        options: [
+            { text: "probably buy", example: "I probably buy dresses" },
+            { text: "will probably buy", example: "I will probably buy the blue dress" },
+            { text: "am probably buying", example: "I am probably buying" }
+        ],
+        correctAnswer: 1,
+        explanation: "This expresses a probable future purchase, requiring Simple Future.",
+        hint: "Probable future purchases use 'will probably'",
+        tip: "Simple Future: probable shopping decisions"
+    },
+    {
+        question: "The train ___ (to arrive) at platform 3.",
+        options: [
+            { text: "arrives", example: "Trains arrive" },
+            { text: "will arrive", example: "The train will arrive at platform 3" },
+            { text: "is arriving", example: "The train is arriving" }
+        ],
+        correctAnswer: 1,
+        explanation: "This provides future train information, requiring Simple Future.",
+        hint: "Future transportation details use 'will'",
+        tip: "Simple Future: future transportation information"
+    },
+    {
+        question: "You ___ (to like) the surprise I planned.",
+        options: [
+            { text: "like", example: "You like surprises" },
+            { text: "will like", example: "You will like the surprise" },
+            { text: "are liking", example: "You are liking it" }
+        ],
+        correctAnswer: 1,
+        explanation: "This expresses a prediction about a future reaction, requiring Simple Future.",
+        hint: "Future reactions to surprises use 'will'",
+        tip: "Simple Future: predictions about reactions"
+    },
+    {
+        question: "The museum ___ (to close) early on Sundays.",
+        options: [
+            { text: "closes", example: "Museums close early" },
+            { text: "will close", example: "The museum will close early on Sunday" },
+            { text: "is closing", example: "The museum is closing" }
+        ],
+        correctAnswer: 1,
+        explanation: "'On Sundays' indicates a future regular schedule, requiring Simple Future.",
+        hint: "Future schedules use 'will'",
+        tip: "Simple Future: future operating hours"
+    },
+    {
+        question: "He ___ (to probably choose) the steak for dinner.",
+        options: [
+            { text: "probably chooses", example: "He probably chooses steak" },
+            { text: "will probably choose", example: "He will probably choose the steak" },
+            { text: "is probably choosing", example: "He is probably choosing" }
+        ],
+        correctAnswer: 1,
+        explanation: "This expresses a probable future choice, requiring Simple Future.",
+        hint: "Probable future choices use 'will probably'",
+        tip: "Simple Future: probable decisions"
+    },
+    {
+        question: "The movie ___ (to start) in ten minutes.",
+        options: [
+            { text: "starts", example: "Movies start" },
+            { text: "will start", example: "The movie will start in ten minutes" },
+            { text: "is starting", example: "The movie is starting" }
+        ],
+        correctAnswer: 1,
+        explanation: "'In ten minutes' indicates a specific future time, requiring Simple Future.",
+        hint: "Future countdowns use 'will'",
+        tip: "Simple Future: imminent future events"
+    },
+    {
+        question: "I ___ (to probably visit) my sister next week.",
+        options: [
+            { text: "probably visit", example: "I probably visit my sister" },
+            { text: "will probably visit", example: "I will probably visit my sister next week" },
+            { text: "am probably visiting", example: "I am probably visiting" }
+        ],
+        correctAnswer: 1,
+        explanation: "This expresses a probable future visit, requiring Simple Future.",
+        hint: "Probable future visits use 'will probably'",
+        tip: "Simple Future: probable family visits"
+    },
+    {
+        question: "The show ___ (to end) at 10 PM tonight.",
+        options: [
+            { text: "ends", example: "Shows end" },
+            { text: "will end", example: "The show will end at 10 PM" },
+            { text: "is ending", example: "The show is ending" }
+        ],
+        correctAnswer: 1,
+        explanation: "'Tonight' indicates a specific future ending time, requiring Simple Future.",
+        hint: "Future ending times use 'will'",
+        tip: "Simple Future: scheduled endings"
+    },
+    {
+        question: "They ___ (to probably hire) a new manager soon.",
+        options: [
+            { text: "probably hire", example: "They probably hire managers" },
+            { text: "will probably hire", example: "They will probably hire a new manager" },
+            { text: "are probably hiring", example: "They are probably hiring" }
+        ],
+        correctAnswer: 1,
+        explanation: "This expresses a probable future hiring decision, requiring Simple Future.",
+        hint: "Probable future hires use 'will probably'",
+        tip: "Simple Future: probable business decisions"
+    }
+];
+    </script>
+     <script src="../data/js/script.js"></script>
+</body>
+</html>

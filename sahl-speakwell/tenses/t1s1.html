@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakWell | Sahl</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="../data/img/speakwell.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="../data/css/style.css">
+     
+</head>
+<body>
+    <!-- Back Button -->
+    <button class="back-button" id="backButton" aria-label="Go back to previous page">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading quiz...</div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container hidden" id="appContainer">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="quiz-title">Grammar Quiz</h1>
+                <div class="quiz-subtitle">Present Simple vs Present Continuous</div>
+                <div class="progress-indicator">
+                    <span id="currentScore">0</span> pts
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content" id="quizContent">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text">
+                    <span>Question <span id="currentQuestionNum">1</span> of <span id="totalQuestions">10</span></span>
+                    <span id="progressPercent">10%</span>
+                </div>
+            </div>
+
+            <!-- Question Container -->
+            <div class="question-container">
+                <div class="question-number">Question <span id="questionNum">1</span></div>
+                <h2 class="question-text" id="questionText">
+                    She usually ___ (to get) up at 7 a.m.
+                </h2>
+                <div class="question-hint">
+                    <i class="fas fa-lightbulb"></i>
+                    <span id="questionHint">Look for time expressions that indicate habits</span>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="options-container" id="optionsContainer">
+                <!-- Options will be inserted here -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="prevButton" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="btn btn-primary" id="submitButton" disabled>
+                    Check Answer
+                </button>
+            </div>
+
+            <!-- Next Button (separate for better flow) -->
+            <button class="btn btn-primary hidden" id="nextButton">
+                Next Question <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <!-- Explanation Panel -->
+            <div class="explanation-panel" id="explanationPanel">
+                <div class="explanation-header">
+                    <i class="fas fa-info-circle"></i>
+                    Explanation
+                </div>
+                <div class="explanation-content" id="explanationText">
+                    <!-- Explanation will be inserted here -->
+                </div>
+                <div class="explanation-tip" id="explanationTip">
+                    <i class="fas fa-tip"></i>
+                    <!-- Tip will be inserted here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Results Screen -->
+        <div class="results-screen hidden" id="resultsScreen">
+            <div class="results-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h2 class="results-title">Quiz Completed!</h2>
+            <div class="results-score" id="finalScore">0/10</div>
+            <p class="results-message" id="resultsMessage">
+                Great effort! Review your answers to improve.
+            </p>
+            
+            <div class="results-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="correctAnswers">0</span>
+                    <span class="stat-label">Correct</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="scorePoints">0</span>
+                    <span class="stat-label">Points</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="completionTime">0:00</span>
+                    <span class="stat-label">Time</span>
+                </div>
+            </div>
+
+            <div class="results-actions">
+                <button class="btn btn-secondary" id="reviewButton">
+                    <i class="fas fa-redo"></i> Review
+                </button>
+                <button class="btn btn-primary" id="restartButton">
+                    <i class="fas fa-play"></i> Try Again
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div>SpeakWell • Eduwell Quantum Group </div>
+        </footer>
+    </div>
+
+    <script>
+        // Quiz Data
+        const quizData = [
+            {
+                question: "She usually ___ (to get) up at 7 a.m.",
+                options: [
+                    { text: "get", example: "I get up early" },
+                    { text: "gets", example: "She gets up at 7 a.m." },
+                    { text: "is getting", example: "She is getting up now" }
+                ],
+                correctAnswer: 1,
+                explanation: "The word 'usually' indicates a habit or routine, which requires the Present Simple tense. With third-person singular subjects (he/she/it), we add -s to the verb.",
+                hint: "Look for time expressions that indicate habits or routines",
+                tip: "Present Simple: habits, routines, general truths"
+            },
+            {
+                question: "Right now, they ___ (to watch) a movie.",
+                options: [
+                    { text: "watch", example: "They watch movies every weekend" },
+                    { text: "watches", example: "He watches movies alone" },
+                    { text: "are watching", example: "They are watching a movie now" }
+                ],
+                correctAnswer: 2,
+                explanation: "'Right now' indicates an action happening at this moment, which requires the Present Continuous tense (am/is/are + verb + -ing).",
+                hint: "Time expressions like 'right now' indicate actions in progress",
+                tip: "Present Continuous: actions happening now, temporary situations"
+            },
+            {
+                question: "The sun ___ (to rise) in the east.",
+                options: [
+                    { text: "rise", example: "I rise early" },
+                    { text: "rises", example: "The sun rises in the east" },
+                    { text: "is rising", example: "The sun is rising now" }
+                ],
+                correctAnswer: 1,
+                explanation: "This is a general truth or scientific fact, which requires the Present Simple tense. Third-person singular subjects require -s.",
+                hint: "General truths and facts use Present Simple",
+                tip: "Present Simple: facts, general truths, permanent situations"
+            },
+            {
+                question: "Listen! The birds ___ (to sing) beautifully.",
+                options: [
+                    { text: "sing", example: "Birds sing in the morning" },
+                    { text: "sings", example: "The bird sings sweetly" },
+                    { text: "are singing", example: "The birds are singing now" }
+                ],
+                correctAnswer: 2,
+                explanation: "'Listen!' indicates that the action is happening right now, which requires the Present Continuous tense.",
+                hint: "Imperatives like 'Listen!' often introduce actions happening now",
+                tip: "Use Present Continuous for actions you can see/hear happening"
+            },
+            {
+                question: "She ___ (to study) English every day.",
+                options: [
+                    { text: "study", example: "I study every day" },
+                    { text: "studies", example: "She studies every day" },
+                    { text: "is studying", example: "She is studying right now" }
+                ],
+                correctAnswer: 1,
+                explanation: "'Every day' indicates a routine or habit, which requires the Present Simple tense. Third-person singular requires -s.",
+                hint: "Frequency adverbs like 'every day' indicate routines",
+                tip: "Present Simple: with frequency adverbs (always, usually, often, sometimes, never)"
+            },
+            {
+                question: "I ___ (to work) on a new project at the moment.",
+                options: [
+                    { text: "am working", example: "I am working on it now" },
+                    { text: "work", example: "I work on projects regularly" },
+                    { text: "works", example: "He works on projects" }
+                ],
+                correctAnswer: 0,
+                explanation: "'At the moment' indicates an action happening now, which requires the Present Continuous tense.",
+                hint: "'At the moment' indicates current, temporary actions",
+                tip: "Present Continuous: actions happening around now"
+            },
+            {
+                question: "My friends ___ (to play) football every weekend.",
+                options: [
+                    { text: "play", example: "They play every weekend" },
+                    { text: "plays", example: "He plays every weekend" },
+                    { text: "are playing", example: "They are playing now" }
+                ],
+                correctAnswer: 0,
+                explanation: "'Every weekend' indicates a regular activity, which requires the Present Simple tense. Plural subjects use the base form.",
+                hint: "Regular time expressions indicate habits",
+                tip: "Present Simple: scheduled events, regular activities"
+            },
+            {
+                question: "Right now, he ___ (to fix) his bike.",
+                options: [
+                    { text: "fix", example: "He fixes bikes professionally" },
+                    { text: "fixes", example: "He fixes it every month" },
+                    { text: "is fixing", example: "He is fixing it now" }
+                ],
+                correctAnswer: 2,
+                explanation: "'Right now' clearly indicates an action in progress at this moment, requiring the Present Continuous tense.",
+                hint: "'Right now' is a clear indicator of Present Continuous",
+                tip: "Present Continuous: emphasizes the ongoing nature of an action"
+            },
+            {
+                question: "Water ___ (to freeze) at 0 degrees Celsius.",
+                options: [
+                    { text: "is freezing", example: "The water is freezing now" },
+                    { text: "freezes", example: "Water freezes at 0°C" },
+                    { text: "freeze", example: "I freeze water to make ice" }
+                ],
+                correctAnswer: 1,
+                explanation: "This is a scientific fact, which requires the Present Simple tense. Third-person singular requires -s.",
+                hint: "Scientific facts always use Present Simple",
+                tip: "Present Simple: laws of nature, scientific facts"
+            },
+            {
+                question: "We ___ (to plan) a trip this summer.",
+                options: [
+                    { text: "plan", example: "We plan trips regularly" },
+                    { text: "plans", example: "He plans the trips" },
+                    { text: "are planning", example: "We are planning a trip now" }
+                ],
+                correctAnswer: 2,
+                explanation: "'This summer' indicates a temporary plan or arrangement happening around now, which often uses the Present Continuous tense.",
+                hint: "Future plans and arrangements often use Present Continuous",
+                tip: "Present Continuous: future arrangements (with time expressions)"
+            }
+        ];
+
+    </script>
+     <script src="../data/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakWell| EduWell</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="./data/imag/speakwell.png" type="image/x-icon">
+   <meta name="google-site-verification" content="7-FD479xFj_8HbH9UlwHCnnMl0gziIaCUqk5R_oU6L4" />
+  <title>EduWell - SpeakWell </title>
+  <link rel="stylesheet" href="./data/css/stylelab.css">
+  
+</head>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Mistakes build champions. Keep going</div>
+            <div class="loading-progress">
+                <div class="loading-progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Back Button -->
+    <button class="back-button" onclick="window.history.back()">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Header -->
+<section>
+
+ <div class="header">
+        <div class="progress">Question <span id="current-question">1</span> of <span id="total-questions">5</span></div>
+        <div class="score">Score: <span id="score">0</span></div>
+    </div>
+
+    <div class="quiz-container" id="quiz-container">
+        <div class="question-number">Question <span id="q-number">1</span></div>
+        <div class="question-text" id="question-text">What is the capital of France?</div>
+        
+        <div class="options-container" id="options-container">
+            <!-- Options will be inserted here by JavaScript -->
+        </div>
+        
+        <button class="action-button" id="action-button" disabled>Fix</button>
+        
+        <div class="explanation" id="explanation">
+            <!-- Explanation will be inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <div class="navigation-buttons">
+        <button class="nav-button" id="prev-button" disabled>Previous</button>
+        <button class="nav-button" id="next-button" disabled>Next</button>
+    </div>
+
+    <div class="result-container" id="result-container">
+        <div class="result-title">Quiz Completed</div>
+        <div class="result-score" id="final-score">0/5</div>
+        <div class="result-message" id="result-message">Good effort!</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+        </div>
+        <button class="restart-button" id="restart-button">Start Again</button>
+    </div>
+</section>
+        <div class="logo footer-logo">
+            <div class="logo-text">SpeakWell</div>
+            <div class="logo-dot"></div>
+            <div class="logo-subtext">ew</div>
+        </div>
+    </div>
+ <script>
+
+ const quizData = [
+  {
+    question: "Space tourism ___ (to become) a rapidly growing industry, attracting adventurous travelers worldwide.",
+    options: ["becomes", "has become", "became"],
+    correctAnswer: 1,
+    explanation: "توّة باش نحكيو على حاجة قاعدة تكبر ومستمرة، نستعملو Present Perfect → has become"
+  },
+  {
+    question: "Many travelers ___ (to prefer) to explore remote destinations that offer unique cultural experiences.",
+    options: ["prefer", "preferred", "have preferred"],
+    correctAnswer: 2,
+    explanation: "التجارب اللي صاروا في الماضي ومازال تأثيرها، نستعملو Present Perfect → have preferred"
+  },
+  {
+    question: "If space agencies ___ (to invest) more in reusable rockets, costs could decrease significantly.",
+    options: ["invest", "invested", "had invested"],
+    correctAnswer: 2,
+    explanation: "هذي شرط في الماضي، لازم نستعملو Past Perfect → had invested"
+  },
+  {
+    question: "Travel technology ___ (to improve) travel experiences by offering personalized services.",
+    options: ["improves", "improved", "has improved"],
+    correctAnswer: 0,
+    explanation: "حقيقة عامة ولا قاعدة ديما تصير → Present Simple → improves"
+  },
+  {
+    question: "Education systems ___ (to face) challenges adapting to new digital tools.",
+    options: ["faces", "face", "faced"],
+    correctAnswer: 1,
+    explanation: "الموضوع جمع، لذلك نستعملو Present Simple للمجموع → face"
+  },
+  {
+    question: "The astronauts ___ (to prepare) extensively before their space missions.",
+    options: ["prepare", "prepared", "have prepared"],
+    correctAnswer: 0,
+    explanation: "إعداد مستمر وعادة → Present Simple → prepare"
+  },
+  {
+    question: "Had the airline ___ (to adopt) advanced safety measures, the accident might have been avoided.",
+    options: ["adopted", "adopting", "had adopted"],
+    correctAnswer: 2,
+    explanation: "جملة شرط في الماضي → Past Perfect → had adopted"
+  },
+  {
+    question: "Technological innovations ___ (to transform) the way we learn and communicate.",
+    options: ["transforms", "transform", "transformed"],
+    correctAnswer: 1,
+    explanation: "الموضوع جمع → Present Simple → transform"
+  },
+  {
+    question: "Many students ___ (to rely) on online resources for their studies.",
+    options: ["relies", "rely", "have relied"],
+    correctAnswer: 0,
+    explanation: "موضوع جمع، لازم Present Simple → rely (خطأ لو كتبت 'relies')"
+  },
+  {
+    question: "The space program ___ (to launch) new satellites every year.",
+    options: ["launches", "launched", "has launched"],
+    correctAnswer: 2,
+    explanation: "أحداث متكررة ومستمرّة → Present Perfect → has launched"
+  },
+  {
+    question: "If tourists ___ (to book) their trips early, they often get discounts.",
+    options: ["book", "booked", "had booked"],
+    correctAnswer: 1,
+    explanation: "جملة شرط نوع 2 (غير حقيقيّة في الحاضر) → Past Simple → booked"
+  },
+  {
+    question: "The education sector ___ (to adapt) quickly to remote learning methods during crises.",
+    options: ["adapts", "adapted", "has adapted"],
+    correctAnswer: 0,
+    explanation: "حقيقة عامة → Present Simple → adapts"
+  },
+  {
+    question: "Space tourism companies ___ (to face) regulatory challenges that slow their progress.",
+    options: ["faces", "face", "faced"],
+    correctAnswer: 1,
+    explanation: "موضوع جمع → Present Simple → face"
+  },
+  {
+    question: "Many travelers ___ (to experience) culture shocks when visiting foreign countries.",
+    options: ["experiences", "experience", "have experienced"],
+    correctAnswer: 0,
+    explanation: "موضوع جمع → Present Simple → experience"
+  },
+  {
+    question: "The new software ___ (to enhance) educational tools with interactive features.",
+    options: ["enhances", "enhanced", "has enhanced"],
+    correctAnswer: 2,
+    explanation: "حاجة جديدة وقاعدة تأثر → Present Perfect → has enhanced"
+  },
+  {
+    question: "Had students ___ (to prepare) better, their exam results would have improved.",
+    options: ["prepared", "preparing", "had prepared"],
+    correctAnswer: 1,
+    explanation: "جملة شرط نوع 3 (ماضي) → Past Perfect → had prepared"
+  },
+  {
+    question: "Travel agencies ___ (to offer) customized packages for space tourists.",
+    options: ["offers", "offer", "offered"],
+    correctAnswer: 0,
+    explanation: "موضوع جمع → Present Simple → offer"
+  },
+  {
+    question: "Online education platforms ___ (to grow) rapidly during the last decade.",
+    options: ["grows", "grew", "have grown"],
+    correctAnswer: 1,
+    explanation: "حدث في الماضي → Past Simple → grew"
+  },
+  {
+    question: "Space tourism ___ (to require) strict safety protocols to ensure passenger security.",
+    options: ["requires", "required", "has required"],
+    correctAnswer: 0,
+    explanation: "حقيقة عامة → Present Simple → requires"
+  },
+  {
+    question: "If technology ___ (to continue) advancing, the future of education looks promising.",
+    options: ["continues", "continued", "has continued"],
+    correctAnswer: 2,
+    explanation: "حاجة قاعدة تصير وتاثيرها مازال → Present Perfect → has continued"
+  }
+
+];
+
+
+
+       
+    </script>
+    <script src="./data/js/lab.js"></script>
+    <script src="./data/js/labint.js"></script>
+</body>
+</html>

@@ -700,3 +700,344 @@
                 contrastManager.destroy();
             }
         });
+
+         
+        // DOM elements
+        const timerElement = document.getElementById('timer');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const timerContainer = document.getElementById('timerContainer');
+        const progressRing = document.getElementById('progressRing');
+        const progressIndicator = document.getElementById('progressIndicator');
+        const progressBar = document.getElementById('progressBar');
+        const statusElement = document.getElementById('status');
+        const modeLabel = document.getElementById('modeLabel');
+        const motivationElement = document.getElementById('motivation');
+        const modeSelector = document.getElementById('modeSelector');
+        const bodyElement = document.body;
+        
+        // Mode buttons
+        const lightBtn = document.getElementById('lightBtn');
+        const normalBtn = document.getElementById('normalBtn');
+        const deepBtn = document.getElementById('deepBtn');
+        const modeButtons = [lightBtn, normalBtn, deepBtn];
+
+        // Timer modes configuration
+        const timerModes = {
+            light: {
+                minutes: 20,
+                name: "Révision rapide",
+                color: "linear-gradient(135deg, #5D9CEC 0%, #4A77CC 100%)"
+            },
+            normal: {
+                minutes: 29,
+                name: "Révision normale",
+                color: "linear-gradient(135deg, #7B68EE 0%, #6A58D4 100%)"
+            },
+            deep: {
+                minutes: 45,
+                name: "Révision approfondie",
+                color: "linear-gradient(135deg, #FF8E53 0%, #FF6B6B 100%)"
+            }
+        };
+
+        // Motivational messages (9 messages)
+        const motivationalMessages = [
+           "التميّز ليس فعلًا عابرًا، بل عادة تُبنى بالتركيز",
+            "العمق أهم من التشتّت",
+            "الوقت الجيد يصنع الفرق",
+            "التركيز طريق التميّز.",
+            "هدأ… واغص في العمق",
+        
+            "ما تستثمره اليوم، تجنيه غدًا."
+        ];
+
+        // Timer variables
+        let isRunning = false;
+        let timerInterval = null;
+        let currentMode = 'light';
+        let totalSeconds = timerModes.light.minutes * 60;
+        let originalSeconds = timerModes.light.minutes * 60;
+        let messageIndex = 0;
+        let lastMessageTime = 0;
+
+        // Format time as MM:SS
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Set active mode button
+        function setActiveMode(mode) {
+            modeButtons.forEach(btn => btn.classList.remove('active'));
+            
+            if (mode === 'light') lightBtn.classList.add('active');
+            if (mode === 'normal') normalBtn.classList.add('active');
+            if (mode === 'deep') deepBtn.classList.add('active');
+            
+            currentMode = mode;
+            originalSeconds = timerModes[mode].minutes * 60;
+            totalSeconds = originalSeconds;
+            modeLabel.textContent = timerModes[mode].name.toUpperCase();
+            timerElement.textContent = formatTime(totalSeconds);
+            
+            // Reset visual effects
+            resetVisuals();
+            statusElement.textContent = `${timerModes[mode].name} selected`;
+            
+            // Show mode selector (for when restart is clicked)
+            showModeSelector();
+        }
+
+        // Show mode selector
+        function showModeSelector() {
+            modeSelector.classList.remove('hidden');
+            statusElement.classList.remove('hidden');
+            progressIndicator.classList.remove('active');
+            motivationElement.textContent = motivationalMessages[0];
+            messageIndex = 0;
+        }
+
+        // Hide mode selector when timer starts
+        function hideModeSelector() {
+            modeSelector.classList.add('hidden');
+            statusElement.classList.add('hidden');
+            progressIndicator.classList.add('active');
+        }
+
+        // Reset visual effects
+        function resetVisuals() {
+            progressBar.style.width = "0%";
+            timerElement.style.color = "var(--primary-black)";
+            timerContainer.style.background = "var(--glass-bg)";
+            timerContainer.style.animation = "none";
+            progressRing.style.background = 'conic-gradient(transparent 0deg, transparent 0deg)';
+        }
+
+        // Show motivational message with animation
+        function showMotivationalMessage() {
+            motivationElement.classList.remove('fade-in');
+            motivationElement.classList.add('fade-out');
+            
+            setTimeout(() => {
+                motivationElement.textContent = motivationalMessages[messageIndex];
+                motivationElement.classList.remove('fade-out');
+                motivationElement.classList.add('fade-in');
+                
+                // Cycle to next message
+                messageIndex = (messageIndex + 1) % motivationalMessages.length;
+                
+                // Subtle animation for timer container
+                timerContainer.style.animation = "subtleGlow 1s ease";
+                setTimeout(() => {
+                    timerContainer.style.animation = "";
+                }, 1000);
+            }, 400);
+        }
+
+        // Update timer display
+        function updateTimer() {
+            timerElement.textContent = formatTime(totalSeconds);
+            
+            // Calculate progress
+            const progressPercentage = 100 - (totalSeconds / originalSeconds * 100);
+            
+            // Update progress ring with smooth gradient
+            progressRing.style.background = `
+                conic-gradient(
+                    ${timerModes[currentMode].color} ${progressPercentage * 3.6}deg,
+                    transparent 0deg
+                )
+            `;
+            
+            // Update progress bar
+            progressBar.style.width = `${progressPercentage}%`;
+            
+            // Timer text ALWAYS stays black
+            timerElement.style.color = "var(--primary-black)";
+            
+            // Update timer container background with subtle animation
+            const progress = 1 - (totalSeconds / originalSeconds);
+            if (progress > 0.7) {
+                timerContainer.style.animation = "smoothBackground 2s ease infinite";
+            } else {
+                timerContainer.style.animation = "";
+            }
+            
+            // Show motivational message every 5 minutes
+            const minutesPassed = Math.floor((originalSeconds - totalSeconds) / 60);
+            if (minutesPassed > 0 && minutesPassed % 5 === 0 && minutesPassed !== lastMessageTime) {
+                lastMessageTime = minutesPassed;
+                showMotivationalMessage();
+            }
+            
+            // Update status based on progress
+            const progressValue = 1 - (totalSeconds / originalSeconds);
+            if (progressValue < 0.25) {
+                statusElement.textContent = "Building momentum";
+            } else if (progressValue < 0.5) {
+                statusElement.textContent = "In the flow state";
+            } else if (progressValue < 0.75) {
+                statusElement.textContent = "Deep focus achieved";
+            } else if (progressValue < 0.9) {
+                statusElement.textContent = "Final stretch ahead";
+            } else {
+                statusElement.textContent = "Almost there, stay strong";
+            }
+            
+            // Check if timer reached zero
+            if (totalSeconds <= 0) {
+                clearInterval(timerInterval);
+                isRunning = false;
+                startBtn.textContent = "Start";
+                startBtn.innerHTML = '<span class="btn-icon">▶</span> Start';
+                startBtn.classList.remove('running');
+                timerElement.textContent = formatTime(originalSeconds);
+                
+                // Show completion message
+                motivationElement.textContent = "Session complete! Well done";
+                statusElement.textContent = "Take a short break";
+                
+                // Reset visuals
+                resetVisuals();
+                
+                // Show mode selector again when timer completes
+                showModeSelector();
+                
+                // Play completion sound
+                playCompletionSound();
+            }
+            
+            totalSeconds--;
+        }
+
+        // Play completion sound
+        function playCompletionSound() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                // Pleasant completion tone
+                oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(880, audioContext.currentTime + 0.5);
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 1);
+            } catch (e) {
+                console.log("Audio context not supported");
+            }
+        }
+
+        // Start/Pause timer
+        function toggleTimer() {
+            if (isRunning) {
+                // Pause timer
+                clearInterval(timerInterval);
+                isRunning = false;
+                startBtn.textContent = "Resume";
+                startBtn.innerHTML = '<span class="btn-icon">▶</span> Resume';
+                startBtn.classList.remove('running');
+                statusElement.textContent = "Paused";
+                
+                // Show mode selector when paused (optional - remove if you want it to stay hidden)
+                // showModeSelector();
+            } else {
+                // Start timer
+                if (totalSeconds <= 0) {
+                    totalSeconds = originalSeconds;
+                }
+                
+                timerInterval = setInterval(updateTimer, 1000);
+                isRunning = true;
+                startBtn.textContent = "Pause";
+                startBtn.innerHTML = '<span class="btn-icon">⏸</span> Pause';
+                startBtn.classList.add('running');
+                
+                // Hide mode selector when timer starts
+                hideModeSelector();
+                
+                // Show initial motivational message
+                motivationElement.textContent = motivationalMessages[0];
+                messageIndex = 1;
+                lastMessageTime = 0;
+                
+                // Update timer immediately
+                updateTimer();
+            }
+        }
+
+        // Reset/Restart timer - SHOWS MODE SELECTOR
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            totalSeconds = originalSeconds;
+            timerElement.textContent = formatTime(totalSeconds);
+            startBtn.textContent = "Start";
+            startBtn.innerHTML = '<span class="btn-icon">▶</span> Start';
+            startBtn.classList.remove('running');
+            statusElement.textContent = `${timerModes[currentMode].name} ready`;
+            
+            // Reset visual effects
+            resetVisuals();
+            
+            // IMPORTANT: Show mode selector when restart is clicked
+            showModeSelector();
+        }
+
+        // Event listeners for mode buttons
+        lightBtn.addEventListener('click', () => {
+            if (!isRunning) {
+                setActiveMode('light');
+            }
+        });
+
+        normalBtn.addEventListener('click', () => {
+            if (!isRunning) {
+                setActiveMode('normal');
+            }
+        });
+
+        deepBtn.addEventListener('click', () => {
+            if (!isRunning) {
+                setActiveMode('deep');
+            }
+        });
+
+        // Event listeners for control buttons
+        startBtn.addEventListener('click', toggleTimer);
+        resetBtn.addEventListener('click', resetTimer);
+        
+        // Double click timer to reset
+        timerContainer.addEventListener('dblclick', resetTimer);
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                toggleTimer();
+            } else if (e.code === 'KeyR' && e.ctrlKey) {
+                e.preventDefault();
+                resetTimer();
+            } else if (e.code === 'Digit1' || e.code === 'Numpad1') {
+                e.preventDefault();
+                if (!isRunning) setActiveMode('light');
+            } else if (e.code === 'Digit2' || e.code === 'Numpad2') {
+                e.preventDefault();
+                if (!isRunning) setActiveMode('normal');
+            } else if (e.code === 'Digit3' || e.code === 'Numpad3') {
+                e.preventDefault();
+                if (!isRunning) setActiveMode('deep');
+            }
+        });
+
+        // Initialize
+        setActiveMode('light');

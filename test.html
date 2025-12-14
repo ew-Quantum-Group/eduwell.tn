@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Select Tense • Grammar Master</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css ">
+    <link href="https://fonts.googleapis.com/css2?family=Inter :wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -489,7 +489,7 @@
                 grid-template-columns: repeat(2, 1fr);
                 max-width: 700px;
             }
-            
+
             .page-title {
                 font-size: 48px;
             }
@@ -499,40 +499,40 @@
             .container {
                 padding: 0 20px;
             }
-            
+
             .nav-back {
                 top: 20px;
                 left: 20px;
             }
-            
+
             .page-header {
                 padding-top: 80px;
                 padding-bottom: 48px;
             }
-            
+
             .page-title {
                 font-size: 40px;
             }
-            
+
             .page-subtitle {
                 font-size: 1.1rem;
             }
-            
+
             .cards-grid {
                 grid-template-columns: 1fr;
                 max-width: 400px;
             }
-            
+
             .modal-content {
                 max-width: 100%;
                 border-radius: 16px 16px 0 0;
             }
-            
+
             .pack-item {
                 padding: 16px;
                 gap: 12px;
             }
-            
+
             .pack-icon {
                 width: 40px;
                 height: 40px;
@@ -544,39 +544,39 @@
             .page-title {
                 font-size: 32px;
             }
-            
+
             .page-subtitle {
                 font-size: 1rem;
             }
-            
+
             .card-title {
                 font-size: 1.1rem;
             }
-            
+
             .card-description {
                 font-size: 0.85rem;
             }
-            
+
             .modal-header {
                 padding: 24px 20px 16px;
             }
-            
+
             .packs-container {
                 padding: 16px 20px 24px;
             }
-            
+
             .pack-item {
                 padding: 14px;
             }
-            
+
             .pack-name {
                 font-size: 1rem;
             }
-            
+
             .pack-description {
                 font-size: 0.85rem;
             }
-            
+
             .pack-details {
                 flex-direction: column;
                 gap: 8px;
@@ -839,16 +839,16 @@
         // Current selected tense
         let currentTense = '';
 
-        // Back Button Handler - Navigate to previous page in browser history
+        // Back Button Handler - Navigate to index.html
         backButton.addEventListener('click', function() {
             // Visual feedback
             this.style.backgroundColor = '#e8e8ed';
             setTimeout(() => {
                 this.style.backgroundColor = '#f5f5f7';
             }, 200);
-            
-            // Navigate back in browser history (same tab)
-            window.history.back();
+
+            // Navigate to index.html
+            window.location.href = 'index.html';
         });
 
         // Card Click Handler - Opens Modal
@@ -857,14 +857,14 @@
                 // Get tense from data attribute
                 const tense = this.getAttribute('data-tense');
                 currentTense = tense;
-                
+
                 // Update modal title
                 const tenseName = getTenseDisplayName(tense);
                 modalTitle.textContent = `${tenseName} Exercise Packs`;
-                
+
                 // Load packs for this tense
                 loadPacks(tense);
-                
+
                 // Open modal
                 openModal();
             });
@@ -883,7 +883,7 @@
 
         // Modal Close Handlers
         modalClose.addEventListener('click', closeModal);
-        
+
         modalOverlay.addEventListener('click', function(event) {
             if (event.target === modalOverlay) {
                 closeModal();
@@ -913,16 +913,16 @@
         function loadPacks(tense) {
             // Clear existing packs
             packsContainer.innerHTML = '';
-            
+
             // Get packs for this tense
             const packs = packsData[tense];
-            
+
             // Create pack elements
             packs.forEach((pack, index) => {
                 const packElement = document.createElement('div');
                 packElement.className = `pack-item ${tense}`;
                 packElement.setAttribute('data-pack-index', index);
-                
+
                 packElement.innerHTML = `
                     <div class="pack-icon">
                         <i class="fas ${pack.icon}"></i>
@@ -952,31 +952,31 @@
                         <i class="fas fa-chevron-right"></i>
                     </div>
                 `;
-                
+
                 // Add click handler for pack selection - Navigate to pack page
                 packElement.addEventListener('click', function(e) {
                     e.stopPropagation(); // Prevent event bubbling
-                    
+
                     // Visual feedback
                     const activePack = e.currentTarget;
                     activePack.style.backgroundColor = '#f8f8fa';
-                    
+
                     setTimeout(() => {
                         activePack.style.backgroundColor = '';
                     }, 200);
-                    
+
                     // Show loading notification
                     showNotification(`Loading ${pack.name}...`);
-                    
+
                     // Close modal
                     closeModal();
-                    
+
                     // Navigate to the page URL after a short delay
                     setTimeout(() => {
                         window.location.href = pack.pageUrl;
                     }, 500);
                 });
-                
+
                 packsContainer.appendChild(packElement);
             });
         }
@@ -988,7 +988,7 @@
             if (existingNotification) {
                 existingNotification.remove();
             }
-            
+
             // Create new notification
             const notification = document.createElement('div');
             notification.className = 'notification';
@@ -1012,14 +1012,14 @@
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
                 border: 1px solid rgba(255, 255, 255, 0.08);
             `;
-            
+
             document.body.appendChild(notification);
-            
+
             // Fade in
             setTimeout(() => {
                 notification.style.opacity = '1';
             }, 10);
-            
+
             // Remove after 2.5 seconds
             setTimeout(() => {
                 notification.style.opacity = '0';
@@ -1037,11 +1037,12 @@
                 this.style.transform = 'translateY(-2px)';
                 this.style.transition = 'transform 0.2s ease';
             });
-            
+
             card.addEventListener('mouseleave', function() {
                 this.style.transform = 'translateY(0)';
             });
         });
     </script>
 </body>
-</html>  i need when i click to back bouttom thay go oindex.html page     give me the full code without any modification on any other ppart
+</html>
+

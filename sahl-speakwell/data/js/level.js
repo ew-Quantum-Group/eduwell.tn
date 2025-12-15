@@ -1,49 +1,47 @@
-
-
-        // DOM Elements
+  // DOM Elements
         const backButton = document.getElementById('backButton');
         const tenseCards = document.querySelectorAll('.tense-card');
         const modalOverlay = document.getElementById('modalOverlay');
-        const modalContent = document.getElementById('modalContent');
         const modalClose = document.getElementById('modalClose');
         const modalTitle = document.getElementById('modalTitle');
         const packsContainer = document.getElementById('packsContainer');
-
-        // Current selected tense
         let currentTense = '';
 
-        // Back Button Handler - Navigate to index.html
+        // Back Button
         backButton.addEventListener('click', function() {
-            // Visual feedback
-            this.style.backgroundColor = '#e8e8ed';
+            // Add mobile-friendly feedback
+            this.style.transform = 'scale(0.9)';
             setTimeout(() => {
-                this.style.backgroundColor = '#f5f5f7';
+                this.style.transform = '';
+                window.location.href = '../index.html';
             }, 200);
-
-            // Navigate to index.html
-            window.location.href = '../index.html';
         });
 
-        // Card Click Handler - Opens Modal
+        // Card Interactions
         tenseCards.forEach(card => {
             card.addEventListener('click', function() {
-                // Get tense from data attribute
                 const tense = this.getAttribute('data-tense');
                 currentTense = tense;
-
+                
+                // Mobile touch feedback
+                this.style.transform = 'scale(0.98)';
+                
                 // Update modal title
                 const tenseName = getTenseDisplayName(tense);
                 modalTitle.textContent = `${tenseName} Exercise Packs`;
-
-                // Load packs for this tense
+                
+                // Load packs
                 loadPacks(tense);
-
-                // Open modal
                 openModal();
+                
+                // Reset card
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
             });
         });
 
-        // Helper function to get display name for tense
+        // Helper function
         function getTenseDisplayName(tense) {
             const tenseNames = {
                 past: "Past Tense",
@@ -54,164 +52,153 @@
             return tenseNames[tense] || tense;
         }
 
-        // Modal Close Handlers
+        // Modal Functions
         modalClose.addEventListener('click', closeModal);
-
+        
         modalOverlay.addEventListener('click', function(event) {
             if (event.target === modalOverlay) {
                 closeModal();
             }
         });
 
-        // Close modal with Escape key
+        function openModal() {
+            // Show swipe indicator on mobile
+            const swipeIndicator = document.querySelector('.swipe-indicator');
+            if (window.innerWidth < 768) {
+                swipeIndicator.style.display = 'block';
+            }
+            
+            modalOverlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => {
+                modalOverlay.classList.add('active');
+            }, 10);
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            
+            setTimeout(() => {
+                modalOverlay.style.display = 'none';
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        function loadPacks(tense) {
+            packsContainer.innerHTML = '';
+            const packs = packsData[tense];
+            
+            // Show loading animation
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'loading-dots';
+            loadingDiv.style.cssText = `
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 80px;
+                color: getTenseColor(tense);
+            `;
+            loadingDiv.innerHTML = `<span></span><span></span><span></span>`;
+            packsContainer.appendChild(loadingDiv);
+            
+            // Load packs after delay
+            setTimeout(() => {
+                packsContainer.removeChild(loadingDiv);
+                
+                packs.forEach((pack, index) => {
+                    const packElement = document.createElement('div');
+                    packElement.className = `pack-item ${tense}`;
+                    packElement.tabIndex = 0;
+                    packElement.style.opacity = '0';
+                    packElement.style.transform = 'translateY(10px)';
+                    
+                    packElement.innerHTML = `
+                        <div class="pack-icon">
+                            <i class="fas ${pack.icon}"></i>
+                        </div>
+                        <div class="pack-content">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;">
+                                <h4 class="pack-name">${pack.name}</h4>
+                                <span class="pack-tense">${pack.difficulty}</span>
+                            </div>
+                            <p class="pack-description">${pack.description}</p>
+                            <div class="pack-details">
+                                <div class="pack-detail">
+                                    <i class="fas fa-pen-alt"></i>
+                                    <span>${pack.exercises} exercises</span>
+                                </div>
+                                <div class="pack-detail">
+                                    <i class="fas fa-clock"></i>
+                                    <span>${pack.duration}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    packsContainer.appendChild(packElement);
+                    
+                    // Animate in
+                    setTimeout(() => {
+                        packElement.style.transition = 'all 0.3s ease';
+                        packElement.style.opacity = '1';
+                        packElement.style.transform = 'translateY(0)';
+                    }, index * 100);
+                    
+                    // Click handler
+                    packElement.addEventListener('click', function() {
+                        // Add touch feedback
+                        this.style.transform = 'scale(0.98)';
+                        
+                        // Show loading state
+                        const icon = this.querySelector('.pack-icon i');
+                        const originalIcon = icon.className;
+                        icon.className = 'fas fa-spinner fa-spin';
+                        
+                        // Close modal and navigate
+                        setTimeout(() => {
+                            closeModal();
+                            setTimeout(() => {
+                                window.location.href = pack.pageUrl;
+                            }, 300);
+                        }, 400);
+                    });
+                });
+            }, 500);
+        }
+
+        // Handle Escape key
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape' && modalOverlay.classList.contains('active')) {
                 closeModal();
             }
         });
 
-        // Open modal function
-        function openModal() {
-            modalOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        // Close modal function
-        function closeModal() {
-            modalOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        // Load packs for a specific tense
-        function loadPacks(tense) {
-            // Clear existing packs
-            packsContainer.innerHTML = '';
-
-            // Get packs for this tense
-            const packs = packsData[tense];
-
-            // Create pack elements
-            packs.forEach((pack, index) => {
-                const packElement = document.createElement('div');
-                packElement.className = `pack-item ${tense}`;
-                packElement.setAttribute('data-pack-index', index);
-
-                packElement.innerHTML = `
-                    <div class="pack-icon">
-                        <i class="fas ${pack.icon}"></i>
-                    </div>
-                    <div class="pack-content">
-                        <div class="pack-header">
-                            <h4 class="pack-name">${pack.name}</h4>
-                            <span class="pack-tense">${pack.difficulty}</span>
-                        </div>
-                        <p class="pack-description">${pack.description}</p>
-                        <div class="pack-details">
-                            <div class="pack-detail">
-                                <i class="fas fa-pen-alt"></i>
-                                <span>${pack.exercises} exercises</span>
-                            </div>
-                            <div class="pack-detail">
-                                <i class="fas fa-clock"></i>
-                                <span>${pack.duration}</span>
-                            </div>
-                            <div class="pack-detail">
-                                <i class="fas fa-chart-line"></i>
-                                <span>${pack.difficulty} level</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pack-arrow">
-                        <i class="fas fa-chevron-right"></i>
-                    </div>
-                `;
-
-                // Add click handler for pack selection - Navigate to pack page
-                packElement.addEventListener('click', function(e) {
-                    e.stopPropagation(); // Prevent event bubbling
-
-                    // Visual feedback
-                    const activePack = e.currentTarget;
-                    activePack.style.backgroundColor = '#f8f8fa';
-
-                    setTimeout(() => {
-                        activePack.style.backgroundColor = '';
-                    }, 200);
-
-                    // Show loading notification
-                    showNotification(`Loading ${pack.name}...`);
-
-                    // Close modal
-                    closeModal();
-
-                    // Navigate to the page URL after a short delay
-                    setTimeout(() => {
-                        window.location.href = pack.pageUrl;
-                    }, 500);
-                });
-
-                packsContainer.appendChild(packElement);
-            });
-        }
-
-        // Show notification
-        function showNotification(message) {
-            // Remove existing notification if any
-            const existingNotification = document.querySelector('.notification');
-            if (existingNotification) {
-                existingNotification.remove();
+        // Add CSS class for touch feedback
+        const style = document.createElement('style');
+        style.textContent = `
+            .touch-active {
+                opacity: 0.7 !important;
+                transform: scale(0.98) !important;
             }
-
-            // Create new notification
-            const notification = document.createElement('div');
-            notification.className = 'notification';
-            notification.textContent = message;
-            notification.style.cssText = `
-                position: fixed;
-                bottom: 24px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: rgba(29, 29, 31, 0.9);
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
-                color: white;
-                padding: 12px 20px;
-                border-radius: 12px;
-                font-size: 0.9rem;
-                font-weight: 500;
-                z-index: 10000;
-                opacity: 0;
-                transition: opacity 0.3s ease;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-                border: 1px solid rgba(255, 255, 255, 0.08);
-            `;
-
-            document.body.appendChild(notification);
-
-            // Fade in
-            setTimeout(() => {
-                notification.style.opacity = '1';
-            }, 10);
-
-            // Remove after 2.5 seconds
-            setTimeout(() => {
-                notification.style.opacity = '0';
-                setTimeout(() => {
-                    if (notification.parentNode) {
-                        notification.remove();
-                    }
-                }, 300);
-            }, 2500);
-        }
-
-        // Add simple hover effect for cards
-        tenseCards.forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-2px)';
-                this.style.transition = 'transform 0.2s ease';
-            });
-
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-        });
+            
+            @media (max-width: 767px) {
+                .tense-card,
+                .pack-item {
+                    transition: transform 0.2s ease;
+                }
+                
+                .tense-card:active,
+                .pack-item:active {
+                    transform: scale(0.98);
+                }
+            }
+            
+            @media (min-width: 768px) {
+                .tense-card:hover {
+                    transform: translateY(-8px) scale(1.02);
+                    box-shadow: var(--shadow-xl);
+                }
+            }
+        `;
+        document.head.appendChild(style);

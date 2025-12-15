@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakWell | Sahl</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="../data/img/speakwell.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="../data/css/style.css">
+     
+</head>
+<body>
+    <!-- Back Button -->
+    <button class="back-button" id="backButton" aria-label="Go back to previous page">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading quiz...</div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container hidden" id="appContainer">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="quiz-title">Grammar Quiz</h1>
+                <div class="quiz-subtitle">Past tenses</div>
+                <div class="progress-indicator">
+                    <span id="currentScore">0</span> pts
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content" id="quizContent">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text">
+                    <span>Question <span id="currentQuestionNum">1</span> of <span id="totalQuestions">10</span></span>
+                    <span id="progressPercent">10%</span>
+                </div>
+            </div>
+
+            <!-- Question Container -->
+            <div class="question-container">
+                <div class="question-number">Question <span id="questionNum">1</span></div>
+                <h2 class="question-text" id="questionText">
+                    She usually ___ (to get) up at 7 a.m.
+                </h2>
+                <div class="question-hint">
+                    <i class="fas fa-lightbulb"></i>
+                    <span id="questionHint">Look for time expressions that indicate habits</span>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="options-container" id="optionsContainer">
+                <!-- Options will be inserted here -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="prevButton" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="btn btn-primary" id="submitButton" disabled>
+                    Check Answer
+                </button>
+            </div>
+
+            <!-- Next Button (separate for better flow) -->
+            <button class="btn btn-primary hidden" id="nextButton">
+                Next Question <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <!-- Explanation Panel -->
+            <div class="explanation-panel" id="explanationPanel">
+                <div class="explanation-header">
+                    <i class="fas fa-info-circle"></i>
+                    Explanation
+                </div>
+                <div class="explanation-content" id="explanationText">
+                    <!-- Explanation will be inserted here -->
+                </div>
+                <div class="explanation-tip" id="explanationTip">
+                    <i class="fas fa-tip"></i>
+                    <!-- Tip will be inserted here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Results Screen -->
+        <div class="results-screen hidden" id="resultsScreen">
+            <div class="results-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h2 class="results-title">Quiz Completed!</h2>
+            <div class="results-score" id="finalScore">0/10</div>
+            <p class="results-message" id="resultsMessage">
+                Great effort! Review your answers to improve.
+            </p>
+            
+            <div class="results-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="correctAnswers">0</span>
+                    <span class="stat-label">Correct</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="scorePoints">0</span>
+                    <span class="stat-label">Points</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="completionTime">0:00</span>
+                    <span class="stat-label">Time</span>
+                </div>
+            </div>
+
+            <div class="results-actions">
+                <button class="btn btn-secondary" id="reviewButton">
+                    <i class="fas fa-redo"></i> Review
+                </button>
+                <button class="btn btn-primary" id="restartButton">
+                    <i class="fas fa-play"></i> Try Again
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div>SpeakWell • Eduwell Quantum Group </div>
+        </footer>
+    </div>
+
+    <script>
+    const quizData = [
+    {
+        question: "Biotechnology ___ (to enable) precise gene editing through CRISPR technology.",
+        options: [
+            { text: "enables", example: "Biotechnology enables genetic modifications" },
+            { text: "is enabling", example: "Biotechnology is enabling breakthroughs currently" },
+            { text: "has enabled", example: "Biotechnology has enabled precise gene editing" }
+        ],
+        correctAnswer: 2,
+        explanation: "This announces a completed technological achievement with current capabilities, requiring Present Perfect tense.",
+        hint: "Announcing completed technological capabilities uses Present Perfect",
+        tip: "Present Perfect: for stating what technology has achieved"
+    },
+    {
+        question: "The spacecraft ___ (to transmit) real-time data from Mars to Earth.",
+        options: [
+            { text: "transmits", example: "The spacecraft transmits data regularly" },
+            { text: "is transmitting", example: "The spacecraft is transmitting data currently" },
+            { text: "has transmitted", example: "The spacecraft has transmitted valuable data" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes an ongoing, real-time space mission activity, requiring Present Continuous tense.",
+        hint: "Real-time space mission activities use Present Continuous",
+        tip: "Present Continuous: for ongoing space mission operations"
+    },
+    {
+        question: "Theoretical mathematics ___ (to provide) the foundation for quantum computing.",
+        options: [
+            { text: "provides", example: "Theoretical mathematics provides essential frameworks" },
+            { text: "is providing", example: "Mathematics is providing new insights now" },
+            { text: "has provided", example: "Mathematics has provided crucial foundations" }
+        ],
+        correctAnswer: 0,
+        explanation: "This states a permanent relationship between fields, requiring Present Simple tense.",
+        hint: "Permanent foundational relationships use Present Simple",
+        tip: "Present Simple: for stating permanent foundational relationships"
+    },
+    {
+        question: "The forensic team ___ (to analyze) digital evidence from the encrypted servers.",
+        options: [
+            { text: "analyzes", example: "The team analyzes evidence systematically" },
+            { text: "is analyzing", example: "The team is analyzing the servers currently" },
+            { text: "has analyzed", example: "The team has analyzed similar cases before" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes specific ongoing forensic work, requiring Present Continuous tense.",
+        hint: "Specific ongoing forensic investigations use Present Continuous",
+        tip: "Present Continuous: for temporary investigative work"
+    },
+    {
+        question: "Augmented reality ___ (to enhance) user experiences across multiple industries.",
+        options: [
+            { text: "enhances", example: "AR enhances interactive experiences" },
+            { text: "is enhancing", example: "AR is enhancing retail experiences now" },
+            { text: "has enhanced", example: "AR has enhanced many user experiences" }
+        ],
+        correctAnswer: 2,
+        explanation: "This states completed improvements with current applications, requiring Present Perfect tense.",
+        hint: "Completed technological enhancements use Present Perfect",
+        tip: "Present Perfect: for completed technological improvements"
+    },
+    {
+        question: "Environmental science ___ (to monitor) ecosystem changes due to climate variations.",
+        options: [
+            { text: "monitors", example: "Environmental science monitors ecosystems" },
+            { text: "is monitoring", example: "Scientists are monitoring changes now" },
+            { text: "has monitored", example: "Science has monitored these changes for decades" }
+        ],
+        correctAnswer: 0,
+        explanation: "This describes the permanent function of environmental science, requiring Present Simple tense.",
+        hint: "Permanent scientific monitoring functions use Present Simple",
+        tip: "Present Simple: for stating what scientific fields monitor"
+    },
+    {
+        question: "The negotiation team ___ (to draft) the final terms of the international agreement.",
+        options: [
+            { text: "drafts", example: "The team drafts agreements professionally" },
+            { text: "is drafting", example: "The team is drafting terms currently" },
+            { text: "has drafted", example: "The team has drafted many agreements" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes ongoing diplomatic document preparation, requiring Present Continuous tense.",
+        hint: "Ongoing diplomatic drafting uses Present Continuous",
+        tip: "Present Continuous: for temporary diplomatic document preparation"
+    },
+    {
+        question: "Blockchain technology ___ (to revolutionize) digital transaction security.",
+        options: [
+            { text: "revolutionizes", example: "Blockchain revolutionizes security protocols" },
+            { text: "is revolutionizing", example: "Blockchain is revolutionizing finance now" },
+            { text: "has revolutionized", example: "Blockchain has revolutionized transaction security" }
+        ],
+        correctAnswer: 2,
+        explanation: "This announces a completed technological transformation, requiring Present Perfect tense.",
+        hint: "Announcing completed security revolutions uses Present Perfect",
+        tip: "Present Perfect: for completed security technology changes"
+    },
+    {
+        question: "Molecular biology ___ (to investigate) protein folding mechanisms in cells.",
+        options: [
+            { text: "investigates", example: "Molecular biology investigates cellular processes" },
+            { text: "is investigating", example: "Researchers are investigating folding now" },
+            { text: "has investigated", example: "Biology has investigated protein folding extensively" }
+        ],
+        correctAnswer: 0,
+        explanation: "This states what the field generally studies, requiring Present Simple tense.",
+        hint: "What biological fields investigate uses Present Simple",
+        tip: "Present Simple: for stating what scientific disciplines investigate"
+    },
+    {
+        question: "The cybersecurity team ___ (to implement) advanced encryption protocols.",
+        options: [
+            { text: "implements", example: "The team implements security measures" },
+            { text: "is implementing", example: "The team is implementing new protocols currently" },
+            { text: "has implemented", example: "The team has implemented strong encryption" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes ongoing security implementation, requiring Present Continuous tense.",
+        hint: "Ongoing security implementations use Present Continuous",
+        tip: "Present Continuous: for temporary security deployments"
+    },
+    {
+        question: "Virtual reality ___ (to transform) medical training simulations.",
+        options: [
+            { text: "transforms", example: "VR transforms educational methods" },
+            { text: "is transforming", example: "VR is transforming medical training now" },
+            { text: "has transformed", example: "VR has transformed simulation training" }
+        ],
+        correctAnswer: 2,
+        explanation: "This states completed transformation with current training methods, requiring Present Perfect tense.",
+        hint: "Completed educational transformations use Present Perfect",
+        tip: "Present Perfect: for completed educational technology changes"
+    },
+    {
+        question: "Cognitive neuroscience ___ (to map) neural connections related to decision-making.",
+        options: [
+            { text: "maps", example: "Cognitive neuroscience maps brain functions" },
+            { text: "is mapping", example: "Neuroscientists are mapping connections now" },
+            { text: "has mapped", example: "Neuroscience has mapped many neural pathways" }
+        ],
+        correctAnswer: 0,
+        explanation: "This describes the permanent function of the field, requiring Present Simple tense.",
+        hint: "Permanent scientific mapping functions use Present Simple",
+        tip: "Present Simple: for stating what neuroscience maps"
+    },
+    {
+        question: "The research institute ___ (to pioneer) new sustainable energy solutions.",
+        options: [
+            { text: "pioneers", example: "The institute pioneers innovative research" },
+            { text: "is pioneering", example: "The institute is pioneering new solutions currently" },
+            { text: "has pioneered", example: "The institute has pioneered breakthrough technologies" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes ongoing innovative research, requiring Present Continuous tense.",
+        hint: "Ongoing pioneering research uses Present Continuous",
+        tip: "Present Continuous: for temporary pioneering activities"
+    },
+    {
+        question: "5G technology ___ (to facilitate) unprecedented data transfer speeds.",
+        options: [
+            { text: "facilitates", example: "5G facilitates fast communication" },
+            { text: "is facilitating", example: "5G is facilitating new applications now" },
+            { text: "has facilitated", example: "5G has facilitated revolutionary speeds" }
+        ],
+        correctAnswer: 2,
+        explanation: "This announces completed technological facilitation, requiring Present Perfect tense.",
+        hint: "Announcing completed technological facilitation uses Present Perfect",
+        tip: "Present Perfect: for completed communication technology achievements"
+    },
+    {
+        question: "Marine biology ___ (to study) deep-sea ecosystems and their unique adaptations.",
+        options: [
+            { text: "studies", example: "Marine biology studies ocean life" },
+            { text: "is studying", example: "Biologists are studying deep-sea vents now" },
+            { text: "has studied", example: "Marine biology has studied oceans extensively" }
+        ],
+        correctAnswer: 0,
+        explanation: "This states the permanent scope of marine biology, requiring Present Simple tense.",
+        hint: "Permanent scientific study scopes use Present Simple",
+        tip: "Present Simple: for stating what biological fields study"
+    },
+    {
+        question: "The development team ___ (to optimize) the algorithm for better performance.",
+        options: [
+            { text: "optimizes", example: "The team optimizes code regularly" },
+            { text: "is optimizing", example: "The team is optimizing the algorithm currently" },
+            { text: "has optimized", example: "The team has optimized similar algorithms" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes ongoing technical improvement work, requiring Present Continuous tense.",
+        hint: "Ongoing technical optimization uses Present Continuous",
+        tip: "Present Continuous: for temporary technical improvements"
+    },
+    {
+        question: "Automation ___ (to displace) certain manual labor positions in manufacturing.",
+        options: [
+            { text: "displaces", example: "Automation displaces some jobs" },
+            { text: "is displacing", example: "Automation is displacing workers now" },
+            { text: "has displaced", example: "Automation has displaced many manufacturing jobs" }
+        ],
+        correctAnswer: 2,
+        explanation: "This states completed workforce changes with current effects, requiring Present Perfect tense.",
+        hint: "Completed workforce displacement uses Present Perfect",
+        tip: "Present Perfect: for completed automation effects on employment"
+    },
+    {
+        question: "Particle physics ___ (to explore) fundamental constituents of matter.",
+        options: [
+            { text: "explores", example: "Particle physics explores subatomic particles" },
+            { text: "is exploring", example: "Physicists are exploring new particles now" },
+            { text: "has explored", example: "Physics has explored matter extensively" }
+        ],
+        correctAnswer: 0,
+        explanation: "This states the permanent exploration focus of the field, requiring Present Simple tense.",
+        hint: "Permanent scientific exploration focuses use Present Simple",
+        tip: "Present Simple: for stating what physics explores"
+    },
+    {
+        question: "The pharmaceutical researcher ___ (to test) potential compounds for efficacy.",
+        options: [
+            { text: "tests", example: "The researcher tests compounds methodically" },
+            { text: "is testing", example: "The researcher is testing compounds currently" },
+            { text: "has tested", example: "The researcher has tested many compounds" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes ongoing experimental work, requiring Present Continuous tense.",
+        hint: "Ongoing experimental testing uses Present Continuous",
+        tip: "Present Continuous: for temporary experimental activities"
+    },
+    {
+        question: "Machine learning ___ (to improve) predictive accuracy in data analysis.",
+        options: [
+            { text: "improves", example: "Machine learning improves predictions" },
+            { text: "is improving", example: "ML is improving accuracy now" },
+            { text: "has improved", example: "ML has improved prediction accuracy significantly" }
+        ],
+        correctAnswer: 2,
+        explanation: "This states completed improvements with current capabilities, requiring Present Perfect tense.",
+        hint: "Completed accuracy improvements use Present Perfect",
+        tip: "Present Perfect: for completed data science improvements"
+    },
+    {
+        question: "Geology ___ (to examine) Earth's crust composition and tectonic movements.",
+        options: [
+            { text: "examines", example: "Geology examines Earth's structure" },
+            { text: "is examining", example: "Geologists are examining recent earthquakes" },
+            { text: "has examined", example: "Geology has examined tectonic plates for centuries" }
+        ],
+        correctAnswer: 0,
+        explanation: "This describes the permanent examination focus of geology, requiring Present Simple tense.",
+        hint: "Permanent geological examination focuses use Present Simple",
+        tip: "Present Simple: for stating what earth sciences examine"
+    },
+    {
+        question: "The engineering consortium ___ (to design) next-generation transportation systems.",
+        options: [
+            { text: "designs", example: "The consortium designs innovative systems" },
+            { text: "is designing", example: "The consortium is designing new systems currently" },
+            { text: "has designed", example: "The consortium has designed award-winning systems" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes ongoing design work, requiring Present Continuous tense.",
+        hint: "Ongoing engineering design uses Present Continuous",
+        tip: "Present Continuous: for temporary design projects"
+    },
+    {
+        question: "Telemedicine ___ (to expand) healthcare access to remote populations.",
+        options: [
+            { text: "expands", example: "Telemedicine expands medical access" },
+            { text: "is expanding", example: "Telemedicine is expanding rapidly now" },
+            { text: "has expanded", example: "Telemedicine has expanded healthcare access dramatically" }
+        ],
+        correctAnswer: 2,
+        explanation: "This announces completed expansion with current access, requiring Present Perfect tense.",
+        hint: "Announcing completed healthcare expansions uses Present Perfect",
+        tip: "Present Perfect: for completed healthcare system changes"
+    },
+    {
+        question: "Anthropology ___ (to analyze) cultural evolution and social structures.",
+        options: [
+            { text: "analyzes", example: "Anthropology analyzes human societies" },
+            { text: "is analyzing", example: "Anthropologists are analyzing modern cultures" },
+            { text: "has analyzed", example: "Anthropology has analyzed cultures for centuries" }
+        ],
+        correctAnswer: 0,
+        explanation: "This states the permanent analytical focus of anthropology, requiring Present Simple tense.",
+        hint: "Permanent anthropological analysis focuses use Present Simple",
+        tip: "Present Simple: for stating what social sciences analyze"
+    },
+    {
+        question: "The satellite ___ (to capture) high-resolution images of weather patterns.",
+        options: [
+            { text: "captures", example: "The satellite captures images regularly" },
+            { text: "is capturing", example: "The satellite is capturing images currently" },
+            { text: "has captured", example: "The satellite has captured valuable data" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes ongoing satellite operations, requiring Present Continuous tense.",
+        hint: "Ongoing satellite operations use Present Continuous",
+        tip: "Present Continuous: for temporary satellite monitoring"
+    },
+    {
+        question: "Cloud computing ___ (to reduce) infrastructure costs for businesses.",
+        options: [
+            { text: "reduces", example: "Cloud computing reduces IT expenses" },
+            { text: "is reducing", example: "Cloud computing is reducing costs now" },
+            { text: "has reduced", example: "Cloud computing has reduced infrastructure costs significantly" }
+        ],
+        correctAnswer: 2,
+        explanation: "This states completed cost reductions with current savings, requiring Present Perfect tense.",
+        hint: "Completed cost reductions use Present Perfect",
+        tip: "Present Perfect: for completed economic efficiency improvements"
+    },
+    {
+        question: "Archaeology ___ (to uncover) historical evidence through systematic excavation.",
+        options: [
+            { text: "uncovers", example: "Archaeology uncovers historical evidence" },
+            { text: "is uncovering", example: "Archaeologists are uncovering artifacts now" },
+            { text: "has uncovered", example: "Archaeology has uncovered ancient civilizations" }
+        ],
+        correctAnswer: 0,
+        explanation: "This describes the permanent function of archaeology, requiring Present Simple tense.",
+        hint: "Permanent archaeological functions use Present Simple",
+        tip: "Present Simple: for stating what archaeology uncovers"
+    },
+    {
+        question: "The medical team ___ (to administer) experimental treatments to trial participants.",
+        options: [
+            { text: "administers", example: "The team administers treatments professionally" },
+            { text: "is administering", example: "The team is administering treatments currently" },
+            { text: "has administered", example: "The team has administered many treatments" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes ongoing clinical trial activities, requiring Present Continuous tense.",
+        hint: "Ongoing clinical trial activities use Present Continuous",
+        tip: "Present Continuous: for temporary medical trial activities"
+    },
+    {
+        question: "Renewable energy ___ (to decrease) carbon emissions globally.",
+        options: [
+            { text: "decreases", example: "Renewable energy decreases pollution" },
+            { text: "is decreasing", example: "Renewable energy is decreasing emissions now" },
+            { text: "has decreased", example: "Renewable energy has decreased emissions substantially" }
+        ],
+        correctAnswer: 2,
+        explanation: "This announces completed environmental improvements, requiring Present Perfect tense.",
+        hint: "Announcing completed emission reductions uses Present Perfect",
+        tip: "Present Perfect: for completed environmental improvements"
+    },
+    {
+        question: "Sociology ___ (to investigate) patterns in human social behavior.",
+        options: [
+            { text: "investigates", example: "Sociology investigates social patterns" },
+            { text: "is investigating", example: "Sociologists are investigating current trends" },
+            { text: "has investigated", example: "Sociology has investigated behavior extensively" }
+        ],
+        correctAnswer: 0,
+        explanation: "This states the permanent investigative focus of sociology, requiring Present Simple tense.",
+        hint: "Permanent sociological investigation focuses use Present Simple",
+        tip: "Present Simple: for stating what sociology investigates"
+    },
+    {
+        question: "The observatory ___ (to track) celestial movements for astronomical research.",
+        options: [
+            { text: "tracks", example: "The observatory tracks celestial bodies" },
+            { text: "is tracking", example: "The observatory is tracking a comet currently" },
+            { text: "has tracked", example: "The observatory has tracked many phenomena" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes ongoing astronomical tracking, requiring Present Continuous tense.",
+        hint: "Ongoing astronomical tracking uses Present Continuous",
+        tip: "Present Continuous: for temporary astronomical observations"
+    }
+];
+    </script>
+     <script src="../data/js/script.js"></script>
+</body>
+</html>

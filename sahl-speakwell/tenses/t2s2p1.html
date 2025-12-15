@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakWell | Sahl</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="../data/img/speakwell.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="../data/css/style.css">
+     
+</head>
+<body>
+    <!-- Back Button -->
+    <button class="back-button" id="backButton" aria-label="Go back to previous page">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading quiz...</div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container hidden" id="appContainer">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="quiz-title">Grammar Quiz</h1>
+                <div class="quiz-subtitle">Past tenses</div>
+                <div class="progress-indicator">
+                    <span id="currentScore">0</span> pts
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content" id="quizContent">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text">
+                    <span>Question <span id="currentQuestionNum">1</span> of <span id="totalQuestions">10</span></span>
+                    <span id="progressPercent">10%</span>
+                </div>
+            </div>
+
+            <!-- Question Container -->
+            <div class="question-container">
+                <div class="question-number">Question <span id="questionNum">1</span></div>
+                <h2 class="question-text" id="questionText">
+                    She usually ___ (to get) up at 7 a.m.
+                </h2>
+                <div class="question-hint">
+                    <i class="fas fa-lightbulb"></i>
+                    <span id="questionHint">Look for time expressions that indicate habits</span>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="options-container" id="optionsContainer">
+                <!-- Options will be inserted here -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="prevButton" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="btn btn-primary" id="submitButton" disabled>
+                    Check Answer
+                </button>
+            </div>
+
+            <!-- Next Button (separate for better flow) -->
+            <button class="btn btn-primary hidden" id="nextButton">
+                Next Question <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <!-- Explanation Panel -->
+            <div class="explanation-panel" id="explanationPanel">
+                <div class="explanation-header">
+                    <i class="fas fa-info-circle"></i>
+                    Explanation
+                </div>
+                <div class="explanation-content" id="explanationText">
+                    <!-- Explanation will be inserted here -->
+                </div>
+                <div class="explanation-tip" id="explanationTip">
+                    <i class="fas fa-tip"></i>
+                    <!-- Tip will be inserted here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Results Screen -->
+        <div class="results-screen hidden" id="resultsScreen">
+            <div class="results-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h2 class="results-title">Quiz Completed!</h2>
+            <div class="results-score" id="finalScore">0/10</div>
+            <p class="results-message" id="resultsMessage">
+                Great effort! Review your answers to improve.
+            </p>
+            
+            <div class="results-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="correctAnswers">0</span>
+                    <span class="stat-label">Correct</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="scorePoints">0</span>
+                    <span class="stat-label">Points</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="completionTime">0:00</span>
+                    <span class="stat-label">Time</span>
+                </div>
+            </div>
+
+            <div class="results-actions">
+                <button class="btn btn-secondary" id="reviewButton">
+                    <i class="fas fa-redo"></i> Review
+                </button>
+                <button class="btn btn-primary" id="restartButton">
+                    <i class="fas fa-play"></i> Try Again
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div>SpeakWell • Eduwell Quantum Group </div>
+        </footer>
+    </div>
+
+    <script>
+    const quizData = [
+    {
+        question: "When I arrived at the party, everyone ___ (to leave) already.",
+        options: [
+            { text: "left", example: "Everyone left before I came" },
+            { text: "had left", example: "Everyone had left when I arrived" },
+            { text: "was leaving", example: "Everyone was leaving as I arrived" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows an action completed before another past action, requiring Past Perfect tense.",
+        hint: "Actions completed before other past actions use Past Perfect",
+        tip: "Past Perfect: for actions that happened before another past action"
+    },
+    {
+        question: "She ___ (to read) a book when the phone rang.",
+        options: [
+            { text: "read", example: "She read a book yesterday" },
+            { text: "was reading", example: "She was reading when the phone rang" },
+            { text: "had read", example: "She had read the book before" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes an action in progress when another action interrupted it, requiring Past Continuous.",
+        hint: "Interrupted actions in progress use Past Continuous",
+        tip: "Past Continuous: for actions in progress at a specific past time"
+    },
+    {
+        question: "They ___ (to finish) their dinner before the movie started.",
+        options: [
+            { text: "finished", example: "They finished dinner" },
+            { text: "were finishing", example: "They were finishing dinner" },
+            { text: "had finished", example: "They had finished dinner before the movie" }
+        ],
+        correctAnswer: 2,
+        explanation: "This shows an action completed before another past action, requiring Past Perfect tense.",
+        hint: "Sequence of past events uses Past Perfect for the earlier action",
+        tip: "Past Perfect: for the earlier of two past actions"
+    },
+    {
+        question: "While I ___ (to walk) home, I saw an old friend.",
+        options: [
+            { text: "walked", example: "I walked home yesterday" },
+            { text: "had walked", example: "I had walked home earlier" },
+            { text: "was walking", example: "I was walking home when I saw a friend" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes a background action in progress when something happened, requiring Past Continuous.",
+        hint: "Background actions in progress use Past Continuous",
+        tip: "Past Continuous: for background actions when something else happened"
+    },
+    {
+        question: "He ___ (to work) at that company for five years before he got promoted.",
+        options: [
+            { text: "worked", example: "He worked there for five years" },
+            { text: "had worked", example: "He had worked there before getting promoted" },
+            { text: "was working", example: "He was working there when promoted" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows a duration completed before another past action, requiring Past Perfect.",
+        hint: "Duration before another past event uses Past Perfect",
+        tip: "Past Perfect: for durations completed before another past action"
+    },
+    {
+        question: "The sun ___ (to shine) brightly when we left the house.",
+        options: [
+            { text: "shone", example: "The sun shone yesterday" },
+            { text: "was shining", example: "The sun was shining when we left" },
+            { text: "had shone", example: "The sun had shone earlier" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes the weather condition in progress at a specific past time, requiring Past Continuous.",
+        hint: "Weather conditions in progress use Past Continuous",
+        tip: "Past Continuous: for weather conditions at specific past moments"
+    },
+    {
+        question: "I ___ (to visit) Paris three times before I moved there.",
+        options: [
+            { text: "visited", example: "I visited Paris last year" },
+            { text: "was visiting", example: "I was visiting Paris when I decided to move" },
+            { text: "had visited", example: "I had visited Paris before moving there" }
+        ],
+        correctAnswer: 2,
+        explanation: "This shows experiences completed before another past action, requiring Past Perfect.",
+        hint: "Past experiences before another past event use Past Perfect",
+        tip: "Past Perfect: for experiences completed before another past action"
+    },
+    {
+        question: "They ___ (to play) tennis when it started to rain.",
+        options: [
+            { text: "played", example: "They played tennis yesterday" },
+            { text: "had played", example: "They had played tennis before it rained" },
+            { text: "were playing", example: "They were playing tennis when it rained" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes an activity in progress when interrupted, requiring Past Continuous.",
+        hint: "Activities interrupted by another event use Past Continuous",
+        tip: "Past Continuous: for ongoing activities interrupted by another action"
+    },
+    {
+        question: "After she ___ (to graduate) from university, she found a job immediately.",
+        options: [
+            { text: "graduated", example: "She graduated last year" },
+            { text: "had graduated", example: "After she had graduated, she found a job" },
+            { text: "was graduating", example: "She was graduating when offered a job" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows an action completed before another past sequence, requiring Past Perfect.",
+        hint: "Sequential past actions use Past Perfect for the first action",
+        tip: "Past Perfect: after/before + past perfect + past simple"
+    },
+    {
+        question: "I ___ (to cook) dinner while my husband was setting the table.",
+        options: [
+            { text: "cooked", example: "I cooked dinner yesterday" },
+            { text: "was cooking", example: "I was cooking while he set the table" },
+            { text: "had cooked", example: "I had cooked dinner earlier" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes two simultaneous past actions, requiring Past Continuous for both actions.",
+        hint: "Simultaneous past actions use Past Continuous",
+        tip: "Past Continuous: for two actions happening at the same time in the past"
+    }
+];
+    </script>
+     <script src="../data/js/script.js"></script>
+</body>
+</html>

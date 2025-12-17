@@ -152,10 +152,10 @@
 
         // Professional animated text options in French
         const animatedTexts = [
-            "Physique",
-            "Math",
-            "science",
-            "informatique",
+            "Sciences Physiques",
+            "Mathématiques",
+            "Sciences Exp",
+            "Informatique",
             "Anglais",
-            "فلسفة "
+            "Philosophie"
         ];

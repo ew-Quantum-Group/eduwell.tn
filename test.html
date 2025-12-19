@@ -3,50 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Interactif - 4ème SI (STI)</title>
+    <title>Quiz STI - 4ème Sciences Informatiques</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="shortcut icon" href="./assets/images/logoo.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600&display=swap');
 
     :root {
-        --primary: #111827;
-        --primary-light: #374151;
-        --primary-dark: #030712;
+        --primary: #1D1D1F;
+        --primary-light: #424245;
         --surface: #FFFFFF;
-        --card-bg: #FFFFFF;
-        --text-primary: #111827;
-        --text-secondary: #6B7280;
-        --border-color: #E5E7EB;
-        --success: #059669;
-        --warning: #D97706;
-        --error: #DC2626;
-        --gray-50: #F9FAFB;
-        --gray-100: #F3F4F6;
-        --gray-200: #E5E7EB;
-        --gray-300: #D1D5DB;
-        --gray-900: #111827;
-        --accent: #3B82F6;
-        --accent-light: #60A5FA;
-        --accent-gradient: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+        --surface-secondary: #F5F5F7;
+        --text-primary: #1D1D1F;
+        --text-secondary: #86868B;
+        --text-tertiary: #A1A1A6;
+        --border-color: #D2D2D7;
+        --border-light: #E8E8ED;
+        --success: #30D158;
+        --warning: #FFD60A;
+        --error: #FF453A;
+        --accent: #007AFF;
+        --accent-light: #409CFF;
+        --accent-subtle: rgba(0, 122, 255, 0.08);
+        --overlay: rgba(0, 0, 0, 0.4);
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-lg: 18px;
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
+        --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.06);
     }
 
     * {
         box-sizing: border-box;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        margin: 0;
+        padding: 0;
     }
 
     body {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+        background: var(--surface);
         min-height: 100vh;
         margin: 0;
         color: var(--text-primary);
-        line-height: 1.6;
+        line-height: 1.5;
+        font-weight: 400;
+        letter-spacing: -0.01em;
     }
 
     /* Modern Loading Animation */
@@ -56,18 +63,18 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+        background: var(--surface);
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
         z-index: 9999;
-        transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.4s;
+        transition: opacity 0.3s ease-out, visibility 0.3s;
     }
 
     .modern-loader {
-        width: 60px;
-        height: 60px;
+        width: 44px;
+        height: 44px;
         position: relative;
     }
 
@@ -75,273 +82,169 @@
         content: '';
         width: 100%;
         height: 100%;
-        border: 2px solid rgba(59, 130, 246, 0.1);
+        border: 1.5px solid var(--border-light);
         border-radius: 50%;
         position: absolute;
-        animation: pulse 2s ease-in-out infinite;
     }
 
     .modern-loader::after {
         content: '';
         width: 100%;
         height: 100%;
-        border: 2px solid transparent;
-        border-top: 2px solid var(--accent);
-        border-right: 2px solid var(--accent);
+        border: 1.5px solid transparent;
+        border-top: 1.5px solid var(--accent);
         border-radius: 50%;
         position: absolute;
-        animation: spin 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+        animation: spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     }
 
     .loader-text {
-        margin-top: 20px;
-        color: var(--text-secondary);
-        font-size: 0.875rem;
-        font-weight: 500;
-        letter-spacing: 1px;
-        position: relative;
-        overflow: hidden;
+        margin-top: 16px;
+        color: var(--text-tertiary);
+        font-size: 13px;
+        font-weight: 450;
+        letter-spacing: 0.5px;
     }
 
-    .loader-text::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, var(--accent), transparent);
-        animation: loadingBar 1.5s ease-in-out infinite;
-    }
-
-    /* Card Design - Enhanced */
+    /* Card Design - Apple style */
     .card {
         background: var(--surface);
-        border: 1px solid var(--border-color);
-        border-radius: 20px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        padding: 2.5rem;
+        border: 1px solid var(--border-light);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 24px;
         position: relative;
         overflow: hidden;
-        backdrop-filter: blur(10px);
-    }
-
-    .card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: var(--accent-gradient);
-        opacity: 0;
-        transition: opacity 0.4s ease;
     }
 
     .card:hover {
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-        border-color: var(--accent-light);
-        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+        border-color: var(--border-color);
     }
 
-    .card:hover::before {
-        opacity: 1;
-    }
-
-    /* Buttons - Enhanced */
+    /* Buttons - Subtle and refined */
     .btn-primary {
-        background: var(--accent-gradient);
+        background: var(--accent);
         color: white;
-        font-weight: 600;
-        font-size: 1rem;
-        border-radius: 14px;
-        padding: 1rem 2.5rem;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        font-weight: 450;
+        font-size: 14px;
+        border-radius: var(--radius-md);
+        padding: 10px 20px;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         border: none;
         cursor: pointer;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 12px;
+        gap: 6px;
         position: relative;
         overflow: hidden;
-        letter-spacing: 0.01em;
-    }
-
-    .btn-primary::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-        transition: left 0.7s ease;
-    }
-
-    .btn-primary:hover::before {
-        left: 100%;
     }
 
     .btn-primary:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 15px 30px rgba(59, 130, 246, 0.25);
+        background: var(--accent-light);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 122, 255, 0.15);
     }
 
     .btn-primary:active {
-        transform: translateY(-1px);
-        box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2);
+        transform: translateY(0);
     }
 
     .btn-primary:disabled {
-        background: var(--gray-300);
+        background: var(--border-light);
+        color: var(--text-tertiary);
         cursor: not-allowed;
         transform: none;
         box-shadow: none;
     }
 
     .btn-secondary {
-        background: white;
+        background: transparent;
         color: var(--text-primary);
-        font-weight: 600;
-        font-size: 1rem;
-        border-radius: 14px;
-        padding: 1rem 2.5rem;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        border: 2px solid var(--border-color);
+        font-weight: 450;
+        font-size: 14px;
+        border-radius: var(--radius-md);
+        padding: 10px 20px;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid var(--border-color);
         cursor: pointer;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 12px;
-        letter-spacing: 0.01em;
+        gap: 6px;
     }
 
     .btn-secondary:hover {
-        background: var(--gray-50);
-        border-color: var(--accent);
-        color: var(--accent);
-        transform: translateY(-3px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        background: var(--surface-secondary);
+        border-color: var(--text-tertiary);
     }
 
-    /* Theme Chips - Enhanced */
+    /* Theme Chips - Compact and elegant */
     .theme-chip {
-        background: white;
-        border: 2px solid var(--border-color);
-        border-radius: 16px;
-        padding: 1.25rem 1.5rem;
-        font-weight: 600;
-        font-size: 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border-light);
+        border-radius: var(--radius-md);
+        padding: 12px 16px;
+        font-weight: 450;
+        font-size: 13px;
         cursor: pointer;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         text-align: center;
-        position: relative;
-        overflow: hidden;
-        letter-spacing: 0.01em;
-    }
-
-    .theme-chip::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: var(--accent);
-        transform: scaleX(0);
-        transition: transform 0.4s ease;
-        transform-origin: left;
+        color: var(--text-secondary);
     }
 
     .theme-chip:hover {
-        background: var(--gray-50);
-        border-color: var(--accent-light);
-        transform: translateY(-4px) scale(1.02);
-        box-shadow: 0 15px 30px rgba(59, 130, 246, 0.15);
-    }
-
-    .theme-chip:hover::before {
-        transform: scaleX(1);
+        background: var(--surface-secondary);
+        border-color: var(--border-color);
+        color: var(--text-primary);
     }
 
     .theme-chip.selected {
-        background: var(--accent-gradient);
+        background: var(--accent);
         color: white;
         border-color: var(--accent);
-        box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
-        transform: translateY(-2px);
     }
 
-    .theme-chip.selected::before {
-        display: none;
-    }
-
-    /* Option Items - Enhanced */
+    /* Option Items - Minimalist */
     .option-item {
-        background: white;
-        border: 2px solid var(--border-color);
-        border-radius: 16px;
-        padding: 1.5rem 2rem;
-        font-weight: 500;
-        font-size: 1.1rem;
+        background: var(--surface);
+        border: 1px solid var(--border-light);
+        border-radius: var(--radius-md);
+        padding: 14px 16px;
+        font-weight: 400;
+        font-size: 14px;
         cursor: pointer;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         text-align: left;
         display: flex;
         align-items: center;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .option-item::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 5px;
-        background: var(--accent);
-        transform: scaleY(0);
-        transition: transform 0.4s ease;
-        transform-origin: top;
+        color: var(--text-primary);
     }
 
     .option-item:hover {
-        background: var(--gray-50);
-        border-color: var(--accent-light);
-        transform: translateX(8px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    }
-
-    .option-item:hover::before {
-        transform: scaleY(1);
+        background: var(--surface-secondary);
+        border-color: var(--border-color);
+        transform: translateX(1px);
     }
 
     .option-item.selected {
-        background: rgba(59, 130, 246, 0.08);
+        background: var(--accent-subtle);
         border-color: var(--accent);
         color: var(--accent);
-        font-weight: 600;
-    }
-
-    .option-item.selected::before {
-        transform: scaleY(1);
     }
 
     .option-item.correct {
-        background: rgba(5, 150, 105, 0.1);
+        background: rgba(48, 209, 88, 0.05);
         border-color: var(--success);
         color: var(--success);
-        font-weight: 600;
     }
 
     .option-item.incorrect {
-        background: rgba(220, 38, 38, 0.1);
+        background: rgba(255, 69, 58, 0.05);
         border-color: var(--error);
         color: var(--error);
-        font-weight: 600;
     }
 
     /* Animations */
@@ -350,250 +253,155 @@
         100% { transform: rotate(360deg); }
     }
 
-    @keyframes pulse {
-        0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.5; transform: scale(1.05); }
-    }
-
-    @keyframes loadingBar {
-        0% { transform: translateX(-100%); }
-        50% { transform: translateX(0); }
-        100% { transform: translateX(100%); }
-    }
-
     @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(30px) scale(0.95); }
-        to { opacity: 1; transform: translateY(0) scale(1); }
+        from { opacity: 0; transform: translateY(6px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes slideIn {
-        from { opacity: 0; transform: translateX(-30px); }
-        to { opacity: 1; transform: translateX(0); }
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(12px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes float {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
-    }
-
-    @keyframes shimmer {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(100%); }
+    @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
     }
 
     .fade-in {
-        animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     }
 
-    .slide-in {
-        animation: slideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    .fade-in-up {
+        animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     }
 
-    .float {
-        animation: float 3s ease-in-out infinite;
+    .fade-out {
+        animation: fadeOut 0.2s ease forwards;
     }
 
-    /* Progress Bar - Enhanced */
+    /* Progress Bar - Thin and elegant */
     .progress-container {
         width: 100%;
-        height: 8px;
-        background: var(--gray-200);
-        border-radius: 4px;
+        height: 2px;
+        background: var(--border-light);
+        border-radius: 1px;
         overflow: hidden;
-        margin: 2.5rem 0;
-        position: relative;
+        margin: 20px 0;
     }
 
     .progress-bar-fill {
         height: 100%;
-        background: var(--accent-gradient);
-        border-radius: 4px;
-        transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
+        background: var(--accent);
+        border-radius: 1px;
+        transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .progress-bar-fill::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        width: 30px;
-        background: linear-gradient(90deg, rgba(255,255,255,0.3), transparent);
-        animation: shimmer 2s infinite;
-    }
-
-    /* Timer - Enhanced */
+    /* Timer - Minimal */
     .timer-container {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
-        padding: 1rem 1.5rem;
-        background: white;
-        border-radius: 16px;
-        border: 2px solid var(--border-color);
-        font-weight: 700;
+        gap: 6px;
+        padding: 8px 12px;
+        background: var(--surface);
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-light);
+        font-weight: 450;
         color: var(--text-primary);
-        transition: all 0.4s ease;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        font-size: 13px;
     }
 
-    .timer-container:hover {
-        border-color: var(--accent);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(59, 130, 246, 0.15);
-    }
-
-    /* Theme Indicator - Enhanced */
+    /* Theme Indicator */
     .theme-indicator {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
-        padding: 0.75rem 1.25rem;
-        background: linear-gradient(135deg, var(--gray-50) 0%, white 100%);
+        gap: 6px;
+        padding: 6px 10px;
+        background: var(--surface-secondary);
         color: var(--text-secondary);
-        border-radius: 24px;
-        font-size: 0.9375rem;
-        font-weight: 600;
-        border: 2px solid var(--border-color);
-        transition: all 0.4s ease;
-        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 450;
+        border: 0.5px solid var(--border-light);
     }
 
-    .theme-indicator:hover {
-        border-color: var(--accent);
-        color: var(--accent);
-        transform: translateY(-2px);
-    }
-
-    /* Score Display - Enhanced */
+    /* Score Display - Clean */
     .score-display {
-        background: linear-gradient(135deg, var(--gray-50) 0%, white 100%);
-        border: 2px solid var(--border-color);
-        padding: 3rem;
-        border-radius: 24px;
+        background: var(--surface);
+        border: 1px solid var(--border-light);
+        padding: 32px;
+        border-radius: var(--radius-lg);
         text-align: center;
-        margin: 2.5rem 0;
-        position: relative;
-        overflow: hidden;
-        backdrop-filter: blur(10px);
-    }
-
-    .score-display::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 5px;
-        background: var(--accent-gradient);
+        margin: 20px 0;
     }
 
     .score-number {
-        font-size: 4rem;
-        font-weight: 800;
+        font-size: 48px;
+        font-weight: 500;
         line-height: 1;
-        margin: 1.5rem 0;
-        background: var(--accent-gradient);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        position: relative;
+        margin: 8px 0;
+        color: var(--text-primary);
     }
 
-    /* Wrong Answers - Enhanced */
+    /* Wrong Answers */
     .wrong-answer-card {
-        background: white;
-        border-left: 5px solid var(--error);
-        padding: 2rem;
-        border-radius: 0 20px 20px 0;
-        margin: 1rem 0;
-        border: 2px solid var(--border-color);
-        transition: all 0.4s ease;
-        position: relative;
-        overflow: hidden;
+        background: var(--surface);
+        border-left: 2px solid var(--error);
+        padding: 16px;
+        border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        margin: 8px 0;
+        border: 1px solid var(--border-light);
     }
 
-    .wrong-answer-card:hover {
-        transform: translateX(8px);
-        box-shadow: 0 10px 30px rgba(220, 38, 38, 0.1);
-    }
-
-    .wrong-answer-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.03), transparent);
-        transform: translateX(-100%);
-        transition: transform 0.8s ease;
-    }
-
-    .wrong-answer-card:hover::before {
-        transform: translateX(100%);
-    }
-
-    /* Floating Action Button - Enhanced */
+    /* Floating Action Button */
     .fab {
         position: fixed;
-        bottom: 40px;
-        right: 40px;
-        width: 64px;
-        height: 64px;
-        border-radius: 32px;
-        background: var(--accent-gradient);
+        bottom: 24px;
+        right: 24px;
+        width: 44px;
+        height: 44px;
+        border-radius: 22px;
+        background: var(--accent);
         color: white;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 15px 35px rgba(59, 130, 246, 0.3);
-        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2);
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 100;
         cursor: pointer;
         border: none;
-        animation: float 3s ease-in-out infinite;
     }
 
     .fab:hover {
-        transform: scale(1.15) rotate(180deg);
-        box-shadow: 0 20px 40px rgba(59, 130, 246, 0.4);
+        background: var(--accent-light);
+        transform: scale(1.05);
     }
 
-    /* Typography Enhancements */
+    /* Typography - Apple style */
     h1, h2, h3 {
-        font-weight: 700;
+        font-weight: 500;
         letter-spacing: -0.02em;
-        line-height: 1.2;
+        line-height: 1.3;
         color: var(--text-primary);
     }
 
     h1 {
-        font-size: 2.75rem;
-        background: var(--accent-gradient);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 1rem;
+        font-size: 28px;
     }
 
     h2 {
-        font-size: 2rem;
-        margin-bottom: 2rem;
+        font-size: 22px;
     }
 
     h3 {
-        font-size: 1.375rem;
-        margin-bottom: 1.5rem;
+        font-size: 17px;
     }
 
     p {
         color: var(--text-secondary);
-        line-height: 1.7;
-        font-size: 1.125rem;
-        margin-bottom: 1.5rem;
+        line-height: 1.5;
+        font-size: 14px;
     }
 
     /* Utility Classes */
@@ -601,232 +409,187 @@
         display: none !important;
     }
 
-    /* Code Blocks - Enhanced */
+    /* Code Blocks */
     pre[class*="language-"] {
-        margin: 2rem 0;
-        border-radius: 16px;
-        border: 2px solid var(--border-color);
-        font-size: 1rem;
-        background: var(--gray-50) !important;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+        margin: 16px 0;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-light);
+        font-size: 13px;
+        background: var(--surface-secondary) !important;
     }
 
     :not(pre) > code {
-        background: linear-gradient(135deg, var(--gray-100) 0%, white 100%);
+        background-color: var(--surface-secondary);
         color: var(--text-primary);
-        padding: 0.375rem 0.75rem;
-        font-size: 0.9375em;
-        border-radius: 8px;
-        font-family: 'JetBrains Mono', 'Courier New', monospace;
-        border: 2px solid var(--border-color);
+        padding: 2px 6px;
+        font-size: 13px;
+        border-radius: 4px;
+        font-family: 'SF Mono', 'Courier New', monospace;
+        border: 0.5px solid var(--border-light);
     }
 
-    /* Responsive Design Enhancements */
+    /* Responsive Design */
     @media (max-width: 768px) {
         .container {
-            padding: 1.5rem;
+            padding: 16px;
         }
         
         .card {
-            padding: 2rem;
-            margin: 1rem 0;
-            border-radius: 20px;
+            padding: 20px;
+            margin: 8px 0;
+            border-radius: var(--radius-md);
         }
         
         h1 {
-            font-size: 2.25rem;
+            font-size: 24px;
         }
         
         h2 {
-            font-size: 1.75rem;
+            font-size: 20px;
         }
         
         .btn-primary,
         .btn-secondary {
-            padding: 1rem 2rem;
-            font-size: 1rem;
-            min-height: 56px;
-            width: 100%;
+            padding: 10px 16px;
+            font-size: 14px;
         }
         
         .theme-chip,
         .option-item {
-            padding: 1.125rem 1.25rem;
-            font-size: 1rem;
-            min-height: 60px;
+            padding: 12px 14px;
+            font-size: 13px;
         }
         
         #question-text {
-            font-size: 1.375rem !important;
+            font-size: 18px !important;
         }
         
         .score-number {
-            font-size: 3rem;
+            font-size: 40px;
         }
         
         .fab {
-            width: 56px;
-            height: 56px;
-            bottom: 30px;
-            right: 30px;
+            width: 40px;
+            height: 40px;
+            bottom: 20px;
+            right: 20px;
         }
     }
 
     @media (max-width: 480px) {
         .card {
-            padding: 1.5rem;
-            border-radius: 18px;
+            padding: 16px;
         }
         
         .score-number {
-            font-size: 2.75rem;
-        }
-        
-        h1 {
-            font-size: 2rem;
-        }
-        
-        h2 {
-            font-size: 1.5rem;
+            font-size: 36px;
         }
         
         .fab {
-            width: 52px;
-            height: 52px;
-            bottom: 24px;
-            right: 24px;
-        }
-        
-        .option-item {
-            padding: 1.25rem 1.5rem;
-            font-size: 1.05rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 18px;
         }
     }
 
-    /* Custom Scrollbar - Enhanced */
+    /* Custom Scrollbar */
     ::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
+        width: 8px;
+        height: 8px;
     }
 
     ::-webkit-scrollbar-track {
-        background: var(--gray-100);
-        border-radius: 5px;
+        background: var(--surface-secondary);
+        border-radius: 4px;
     }
 
     ::-webkit-scrollbar-thumb {
-        background: var(--accent-gradient);
-        border-radius: 5px;
-        transition: all 0.4s ease;
+        background: var(--border-color);
+        border-radius: 4px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%);
-        box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+        background: var(--text-tertiary);
     }
 
-    /* Focus States - Enhanced */
+    /* Focus States - Subtle */
     button:focus-visible,
     .theme-chip:focus-visible,
     .option-item:focus-visible {
-        outline: 3px solid rgba(59, 130, 246, 0.4);
-        outline-offset: 4px;
-        border-color: var(--accent);
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2);
     }
 
     /* Selection */
     ::selection {
-        background: rgba(59, 130, 246, 0.25);
-        color: var(--primary);
+        background: var(--accent-subtle);
+        color: var(--accent);
     }
 
     /* Subtle Hover Effects */
     .btn-primary i,
     .btn-secondary i {
-        transition: transform 0.4s ease;
+        transition: transform 0.2s ease;
     }
 
     .btn-primary:hover i {
-        transform: translateX(6px);
+        transform: translateX(1px);
     }
 
     .btn-secondary:hover i {
-        transform: translateX(-6px);
+        transform: translateX(-1px);
     }
 
     /* Loading State */
     .loading {
-        opacity: 0.7;
+        opacity: 0.6;
         pointer-events: none;
-        position: relative;
-    }
-
-    .loading::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-        animation: shimmer 2s infinite;
     }
 
     /* Divider */
     .border-divider {
-        border-bottom: 2px solid var(--border-color);
-        margin: 2.5rem 0;
-        position: relative;
-    }
-
-    .border-divider::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        width: 80px;
-        height: 2px;
-        background: var(--accent);
+        border-bottom: 0.5px solid var(--border-light);
+        margin: 20px 0;
     }
 
     /* Grid Layouts */
     .grid-responsive {
         display: grid;
-        gap: 1.5rem;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 12px;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
 
     /* Text Sizes */
     .text-small {
-        font-size: 0.9375rem;
+        font-size: 13px;
     }
 
     .text-xsmall {
-        font-size: 0.8125rem;
+        font-size: 11px;
     }
 
     /* Spacing Utilities */
+    .space-y-3 > * + * {
+        margin-top: 12px;
+    }
+
     .space-y-4 > * + * {
-        margin-top: 1.5rem;
+        margin-top: 16px;
     }
 
     .space-y-6 > * + * {
-        margin-top: 2rem;
-    }
-
-    .space-y-8 > * + * {
-        margin-top: 3rem;
+        margin-top: 24px;
     }
 
     /* Icon Sizes */
     .icon-sm {
-        width: 20px;
-        height: 20px;
+        width: 16px;
+        height: 16px;
     }
 
     .icon-md {
-        width: 24px;
-        height: 24px;
+        width: 18px;
+        height: 18px;
     }
 
     /* Status Colors */
@@ -844,195 +607,239 @@
 
     /* Background Colors */
     .bg-subtle {
-        background: linear-gradient(135deg, var(--gray-50) 0%, white 100%);
+        background: var(--surface-secondary);
     }
 
-    /* Floating Labels */
-    .floating-label {
-        position: absolute;
-        top: -10px;
-        left: 16px;
-        background: white;
-        padding: 0 12px;
-        font-size: 0.875rem;
-        font-weight: 600;
-        color: var(--accent);
-        border-radius: 12px;
-        border: 2px solid var(--border-color);
+    /* Section transitions */
+    .section-transition {
+        transition: opacity 0.3s ease, transform 0.3s ease;
     }
 
-    /* Status Indicators */
-    .status-indicator {
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        margin-right: 10px;
-    }
-
-    .status-indicator.active {
-        background: var(--success);
-        box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.2);
-    }
-
-    .status-indicator.inactive {
-        background: var(--error);
-        box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.2);
-    }
-
-    /* Enhanced Visual Feedback */
-    .pulse-effect {
-        animation: pulse 2s infinite;
-    }
-
-    /* Smooth Transitions */
-    .transition-all {
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* Glass Effect */
-    .glass {
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    /* Gradient Text */
-    .gradient-text {
-        background: var(--accent-gradient);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    /* Hover Effects */
-    .hover-lift {
-        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .hover-lift:hover {
-        transform: translateY(-6px);
-    }
-
-    /* Card Hover Effects */
-    .card-hover {
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .card-hover:hover {
-        transform: translateY(-8px) scale(1.01);
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Button Shine Effect */
-    .btn-shine {
+    /* Micro-interactions */
+    .pressable {
         position: relative;
         overflow: hidden;
     }
 
-    .btn-shine::before {
+    .pressable::after {
         content: '';
         position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-        transition: left 0.7s ease;
+        top: 50%;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        background: rgba(0, 122, 255, 0.1);
+        opacity: 0;
+        border-radius: 100%;
+        transform: scale(1, 1) translate(-50%);
+        transform-origin: 50% 50%;
     }
 
-    .btn-shine:hover::before {
-        left: 100%;
+    .pressable:focus:not(:active)::after {
+        animation: ripple 0.6s ease-out;
     }
 
-    /* Subtle Border Glow */
-    .border-glow {
+    @keyframes ripple {
+        0% {
+            transform: scale(0, 0);
+            opacity: 0.5;
+        }
+        100% {
+            transform: scale(20, 20);
+            opacity: 0;
+        }
+    }
+
+    /* Smooth content reveal */
+    .content-reveal {
+        opacity: 0;
+        transform: translateY(10px);
+        animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    /* Subtle background transitions */
+    .bg-transition {
+        transition: background-color 0.25s ease;
+    }
+
+    /* Glass effect for overlays */
+    .glass {
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        background: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Tab-like selection effect */
+    .tab-selected {
         position: relative;
     }
 
-    .border-glow::before {
+    .tab-selected::after {
         content: '';
         position: absolute;
-        top: -2px;
-        left: -2px;
-        right: -2px;
-        bottom: -2px;
-        background: var(--accent-gradient);
-        border-radius: inherit;
-        z-index: -1;
-        opacity: 0;
-        transition: opacity 0.4s ease;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--accent);
+        animation: tabSlide 0.3s ease;
     }
 
-    .border-glow:hover::before {
-        opacity: 1;
+    @keyframes tabSlide {
+        from { transform: scaleX(0); }
+        to { transform: scaleX(1); }
+    }
+
+    /* Card hover elevation */
+    .card-elevation {
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                    box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card-elevation:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    /* Input focus effect */
+    .input-focus:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+    }
+
+    /* Progress indicator pulse */
+    .progress-pulse {
+        position: relative;
+    }
+
+    .progress-pulse::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--accent);
+        opacity: 0.2;
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 0.2; }
+        50% { opacity: 0.4; }
+    }
+
+    /* Status badge animations */
+    .status-badge {
+        transition: all 0.3s ease;
+    }
+
+    .status-badge.active {
+        animation: statusPulse 2s infinite;
+    }
+
+    @keyframes statusPulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+    }
+
+    /* Smooth opacity transitions */
+    .opacity-transition {
+        transition: opacity 0.2s ease;
+    }
+
+    /* Subtle scale on interaction */
+    .scale-on-interact {
+        transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .scale-on-interact:hover {
+        transform: scale(1.02);
+    }
+
+    /* Elegant underline animation */
+    .underline-animation {
+        position: relative;
+    }
+
+    .underline-animation::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--accent);
+        transition: width 0.3s ease;
+    }
+
+    .underline-animation:hover::after {
+        width: 100%;
     }
 </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+<body class="min-h-screen bg-surface">
     <!-- Modern Loading Screen -->
     <div id="loading-screen">
         <div class="modern-loader"></div>
         <div class="loader-text">CHARGEMENT</div>
     </div>
 
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
+    <div class="container mx-auto px-4 py-6 max-w-3xl">
         <!-- Home Screen -->
         <section id="home-screen" class="fade-in">
-            <div class="card text-center max-w-lg mx-auto card-hover">
-                <div class="w-32 h-32 mx-auto mb-8 rounded-full bg-gradient-to-br from-gray-100 to-white flex items-center justify-center border-4 border-white shadow-xl float">
-                    <i class="fas fa-brain text-5xl gradient-text"></i>
+            <div class="card text-center max-w-md mx-auto card-elevation">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-surface-secondary flex items-center justify-center border border-border-light">
+                    <i class="fas fa-graduation-cap text-xl text-text-secondary"></i>
                 </div>
-                <h1 class="text-3xl font-bold mb-4">Quiz STI</h1>
-                <h2 class="text-xl text-gray-600 mb-6 font-semibold">4<sup>ème</sup> Sciences de l'informatique</h2>
-                <p class="text-gray-600 mb-8 leading-relaxed text-lg">Testez vos connaissances sur les points clés du programme avec un quiz interactif et moderne.</p>
-                <button id="start-config-btn" class="btn-primary w-full py-5 text-lg font-semibold btn-shine hover-lift">
-                    <i class="fas fa-play-circle mr-3"></i>
-                    Commencer le Quiz
+                <h1 class="text-2xl font-medium mb-2">Quiz STI</h1>
+                <h2 class="text-sm text-text-secondary mb-4">4<sup>ème</sup> Sciences de l'informatique</h2>
+                <p class="text-text-secondary text-sm mb-6">Testez vos connaissances avec précision et élégance.</p>
+                <button id="start-config-btn" class="btn-primary w-full pressable scale-on-interact">
+                    <i class="fas fa-play icon-sm"></i>
+                    Commencer
                 </button>
             </div>
         </section>
 
         <!-- Config Screen -->
-        <section id="config-screen" class="hidden slide-in">
-            <div class="card">
-                <h2 class="text-2xl font-bold mb-10 text-center gradient-text">Configurer votre Quiz</h2>
+        <section id="config-screen" class="hidden fade-in-up">
+            <div class="card card-elevation">
+                <h2 class="text-xl font-medium mb-6 text-center">Configuration</h2>
 
-                <div class="space-y-12">
+                <div class="space-y-8">
                     <div>
-                        <h3 class="text-lg font-semibold mb-8 flex items-center gap-4 text-gray-800">
-                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center shadow-lg">
-                                <i class="fas fa-layer-group text-blue-600 text-xl"></i>
-                            </div>
-                            <span class="text-xl">Choisissez un ou plusieurs thèmes</span>
+                        <h3 class="text-base font-medium mb-3 flex items-center gap-2 text-text-primary">
+                            <i class="fas fa-layer-group text-text-tertiary"></i>
+                            Thèmes
                         </h3>
-                        <div id="themes-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
+                        <div id="themes-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2"></div>
                     </div>
 
-                    <div class="border-t border-gray-200 pt-12">
-                        <h3 class="text-lg font-semibold mb-8 flex items-center gap-4 text-gray-800">
-                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center shadow-lg">
-                                <i class="fas fa-chart-line text-blue-600 text-xl"></i>
-                            </div>
-                            <span class="text-xl">Choisissez le niveau</span>
+                    <div class="border-divider"></div>
+
+                    <div>
+                        <h3 class="text-base font-medium mb-3 flex items-center gap-2 text-text-primary">
+                            <i class="fas fa-chart-line text-text-tertiary"></i>
+                            Niveau
                         </h3>
-                        <div id="level-container" class="flex flex-wrap gap-4"></div>
+                        <div id="level-container" class="flex flex-wrap gap-2"></div>
                     </div>
 
-                    <div class="border-t border-gray-200 pt-12">
-                        <h3 class="text-lg font-semibold mb-8 flex items-center gap-4 text-gray-800">
-                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center shadow-lg">
-                                <i class="fas fa-ruler text-blue-600 text-xl"></i>
-                            </div>
-                            <span class="text-xl">Choisissez la longueur de l'épreuve</span>
+                    <div class="border-divider"></div>
+
+                    <div>
+                        <h3 class="text-base font-medium mb-3 flex items-center gap-2 text-text-primary">
+                            <i class="fas fa-ruler text-text-tertiary"></i>
+                            Durée
                         </h3>
-                        <div id="length-container" class="flex flex-wrap gap-4"></div>
+                        <div id="length-container" class="flex flex-wrap gap-2"></div>
                     </div>
 
-                    <div class="text-center pt-8 border-t border-gray-200">
-                        <button id="start-quiz-btn" class="btn-primary px-20 py-5 text-xl font-bold btn-shine hover-lift" disabled>
-                            <i class="fas fa-rocket mr-3"></i>
-                            Démarrer le Quiz
+                    <div class="text-center pt-4">
+                        <button id="start-quiz-btn" class="btn-primary pressable scale-on-interact" disabled>
+                            <i class="fas fa-play-circle"></i>
+                            Démarrer
                         </button>
                     </div>
                 </div>
@@ -1041,12 +848,12 @@
 
         <!-- Quiz Screen -->
         <section id="quiz-screen" class="hidden">
-            <div class="card card-hover">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-8">
-                    <div id="progress-indicator" class="text-gray-800 font-bold text-xl"></div>
-                    <div class="timer-container hover-lift">
-                        <i class="fas fa-clock text-blue-500 text-xl"></i>
-                        <span id="timer" class="font-mono text-2xl font-bold"></span>
+            <div class="card card-elevation">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+                    <div id="progress-indicator" class="text-sm text-text-secondary"></div>
+                    <div class="timer-container">
+                        <i class="fas fa-clock text-text-tertiary"></i>
+                        <span id="timer" class="font-mono text-sm"></span>
                     </div>
                 </div>
 
@@ -1054,80 +861,76 @@
                     <div id="progress-fill" class="progress-bar-fill"></div>
                 </div>
 
-                <div class="mb-10">
-                    <span id="question-theme" class="theme-indicator text-base hover-lift">
+                <div class="mb-4">
+                    <span id="question-theme" class="theme-indicator">
                         <i class="fas fa-tag"></i>
-                        <span id="theme-text" class="font-semibold"></span>
+                        <span id="theme-text"></span>
                     </span>
                 </div>
 
-                <div id="question-text" class="text-2xl font-bold mb-12 leading-relaxed text-gray-900"></div>
+                <div id="question-text" class="text-lg font-medium mb-6 text-text-primary"></div>
 
-                <div id="options-container" class="space-y-6 mb-12"></div>
+                <div id="options-container" class="space-y-2 mb-6"></div>
 
-                <div class="flex flex-col sm:flex-row justify-between items-center gap-6 pt-10 border-t border-gray-200">
-                    <button id="prev-btn" class="btn-secondary w-full sm:w-auto order-2 sm:order-1 hover-lift btn-shine">
-                        <i class="fas fa-arrow-left mr-3"></i>
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-2 pt-4 border-t border-border-light">
+                    <button id="prev-btn" class="btn-secondary w-full sm:w-auto order-2 sm:order-1 pressable">
+                        <i class="fas fa-arrow-left"></i>
                         Précédent
                     </button>
-                    <div class="flex flex-col sm:flex-row gap-6 w-full sm:w-auto order-1 sm:order-2">
-                        <button id="skip-btn" class="btn-secondary w-full sm:w-auto hover-lift btn-shine">
-                            <i class="fas fa-forward mr-3"></i>
+                    <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto order-1 sm:order-2">
+                        <button id="skip-btn" class="btn-secondary w-full sm:w-auto pressable">
+                            <i class="fas fa-forward"></i>
                             Ignorer
                         </button>
-                        <button id="next-btn" class="btn-primary w-full sm:w-auto hover-lift btn-shine">
+                        <button id="next-btn" class="btn-primary w-full sm:w-auto pressable">
                             Suivant
-                            <i class="fas fa-arrow-right ml-3"></i>
+                            <i class="fas fa-arrow-right"></i>
                         </button>
                     </div>
                 </div>
             </div>
 
             <!-- Floating Action Button for Mobile -->
-            <button id="fab-next" class="fab hidden sm:flex">
-                <i class="fas fa-arrow-right text-2xl"></i>
+            <button id="fab-next" class="fab hidden sm:flex pressable">
+                <i class="fas fa-arrow-right"></i>
             </button>
         </section>
 
         <!-- Results Screen -->
-        <section id="results-screen" class="hidden slide-in">
-            <div class="card">
-                <h2 class="text-2xl font-bold mb-12 text-center gradient-text">Résultats du Quiz</h2>
+        <section id="results-screen" class="hidden fade-in-up">
+            <div class="card card-elevation">
+                <h2 class="text-xl font-medium mb-6 text-center">Résultats</h2>
 
-                <div class="score-display space-y-8">
-                    <div class="text-xl font-semibold text-gray-700">Votre score final</div>
+                <div class="score-display space-y-4">
+                    <div class="text-sm text-text-secondary">Score final</div>
                     <div id="final-score" class="score-number"></div>
-                    <div id="total-time" class="text-gray-600 text-lg font-medium"></div>
+                    <div id="total-time" class="text-text-tertiary text-sm"></div>
                 </div>
 
-                <div class="space-y-12">
+                <div class="space-y-6">
                     <div>
-                        <h3 class="text-lg font-semibold mb-8 flex items-center gap-4 text-gray-800">
-                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center shadow-lg">
-                                <i class="fas fa-chart-pie text-blue-600 text-xl"></i>
-                            </div>
-                            <span class="text-xl">Performance par thème</span>
+                        <h3 class="text-base font-medium mb-3 flex items-center gap-2 text-text-primary">
+                            <i class="fas fa-chart-pie text-text-tertiary"></i>
+                            Performance par thème
                         </h3>
-                        <div id="theme-scores-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+                        <div id="theme-scores-container" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
                     </div>
 
                     <div id="wrong-answers-container">
-                        <h3 class="text-lg font-semibold mb-8 flex items-center gap-4 text-gray-800">
-                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-50 to-red-100 flex items-center justify-center shadow-lg">
-                                <i class="fas fa-exclamation-circle text-red-600 text-xl"></i>
-                            </div>
-                            <span class="text-xl">Questions incorrectes</span>
+                        <h3 class="text-base font-medium mb-3 flex items-center gap-2 text-text-primary">
+                            <i class="fas fa-exclamation-circle text-text-tertiary"></i>
+                            Questions incorrectes
                         </h3>
-                        <div id="wrong-answers-list" class="space-y-6"></div>
+                        <div id="wrong-answers-list" class="space-y-2"></div>
                     </div>
 
-                    <div class="flex flex-col sm:flex-row justify-center gap-8 pt-12 border-t border-gray-200">
-                        <button id="replay-btn" class="btn-primary px-16 py-5 text-lg font-semibold hover-lift btn-shine">
-                            <i class="fas fa-redo mr-3"></i>
+                    <div class="flex flex-col sm:flex-row justify-center gap-3 pt-6 border-t border-border-light">
+                        <button id="replay-btn" class="btn-primary pressable">
+                            <i class="fas fa-redo"></i>
                             Rejouer
                         </button>
-                        <button id="quit-btn" class="btn-secondary px-16 py-5 text-lg font-semibold hover-lift btn-shine">
-                            <i class="fas fa-times mr-3"></i>
+                        <button id="quit-btn" class="btn-secondary pressable">
+                            <i class="fas fa-times"></i>
                             Quitter
                         </button>
                     </div>
@@ -1135,10 +938,9 @@
             </div>
         </section>
 
-        <footer class="text-center text-gray-500 text-sm mt-20 pt-10 border-t border-gray-200">
+        <footer class="text-center text-text-tertiary text-xs mt-8 pt-6 border-t border-border-light">
             <address class="not-italic">
-                <span class="font-bold text-gray-700 text-lg">Eduwell Quantum Group</span>
-                <div class="mt-3 text-xs text-gray-400">© 2024 Tous droits réservés</div>
+                Eduwell Quantum Group
             </address>
         </footer>
     </div>
@@ -1146,18 +948,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
     <script>
-        // Script for loading screen with enhanced animation
+        // Script for loading screen
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 const loadingScreen = document.getElementById('loading-screen');
-                loadingScreen.style.opacity = '0';
+                loadingScreen.classList.add('fade-out');
                 setTimeout(() => {
                     loadingScreen.style.display = 'none';
-                    const homeScreen = document.getElementById('home-screen');
-                    homeScreen.classList.remove('hidden');
-                    homeScreen.style.animation = 'fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
-                }, 400);
-            }, 1800);
+                    document.getElementById('home-screen').classList.remove('hidden');
+                }, 200);
+            }, 1200);
         });
     </script>
     <script src="app.js"></script>

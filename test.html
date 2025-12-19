@@ -54,9 +54,10 @@
             line-height: 1.5;
             font-weight: 400;
             letter-spacing: -0.01em;
+            overflow-x: hidden;
         }
 
-        /* Modern Loading Animation - Enhanced */
+        /* Modern Loading Animation - Optimized */
         #loading-screen {
             position: fixed;
             top: 0;
@@ -120,7 +121,7 @@
         }
 
         /* ================================ */
-        /* HOME PAGE - PREMIUM ANIMATIONS */
+        /* HOME PAGE - OPTIMIZED ANIMATIONS */
         /* ================================ */
         
         .home-container {
@@ -128,9 +129,10 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
             opacity: 0;
             animation: fadeInScale 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+            will-change: transform, opacity;
         }
 
         .home-container::before {
@@ -153,7 +155,7 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 0.5px solid var(--border-light);
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             position: sticky;
@@ -169,6 +171,8 @@
             align-items: center;
             gap: 12px;
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            cursor: pointer;
         }
 
         .brand-logo:hover {
@@ -403,6 +407,7 @@
             overflow: hidden;
             opacity: 0;
             transform: translateY(30px);
+            will-change: transform, opacity;
         }
 
         .feature-card:nth-child(1) {
@@ -529,7 +534,7 @@
         }
 
         /* ================================ */
-        /* ANIMATIONS - PREMIUM & SMOOTH */
+        /* ANIMATIONS - OPTIMIZED */
         /* ================================ */
 
         @keyframes fadeInScale {
@@ -767,9 +772,7 @@
             }
         }
 
-        /* REST OF THE CSS (OTHER PAGES) - UNCHANGED BELOW */
-        
-        /* Card Design */
+        /* OTHER PAGES STYLES - OPTIMIZED */
         .card {
             background: var(--surface);
             border: 1px solid var(--border-light);
@@ -786,7 +789,7 @@
             border-color: var(--border-color);
         }
 
-        /* Buttons */
+        /* Buttons for other pages */
         .btn-primary {
             background: var(--accent);
             color: white;
@@ -805,13 +808,13 @@
             overflow: hidden;
         }
 
-        .btn-primary:hover {
+        .btn-primary:hover:not(:disabled) {
             background: var(--accent-light);
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(0, 122, 255, 0.15);
         }
 
-        .btn-primary:active {
+        .btn-primary:active:not(:disabled) {
             transform: translateY(0);
         }
 
@@ -839,7 +842,7 @@
             gap: 6px;
         }
 
-        .btn-secondary:hover {
+        .btn-secondary:hover:not(:disabled) {
             background: var(--surface-secondary);
             border-color: var(--text-tertiary);
         }
@@ -886,7 +889,7 @@
             color: var(--text-primary);
         }
 
-        .option-item:hover {
+        .option-item:hover:not(.selected):not(.correct):not(.incorrect) {
             background: var(--surface-secondary);
             border-color: var(--border-color);
             transform: translateX(1px);
@@ -1039,6 +1042,10 @@
             display: none !important;
         }
 
+        .visible {
+            display: block !important;
+        }
+
         /* Code Blocks */
         pre[class*="language-"] {
             margin: 16px 0;
@@ -1056,6 +1063,13 @@
             border-radius: 4px;
             font-family: 'SF Mono', 'Courier New', monospace;
             border: 0.5px solid var(--border-light);
+        }
+
+        /* Container for other pages */
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
         }
 
         /* Responsive Design */
@@ -1196,6 +1210,11 @@
         .space-y-6 > * + * {
             margin-top: 24px;
         }
+
+        /* Smooth transitions for page changes */
+        .page-transition {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
     </style>
 </head>
 <body>
@@ -1205,11 +1224,11 @@
         <div class="loader-text">CHARGEMENT</div>
     </div>
 
-    <!-- HOME PAGE - ENHANCED WITH ANIMATIONS -->
+    <!-- HOME PAGE -->
     <div id="home-screen" class="home-container">
         <!-- Header -->
         <header class="home-header">
-            <div class="brand-logo">
+            <div class="brand-logo" id="home-logo">
                 <div class="brand-icon">
                     <i class="fas fa-brain"></i>
                 </div>
@@ -1299,9 +1318,8 @@
         </footer>
     </div>
 
-    <!-- OTHER PAGES - UNCHANGED -->
-    <!-- Config Screen -->
-    <section id="config-screen" class="hidden">
+    <!-- CONFIG SCREEN -->
+    <section id="config-screen" class="hidden page-container">
         <div class="container mx-auto px-4 py-8 max-w-4xl">
             <div class="card">
                 <h2 class="text-2xl font-semibold mb-8 text-center">Configurer votre Quiz</h2>
@@ -1342,8 +1360,8 @@
         </div>
     </section>
 
-    <!-- Quiz Screen -->
-    <section id="quiz-screen" class="hidden">
+    <!-- QUIZ SCREEN -->
+    <section id="quiz-screen" class="hidden page-container">
         <div class="container mx-auto px-4 py-8 max-w-4xl">
             <div class="card">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
@@ -1394,8 +1412,8 @@
         </div>
     </section>
 
-    <!-- Results Screen -->
-    <section id="results-screen" class="hidden">
+    <!-- RESULTS SCREEN -->
+    <section id="results-screen" class="hidden page-container">
         <div class="container mx-auto px-4 py-8 max-w-4xl">
             <div class="card">
                 <h2 class="text-2xl font-semibold mb-8 text-center">Résultats du Quiz</h2>
@@ -1440,9 +1458,17 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    
+    <!-- Main Application Script -->
     <script>
-        // Enhanced loading screen script
+        // Wait for DOM to be fully loaded
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the application
+            initApplication();
+        });
+
+        function initApplication() {
+            // Enhanced loading screen
             const loadingScreen = document.getElementById('loading-screen');
             const homeScreen = document.getElementById('home-screen');
             
@@ -1454,27 +1480,29 @@
                 setTimeout(() => {
                     loadingScreen.style.display = 'none';
                     
-                    // Reveal home screen with staggered animations
+                    // Reveal home screen
                     homeScreen.classList.remove('hidden');
                     
-                    // Add micro-interactions after page loads
+                    // Add micro-interactions
                     setTimeout(() => {
-                        addHomePageInteractions();
-                    }, 2000);
+                        setupHomePageInteractions();
+                    }, 1000);
                     
                 }, 400);
                 
-            }, 1800);
-        });
+            }, 1500);
 
-        // Function to add additional home page interactions
-        function addHomePageInteractions() {
-            // Add hover effect to feature cards with delay
+            // Setup navigation between screens
+            setupNavigation();
+        }
+
+        function setupHomePageInteractions() {
+            // Add hover effect to feature cards
             const featureCards = document.querySelectorAll('.feature-card');
             featureCards.forEach((card, index) => {
                 card.style.setProperty('--card-index', index);
                 
-                // Add click animation
+                // Add subtle click animation
                 card.addEventListener('click', function() {
                     this.style.transform = 'scale(0.98)';
                     setTimeout(() => {
@@ -1483,63 +1511,12 @@
                 });
             });
 
-            // Add parallax effect on scroll
-            let lastScrollTop = 0;
-            const homeContainer = document.querySelector('.home-container');
-            
-            window.addEventListener('scroll', function() {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                const scrollDiff = scrollTop - lastScrollTop;
-                
-                // Subtle parallax for background
-                if (homeContainer) {
-                    const speed = 0.5;
-                    const yPos = -(scrollTop * speed);
-                    homeContainer.style.transform = `translateY(${yPos}px)`;
-                }
-                
-                lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-            });
-
-            // Add mouse move effect for subtle interaction
-            document.addEventListener('mousemove', function(e) {
-                const x = e.clientX / window.innerWidth;
-                const y = e.clientY / window.innerHeight;
-                
-                // Subtly move elements based on mouse position
-                const heroTitle = document.querySelector('.hero-title');
-                if (heroTitle) {
-                    const moveX = (x - 0.5) * 10;
-                    const moveY = (y - 0.5) * 10;
-                    heroTitle.style.transform = `translate(${moveX}px, ${moveY}px)`;
-                }
-            });
-
-            // Button click animation
+            // CTA Button animation
             const ctaButton = document.querySelector('.cta-button');
             if (ctaButton) {
                 ctaButton.addEventListener('click', function(e) {
-                    // Ripple effect
-                    const ripple = document.createElement('span');
-                    const rect = this.getBoundingClientRect();
-                    const size = Math.max(rect.width, rect.height);
-                    const x = e.clientX - rect.left - size / 2;
-                    const y = e.clientY - rect.top - size / 2;
-                    
-                    ripple.style.cssText = `
-                        position: absolute;
-                        border-radius: 50%;
-                        background: rgba(255, 255, 255, 0.3);
-                        transform: scale(0);
-                        animation: rippleAnimation 0.6s linear;
-                        width: ${size}px;
-                        height: ${size}px;
-                        top: ${y}px;
-                        left: ${x}px;
-                    `;
-                    
-                    this.appendChild(ripple);
-                    setTimeout(() => ripple.remove(), 600);
+                    // Create ripple effect
+                    createRippleEffect(e, this);
                     
                     // Button press animation
                     this.style.transform = 'scale(0.95)';
@@ -1548,20 +1525,163 @@
                     }, 150);
                 });
             }
+
+            // Logo click to go home
+            const homeLogo = document.getElementById('home-logo');
+            if (homeLogo) {
+                homeLogo.addEventListener('click', function() {
+                    showHomeScreen();
+                });
+            }
         }
 
-        // Add CSS for ripple animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes rippleAnimation {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
-                }
+        function createRippleEffect(event, element) {
+            const ripple = document.createElement('span');
+            const rect = element.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = event.clientX - rect.left - size / 2;
+            const y = event.clientY - rect.top - size / 2;
+            
+            ripple.style.cssText = `
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.3);
+                transform: scale(0);
+                animation: rippleAnimation 0.6s linear;
+                width: ${size}px;
+                height: ${size}px;
+                top: ${y}px;
+                left: ${x}px;
+                pointer-events: none;
+            `;
+            
+            element.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        function setupNavigation() {
+            // Home to Config
+            const startConfigBtn = document.getElementById('start-config-btn');
+            if (startConfigBtn) {
+                startConfigBtn.addEventListener('click', function() {
+                    showConfigScreen();
+                });
             }
-        `;
-        document.head.appendChild(style);
+
+            // Config to Quiz
+            const startQuizBtn = document.getElementById('start-quiz-btn');
+            if (startQuizBtn) {
+                startQuizBtn.addEventListener('click', function() {
+                    showQuizScreen();
+                });
+            }
+
+            // Results to Home
+            const replayBtn = document.getElementById('replay-btn');
+            if (replayBtn) {
+                replayBtn.addEventListener('click', function() {
+                    showHomeScreen();
+                });
+            }
+
+            // Results to Quit (goes home)
+            const quitBtn = document.getElementById('quit-btn');
+            if (quitBtn) {
+                quitBtn.addEventListener('click', function() {
+                    showHomeScreen();
+                });
+            }
+        }
+
+        function showHomeScreen() {
+            hideAllScreens();
+            const homeScreen = document.getElementById('home-screen');
+            homeScreen.classList.remove('hidden');
+            homeScreen.style.opacity = '0';
+            homeScreen.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                homeScreen.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                homeScreen.style.opacity = '1';
+                homeScreen.style.transform = 'translateY(0)';
+            }, 50);
+        }
+
+        function showConfigScreen() {
+            hideAllScreens();
+            const configScreen = document.getElementById('config-screen');
+            configScreen.classList.remove('hidden');
+            configScreen.style.opacity = '0';
+            configScreen.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                configScreen.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                configScreen.style.opacity = '1';
+                configScreen.style.transform = 'translateY(0)';
+            }, 50);
+        }
+
+        function showQuizScreen() {
+            hideAllScreens();
+            const quizScreen = document.getElementById('quiz-screen');
+            quizScreen.classList.remove('hidden');
+            quizScreen.style.opacity = '0';
+            quizScreen.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                quizScreen.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                quizScreen.style.opacity = '1';
+                quizScreen.style.transform = 'translateY(0)';
+            }, 50);
+        }
+
+        function showResultsScreen() {
+            hideAllScreens();
+            const resultsScreen = document.getElementById('results-screen');
+            resultsScreen.classList.remove('hidden');
+            resultsScreen.style.opacity = '0';
+            resultsScreen.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                resultsScreen.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                resultsScreen.style.opacity = '1';
+                resultsScreen.style.transform = 'translateY(0)';
+            }, 50);
+        }
+
+        function hideAllScreens() {
+            const screens = [
+                'home-screen',
+                'config-screen', 
+                'quiz-screen',
+                'results-screen'
+            ];
+            
+            screens.forEach(screenId => {
+                const screen = document.getElementById(screenId);
+                if (screen) {
+                    screen.classList.add('hidden');
+                }
+            });
+        }
+
+        // Add CSS for ripple animation if not already present
+        if (!document.querySelector('style[data-ripple]')) {
+            const style = document.createElement('style');
+            style.setAttribute('data-ripple', 'true');
+            style.textContent = `
+                @keyframes rippleAnimation {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
     </script>
+    
+    <!-- Original app.js functionality -->
     <script src="app.js"></script>
 </body>
 </html>

@@ -1234,11 +1234,12 @@
                 box-shadow: var(--shadow-md);
             }
             
-            .edu-stream-container .edu-nav.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
+            /* In your CSS, add this if not already present */
+.edu-stream-container .edu-nav.active {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
             
             .edu-stream-container .edu-nav ul {
                 flex-direction: column;
@@ -2345,667 +2346,694 @@ Découvrez toutes les matières scientifiques essentielles pour réussir votre <
     
     <!-- eduSTREAM JavaScript -->
     <script>
-    // Wait for DOM to be fully loaded
-    document.addEventListener('DOMContentLoaded', function() {
-        // Data for eduSTREAM
-        const eduVideosData = [
-            {
-                "id": 1,
-                "title": "Introduction à la Physique Quantique",
-                "youtubeLink": "https://www.youtube.com/embed/6v2L2UGZJAM",
-                "thumbnail": "https://images.unsplash.com/photo-1558655146-9f40138edfeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                "category": "Physique",
-                "description": "Découvrez les bases de la physique quantique avec des explications claires et des exemples concrets."
-            },
-            {
-                "id": 2,
-                "title": "Algèbre Linéaire - Matrices",
-                "youtubeLink": "https://www.youtube.com/embed/XIMLoLxmTDw",
-                "thumbnail": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                "category": "Mathématiques",
-                "description": "Apprenez à manipuler les matrices et résoudre des systèmes d'équations linéaires."
-            },
-            {
-                "id": 3,
-                "title": "Biologie Cellulaire Avancée",
-                "youtubeLink": "https://www.youtube.com/embed/SPFDLHNm5KQ",
-                "thumbnail": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                "category": "Biologie",
-                "description": "Explorez le fonctionnement interne des cellules et leurs structures complexes."
-            },
-            {
-                "id": 4,
-                "title": "Chimie Organique - Les Bases",
-                "youtubeLink": "https://www.youtube.com/embed/PkZNo7MFNFg",
-                "thumbnail": "https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                "category": "Chimie",
-                "description": "Introduction aux composés organiques et leurs propriétés fondamentales."
-            },
-            {
-                "id": 5,
-                "title": "Programmation Python",
-                "youtubeLink": "https://www.youtube.com/embed/_2LLXnUdUIc",
-                "thumbnail": "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                "category": "Informatique",
-                "description": "Apprenez les bases de la programmation avec Python, langage idéal pour débutants."
-            },
-            {
-                "id": 6,
-                "title": "Histoire de la Philosophie",
-                "youtubeLink": "https://www.youtube.com/embed/VQraviuwbzU",
-                "thumbnail": "https://images.unsplash.com/photo-1555066931-bf76d369d2f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                "category": "Philosophie",
-                "description": "Parcourez les grands courants philosophiques à travers les siècles."
-            },
-            {
-                "id": 7,
-                "title": "Grammaire Anglaise Avancée",
-                "youtubeLink": "https://www.youtube.com/embed/7OSkB4BCx00",
-                "thumbnail": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                "category": "Anglais",
-                "description": "Maîtrisez les nuances de la grammaire anglaise pour une communication fluide et précise."
-            },
-            {
-                "id": 8,
-                "title": "Mécanique Newtonienne",
-                "youtubeLink": "https://www.youtube.com/embed/MuBM8J2HfRA",
-                "thumbnail": "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                "category": "Physique",
-                "description": "Comprenez les lois fondamentales de Newton et leurs applications pratiques."
-            },
-            {
-                "id": 9,
-                "title": "Calcul Différentiel",
-                "youtubeLink": "https://www.youtube.com/embed/sByzHoiYFX0",
-                "thumbnail": "https://images.unsplash.com/photo-1545235617-9465d2a55698?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                "category": "Mathématiques",
-                "description": "Apprenez les bases du calcul différentiel avec des exemples concrets et des exercices."
-            },
-            {
-                "id": 10,
-                "title": "Génétique Moléculaire",
-                "youtubeLink": "https://www.youtube.com/embed/I7LrS1z_WNA",
-                "thumbnail": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                "category": "Biologie",
-                "description": "Explorez les mécanismes moléculaires de l'hérédité et de l'expression génétique."
-            },
-            {
-                "id": 11,
-                "title": "Algorithmes et Structures de Données",
-                "youtubeLink": "https://www.youtube.com/embed/YKYle5nR-7M",
-                "thumbnail": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                "category": "Informatique",
-                "description": "Découvrez les algorithmes fondamentaux et les structures de données essentielles en programmation."
-            },
-            {
-                "id": 12,
-                "title": "Littérature Française Moderne",
-                "youtubeLink": "https://www.youtube.com/embed/20SHvU2PKsM",
-                "thumbnail": "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                "category": "Français",
-                "description": "Analyse des grands auteurs et courants littéraires français du XXe siècle."
+  // Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Data for eduSTREAM
+    const eduVideosData = [
+        {
+            "id": 1,
+            "title": "Introduction à la Physique Quantique",
+            "youtubeLink": "https://www.youtube.com/embed/6v2L2UGZJAM",
+            "thumbnail": "https://images.unsplash.com/photo-1558655146-9f40138edfeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "category": "Physique",
+            "description": "Découvrez les bases de la physique quantique avec des explications claires et des exemples concrets."
+        },
+        {
+            "id": 2,
+            "title": "Algèbre Linéaire - Matrices",
+            "youtubeLink": "https://www.youtube.com/embed/XIMLoLxmTDw",
+            "thumbnail": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "category": "Mathématiques",
+            "description": "Apprenez à manipuler les matrices et résoudre des systèmes d'équations linéaires."
+        },
+        {
+            "id": 3,
+            "title": "Biologie Cellulaire Avancée",
+            "youtubeLink": "https://www.youtube.com/embed/SPFDLHNm5KQ",
+            "thumbnail": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "category": "Biologie",
+            "description": "Explorez le fonctionnement interne des cellules et leurs structures complexes."
+        },
+        {
+            "id": 4,
+            "title": "Chimie Organique - Les Bases",
+            "youtubeLink": "https://www.youtube.com/embed/PkZNo7MFNFg",
+            "thumbnail": "https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "category": "Chimie",
+            "description": "Introduction aux composés organiques et leurs propriétés fondamentales."
+        },
+        {
+            "id": 5,
+            "title": "Programmation Python",
+            "youtubeLink": "https://www.youtube.com/embed/_2LLXnUdUIc",
+            "thumbnail": "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "category": "Informatique",
+            "description": "Apprenez les bases de la programmation avec Python, langage idéal pour débutants."
+        },
+        {
+            "id": 6,
+            "title": "Histoire de la Philosophie",
+            "youtubeLink": "https://www.youtube.com/embed/VQraviuwbzU",
+            "thumbnail": "https://images.unsplash.com/photo-1555066931-bf76d369d2f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "category": "Philosophie",
+            "description": "Parcourez les grands courants philosophiques à travers les siècles."
+        },
+        {
+            "id": 7,
+            "title": "Grammaire Anglaise Avancée",
+            "youtubeLink": "https://www.youtube.com/embed/7OSkB4BCx00",
+            "thumbnail": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "category": "Anglais",
+            "description": "Maîtrisez les nuances de la grammaire anglaise pour une communication fluide et précise."
+        },
+        {
+            "id": 8,
+            "title": "Mécanique Newtonienne",
+            "youtubeLink": "https://www.youtube.com/embed/MuBM8J2HfRA",
+            "thumbnail": "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "category": "Physique",
+            "description": "Comprenez les lois fondamentales de Newton et leurs applications pratiques."
+        },
+        {
+            "id": 9,
+            "title": "Calcul Différentiel",
+            "youtubeLink": "https://www.youtube.com/embed/sByzHoiYFX0",
+            "thumbnail": "https://images.unsplash.com/photo-1545235617-9465d2a55698?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "category": "Mathématiques",
+            "description": "Apprenez les bases du calcul différentiel avec des exemples concrets et des exercices."
+        },
+        {
+            "id": 10,
+            "title": "Génétique Moléculaire",
+            "youtubeLink": "https://www.youtube.com/embed/I7LrS1z_WNA",
+            "thumbnail": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "category": "Biologie",
+            "description": "Explorez les mécanismes moléculaires de l'hérédité et de l'expression génétique."
+        },
+        {
+            "id": 11,
+            "title": "Algorithmes et Structures de Données",
+            "youtubeLink": "https://www.youtube.com/embed/YKYle5nR-7M",
+            "thumbnail": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "category": "Informatique",
+            "description": "Découvrez les algorithmes fondamentaux et les structures de données essentielles en programmation."
+        },
+        {
+            "id": 12,
+            "title": "Littérature Française Moderne",
+            "youtubeLink": "https://www.youtube.com/embed/20SHvU2PKsM",
+            "thumbnail": "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "category": "Français",
+            "description": "Analyse des grands auteurs et courants littéraires français du XXe siècle."
+        }
+    ];
+
+    const eduPlaylistsData = [
+        {
+            "id": 1,
+            "title": "Sciences Physiques",
+            "topic": "Physique & Chimie",
+            "cover": "https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "videoIds": [1, 4, 8],
+            "description": "Principes fondamentaux de la physique et de la chimie avec applications pratiques"
+        },
+        {
+            "id": 2,
+            "title": "Mathématiques Avancées",
+            "topic": "Algèbre & Analyse",
+            "cover": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "videoIds": [2, 9],
+            "description": "Concepts mathématiques essentiels pour le baccalauréat et au-delà"
+        },
+        {
+            "id": 3,
+            "title": "Sciences de la Vie",
+            "topic": "Biologie & SVT",
+            "cover": "https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "videoIds": [3, 10],
+            "description": "Biologie cellulaire, génétique et sciences de la vie et de la terre"
+        },
+        {
+            "id": 4,
+            "title": "Informatique Fondamentale",
+            "topic": "Programmation & Algo",
+            "cover": "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "videoIds": [5, 11],
+            "description": "Bases de la programmation et algorithmique pour débutants"
+        },
+        {
+            "id": 5,
+            "title": "Langues Modernes",
+            "topic": "Anglais & Français",
+            "cover": "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "videoIds": [7, 12],
+            "description": "Perfectionnement linguistique en anglais et français académique"
+        },
+        {
+            "id": 6,
+            "title": "Philosophie & Pensée",
+            "topic": "Réflexion & Logique",
+            "cover": "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "videoIds": [6],
+            "description": "Courants philosophiques et développement de la pensée critique"
+        }
+    ];
+
+    const eduAnimatedTexts = [
+        "Sciences Physiques",
+        "Mathématiques",
+        "Sciences Exp",
+        "Informatique",
+        "Anglais",
+        "Philosophie"
+    ];
+
+    // Initialize eduSTREAM when the about section is active
+    function initEduStream() {
+        console.log('Initializing eduSTREAM with original project logic...');
+        
+        // Get eduSTREAM elements
+        const eduPages = document.querySelectorAll('#about .edu-page');
+        const eduNavLinks = document.querySelectorAll('#about .edu-nav-link');
+        const eduMobileMenuBtn = document.getElementById('eduMobileMenuBtn');
+        const eduMainNav = document.getElementById('eduMainNav');
+        const eduSearchIcon = document.getElementById('eduSearchIcon');
+        const eduWatchNowBtn = document.getElementById('eduWatchNowBtn');
+        const eduHomeLogo = document.getElementById('eduHomeLogo');
+        const eduAnimatedTextContainer = document.getElementById('eduAnimatedTextContainer');
+        const eduScrollIndicator = document.querySelector('#about .edu-scroll-indicator');
+        
+        // Feed elements
+        const eduVideosFeed = document.getElementById('eduVideosFeed');
+        const eduLoadMoreBtn = document.getElementById('eduLoadMoreBtn');
+        
+        // Search elements
+        const eduSearchInput = document.getElementById('eduSearchInput');
+        const eduSearchResults = document.getElementById('eduSearchResults');
+        const eduResultsCount = document.getElementById('eduResultsCount');
+        const eduNoResults = document.getElementById('eduNoResults');
+        
+        // Categories elements
+        const eduCategoriesGrid = document.getElementById('eduCategoriesGrid');
+        const eduPlaylistPage = document.getElementById('eduPlaylistPage');
+        const eduPlaylistVideos = document.getElementById('eduPlaylistVideos');
+        const eduPlaylistTitle = document.getElementById('eduPlaylistTitle');
+        const eduPlaylistTopic = document.getElementById('eduPlaylistTopic');
+        
+        // Player elements
+        const eduYoutubePlayer = document.getElementById('eduYoutubePlayer');
+        const eduPlayerTitle = document.getElementById('eduPlayerTitle');
+        const eduPlayerDescription = document.getElementById('eduPlayerDescription');
+        const eduSuggestedVideos = document.getElementById('eduSuggestedVideos');
+        
+        // Back buttons
+        const eduFeedBackBtn = document.getElementById('eduFeedBackBtn');
+        const eduCategoriesBackBtn = document.getElementById('eduCategoriesBackBtn');
+        const eduPlaylistBackBtn = document.getElementById('eduPlaylistBackBtn');
+        const eduSearchBackBtn = document.getElementById('eduSearchBackBtn');
+        const eduPlayerBackBtn = document.getElementById('eduPlayerBackBtn');
+
+        // State variables
+        let eduCurrentVideo = null;
+        let eduVideosToShow = 6;
+        let eduCurrentPage = 'home';
+        let eduCurrentTextIndex = 0;
+        let eduAnimatedTextInterval;
+
+        // Initialize the application
+        function init() {
+            renderVideosFeed();
+            renderCategories();
+            setupEventListeners();
+            setupSearch();
+            initAnimatedText();
+            setupScrollIndicator();
+        }
+
+        // Initialize animated text in hero section
+        function initAnimatedText() {
+            // Clear container first
+            eduAnimatedTextContainer.innerHTML = '';
+            
+            // Create animated text elements
+            eduAnimatedTexts.forEach((text, index) => {
+                const textElement = document.createElement('div');
+                textElement.className = 'edu-animated-text';
+                textElement.textContent = text;
+                textElement.dataset.index = index;
+                eduAnimatedTextContainer.appendChild(textElement);
+            });
+            
+            // Show first text
+            const firstText = eduAnimatedTextContainer.querySelector('.edu-animated-text');
+            if (firstText) {
+                firstText.classList.add('active');
             }
-        ];
-
-        const eduPlaylistsData = [
-            {
-                "id": 1,
-                "title": "Sciences Physiques",
-                "topic": "Physique & Chimie",
-                "cover": "https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                "videoIds": [1, 4, 8],
-                "description": "Principes fondamentaux de la physique et de la chimie avec applications pratiques"
-            },
-            {
-                "id": 2,
-                "title": "Mathématiques Avancées",
-                "topic": "Algèbre & Analyse",
-                "cover": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                "videoIds": [2, 9],
-                "description": "Concepts mathématiques essentiels pour le baccalauréat et au-delà"
-            },
-            {
-                "id": 3,
-                "title": "Sciences de la Vie",
-                "topic": "Biologie & SVT",
-                "cover": "https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                "videoIds": [3, 10],
-                "description": "Biologie cellulaire, génétique et sciences de la vie et de la terre"
-            },
-            {
-                "id": 4,
-                "title": "Informatique Fondamentale",
-                "topic": "Programmation & Algo",
-                "cover": "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                "videoIds": [5, 11],
-                "description": "Bases de la programmation et algorithmique pour débutants"
-            },
-            {
-                "id": 5,
-                "title": "Langues Modernes",
-                "topic": "Anglais & Français",
-                "cover": "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                "videoIds": [7, 12],
-                "description": "Perfectionnement linguistique en anglais et français académique"
-            },
-            {
-                "id": 6,
-                "title": "Philosophie & Pensée",
-                "topic": "Réflexion & Logique",
-                "cover": "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                "videoIds": [6],
-                "description": "Courants philosophiques et développement de la pensée critique"
-            }
-        ];
-
-        const eduAnimatedTexts = [
-            "Sciences Physiques",
-            "Mathématiques",
-            "Sciences Exp",
-            "Informatique",
-            "Anglais",
-            "Philosophie"
-        ];
-
-        // Initialize eduSTREAM when the about section is active
-        function initEduStream() {
-            console.log('Initializing eduSTREAM with original project logic...');
             
-            // Get eduSTREAM elements
-            const eduPages = document.querySelectorAll('#about .edu-page');
-            const eduNavLinks = document.querySelectorAll('#about .edu-nav-link');
-            const eduMobileMenuBtn = document.getElementById('eduMobileMenuBtn');
-            const eduMainNav = document.getElementById('eduMainNav');
-            const eduSearchIcon = document.getElementById('eduSearchIcon');
-            const eduWatchNowBtn = document.getElementById('eduWatchNowBtn');
-            const eduHomeLogo = document.getElementById('eduHomeLogo');
-            const eduAnimatedTextContainer = document.getElementById('eduAnimatedTextContainer');
-            const eduScrollIndicator = document.querySelector('#about .edu-scroll-indicator');
-            
-            // Feed elements
-            const eduVideosFeed = document.getElementById('eduVideosFeed');
-            const eduLoadMoreBtn = document.getElementById('eduLoadMoreBtn');
-            
-            // Search elements
-            const eduSearchInput = document.getElementById('eduSearchInput');
-            const eduSearchResults = document.getElementById('eduSearchResults');
-            const eduResultsCount = document.getElementById('eduResultsCount');
-            const eduNoResults = document.getElementById('eduNoResults');
-            
-            // Categories elements
-            const eduCategoriesGrid = document.getElementById('eduCategoriesGrid');
-            const eduPlaylistPage = document.getElementById('eduPlaylistPage');
-            const eduPlaylistVideos = document.getElementById('eduPlaylistVideos');
-            const eduPlaylistTitle = document.getElementById('eduPlaylistTitle');
-            const eduPlaylistTopic = document.getElementById('eduPlaylistTopic');
-            
-            // Player elements
-            const eduYoutubePlayer = document.getElementById('eduYoutubePlayer');
-            const eduPlayerTitle = document.getElementById('eduPlayerTitle');
-            const eduPlayerDescription = document.getElementById('eduPlayerDescription');
-            const eduSuggestedVideos = document.getElementById('eduSuggestedVideos');
-            
-            // Back buttons
-            const eduFeedBackBtn = document.getElementById('eduFeedBackBtn');
-            const eduCategoriesBackBtn = document.getElementById('eduCategoriesBackBtn');
-            const eduPlaylistBackBtn = document.getElementById('eduPlaylistBackBtn');
-            const eduSearchBackBtn = document.getElementById('eduSearchBackBtn');
-            const eduPlayerBackBtn = document.getElementById('eduPlayerBackBtn');
+            // Start animation interval (every 2.5 seconds)
+            clearInterval(eduAnimatedTextInterval);
+            eduAnimatedTextInterval = setInterval(cycleAnimatedText, 2500);
+        }
 
-            // State variables
-            let eduCurrentVideo = null;
-            let eduVideosToShow = 6;
-            let eduCurrentPage = 'home';
-            let eduCurrentTextIndex = 0;
-            let eduAnimatedTextInterval;
-
-            // Initialize the application
-            function init() {
-                renderVideosFeed();
-                renderCategories();
-                setupEventListeners();
-                setupSearch();
-                initAnimatedText();
-                setupScrollIndicator();
-            }
-
-            // Initialize animated text in hero section
-            function initAnimatedText() {
-                // Create animated text elements
-                eduAnimatedTexts.forEach((text, index) => {
-                    const textElement = document.createElement('div');
-                    textElement.className = 'edu-animated-text';
-                    textElement.textContent = text;
-                    textElement.dataset.index = index;
-                    eduAnimatedTextContainer.appendChild(textElement);
-                });
-                
-                // Show first text
-                const firstText = eduAnimatedTextContainer.querySelector('.edu-animated-text');
-                if (firstText) {
-                    firstText.classList.add('active');
+        // Cycle through animated texts
+        function cycleAnimatedText() {
+            const currentActive = eduAnimatedTextContainer.querySelector('.edu-animated-text.active');
+            if (currentActive) {
+                currentActive.classList.remove('active');
+                eduCurrentTextIndex = (eduCurrentTextIndex + 1) % eduAnimatedTexts.length;
+                const nextText = eduAnimatedTextContainer.querySelector(`.edu-animated-text[data-index="${eduCurrentTextIndex}"]`);
+                if (nextText) {
+                    nextText.classList.add('active');
                 }
-                
-                // Start animation interval (every 2.5 seconds)
-                eduAnimatedTextInterval = setInterval(cycleAnimatedText, 2500);
             }
+        }
 
-            // Cycle through animated texts
-            function cycleAnimatedText() {
-                const currentActive = eduAnimatedTextContainer.querySelector('.edu-animated-text.active');
-                if (currentActive) {
-                    currentActive.classList.remove('active');
-                    eduCurrentTextIndex = (eduCurrentTextIndex + 1) % eduAnimatedTexts.length;
-                    const nextText = eduAnimatedTextContainer.querySelector(`.edu-animated-text[data-index="${eduCurrentTextIndex}"]`);
-                    if (nextText) {
-                        nextText.classList.add('active');
-                    }
-                }
-            }
-
-            // Setup scroll indicator
-            function setupScrollIndicator() {
+        // Setup scroll indicator
+        function setupScrollIndicator() {
+            if (eduScrollIndicator) {
                 eduScrollIndicator.addEventListener('click', () => {
                     eduSwitchPage('feed');
                 });
             }
+        }
 
-            // Render videos in feed with premium design
-            function renderVideosFeed() {
-                eduVideosFeed.innerHTML = '';
-                const videosToDisplay = eduVideosData.slice(0, eduVideosToShow);
-                
-                if (videosToDisplay.length === 0) {
-                    eduVideosFeed.innerHTML = `
-                        <div class="edu-placeholder-message">
-                            <i class="fas fa-video"></i>
-                            <h3>Aucune vidéo disponible</h3>
-                            <p>Le contenu vidéo sera bientôt ajouté à la bibliothèque</p>
-                        </div>
-                    `;
-                    eduLoadMoreBtn.style.display = 'none';
-                    return;
-                }
-                
-                videosToDisplay.forEach(video => {
-                    const videoCard = createVideoCard(video);
-                    eduVideosFeed.appendChild(videoCard);
-                });
-                
-                // Show/hide load more button
+        // Render videos in feed with premium design
+        function renderVideosFeed() {
+            if (!eduVideosFeed) return;
+            
+            eduVideosFeed.innerHTML = '';
+            const videosToDisplay = eduVideosData.slice(0, eduVideosToShow);
+            
+            if (videosToDisplay.length === 0) {
+                eduVideosFeed.innerHTML = `
+                    <div class="edu-placeholder-message">
+                        <i class="fas fa-video"></i>
+                        <h3>Aucune vidéo disponible</h3>
+                        <p>Le contenu vidéo sera bientôt ajouté à la bibliothèque</p>
+                    </div>
+                `;
+                if (eduLoadMoreBtn) eduLoadMoreBtn.style.display = 'none';
+                return;
+            }
+            
+            videosToDisplay.forEach(video => {
+                const videoCard = createVideoCard(video);
+                eduVideosFeed.appendChild(videoCard);
+            });
+            
+            // Show/hide load more button
+            if (eduLoadMoreBtn) {
                 eduLoadMoreBtn.style.display = eduVideosToShow >= eduVideosData.length ? 'none' : 'block';
-                
-                // Add fade-in animation to cards
-                setTimeout(() => {
-                    const cards = eduVideosFeed.querySelectorAll('.edu-video-card');
-                    cards.forEach((card, index) => {
-                        card.style.animation = `fadeInUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) ${index * 0.05}s forwards`;
-                        card.style.opacity = '0';
-                    });
-                }, 50);
             }
-
-            // Render categories/playlists
-            function renderCategories() {
-                eduCategoriesGrid.innerHTML = '';
-                
-                if (eduPlaylistsData.length === 0) {
-                    eduCategoriesGrid.innerHTML = `
-                        <div class="edu-placeholder-message">
-                            <i class="fas fa-folder-open"></i>
-                            <h3>Aucune collection disponible</h3>
-                            <p>Les collections thématiques seront bientôt ajoutées</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                eduPlaylistsData.forEach(playlist => {
-                    const playlistVideosCount = playlist.videoIds.length;
-                    
-                    const categoryCard = document.createElement('div');
-                    categoryCard.className = 'edu-category-card';
-                    categoryCard.dataset.id = playlist.id;
-                    
-                    categoryCard.innerHTML = `
-                        <img src="${playlist.cover}" alt="${playlist.title}" class="edu-category-cover" loading="lazy">
-                        <div class="edu-category-overlay">
-                            <h3 class="edu-category-title">${playlist.title}</h3>
-                            <div class="edu-category-info">
-                                <i class="fas fa-play-circle"></i>
-                                <span>${playlistVideosCount} vidéo${playlistVideosCount > 1 ? 's' : ''}</span>
-                                <span>•</span>
-                                <span>${playlist.topic}</span>
-                            </div>
-                        </div>
-                    `;
-                    
-                    categoryCard.addEventListener('click', () => {
-                        openPlaylist(playlist);
-                    });
-                    
-                    eduCategoriesGrid.appendChild(categoryCard);
+            
+            // Add fade-in animation to cards
+            setTimeout(() => {
+                const cards = eduVideosFeed.querySelectorAll('.edu-video-card');
+                cards.forEach((card, index) => {
+                    card.style.animation = `fadeInUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) ${index * 0.05}s forwards`;
+                    card.style.opacity = '0';
                 });
-                
-                // Add fade-in animation to cards
-                setTimeout(() => {
-                    const cards = eduCategoriesGrid.querySelectorAll('.edu-category-card');
-                    cards.forEach((card, index) => {
-                        card.style.animation = `fadeInUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) ${index * 0.05}s forwards`;
-                        card.style.opacity = '0';
-                    });
-                }, 50);
-            }
+            }, 50);
+        }
 
-            // Open playlist view
-            function openPlaylist(playlist) {
-                eduPlaylistTitle.textContent = playlist.title;
-                eduPlaylistTopic.textContent = playlist.topic;
-                
-                // Get videos for this playlist
-                const playlistVideosData = eduVideosData.filter(video => 
-                    playlist.videoIds.includes(video.id)
-                );
-                
-                renderPlaylistVideos(playlistVideosData);
-                
-                // Show playlist page, hide categories grid
-                eduCategoriesGrid.style.display = 'none';
-                eduPlaylistPage.classList.add('active');
-                
-                // Scroll to top
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-
-            // Render playlist videos
-            function renderPlaylistVideos(videos) {
-                eduPlaylistVideos.innerHTML = '';
-                
-                if (videos.length === 0) {
-                    eduPlaylistVideos.innerHTML = `
-                        <div class="edu-placeholder-message">
-                            <i class="fas fa-video"></i>
-                            <h3>Aucune vidéo dans cette playlist</h3>
-                            <p>Les vidéos seront bientôt ajoutées à cette collection</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                videos.forEach(video => {
-                    const videoCard = createVideoCard(video);
-                    eduPlaylistVideos.appendChild(videoCard);
-                });
-                
-                // Add fade-in animation to cards
-                setTimeout(() => {
-                    const cards = eduPlaylistVideos.querySelectorAll('.edu-video-card');
-                    cards.forEach((card, index) => {
-                        card.style.animation = `fadeInUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) ${index * 0.05}s forwards`;
-                        card.style.opacity = '0';
-                    });
-                }, 50);
-            }
-
-            // Close playlist view
-            function closePlaylist() {
-                eduPlaylistPage.classList.remove('active');
-                eduCategoriesGrid.style.display = 'grid';
-                eduPlaylistVideos.innerHTML = '';
-                
-                // Scroll to top
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-
-            // Create premium video card element
-            function createVideoCard(video) {
-                const card = document.createElement('div');
-                card.className = 'edu-video-card';
-                card.dataset.id = video.id;
-                
-                card.innerHTML = `
-                    <div class="edu-video-thumbnail-container">
-                        <img src="${video.thumbnail}" alt="${video.title}" class="edu-video-thumbnail" loading="lazy">
-                        <div class="edu-video-play-overlay">
-                            <div class="edu-video-play-icon">
-                                <i class="fas fa-play"></i>
-                            </div>
-                        </div>
+        // Render categories/playlists
+        function renderCategories() {
+            if (!eduCategoriesGrid) return;
+            
+            eduCategoriesGrid.innerHTML = '';
+            
+            if (eduPlaylistsData.length === 0) {
+                eduCategoriesGrid.innerHTML = `
+                    <div class="edu-placeholder-message">
+                        <i class="fas fa-folder-open"></i>
+                        <h3>Aucune collection disponible</h3>
+                        <p>Les collections thématiques seront bientôt ajoutées</p>
                     </div>
-                    <div class="edu-video-text-overlay">
-                        <h3 class="edu-video-card-title">${video.title}</h3>
-                        <div class="edu-video-card-category">${video.category}</div>
+                `;
+                return;
+            }
+            
+            eduPlaylistsData.forEach(playlist => {
+                const playlistVideosCount = playlist.videoIds.length;
+                
+                const categoryCard = document.createElement('div');
+                categoryCard.className = 'edu-category-card';
+                categoryCard.dataset.id = playlist.id;
+                
+                categoryCard.innerHTML = `
+                    <img src="${playlist.cover}" alt="${playlist.title}" class="edu-category-cover" loading="lazy">
+                    <div class="edu-category-overlay">
+                        <h3 class="edu-category-title">${playlist.title}</h3>
+                        <div class="edu-category-info">
+                            <i class="fas fa-play-circle"></i>
+                            <span>${playlistVideosCount} vidéo${playlistVideosCount > 1 ? 's' : ''}</span>
+                            <span>•</span>
+                            <span>${playlist.topic}</span>
+                        </div>
                     </div>
                 `;
                 
-                // Add click handler
-                card.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    playVideo(video);
+                categoryCard.addEventListener('click', () => {
+                    openPlaylist(playlist);
                 });
                 
-                // Add touch feedback
-                card.addEventListener('touchstart', function(e) {
-                    this.style.transform = 'scale(0.98)';
+                eduCategoriesGrid.appendChild(categoryCard);
+            });
+            
+            // Add fade-in animation to cards
+            setTimeout(() => {
+                const cards = eduCategoriesGrid.querySelectorAll('.edu-category-card');
+                cards.forEach((card, index) => {
+                    card.style.animation = `fadeInUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) ${index * 0.05}s forwards`;
+                    card.style.opacity = '0';
                 });
-                
-                card.addEventListener('touchend', function(e) {
-                    this.style.transform = '';
-                });
-                
-                return card;
-            }
+            }, 50);
+        }
 
-            // Create suggested video card
-            function createSuggestedCard(video) {
-                const card = document.createElement('div');
-                card.className = 'edu-suggested-card';
-                card.dataset.id = video.id;
-                
-                card.innerHTML = `
-                    <img src="${video.thumbnail}" alt="${video.title}" class="edu-suggested-thumbnail" loading="lazy">
-                    <div class="edu-suggested-info">
-                        <h4 class="edu-suggested-video-title">${video.title}</h4>
-                        <div class="edu-suggested-category">${video.category}</div>
+        // Open playlist view
+        function openPlaylist(playlist) {
+            if (!eduPlaylistTitle || !eduPlaylistTopic) return;
+            
+            eduPlaylistTitle.textContent = playlist.title;
+            eduPlaylistTopic.textContent = playlist.topic;
+            
+            // Get videos for this playlist
+            const playlistVideosData = eduVideosData.filter(video => 
+                playlist.videoIds.includes(video.id)
+            );
+            
+            renderPlaylistVideos(playlistVideosData);
+            
+            // Show playlist page, hide categories grid
+            if (eduCategoriesGrid) eduCategoriesGrid.style.display = 'none';
+            if (eduPlaylistPage) eduPlaylistPage.classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Render playlist videos
+        function renderPlaylistVideos(videos) {
+            if (!eduPlaylistVideos) return;
+            
+            eduPlaylistVideos.innerHTML = '';
+            
+            if (videos.length === 0) {
+                eduPlaylistVideos.innerHTML = `
+                    <div class="edu-placeholder-message">
+                        <i class="fas fa-video"></i>
+                        <h3>Aucune vidéo dans cette playlist</h3>
+                        <p>Les vidéos seront bientôt ajoutées à cette collection</p>
                     </div>
                 `;
-                
-                card.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    playVideo(video);
+                return;
+            }
+            
+            videos.forEach(video => {
+                const videoCard = createVideoCard(video);
+                eduPlaylistVideos.appendChild(videoCard);
+            });
+            
+            // Add fade-in animation to cards
+            setTimeout(() => {
+                const cards = eduPlaylistVideos.querySelectorAll('.edu-video-card');
+                cards.forEach((card, index) => {
+                    card.style.animation = `fadeInUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) ${index * 0.05}s forwards`;
+                    card.style.opacity = '0';
                 });
-                
-                return card;
-            }
+            }, 50);
+        }
 
-            // Play video function
-            function playVideo(video) {
-                eduCurrentVideo = video;
-                
-                // Update player content
-                eduPlayerTitle.textContent = video.title;
-                eduPlayerDescription.textContent = video.description;
-                
-                // Extract YouTube video ID from URL
-                const videoId = extractYouTubeId(video.youtubeLink);
-                
-                // Clear previous iframe to prevent conflicts
-                eduYoutubePlayer.innerHTML = '';
-                
-                // Create and append new iframe
-                const iframe = document.createElement('iframe');
-                iframe.className = 'edu-video-player-frame';
-                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
-                iframe.frameBorder = '0';
-                iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-                iframe.allowFullscreen = true;
-                iframe.title = video.title;
-                
-                eduYoutubePlayer.appendChild(iframe);
-                
-                // Render suggested videos (exclude current video)
-                renderSuggestedVideos();
-                
-                // Switch to player page
-                eduSwitchPage('player');
-            }
+        // Close playlist view
+        function closePlaylist() {
+            if (eduPlaylistPage) eduPlaylistPage.classList.remove('active');
+            if (eduCategoriesGrid) eduCategoriesGrid.style.display = 'grid';
+            if (eduPlaylistVideos) eduPlaylistVideos.innerHTML = '';
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
+        // Create premium video card element
+        function createVideoCard(video) {
+            const card = document.createElement('div');
+            card.className = 'edu-video-card';
+            card.dataset.id = video.id;
+            
+            card.innerHTML = `
+                <div class="edu-video-thumbnail-container">
+                    <img src="${video.thumbnail}" alt="${video.title}" class="edu-video-thumbnail" loading="lazy">
+                    <div class="edu-video-play-overlay">
+                        <div class="edu-video-play-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="edu-video-text-overlay">
+                    <h3 class="edu-video-card-title">${video.title}</h3>
+                    <div class="edu-video-card-category">${video.category}</div>
+                </div>
+            `;
+            
+            // Add click handler
+            card.addEventListener('click', (e) => {
+                e.stopPropagation();
+                playVideo(video);
+            });
+            
+            // Add touch feedback
+            card.addEventListener('touchstart', function(e) {
+                this.style.transform = 'scale(0.98)';
+            });
+            
+            card.addEventListener('touchend', function(e) {
+                this.style.transform = '';
+            });
+            
+            return card;
+        }
+
+        // Create suggested video card
+        function createSuggestedCard(video) {
+            const card = document.createElement('div');
+            card.className = 'edu-suggested-card';
+            card.dataset.id = video.id;
+            
+            card.innerHTML = `
+                <img src="${video.thumbnail}" alt="${video.title}" class="edu-suggested-thumbnail" loading="lazy">
+                <div class="edu-suggested-info">
+                    <h4 class="edu-suggested-video-title">${video.title}</h4>
+                    <div class="edu-suggested-category">${video.category}</div>
+                </div>
+            `;
+            
+            card.addEventListener('click', (e) => {
+                e.stopPropagation();
+                playVideo(video);
+            });
+            
+            return card;
+        }
+
+        // Play video function
+        function playVideo(video) {
+            eduCurrentVideo = video;
+            
+            // Update player content
+            if (eduPlayerTitle) eduPlayerTitle.textContent = video.title;
+            if (eduPlayerDescription) eduPlayerDescription.textContent = video.description;
+            
             // Extract YouTube video ID from URL
-            function extractYouTubeId(url) {
-                const match = url.match(/embed\/([a-zA-Z0-9_-]+)/);
-                return match ? match[1] : '6v2L2UGZJAM';
-            }
+            const videoId = extractYouTubeId(video.youtubeLink);
+            
+            // Clear previous iframe to prevent conflicts
+            if (eduYoutubePlayer) eduYoutubePlayer.innerHTML = '';
+            
+            // Create and append new iframe
+            const iframe = document.createElement('iframe');
+            iframe.className = 'edu-video-player-frame';
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+            iframe.frameBorder = '0';
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+            iframe.allowFullscreen = true;
+            iframe.title = video.title;
+            
+            if (eduYoutubePlayer) eduYoutubePlayer.appendChild(iframe);
+            
+            // Render suggested videos (exclude current video)
+            renderSuggestedVideos();
+            
+            // Switch to player page
+            eduSwitchPage('player');
+        }
 
-            // Render suggested videos
-            function renderSuggestedVideos() {
-                eduSuggestedVideos.innerHTML = '';
-                const suggested = eduVideosData
-                    .filter(v => v.id !== eduCurrentVideo.id)
-                    .slice(0, 5);
-                
-                suggested.forEach(video => {
-                    const card = createSuggestedCard(video);
-                    eduSuggestedVideos.appendChild(card);
-                });
-            }
+        // Extract YouTube video ID from URL
+        function extractYouTubeId(url) {
+            const match = url.match(/embed\/([a-zA-Z0-9_-]+)/);
+            return match ? match[1] : '6v2L2UGZJAM';
+        }
 
-            // Setup search functionality
-            function setupSearch() {
-                let searchTimeout;
+        // Render suggested videos
+        function renderSuggestedVideos() {
+            if (!eduSuggestedVideos) return;
+            
+            eduSuggestedVideos.innerHTML = '';
+            const suggested = eduVideosData
+                .filter(v => v.id !== eduCurrentVideo.id)
+                .slice(0, 5);
+            
+            suggested.forEach(video => {
+                const card = createSuggestedCard(video);
+                eduSuggestedVideos.appendChild(card);
+            });
+        }
+
+        // Setup search functionality
+        function setupSearch() {
+            if (!eduSearchInput || !eduSearchResults) return;
+            
+            let searchTimeout;
+            
+            eduSearchInput.addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
                 
-                eduSearchInput.addEventListener('input', (e) => {
-                    clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    const query = e.target.value.trim().toLowerCase();
                     
-                    searchTimeout = setTimeout(() => {
-                        const query = e.target.value.trim().toLowerCase();
-                        
-                        if (query.length === 0) {
-                            eduSearchResults.innerHTML = '';
-                            eduResultsCount.textContent = '';
-                            eduNoResults.style.display = 'none';
-                            return;
-                        }
-                        
-                        // Filter videos based on search query
+                    if (query.length === 0) {
+                        eduSearchResults.innerHTML = '';
+                        if (eduResultsCount) eduResultsCount.textContent = '';
+                        if (eduNoResults) eduNoResults.style.display = 'none';
+                        return;
+                    }
+                    
+                    // Filter videos based on search query
+                    const filteredVideos = eduVideosData.filter(video => 
+                        video.title.toLowerCase().includes(query) || 
+                        video.category.toLowerCase().includes(query) ||
+                        video.description.toLowerCase().includes(query)
+                    );
+                    
+                    // Display results
+                    displaySearchResults(filteredVideos, query);
+                }, 300);
+            });
+            
+            // Add search on mobile keyboard complete
+            eduSearchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const query = eduSearchInput.value.trim();
+                    if (query) {
                         const filteredVideos = eduVideosData.filter(video => 
-                            video.title.toLowerCase().includes(query) || 
-                            video.category.toLowerCase().includes(query) ||
-                            video.description.toLowerCase().includes(query)
+                            video.title.toLowerCase().includes(query.toLowerCase()) || 
+                            video.category.toLowerCase().includes(query.toLowerCase())
                         );
-                        
-                        // Display results
                         displaySearchResults(filteredVideos, query);
-                    }, 300);
+                    }
+                }
+            });
+        }
+
+        // Display search results
+        function displaySearchResults(videos, query) {
+            if (!eduSearchResults) return;
+            
+            eduSearchResults.innerHTML = '';
+            
+            if (videos.length === 0) {
+                if (eduNoResults) eduNoResults.style.display = 'block';
+                if (eduResultsCount) eduResultsCount.textContent = `Aucun résultat pour "${query}"`;
+                return;
+            }
+            
+            if (eduNoResults) eduNoResults.style.display = 'none';
+            if (eduResultsCount) eduResultsCount.textContent = `${videos.length} résultat${videos.length === 1 ? '' : 's'} pour "${query}"`;
+            
+            videos.forEach(video => {
+                const videoCard = createVideoCard(video);
+                eduSearchResults.appendChild(videoCard);
+            });
+            
+            // Animate search results
+            setTimeout(() => {
+                const cards = eduSearchResults.querySelectorAll('.edu-video-card');
+                cards.forEach((card, index) => {
+                    card.style.animation = `fadeInUp 0.4s ease ${index * 0.05}s forwards`;
+                    card.style.opacity = '0';
                 });
+            }, 50);
+        }
+
+        // Switch between eduSTREAM pages
+        function eduSwitchPage(pageName) {
+            // Stop animated text when leaving home page
+            if (eduCurrentPage === 'home' && pageName !== 'home') {
+                clearInterval(eduAnimatedTextInterval);
+            }
+            // Restart animated text when returning to home page
+            else if (pageName === 'home' && eduCurrentPage !== 'home') {
+                clearInterval(eduAnimatedTextInterval);
+                initAnimatedText();
+            }
+            
+            // Update current page
+            eduCurrentPage = pageName;
+            
+            // Hide all pages
+            eduPages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show target page
+            const targetPage = document.getElementById(`edu${pageName.charAt(0).toUpperCase() + pageName.slice(1)}Page`);
+            if (targetPage) {
+                targetPage.classList.add('active');
                 
-                // Add search on mobile keyboard complete
-                eduSearchInput.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        const query = eduSearchInput.value.trim();
-                        if (query) {
-                            const filteredVideos = eduVideosData.filter(video => 
-                                video.title.toLowerCase().includes(query.toLowerCase()) || 
-                                video.category.toLowerCase().includes(query.toLowerCase())
-                            );
-                            displaySearchResults(filteredVideos, query);
-                        }
+                // Update active nav link
+                eduNavLinks.forEach(link => {
+                    if (link.dataset.eduPage === pageName) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
                     }
                 });
-            }
-
-            // Display search results
-            function displaySearchResults(videos, query) {
-                eduSearchResults.innerHTML = '';
                 
-                if (videos.length === 0) {
-                    eduNoResults.style.display = 'block';
-                    eduResultsCount.textContent = `Aucun résultat pour "${query}"`;
-                    return;
-                }
-                
-                eduNoResults.style.display = 'none';
-                eduResultsCount.textContent = `${videos.length} résultat${videos.length === 1 ? '' : 's'} pour "${query}"`;
-                
-                videos.forEach(video => {
-                    const videoCard = createVideoCard(video);
-                    eduSearchResults.appendChild(videoCard);
-                });
-                
-                // Animate search results
-                setTimeout(() => {
-                    const cards = eduSearchResults.querySelectorAll('.edu-video-card');
-                    cards.forEach((card, index) => {
-                        card.style.animation = `fadeInUp 0.4s ease ${index * 0.05}s forwards`;
-                        card.style.opacity = '0';
-                    });
-                }, 50);
-            }
-
-            // Switch between eduSTREAM pages
-            function eduSwitchPage(pageName) {
-                // Stop animated text when leaving home page
-                if (eduCurrentPage === 'home' && pageName !== 'home') {
-                    clearInterval(eduAnimatedTextInterval);
-                }
-                // Restart animated text when returning to home page
-                else if (pageName === 'home' && eduCurrentPage !== 'home') {
-                    clearInterval(eduAnimatedTextInterval);
-                    initAnimatedText();
-                }
-                
-                // Update current page
-                eduCurrentPage = pageName;
-                
-                // Hide all pages
-                eduPages.forEach(page => {
-                    page.classList.remove('active');
-                });
-                
-                // Show target page
-                const targetPage = document.getElementById(`edu${pageName.charAt(0).toUpperCase() + pageName.slice(1)}Page`);
-                if (targetPage) {
-                    targetPage.classList.add('active');
-                    
-                    // Update active nav link
-                    eduNavLinks.forEach(link => {
-                        if (link.dataset.eduPage === pageName) {
-                            link.classList.add('active');
-                        } else {
-                            link.classList.remove('active');
-                        }
-                    });
-                    
-                    // Special page initialization
-                    if (pageName === 'search') {
-                        setTimeout(() => {
+                // Special page initialization
+                if (pageName === 'search') {
+                    setTimeout(() => {
+                        if (eduSearchInput) {
                             eduSearchInput.focus();
                             if (window.innerWidth <= 768) {
                                 eduSearchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
                             }
-                        }, 300);
-                    } else if (pageName === 'feed') {
-                        eduVideosToShow = 6;
-                        renderVideosFeed();
-                    } else if (pageName === 'categories') {
-                        closePlaylist(); // Ensure playlist view is closed when switching to categories
-                    }
+                        }
+                    }, 300);
+                } else if (pageName === 'feed') {
+                    eduVideosToShow = 6;
+                    renderVideosFeed();
+                } else if (pageName === 'categories') {
+                    closePlaylist(); // Ensure playlist view is closed when switching to categories
                 }
-                
-                // Close mobile menu if open
-                if (eduMainNav && eduMainNav.classList.contains('active')) {
-                    eduMainNav.classList.remove('active');
+            }
+            
+            // Close mobile menu if open
+            if (eduMainNav && eduMainNav.classList.contains('active')) {
+                eduMainNav.classList.remove('active');
+                if (eduMobileMenuBtn) {
                     eduMobileMenuBtn.setAttribute('aria-expanded', 'false');
                     eduMobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
                 }
-                
-                // Scroll to top
-                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-            // Setup event listeners for eduSTREAM
-            function setupEventListeners() {
-                // Navigation links
+        // Setup event listeners for eduSTREAM - FIXED MOBILE MENU
+        function setupEventListeners() {
+            // Navigation links
+            if (eduNavLinks.length > 0) {
                 eduNavLinks.forEach(link => {
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
@@ -3013,203 +3041,230 @@ Découvrez toutes les matières scientifiques essentielles pour réussir votre <
                         eduSwitchPage(page);
                     });
                 });
-                
-                // Home logo
-                if (eduHomeLogo) {
-                    eduHomeLogo.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        eduSwitchPage('home');
-                    });
-                }
-                
-                // Mobile menu button
-                if (eduMobileMenuBtn) {
-                    eduMobileMenuBtn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        const isExpanded = eduMainNav.classList.contains('active');
-                        eduMainNav.classList.toggle('active');
-                        eduMobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
-                        eduMobileMenuBtn.innerHTML = isExpanded ? '<i class="fas fa-bars"></i>' : '<i class="fas fa-times"></i>';
-                    });
-                }
-                
-                // Search icon
-                if (eduSearchIcon) {
-                    eduSearchIcon.addEventListener('click', () => {
-                        eduSwitchPage('search');
-                    });
-                }
-                
-                // Watch now button
-                if (eduWatchNowBtn) {
-                    eduWatchNowBtn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        eduSwitchPage('feed');
-                    });
-                }
-                
-                // Load more button
-                if (eduLoadMoreBtn) {
-                    eduLoadMoreBtn.addEventListener('click', () => {
-                        eduVideosToShow += 6;
-                        renderVideosFeed();
-                        setTimeout(() => {
-                            const newCards = eduVideosFeed.querySelectorAll('.edu-video-card');
-                            if (newCards.length > 6) {
-                                newCards[6].scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            }
-                        }, 100);
-                    });
-                }
-                
-                // Back buttons
-                if (eduFeedBackBtn) {
-                    eduFeedBackBtn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        eduSwitchPage('home');
-                    });
-                }
-                
-                if (eduCategoriesBackBtn) {
-                    eduCategoriesBackBtn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        eduSwitchPage('home');
-                    });
-                }
-                
-                if (eduPlaylistBackBtn) {
-                    eduPlaylistBackBtn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        closePlaylist();
-                    });
-                }
-                
-                if (eduSearchBackBtn) {
-                    eduSearchBackBtn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        eduSearchInput.value = '';
-                        eduSearchResults.innerHTML = '';
-                        eduResultsCount.textContent = '';
-                        eduNoResults.style.display = 'none';
-                        eduSwitchPage('home');
-                    });
-                }
-                
-                if (eduPlayerBackBtn) {
-                    eduPlayerBackBtn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        eduYoutubePlayer.innerHTML = '';
-                        const previousPage = eduCurrentVideo ? 'feed' : 'home';
-                        eduSwitchPage(previousPage);
-                    });
-                }
-                
-                // Close mobile menu when clicking outside
-                document.addEventListener('click', (e) => {
-                    if (eduMainNav && eduMobileMenuBtn && 
-                        !eduMainNav.contains(e.target) && 
-                        !eduMobileMenuBtn.contains(e.target) && 
-                        eduMainNav.classList.contains('active')) {
-                        eduMainNav.classList.remove('active');
-                        eduMobileMenuBtn.setAttribute('aria-expanded', 'false');
-                        eduMobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-                    }
-                });
-                
-                // Close mobile menu with Escape key
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && eduMainNav && eduMainNav.classList.contains('active')) {
-                        eduMainNav.classList.remove('active');
-                        eduMobileMenuBtn.setAttribute('aria-expanded', 'false');
-                        eduMobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-                    }
-                });
-                
-                // Handle window resize
-                let resizeTimeout;
-                window.addEventListener('resize', () => {
-                    clearTimeout(resizeTimeout);
-                    resizeTimeout = setTimeout(() => {
-                        if (window.innerWidth > 768 && eduMainNav && eduMainNav.classList.contains('active')) {
-                            eduMainNav.classList.remove('active');
-                            eduMobileMenuBtn.setAttribute('aria-expanded', 'false');
-                            eduMobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-                        }
-                    }, 250);
-                });
-                
-                // Prevent double tap zoom on mobile
-                let lastTouchEnd = 0;
-                document.addEventListener('touchend', function(e) {
-                    const now = Date.now();
-                    if (now - lastTouchEnd <= 300) {
-                        e.preventDefault();
-                    }
-                    lastTouchEnd = now;
-                }, { passive: false });
-                
-                // Add touch feedback to interactive elements
-                const buttons = document.querySelectorAll('#about button, #about .edu-video-card, #about .edu-category-card, #about .edu-suggested-card');
-                buttons.forEach(button => {
-                    button.addEventListener('touchstart', function() {
-                        this.style.transform = 'scale(0.98)';
-                    });
-                    
-                    button.addEventListener('touchend', function() {
-                        this.style.transform = '';
-                    });
+            }
+            
+            // Home logo
+            if (eduHomeLogo) {
+                eduHomeLogo.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    eduSwitchPage('home');
                 });
             }
             
-            // Initialize
-            init();
+            // Mobile menu button - FIXED VERSION
+            if (eduMobileMenuBtn && eduMainNav) {
+                // Remove any existing event listeners by cloning
+                const newBtn = eduMobileMenuBtn.cloneNode(true);
+                eduMobileMenuBtn.parentNode.replaceChild(newBtn, eduMobileMenuBtn);
+                
+                // Get new references
+                const mobileBtn = document.getElementById('eduMobileMenuBtn');
+                const mainNav = document.getElementById('eduMainNav');
+                
+                mobileBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    if (mainNav.classList.contains('active')) {
+                        // Close the menu
+                        mainNav.classList.remove('active');
+                        mobileBtn.setAttribute('aria-expanded', 'false');
+                        mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    } else {
+                        // Open the menu
+                        mainNav.classList.add('active');
+                        mobileBtn.setAttribute('aria-expanded', 'true');
+                        mobileBtn.innerHTML = '<i class="fas fa-times"></i>';
+                    }
+                });
+            }
             
-            console.log('eduSTREAM initialized successfully with original project logic');
-        }
-        
-        // Check if we're in the about section and initialize eduSTREAM
-        const aboutSection = document.getElementById('about');
-        if (aboutSection && aboutSection.classList.contains('active')) {
-            initEduStream();
-        }
-        
-        // Also initialize when navigating to about section
-        const navItems = document.querySelectorAll('.nav-item');
-        navItems.forEach(item => {
-            item.addEventListener('click', function() {
-                const target = this.getAttribute('data-target');
-                if (target === 'about') {
-                    // Wait a bit for the section to become active
-                    setTimeout(initEduStream, 100);
+            // Search icon
+            if (eduSearchIcon) {
+                eduSearchIcon.addEventListener('click', () => {
+                    eduSwitchPage('search');
+                });
+            }
+            
+            // Watch now button
+            if (eduWatchNowBtn) {
+                eduWatchNowBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    eduSwitchPage('feed');
+                });
+            }
+            
+            // Load more button
+            if (eduLoadMoreBtn) {
+                eduLoadMoreBtn.addEventListener('click', () => {
+                    eduVideosToShow += 6;
+                    renderVideosFeed();
+                    setTimeout(() => {
+                        const newCards = eduVideosFeed.querySelectorAll('.edu-video-card');
+                        if (newCards.length > 6) {
+                            newCards[6].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }, 100);
+                });
+            }
+            
+            // Back buttons
+            if (eduFeedBackBtn) {
+                eduFeedBackBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    eduSwitchPage('home');
+                });
+            }
+            
+            if (eduCategoriesBackBtn) {
+                eduCategoriesBackBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    eduSwitchPage('home');
+                });
+            }
+            
+            if (eduPlaylistBackBtn) {
+                eduPlaylistBackBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    closePlaylist();
+                });
+            }
+            
+            if (eduSearchBackBtn) {
+                eduSearchBackBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (eduSearchInput) eduSearchInput.value = '';
+                    if (eduSearchResults) eduSearchResults.innerHTML = '';
+                    if (eduResultsCount) eduResultsCount.textContent = '';
+                    if (eduNoResults) eduNoResults.style.display = 'none';
+                    eduSwitchPage('home');
+                });
+            }
+            
+            if (eduPlayerBackBtn) {
+                eduPlayerBackBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (eduYoutubePlayer) eduYoutubePlayer.innerHTML = '';
+                    const previousPage = eduCurrentVideo ? 'feed' : 'home';
+                    eduSwitchPage(previousPage);
+                });
+            }
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (eduMainNav && eduMobileMenuBtn) {
+                    const mobileBtn = document.getElementById('eduMobileMenuBtn');
+                    const mainNav = document.getElementById('eduMainNav');
+                    
+                    if (mainNav && 
+                        !mainNav.contains(e.target) && 
+                        !mobileBtn.contains(e.target) && 
+                        mainNav.classList.contains('active')) {
+                        mainNav.classList.remove('active');
+                        mobileBtn.setAttribute('aria-expanded', 'false');
+                        mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
                 }
             });
-        });
-        
-        // Initialize main navigation
-        const bottomNavItems = document.querySelectorAll('.bottom-nav .nav-item');
-        const contentSections = document.querySelectorAll('.content-section');
-        
-        bottomNavItems.forEach(item => {
-            item.addEventListener('click', function() {
-                const target = this.getAttribute('data-target');
-                
-                // Update active states
-                bottomNavItems.forEach(navItem => navItem.classList.remove('active'));
-                this.classList.add('active');
-                
-                contentSections.forEach(section => section.classList.remove('active'));
-                document.getElementById(target).classList.add('active');
-                
-                // Update body attribute for CSS targeting
-                document.body.setAttribute('data-current-section', target);
-                
-                // Initialize eduSTREAM if we're going to about section
-                if (target === 'about') {
-                    setTimeout(initEduStream, 100);
+            
+            // Close mobile menu with Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && eduMainNav && eduMainNav.classList.contains('active')) {
+                    eduMainNav.classList.remove('active');
+                    if (eduMobileMenuBtn) {
+                        eduMobileMenuBtn.setAttribute('aria-expanded', 'false');
+                        eduMobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
                 }
             });
+            
+            // Handle window resize
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    if (window.innerWidth > 768 && eduMainNav && eduMainNav.classList.contains('active')) {
+                        eduMainNav.classList.remove('active');
+                        if (eduMobileMenuBtn) {
+                            eduMobileMenuBtn.setAttribute('aria-expanded', 'false');
+                            eduMobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                        }
+                    }
+                }, 250);
+            });
+            
+            // Prevent double tap zoom on mobile
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function(e) {
+                const now = Date.now();
+                if (now - lastTouchEnd <= 300) {
+                    e.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, { passive: false });
+            
+            // Add touch feedback to interactive elements
+            const buttons = document.querySelectorAll('#about button, #about .edu-video-card, #about .edu-category-card, #about .edu-suggested-card');
+            buttons.forEach(button => {
+                button.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                button.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                });
+            });
+        }
+        
+        // Initialize
+        init();
+        
+        console.log('eduSTREAM initialized successfully with original project logic');
+    }
+    
+    // Check if we're in the about section and initialize eduSTREAM
+    const aboutSection = document.getElementById('about');
+    if (aboutSection && aboutSection.classList.contains('active')) {
+        initEduStream();
+    }
+    
+    // Also initialize when navigating to about section
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const target = this.getAttribute('data-target');
+            if (target === 'about') {
+                // Wait a bit for the section to become active
+                setTimeout(initEduStream, 100);
+            }
         });
     });
+    
+    // Initialize main navigation
+    const bottomNavItems = document.querySelectorAll('.bottom-nav .nav-item');
+    const contentSections = document.querySelectorAll('.content-section');
+    
+    bottomNavItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const target = this.getAttribute('data-target');
+            
+            // Update active states
+            bottomNavItems.forEach(navItem => navItem.classList.remove('active'));
+            this.classList.add('active');
+            
+            contentSections.forEach(section => section.classList.remove('active'));
+            document.getElementById(target).classList.add('active');
+            
+            // Update body attribute for CSS targeting
+            document.body.setAttribute('data-current-section', target);
+            
+            // Initialize eduSTREAM if we're going to about section
+            if (target === 'about') {
+                setTimeout(initEduStream, 100);
+            }
+        });
+    });
+});
     </script>
 </body>
 </html>

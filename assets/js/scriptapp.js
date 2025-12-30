@@ -80,7 +80,7 @@
             this.style.transform = 'scale(0.95)';
             setTimeout(() => {
                 this.style.transform = '';
-                window.location.href = 'https://play.google.com/store/apps/details?id=com.sahlapp.education';
+                window.location.href = 'https://files.appsgeyser.com/Sahl%20App_19386403.apk';
             }, 150);
         });
 

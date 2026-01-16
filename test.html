@@ -810,26 +810,31 @@
                 }, 600);
             }
             
-            // Contact button interaction
+            // Contact button interaction - Redirects to Instagram
             contactBtn.addEventListener('click', function(e) {
                 createRipple(e, this);
                 
                 // Button loading state
                 const originalHTML = this.innerHTML;
-                this.innerHTML = '<span>جارٍ التوصيل...</span><i class="fas fa-spinner fa-spin btn-icon"></i>';
+                this.innerHTML = '<span>جارٍ التوجيه...</span><i class="fas fa-spinner fa-spin btn-icon"></i>';
                 this.disabled = true;
                 
-                // Simulate API call
+                // Show notification
+                showNotification('جاري توجيهك إلى صفحة Instagram الرسمية...', 'info');
+                
+                // Redirect to Instagram after animation
                 setTimeout(() => {
-                    this.innerHTML = originalHTML;
-                    this.disabled = false;
+                    window.open('https://www.instagram.com/eduwellofficial', '_blank');
                     
-                    // Show success notification
-                    showNotification('تم إنشاء طلب التواصل بنجاح، سيقوم الإداري بالرد خلال 24 ساعة.', 'success');
-                }, 1500);
+                    // Reset button state after redirect
+                    setTimeout(() => {
+                        this.innerHTML = originalHTML;
+                        this.disabled = false;
+                    }, 1000);
+                }, 800);
             });
             
-            // Home button interaction
+            // Home button interaction - Goes back to previous page
             homeBtn.addEventListener('click', function(e) {
                 createRipple(e, this);
                 
@@ -839,10 +844,22 @@
                     this.style.transform = 'translateY(-2px)';
                 }, 150);
                 
-                // Simulate navigation
-                setTimeout(() => {
+                // Check if there's history to go back to
+                if (document.referrer && document.referrer !== window.location.href) {
+                    showNotification('جاري العودة إلى الصفحة السابقة...', 'info');
+                    
+                    // Go back after delay
+                    setTimeout(() => {
+                        window.history.back();
+                    }, 500);
+                } else {
+                    // No referrer or same page - redirect to root
                     showNotification('جاري التوجيه إلى الصفحة الرئيسية...', 'info');
-                }, 300);
+                    
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 500);
+                }
             });
             
             // Notification system
@@ -947,6 +964,7 @@
                     } else if (text.includes('المساعدة')) {
                         showNotification('فتح مركز المساعدة والدعم الفني', 'info');
                     } else {
+                        // Go back in history
                         window.history.back();
                     }
                 });

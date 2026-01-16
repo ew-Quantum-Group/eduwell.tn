@@ -32,18 +32,1834 @@
   cursor: pointer;
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
+/* ============================================
+   CARROUSEL PROFESSIONNEL - SECTION SPÉCIFIQUE
+   ============================================ */
+/* ============================================
+   CARROUSEL PROFESSIONNEL - COMPLETE FIX
+   ============================================ */
+
+/* Variables CSS pour le carrousel - OPTIMIZED */
+:root {
+    --carousel-primary-black: #000000;
+    --carousel-secondary-black: #1d1d1f;
+    --carousel-dark-gray: #2c2c2e;
+    --carousel-medium-gray: #86868b;
+    --carousel-light-gray: #f5f5f7;
+    --carousel-extra-light-gray: #fafafa;
+    --carousel-white: #ffffff;
+    --carousel-accent-blue: #0071e3;
+    --carousel-gradient-primary: linear-gradient(135deg, #0071e3 0%, #0096ff 100%);
+    --carousel-gradient-dark: linear-gradient(135deg, #1d1d1f 0%, #000000 100%);
+    --carousel-transition-smooth: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --carousel-transition-fast: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --carousel-border-radius-large: min(max(16px, 2vw), 28px);
+    --carousel-border-radius-pill: 100px;
+    --carousel-shadow-strong: 0 20px 60px rgba(0, 0, 0, 0.12);
+    --carousel-glass-effect: rgba(255, 255, 255, 0.1);
+    --carousel-glass-border: rgba(255, 255, 255, 0.2);
+    
+    /* Responsive typography system */
+    --fluid-min-width: 320;
+    --fluid-max-width: 1200;
+    --fluid-screen: 100vw;
+    --fluid-bp: calc((var(--fluid-screen) - var(--fluid-min-width) * 1px) / (var(--fluid-max-width) - var(--fluid-min-width)));
+    
+    /* Clamp values calculated with fallback */
+    --font-size-h2: clamp(1.6rem, calc(1.6rem + (2.2 - 1.6) * var(--fluid-bp, 0.5)), 2.2rem);
+    --font-size-h3: clamp(1.2rem, calc(1.2rem + (1.6 - 1.2) * var(--fluid-bp, 0.5)), 1.6rem);
+    --font-size-body: clamp(0.9rem, calc(0.9rem + (1.1 - 0.9) * var(--fluid-bp, 0.5)), 1.1rem);
+    --font-size-small: clamp(0.85rem, calc(0.85rem + (0.95 - 0.85) * var(--fluid-bp, 0.5)), 0.95rem);
+    --font-size-feature: clamp(0.75rem, calc(0.75rem + (0.9 - 0.75) * var(--fluid-bp, 0.5)), 0.9rem);
+    
+    /* Responsive spacing */
+    --space-3xs: clamp(0.25rem, 0.25rem + 0.5vw, 0.5rem);
+    --space-2xs: clamp(0.5rem, 0.5rem + 0.75vw, 0.875rem);
+    --space-xs: clamp(0.75rem, 0.75rem + 1vw, 1.25rem);
+    --space-sm: clamp(1rem, 1rem + 1.25vw, 1.5rem);
+    --space-md: clamp(1.5rem, 1.5rem + 1.5vw, 2rem);
+    --space-lg: clamp(2rem, 2rem + 2vw, 3rem);
+    --space-xl: clamp(3rem, 3rem + 2.5vw, 4rem);
+    
+    /* Line heights */
+    --line-height-tight: 1.2;
+    --line-height-base: 1.5;
+    --line-height-loose: 1.7;
+    
+    /* Container widths */
+    --container-max: min(1200px, 92vw);
+    --container-wide: min(1000px, 90vw);
+    --container-narrow: min(400px, 90vw);
+}
+
+/* Base reset for better text rendering */
+.professional-showcase * {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   CONTAINER & LAYOUT FIXES
+   ============================================ */
+
+.professional-showcase {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: var(--space-xl) auto;
+    padding: var(--space-lg) var(--space-md);
+    position: relative;
+    z-index: 0;
+}
+
+/* Section header with responsive text */
+.professional-showcase .section-header {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+    position: relative;
+    padding: 0 var(--space-sm);
+}
+
+.professional-showcase .section-header h2 {
+    font-size: var(--font-size-h2);
+    font-weight: 700;
+    color: var(--carousel-secondary-black);
+    line-height: var(--line-height-tight);
+    margin-bottom: var(--space-xs);
+    padding: 0;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+
+.professional-showcase .section-header p {
+    font-size: var(--font-size-body);
+    color: var(--carousel-medium-gray);
+    line-height: var(--line-height-base);
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 var(--space-sm);
+}
+
+.professional-showcase .section-header::after {
+    content: '';
+    position: absolute;
+    bottom: calc(var(--space-md) * -1);
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(80px, 10vw);
+    height: 3px;
+    background: var(--carousel-gradient-primary);
+    border-radius: 2px;
+}
+
+/* ============================================
+   DESKTOP LAYOUT - COMPLETELY REFACTORED
+   ============================================ */
+
+.desktop-layout {
+    display: flex;
+    min-height: min(500px, 60vh);
+    max-height: 700px;
+    border-radius: var(--carousel-border-radius-large);
+    box-shadow: var(--carousel-shadow-strong);
+    overflow: hidden;
+    background-color: var(--carousel-white);
+    margin: 0 auto;
+    max-width: var(--container-wide);
+    position: relative;
+    z-index: 1;
+}
+
+/* Image section - fixed 50% width */
+.desktop-layout .image-section {
+    flex: 0 0 50%;
+    position: relative;
+    overflow: hidden;
+    min-height: 100%;
+    background: var(--carousel-gradient-dark);
+}
+
+/* Text section - dynamic height */
+.desktop-layout .text-section {
+    flex: 0 0 50%;
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    background-color: var(--carousel-extra-light-gray);
+    position: relative;
+    min-height: 100%;
+    overflow: visible;
+}
+
+/* Text content container - CRITICAL FIX */
+.text-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow-y: auto; /* Allow scrolling if content is too long */
+    padding-right: var(--space-xs);
+}
+
+/* Individual text slides - FIXED POSITIONING ISSUE */
+.text-slide {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute; /* Keep absolute but fix constraints */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: var(--carousel-transition-smooth);
+    transform: translateX(20px);
+    pointer-events: none;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--carousel-medium-gray) transparent;
+}
+
+.text-slide::-webkit-scrollbar {
+    width: 4px;
+}
+
+.text-slide::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.text-slide::-webkit-scrollbar-thumb {
+    background-color: var(--carousel-medium-gray);
+    border-radius: 20px;
+}
+
+.text-slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    pointer-events: all;
+    position: relative; /* Changed from absolute to enable natural flow */
+    height: auto;
+    min-height: 100%;
+}
+
+/* Text content styling */
+.text-slide h3 {
+    font-size: var(--font-size-h3);
+    font-weight: 700;
+    margin-bottom: var(--space-sm);
+    color: var(--carousel-secondary-black);
+    line-height: var(--line-height-tight);
+    position: relative;
+    padding-bottom: var(--space-2xs);
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    max-width: 100%;
+}
+
+.text-slide h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: min(40px, 8vw);
+    height: 3px;
+    background: var(--carousel-gradient-primary);
+    border-radius: 2px;
+}
+
+.text-slide p {
+    font-size: var(--font-size-body);
+    font-weight: 400;
+    color: var(--carousel-medium-gray);
+    line-height: var(--line-height-base);
+    margin-bottom: var(--space-md);
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    max-width: 100%;
+}
+
+/* Feature list with proper wrapping */
+.feature-list {
+    list-style: none;
+    margin-bottom: var(--space-lg);
+    padding: 0;
+}
+
+.feature-list li {
+    font-size: var(--font-size-feature);
+    color: var(--carousel-dark-gray);
+    margin-bottom: var(--space-2xs);
+    padding-left: var(--space-md);
+    position: relative;
+    line-height: var(--line-height-base);
+    word-break: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+.feature-list li:before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--carousel-accent-blue);
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* CTA Button */
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3xs);
+    padding: var(--space-xs) var(--space-md);
+    background: var(--carousel-gradient-primary);
+    color: var(--carousel-white);
+    border: none;
+    border-radius: var(--carousel-border-radius-pill);
+    font-size: var(--font-size-small);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--carousel-transition-fast);
+    max-width: fit-content;
+    min-width: min(160px, 30vw);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    margin-top: auto;
+    align-self: flex-start;
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.7s ease;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 113, 227, 0.3);
+}
+
+.cta-button:hover::before {
+    left: 100%;
+}
+
+.cta-button:active {
+    transform: translateY(0);
+}
+
+.cta-button svg {
+    transition: transform 0.3s ease;
+}
+
+.cta-button:hover svg {
+    transform: translateX(4px);
+}
+
+/* ============================================
+   CAROUSEL IMAGE SECTION (Unchanged except for fixes)
+   ============================================ */
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.carousel-aspect-ratio {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.carousel-gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, 
+        rgba(0, 0, 0, 0.3) 0%, 
+        rgba(0, 0, 0, 0.15) 30%, 
+        rgba(0, 0, 0, 0) 60%
+    );
+    z-index: 2;
+    pointer-events: none;
+}
+
+.carousel-slides {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--carousel-transition-smooth);
+    overflow: hidden;
+    z-index: 1;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 20s ease-out;
+}
+
+.carousel-slide.active img {
+    transform: scale(1.05);
+}
+
+/* ============================================
+   CONTROLS & INDICATORS (Optimized)
+   ============================================ */
+
+.slide-counter {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    color: var(--carousel-white);
+    font-size: var(--font-size-small);
+    font-weight: 500;
+    z-index: 10;
+    background: var(--carousel-glass-effect);
+    backdrop-filter: blur(20px);
+    padding: var(--space-3xs) var(--space-2xs);
+    border-radius: var(--carousel-border-radius-pill);
+    border: 1px solid var(--carousel-glass-border);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.slide-counter .current-slide {
+    font-size: calc(var(--font-size-small) + 0.1rem);
+    font-weight: 700;
+}
+
+.carousel-controls {
+    position: absolute;
+    bottom: var(--space-md);
+    right: var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    z-index: 10;
+}
+
+.nav-indicators {
+    display: flex;
+    gap: var(--space-3xs);
+    background: var(--carousel-glass-effect);
+    backdrop-filter: blur(20px);
+    padding: var(--space-3xs) var(--space-2xs);
+    border-radius: var(--carousel-border-radius-pill);
+    border: 1px solid var(--carousel-glass-border);
+}
+
+.nav-indicator {
+    width: var(--space-3xs);
+    height: var(--space-3xs);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: var(--carousel-transition-fast);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-indicator::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--carousel-white);
+    transition: left 5s linear;
+}
+
+.nav-indicator.active {
+    background: var(--carousel-white);
+    transform: scale(1.2);
+}
+
+.nav-indicator.active::after {
+    left: 0%;
+}
+
+.nav-indicator:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.nav-buttons {
+    display: flex;
+    gap: var(--space-3xs);
+}
+
+.nav-button {
+    width: var(--space-md);
+    height: var(--space-md);
+    border-radius: 50%;
+    background: var(--carousel-glass-effect);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--carousel-glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--carousel-transition-fast);
+    color: var(--carousel-white);
+}
+
+.nav-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.nav-button:active {
+    transform: translateY(0);
+}
+
+/* ============================================
+   MOBILE LAYOUT - COMPLETELY REFACTORED
+   ============================================ */
+
+.mobile-layout {
+    display: none;
+    border-radius: var(--carousel-border-radius-large);
+    box-shadow: var(--carousel-shadow-strong);
+    overflow: hidden;
+    background-color: var(--carousel-white);
+    margin: 0 auto;
+    max-width: var(--container-narrow);
+    position: relative;
+    z-index: 1;
+    transform: translateZ(0);
+}
+
+/* Mobile container */
+.mobile-carousel-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: var(--carousel-gradient-dark);
+}
+
+.mobile-aspect-ratio {
+    position: relative;
+    width: 100%;
+    padding-bottom: min(75%, 400px);
+    overflow: hidden;
+}
+
+/* Mobile slides */
+.mobile-slides {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.mobile-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--carousel-transition-smooth);
+    overflow: hidden;
+    z-index: 1;
+}
+
+.mobile-slide.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
+}
+
+.mobile-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Mobile text content - CRITICAL ADDITION */
+.mobile-text-container {
+    padding: var(--space-lg) var(--space-md);
+    background-color: var(--carousel-extra-light-gray);
+    min-height: min(300px, 40vh);
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.mobile-text-slide {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: var(--carousel-transition-smooth);
+    transform: translateY(10px);
+    pointer-events: none;
+}
+
+.mobile-text-slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: all;
+    position: relative;
+}
+
+.mobile-text-slide h3 {
+    font-size: clamp(1.1rem, 4vw, 1.4rem);
+    font-weight: 700;
+    margin-bottom: var(--space-xs);
+    color: var(--carousel-secondary-black);
+    line-height: var(--line-height-tight);
+    position: relative;
+    padding-bottom: var(--space-2xs);
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+
+.mobile-text-slide h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: min(35px, 10vw);
+    height: 3px;
+    background: var(--carousel-gradient-primary);
+    border-radius: 2px;
+}
+
+.mobile-text-slide p {
+    font-size: clamp(0.85rem, 3vw, 1rem);
+    font-weight: 400;
+    color: var(--carousel-medium-gray);
+    line-height: var(--line-height-base);
+    margin-bottom: var(--space-md);
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+
+.mobile-feature-list {
+    list-style: none;
+    margin-bottom: var(--space-md);
+    padding: 0;
+}
+
+.mobile-feature-list li {
+    font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+    color: var(--carousel-dark-gray);
+    margin-bottom: var(--space-2xs);
+    padding-left: var(--space-md);
+    position: relative;
+    line-height: var(--line-height-base);
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.mobile-feature-list li:before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--carousel-accent-blue);
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.mobile-cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3xs);
+    padding: var(--space-xs) var(--space-md);
+    background: var(--carousel-gradient-primary);
+    color: var(--carousel-white);
+    border: none;
+    border-radius: var(--carousel-border-radius-pill);
+    font-size: clamp(0.85rem, 3vw, 0.9rem);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--carousel-transition-fast);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    margin-top: auto;
+    width: 100%;
+    justify-content: center;
+}
+
+/* Mobile controls */
+.mobile-slide-counter {
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    color: var(--carousel-white);
+    font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+    font-weight: 500;
+    z-index: 10;
+    background: var(--carousel-glass-effect);
+    backdrop-filter: blur(20px);
+    padding: var(--space-3xs) var(--space-xs);
+    border-radius: var(--carousel-border-radius-pill);
+    border: 1px solid var(--carousel-glass-border);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.mobile-slide-counter .mobile-current-slide {
+    font-size: clamp(0.85rem, 3vw, 0.95rem);
+    font-weight: 700;
+}
+
+.mobile-controls {
+    position: absolute;
+    bottom: var(--space-sm);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    z-index: 10;
+}
+
+.mobile-nav-indicators {
+    display: flex;
+    gap: var(--space-3xs);
+    background: var(--carousel-glass-effect);
+    backdrop-filter: blur(20px);
+    padding: var(--space-3xs) var(--space-xs);
+    border-radius: var(--carousel-border-radius-pill);
+    border: 1px solid var(--carousel-glass-border);
+}
+
+.mobile-nav-indicator {
+    width: var(--space-3xs);
+    height: var(--space-3xs);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: var(--carousel-transition-fast);
+    cursor: pointer;
+}
+
+.mobile-nav-indicator.active {
+    background: var(--carousel-white);
+    transform: scale(1.2);
+}
+
+.mobile-nav-buttons {
+    display: flex;
+    gap: var(--space-3xs);
+}
+
+.mobile-nav-button {
+    width: var(--space-md);
+    height: var(--space-md);
+    border-radius: 50%;
+    background: var(--carousel-glass-effect);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--carousel-glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--carousel-transition-fast);
+    color: var(--carousel-white);
+}
+
+.mobile-nav-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS - OPTIMIZED
+   ============================================ */
+
+/* Large tablets (901px - 1024px) */
+@media (min-width: 901px) and (max-width: 1024px) {
+    .desktop-layout {
+        min-height: min(450px, 55vh);
+        max-width: min(900px, 88vw);
+    }
+    
+    .desktop-layout .text-section {
+        padding: var(--space-md);
+    }
+    
+    .text-slide {
+        padding: var(--space-sm);
+    }
+    
+    .text-slide h3 {
+        font-size: clamp(1.15rem, 2vw, 1.35rem);
+    }
+    
+    .text-slide p {
+        font-size: clamp(0.88rem, 1.8vw, 1.05rem);
+    }
+}
+
+/* Tablets (769px - 900px) */
+@media (min-width: 769px) and (max-width: 900px) {
+    .desktop-layout {
+        min-height: min(400px, 50vh);
+        max-width: min(800px, 86vw);
+    }
+    
+    .text-content {
+        overflow-y: auto;
+        padding-right: var(--space-2xs);
+    }
+    
+    .text-slide {
+        padding: var(--space-sm);
+    }
+    
+    .feature-list li {
+        font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+        margin-bottom: var(--space-3xs);
+    }
+    
+    .cta-button {
+        padding: calc(var(--space-xs) * 0.9) calc(var(--space-md) * 0.9);
+        font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+    }
+}
+
+/* Tablet/Mobile transition (max-width: 768px) */
+@media (max-width: 768px) {
+    .desktop-layout {
+        display: none;
+    }
+    
+    .mobile-layout {
+        display: block;
+    }
+    
+    .professional-showcase {
+        padding: var(--space-md) var(--space-sm);
+        margin: var(--space-lg) auto;
+    }
+    
+    .professional-showcase .section-header {
+        margin-bottom: var(--space-lg);
+        padding: 0 var(--space-xs);
+    }
+    
+    .professional-showcase .section-header h2 {
+        font-size: clamp(1.4rem, 5vw, 1.8rem);
+        line-height: 1.3;
+        padding: 0;
+    }
+    
+    .mobile-text-container {
+        padding: var(--space-md);
+        max-height: 450px;
+    }
+    
+    .mobile-text-slide {
+        padding: var(--space-sm);
+    }
+}
+
+/* Mobile (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    .mobile-layout {
+        max-width: min(450px, 92vw);
+    }
+    
+    .mobile-aspect-ratio {
+        padding-bottom: min(70%, 350px);
+    }
+    
+    .mobile-text-slide h3 {
+        font-size: clamp(1.2rem, 3.5vw, 1.35rem);
+    }
+    
+    .mobile-text-slide p {
+        font-size: clamp(0.9rem, 2.8vw, 1rem);
+    }
+}
+
+/* Small mobile (376px - 480px) */
+@media (min-width: 376px) and (max-width: 480px) {
+    .professional-showcase {
+        padding: var(--space-sm) var(--space-xs);
+    }
+    
+    .mobile-layout {
+        max-width: 100%;
+        border-radius: min(max(16px, 3vw), 20px);
+    }
+    
+    .mobile-text-container {
+        padding: var(--space-md) var(--space-sm);
+        max-height: 400px;
+    }
+    
+    .mobile-text-slide h3 {
+        font-size: clamp(1.1rem, 4vw, 1.25rem);
+        margin-bottom: var(--space-2xs);
+    }
+    
+    .mobile-text-slide p {
+        font-size: clamp(0.85rem, 3.5vw, 0.95rem);
+        margin-bottom: var(--space-sm);
+    }
+    
+    .mobile-feature-list {
+        margin-bottom: var(--space-sm);
+    }
+    
+    .mobile-feature-list li {
+        font-size: clamp(0.75rem, 3vw, 0.8rem);
+        margin-bottom: var(--space-3xs);
+    }
+}
+
+/* Extra small mobile (up to 375px) */
+@media (max-width: 375px) {
+    .professional-showcase {
+        padding: var(--space-sm) var(--space-2xs);
+        margin: var(--space-md) auto;
+    }
+    
+    .professional-showcase .section-header h2 {
+        font-size: clamp(1.2rem, 5.5vw, 1.4rem);
+        line-height: 1.25;
+    }
+    
+    .mobile-layout {
+        border-radius: min(max(14px, 4vw), 18px);
+    }
+    
+    .mobile-text-container {
+        padding: var(--space-sm);
+        max-height: 350px;
+    }
+    
+    .mobile-text-slide {
+        padding: var(--space-xs);
+    }
+    
+    .mobile-text-slide h3 {
+        font-size: clamp(1rem, 4.5vw, 1.15rem);
+        line-height: 1.2;
+    }
+    
+    .mobile-text-slide p {
+        font-size: clamp(0.8rem, 3.8vw, 0.9rem);
+        line-height: 1.4;
+    }
+    
+    .mobile-feature-list li {
+        font-size: clamp(0.7rem, 3.2vw, 0.75rem);
+        line-height: 1.3;
+    }
+    
+    .mobile-cta-button {
+        padding: calc(var(--space-xs) * 0.9) var(--space-sm);
+        font-size: clamp(0.8rem, 3.5vw, 0.85rem);
+    }
+}
+
+/* ============================================
+   ANIMATIONS & EFFECTS
+   ============================================ */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideProgress {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+.professional-showcase {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.nav-indicator.active::after {
+    animation: slideProgress 5s linear forwards;
+}
+
+/* Loading states */
+.carousel-slide img,
+.mobile-slide img {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.carousel-slide img.loaded,
+.mobile-slide img.loaded {
+    animation: none;
+    background: none;
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+.cta-button:focus,
+.nav-button:focus,
+.nav-indicator:focus,
+.mobile-nav-button:focus,
+.mobile-nav-indicator:focus {
+    outline: 2px solid var(--carousel-accent-blue);
+    outline-offset: 2px;
+}
+
+.nav-indicator:focus-visible,
+.mobile-nav-indicator:focus-visible {
+    transform: scale(1.3);
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+.carousel-slide,
+.text-slide,
+.mobile-slide,
+.mobile-text-slide {
+    will-change: transform, opacity;
+    contain: layout style paint;
+}
+
+.desktop-layout .image-section {
+    contain: paint;
+    backface-visibility: hidden;
+}
+
+.mobile-carousel-container {
+    contain: paint;
+    backface-visibility: hidden;
+}
+
+/* For iOS/Safari */
+@supports (-webkit-overflow-scrolling: touch) {
+    .professional-showcase {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+    
+    .text-content,
+    .mobile-text-container {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* ============================================
+   UTILITY CLASSES FOR TEXT
+   ============================================ */
+
+.text-truncate-single {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.text-truncate-multi {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.text-wrap-balance {
+    text-wrap: balance;
+}
+
+.text-wrap-pretty {
+    text-wrap: pretty;
+}
+
+.text-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ============================================
+   FOOTER LOGO
+   ============================================ */
+
+.footer-logo-icon {
+    display: flex;
+    align-items: center;
+}
+
+.footer-logo-icon img {
+    width: clamp(100px, 15vw, 130px);
+    max-width: 100%;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+@media (max-width: 768px) {
+    .footer-logo-icon img {
+        width: clamp(90px, 20vw, 110px);
+    }
+}
+
+/* ============================================
+   HOVER EFFECTS
+   ============================================ */
+
+.desktop-layout:hover .carousel-gradient-overlay {
+    opacity: 0.8;
+}
+
+.mobile-carousel-container:active .mobile-nav-button {
+    transform: scale(0.95);
+}
 
 .footer-logo-icon img:hover {
-  transform: scale(1.04);
-  opacity: 0.95;
-}
-@media (max-width: 768px) {
-  .footer-logo-icon img {
-    width: 110px;
-  }
+    transform: scale(1.04);
+    opacity: 0.95;
 }
 
-    </style>
+
+
+
+
+/* ============================================
+   COMPACT ANIMATION SECTION - LARGER VERSION
+   ============================================ */
+
+.compact-animation-section {
+    width: 100%;
+    max-width: 600px; /* زيادة من 500px إلى 600px */
+    margin: 2.5rem auto; /* زيادة margin */
+    padding: 2rem; /* زيادة padding */
+    background: white;
+    border-radius: 20px; /* زيادة border-radius */
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1); /* زيادة shadow */
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    min-height: 280px; /* زيادة ارتفاع أدنى */
+    height: auto;
+}
+
+/* عند ظهور المحتوى */
+.compact-animation-section.with-content {
+    min-height: 380px; /* زيادة ارتفاع عند ظهور المحتوى */
+}
+
+/* Header مصغر - حجم أكبر */
+.compact-header {
+    text-align: center;
+    margin-bottom: 2rem; /* زيادة margin */
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.compact-header .subtitle {
+    font-size: 1rem; /* زيادة حجم الخط */
+    font-weight: 500;
+    color: #86868b;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem; /* زيادة margin */
+    opacity: 0.8;
+}
+
+.compact-header .compact-title {
+    font-size: 2rem; /* زيادة كبيرة في حجم الخط */
+    font-weight: 600;
+    color: #1d1d1f;
+    line-height: 1.3; /* زيادة line-height */
+    margin: 0;
+}
+
+.compact-header .highlight-purple {
+    color: #5856d6;
+    background: linear-gradient(135deg, #5856d6, #af52de);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.compact-header .highlight-green {
+    color: #34c759;
+    background: linear-gradient(135deg, #34c759, #30d158);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* زر البدء - حجم أكبر */
+.compact-start-button {
+    width: 100%;
+    padding: 1rem 2rem; /* زيادة padding */
+    background: linear-gradient(135deg, #1d1d1f, #2c2c2e);
+    color: white;
+    border: none;
+    border-radius: 14px; /* زيادة border-radius */
+    font-size: 1.1rem; /* زيادة حجم الخط */
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem; /* زيادة gap */
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.compact-start-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.compact-start-button:hover {
+    background: linear-gradient(135deg, #007aff, #0056cc);
+    transform: translateY(-3px); /* زيادة تأثير الرفع */
+    box-shadow: 0 8px 25px rgba(0, 122, 255, 0.2); /* زيادة shadow */
+}
+
+.compact-start-button:hover::before {
+    left: 100%;
+}
+
+.compact-start-button:active {
+    transform: translateY(0);
+}
+
+.compact-start-button.hidden {
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    padding: 0;
+    margin: 0;
+    transform: translateY(-15px); /* زيادة التأثير */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* المحتوى - حجم أكبر */
+.compact-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    padding: 2rem; /* زيادة padding */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(15px); /* زيادة التأثير */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 20px; /* زيادة border-radius */
+    z-index: 1;
+}
+
+.compact-content.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.compact-content-inner {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* النصوص - حجم أكبر */
+.compact-title-text {
+    font-size: 1.75rem; /* زيادة حجم الخط */
+    font-weight: 600;
+    color: #1d1d1f;
+    margin-bottom: 1rem; /* زيادة margin */
+    text-align: center;
+    min-height: 2.2rem; /* زيادة min-height */
+    width: 100%;
+}
+
+.compact-typed-text {
+    display: inline-block;
+    position: relative;
+}
+
+.compact-typed-text::after {
+    content: '|';
+    position: absolute;
+    right: -8px; /* زيادة المسافة */
+    top: 0;
+    color: #007aff;
+    animation: blink 1s infinite;
+    font-weight: 300;
+    font-size: 1.8rem; /* زيادة حجم المؤشر */
+}
+
+.compact-description {
+    font-size: 1.1rem; /* زيادة حجم الخط */
+    color: #86868b;
+    line-height: 1.6; /* زيادة line-height */
+    text-align: center;
+    margin-bottom: 2rem; /* زيادة margin */
+    opacity: 0;
+    transform: translateY(8px); /* زيادة التأثير */
+    transition: all 0.3s ease 0.2s;
+    width: 100%;
+    max-width: 500px; /* زيادة max-width */
+}
+
+.compact-description.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Progress Indicator - حجم أكبر */
+.compact-progress {
+    margin-top: 2rem; /* زيادة margin */
+    width: 100%;
+    max-width: 400px; /* زيادة max-width */
+}
+
+.compact-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem; /* زيادة gap */
+    margin-bottom: 0.75rem; /* زيادة margin */
+}
+
+.compact-dot {
+    width: 12px; /* زيادة الحجم */
+    height: 12px;
+    border-radius: 50%;
+    background: #e5e5e7;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.compact-dot.active {
+    background: #007aff;
+    transform: scale(1.3); /* زيادة scale */
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15); /* إضافة shadow */
+}
+
+.compact-dot.completed {
+    background: #007aff;
+}
+
+.compact-progress-bar {
+    height: 4px; /* زيادة الارتفاع */
+    background: #e5e5e7;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.compact-progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #c7c6c6, #4c42da);
+    border-radius: 2px;
+    transition: width 0.5s ease;
+    box-shadow: 0 0 8px rgba(0, 122, 255, 0.2); /* إضافة shadow */
+}
+
+/* زر الإغلاق - حجم أكبر */
+.compact-close-button {
+    position: absolute;
+    top: 1.25rem; /* زيادة المسافة */
+    right: 1.25rem;
+    width: 40px; /* زيادة الحجم */
+    height: 40px;
+    background: rgba(0, 0, 0, 0.05);
+    border: none;
+    border-radius: 50%;
+    color: #86868b;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem; /* زيادة حجم الخط */
+    transition: all 0.2s ease;
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.compact-content.active .compact-close-button {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease 0.3s, visibility 0.3s ease 0.3s;
+}
+
+.compact-close-button:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #1d1d1f;
+    transform: rotate(90deg);
+}
+
+/* Animations - نفس الأنيميشنات */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(0, 122, 255, 0.4); }
+    70% { box-shadow: 0 0 0 12px rgba(0, 122, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 122, 255, 0); }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(25px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* تأثيرات دخول العناصر */
+.compact-content.active .compact-title-text {
+    animation: fadeIn 0.6s ease 0.2s both;
+}
+
+.compact-content.active .compact-description.visible {
+    animation: fadeIn 0.6s ease 0.4s both;
+}
+
+.compact-content.active .compact-progress {
+    animation: slideUp 0.6s ease 0.6s both;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN - Web & Mobile
+   ============================================ */
+
+/* Web Version (Desktop) */
+@media (min-width: 1025px) {
+    .compact-animation-section {
+        max-width: 650px; /* زيادة أكبر للشاشات الكبيرة */
+        min-height: 320px;
+    }
+    
+    .compact-animation-section.with-content {
+        min-height: 420px;
+    }
+    
+    .compact-header .compact-title {
+        font-size: 2.2rem;
+    }
+    
+    .compact-title-text {
+        font-size: 1.9rem;
+    }
+    
+    .compact-description {
+        font-size: 1.2rem;
+        max-width: 550px;
+    }
+    
+    .compact-start-button {
+        padding: 1.1rem 2.2rem;
+        font-size: 1.15rem;
+    }
+}
+
+/* Tablet Version */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .compact-animation-section {
+        max-width: 550px;
+        min-height: 300px;
+        margin: 2rem auto;
+    }
+    
+    .compact-animation-section.with-content {
+        min-height: 400px;
+    }
+    
+    .compact-header .compact-title {
+        font-size: 1.8rem;
+    }
+    
+    .compact-title-text {
+        font-size: 1.6rem;
+    }
+    
+    .compact-description {
+        font-size: 1.05rem;
+        max-width: 450px;
+    }
+    
+    .compact-start-button {
+        padding: 0.95rem 1.8rem;
+        font-size: 1.05rem;
+    }
+}
+
+/* Tablet Portrait */
+@media (max-width: 768px) {
+    .compact-animation-section {
+        max-width: 90%;
+        margin: 2rem auto;
+        min-height: 260px;
+        padding: 1.75rem;
+    }
+    
+    .compact-animation-section.with-content {
+        min-height: 350px;
+    }
+    
+    .compact-header .compact-title {
+        font-size: 1.7rem;
+    }
+    
+    .compact-title-text {
+        font-size: 1.5rem;
+    }
+    
+    .compact-description {
+        font-size: 1rem;
+        max-width: 400px;
+        margin-bottom: 1.75rem;
+    }
+    
+    .compact-start-button {
+        padding: 0.9rem 1.6rem;
+        font-size: 1rem;
+    }
+    
+    .compact-content {
+        padding: 1.75rem;
+    }
+    
+    .compact-progress {
+        max-width: 350px;
+    }
+}
+
+/* Mobile Version */
+@media (max-width: 480px) {
+    .compact-animation-section {
+        max-width: 92%;
+        margin: 1.5rem auto;
+        padding: 1.5rem;
+        min-height: 240px;
+        border-radius: 18px;
+    }
+    
+    .compact-animation-section.with-content {
+        min-height: 320px;
+    }
+    
+    .compact-header .subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .compact-header .compact-title {
+        font-size: 1.5rem;
+    }
+    
+    .compact-title-text {
+        font-size: 1.3rem;
+        min-height: 1.8rem;
+    }
+    
+    .compact-description {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 1.5rem;
+        max-width: 320px;
+    }
+    
+    .compact-start-button {
+        padding: 0.85rem 1.4rem;
+        font-size: 0.95rem;
+    }
+    
+    .compact-content {
+        padding: 1.5rem;
+    }
+    
+    .compact-progress {
+        margin-top: 1.5rem;
+        max-width: 280px;
+    }
+    
+    .compact-close-button {
+        top: 1rem;
+        right: 1rem;
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 375px) {
+    .compact-animation-section {
+        min-height: 220px;
+        padding: 1.25rem;
+    }
+    
+    .compact-animation-section.with-content {
+        min-height: 300px;
+    }
+    
+    .compact-header .compact-title {
+        font-size: 1.4rem;
+    }
+    
+    .compact-title-text {
+        font-size: 1.2rem;
+    }
+    
+    .compact-description {
+        font-size: 0.9rem;
+        max-width: 280px;
+        margin-bottom: 1.25rem;
+    }
+    
+    .compact-progress {
+        max-width: 250px;
+        margin-top: 1.25rem;
+    }
+    
+    .compact-dot {
+        width: 10px;
+        height: 10px;
+    }
+}
+
+/* Landscape Mode */
+@media (max-height: 600px) and (orientation: landscape) {
+    .compact-animation-section {
+        max-width: 80%;
+        min-height: 200px;
+        padding: 1.5rem;
+    }
+    
+    .compact-animation-section.with-content {
+        min-height: 260px;
+    }
+    
+    .compact-header {
+        margin-bottom: 1.5rem;
+    }
+    
+    .compact-header .compact-title {
+        font-size: 1.6rem;
+    }
+    
+    .compact-title-text {
+        font-size: 1.3rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .compact-description {
+        font-size: 0.95rem;
+        margin-bottom: 1.25rem;
+        max-width: 400px;
+    }
+    
+    .compact-progress {
+        margin-top: 1.25rem;
+        max-width: 350px;
+    }
+}
+
+/* إضافة مسافات إضافية */
+.compact-animation-section {
+    transition: min-height 0.4s ease, transform 0.3s ease;
+}
+
+.compact-animation-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.12);
+}
+
+/* تحسينات للخطوط */
+.compact-title-text,
+.compact-description {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+    letter-spacing: -0.01em;
+}
+
+/* إضافة تأثيرات إضافية */
+.compact-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+  
+    background-size: 200% 100%;
+    animation: gradientMove 3s ease infinite;
+    border-radius: 20px 20px 0 0;
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* تحسينات النقاط */
+.compact-dot {
+    position: relative;
+}
+
+.compact-dot.active::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(0, 122, 255, 0.2);
+    border-radius: 50%;
+    animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 0;
+    }
+}
+
+</style>
 </head>
 <body>
     <!-- Home Section Header (Only in Home) - Fixed at top -->
@@ -79,7 +1895,13 @@
                 <div class="gradient-bg"></div>
                 
                 <div class="content">
-                    <h1 class="heading">e-Book</h1>
+                    <div class="subtitle">E-Book</div>
+        <div class="main-title">
+            Le 
+            <span class="highlight-green">secret</span> 
+            pour
+            <span class="highlight-warm">réussir et progresser</span>
+        </div>
                     <p class="subheading">
 Découvrez toutes les matières scientifiques essentielles pour réussir votre <spam> baccalauréat</spam>
 </p>
@@ -95,7 +1917,7 @@ Découvrez toutes les matières scientifiques essentielles pour réussir votre <
             
             <!-- Action Buttons Section -->
             <div class="action-buttons">
-                <a href="ebook.html" class="action-button">
+                 <a href="ebook.html" class="action-button">
                     سارع باقتناء نسختك من الكتاب
                     <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
@@ -107,68 +1929,214 @@ Découvrez toutes les matières scientifiques essentielles pour réussir votre <
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                     </svg>
                 </a>
+               
             </div>
 
-            <header class="animate-slide-up"></header>
-
-            <!-- Section 2: Visual Components -->
-            <section class="section animate-slide-up">
-                <div class="section-header">
-                    <div>
-                        <h2 class="section-title">À la découverte de notre app</h2>
-                    </div>
-                </div>
-                
-                <div class="stack-container-wrapper">
-                    <div class="stack-container">
-                        <div class="stack-card">
-                            <div class="stack-icon">
-                                <i class="fas fa-user-graduate"></i>
-                            </div>
-                            <h3 class="stack-card-title">Bac Sciences - SVT App</h3>
-                            <p class="stack-card-text">Appli Bac SC : cours, exercices, quiz et flashcards pour réviser vite et bien.</p>
-                        </div>
-                        <div class="stack-card">
-                            <div class="stack-icon">
-                                <i class="fas fa-user-graduate"></i>
-                            </div>
-                            <h3 class="stack-card-title">Bac INO – STI App</h3>
-                            <p class="stack-card-text">Appli Bac INO/STI : révise tes cours de sciences et technologies et reste à jour facilement.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section 1: Horizontal Swipe Cards -->
-            <section class="section animate-slide-up">
-                <div class="section-header">
+<section class="professional-showcase">
+     <div class="section-header">
                     <div>
                         <h2 class="section-title">Collection d'Applications</h2>
                     </div>
-                    <div class="swipe-hint">
-                        <i class="fas fa-arrow-right"></i>
-                        <span>Glissez pour explorer</span>
+                   
+                </div>
+
+    <!-- Desktop Layout (50% image + 50% texte) -->
+    <div class="desktop-layout">
+        <!-- Section Image (50% à gauche) -->
+        <div class="image-section">
+            <div class="carousel-container">
+                <div class="carousel-aspect-ratio">
+                    <div class="carousel-slides">
+                        <!-- Slide 1 -->
+                        <div class="carousel-slide active">
+                            <img src="./assets/images/01.png" 
+                                 alt="Étudiants en cours de sciences"
+                                 loading="lazy">
+                        </div>
+                        
+                        <!-- Slide 2 -->
+                        <div class="carousel-slide">
+                            <img src="./assets/images/img_1768493036080.png" 
+                                 alt="Apprentissage interactif"
+                                 loading="lazy">
+                        </div>
+                        
+                        <!-- Slide 3 -->
+                        <div class="carousel-slide">
+                            <img src="./assets/images/img_1768492903561.png" 
+                                 alt="Technologie éducative"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <!-- Overlay gradient -->
+                    <div class="carousel-gradient-overlay"></div>
+                    
+                    <!-- Compteur de slides -->
+                    <div class="slide-counter">
+                        <span class="current-slide">01</span> / <span class="total-slides">03</span>
+                    </div>
+                    
+                    <!-- Contrôles de navigation -->
+                    <div class="carousel-controls">
+                        <div class="nav-indicators">
+                            <div class="nav-indicator active" data-index="0"></div>
+                            <div class="nav-indicator" data-index="1"></div>
+                            <div class="nav-indicator" data-index="2"></div>
+                        </div>
+                        <div class="nav-buttons">
+                            <button class="nav-button prev-button" aria-label="Slide précédent">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M15 18l-6-6 6-6"/>
+                                </svg>
+                            </button>
+                            <button class="nav-button next-button" aria-label="Slide suivant">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M9 18l6-6-6-6"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Texte (50% à droite) -->
+        <div class="text-section">
+            <div class="text-content">
+                <!-- Texte Slide 1 -->
+                <div class="text-slide active">
+    <h3>E-Book Bac Sciences</h3>
+    <p>
+        Accédez à une collection d’e-books pédagogiques de haute qualité,
+        conçus spécialement pour les élèves du baccalauréat scientifique tunisien.
+    </p>
+    <ul class="feature-list">
+        <li>Cours clairs, bien expliqués et soigneusement structurés</li>
+        <li>Bibliothèque complète de séries Pilote, Sfax et Réo</li>
+        <li>Résumés efficaces et fiches méthodologiques pratiques</li>
+       
+    </ul>
+</div>
+
+                
+                <!-- Texte Slide 2 -->
+               <div class="text-slide">
+    <h3>Philosophie Assistée par l’IA</h3>
+    <p>
+        Des outils intelligents basés sur l’intelligence artificielle pour comprendre,
+        analyser et maîtriser la philosophie du baccalauréat scientifique tunisien.
+    </p>
+    <ul class="feature-list">
+        <li>Cours complets de philosophie, structurés selon le programme officiel</li>
+        <li>Explications simples et progressives des notions complexes</li>
+        <li>Chatbot intelligent pour discuter, poser des questions et comprendre chaque thème</li>
+       
+    </ul>
+</div>
+
+                
+                <!-- Texte Slide 3 -->
+                <div class="text-slide">
+    <h3>Application SVT – Bac Sciences</h3>
+    <p>
+        Une application éducative dédiée aux élèves en sciences,
+        conçue pour renforcer les acquis et réussir le baccalauréat tunisien.
+    </p>
+    <ul class="feature-list">
+        <li>Cours complets de SVT, clairs et conformes au programme officiel</li>
+        <li>Quiz interactifs et QCM pour s’entraîner efficacement</li>
+        <li>Exercices corrigés et séries Pilote & Réo pour une préparation optimale</li>
+       
+    </ul>
+</div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Layout (seulement les photos) -->
+    <div class="mobile-layout">
+        <div class="mobile-carousel-container">
+            <div class="mobile-aspect-ratio">
+                <div class="mobile-slides">
+                    <!-- Slide 1 -->
+                    <div class="mobile-slide active">
+                        <img src="./assets/images/01.png" 
+                             alt="Étudiants en cours de sciences"
+                             loading="lazy">
+                    </div>
+                    
+                    <!-- Slide 2 -->
+                    <div class="mobile-slide">
+                         <img src="./assets/images/img_1768493036080.png" 
+                             alt="Apprentissage interactif"
+                             loading="lazy">
+                    </div>
+                    
+                    <!-- Slide 3 -->
+                    <div class="mobile-slide">
+                         <img src="./assets/images/img_1768492903561.png" 
+                             alt="Technologie éducative"
+                             loading="lazy">
                     </div>
                 </div>
                 
+                <!-- Compteur mobile -->
+                <div class="mobile-slide-counter">
+                    <span class="mobile-current-slide">01</span> / <span class="mobile-total-slides">03</span>
+                </div>
+                
+                <!-- Contrôles mobile -->
+                <div class="mobile-controls">
+                    <div class="mobile-nav-indicators">
+                        <div class="mobile-nav-indicator active" data-index="0"></div>
+                        <div class="mobile-nav-indicator" data-index="1"></div>
+                        <div class="mobile-nav-indicator" data-index="2"></div>
+                    </div>
+                    <div class="mobile-nav-buttons">
+                        <button class="mobile-nav-button mobile-prev-button" aria-label="Slide précédent">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M15 18l-6-6 6-6"/>
+                            </svg>
+                        </button>
+                        <button class="mobile-nav-button mobile-next-button" aria-label="Slide suivant">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M9 18l6-6-6-6"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- في مكان animation-section السابق -->
+
+
+          
+            <!-- Section 1: Horizontal Swipe Cards -->
+            <section class="section animate-slide-up">
+               
+                
                 <div class="cards-scroll-container">
                     <div class="cards-wrapper" id="section1">
-                        <div class="app-card" data-app="cloud">
-                            <div class="app-icon-circle">
-                                <img src="./assets/images/notin icon app.png" alt="App Icon" class="app-icon-img">
-                            </div>
-                            <h3 class="app-title">Chat فيلو</h3>
-                        </div>
+                        
                          
                         <div class="app-card" data-app="analytics">
                             <div class="app-icon-circle">
-                                <img src="./assets/images/svt app.png" alt="App Icon" class="app-icon-img">
+                                <img src="./assets/images/dna.png" alt="App Icon" class="app-icon-img">
                             </div>
                             <h3 class="app-title">SVT App</h3>
                         </div>
+                        <div class="app-card" data-app="cloud">
+                            <div class="app-icon-circle">
+                                <img src="./assets/images/philosopher.png" alt="App Icon" class="app-icon-img">
+                            </div>
+                            <h3 class="app-title">Chat فيلو</h3>
+                        </div>
                         <div class="app-card" data-app="security">
                             <div class="app-icon-circle">
-                                <img src="./assets/images/sti icon qpp.png" alt="App Icon" class="app-icon-img">
+                                <img src="./assets/images/programming.png" alt="App Icon" class="app-icon-img">
                             </div>
                             <h3 class="app-title">STI App</h3>
                         </div>
@@ -207,11 +2175,62 @@ Découvrez toutes les matières scientifiques essentielles pour réussir votre <
                         <h3 class="poster-title">EduWell Classroom</h3>
                         <p class="poster-text">Clique ici pour accéder à Eduwell Classroom et découvrir tout ce qu'il te faut pour réussir le Bac</p>
                     </div>
+                    
 
 
                    
                 </div>
             </section>
+
+
+
+              <!-- Header 
+
+<section class="compact-animation-section">
+  
+    <div class="compact-header">
+        <div class="subtitle">Sahl Haven</div>
+        <div class="compact-title">
+            Une
+            <span class="highlight-purple">grande</span> 
+            source
+            <span class="highlight-green">d’apprentissage</span>
+        </div>
+    </div>
+    
+  
+    <button id="compactStartButton" class="compact-start-button">
+        <span>▶</span>
+        <span>Start Animation</span>
+    </button>
+
+    
+    <div id="compactContent" class="compact-content">
+        <div class="compact-content-inner">
+            <h3 id="compactTitle" class="compact-title-text">
+                <span id="compactTypedText" class="compact-typed-text"></span>
+            </h3>
+            
+            <p id="compactDescription" class="compact-description"></p>
+           
+            <div class="compact-progress">
+                <div class="compact-dots">
+                    <div class="compact-dot active" data-index="0"></div>
+                    <div class="compact-dot" data-index="1"></div>
+                    <div class="compact-dot" data-index="2"></div>
+                </div>
+                <div class="compact-progress-bar">
+                    <div class="compact-progress-fill" id="compactProgressFill"></div>
+                </div>
+            </div>
+        </div>
+        
+     
+        <button id="compactCloseButton" class="compact-close-button">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+</section> مصغر -->
 
             <!-- Section 4: Additional Content -->
             <section class="section animate-slide-up">
@@ -301,7 +2320,7 @@ Découvrez toutes les matières scientifiques essentielles pour réussir votre <
             </div>
             
             <footer>
-                <p>Eduwell Quantum Group &copy; <span class="footer-highlight">2025</span></p>
+                <p>Eduwell Quantum Group &copy; <span class="footer-highlight">2026</span></p>
             </footer>
         </div>
     </div>
@@ -826,7 +2845,7 @@ Découvrez toutes les matières scientifiques essentielles pour réussir votre <
             </div>
             <div class="modal-content app-modal-content">
                 <div class="app-modal-icon-large">
-                    <img src="./assets/images/svt app.png" alt="App Icon" class="app-icon-img1">
+                    <img src="./assets/images/dna.png alt="App Icon" class="app-icon-img1">
                 </div>
                 <h3 class="app-modal-title">SVT App</h3>
                 <p class="app-modal-description">
@@ -854,7 +2873,7 @@ Découvrez toutes les matières scientifiques essentielles pour réussir votre <
             </div>
             <div class="modal-content app-modal-content">
                 <div class="app-modal-icon-large">
-                    <img src="./assets/images/sti icon qpp.png" alt="App Icon" class="app-icon-img1">
+                    <img src="./assets/images/programming.png alt="App Icon" class="app-icon-img1">
                 </div>
                 <h3 class="app-modal-title">STI App</h3>
                 <p class="app-modal-description">
@@ -883,7 +2902,7 @@ Découvrez toutes les matières scientifiques essentielles pour réussir votre <
             </div>
             <div class="modal-content app-modal-content">
                 <div class="app-modal-icon-large">
-                    <img src="./assets/images/notin icon app.png" alt="App Icon" class="app-icon-img1">
+                    <img src="./assets/images/philosopher.png" alt="App Icon" class="app-icon-img1">
                 </div>
                 <h3 class="app-modal-title">Chat فيلو</h3>
                 <p class="app-modal-description">
@@ -898,56 +2917,127 @@ Découvrez toutes les matières scientifiques essentielles pour réussir votre <
             </div>
         </div>
     </div>
-
-    <div class="modal-overlay" id="3d-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">
-                    <i class="fas fa-stream modal-icon"></i>
-                    Sahl App
-                </h2>
-                <button class="close-btn" data-modal="3d-modal">
-                    <i class="fas fa-times"></i>
+<div class="modal-overlay" id="3d-modal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 class="modal-title">
+                <i class="fas fa-stream modal-icon"></i>
+                Sahl App
+            </h2>
+            <button class="close-btn" data-modal="3d-modal">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-content">
+            <p class="poster-description">
+                Télécharge l'application Sahl sur ton téléphone et sois toujours prêt pour le Bac
+            </p>
+            <div class="get-app-section">
+                <button class="pdf-link" onclick="window.location.href='./app.html'">
+                    <i class="fas fa-stream"></i>
+                    Télécharger l'app
                 </button>
-            </div>
-            <div class="modal-content">
-                <p class="poster-description">
-                    Télécharge l’application Sahl sur ton téléphone et sois toujours prêt pour le Bac
-                </p>
-                <div class="get-app-section">
-                    <button class="pdf-link" onclick="window.location.href = './app.html'">
-                        <i class="fas fa-stream"></i>
-                        Télécharger l’app
-                    </button>
-                </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="modal-overlay" id="wave-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">
-                    <i class="fas fa-school modal-icon"></i>
-                    Eduwell Classroom
-                </h2>
-                <button class="close-btn" data-modal="wave-modal">
-                    <i class="fas fa-times"></i>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- MODALS SECTION - FIXED -->
+<div class="modal-overlay" id="3d-modal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 class="modal-title">
+                <i class="fas fa-stream modal-icon"></i>
+                Sahl App
+            </h2>
+            <button class="close-btn" data-modal="3d-modal">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-content">
+            <p class="poster-description">
+                Télécharge l'application Sahl sur ton téléphone et sois toujours prêt pour le Bac
+            </p>
+            <div class="get-app-section">
+                <button class="pdf-link" onclick="window.location.href='./app.html'">
+                    <i class="fas fa-stream"></i>
+                    Télécharger l'app
                 </button>
-            </div>
-            <div class="modal-content">
-                <p class="poster-description">
-                    Clique ici pour accéder à Eduwell Classroom et découvrir tout ce qu'il te faut pour réussir le Bac
-                </p>
-                <div class="get-app-section">
-                    <button class="pdf-link" onclick="window.location.href = 'inscription.html'">
-                        <i class="fas fa-wave-square"></i>
-                        Découvrir la Classroom
-                    </button>
-                </div>
             </div>
         </div>
     </div>
+</div>
+
+
+
+
+
+<div class="modal-overlay" id="wave-modal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 class="modal-title">
+                <i class="fas fa-school modal-icon"></i>
+                Eduwell Classroom
+            </h2>
+            <button class="close-btn" data-modal="wave-modal">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-content">
+            <p class="poster-description">
+                Clique ici pour accéder à Eduwell Classroom et découvrir tout ce qu'il te faut pour réussir le Bac
+            </p>
+            <div class="get-app-section">
+                <button class="pdf-link" onclick="window.location.href='inscription.html'">
+                    <i class="fas fa-wave-square"></i>
+                    Découvrir la Classroom
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     
     <div class="modal-overlay resource-modal" id="resource-modal">
@@ -967,6 +3057,432 @@ Découvrez toutes les matières scientifiques essentielles pour réussir votre <
     <script src="./assets/js/rsewdata1.js"></script>
      <script src="./assets/js/edustreamdata.js"></script>
       <script src="./edustream/data/js/data.js"></script>
-  
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const SLIDE_DURATION = 5000; // 5 secondes
+    
+    // Éléments desktop
+    const desktopSlides = document.querySelectorAll('.carousel-slide');
+    const desktopTextSlides = document.querySelectorAll('.text-slide');
+    const desktopIndicators = document.querySelectorAll('.nav-indicator');
+    const desktopPrevBtn = document.querySelector('.prev-button');
+    const desktopNextBtn = document.querySelector('.next-button');
+    const desktopCurrentSlide = document.querySelector('.current-slide');
+    const desktopTotalSlides = document.querySelector('.total-slides');
+    
+    // Éléments mobile
+    const mobileSlides = document.querySelectorAll('.mobile-slide');
+    const mobileIndicators = document.querySelectorAll('.mobile-nav-indicator');
+    const mobilePrevBtn = document.querySelector('.mobile-prev-button');
+    const mobileNextBtn = document.querySelector('.mobile-next-button');
+    const mobileCurrentSlide = document.querySelector('.mobile-current-slide');
+    const mobileTotalSlides = document.querySelector('.mobile-total-slides');
+    
+    const totalSlides = 3;
+    let currentSlide = 0;
+    let slideInterval;
+    
+    // Initialiser les compteurs
+    function initCounters() {
+        if (desktopTotalSlides) desktopTotalSlides.textContent = totalSlides.toString().padStart(2, '0');
+        if (mobileTotalSlides) mobileTotalSlides.textContent = totalSlides.toString().padStart(2, '0');
+        updateSlideCounters();
+    }
+    
+    // Mettre à jour les compteurs
+    function updateSlideCounters() {
+        if (desktopCurrentSlide) desktopCurrentSlide.textContent = (currentSlide + 1).toString().padStart(2, '0');
+        if (mobileCurrentSlide) mobileCurrentSlide.textContent = (currentSlide + 1).toString().padStart(2, '0');
+    }
+    
+    // Aller à une slide spécifique
+    function goToSlide(nextIndex) {
+        // Desktop
+        desktopSlides.forEach(slide => slide.classList.remove('active'));
+        desktopTextSlides.forEach(slide => slide.classList.remove('active'));
+        desktopIndicators.forEach(indicator => indicator.classList.remove('active'));
+        
+        desktopSlides[nextIndex].classList.add('active');
+        desktopTextSlides[nextIndex].classList.add('active');
+        desktopIndicators[nextIndex].classList.add('active');
+        
+        // Mobile
+        mobileSlides.forEach(slide => slide.classList.remove('active'));
+        mobileIndicators.forEach(indicator => indicator.classList.remove('active'));
+        
+        mobileSlides[nextIndex].classList.add('active');
+        mobileIndicators[nextIndex].classList.add('active');
+        
+        currentSlide = nextIndex;
+        updateSlideCounters();
+    }
+    
+    // Slide suivante
+    function nextSlide() {
+        const nextIndex = (currentSlide + 1) % totalSlides;
+        goToSlide(nextIndex);
+    }
+    
+    // Slide précédente
+    function prevSlide() {
+        const nextIndex = (currentSlide - 1 + totalSlides) % totalSlides;
+        goToSlide(nextIndex);
+    }
+    
+    // Démarrer le carrousel automatique
+    function startCarousel() {
+        if (slideInterval) clearInterval(slideInterval);
+        slideInterval = setInterval(nextSlide, SLIDE_DURATION);
+    }
+    
+    // Arrêter le carrousel
+    function stopCarousel() {
+        if (slideInterval) clearInterval(slideInterval);
+    }
+    
+    // Initialiser les événements
+    function initEvents() {
+        // Desktop events
+        if (desktopPrevBtn) {
+            desktopPrevBtn.addEventListener('click', () => {
+                stopCarousel();
+                prevSlide();
+                setTimeout(startCarousel, 8000);
+            });
+        }
+        
+        if (desktopNextBtn) {
+            desktopNextBtn.addEventListener('click', () => {
+                stopCarousel();
+                nextSlide();
+                setTimeout(startCarousel, 8000);
+            });
+        }
+        
+        // Mobile events
+        if (mobilePrevBtn) {
+            mobilePrevBtn.addEventListener('click', () => {
+                stopCarousel();
+                prevSlide();
+                setTimeout(startCarousel, 8000);
+            });
+        }
+        
+        if (mobileNextBtn) {
+            mobileNextBtn.addEventListener('click', () => {
+                stopCarousel();
+                nextSlide();
+                setTimeout(startCarousel, 8000);
+            });
+        }
+        
+        // Indicateurs desktop
+        desktopIndicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                stopCarousel();
+                goToSlide(index);
+                setTimeout(startCarousel, 8000);
+            });
+        });
+        
+        // Indicateurs mobile
+        mobileIndicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                stopCarousel();
+                goToSlide(index);
+                setTimeout(startCarousel, 8000);
+            });
+        });
+        
+        // Navigation clavier
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                stopCarousel();
+                prevSlide();
+                setTimeout(startCarousel, 8000);
+            } else if (e.key === 'ArrowRight') {
+                stopCarousel();
+                nextSlide();
+                setTimeout(startCarousel, 8000);
+            }
+        });
+        
+        // Pause au survol (desktop)
+        const desktopImage = document.querySelector('.image-section');
+        if (desktopImage) {
+            desktopImage.addEventListener('mouseenter', stopCarousel);
+            desktopImage.addEventListener('mouseleave', startCarousel);
+        }
+        
+        // Pause au touch (mobile)
+        const mobileImage = document.querySelector('.mobile-carousel-container');
+        if (mobileImage) {
+            mobileImage.addEventListener('touchstart', stopCarousel);
+            mobileImage.addEventListener('touchend', () => setTimeout(startCarousel, 3000));
+        }
+        
+        // CTA buttons hover effect
+        const ctaButtons = document.querySelectorAll('.cta-button');
+        ctaButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const href = btn.getAttribute('onclick');
+                if (href && href.includes('window.location.href')) {
+                    const url = href.match(/'([^']+)'/)[1];
+                    window.location.href = url;
+                }
+            });
+            
+            // Effet de clic
+            btn.addEventListener('mousedown', () => {
+                btn.style.transform = 'scale(0.95)';
+            });
+            
+            btn.addEventListener('mouseup', () => {
+                btn.style.transform = '';
+            });
+            
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = '';
+            });
+        });
+    }
+    
+    // Initialiser le carrousel
+    function initCarousel() {
+        initCounters();
+        startCarousel();
+        initEvents();
+        
+        // Précharger les images
+        const images = document.querySelectorAll('.carousel-slide img, .mobile-slide img');
+        images.forEach(img => {
+            if (img.complete) {
+                img.classList.add('loaded');
+            } else {
+                img.addEventListener('load', () => {
+                    img.classList.add('loaded');
+                });
+            }
+        });
+    }
+    
+    // Démarrer le carrousel
+    initCarousel();
+});
+</script>
+
+<script>// COMPACT ANIMATION SECTION SCRIPT - WITH HEIGHT CONTROL
+document.addEventListener('DOMContentLoaded', function() {
+    const SLIDE_DURATION = 4000;
+    
+    // عناصر DOM
+    const startButton = document.getElementById('compactStartButton');
+    const contentContainer = document.getElementById('compactContent');
+    const section = document.querySelector('.compact-animation-section');
+    const header = document.querySelector('.compact-header');
+    const typedTextElement = document.getElementById('compactTypedText');
+    const descriptionElement = document.getElementById('compactDescription');
+    const progressFill = document.getElementById('compactProgressFill');
+    const closeButton = document.getElementById('compactCloseButton');
+    const dots = document.querySelectorAll('.compact-dot');
+    
+    // بيانات المحتوى
+    const contentSequence = [
+        {
+            title: "Design Principles",
+            description: "Clean, intuitive interfaces that enhance user experience."
+        },
+        {
+            title: "Smooth Animations",
+            description: "Purposeful motion guides attention seamlessly."
+        },
+        {
+            title: "Responsive Design",
+            description: "Consistent experience across all devices."
+        }
+    ];
+    
+    // متغيرات الحالة
+    let currentStep = 0;
+    let isAnimating = false;
+    let stepTimeout = null;
+    
+    // دالة بدء الأنيميشن
+    function startAnimation() {
+        if (isAnimating) return;
+        
+        isAnimating = true;
+        
+        // إضافة class لتغيير ارتفاع القسم
+        section.classList.add('with-content');
+        
+        // إخفاء الزر والهيدر
+        startButton.classList.add('hidden');
+        header.style.opacity = '0';
+        header.style.visibility = 'hidden';
+        header.style.height = '0';
+        header.style.marginBottom = '0';
+        header.style.transform = 'translateY(-10px)';
+        header.style.transition = 'all 0.3s ease';
+        
+        // إظهار المحتوى
+        setTimeout(() => {
+            contentContainer.classList.add('active');
+            showStep(0);
+        }, 300);
+    }
+    
+    // دالة عرض خطوة
+    function showStep(stepIndex) {
+        if (stepIndex >= contentSequence.length) {
+            resetAnimation();
+            return;
+        }
+        
+        currentStep = stepIndex;
+        
+        // تحديث التقدم
+        updateProgress();
+        
+        // الحصول على المحتوى الحالي
+        const content = contentSequence[stepIndex];
+        
+        // إعادة تعيين النصوص
+        typedTextElement.textContent = '';
+        descriptionElement.textContent = '';
+        descriptionElement.classList.remove('visible');
+        
+        // كتابة العنوان
+        typeText(typedTextElement, content.title, 40, () => {
+            // إظهار الوصف بعد التأخير
+            setTimeout(() => {
+                descriptionElement.textContent = content.description;
+                descriptionElement.classList.add('visible');
+            }, 200);
+        });
+        
+        // الانتقال التلقائي للخطوة التالية
+        if (stepTimeout) clearTimeout(stepTimeout);
+        stepTimeout = setTimeout(() => {
+            showStep(currentStep + 1);
+        }, SLIDE_DURATION);
+    }
+    
+    // دالة كتابة النص
+    function typeText(element, text, speed, callback) {
+        let index = 0;
+        
+        function typeCharacter() {
+            if (index < text.length) {
+                element.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeCharacter, speed);
+            } else if (callback) {
+                setTimeout(callback, 100);
+            }
+        }
+        
+        typeCharacter();
+    }
+    
+    // دالة تحديث التقدم
+    function updateProgress() {
+        // تحديث شريط التقدم
+        const progressPercentage = (currentStep / (contentSequence.length - 1)) * 100;
+        progressFill.style.width = `${progressPercentage}%`;
+        
+        // تحديث النقاط
+        dots.forEach((dot, index) => {
+            dot.classList.remove('active', 'completed');
+            
+            if (index < currentStep) {
+                dot.classList.add('completed');
+            } else if (index === currentStep) {
+                dot.classList.add('active');
+            }
+        });
+    }
+    
+    // دالة إعادة التعيين
+    function resetAnimation() {
+        // إيقاف المؤقت
+        if (stepTimeout) clearTimeout(stepTimeout);
+        
+        // إعادة تعيين الحالة
+        currentStep = 0;
+        isAnimating = false;
+        
+        // إزالة class تغيير الارتفاع
+        section.classList.remove('with-content');
+        
+        // إعادة تعيين النصوص
+        typedTextElement.textContent = '';
+        descriptionElement.textContent = '';
+        descriptionElement.classList.remove('visible');
+        
+        // إعادة تعيين التقدم
+        progressFill.style.width = '0%';
+        dots.forEach(dot => {
+            dot.classList.remove('active', 'completed');
+        });
+        
+        // إخفاء المحتوى
+        contentContainer.classList.remove('active');
+        
+        // إعادة إظهار الزر والهيدر
+        setTimeout(() => {
+            header.style.opacity = '1';
+            header.style.visibility = 'visible';
+            header.style.height = 'auto';
+            header.style.marginBottom = '1.5rem';
+            header.style.transform = 'translateY(0)';
+            
+            startButton.classList.remove('hidden');
+            
+            // تأثير للزر
+            startButton.style.animation = 'pulse 1.5s ease';
+            setTimeout(() => {
+                startButton.style.animation = '';
+            }, 1500);
+        }, 300);
+    }
+    
+    // Event Listeners
+    startButton.addEventListener('click', startAnimation);
+    closeButton.addEventListener('click', resetAnimation);
+    
+    // النقر على النقاط للتنقل
+    dots.forEach(dot => {
+        dot.addEventListener('click', function() {
+            const index = parseInt(this.getAttribute('data-index'));
+            if (isAnimating && index < contentSequence.length) {
+                if (stepTimeout) clearTimeout(stepTimeout);
+                showStep(index);
+            }
+        });
+    });
+    
+    // دعم لوحة المفاتيح
+    document.addEventListener('keydown', (e) => {
+        if (e.code === 'Space' && !isAnimating) {
+            e.preventDefault();
+            startAnimation();
+        }
+        
+        if (e.code === 'Escape' && isAnimating) {
+            resetAnimation();
+        }
+    });
+    
+    // تأثير أولي للزر
+    setTimeout(() => {
+        startButton.style.animation = 'pulse 2s ease-in-out';
+        setTimeout(() => {
+            startButton.style.animation = '';
+        }, 2000);
+    }, 1000);
+});
+</script>
 </body>
 </html>

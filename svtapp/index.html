@@ -1,24 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FNTBT1VQN7"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-FNTBT1VQN7');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNTBT1VQN7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-FNTBT1VQN7');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SVT App | EduWell</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-     <link rel="stylesheet" href="./assets/css/stylesvtapp.css">
-   
+    <link rel="stylesheet" href="./assets/css/stylesvtapp.css">
+    
+    <!-- Session Manager CSS -->
+    <style>
+        /* Disable right-click and image saving */
+        body {
+            user-select: none;
+        }
+        
+        img {
+            pointer-events: none;
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+        }
+        
+        .gallery-grid img,
+        .fullscreen-image {
+            pointer-events: auto; /* Allow clicking for gallery functionality */
+        }
+        
+        /* Prevent text selection except in inputs */
+        * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        input, textarea {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+
+        /* Apple-style Logout Confirmation Modal */
+        .logout-confirmation-content {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border-radius: 20px;
+            padding: 32px;
+            width: 90%;
+            max-width: 340px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.1),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.6),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
+            animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .confirmation-icon {
+            font-size: 48px;
+            color: rgba(0, 0, 0, 0.9);
+            margin-bottom: 20px;
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .confirmation-title {
+            font-size: 20px;
+            color: rgba(0, 0, 0, 0.9);
+            margin-bottom: 8px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .confirmation-text {
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 15px;
+            line-height: 1.4;
+            margin-bottom: 28px;
+            font-weight: 400;
+        }
+
+        .confirmation-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .confirmation-btn {
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: 500;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            flex: 1;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            letter-spacing: -0.01em;
+        }
+
+        .cancel-btn {
+            background: rgba(0, 0, 0, 0.03);
+            color: rgba(0, 0, 0, 0.8);
+        }
+
+        .cancel-btn:hover {
+            background: rgba(0, 0, 0, 0.06);
+            transform: translateY(-1px);
+        }
+
+        .cancel-btn:active {
+            transform: translateY(0);
+        }
+
+        .confirm-btn {
+            background: rgba(0, 0, 0, 0.85);
+            color: white;
+            border: none;
+        }
+
+        .confirm-btn:hover {
+            background: rgba(0, 0, 0, 0.95);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .confirm-btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        /* Dark mode for modal */
+        @media (prefers-color-scheme: dark) {
+            .logout-confirmation-content {
+                background: rgba(40, 40, 40, 0.85);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 
+                    0 20px 60px rgba(0, 0, 0, 0.25),
+                    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            }
+            
+            .confirmation-icon {
+                color: rgba(255, 255, 255, 0.9);
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .confirmation-title {
+                color: rgba(255, 255, 255, 0.95);
+            }
+            
+            .confirmation-text {
+                color: rgba(255, 255, 255, 0.7);
+            }
+            
+            .cancel-btn {
+                background: rgba(255, 255, 255, 0.08);
+                color: rgba(255, 255, 255, 0.9);
+                border: 1px solid rgba(255, 255, 255, 0.15);
+            }
+            
+            .cancel-btn:hover {
+                background: rgba(255, 255, 255, 0.12);
+            }
+            
+            .confirm-btn {
+                background: rgba(255, 255, 255, 0.9);
+                color: rgba(0, 0, 0, 0.9);
+            }
+            
+            .confirm-btn:hover {
+                background: white;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Apple-style Glass Effect Profile Section -->
@@ -315,7 +504,7 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
                 </div>
             </div>
         </div>
-</div>
+    </div>
 
     <!-- PDF Viewer Popup Overlay -->
     <div class="popup-overlay" id="pdfViewerPopup">
@@ -357,169 +546,255 @@ Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
         </div>
     </div>
 
-    <style>
-        /* Apple-style Logout Confirmation Modal */
-        .logout-confirmation-content {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(30px) saturate(200%);
-            -webkit-backdrop-filter: blur(30px) saturate(200%);
-            border-radius: 20px;
-            padding: 32px;
-            width: 90%;
-            max-width: 340px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 
-                0 20px 60px rgba(0, 0, 0, 0.1),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.6),
-                inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
-            animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+    <!-- Session Manager Script -->
+    <script>
+        // SESSION MANAGEMENT - 30 MINUTE INACTIVITY TIMEOUT
+        const SESSION_CONFIG = {
+            inactivityTimeout: 30 * 60 * 1000, // 30 minutes in milliseconds
+            checkInterval: 60000, // Check every minute
+            isLoggedInKey: 'eduwell_svt_isLoggedIn',
+            usernameKey: 'eduwell_svt_username',
+            lastActivityKey: 'eduwell_svt_lastActivity'
+        };
 
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px) scale(0.95);
+        class SessionManager {
+            constructor() {
+                this.timer = null;
+                this.activityTimer = null;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
+
+            // Initialize session checking
+            init() {
+                console.log('Session manager initialized - 30 minute inactivity timeout');
+                
+                // Clear any existing timers
+                this.clearTimers();
+                
+                // Update last activity timestamp
+                this.updateActivity();
+                
+                // Start session check
+                this.startSessionCheck();
+                
+                // Set up activity detection
+                this.setupActivityDetection();
+                
+                // Check session immediately
+                this.checkSession();
+            }
+
+            // Start the session check interval
+            startSessionCheck() {
+                this.timer = setInterval(() => {
+                    this.checkSession();
+                }, SESSION_CONFIG.checkInterval);
+            }
+
+            // Set up activity detection
+            setupActivityDetection() {
+                // Update activity on user interaction
+                const activityEvents = ['click', 'mousemove', 'keydown', 'scroll', 'touchstart'];
+                activityEvents.forEach(event => {
+                    document.addEventListener(event, () => {
+                        this.updateActivity();
+                    }, { passive: true });
+                });
+            }
+
+            // Update last activity timestamp
+            updateActivity() {
+                localStorage.setItem(SESSION_CONFIG.lastActivityKey, Date.now().toString());
+            }
+
+            // Check if session is still valid based on inactivity
+            checkSession() {
+                if (!this.isAuthenticated()) {
+                    return;
+                }
+
+                const lastActivity = localStorage.getItem(SESSION_CONFIG.lastActivityKey);
+                if (!lastActivity) {
+                    // If no activity recorded, set current time
+                    this.updateActivity();
+                    return;
+                }
+
+                const lastActivityTime = parseInt(lastActivity);
+                const currentTime = Date.now();
+                const timeSinceLastActivity = currentTime - lastActivityTime;
+
+                // Check if session has expired due to inactivity
+                if (timeSinceLastActivity >= SESSION_CONFIG.inactivityTimeout) {
+                    console.log('Session expired due to inactivity');
+                    this.forceLogout();
+                    return;
+                }
+            }
+
+            // Force logout when session expires
+            forceLogout() {
+                console.log('Session expired - forcing logout');
+                
+                // Clear all session data
+                this.clearSession();
+                
+                // Clear timers
+                this.clearTimers();
+                
+                // Redirect to login page with message
+                const redirectUrl = 'login.html?message=session_expired';
+                window.location.href = redirectUrl;
+            }
+
+            // Clear session data
+            clearSession() {
+                localStorage.removeItem(SESSION_CONFIG.isLoggedInKey);
+                localStorage.removeItem(SESSION_CONFIG.usernameKey);
+                localStorage.removeItem(SESSION_CONFIG.lastActivityKey);
+            }
+
+            // Clear all timers
+            clearTimers() {
+                if (this.timer) {
+                    clearInterval(this.timer);
+                    this.timer = null;
+                }
+                if (this.activityTimer) {
+                    clearTimeout(this.activityTimer);
+                    this.activityTimer = null;
+                }
+            }
+
+            // Check if user is authenticated
+            isAuthenticated() {
+                return localStorage.getItem(SESSION_CONFIG.isLoggedInKey) === 'true';
             }
         }
 
-        .confirmation-icon {
-            font-size: 48px;
-            color: rgba(0, 0, 0, 0.9);
-            margin-bottom: 20px;
-            width: 72px;
-            height: 72px;
-            margin: 0 auto 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
+        // Main initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            // Disable right-click context menu
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
 
-        .confirmation-title {
-            font-size: 20px;
-            color: rgba(0, 0, 0, 0.9);
-            margin-bottom: 8px;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
+            // Disable keyboard shortcuts for saving
+            document.addEventListener('keydown', function(e) {
+                // Disable Ctrl+S, Ctrl+Shift+S, Ctrl+P
+                if ((e.ctrlKey && e.key === 's') || 
+                    (e.ctrlKey && e.shiftKey && e.key === 'S') || 
+                    (e.ctrlKey && e.key === 'p')) {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Disable F12 (DevTools)
+                if (e.key === 'F12') {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Disable Ctrl+Shift+I (DevTools)
+                if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Disable Ctrl+U (View Source)
+                if (e.ctrlKey && e.key === 'u') {
+                    e.preventDefault();
+                    return false;
+                }
+            });
 
-        .confirmation-text {
-            color: rgba(0, 0, 0, 0.6);
-            font-size: 15px;
-            line-height: 1.4;
-            margin-bottom: 28px;
-            font-weight: 400;
-        }
-
-        .confirmation-buttons {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-        }
-
-        .confirmation-btn {
-            padding: 14px 24px;
-            border-radius: 12px;
-            font-weight: 500;
-            font-size: 15px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            flex: 1;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            letter-spacing: -0.01em;
-        }
-
-        .cancel-btn {
-            background: rgba(0, 0, 0, 0.03);
-            color: rgba(0, 0, 0, 0.8);
-        }
-
-        .cancel-btn:hover {
-            background: rgba(0, 0, 0, 0.06);
-            transform: translateY(-1px);
-        }
-
-        .cancel-btn:active {
-            transform: translateY(0);
-        }
-
-        .confirm-btn {
-            background: rgba(0, 0, 0, 0.85);
-            color: white;
-            border: none;
-        }
-
-        .confirm-btn:hover {
-            background: rgba(0, 0, 0, 0.95);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .confirm-btn:active {
-            transform: translateY(0);
-            box-shadow: none;
-        }
-
-        /* Dark mode for modal */
-        @media (prefers-color-scheme: dark) {
-            .logout-confirmation-content {
-                background: rgba(40, 40, 40, 0.85);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                box-shadow: 
-                    0 20px 60px rgba(0, 0, 0, 0.25),
-                    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            // CHECK SESSION EXPIRATION IMMEDIATELY
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            const lastActivity = localStorage.getItem('eduwell_svt_lastActivity');
+            
+            if (isLoggedIn && lastActivity) {
+                const lastActivityTime = parseInt(lastActivity);
+                const currentTime = Date.now();
+                const minutesDiff = (currentTime - lastActivityTime) / (1000 * 60);
+                
+                // If session expired due to 30 minutes of inactivity, redirect to login
+                if (minutesDiff >= 30) {
+                    localStorage.clear();
+                    window.location.href = 'login.html?message=session_expired';
+                    return;
+                }
+            } else if (!isLoggedIn) {
+                // Not logged in, redirect to login
+                window.location.href = 'login.html';
+                return;
             }
             
-            .confirmation-icon {
-                color: rgba(255, 255, 255, 0.9);
-                background: rgba(255, 255, 255, 0.05);
-                border: 1px solid rgba(255, 255, 255, 0.1);
+            // Only initialize session manager if user is logged in
+            if (isLoggedIn) {
+                // Initialize session manager
+                window.sessionManager = new SessionManager();
+                sessionManager.init();
+                
+                // Update username in profile
+                const username = localStorage.getItem('eduwell_svt_username') || 'User';
+                const profileUsername = document.getElementById('profileUsername');
+                const welcomeTitle = document.getElementById('welcomeTitle');
+                
+                if (profileUsername) {
+                    profileUsername.textContent = username;
+                }
+                if (welcomeTitle) {
+                    welcomeTitle.textContent = `Bienvenue, ${username}`;
+                }
             }
-            
-            .confirmation-title {
-                color: rgba(255, 255, 255, 0.95);
-            }
-            
-            .confirmation-text {
-                color: rgba(255, 255, 255, 0.7);
-            }
-            
-            .cancel-btn {
-                background: rgba(255, 255, 255, 0.08);
-                color: rgba(255, 255, 255, 0.9);
-                border: 1px solid rgba(255, 255, 255, 0.15);
-            }
-            
-            .cancel-btn:hover {
-                background: rgba(255, 255, 255, 0.12);
-            }
-            
-            .confirm-btn {
-                background: rgba(255, 255, 255, 0.9);
-                color: rgba(0, 0, 0, 0.9);
-            }
-            
-            .confirm-btn:hover {
-                background: white;
-            }
-        }
-    </style>
 
-   
+            // Setup logout functionality
+            const logoutBtn = document.getElementById('profileLogoutBtn');
+            const logoutConfirmationPopup = document.getElementById('logoutConfirmationPopup');
+            const logoutCancelBtn = document.getElementById('logoutCancelBtn');
+            const logoutConfirmBtn = document.getElementById('logoutConfirmBtn');
 
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function() {
+                    logoutConfirmationPopup.style.display = 'flex';
+                });
+            }
+
+            if (logoutCancelBtn) {
+                logoutCancelBtn.addEventListener('click', function() {
+                    logoutConfirmationPopup.style.display = 'none';
+                });
+            }
+
+            if (logoutConfirmBtn) {
+                logoutConfirmBtn.addEventListener('click', function() {
+                    // Clear session manager
+                    if (window.sessionManager) {
+                        window.sessionManager.clearTimers();
+                        window.sessionManager.clearSession();
+                    }
+                    
+                    // Clear all auth data
+                    localStorage.removeItem('eduwell_svt_isLoggedIn');
+                    localStorage.removeItem('eduwell_svt_username');
+                    localStorage.removeItem('eduwell_svt_lastActivity');
+                    
+                    // Redirect to login page
+                    window.location.href = 'login.html';
+                });
+            }
+
+            // Close modal when clicking outside
+            logoutConfirmationPopup.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.style.display = 'none';
+                }
+            });
+        });
+    </script>
 
     <!-- Your existing scripts -->
     <script src="./assets/js/qcm.js"></script>
-
     <script src="./assets/js/login.js"></script>
     <script src="./assets/js/exercice.js"></script>
     <script src="./assets/js/flashcarts.js"></script>

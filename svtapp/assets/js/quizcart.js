@@ -9,42 +9,42 @@
                         title: "Chez l'Homme Pack(1)",
                         description: "",
                         icon: "fas fa-male",
-                        link: "seek1.html",
+                        link: "./pages/seek1.html",
                         color: "blue"
                     },
                     {
                         title: "Chez la Femme Pack(1)",
                         description: "",
                         icon: "fas fa-female",
-                        link: "seek3",
+                        link: "./pages/seek3.html",
                         color: "green"
                     },
                     {
                         title: "Chez l'Homme Pack(2)",
                         description: "",
                         icon: "fas fa-male",
-                        link: "seek2",
+                        link: "./pages/seek2.html",
                         color: "blue"
                     },
                     {
                         title: "Chez la Femme Pack(2)",
                         description: "",
                         icon: "fas fa-female",
-                        link: "seek4",
+                        link: "./pages/seek4.html",
                         color: "green"
                     },
                     {
                         title: "Procréation Pack(1)",
                         description: "",
                         icon: "fas fa-baby",
-                        link: "seek5",
+                        link: "./pages/seek5.html",
                         color: "purple"
                     },
                     {
                         title: "Procréation Pack(2)",
                         description: "",
                         icon: "fas fa-baby",
-                        link: "seek6",
+                        link: "./pages/seek6.html",
                         color: "purple"
                     }
                 ]
@@ -57,14 +57,14 @@
                         title: "Arguments",
                         description: "",
                         icon: "fas fa-search",
-                        link: "seek7",
+                        link: "./pages/seek7.html",
                         color: "blue"
                     },
                     {
                         title: "Mécanismes",
                         description: "",
                         icon: "fas fa-cogs",
-                        link: "seek8",
+                        link: "./pages/seek8.html",
                         color: "purple"
                     }
                 ]
@@ -77,7 +77,7 @@
                         title: "Génétique des diploïdes (P1)",
                         description: "",
                         icon: "fas fa-dna",
-                        link: "seek11",
+                        link: "./pages/seek11.html",
                         color: "green"
                     },
                     {

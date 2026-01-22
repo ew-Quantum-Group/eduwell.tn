@@ -982,7 +982,7 @@
             gap: var(--space-2);
         }
 
-        /* ===== Video Popup - FIXED ===== */
+        /* ===== Video Popup - FIXED FOR MOBILE ===== */
         .popup-overlay {
             position: fixed;
             top: 0;
@@ -1040,7 +1040,8 @@
         }
 
         .popup-container.active {
-            display: block;
+            display: flex;
+            flex-direction: column;
             opacity: 1;
             transform: translate(-50%, -50%) scale(1);
         }
@@ -1054,6 +1055,7 @@
             background-color: var(--white);
             /* Prevent content shift */
             flex-shrink: 0;
+            min-height: 73px;
         }
 
         .popup-title {
@@ -1089,39 +1091,47 @@
         .popup-content {
             display: flex;
             flex-direction: column;
-            height: calc(90vh - 73px);
+            flex: 1;
+            min-height: 0;
             overflow: hidden;
             /* Optimize scrolling */
             contain: content;
         }
 
+        /* FIXED VIDEO PLAYER CONTAINER FOR MOBILE */
         .video-player-container {
-            flex: 0 0 auto;
-            height: 56.25%; /* 16:9 aspect ratio */
-            background-color: var(--black);
             position: relative;
+            background-color: var(--black);
             overflow: hidden;
             width: 100%;
-            /* Prevent iframe issues on mobile */
-            min-height: 0;
+            /* Perfect aspect ratio handling */
+            aspect-ratio: 16/9;
+            /* Ensure container matches video exactly */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        @media (max-width: 768px) {
-            .video-player-container {
-                height: 40%;
-                width: 100%;
-                /* Ensure proper sizing on mobile */
-                flex-shrink: 0;
-            }
+        /* Video player wrapper for perfect centering */
+        .video-player-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .video-player {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            background-color: var(--black);
-            /* Prevent iframe scaling issues */
             border: 0;
+            background-color: var(--black);
+            /* Perfect fit - no extra space */
+            object-fit: contain;
             display: block;
             /* Fix iOS iframe rendering */
             -webkit-overflow-scrolling: touch;
@@ -1129,11 +1139,12 @@
 
         /* Fix for YouTube/Drive iframe responsiveness */
         .video-player iframe {
-            width: 100%;
-            height: 100%;
             position: absolute;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
 
         .video-source-indicator {
@@ -1347,7 +1358,7 @@
             animation: slideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
-        /* ===== Responsive Design ===== */
+        /* ===== Mobile-Specific Video Player Fixes ===== */
         @media (max-width: 1024px) {
             .container {
                 padding: 0 var(--space-6);
@@ -1361,11 +1372,6 @@
                 flex-direction: column;
             }
             
-            .video-player-container {
-                height: 45%;
-                width: 100%;
-            }
-            
             .profile-details-title {
                 font-size: var(--font-size-xl);
             }
@@ -1373,6 +1379,12 @@
             .profile-stats-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: var(--space-3);
+            }
+            
+            /* Tablet video player optimization */
+            .video-player-container {
+                aspect-ratio: 16/9;
+                flex-shrink: 0;
             }
         }
 
@@ -1439,45 +1451,66 @@
                 gap: var(--space-3);
             }
             
-            /* Mobile Popup Optimization */
+            /* Mobile Popup Optimization - FIXED VIDEO PLAYER */
             .popup-container {
-                width: 98%;
-                height: 95vh;
-                border-radius: var(--radius-lg);
+                width: 100%;
+                height: 100vh;
+                border-radius: 0;
+                top: 0;
+                left: 0;
+                transform: none;
                 max-width: none;
                 /* Full screen on mobile */
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%) scale(0.95);
+                display: none;
+                opacity: 0;
+            }
+            
+            .popup-container.active {
+                display: flex;
+                opacity: 1;
+                transform: none;
+                animation: fadeIn 0.3s ease;
             }
             
             .popup-content {
-                height: calc(95vh - 73px);
+                height: 100%;
+                flex: 1;
+                min-height: 0;
             }
             
             .popup-header {
                 padding: var(--space-4);
+                min-height: 65px;
             }
             
             .popup-title {
                 font-size: var(--font-size-lg);
             }
             
+            /* PERFECT VIDEO PLAYER FOR MOBILE */
             .video-player-container {
-                height: 40%;
+                aspect-ratio: 16/9;
                 width: 100%;
-                /* Remove negative margin that was causing issues */
-                margin-left: 0;
-                max-width: 100%;
+                height: auto;
+                max-height: 50vh;
+                flex-shrink: 0;
+                /* Remove all margins and extra space */
+                margin: 0;
+                padding: 0;
             }
             
             .video-player {
                 width: 100%;
-                max-width: 100%;
+                height: 100%;
+                /* Ensure perfect fit */
+                object-fit: contain;
             }
             
             .video-playlist {
                 padding: var(--space-4);
+                flex: 1;
+                min-height: 0;
+                overflow-y: auto;
             }
             
             .playlist-header {
@@ -1555,32 +1588,14 @@
                 font-size: var(--font-size-lg);
             }
             
-            /* Mobile Popup Fine-tuning */
-            .popup-container {
-                width: 100%;
-                height: 100vh;
-                border-radius: 0;
-                animation: fadeIn 0.3s ease;
-                /* Full screen on very small devices */
-                top: 0;
-                left: 0;
-                transform: none;
-                max-width: none;
-            }
-            
-            @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-            
-            .popup-content {
-                height: calc(100vh - 73px);
-            }
-            
+            /* Small Mobile Video Player Perfection */
             .video-player-container {
-                height: 45%;
-                width: 100%;
-                margin-left: 0;
+                aspect-ratio: 16/9;
+                max-height: 45vh;
+                /* Ensure no extra space */
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
             
             .popup-title span {
@@ -1598,8 +1613,9 @@
         }
 
         @media (max-width: 360px) {
+            /* Extra small devices */
             .video-player-container {
-                height: 40%;
+                max-height: 40vh;
             }
             
             .playlist-item {
@@ -1632,6 +1648,25 @@
                 width: 32px;
                 height: 32px;
                 font-size: 14px;
+            }
+        }
+
+        /* ===== Landscape Mode Optimization ===== */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .popup-container {
+                height: 100vh;
+            }
+            
+            .video-player-container {
+                aspect-ratio: 16/9;
+                max-height: 60vh;
+                /* Perfect fit for landscape */
+                width: 100%;
+                height: auto;
+            }
+            
+            .popup-content {
+                flex-direction: column;
             }
         }
 
@@ -1671,6 +1706,13 @@
             .activity-item:hover,
             .playlist-item:hover {
                 transform: none;
+            }
+            
+            /* Optimize video player for touch */
+            .video-player {
+                /* Enable hardware acceleration */
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
             }
         }
 
@@ -2176,11 +2218,6 @@
         let currentSubject = null;
         let currentVideoIndex = 0;
         let isLoggedIn = false;
-        
-        // Performance optimization variables
-        let isScrolling = false;
-        let scrollTimeout = null;
-        let lastScrollTime = 0;
 
         // Initialize Application
         document.addEventListener('DOMContentLoaded', () => {
@@ -2188,7 +2225,7 @@
             renderSubjects();
             renderFeaturedVideos();
             initPopup();
-            initOptimizedTouchSupport(); // Changed to optimized version
+            initTouchSupport();
             initAccessibility();
             initAnimations();
             initProfileInteractions();
@@ -2367,7 +2404,7 @@
             });
         }
 
-        // Initialize Popup - FIXED VERSION
+        // Initialize Popup
         function initPopup() {
             // Close popup on overlay click
             popupOverlay.addEventListener('click', closePopup);
@@ -2387,44 +2424,46 @@
                 e.stopPropagation();
             });
             
-            // Fix for iOS Safari 100vh issue
-            function setPopupHeight() {
+            // Fix video player sizing on mobile
+            function optimizeVideoPlayer() {
+                const videoContainer = document.querySelector('.video-player-container');
+                const videoElement = document.querySelector('.video-player');
+                
+                if (!videoContainer || !videoElement) return;
+                
+                // Ensure video takes exact container size
+                videoElement.style.width = '100%';
+                videoElement.style.height = '100%';
+                videoElement.style.maxWidth = '100%';
+                videoElement.style.maxHeight = '100%';
+                
+                // Mobile-specific optimizations
                 if (window.innerWidth <= 768) {
-                    const vh = window.innerHeight * 0.01;
-                    document.documentElement.style.setProperty('--vh', `${vh}px`);
+                    // Set container to exact video dimensions
+                    videoContainer.style.flexShrink = '0';
+                    videoContainer.style.display = 'flex';
+                    videoContainer.style.alignItems = 'center';
+                    videoContainer.style.justifyContent = 'center';
                     
-                    if (popupContainer.classList.contains('active')) {
-                        const isMobile = window.innerWidth <= 480;
-                        if (isMobile) {
-                            popupContainer.style.height = '100vh';
-                            popupContainer.style.top = '0';
-                            popupContainer.style.left = '0';
-                            popupContainer.style.transform = 'none';
-                        }
+                    // Ensure iframe is properly sized
+                    if (videoElement.tagName === 'IFRAME') {
+                        videoElement.style.position = 'absolute';
+                        videoElement.style.top = '0';
+                        videoElement.style.left = '0';
+                        videoElement.style.width = '100%';
+                        videoElement.style.height = '100%';
                     }
                 }
             }
             
-            // Set initial height
-            setPopupHeight();
+            // Call on popup open and window resize
+            window.addEventListener('resize', optimizeVideoPlayer);
             
-            // Update on resize
-            window.addEventListener('resize', setPopupHeight);
-            window.addEventListener('orientationchange', setPopupHeight);
-            
-            // Prevent body scroll when popup is open
-            const preventDefault = (e) => {
-                if (popupContainer.classList.contains('active')) {
-                    e.preventDefault();
-                }
-            };
-            
-            // Add touch event listeners to prevent scroll
-            document.addEventListener('touchmove', preventDefault, { passive: false });
-            document.addEventListener('wheel', preventDefault, { passive: false });
+            // Initial call
+            setTimeout(optimizeVideoPlayer, 100);
         }
 
-        // Open Subject Popup - FIXED VERSION
+        // Open Subject Popup
         function openSubjectPopup(subjectName) {
             currentSubject = subjectName;
             currentVideoIndex = 0;
@@ -2487,10 +2526,10 @@
             
             // Show popup with animation
             document.body.style.overflow = 'hidden';
-            document.body.style.touchAction = 'none'; // Prevent scroll on body
+            popupOverlay.classList.add('active');
             
-            // Set popup position based on screen size
-            const isMobile = window.innerWidth <= 480;
+            // Mobile-specific positioning
+            const isMobile = window.innerWidth <= 768;
             if (isMobile) {
                 popupContainer.style.top = '0';
                 popupContainer.style.left = '0';
@@ -2508,17 +2547,15 @@
                 popupContainer.style.borderRadius = 'var(--radius-xl)';
             }
             
-            popupOverlay.classList.add('active');
-            
-            // Use requestAnimationFrame for smoother animation
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    popupContainer.classList.add('active');
-                    if (!isMobile) {
-                        popupContainer.style.transform = 'translate(-50%, -50%) scale(1)';
-                    }
-                });
-            });
+            setTimeout(() => {
+                popupContainer.classList.add('active');
+                if (!isMobile) {
+                    popupContainer.style.transform = 'translate(-50%, -50%) scale(1)';
+                }
+                
+                // Optimize video player after popup opens
+                setTimeout(optimizeVideoPlayer, 50);
+            }, 10);
             
             // Focus on close button for accessibility
             setTimeout(() => {
@@ -2526,80 +2563,106 @@
             }, 100);
         }
 
-        // Play Video - OPTIMIZED VERSION
+        // Optimize video player function
+        function optimizeVideoPlayer() {
+            const videoContainer = document.querySelector('.video-player-container');
+            const videoElement = document.querySelector('.video-player');
+            
+            if (!videoContainer || !videoElement) return;
+            
+            // Reset styles
+            videoContainer.style.margin = '0';
+            videoContainer.style.padding = '0';
+            videoElement.style.margin = '0';
+            videoElement.style.padding = '0';
+            
+            // Mobile optimizations
+            if (window.innerWidth <= 768) {
+                // Ensure perfect aspect ratio
+                videoContainer.style.aspectRatio = '16/9';
+                videoContainer.style.width = '100%';
+                videoContainer.style.height = 'auto';
+                videoContainer.style.maxHeight = window.innerHeight * 0.5 + 'px';
+                
+                // Perfect iframe sizing
+                if (videoElement.tagName === 'IFRAME') {
+                    videoElement.style.width = '100%';
+                    videoElement.style.height = '100%';
+                    videoElement.style.position = 'absolute';
+                    videoElement.style.top = '0';
+                    videoElement.style.left = '0';
+                }
+            }
+        }
+
+        // Play Video
         function playVideo(index, videos) {
             if (index < 0 || index >= videos.length) return;
             
             currentVideoIndex = index;
             const video = videos[index];
             
-            // Clear previous video to prevent memory leaks
+            // Clear previous video
             videoPlayer.src = '';
             
-            // Use setTimeout to prevent blocking UI
-            setTimeout(() => {
-                // Update video player based on source
-                if (video.source === 'youtube') {
-                    // YouTube video with optimized parameters
-                    videoPlayer.src = `https://www.youtube.com/embed/${video.sourceId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
-                    videoSourceIndicator.innerHTML = '<i class="fab fa-youtube"></i><span>YouTube</span>';
-                } else if (video.source === 'drive') {
-                    // Google Drive video - use embedded viewer
-                    videoPlayer.src = `https://drive.google.com/file/d/${video.sourceId}/preview`;
-                    videoSourceIndicator.innerHTML = '<i class="fab fa-google-drive"></i><span>Google Drive</span>';
-                }
-                
-                // Update active playlist item
-                document.querySelectorAll('.playlist-item').forEach((item, i) => {
-                    item.classList.toggle('active', i === index);
-                    const number = item.querySelector('.playlist-number');
-                    if (number) {
-                        number.textContent = i + 1;
-                        number.style.backgroundColor = i === index ? 'var(--accent-blue)' : 'var(--gray-100)';
-                        number.style.color = i === index ? 'var(--white)' : 'var(--gray-600)';
-                    }
-                });
-                
-                // Scroll active item into view with smooth behavior
-                if (window.innerWidth <= 768) {
-                    const activeItem = document.querySelector('.playlist-item.active');
-                    if (activeItem) {
-                        // Use smooth scroll with timeout for better performance
-                        setTimeout(() => {
-                            activeItem.scrollIntoView({ 
-                                behavior: 'smooth', 
-                                block: 'center',
-                                inline: 'nearest' 
-                            });
-                        }, 50);
-                    }
-                }
-            }, 10);
-        }
-
-        // Close Popup - FIXED VERSION
-        function closePopup() {
-            // Pause video and clear src to stop playback
-            if (videoPlayer) {
-                videoPlayer.src = '';
-                videoPlayer.removeAttribute('src');
+            // Update video player based on source
+            if (video.source === 'youtube') {
+                // YouTube video with mobile optimization
+                videoPlayer.src = `https://www.youtube.com/embed/${video.sourceId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+                videoSourceIndicator.innerHTML = '<i class="fab fa-youtube"></i><span>YouTube</span>';
+            } else if (video.source === 'drive') {
+                // Google Drive video
+                videoPlayer.src = `https://drive.google.com/file/d/${video.sourceId}/preview`;
+                videoSourceIndicator.innerHTML = '<i class="fab fa-google-drive"></i><span>Google Drive</span>';
             }
             
-            // Hide popup with animation
+            // Update active playlist item
+            document.querySelectorAll('.playlist-item').forEach((item, i) => {
+                item.classList.toggle('active', i === index);
+                const number = item.querySelector('.playlist-number');
+                if (number) {
+                    number.textContent = i + 1;
+                    number.style.backgroundColor = i === index ? 'var(--accent-blue)' : 'var(--gray-100)';
+                    number.style.color = i === index ? 'var(--white)' : 'var(--gray-600)';
+                }
+            });
+            
+            // Scroll active item into view on mobile
+            if (window.innerWidth <= 768) {
+                const activeItem = document.querySelector('.playlist-item.active');
+                if (activeItem) {
+                    setTimeout(() => {
+                        activeItem.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'center',
+                            inline: 'nearest' 
+                        });
+                    }, 100);
+                }
+            }
+            
+            // Optimize video player after loading
+            setTimeout(optimizeVideoPlayer, 100);
+        }
+
+        // Close Popup
+        function closePopup() {
+            // Pause video
+            videoPlayer.src = '';
+            
+            // Hide popup
             popupContainer.classList.remove('active');
-            
-            // Reset popup position for next open
-            popupContainer.style.transform = 'translate(-50%, -50%) scale(0.95)';
-            popupContainer.style.top = '50%';
-            popupContainer.style.left = '50%';
-            
             setTimeout(() => {
                 popupOverlay.classList.remove('active');
                 document.body.style.overflow = '';
-                document.body.style.touchAction = '';
+                
+                // Reset popup position
+                popupContainer.style.top = '50%';
+                popupContainer.style.left = '50%';
+                popupContainer.style.transform = 'translate(-50%, -50%) scale(0.95)';
             }, 150);
             
-            // Focus on last clicked subject for accessibility
+            // Focus on last clicked subject
             if (currentSubject) {
                 const subjectCards = document.querySelectorAll('.subject-card');
                 subjectCards.forEach(card => {
@@ -2610,36 +2673,15 @@
             }
         }
 
-        // Initialize Optimized Touch Support - FIXED VERSION
-        function initOptimizedTouchSupport() {
+        // Initialize Touch Support
+        function initTouchSupport() {
             const track = subjectsTrack;
             
-            // Remove any existing drag implementation and use native scrolling
-            // Native scrolling is more performant on mobile
-            
-            // Just ensure native scrolling works smoothly
+            // Native scrolling is more performant
             track.style.cursor = 'grab';
-            
-            // Add momentum scrolling for better UX
-            track.addEventListener('scroll', () => {
-                // Clear any existing timeout
-                if (scrollTimeout) {
-                    clearTimeout(scrollTimeout);
-                }
-                
-                // Set scrolling state
-                isScrolling = true;
-                lastScrollTime = Date.now();
-                
-                // Use requestAnimationFrame for better performance
-                scrollTimeout = setTimeout(() => {
-                    isScrolling = false;
-                }, 100);
-            });
             
             // Improve touch interaction
             track.addEventListener('touchstart', (e) => {
-                // Just ensure default behavior works
                 track.style.cursor = 'grabbing';
             }, { passive: true });
             
@@ -2647,12 +2689,10 @@
                 track.style.cursor = 'grab';
             }, { passive: true });
             
-            // Optimize for mobile devices
+            // Optimize for mobile
             if ('ontouchstart' in window) {
-                // Use passive listeners for better performance
                 track.addEventListener('touchmove', () => {}, { passive: true });
                 
-                // Optimize touch targets
                 document.querySelectorAll('.subject-card').forEach(el => {
                     el.style.minHeight = '44px';
                     el.style.minWidth = '44px';
@@ -2676,7 +2716,7 @@
                 card.setAttribute('aria-label', `${label}: ${value}`);
             });
             
-            // Handle keyboard navigation in popup
+            // Keyboard navigation in popup
             document.addEventListener('keydown', (e) => {
                 if (!popupContainer.classList.contains('active')) return;
                 

@@ -419,7 +419,8 @@
             border-color: rgba(255, 149, 0, 0.1);
         }
 
-        /* Stats Grid - Enhanced and moved to profile header card */
+        /* ===== DESKTOP-ONLY Profile Stats Grid Fix ===== */
+        /* Mobile stays perfect, only desktop gets fixed */
         .profile-stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -428,10 +429,43 @@
             width: 100%;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 768px) and (max-width: 1023px) {
+            /* Tablet layout - keep as is */
             .profile-stats-grid {
                 grid-template-columns: repeat(4, 1fr);
                 gap: var(--space-4);
+            }
+        }
+
+        /* DESKTOP FIX: Better alignment and spacing */
+        @media (min-width: 1024px) {
+            .profile-stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: var(--space-3);
+                margin-top: var(--space-6);
+                padding: 0 var(--space-2);
+            }
+            
+            .profile-stat-card {
+                padding: var(--space-4) var(--space-3);
+                border-radius: var(--radius-md);
+            }
+            
+            .profile-stat-card .stat-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+                margin-bottom: var(--space-3);
+            }
+            
+            .stat-value {
+                font-size: var(--font-size-xl);
+                margin-bottom: var(--space-1);
+            }
+            
+            .stat-label {
+                font-size: var(--font-size-xs);
+                letter-spacing: 0.01em;
             }
         }
 
@@ -725,7 +759,7 @@
         .activity-content {
             flex: 1;
             min-width: 0;
-        }
+}
 
         .activity-text {
             font-size: var(--font-size-base);
@@ -982,7 +1016,7 @@
             gap: var(--space-2);
         }
 
-        /* ===== Video Popup - FIXED FOR MOBILE ===== */
+        /* ===== Video Popup - DESKTOP LAYOUT ===== */
         .popup-overlay {
             position: fixed;
             top: 0;
@@ -1088,17 +1122,104 @@
             color: var(--gray-900);
         }
 
-        .popup-content {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            min-height: 0;
-            overflow: hidden;
-            /* Optimize scrolling */
-            contain: content;
+        /* DESKTOP-ONLY: YouTube-style layout */
+        @media (min-width: 769px) {
+            .popup-content {
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                grid-template-rows: 1fr;
+                flex: 1;
+                min-height: 0;
+                overflow: hidden;
+            }
+            
+            .video-player-container {
+                grid-column: 1;
+                grid-row: 1;
+                aspect-ratio: 16/9;
+                width: 100%;
+                height: auto;
+                max-height: none;
+                border-right: 1px solid var(--gray-200);
+                border-radius: 0;
+            }
+            
+            .video-playlist {
+                grid-column: 2;
+                grid-row: 1;
+                flex: 1;
+                overflow-y: auto;
+                padding: var(--space-6);
+                background-color: var(--white-soft);
+                border-radius: 0;
+                /* Optimize scrolling performance */
+                -webkit-overflow-scrolling: touch;
+                will-change: scroll-position;
+                /* Prevent content shift */
+                scrollbar-gutter: stable;
+            }
+            
+            .playlist-header {
+                margin-bottom: var(--space-6);
+                flex-shrink: 0;
+            }
         }
 
-        /* FIXED VIDEO PLAYER CONTAINER FOR MOBILE */
+        /* MOBILE-ONLY: Keep existing perfect mobile layout */
+        @media (max-width: 768px) {
+            .popup-content {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+                min-height: 0;
+                overflow: hidden;
+            }
+            
+            .video-player-container {
+                aspect-ratio: 16/9;
+                width: 100%;
+                height: auto;
+                max-height: 50vh;
+                flex-shrink: 0;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .video-playlist {
+                flex: 1;
+                overflow-y: auto;
+                padding: var(--space-4);
+                background-color: var(--white-soft);
+            }
+            
+            .popup-container {
+                width: 100%;
+                height: 100vh;
+                border-radius: 0;
+                top: 0;
+                left: 0;
+                transform: none;
+                max-width: none;
+            }
+            
+            .popup-container.active {
+                display: flex;
+                opacity: 1;
+                transform: none;
+                animation: fadeIn 0.3s ease;
+            }
+            
+            .popup-header {
+                padding: var(--space-4);
+                min-height: 65px;
+            }
+            
+            .popup-title {
+                font-size: var(--font-size-lg);
+            }
+        }
+
+        /* Video player container for perfect centering */
         .video-player-container {
             position: relative;
             background-color: var(--black);
@@ -1162,18 +1283,6 @@
             display: flex;
             align-items: center;
             gap: var(--space-2);
-        }
-
-        .video-playlist {
-            flex: 1;
-            overflow-y: auto;
-            padding: var(--space-6);
-            background-color: var(--white-soft);
-            /* Optimize scrolling performance */
-            -webkit-overflow-scrolling: touch;
-            will-change: scroll-position;
-            /* Prevent content shift */
-            scrollbar-gutter: stable;
         }
 
         .playlist-header {
@@ -1368,17 +1477,8 @@
                 grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             }
             
-            .popup-content {
-                flex-direction: column;
-            }
-            
             .profile-details-title {
                 font-size: var(--font-size-xl);
-            }
-            
-            .profile-stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: var(--space-3);
             }
             
             /* Tablet video player optimization */
@@ -1446,64 +1546,18 @@
                 font-size: var(--font-size-lg);
             }
             
+            /* Mobile stats grid stays perfect */
             .profile-stats-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: var(--space-3);
             }
             
-            /* Mobile Popup Optimization - FIXED VIDEO PLAYER */
-            .popup-container {
-                width: 100%;
-                height: 100vh;
-                border-radius: 0;
-                top: 0;
-                left: 0;
-                transform: none;
-                max-width: none;
-                /* Full screen on mobile */
-                display: none;
-                opacity: 0;
-            }
-            
-            .popup-container.active {
-                display: flex;
-                opacity: 1;
-                transform: none;
-                animation: fadeIn 0.3s ease;
-            }
-            
-            .popup-content {
-                height: 100%;
-                flex: 1;
-                min-height: 0;
-            }
-            
-            .popup-header {
-                padding: var(--space-4);
-                min-height: 65px;
-            }
-            
-            .popup-title {
-                font-size: var(--font-size-lg);
-            }
-            
-            /* PERFECT VIDEO PLAYER FOR MOBILE */
             .video-player-container {
                 aspect-ratio: 16/9;
                 width: 100%;
                 height: auto;
                 max-height: 50vh;
                 flex-shrink: 0;
-                /* Remove all margins and extra space */
-                margin: 0;
-                padding: 0;
-            }
-            
-            .video-player {
-                width: 100%;
-                height: 100%;
-                /* Ensure perfect fit */
-                object-fit: contain;
             }
             
             .video-playlist {
@@ -1575,6 +1629,7 @@
                 font-size: var(--font-size-xs);
             }
             
+            /* Mobile stats grid stays perfect */
             .profile-stats-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: var(--space-2);
@@ -1789,40 +1844,8 @@
                             </span>
                         </div>
                         
-                        <!-- Stats Grid - Moved to Profile Header Card -->
-                        <div class="profile-stats-grid">
-                            <div class="profile-stat-card">
-                                <div class="stat-icon" style="background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));">
-                                    <i class="fas fa-book"></i>
-                                </div>
-                                <div class="stat-value">12</div>
-                                <div class="stat-label">Courses</div>
-                            </div>
-                            
-                            <div class="profile-stat-card">
-                                <div class="stat-icon" style="background: linear-gradient(135deg, var(--accent-green), #5CD25C);">
-                                    <i class="fas fa-chart-bar"></i>
-                                </div>
-                                <div class="stat-value">94%</div>
-                                <div class="stat-label">Grade</div>
-                            </div>
-                            
-                            <div class="profile-stat-card">
-                                <div class="stat-icon" style="background: linear-gradient(135deg, var(--accent-orange), #FFB340);">
-                                    <i class="fas fa-fire"></i>
-                                </div>
-                                <div class="stat-value">38</div>
-                                <div class="stat-label">Streak</div>
-                            </div>
-                            
-                            <div class="profile-stat-card">
-                                <div class="stat-icon" style="background: linear-gradient(135deg, var(--accent-red), #FF6B6B);">
-                                    <i class="fas fa-clock"></i>
-                                </div>
-                                <div class="stat-value">156h</div>
-                                <div class="stat-label">Study</div>
-                            </div>
-                        </div>
+                        <!-- Stats Grid - Fixed for Desktop -->
+                       
                     </div>
                     
                     <!-- Profile Details Card - ENHANCED -->
@@ -1860,10 +1883,7 @@
                                     <i class="fas fa-history"></i>
                                     Recent Activity
                                 </h3>
-                                <a href="#" class="view-all-button">
-                                    View All
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
+                               
                             </div>
                             
                             <div class="activity-list">
@@ -2423,44 +2443,6 @@
             popupContainer.addEventListener('click', (e) => {
                 e.stopPropagation();
             });
-            
-            // Fix video player sizing on mobile
-            function optimizeVideoPlayer() {
-                const videoContainer = document.querySelector('.video-player-container');
-                const videoElement = document.querySelector('.video-player');
-                
-                if (!videoContainer || !videoElement) return;
-                
-                // Ensure video takes exact container size
-                videoElement.style.width = '100%';
-                videoElement.style.height = '100%';
-                videoElement.style.maxWidth = '100%';
-                videoElement.style.maxHeight = '100%';
-                
-                // Mobile-specific optimizations
-                if (window.innerWidth <= 768) {
-                    // Set container to exact video dimensions
-                    videoContainer.style.flexShrink = '0';
-                    videoContainer.style.display = 'flex';
-                    videoContainer.style.alignItems = 'center';
-                    videoContainer.style.justifyContent = 'center';
-                    
-                    // Ensure iframe is properly sized
-                    if (videoElement.tagName === 'IFRAME') {
-                        videoElement.style.position = 'absolute';
-                        videoElement.style.top = '0';
-                        videoElement.style.left = '0';
-                        videoElement.style.width = '100%';
-                        videoElement.style.height = '100%';
-                    }
-                }
-            }
-            
-            // Call on popup open and window resize
-            window.addEventListener('resize', optimizeVideoPlayer);
-            
-            // Initial call
-            setTimeout(optimizeVideoPlayer, 100);
         }
 
         // Open Subject Popup
@@ -2528,9 +2510,10 @@
             document.body.style.overflow = 'hidden';
             popupOverlay.classList.add('active');
             
-            // Mobile-specific positioning
+            // Mobile vs Desktop positioning
             const isMobile = window.innerWidth <= 768;
             if (isMobile) {
+                // Mobile layout (unchanged)
                 popupContainer.style.top = '0';
                 popupContainer.style.left = '0';
                 popupContainer.style.transform = 'none';
@@ -2538,6 +2521,7 @@
                 popupContainer.style.height = '100vh';
                 popupContainer.style.borderRadius = '0';
             } else {
+                // Desktop layout
                 popupContainer.style.top = '50%';
                 popupContainer.style.left = '50%';
                 popupContainer.style.transform = 'translate(-50%, -50%) scale(0.95)';
@@ -2552,47 +2536,12 @@
                 if (!isMobile) {
                     popupContainer.style.transform = 'translate(-50%, -50%) scale(1)';
                 }
-                
-                // Optimize video player after popup opens
-                setTimeout(optimizeVideoPlayer, 50);
             }, 10);
             
             // Focus on close button for accessibility
             setTimeout(() => {
                 popupClose.focus();
             }, 100);
-        }
-
-        // Optimize video player function
-        function optimizeVideoPlayer() {
-            const videoContainer = document.querySelector('.video-player-container');
-            const videoElement = document.querySelector('.video-player');
-            
-            if (!videoContainer || !videoElement) return;
-            
-            // Reset styles
-            videoContainer.style.margin = '0';
-            videoContainer.style.padding = '0';
-            videoElement.style.margin = '0';
-            videoElement.style.padding = '0';
-            
-            // Mobile optimizations
-            if (window.innerWidth <= 768) {
-                // Ensure perfect aspect ratio
-                videoContainer.style.aspectRatio = '16/9';
-                videoContainer.style.width = '100%';
-                videoContainer.style.height = 'auto';
-                videoContainer.style.maxHeight = window.innerHeight * 0.5 + 'px';
-                
-                // Perfect iframe sizing
-                if (videoElement.tagName === 'IFRAME') {
-                    videoElement.style.width = '100%';
-                    videoElement.style.height = '100%';
-                    videoElement.style.position = 'absolute';
-                    videoElement.style.top = '0';
-                    videoElement.style.left = '0';
-                }
-            }
         }
 
         // Play Video
@@ -2627,22 +2576,26 @@
                 }
             });
             
-            // Scroll active item into view on mobile
-            if (window.innerWidth <= 768) {
-                const activeItem = document.querySelector('.playlist-item.active');
-                if (activeItem) {
-                    setTimeout(() => {
+            // Scroll active item into view
+            const activeItem = document.querySelector('.playlist-item.active');
+            if (activeItem) {
+                setTimeout(() => {
+                    // Desktop scroll behavior
+                    if (window.innerWidth > 768) {
+                        activeItem.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'center'
+                        });
+                    } else {
+                        // Mobile scroll behavior
                         activeItem.scrollIntoView({ 
                             behavior: 'smooth', 
                             block: 'center',
                             inline: 'nearest' 
                         });
-                    }, 100);
-                }
+                    }
+                }, 100);
             }
-            
-            // Optimize video player after loading
-            setTimeout(optimizeVideoPlayer, 100);
         }
 
         // Close Popup
@@ -2656,10 +2609,11 @@
                 popupOverlay.classList.remove('active');
                 document.body.style.overflow = '';
                 
-                // Reset popup position
+                // Reset popup position for next open
                 popupContainer.style.top = '50%';
                 popupContainer.style.left = '50%';
                 popupContainer.style.transform = 'translate(-50%, -50%) scale(0.95)';
+                popupContainer.style.borderRadius = 'var(--radius-xl)';
             }, 150);
             
             // Focus on last clicked subject

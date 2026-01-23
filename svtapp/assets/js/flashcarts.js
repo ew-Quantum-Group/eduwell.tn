@@ -63,7 +63,7 @@
                     { src: "https://drive.google.com/thumbnail?id=1rdbpEervmKrPDHB73C7xwesLy8voE4pZ&sz=w1000",alt: "Cellule 8"},
                     { src: "https://drive.google.com/thumbnail?id=1Q1XGFkN_xZPi4255doQG7Vs9iE7ba7bw&sz=w1000",alt: "Cellule 9"},
                     { src: "https://drive.google.com/thumbnail?id=1fqvUV--ees-9qlcWoxP5nDJL7ltm86Bk&sz=w1000",alt: "Cellule 10"},
-                    { src: "https://drive.google.com/thumbnail?id=1-S_3m177TcJex0AWX4s-c9DeugX871P4/&sz=w1000",alt: "Cellule 11"},
+                    { src: "https://drive.google.com/thumbnail?id=1-S_3m177TcJex0AWX4s-c9DeugX871P4&sz=w1000",alt: "Cellule 11"},
                     { src: "https://drive.google.com/thumbnail?id=1djZJkRN4RavVlGEK3P8WhIxRW5aOoLb-&sz=w1000",alt: "Cellule 12"},
                     { src: "https://drive.google.com/thumbnail?id=1USWIA4GW9K7irjhQUT8RK8cbqJdvrwE_&sz=w1000",alt: "Cellule 13"},
                     { src: "https://drive.google.com/thumbnail?id=1v2e_G9zBbJ3TA8oTZNoDLfI7Fh4eUcif&sz=w1000",alt: "Cellule 14"},

@@ -635,7 +635,7 @@ const qcmData = {
         },
 {
     "id": "model4",
-    "title": "Génétique Mendélienne et Hérédité Humaine",
+    "title": "Génétique & hérédité humaine",
     "chapters": [
         {
             "id": "ch1",
@@ -844,7 +844,7 @@ const qcmData = {
         },
         {
             "id": "ch4",
-            "title": "Génétique Moléculaire et Évolution",
+            "title": "Génétique & Évolution",
             "questions": [
                 {
                     "id": 76,
@@ -1057,7 +1057,7 @@ const qcmData = {
 
 {
     "id": "model5",
-    "title": "Génétique des Populations et Neurophysiologie",
+    "title": "Génétique & Neurophysiologie",
     "chapters": [
         {
             "id": "ch1",
@@ -1609,7 +1609,7 @@ const qcmData = {
 },
 {
     "id": "model8",
-    "title": "Immunologie et Système Endocrinien",
+    "title": "Immunologie & Endocrinien",
     "chapters": [
         {
             "id": "ch1",
@@ -1844,6 +1844,167 @@ const qcmData = {
                         "nuire à la santé du fœtus Rh⁻",
                         "être issus d'une mère Rh⁺",
                         "être issus d'une mère Rh⁻"
+                    ],
+                    "correct_index": [0, 3]
+                }
+            ]
+        }
+    ]
+},
+{
+    "id": "model9",
+    "title": "Physio cardio – immuno",
+    "chapters": [
+        {
+            "id": "ch1",
+            "title": "Régulation Vasculaire et Système Endocrinien",
+            "questions": [
+                {
+                    "id": 158,
+                    "question": "La vasodilatation peut être déterminée par :",
+                    "choices": [
+                        "une libération d'acétylcholine par les fibres parasympathiques",
+                        "une libération d'adrénaline par la médullosurrénale",
+                        "une sécrétion d'aldostérone par la corticosurrénale",
+                        "une stimulation de l'interneurone inhibiteur"
+                    ],
+                    "correct_index": [3]
+                },
+                {
+                    "id": 159,
+                    "question": "Parmi les organes suivants, celui (ou ceux) qui est (ou sont) la cible de la TSH est :",
+                    "choices": [
+                        "le cœur",
+                        "la thyroïde",
+                        "l'hypophyse",
+                        "l'hypothalamus"
+                    ],
+                    "correct_index": [1]
+                },
+                {
+                    "id": 160,
+                    "question": "Le neurone dopaminergique est :",
+                    "choices": [
+                        "excitateur",
+                        "la cible de la dopamine",
+                        "la cible de la cocaïne",
+                        "responsable de la sensation d'angoisse"
+                    ],
+                    "correct_index": [0, 2]
+                },
+                {
+                    "id": 161,
+                    "question": "Le plasma sanguin d'un sujet S agglutine in-vitro des globules rouges portant à la fois les agglutinogènes A et B. On peut en déduire que le sujet S :",
+                    "choices": [
+                        "est de groupe AB",
+                        "est de groupe O",
+                        "peut être de groupe A",
+                        "peut être de groupe B"
+                    ],
+                    "correct_index": [2, 3]
+                },
+                {
+                    "id": 162,
+                    "question": "Les anticorps circulants sont :",
+                    "choices": [
+                        "des molécules spécifiques",
+                        "des glycoprotéines membranaires",
+                        "les récepteurs des LB immunocompétents",
+                        "formés de quatre chaînes polypeptidiques identiques"
+                    ],
+                    "correct_index": [0]
+                },
+                {
+                    "id": 163,
+                    "question": "Les LB peuvent :",
+                    "choices": [
+                        "sécréter l'IL2",
+                        "présenter l'antigène aux LT4",
+                        "phagocyter le complexe immun",
+                        "sécréter des anticorps circulants"
+                    ],
+                    "correct_index": [1]
+                },
+                {
+                    "id": 164,
+                    "question": "Le complément :",
+                    "choices": [
+                        "correspond à des cellules phagocytaires",
+                        "correspond à des enzymes",
+                        "est activé lors de la phase d'induction de la RIMH",
+                        "est activé lors de la phase effectrice de la RIMH"
+                    ],
+                    "correct_index": [1, 3]
+                },
+                {
+                    "id": 165,
+                    "question": "Le choc anaphylactique consécutif à une prise de pénicilline est :",
+                    "choices": [
+                        "le résultat d'un 1er contact avec l'allergène",
+                        "provoqué par une activation des mastocytes",
+                        "provoqué par une sensibilisation des mastocytes",
+                        "une réaction allergique localisée"
+                    ],
+                    "correct_index": [1]
+                }
+            ]
+        },
+        {
+            "id": "ch2",
+            "title": "Physiologie Musculaire et Immunologie",
+            "questions": [
+                {
+                    "id": 166,
+                    "question": "L'unité structurale du muscle squelettique est :",
+                    "choices": [
+                        "le sarcomère",
+                        "la myofibrille",
+                        "le disque clair",
+                        "la fibre musculaire"
+                    ],
+                    "correct_index": [3]
+                },
+                {
+                    "id": 167,
+                    "question": "Dans la fibre musculaire, la respiration cellulaire se déroule :",
+                    "choices": [
+                        "au niveau de l'hyaloplasme",
+                        "au niveau des mitochondries",
+                        "avant la glycolyse",
+                        "après tout effort qu'il soit intense ou modéré"
+                    ],
+                    "correct_index": [1, 3]
+                },
+                {
+                    "id": 168,
+                    "question": "Au niveau de la bande H d'un sarcomère, on trouve :",
+                    "choices": [
+                        "une strie Z",
+                        "des filaments d'actine",
+                        "des filaments de myosine",
+                        "des filaments d'actine et de myosine"
+                    ],
+                    "correct_index": [2]
+                },
+                {
+                    "id": 169,
+                    "question": "Lors la régulation nerveuse de la pression artérielle, l'activation du ganglion étoilé :",
+                    "choices": [
+                        "a un effet hypotenseur",
+                        "a un effet hypertenseur",
+                        "entraîne une vasodilatation",
+                        "entraîne une vasoconstriction"
+                    ],
+                    "correct_index": [1]
+                },
+                {
+                    "id": 170,
+                    "question": "Dans la réponse immunitaire spécifique, les immunoglobulines peuvent jouer le rôle :",
+                    "choices": [
+                        "d'effecteurs",
+                        "de marqueurs du soi",
+                        "d'immunosuppresseurs",
+                        "de récepteurs assurant la reconnaissance de l'antigène"
                     ],
                     "correct_index": [0, 3]
                 }

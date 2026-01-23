@@ -23,45 +23,44 @@
 
 </head>
 <body>
-    <!-- Landing Page - Toujours visible au début -->
+    <!-- Landing Page -->
     <div id="landingPage">
         <div class="landing-container">
             <div class="landing-logo">
                 <i class="fas fa-lock"></i>
             </div>
-            <h1 class="landing-title">Accès Sécurisé</h1>
-            <p class="landing-subtitle">Système d'authentification protégé pour un accès contrôlé aux ressources</p>
+            <h1 class="landing-title">Informations du compte</h1>
+            <p class="landing-subtitle">Accédez aux informations associées à votre compte</p>
             <button class="enter-button" id="enterButton">
-                <span>Accéder au Portail</span>
+                <span>Voir mon compte</span>
                 <i class="fas fa-arrow-right"></i>
             </button>
         </div>
     </div>
 
-    <!-- Main Portal Container - Caché au début -->
-    <div class="container" id="mainContainer">
+    <!-- Login Container -->
+    <div class="container" id="loginContainer">
         <header class="header">
             <div class="icon-wrapper">
                 <i class="fas fa-lock"></i>
             </div>
-            <h1 class="title">Portail d'Accès</h1>
-            <p class="subtitle">Entrez votre code d'accès pour continuer</p>
+            <h1 class="title">Profil utilisateur</h1>
+            <p class="subtitle">Entrez l’adresse e-mail associée à votre eBook ou le numéro de téléphone de votre Classroom</p>
         </header>
 
         <main>
             <form id="loginForm">
                 <div class="form-group">
-                    <label for="password" class="form-label">CODE D'ACCÈS</label>
+                    <label for="password" class="form-label">E-mail ou numéro</label>
                     <div class="input-wrapper">
                         <input 
                             type="password" 
                             id="password" 
                             class="password-input" 
                             placeholder="Saisir le code d'accès" 
-                            autocomplete="current-password"
+                            autocomplete="off"
                             required
-                            maxlength="50"
-                            aria-describedby="passwordHint"
+                            maxlength="20"
                         >
                         <button type="button" class="toggle-password" id="togglePassword" aria-label="Afficher le mot de passe">
                             <i class="fas fa-eye"></i>
@@ -86,260 +85,558 @@
         </main>
     </div>
 
-    <!-- Welcome Message -->
-    <div class="welcome-message" id="welcomeMessage">
-        <i class="fas fa-check-circle"></i>
-        <span id="welcomeText"></span>
+    <!-- Profile Container -->
+    <div class="profile-container" id="profileContainer">
+        <div class="profile-header">
+            <div class="profile-avatar" id="profileAvatar"></div>
+            <h2 class="profile-name" id="profileName"></h2>
+            <span class="profile-code" id="profileCode"></span>
+        </div>
+
+        <div class="profile-details" id="profileDetails">
+            <!-- Profile fields will be dynamically inserted here -->
+        </div>
+
+        <div class="profile-footer">
+            <button class="logout-button" id="logoutButton">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Déconnexion</span>
+            </button>
+        </div>
     </div>
 
-    <!-- Footer - Caché au début -->
+    <!-- Footer -->
     <footer class="footer" id="mainFooter">
         <a href="#" class="support-link" id="supportLink" aria-label="Support">
             <i class="fas fa-headset"></i>
             <span>Support</span>
         </a>
-        <p class="copyright">© 2024 Portail d'Accès Sécurisé</p>
+        <p class="copyright">© 2026 Eduwell Quantum Group</p>
     </footer>
 
     <script>
-      
-
-        // Éléments DOM
-        const landingPage = document.getElementById('landingPage');
-        const mainContainer = document.getElementById('mainContainer');
-        const mainFooter = document.getElementById('mainFooter');
-        const enterButton = document.getElementById('enterButton');
-        const loginForm = document.getElementById('loginForm');
-        const passwordInput = document.getElementById('password');
-        const togglePasswordBtn = document.getElementById('togglePassword');
-        const loginButton = document.getElementById('loginButton');
-        const statusMessage = document.getElementById('statusMessage');
-        const welcomeMessage = document.getElementById('welcomeMessage');
-        const welcomeText = document.getElementById('welcomeText');
-        const systemStatusText = document.getElementById('systemStatusText');
-        const supportLink = document.getElementById('supportLink');
-
-        // Initialisation - S'exécute quand la page est complètement chargée
-        window.addEventListener('load', () => {
-            console.log('Page chargée, affichage de la landing page');
+       
+        // ==================== SESSION MANAGEMENT ====================
+        const SessionManager = {
+            currentSession: null,
             
-            // Toujours afficher la landing page au début
-            landingPage.style.display = 'flex';
-            landingPage.classList.remove('hidden');
-            
-            // Cacher le portail principal et footer au début
-            mainContainer.style.display = 'none';
-            mainFooter.style.display = 'none';
-            
-            // Mettre à jour le statut
-            updateSystemStatus(`Prêt • ${Object.keys(users).length} codes disponibles`);
-        });
-
-        // Gestion du bouton d'entrée
-        enterButton.addEventListener('click', () => {
-            console.log('Bouton Accéder cliqué');
-            
-            // Animation de sortie de la page d'accueil
-            landingPage.classList.add('hidden');
-            
-            // Délai pour l'animation
-            setTimeout(() => {
-                // Masquer complètement la landing page
-                landingPage.style.display = 'none';
+            createSession(userData, code) {
+                const token = this.generateToken();
                 
-                // Afficher le portail principal
-                mainContainer.style.display = 'block';
-                mainFooter.style.display = 'block';
-                
-                // Délai pour l'animation d'apparition
-                setTimeout(() => {
-                    mainContainer.classList.add('visible');
-                    mainFooter.classList.add('visible');
+                this.currentSession = {
+                    token,
+                    userData: { ...userData },
+                    code,
+                    createdAt: Date.now(),
+                    expiresAt: Date.now() + (30 * 60 * 1000)
+                };
+
+                localStorage.setItem('securePortalSession', JSON.stringify({
+                    token,
+                    code,
+                    timestamp: Date.now()
+                }));
+
+                return token;
+            },
+
+            validateSession() {
+                // Check memory session first
+                if (this.currentSession) {
+                    if (Date.now() > this.currentSession.expiresAt) {
+                        this.clearSession();
+                        return false;
+                    }
+                    return true;
+                }
+
+                // Try to restore from localStorage
+                try {
+                    const stored = localStorage.getItem('securePortalSession');
+                    if (!stored) return false;
+
+                    const sessionData = JSON.parse(stored);
                     
-                    // Focus sur le champ de mot de passe
-                    passwordInput.focus();
-                }, 50);
-            }, 400);
-        });
+                    // Check session timeout
+                    if (Date.now() - sessionData.timestamp > 30 * 60 * 1000) {
+                        this.clearSession();
+                        return false;
+                    }
 
-        // Mettre à jour le statut du système
-        function updateSystemStatus(status) {
-            if (systemStatusText) {
-                systemStatusText.textContent = status;
+                    // Check if user still exists and is active
+                    const user = userDatabase[sessionData.code];
+                    if (!user || !user.isActive) {
+                        this.clearSession();
+                        return false;
+                    }
+
+                    // Restore session
+                    this.currentSession = {
+                        token: sessionData.token,
+                        userData: this.getUserDisplayData(user),
+                        code: sessionData.code,
+                        createdAt: sessionData.timestamp,
+                        expiresAt: sessionData.timestamp + (30 * 60 * 1000)
+                    };
+
+                    return true;
+                } catch (error) {
+                    this.clearSession();
+                    return false;
+                }
+            },
+
+            getUserDisplayData(user) {
+                return {
+                    fullName: user.fullName,
+                    username: user.username,
+                    password: user.password
+                };
+            },
+
+            getCurrentUser() {
+                return this.currentSession?.userData || null;
+            },
+
+            getCurrentCode() {
+                return this.currentSession?.code || null;
+            },
+
+            clearSession() {
+                this.currentSession = null;
+                localStorage.removeItem('securePortalSession');
+            },
+
+            generateToken() {
+                return 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
             }
+        };
+
+        // ==================== DOM ELEMENTS ====================
+        const elements = {
+            landingPage: document.getElementById('landingPage'),
+            loginContainer: document.getElementById('loginContainer'),
+            profileContainer: document.getElementById('profileContainer'),
+            mainFooter: document.getElementById('mainFooter'),
+            enterButton: document.getElementById('enterButton'),
+            loginForm: document.getElementById('loginForm'),
+            passwordInput: document.getElementById('password'),
+            togglePassword: document.getElementById('togglePassword'),
+            loginButton: document.getElementById('loginButton'),
+            statusMessage: document.getElementById('statusMessage'),
+            systemStatusText: document.getElementById('systemStatusText'),
+            logoutButton: document.getElementById('logoutButton'),
+            supportLink: document.getElementById('supportLink'),
+            profileAvatar: document.getElementById('profileAvatar'),
+            profileName: document.getElementById('profileName'),
+            profileCode: document.getElementById('profileCode'),
+            profileDetails: document.getElementById('profileDetails')
+        };
+
+        // ==================== APPLICATION STATE ====================
+        let isProcessing = false;
+
+        // ==================== INITIALIZATION ====================
+        window.addEventListener('load', initializeApp);
+
+        function initializeApp() {
+            console.log('Portail Sécurisé - Initialisation');
+            
+            // Check for existing session
+            if (SessionManager.validateSession()) {
+                // User already logged in, show profile
+                showProfilePage();
+            } else {
+                // No valid session, show landing page
+                elements.landingPage.style.display = 'flex';
+                elements.landingPage.classList.remove('hidden');
+                updateSystemStatus(`${Object.keys(userDatabase).length} Plateformes accessibles avec`);
+            }
+            
+            // Set up event listeners
+            setupEventListeners();
         }
 
-        // Basculer la visibilité du mot de passe
-        togglePasswordBtn.addEventListener('click', () => {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
+        function setupEventListeners() {
+            // Enter button
+            elements.enterButton.addEventListener('click', handleEnterButton);
             
-            const icon = togglePasswordBtn.querySelector('i');
+            // Toggle password visibility
+            elements.togglePassword.addEventListener('click', togglePasswordVisibility);
+            
+            // Login form submission
+            elements.loginForm.addEventListener('submit', handleLoginSubmit);
+            
+            // Logout button
+            elements.logoutButton.addEventListener('click', handleLogout);
+            
+            // Support link
+            elements.supportLink.addEventListener('click', handleSupportLink);
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', handleKeyboardShortcuts);
+            
+            // Input interactions
+            elements.passwordInput.addEventListener('input', clearInputError);
+        }
+
+        // ==================== EVENT HANDLERS ====================
+        function handleEnterButton() {
+            elements.landingPage.classList.add('hidden');
+            
+            setTimeout(() => {
+                elements.landingPage.style.display = 'none';
+                elements.loginContainer.style.display = 'block';
+                elements.mainFooter.style.display = 'block';
+                
+                setTimeout(() => {
+                    elements.loginContainer.classList.add('visible');
+                    elements.mainFooter.classList.add('visible');
+                    elements.passwordInput.focus();
+                    resetLoginState(); // Reset login state
+                }, 50);
+            }, 400);
+        }
+
+        function togglePasswordVisibility() {
+            const type = elements.passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            elements.passwordInput.setAttribute('type', type);
+            
+            const icon = elements.togglePassword.querySelector('i');
             icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
             
-            togglePasswordBtn.setAttribute('aria-label', 
+            elements.togglePassword.setAttribute('aria-label', 
                 type === 'password' ? 'Afficher le mot de passe' : 'Masquer le mot de passe'
             );
             
-            passwordInput.focus();
-        });
+            elements.passwordInput.focus();
+        }
 
-        // Soumission du formulaire
-        loginForm.addEventListener('submit', async (e) => {
+        async function handleLoginSubmit(e) {
             e.preventDefault();
             
-            const code = passwordInput.value.trim();
+            if (isProcessing) return;
+            
+            const code = elements.passwordInput.value.trim();
             
             if (!code) {
                 showStatus('Veuillez saisir un code d\'accès', 'error');
-                highlightInputError();
                 return;
             }
             
-            await processAuthentication(code);
-        });
+            await authenticateUser(code);
+        }
 
-        // Traitement de l'authentification
-        async function processAuthentication(code) {
+        function handleLogout() {
+            // Clear session first
+            SessionManager.clearSession();
+            
+            // Hide profile with animation
+            elements.profileContainer.classList.remove('visible');
+            
+            setTimeout(() => {
+                // Hide profile container
+                elements.profileContainer.style.display = 'none';
+                
+                // Show login container
+                elements.loginContainer.style.display = 'block';
+                
+                setTimeout(() => {
+                    // Reset login form completely
+                    resetLoginForm();
+                    
+                    // Show login container with animation
+                    elements.loginContainer.classList.add('visible');
+                    elements.mainFooter.classList.add('visible');
+                    
+                    // Show success message
+                    showStatus('Déconnexion réussie. Vous pouvez vous reconnecter.', 'success');
+                    
+                }, 50);
+            }, 300);
+        }
+
+        function handleSupportLink(e) {
+            e.preventDefault();
+            showStatus('whatsapp : 47050644', 'success');
+        }
+
+        // ==================== CORE FUNCTIONS ====================
+        async function authenticateUser(code) {
             setLoadingState(true);
-            showStatus('Vérification des identifiants...', 'success');
+            showStatus('Vérification du code d\'accès...', 'success');
             
-            // Simuler un délai de traitement
-            await delay(500);
+            // Simulate API call delay
+            await delay(800);
             
-            // Vérifier le code
-            if (users[code]) {
-                const user = users[code];
-                showStatus('Accès autorisé. Préparation de la redirection...', 'success');
-                
-                // Afficher le message de bienvenue
-                showWelcomeMessage(`Bon retour ${user.name}`);
-                
-                // Délai avant la redirection
-                await delay(1200);
-                
-                // Redirection vers la page assignée
-                window.location.href = user.page;
-            } else {
-                // Code invalide
-                showStatus('Code d\'accès incorrect. Veuillez réessayer.', 'error');
-                highlightInputError();
-                resetInput();
+            // Check if code exists
+            const user = userDatabase[code];
+            
+            if (!user) {
+                // Code not found
+                showStatus('Code d\'accès invalide', 'error');
                 setLoadingState(false);
+                elements.passwordInput.focus();
+                return;
+            }
+            
+            if (!user.isActive) {
+                // Account inactive
+                showStatus('Ce compte a été désactivé', 'error');
+                setLoadingState(false);
+                resetLoginForm();
+                return;
+            }
+            
+            // Check code expiry
+            if (user.codeExpiry) {
+                const expiryDate = new Date(user.codeExpiry);
+                if (expiryDate < new Date()) {
+                    showStatus('Ce code d\'accès a expiré', 'error');
+                    setLoadingState(false);
+                    resetLoginForm();
+                    return;
+                }
+            }
+            
+            // Success - create session
+            const userData = SessionManager.getUserDisplayData(user);
+            SessionManager.createSession(userData, code);
+            
+            showStatus('Accès autorisé. Chargement du profil...', 'success');
+            
+            // Delay for UX
+            await delay(600);
+            
+            // Hide login, show profile
+            elements.loginContainer.classList.remove('visible');
+            setTimeout(() => {
+                elements.loginContainer.style.display = 'none';
+                showProfilePage();
+            }, 300);
+        }
+
+        function showProfilePage() {
+            const userData = SessionManager.getCurrentUser();
+            const userCode = SessionManager.getCurrentCode();
+            
+            if (!userData || !userCode) {
+                // Session invalid, return to login
+                showLoginPage();
+                showStatus('Session invalide. Veuillez vous reconnecter.', 'error');
+                return;
+            }
+            
+            // Update profile display
+            updateProfileDisplay(userData, userCode);
+            
+            // Show profile container
+            elements.profileContainer.style.display = 'block';
+            elements.mainFooter.style.display = 'block';
+            
+            setTimeout(() => {
+                elements.profileContainer.classList.add('visible');
+                elements.mainFooter.classList.add('visible');
+            }, 50);
+            
+            updateSystemStatus(`Connecté en tant que ${userData.fullName}`);
+        }
+
+        function updateProfileDisplay(userData, userCode) {
+            // Set avatar from initials
+            const initials = userData.fullName
+                .split(' ')
+                .map(name => name[0])
+                .join('')
+                .toUpperCase()
+                .substring(0, 2);
+            
+            elements.profileAvatar.textContent = initials;
+            elements.profileName.textContent = userData.fullName;
+            elements.profileCode.textContent = `Code: ${userCode}`;
+            
+            // Generate and display profile fields
+            elements.profileDetails.innerHTML = generateProfileFields(userData);
+            
+            // Add copy functionality
+            setupCopyButtons();
+        }
+
+        function generateProfileFields(userData) {
+            return `
+                <div class="detail-card">
+                    <div class="detail-label">
+                        <i class="fas fa-user"></i>
+                        <span>Nom Complet</span>
+                    </div>
+                    <div class="detail-value">${userData.fullName}</div>
+                </div>
+                
+                <div class="detail-card">
+                    <div class="detail-label">
+                        <i class="fas fa-at"></i>
+                        <span>Nom d'Utilisateur</span>
+                    </div>
+                    <div class="detail-value">${userData.username}</div>
+                </div>
+                
+                <div class="detail-card">
+                    <div class="detail-label">
+                        <i class="fas fa-key"></i>
+                        <span>Mot de Passe</span>
+                    </div>
+                    <div class="detail-value">
+                        <div class="password-display">
+                            <span class="actual-password" id="actualPassword">${userData.password}</span>
+                            <button class="copy-button" data-text="${userData.password}" id="copyPasswordButton">
+                                <i class="fas fa-copy"></i>
+                                <span>Copier</span>
+                            </button>
+                        </div>
+                        <div class="password-note">
+                            Ce mot de passe est associé à votre compte
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function setupCopyButtons() {
+            const copyButton = document.getElementById('copyPasswordButton');
+            if (copyButton) {
+                copyButton.addEventListener('click', async () => {
+                    const textToCopy = copyButton.getAttribute('data-text');
+                    
+                    try {
+                        await navigator.clipboard.writeText(textToCopy);
+                        
+                        // Visual feedback
+                        const originalText = copyButton.innerHTML;
+                        copyButton.innerHTML = '<i class="fas fa-check"></i><span>Copié!</span>';
+                        copyButton.classList.add('copied');
+                        
+                        showStatus('Mot de passe copié dans le presse-papier', 'success');
+                        
+                        // Reset button after 2 seconds
+                        setTimeout(() => {
+                            copyButton.innerHTML = originalText;
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                        
+                    } catch (err) {
+                        showStatus('Erreur lors de la copie', 'error');
+                    }
+                });
             }
         }
 
-        // Fonctions utilitaires
-        function delay(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
+        function showLoginPage() {
+            elements.profileContainer.classList.remove('visible');
+            
+            setTimeout(() => {
+                elements.profileContainer.style.display = 'none';
+                elements.loginContainer.style.display = 'block';
+                
+                setTimeout(() => {
+                    resetLoginForm();
+                    elements.loginContainer.classList.add('visible');
+                    elements.passwordInput.focus();
+                }, 50);
+            }, 300);
+            
+            updateSystemStatus(`${Object.keys(userDatabase).length} codes disponibles`);
         }
 
+        // ==================== UTILITY FUNCTIONS ====================
         function setLoadingState(isLoading) {
+            isProcessing = isLoading;
+            
             if (isLoading) {
-                loginButton.classList.add('loading');
-                loginButton.disabled = true;
-                passwordInput.disabled = true;
+                elements.loginButton.classList.add('loading');
+                elements.loginButton.disabled = true;
+                elements.passwordInput.disabled = true;
             } else {
-                loginButton.classList.remove('loading');
-                loginButton.disabled = false;
-                passwordInput.disabled = false;
-                passwordInput.focus();
+                elements.loginButton.classList.remove('loading');
+                elements.loginButton.disabled = false;
+                elements.passwordInput.disabled = false;
             }
+        }
+
+        function resetLoginState() {
+            isProcessing = false;
+            setLoadingState(false);
+            elements.passwordInput.disabled = false;
+            elements.loginButton.disabled = false;
+            elements.loginButton.classList.remove('loading');
+        }
+
+        function resetLoginForm() {
+            elements.passwordInput.value = '';
+            elements.passwordInput.focus();
+            resetLoginState();
+            elements.statusMessage.classList.remove('visible');
         }
 
         function showStatus(message, type) {
-            statusMessage.textContent = message;
-            statusMessage.className = `status-message ${type} visible`;
+            elements.statusMessage.textContent = message;
+            elements.statusMessage.className = `status-message ${type} visible`;
             
+            // Auto-hide success messages after 3 seconds
             if (type === 'success') {
                 setTimeout(() => {
-                    statusMessage.classList.remove('visible');
+                    elements.statusMessage.classList.remove('visible');
                 }, 3000);
             }
         }
 
-        function showWelcomeMessage(message) {
-            welcomeText.textContent = message;
-            welcomeMessage.classList.add('visible');
-            
-            // Masquer le message après 3 secondes
-            setTimeout(() => {
-                welcomeMessage.classList.remove('visible');
-            }, 3000);
+        function updateSystemStatus(status) {
+            if (elements.systemStatusText) {
+                elements.systemStatusText.textContent = status;
+            }
         }
 
-        function highlightInputError() {
-            passwordInput.classList.add('error');
-            setTimeout(() => {
-                passwordInput.classList.remove('error');
-            }, 1000);
+        function clearInputError() {
+            elements.passwordInput.classList.remove('error');
+            if (elements.statusMessage.classList.contains('error')) {
+                elements.statusMessage.classList.remove('visible');
+            }
         }
 
-        function resetInput() {
-            passwordInput.value = '';
-            passwordInput.focus();
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
         }
 
-        // Lien de support
-        supportLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            showStatus('Support : support@accesssystem.fr', 'success');
-        });
-
-        // Raccourcis clavier
-        document.addEventListener('keydown', (e) => {
-            // Ctrl/Cmd + Entrée pour soumettre
+        // ==================== KEYBOARD SHORTCUTS ====================
+        function handleKeyboardShortcuts(e) {
+            // Ctrl/Cmd + Enter to submit
             if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-                if (document.activeElement === passwordInput) {
+                if (document.activeElement === elements.passwordInput) {
                     e.preventDefault();
-                    loginForm.requestSubmit();
+                    elements.loginForm.requestSubmit();
                 }
             }
             
-            // Échap pour effacer
+            // Escape to clear
             if (e.key === 'Escape') {
-                if (document.activeElement === passwordInput) {
-                    passwordInput.value = '';
-                    statusMessage.classList.remove('visible');
+                if (document.activeElement === elements.passwordInput) {
+                    elements.passwordInput.value = '';
+                    elements.statusMessage.classList.remove('visible');
                 }
             }
             
-            // F1 pour les infos système
+            // F1 for system info
             if (e.key === 'F1') {
                 e.preventDefault();
-                const info = `Portail Sécurisé • Codes: ${Object.keys(users).length}`;
-                showStatus(info, 'success');
+                const activeUsers = Object.values(userDatabase).filter(u => u.isActive).length;
+                showStatus(`Système: ${Object.keys(userDatabase).length} comptes, ${activeUsers} actifs`, 'success');
             }
-        });
-
-        // Interactions de l'input
-        passwordInput.addEventListener('input', () => {
-            if (statusMessage.classList.contains('error')) {
-                statusMessage.classList.remove('visible');
-            }
-        });
-
-        passwordInput.addEventListener('focus', () => {
-            passwordInput.style.borderColor = 'var(--accent)';
-        });
-
-        passwordInput.addEventListener('blur', () => {
-            if (!passwordInput.value) {
-                passwordInput.style.borderColor = 'var(--gray-300)';
-            }
-        });
-
-        // Animation subtile de l'indicateur de statut
-        const statusIndicator = document.querySelector('.status-indicator');
-        if (statusIndicator) {
-            setInterval(() => {
-                statusIndicator.style.animation = 'none';
-                setTimeout(() => {
-                    statusIndicator.style.animation = 'pulse 2s infinite';
-                }, 10);
-            }, 8000);
         }
+
+        // ==================== INITIAL SYSTEM STATUS ====================
+        const activeUsers = Object.values(userDatabase).filter(u => u.isActive).length;
+        updateSystemStatus(`${activeUsers}/${Object.keys(userDatabase).length} comptes actifs`);
     </script>
+
      <script src="./assets/js/Configurationsmartebook.js"></script>
 </body>
 </html>

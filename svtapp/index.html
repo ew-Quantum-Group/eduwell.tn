@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNTBT1VQN7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-FNTBT1VQN7');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SVT App | Sahl</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/stylesvtapp.css">
+    
+    <!-- Session Manager CSS -->
+    <style>
+        /* Disable right-click and image saving */
+        body {
+            user-select: none;
+        }
+        
+        img {
+            pointer-events: none;
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+        }
+        
+        .gallery-grid img,
+        .fullscreen-image {
+            pointer-events: auto; /* Allow clicking for gallery functionality */
+        }
+        
+        /* Prevent text selection except in inputs */
+        * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        input, textarea {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+
+        /* Apple-style Logout Confirmation Modal */
+        .logout-confirmation-content {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border-radius: 20px;
+            padding: 32px;
+            width: 90%;
+            max-width: 340px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.1),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.6),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
+            animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .confirmation-icon {
+            font-size: 48px;
+            color: rgba(0, 0, 0, 0.9);
+            margin-bottom: 20px;
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .confirmation-title {
+            font-size: 20px;
+            color: rgba(0, 0, 0, 0.9);
+            margin-bottom: 8px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .confirmation-text {
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 15px;
+            line-height: 1.4;
+            margin-bottom: 28px;
+            font-weight: 400;
+        }
+
+        .confirmation-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .confirmation-btn {
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: 500;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            flex: 1;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            letter-spacing: -0.01em;
+        }
+
+        .cancel-btn {
+            background: rgba(0, 0, 0, 0.03);
+            color: rgba(0, 0, 0, 0.8);
+        }
+
+        .cancel-btn:hover {
+            background: rgba(0, 0, 0, 0.06);
+            transform: translateY(-1px);
+        }
+
+        .cancel-btn:active {
+            transform: translateY(0);
+        }
+
+        .confirm-btn {
+            background: rgba(0, 0, 0, 0.85);
+            color: white;
+            border: none;
+        }
+
+        .confirm-btn:hover {
+            background: rgba(0, 0, 0, 0.95);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .confirm-btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        /* Dark mode for modal */
+        @media (prefers-color-scheme: dark) {
+            .logout-confirmation-content {
+                background: rgba(40, 40, 40, 0.85);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 
+                    0 20px 60px rgba(0, 0, 0, 0.25),
+                    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            }
+            
+            .confirmation-icon {
+                color: rgba(255, 255, 255, 0.9);
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .confirmation-title {
+                color: rgba(255, 255, 255, 0.95);
+            }
+            
+            .confirmation-text {
+                color: rgba(255, 255, 255, 0.7);
+            }
+            
+            .cancel-btn {
+                background: rgba(255, 255, 255, 0.08);
+                color: rgba(255, 255, 255, 0.9);
+                border: 1px solid rgba(255, 255, 255, 0.15);
+            }
+            
+            .cancel-btn:hover {
+                background: rgba(255, 255, 255, 0.12);
+            }
+            
+            .confirm-btn {
+                background: rgba(255, 255, 255, 0.9);
+                color: rgba(0, 0, 0, 0.9);
+            }
+            
+            .confirm-btn:hover {
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Apple-style Glass Effect Profile Section -->
+    <div class="minimal-profile" id="minimalProfileSection">
+        <div class="profile-content">
+            <i class="fas fa-user-circle profile-icon"></i>
+            <span class="profile-username" id="profileUsername">User</span>
+            <button class="profile-logout-btn" id="profileLogoutBtn" title="Logout">
+                <span class="profile-status"></span>
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-navigation">
+        <a href="#home" class="nav-item active" data-page="home">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="#exercises" class="nav-item" data-page="exercises">
+            <i class="fas fa-file-alt"></i>
+            <span>Exercises</span>
+        </a>
+        <a href="#qcm" class="nav-item" data-page="qcm">
+            <i class="fas fa-question-circle"></i>
+            <span>QCM</span>
+        </a>
+        <a href="#ebooks" class="nav-item" data-page="ebooks">
+            <i class="fas fa-users-rectangle"></i>
+            <span>EduStream</span>
+        </a>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="home-page" class="page-section active">
+        <div class="container">
+            <!-- Updated Trial Card with User's Name -->
+            <div class="trial-card">
+                <div class="trial-content">
+                    <h2 id="welcomeTitle">Eduwell SVT Elite</h2>
+                    <p>Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à utiliser</p>
+                    <button class="trial-btn" id="startButton">
+                        <i class="fa-solid fa-play"></i>
+                        Commencer maintenant
+                    </button>
+                </div>
+            </div>
+
+            <!-- Search Section -->
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Trouvez un cours et quiz..." id="searchInput">
+            </div>
+
+            <!-- Popular Courses Section with Horizontal Slider -->
+            <div class="section-header" id="quizSection">
+                <div class="section-title">
+                    <i class="fa-solid fa-fire"></i>
+                    <span>Quiz Cards</span>
+                </div>
+            </div>
+
+            <!-- Horizontal Slider -->
+            <div class="slider-container">
+                <div class="courses-slider" id="coursesSlider">
+                    <!-- Course cards will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Your Courses Section with Grid Layout -->
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fa-solid fa-book"></i>
+                    <span>Ma révision</span>
+                </div>
+            </div>
+            <div class="courses-grid" id="yourCoursesGrid">
+                <!-- Course cards will be populated by JavaScript -->
+            </div>
+
+            <div class="footer">
+               
+            </div>
+        </div>
+    </div>
+
+    <!-- EXERCISES PAGE -->
+    <div id="exercises-page" class="page-section">
+        <div class="container">
+            <!-- Biology-themed card for Exercises section -->
+            <div class="biology-card">
+                <div class="biology-content">
+                    <h2>Smart Cards </h2>
+                    <p> mini-cartes claires et rapides pour comprendre, mémoriser et réviser le Bac sans stress</p>
+                    <button class="biology-btn" id="viewSchemasButton">
+                        <i class="fa-solid fa-eye"></i>
+                      Lancer la révision
+                    </button>
+                </div>
+            </div>
+
+            <!-- Exercises Grid -->
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Exercices & Modèles</span>
+                </div>
+            </div>
+            <div class="exercises-grid" id="exercisesGrid">
+                <!-- Exercise cards will be populated by JavaScript -->
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+               
+            </div>
+        </div>
+    </div>
+
+    <!-- QCM PAGE - ENHANCED DESIGN -->
+    <div id="qcm-page" class="page-section">
+        <div class="container">
+            <!-- Enhanced Biology Card -->
+            <div class="qcm-biology-card">
+                <div class="qcm-biology-content">
+                    <div class="qcm-biology-text">
+                        <h2>QCM Lab Science</h2>
+                        <p>Révise SVT avec des quiz fun + explications claires.
+Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
+                    </div>
+                    <button class="qcm-biology-btn" id="qcmBiologyBtn">
+                        <i class="fas fa-play-circle"></i>
+                      Commencer le Quiz Bio
+                    </button>
+                </div>
+            </div>
+
+            <!-- QCM Models Container -->
+            <div class="qcm-models-container" id="qcmModelsContainer">
+                <!-- Models will be populated by JavaScript -->
+            </div>
+
+            <!-- QCM Footer -->
+            <div class="qcm-footer">
+                
+                <p class="qcm-footer-note">Tous les quiz sont mis à jour régulièrement avec le programme officiel</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODIFICATION FOR E-BOOK SECTION: NOW STRATEGIES SECTION -->
+    <div id="ebooks-page" class="page-section">
+        <div class="container">
+            <!-- EduStream Section -->
+            <div class="ebook-biology-card">
+                <div class="ebook-biology-content">
+                    <div class="ebook-biology-text">
+                        <h2>SahlAcademy</h2>
+                        <p>plateforme éducative avancée, proposant des vidéos pédagogiques et tirant parti de l'IA pour optimiser vos révisions du Bac efficacement.</p>
+                    </div>
+                    <!-- Button opens external website -->
+                    <button class="ebook-biology-btn" id="ebookBiologyBtn" onclick="window.open('../SahlAcademy/index.html', '_blank')">
+                        <i class="fas fa-external-link-alt"></i>
+                       Découvrir Sahl
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stratégies Bac Section -->
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Stratégies Bac</span>
+                </div>
+            </div>
+
+            <!-- Biology Cards Grid for Stratégies Bac -->
+            <div class="biology-cards-grid" id="strategiesContent">
+                <!-- Biology cards will be populated by JavaScript -->
+            </div>
+           
+        </div>
+         <!-- Footer -->
+            <div class="footer">
+                <p></p>
+            </div>
+    </div>
+
+    <!-- QUIZ MODAL OVERLAY -->
+    <div class="qcm-quiz-overlay" id="qcmQuizOverlay">
+        <div class="qcm-quiz-container">
+            <div class="qcm-quiz-header">
+                <button class="qcm-quiz-close" id="qcmQuizClose">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h3 class="qcm-quiz-title" id="qcmQuizTitle">Quiz Title</h3>
+                <div class="qcm-quiz-meta">
+                    <span id="qcmQuizQuestionCount">Question 1 of 10</span>
+                    <span id="qcmQuizInstruction"></span>
+                </div>
+                <div class="qcm-quiz-progress-bar">
+                    <div class="qcm-quiz-progress-fill" id="qcmQuizProgress"></div>
+                </div>
+            </div>
+            <div class="qcm-quiz-content" id="qcmQuizContent">
+                <!-- Quiz content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUPS -->
+
+    <!-- Models Popup Overlay -->
+    <div class="popup-overlay" id="modelsPopup">
+        <div class="models-popup-content">
+            <button class="popup-close" id="modelsPopupClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="models-header">
+                <div>
+                    <h2 class="models-title">Schémas & Modèles SVT</h2>
+                    <p class="models-description">Sélectionnez un modèle pour voir tous les schémas associés</p>
+                </div>
+            </div>
+            <div class="models-grid" id="modelsGrid">
+                <!-- Model cards will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Popup Overlay -->
+    <div class="popup-overlay" id="galleryPopup">
+        <div class="gallery-popup-content">
+            <button class="popup-close" id="galleryPopupClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="gallery-header">
+                <div>
+                    <h2 class="gallery-title" id="galleryTitle">Gallery Title</h2>
+                    <p class="models-description">Cliquez sur une image pour l'agrandir</p>
+                </div>
+            </div>
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Gallery items will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Fullscreen Image Viewer -->
+    <div class="fullscreen-viewer" id="fullscreenViewer">
+        <img class="fullscreen-image" id="fullscreenImage" src="" alt="Fullscreen Image">
+        <button class="back-button" id="backFromFullscreen">Retour</button>
+    </div>
+
+    <!-- Popular Courses Popup Overlay -->
+    <div class="popup-overlay" id="popularCoursesPopup">
+        <div class="popup-content">
+            <button class="popup-close" id="popularCoursesPopupClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="popup-header">
+                <h2 class="popup-title" id="popularCoursesPopupTitle">Course Title</h2>
+                <p class="popup-description" id="popularCoursesPopupDescription">Course description will appear here.</p>
+            </div>
+            <div class="options-section">
+                <h3 class="options-title">Sélectionnez une carte quiz</h3>
+                <div class="options-slider" id="popularCoursesOptions">
+                    <!-- Options will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exercise Modal Overlay -->
+    <div class="popup-overlay" id="exerciseModal">
+        <div class="exercise-modal-content">
+            <button class="popup-close" id="exerciseModalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="exercise-header">
+                <div>
+                    <h2 class="exercise-title" id="exerciseModalTitle">Exercise Title</h2>
+                    <p class="exercise-description" id="exerciseModalDescription">Exercise description will appear here.</p>
+                </div>
+            </div>
+            <div class="pdfs-section">
+                <h3 class="pdfs-title">
+                    <i class="fas fa-file-pdf"></i>
+                    Documents PDF
+                </h3>
+                <div class="pdfs-list" id="exercisePdfsList">
+                    <!-- PDF items will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF Viewer Popup Overlay -->
+    <div class="popup-overlay" id="pdfViewerPopup">
+        <div class="pdf-popup-content">
+            <button class="popup-close" id="pdfViewerPopupClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="pdf-header">
+                <h2 class="pdf-title" id="pdfViewerPopupTitle">Course Title</h2>
+                <div class="pdf-controls">
+                    <button class="pdf-control-btn" id="pdfFullscreenBtn" title="Fullscreen">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="pdf-viewer-container" id="pdfViewerContainer">
+                <div class="loading-spinner"></div>
+                <iframe class="pdf-viewer" id="pdfViewer" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Apple-style Logout Confirmation Modal -->
+    <div class="popup-overlay" id="logoutConfirmationPopup">
+        <div class="logout-confirmation-content">
+            <div class="confirmation-icon">
+                <i class="fas fa-sign-out-alt"></i>
+            </div>
+            <h3 class="confirmation-title">Se déconnecter ?</h3>
+            <p class="confirmation-text">Vous serez redirigé vers la page de connexion.</p>
+            <div class="confirmation-buttons">
+                <button class="confirmation-btn cancel-btn" id="logoutCancelBtn">
+                    Annuler
+                </button>
+                <button class="confirmation-btn confirm-btn" id="logoutConfirmBtn">
+                    Se déconnecter
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Session Manager Script -->
+    <script>
+        // SESSION MANAGEMENT - 30 MINUTE INACTIVITY TIMEOUT
+        const SESSION_CONFIG = {
+            inactivityTimeout: 30 * 60 * 1000, // 30 minutes in milliseconds
+            checkInterval: 60000, // Check every minute
+            isLoggedInKey: 'eduwell_svt_isLoggedIn',
+            usernameKey: 'eduwell_svt_username',
+            lastActivityKey: 'eduwell_svt_lastActivity'
+        };
+
+        class SessionManager {
+            constructor() {
+                this.timer = null;
+                this.activityTimer = null;
+            }
+
+            // Initialize session checking
+            init() {
+                console.log('Session manager initialized - 30 minute inactivity timeout');
+                
+                // Clear any existing timers
+                this.clearTimers();
+                
+                // Update last activity timestamp
+                this.updateActivity();
+                
+                // Start session check
+                this.startSessionCheck();
+                
+                // Set up activity detection
+                this.setupActivityDetection();
+                
+                // Check session immediately
+                this.checkSession();
+            }
+
+            // Start the session check interval
+            startSessionCheck() {
+                this.timer = setInterval(() => {
+                    this.checkSession();
+                }, SESSION_CONFIG.checkInterval);
+            }
+
+            // Set up activity detection
+            setupActivityDetection() {
+                // Update activity on user interaction
+                const activityEvents = ['click', 'mousemove', 'keydown', 'scroll', 'touchstart'];
+                activityEvents.forEach(event => {
+                    document.addEventListener(event, () => {
+                        this.updateActivity();
+                    }, { passive: true });
+                });
+            }
+
+            // Update last activity timestamp
+            updateActivity() {
+                localStorage.setItem(SESSION_CONFIG.lastActivityKey, Date.now().toString());
+            }
+
+            // Check if session is still valid based on inactivity
+            checkSession() {
+                if (!this.isAuthenticated()) {
+                    return;
+                }
+
+                const lastActivity = localStorage.getItem(SESSION_CONFIG.lastActivityKey);
+                if (!lastActivity) {
+                    // If no activity recorded, set current time
+                    this.updateActivity();
+                    return;
+                }
+
+                const lastActivityTime = parseInt(lastActivity);
+                const currentTime = Date.now();
+                const timeSinceLastActivity = currentTime - lastActivityTime;
+
+                // Check if session has expired due to inactivity
+                if (timeSinceLastActivity >= SESSION_CONFIG.inactivityTimeout) {
+                    console.log('Session expired due to inactivity');
+                    this.forceLogout();
+                    return;
+                }
+            }
+
+            // Force logout when session expires
+            forceLogout() {
+                console.log('Session expired - forcing logout');
+                
+                // Clear all session data
+                this.clearSession();
+                
+                // Clear timers
+                this.clearTimers();
+                
+                // Redirect to login page with message
+                const redirectUrl = 'login.html?message=session_expired';
+                window.location.href = redirectUrl;
+            }
+
+            // Clear session data
+            clearSession() {
+                localStorage.removeItem(SESSION_CONFIG.isLoggedInKey);
+                localStorage.removeItem(SESSION_CONFIG.usernameKey);
+                localStorage.removeItem(SESSION_CONFIG.lastActivityKey);
+            }
+
+            // Clear all timers
+            clearTimers() {
+                if (this.timer) {
+                    clearInterval(this.timer);
+                    this.timer = null;
+                }
+                if (this.activityTimer) {
+                    clearTimeout(this.activityTimer);
+                    this.activityTimer = null;
+                }
+            }
+
+            // Check if user is authenticated
+            isAuthenticated() {
+                return localStorage.getItem(SESSION_CONFIG.isLoggedInKey) === 'true';
+            }
+        }
+
+        // Main initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            // Disable right-click context menu
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+
+            // Disable keyboard shortcuts for saving
+            document.addEventListener('keydown', function(e) {
+                // Disable Ctrl+S, Ctrl+Shift+S, Ctrl+P
+                if ((e.ctrlKey && e.key === 's') || 
+                    (e.ctrlKey && e.shiftKey && e.key === 'S') || 
+                    (e.ctrlKey && e.key === 'p')) {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Disable F12 (DevTools)
+                if (e.key === 'F12') {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Disable Ctrl+Shift+I (DevTools)
+                if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Disable Ctrl+U (View Source)
+                if (e.ctrlKey && e.key === 'u') {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
+            // CHECK SESSION EXPIRATION IMMEDIATELY
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            const lastActivity = localStorage.getItem('eduwell_svt_lastActivity');
+            
+            if (isLoggedIn && lastActivity) {
+                const lastActivityTime = parseInt(lastActivity);
+                const currentTime = Date.now();
+                const minutesDiff = (currentTime - lastActivityTime) / (1000 * 60);
+                
+                // If session expired due to 30 minutes of inactivity, redirect to login
+                if (minutesDiff >= 30) {
+                    localStorage.clear();
+                    window.location.href = 'login.html?message=session_expired';
+                    return;
+                }
+            } else if (!isLoggedIn) {
+                // Not logged in, redirect to login
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Only initialize session manager if user is logged in
+            if (isLoggedIn) {
+                // Initialize session manager
+                window.sessionManager = new SessionManager();
+                sessionManager.init();
+                
+                // Update username in profile
+                const username = localStorage.getItem('eduwell_svt_username') || 'User';
+                const profileUsername = document.getElementById('profileUsername');
+                const welcomeTitle = document.getElementById('welcomeTitle');
+                
+                if (profileUsername) {
+                    profileUsername.textContent = username;
+                }
+                if (welcomeTitle) {
+                    welcomeTitle.textContent = `Bienvenue, ${username}`;
+                }
+            }
+
+            // Setup logout functionality
+            const logoutBtn = document.getElementById('profileLogoutBtn');
+            const logoutConfirmationPopup = document.getElementById('logoutConfirmationPopup');
+            const logoutCancelBtn = document.getElementById('logoutCancelBtn');
+            const logoutConfirmBtn = document.getElementById('logoutConfirmBtn');
+
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function() {
+                    logoutConfirmationPopup.style.display = 'flex';
+                });
+            }
+
+            if (logoutCancelBtn) {
+                logoutCancelBtn.addEventListener('click', function() {
+                    logoutConfirmationPopup.style.display = 'none';
+                });
+            }
+
+            if (logoutConfirmBtn) {
+                logoutConfirmBtn.addEventListener('click', function() {
+                    // Clear session manager
+                    if (window.sessionManager) {
+                        window.sessionManager.clearTimers();
+                        window.sessionManager.clearSession();
+                    }
+                    
+                    // Clear all auth data
+                    localStorage.removeItem('eduwell_svt_isLoggedIn');
+                    localStorage.removeItem('eduwell_svt_username');
+                    localStorage.removeItem('eduwell_svt_lastActivity');
+                    
+                    // Redirect to login page
+                    window.location.href = 'login.html';
+                });
+            }
+
+            // Close modal when clicking outside
+            logoutConfirmationPopup.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+    <!-- Your existing scripts -->
+    <script src="./assets/js/qcm.js"></script>
+    <script src="./assets/js/login.js"></script>
+    <script src="./assets/js/exercice.js"></script>
+    <script src="./assets/js/flashcarts.js"></script>
+    <script src="./assets/js/quizcart.js"></script>
+    <script src="./assets/js/cours.js"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SVT App | EduWell</title>
+    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/styleseek.css">
+</head>
+<body>
+    <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    
+    <div class="floating-element floating-1"></div>
+    <div class="floating-element floating-2"></div>
+    <div class="floating-element floating-3"></div>
+    
+    <a href="../index.html" class="back-btn" id="backBtn">
+        ← Retour
+    </a>
+    
+    <div class="app-container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    SVT
+                </div>
+            </div>
+            <h1>SVT App</h1>
+            <p>Glissez vers la droite pour Vrai, vers la gauche pour Faux</p>
+        </div>
+
+        <div class="card-container">
+            <div class="quiz-card" id="current-card">
+                <div class="card-pattern"></div>
+                <div class="question-number" id="question-number">Question 1/5</div>
+                <h2 id="question-text">Un exemple de question apparaîtra ici</h2>
+                <div class="swipe-hints">
+                    <div class="swipe-hint false">
+                        FAUX
+                    </div>
+                    <div class="swipe-hint true">
+                        VRAI
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="overlay" id="overlay"></div>
+
+        <div class="feedback-popup" id="feedback-popup">
+            <div class="feedback-icon" id="feedback-icon">
+                ✓
+            </div>
+            <h3 id="feedback-title">Correct !</h3>
+            <p id="feedback-message">Vous avez trouvé la bonne réponse !</p>
+            <div class="correct-answer" id="correct-answer">La bonne réponse est : Vrai</div>
+            <div class="explanation" id="explanation">L'explication apparaîtra ici.</div>
+            <button id="continue-btn">
+                Continuer
+            </button>
+        </div>
+
+        <div class="results-screen" id="results-screen">
+            <div class="results-icon">
+                🏆
+            </div>
+            <h2>Quiz Terminé !</h2>
+            <p>Bravo pour avoir terminé le quiz !</p>
+            <div class="percentage" id="final-percentage" data-value="100%">100%</div>
+            <div class="score-container">
+                <div class="score-row">
+                    <span class="score-label">Réponses correctes :</span>
+                    <span class="score-value" id="correct-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Réponses incorrectes :</span>
+                    <span class="score-value" id="incorrect-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Score Total :</span>
+                    <span class="score-value" id="total-score">0/5</span>
+                </div>
+            </div>
+            <button class="retry-btn" id="retry-btn">
+                Recommencer
+            </button>
+        </div>
+    </div>
+
+    <!-- ORIGINAL QUIZ DATA - Only runs if authenticated -->
+    <script>
+        // Données des questions du quiz avec explications
+        const quizQuestions =  [
+  // t
+
+  {
+    question: "La prise des pilules combinées pendant 21 jours d’un cycle de 28 jours entraîne la disparition des menstruations.",
+    answer: false,
+    explanation: "La pilule bloque l’ovulation mais provoque une hémorragie de privation à la fin de la prise."
+  },
+  {
+    question: "Une ovulation se produit au 29ème jour du cycle si on prend la pilule combinée.",
+    answer: false,
+    explanation: "L’ovulation normale est bloquée par la pilule et ne survient pas automatiquement après le cycle."
+  },
+  {
+    question: "La prise des pilules combinées entraîne la disparition de l’ovulation.",
+    answer: true,
+    explanation: "Les hormones de la pilule empêchent le pic de LH, ce qui bloque l’ovulation."
+  },
+  
+  {
+    question: "Une hémorragie de privation survient au 29ème jour après la prise de la pilule combinée.",
+    answer: true,
+    explanation: "La chute brutale des hormones provoque cette hémorragie."
+  },
+  {
+    question: "La FIVETE consiste à déposer artificiellement du sperme dans le vagin.",
+    answer: false,
+    explanation: "Le dépôt artificiel de sperme dans le vagin est l’insémination artificielle, pas la FIVETE."
+  },
+  {
+    question: "La FIVETE consiste à féconder, in vitro, des ovocytes II avec des spermatozoïdes.",
+    answer: true,
+    explanation: "La fécondation a lieu en laboratoire avec ovocytes et spermatozoïdes."
+  },
+  {
+    question: "La FIVETE est une technique de PMA.",
+    answer: true,
+    explanation: "C’est bien une technique de procréation médicalement assistée."
+  },
+  {
+    question: "La FIVETE est pratiquée pour résoudre n’importe quel problème de stérilité.",
+    answer: false,
+    explanation: "Elle est indiquée surtout pour obstruction tubaire ou infertilité masculine sévère."
+  },
+  
+  {
+    question: "La HCG cible les cellules hypophysaires.",
+    answer: false,
+    explanation: "La HCG n’agit pas sur l’hypophyse mais sur le corps jaune ovarien."
+  },
+  {
+    question: "La HCG cible les cellules de l’endomètre.",
+    answer: false,
+    explanation: "Elle agit indirectement sur l’endomètre via la progestérone."
+  },
+  {
+    question: "La HCG a pour cible les neurones hypothalamiques.",
+    answer: false,
+    explanation: "Elle agit sur le corps jaune et non sur l’hypothalamus."
+  },
+  {
+    question: "La HCG cible les cellules du corps jaune.",
+    answer: true,
+    explanation: "La HCG stimule le corps jaune pour produire la progestérone nécessaire au maintien de la grossesse."
+  },
+  {
+    question: "La FIVETE est proposée si la femme ne peut pas ovuler.",
+    answer: false,
+    explanation: "Dans ce cas, on utilise plutôt un traitement stimulant l’ovulation."
+  },
+  {
+    question: "La FIVETE est proposée si l’embryon ne peut pas s’implanter naturellement.",
+    answer: true,
+    explanation: "Le transfert d’embryon in vitro permet de contourner des problèmes de nidation."
+  },
+  {
+    question: "La FIVETE est proposée si la femme a une obstruction bilatérale des trompes.",
+    answer: true,
+    explanation: "La FIVETE permet de contourner l’obstruction des trompes et de placer l’embryon directement dans l’utérus."
+  },
+  {
+    question: "La FIVETE est proposée si le conjoint souffre d’une oligospermie.",
+    answer: false,
+    explanation: "Dans ce cas, d’autres techniques comme l’ICSI peuvent être préférées."
+  },
+  {
+    question: "La pilule combinée bloque l’ovulation.",
+    answer: true,
+    explanation: "Les hormones empêchent le pic de LH et donc la maturation ovocytaire."
+  },
+  {
+    question: "La pilule combinée provoque la menstruation.",
+    answer: false,
+    explanation: "Elle provoque une hémorragie de privation, pas de véritables menstruations."
+  },
+  {
+    question: "La pilule combinée stimule la croissance folliculaire.",
+    answer: false,
+    explanation: "Au contraire, elle inhibe la maturation folliculaire."
+  },
+  {
+    question: "La pilule combinée interrompt la grossesse.",
+    answer: false,
+    explanation: "Elle empêche la fécondation mais ne supprime pas une grossesse déjà existante."
+  },
+  {
+    question: "Dans la trompe d'une femme, on peut observer un ovocyte I.",
+    answer: false,
+    explanation: "C’est l’ovocyte II qui se trouve dans la trompe après l’ovulation."
+  },
+  {
+    question: "Dans la trompe d'une femme, on peut observer une ovogonie.",
+    answer: false,
+    explanation: "Les ovogonies sont présentes uniquement dans l’ovaire pendant la vie fœtale."
+  },
+  {
+    question: "Dans la trompe d'une femme, on peut observer des spermatozoïdes.",
+    answer: true,
+    explanation: "Les spermatozoïdes se déplacent dans la trompe pour rencontrer l’ovocyte II."
+  },
+  {
+    question: "Dans la trompe d'une femme, on peut observer un ovule.",
+    answer: false,
+    explanation: "Le gamète libéré est un ovocyte II ; l’ovule n’existe qu’après la fécondation."
+  },
+  {
+    question: "En cas de fécondation, les cycles sexuels s'arrêtent car le taux de progestérone diminue.",
+    answer: false,
+    explanation: "Au contraire, la progestérone augmente pour maintenir l’endomètre."
+  },
+  {
+    question: "En cas de fécondation, les cycles sexuels s'arrêtent car le taux de progestérone augmente.",
+    answer: true,
+    explanation: "La progestérone élevée empêche le développement de nouveaux follicules et prépare l’utérus."
+  },
+  {
+    question: "En cas de fécondation, les cycles sexuels s'arrêtent car le corps jaune disparaît.",
+    answer: false,
+    explanation: "Le corps jaune persiste et sécrète la progestérone pendant le début de la grossesse."
+  },
+  {
+    question: "En cas de fécondation, les cycles sexuels s'arrêtent car la sécrétion de FSH est inhibée par le fort taux de progestérone.",
+    answer: true,
+    explanation: "La FSH est bloquée, empêchant la maturation de nouveaux follicules."
+  }
+
+  
+];
+
+
+    </script>
+    
+    <script src="../assets/js/arcseek.js"></script>
+    
+    <footer class="footer">
+        Eduwell Quantum Group
+    </footer>
+</body>
+</html>

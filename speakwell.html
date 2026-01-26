@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="7-FD479xFj_8HbH9UlwHCnnMl0gziIaCUqk5R_oU6L4" />
-    <title>EduWell - SpeakWell </title>
+    <title>EduWell - SpeakWell</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="shortcut icon" href="./assets/images/speakwell.png" type="image/x-icon">
@@ -66,7 +66,7 @@
         .page {
             position: absolute;
             width: 100%;
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             transition: var(--transition-slow);
@@ -74,6 +74,7 @@
             background-color: var(--surface-primary);
             opacity: 1;
             transform: translateY(0);
+            overflow: hidden;
         }
 
         .page.hidden {
@@ -98,6 +99,7 @@
             padding: 0 24px;
             z-index: 1000;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            flex-shrink: 0;
         }
 
         .nav-logo {
@@ -175,7 +177,7 @@
             color: var(--text-primary);
         }
 
-        /* Back Button - Fixed mobile positioning */
+        /* Back Button */
         .back-btn {
             position: fixed;
             top: 76px;
@@ -208,18 +210,18 @@
             font-size: 0.9rem;
         }
 
-        /* Main Page Styles - Fixed height */
+        /* Main Page - Centered Layout */
         .main-content {
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 120px 24px 80px;
+            flex: 1;
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
             text-align: center;
-            min-height: calc(100vh - 64px);
-            justify-content: center;
+            padding: 0 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
         }
 
         .logo-container {
@@ -304,13 +306,36 @@
             opacity: 1;
         }
 
-        /* Section Titles */
-        .section-header {
+        /* Content Pages - Scrollable Layout */
+        .page-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: calc(100vh - 64px);
+            margin-top: 64px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+
+        /* Scrollable Content Container */
+        .scrollable-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: min-content;
+            padding: 40px 24px 120px;
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 24px;
-            margin-bottom: 40px;
+        }
+
+        /* Section Titles */
+        .section-header {
+            width: 100%;
+            margin-bottom: 48px;
         }
 
         .section-title {
@@ -333,15 +358,13 @@
             line-height: 1.6;
         }
 
-        /* Cards Container - Fixed scrolling */
+        /* Cards Container */
         .cards-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 24px;
             width: 100%;
-            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 24px 100px;
         }
 
         /* Subject Cards */
@@ -603,15 +626,6 @@
             transform: translateY(-2px);
         }
 
-        /* Page Content - Fixed scrolling layout */
-        .page-content {
-            width: 100%;
-            margin-top: 64px;
-            padding-top: 40px;
-            min-height: calc(100vh - 164px);
-            overflow-y: auto;
-        }
-
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -654,15 +668,9 @@
                 font-size: 2.2rem;
             }
             
-            .section-header {
-                margin-bottom: 32px;
-                padding-top: 0;
-            }
-            
             .cards-container {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
                 gap: 20px;
-                padding-bottom: 120px;
             }
             
             .nav-links {
@@ -690,30 +698,13 @@
                 z-index: 1001;
             }
             
-            /* Mobile content layout */
-            .page-content {
-                padding-top: 20px;
-                min-height: calc(100vh - 164px);
-                overflow-y: auto;
+            /* Adjust scrollable content padding */
+            .scrollable-content {
+                padding: 30px 16px 100px;
             }
             
-            .main-content {
-                padding: 100px 20px 80px;
-                min-height: calc(100vh - 64px);
-                justify-content: center;
-            }
-            
-            /* Mobile specific card heights */
-            .subject-card {
-                height: 280px;
-            }
-            
-            .level-card {
-                height: 220px;
-            }
-            
-            .sublevel-card {
-                height: 180px;
+            .section-header {
+                margin-bottom: 36px;
             }
         }
 
@@ -724,36 +715,25 @@
             
             .tagline {
                 font-size: 1.3rem;
-                margin-bottom: 16px;
             }
             
             .sub-tagline {
                 font-size: 1rem;
-                margin-bottom: 32px;
             }
             
             .section-title {
                 font-size: 1.9rem;
-                margin-top: 0;
-                margin-bottom: 12px;
             }
             
             .section-subtitle {
                 font-size: 1.1rem;
-                line-height: 1.5;
-            }
-            
-            .section-header {
-                margin-bottom: 24px;
-                padding: 0 16px;
+                margin-bottom: 32px;
             }
             
             .cards-container {
                 grid-template-columns: 1fr;
                 max-width: 400px;
                 margin: 0 auto;
-                padding: 0 16px 120px;
-                gap: 16px;
             }
             
             .btn {
@@ -771,17 +751,9 @@
                 z-index: 1001;
             }
             
-            /* Ensure content fits mobile viewport */
-            .page-content {
-                margin-top: 60px;
-                padding-top: 15px;
-                min-height: calc(100vh - 164px);
-                overflow-y: auto;
-            }
-            
-            .main-content {
-                padding: 80px 16px 60px;
-                min-height: calc(100vh - 64px);
+            /* Mobile scrollable content adjustments */
+            .scrollable-content {
+                padding: 25px 16px 90px;
             }
             
             .footer-btn {
@@ -792,97 +764,53 @@
                 font-size: 1rem;
             }
             
-            /* Mobile card adjustments */
             .subject-card {
-                height: 240px;
-                padding: 20px 16px;
+                height: 280px;
             }
             
             .level-card {
-                height: 200px;
-                padding: 24px 16px;
-            }
-            
-            .sublevel-card {
-                height: 160px;
-                padding: 20px 12px;
-            }
-            
-            .subject-icon {
-                width: 70px;
-                height: 70px;
-                font-size: 1.8rem;
-                margin-bottom: 20px;
-            }
-            
-            .level-number {
-                width: 50px;
-                height: 50px;
-                font-size: 1.2rem;
-                margin-bottom: 16px;
-            }
-            
-            .sublevel-number {
-                width: 40px;
-                height: 40px;
-                font-size: 0.9rem;
-                margin-bottom: 12px;
-            }
-            
-            .subject-name {
-                font-size: 1.3rem;
-            }
-            
-            .level-name {
-                font-size: 1.2rem;
-            }
-            
-            .sublevel-name {
-                font-size: 1rem;
-            }
-            
-            .subject-desc,
-            .level-desc,
-            .sublevel-desc {
-                font-size: 0.85rem;
-                line-height: 1.4;
-            }
-        }
-        
-        /* Small screen adjustments for better scrolling */
-        @media (max-height: 700px) {
-            .page-content {
-                min-height: calc(100vh - 144px);
-            }
-            
-            .main-content {
-                padding-top: 80px;
-                padding-bottom: 40px;
-                min-height: calc(100vh - 64px);
-            }
-            
-            .cards-container {
-                padding-bottom: 100px;
-            }
-        }
-        
-        /* Extra small mobile devices */
-        @media (max-width: 360px) {
-            .cards-container {
-                gap: 12px;
-            }
-            
-            .subject-card {
                 height: 220px;
             }
             
-            .level-card {
+            .sublevel-card {
                 height: 180px;
             }
-            
-            .sublevel-card {
-                height: 150px;
+        }
+        
+        /* Tablet adjustments */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .cards-container {
+                grid-template-columns: repeat(2, 1fr);
             }
+            
+            .scrollable-content {
+                padding: 40px 32px 120px;
+            }
+        }
+        
+        /* Desktop adjustments */
+        @media (min-width: 1025px) {
+            .cards-container {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+        
+        /* Custom scrollbar for webkit browsers */
+        .page-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .page-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .page-content::-webkit-scrollbar-thumb {
+            background: var(--apple-light-gray);
+            border-radius: 4px;
+        }
+        
+        .page-content::-webkit-scrollbar-thumb:hover {
+            background: var(--apple-gray);
         }
     </style>
 </head>
@@ -933,29 +861,31 @@
             <i class="fas fa-chevron-left"></i>
             <span>Back</span>
         </button>
-        
+         <br><br>
         <div class="page-content">
-            <div class="section-header">
-                <h2 class="section-title">Learning Modules</h2>
-                <p class="section-subtitle">Choose your focus area to begin mastering English language skills</p>
-            </div>
-            
-            <div class="cards-container">
-                <a class="subject-card" id="tensesCard">
-                    <div class="subject-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <h3 class="subject-name">Tense Mastery</h3>
-                    <p class="subject-desc">Master verb tenses for precise communication</p>
-                </a>
+            <div class="scrollable-content">
+                <div class="section-header">
+                    <h2 class="section-title">Learning Modules</h2>
+                    <p class="section-subtitle">Choose your focus area to begin mastering English language skills</p>
+                </div>
                 
-                <a class="subject-card grammar" id="grammarCard">
-                    <div class="subject-icon">
-                        <i class="fas fa-pen-fancy"></i>
-                    </div>
-                    <h3 class="subject-name">Grammar Precision</h3>
-                    <p class="subject-desc">Perfect your sentence construction skills</p>
-                </a>
+                <div class="cards-container">
+                    <a class="subject-card" id="tensesCard">
+                        <div class="subject-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3 class="subject-name">Tense Mastery</h3>
+                        <p class="subject-desc">Master verb tenses for precise communication</p>
+                    </a>
+                    
+                    <a class="subject-card grammar" id="grammarCard">
+                        <div class="subject-icon">
+                            <i class="fas fa-pen-fancy"></i>
+                        </div>
+                        <h3 class="subject-name">Grammar Precision</h3>
+                        <p class="subject-desc">Perfect your sentence construction skills</p>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -966,37 +896,39 @@
             <i class="fas fa-chevron-left"></i>
             <span>Back</span>
         </button>
-        
+         <br><br>
         <div class="page-content">
-            <div class="section-header">
-                <h2 class="section-title">Tense Progression</h2>
-                <p class="section-subtitle">Progress through our structured tense mastery levels</p>
-            </div>
-            
-            <div class="cards-container">
-                <a class="level-card" onclick="showPage('foundationPage')">
-                    <div class="level-number">1</div>
-                    <h3 class="level-name">Past Tenses</h3>
-                    <p class="level-desc">Master past simple, continuous, perfect</p>
-                </a>
+            <div class="scrollable-content">
+                <div class="section-header">
+                    <h2 class="section-title">Tense Progression</h2>
+                    <p class="section-subtitle">Progress through our structured tense mastery levels</p>
+                </div>
                 
-                <a class="level-card" onclick="showPage('intermediatePage')">
-                    <div class="level-number">2</div>
-                    <h3 class="level-name">Present Tenses</h3>
-                    <p class="level-desc">Learn present tenses and their applications</p>
-                </a>
-                
-                <a class="level-card" onclick="showPage('advancedPage')">
-                    <div class="level-number">3</div>
-                    <h3 class="level-name">Future Tenses</h3>
-                    <p class="level-desc">Explore future forms and their usage</p>
-                </a>
-                
-                <a class="level-card" onclick="showPage('masteryPage')">
-                    <div class="level-number">4</div>
-                    <h3 class="level-name">Bac Exam</h3>
-                    <p class="level-desc">Prepare for your Bac exam with confidence</p>
-                </a>
+                <div class="cards-container">
+                    <a class="level-card" onclick="showPage('foundationPage')">
+                        <div class="level-number">1</div>
+                        <h3 class="level-name">Past Tenses</h3>
+                        <p class="level-desc">Master past simple, continuous, perfect</p>
+                    </a>
+                    
+                    <a class="level-card" onclick="showPage('intermediatePage')">
+                        <div class="level-number">2</div>
+                        <h3 class="level-name">Present Tenses</h3>
+                        <p class="level-desc">Learn present tenses and their applications</p>
+                    </a>
+                    
+                    <a class="level-card" onclick="showPage('advancedPage')">
+                        <div class="level-number">3</div>
+                        <h3 class="level-name">Future Tenses</h3>
+                        <p class="level-desc">Explore future forms and their usage</p>
+                    </a>
+                    
+                    <a class="level-card" onclick="showPage('masteryPage')">
+                        <div class="level-number">4</div>
+                        <h3 class="level-name">Bac Exam</h3>
+                        <p class="level-desc">Prepare for your Bac exam with confidence</p>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -1007,49 +939,51 @@
             <i class="fas fa-chevron-left"></i>
             <span>Back</span>
         </button>
-        
+         <br><br>
         <div class="page-content">
-            <div class="section-header">
-                <h2 class="section-title">Past Tense Mastery</h2>
-                <p class="section-subtitle">Which past tense are you mastering today?</p>
-            </div>
-            
-            <div class="cards-container">
-                <a class="sublevel-card" href="./speakwell/tenses/t1s1">
-                    <div class="sublevel-number">1</div>
-                    <h3 class="sublevel-name">Past Simple vs. Past Perfect</h3>
-                    <p class="sublevel-desc">Learn the difference and when to use each</p>
-                </a>
+            <div class="scrollable-content">
+                <div class="section-header">
+                    <h2 class="section-title">Past Tense Mastery</h2>
+                    <p class="section-subtitle">Which past tense are you mastering today?</p>
+                </div>
                 
-                <a class="sublevel-card" href="./speakwell/tenses/t2s2">
-                    <div class="sublevel-number">2</div>
-                    <h3 class="sublevel-name">Past Continuous vs. Past Simple</h3>
-                    <p class="sublevel-desc">Understand ongoing vs completed past actions</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/tenses/t2s3">
-                    <div class="sublevel-number">3</div>
-                    <h3 class="sublevel-name">Past Perfect vs. Past Perfect Continuous</h3>
-                    <p class="sublevel-desc">Master completed vs ongoing past actions</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/tenses/t2s4">
-                    <div class="sublevel-number">4</div>
-                    <h3 class="sublevel-name">Past Simple / Continuous / Perfect</h3>
-                    <p class="sublevel-desc">Compare and contrast all past tenses</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/tenses/t2s5">
-                    <div class="sublevel-number">5</div>
-                    <h3 class="sublevel-name">Mixed (All Past Tenses)</h3>
-                    <p class="sublevel-desc">Challenge yourself with mixed exercises</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/tenses/t1s6">
-                    <div class="sublevel-number">6</div>
-                    <h3 class="sublevel-name">Time Expressions</h3>
-                    <p class="sublevel-desc">Learn expressions used with past tenses</p>
-                </a>
+                <div class="cards-container">
+                    <a class="sublevel-card" href="./speakwell/tenses/t1s1">
+                        <div class="sublevel-number">1</div>
+                        <h3 class="sublevel-name">Past Simple vs. Past Perfect</h3>
+                        <p class="sublevel-desc">Learn the difference and when to use each</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/tenses/t2s2">
+                        <div class="sublevel-number">2</div>
+                        <h3 class="sublevel-name">Past Continuous vs. Past Simple</h3>
+                        <p class="sublevel-desc">Understand ongoing vs completed past actions</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/tenses/t2s3">
+                        <div class="sublevel-number">3</div>
+                        <h3 class="sublevel-name">Past Perfect vs. Past Perfect Continuous</h3>
+                        <p class="sublevel-desc">Master completed vs ongoing past actions</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/tenses/t2s4">
+                        <div class="sublevel-number">4</div>
+                        <h3 class="sublevel-name">Past Simple / Continuous / Perfect</h3>
+                        <p class="sublevel-desc">Compare and contrast all past tenses</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/tenses/t2s5">
+                        <div class="sublevel-number">5</div>
+                        <h3 class="sublevel-name">Mixed (All Past Tenses)</h3>
+                        <p class="sublevel-desc">Challenge yourself with mixed exercises</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/tenses/t1s6">
+                        <div class="sublevel-number">6</div>
+                        <h3 class="sublevel-name">Time Expressions</h3>
+                        <p class="sublevel-desc">Learn expressions used with past tenses</p>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -1062,47 +996,49 @@
         </button>
         
         <div class="page-content">
-            <div class="section-header">
-                <h2 class="section-title">Present Tense Mastery</h2>
-                <p class="section-subtitle">Master the different present tense forms</p>
-            </div>
-            
-            <div class="cards-container">
-                <a class="sublevel-card" href="./speakwell/tenses/t1s1">
-                    <div class="sublevel-number">1</div>
-                    <h3 class="sublevel-name">Present Simple & Continuous</h3>
-                    <p class="sublevel-desc">Learn habits vs ongoing actions</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/tenses/t1s2">
-                    <div class="sublevel-number">2</div>
-                    <h3 class="sublevel-name">Present Tenses</h3>
-                    <p class="sublevel-desc">Review all present tense forms</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/tenses/t1s3">
-                    <div class="sublevel-number">3</div>
-                    <h3 class="sublevel-name">Present Perfect & Simple</h3>
-                    <p class="sublevel-desc">Master the present perfect tense</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/tenses/t1s4">
-                    <div class="sublevel-number">4</div>
-                    <h3 class="sublevel-name">Present Perfect & Perfect Continuous</h3>
-                    <p class="sublevel-desc">Compare perfect and continuous forms</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/tenses/t1s5">
-                    <div class="sublevel-number">5</div>
-                    <h3 class="sublevel-name">Mixed Present Tenses</h3>
-                    <p class="sublevel-desc">Challenge with mixed present tense exercises</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/tenses/t1s6">
-                    <div class="sublevel-number">6</div>
-                    <h3 class="sublevel-name">Present Simple, Continuous, Perfect</h3>
-                    <p class="sublevel-desc">Advanced practice with all present tenses</p>
-                </a>
+            <div class="scrollable-content">
+                <div class="section-header">
+                    <h2 class="section-title">Present Tense Mastery</h2>
+                    <p class="section-subtitle">Master the different present tense forms</p>
+                </div>
+                 <br><br>
+                <div class="cards-container">
+                    <a class="sublevel-card" href="./speakwell/tenses/t1s1">
+                        <div class="sublevel-number">1</div>
+                        <h3 class="sublevel-name">Present Simple & Continuous</h3>
+                        <p class="sublevel-desc">Learn habits vs ongoing actions</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/tenses/t1s2">
+                        <div class="sublevel-number">2</div>
+                        <h3 class="sublevel-name">Present Tenses</h3>
+                        <p class="sublevel-desc">Review all present tense forms</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/tenses/t1s3">
+                        <div class="sublevel-number">3</div>
+                        <h3 class="sublevel-name">Present Perfect & Simple</h3>
+                        <p class="sublevel-desc">Master the present perfect tense</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/tenses/t1s4">
+                        <div class="sublevel-number">4</div>
+                        <h3 class="sublevel-name">Present Perfect & Perfect Continuous</h3>
+                        <p class="sublevel-desc">Compare perfect and continuous forms</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/tenses/t1s5">
+                        <div class="sublevel-number">5</div>
+                        <h3 class="sublevel-name">Mixed Present Tenses</h3>
+                        <p class="sublevel-desc">Challenge with mixed present tense exercises</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/tenses/t1s6">
+                        <div class="sublevel-number">6</div>
+                        <h3 class="sublevel-name">Present Simple, Continuous, Perfect</h3>
+                        <p class="sublevel-desc">Advanced practice with all present tenses</p>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -1113,49 +1049,51 @@
             <i class="fas fa-chevron-left"></i>
             <span>Back</span>
         </button>
-        
+         <br><br>
         <div class="page-content">
-            <div class="section-header">
-                <h2 class="section-title">Future Tense Mastery</h2>
-                <p class="section-subtitle">Which future tense are you mastering today?</p>
-            </div>
-            
-            <div class="cards-container">
-                <a class="sublevel-card" href="./speakwell/tenses/t3s1">
-                    <div class="sublevel-number">1</div>
-                    <h3 class="sublevel-name">Future Simple vs Continuous</h3>
-                    <p class="sublevel-desc">Learn planned vs ongoing future actions</p>
-                </a>
+            <div class="scrollable-content">
+                <div class="section-header">
+                    <h2 class="section-title">Future Tense Mastery</h2>
+                    <p class="section-subtitle">Which future tense are you mastering today?</p>
+                </div>
                 
-                <a class="sublevel-card" href="./speakwell/tenses/t3s2">
-                    <div class="sublevel-number">2</div>
-                    <h3 class="sublevel-name">Future Continuous</h3>
-                    <p class="sublevel-desc">Master ongoing future actions</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/tenses/t3s3">
-                    <div class="sublevel-number">3</div>
-                    <h3 class="sublevel-name">Future Perfect</h3>
-                    <p class="sublevel-desc">Learn completed future actions</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/tenses/t3s4">
-                    <div class="sublevel-number">4</div>
-                    <h3 class="sublevel-name">Future Perfect Continuous</h3>
-                    <p class="sublevel-desc">Master ongoing future actions up to a point</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/tenses/t3s5">
-                    <div class="sublevel-number">5</div>
-                    <h3 class="sublevel-name">Mixed Future Tenses</h3>
-                    <p class="sublevel-desc">Challenge with mixed future tense exercises</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/tenses/t3s6">
-                    <div class="sublevel-number">6</div>
-                    <h3 class="sublevel-name">Future Time Clauses</h3>
-                    <p class="sublevel-desc">Learn time expressions with future tenses</p>
-                </a>
+                <div class="cards-container">
+                    <a class="sublevel-card" href="./speakwell/tenses/t3s1">
+                        <div class="sublevel-number">1</div>
+                        <h3 class="sublevel-name">Future Simple vs Continuous</h3>
+                        <p class="sublevel-desc">Learn planned vs ongoing future actions</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/tenses/t3s2">
+                        <div class="sublevel-number">2</div>
+                        <h3 class="sublevel-name">Future Continuous</h3>
+                        <p class="sublevel-desc">Master ongoing future actions</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/tenses/t3s3">
+                        <div class="sublevel-number">3</div>
+                        <h3 class="sublevel-name">Future Perfect</h3>
+                        <p class="sublevel-desc">Learn completed future actions</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/tenses/t3s4">
+                        <div class="sublevel-number">4</div>
+                        <h3 class="sublevel-name">Future Perfect Continuous</h3>
+                        <p class="sublevel-desc">Master ongoing future actions up to a point</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/tenses/t3s5">
+                        <div class="sublevel-number">5</div>
+                        <h3 class="sublevel-name">Mixed Future Tenses</h3>
+                        <p class="sublevel-desc">Challenge with mixed future tense exercises</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/tenses/t3s6">
+                        <div class="sublevel-number">6</div>
+                        <h3 class="sublevel-name">Future Time Clauses</h3>
+                        <p class="sublevel-desc">Learn time expressions with future tenses</p>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -1166,43 +1104,45 @@
             <i class="fas fa-chevron-left"></i>
             <span>Back</span>
         </button>
-        
+         <br><br>
         <div class="page-content">
-            <div class="section-header">
-                <h2 class="section-title">Bac Exam Preparation</h2>
-                <p class="section-subtitle">Master tenses for your Bac exam with these exercises</p>
-            </div>
-            
-            <div class="cards-container">
-                <a class="sublevel-card" href="./speakwell/tenses/t4s1">
-                    <div class="sublevel-number">1</div>
-                    <h3 class="sublevel-name">Tenses Exercise I</h3>
-                    <p class="sublevel-desc">Beginner level tense exercises</p>
-                </a>
+            <div class="scrollable-content">
+                <div class="section-header">
+                    <h2 class="section-title">Bac Exam Preparation</h2>
+                    <p class="section-subtitle">Master tenses for your Bac exam with these exercises</p>
+                </div>
                 
-                <a class="sublevel-card" href="./speakwell/tenses/t4s2">
-                    <div class="sublevel-number">2</div>
-                    <h3 class="sublevel-name">Tenses Exercise II</h3>
-                    <p class="sublevel-desc">Intermediate level tense exercises</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/tenses/t4s3">
-                    <div class="sublevel-number">3</div>
-                    <h3 class="sublevel-name">Tenses Exercise III</h3>
-                    <p class="sublevel-desc">Advanced level tense exercises</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/tenses/t4s4">
-                    <div class="sublevel-number">4</div>
-                    <h3 class="sublevel-name">Tenses Challenge #1</h3>
-                    <p class="sublevel-desc">First challenge with mixed tenses</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/tenses/t4s5">
-                    <div class="sublevel-number">5</div>
-                    <h3 class="sublevel-name">Tenses Challenge #2</h3>
-                    <p class="sublevel-desc">Final challenge with advanced mixed tenses</p>
-                </a>
+                <div class="cards-container">
+                    <a class="sublevel-card" href="./speakwell/tenses/t4s1">
+                        <div class="sublevel-number">1</div>
+                        <h3 class="sublevel-name">Tenses Exercise I</h3>
+                        <p class="sublevel-desc">Beginner level tense exercises</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/tenses/t4s2">
+                        <div class="sublevel-number">2</div>
+                        <h3 class="sublevel-name">Tenses Exercise II</h3>
+                        <p class="sublevel-desc">Intermediate level tense exercises</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/tenses/t4s3">
+                        <div class="sublevel-number">3</div>
+                        <h3 class="sublevel-name">Tenses Exercise III</h3>
+                        <p class="sublevel-desc">Advanced level tense exercises</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/tenses/t4s4">
+                        <div class="sublevel-number">4</div>
+                        <h3 class="sublevel-name">Tenses Challenge #1</h3>
+                        <p class="sublevel-desc">First challenge with mixed tenses</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/tenses/t4s5">
+                        <div class="sublevel-number">5</div>
+                        <h3 class="sublevel-name">Tenses Challenge #2</h3>
+                        <p class="sublevel-desc">Final challenge with advanced mixed tenses</p>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -1213,61 +1153,65 @@
             <i class="fas fa-chevron-left"></i>
             <span>Back</span>
         </button>
+      
         
         <div class="page-content">
-            <div class="section-header">
-                <h2 class="section-title">Grammar Modules</h2>
-                <p class="section-subtitle">Master English grammar with our structured modules</p>
-            </div>
-            
-            <div class="cards-container">
-                <a class="sublevel-card" href="./speakwell/grammar/s1">
-                    <div class="level-number">1</div>
-                    <h3 class="level-name">Parts of Speech</h3>
-                    <p class="level-desc">Learn nouns, verbs, adjectives, and more</p>
-                </a>
+            <div class="scrollable-content">
+                <div class="section-header">
+                      <br><br>
+                    <h2 class="section-title">Grammar Modules</h2>
+                    <p class="section-subtitle">Master English grammar with our structured modules</p>
+                </div>
                 
-                <a class="sublevel-card" href="./speakwell/grammar/s2">
-                    <div class="level-number">2</div>
-                    <h3 class="level-name">Sentence Structure</h3>
-                    <p class="level-desc">Master subject-verb agreement and clauses</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/grammar/s3">
-                    <div class="level-number">3</div>
-                    <h3 class="level-name">Articles</h3>
-                    <p class="level-desc">Learn when to use a, an, the, or no article</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/grammar/s4">
-                    <div class="level-number">4</div>
-                    <h3 class="level-name">Modal Verbs</h3>
-                    <p class="level-desc">Master can, could, would, should, must, etc.</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/grammar/s5">
-                    <div class="level-number">5</div>
-                    <h3 class="level-name">Passive Voice</h3>
-                    <p class="level-desc">Learn to form and use passive constructions</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/grammar/s6">
-                    <div class="level-number">6</div>
-                    <h3 class="level-name">Reported Speech</h3>
-                    <p class="level-desc">Master indirect speech and tense changes</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/grammar/s7">
-                    <div class="level-number">7</div>
-                    <h3 class="level-name">Question Forms</h3>
-                    <p class="level-desc">Learn to form different types of questions</p>
-                </a>
-                
-                <a class="sublevel-card" href="./speakwell/grammar/s8">
-                    <div class="level-number">8</div>
-                    <h3 class="level-name">Comparison</h3>
-                    <p class="level-desc">Master comparative and superlative forms</p>
-                </a>
+                <div class="cards-container">
+                    <a class="sublevel-card" href="./speakwell/grammar/s1">
+                        <div class="level-number">1</div>
+                        <h3 class="level-name">Parts of Speech</h3>
+                        <p class="level-desc">Learn nouns, verbs, adjectives, and more</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/grammar/s2">
+                        <div class="level-number">2</div>
+                        <h3 class="level-name">Sentence Structure</h3>
+                        <p class="level-desc">Master subject-verb agreement and clauses</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/grammar/s3">
+                        <div class="level-number">3</div>
+                        <h3 class="level-name">Articles</h3>
+                        <p class="level-desc">Learn when to use a, an, the, or no article</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/grammar/s4">
+                        <div class="level-number">4</div>
+                        <h3 class="level-name">Modal Verbs</h3>
+                        <p class="level-desc">Master can, could, would, should, must, etc.</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/grammar/s5">
+                        <div class="level-number">5</div>
+                        <h3 class="level-name">Passive Voice</h3>
+                        <p class="level-desc">Learn to form and use passive constructions</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/grammar/s6">
+                        <div class="level-number">6</div>
+                        <h3 class="level-name">Reported Speech</h3>
+                        <p class="level-desc">Master indirect speech and tense changes</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/grammar/s7">
+                        <div class="level-number">7</div>
+                        <h3 class="level-name">Question Forms</h3>
+                        <p class="level-desc">Learn to form different types of questions</p>
+                    </a>
+                    
+                    <a class="sublevel-card" href="./speakwell/grammar/s8">
+                        <div class="level-number">8</div>
+                        <h3 class="level-name">Comparison</h3>
+                        <p class="level-desc">Master comparative and superlative forms</p>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -1311,8 +1255,13 @@
             // Update navigation
             updateNavigation();
             
-            // Scroll to top
-            window.scrollTo(0, 0);
+            // Scroll to top of the page content
+            if (pageId !== 'mainPage') {
+                const pageContent = targetPage.querySelector('.page-content');
+                if (pageContent) {
+                    pageContent.scrollTop = 0;
+                }
+            }
         }
         
         // Update navigation active state
@@ -1390,6 +1339,13 @@
             
             // Initialize navigation
             updateNavigation();
+            
+            // Add smooth scroll behavior for iOS devices
+            if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                document.querySelectorAll('.page-content').forEach(el => {
+                    el.style['-webkit-overflow-scrolling'] = 'touch';
+                });
+            }
         });
     </script>
 </body>

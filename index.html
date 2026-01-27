@@ -1,1469 +1,225 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNTBT1VQN7"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-FNTBT1VQN7');
-    </script>
-    
+      <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FNTBT1VQN7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FNTBT1VQN7');
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sahl App</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="./assets/css/styleapp.css">
-    <link rel="shortcut icon" href="./assets/images/app-store.png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700&display=swap" rel="stylesheet">
-    
+    <title>Professional Design</title>
     <style>
-/* Enhanced Home Header with Login Button */
-.home-header {
-   
-   
-   
-    justify-content: space-between;
-   
-    
-}
+        /* Ultra-clean modern aesthetic */
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-light: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --accent: #0071e3; /* Apple-like blue accent */
+            --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+            --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* Apple-style Login Button for Header */
-.header-login-btn {
-    background-color: #007AFF;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 10px 24px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 14px;
-    letter-spacing: -0.2px;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 110px;
-    height: 40px;
-}
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", 
+                         "SF Pro Text", "Helvetica Neue", Helvetica, Arial, 
+                         sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark), var(--bg-light));
+            color: var(--text-primary);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.5;
+        }
 
+        /* Ultra-smooth animated gradient */
+        .gradient-bg {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                var(--bg-dark) 0%,
+                var(--bg-light) 50%,
+                var(--bg-dark) 100%
+            );
+            background-size: 200% 200%;
+            animation: gradientFlow 16s ease infinite;
+            z-index: -1;
+            opacity: 0.98;
+        }
 
-.header-login-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2);
-    transition: all 0.1s ease;
-}
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
+        /* Subtle floating grid (minimalist) */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            opacity: 0;
+            animation: fadeIn 1.5s var(--ease-out-quint) forwards 0.5s;
+        }
 
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
 
-/* Add subtle shine effect on hover */
-.header-login-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.7s ease;
-}
+        /* Main content styling */
+        .content {
+            text-align: center;
+            padding: 2rem;
+            max-width: min(90%, 800px);
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInUp 1s var(--ease-out-quint) forwards 0.8s;
+        }
 
-.header-login-btn:hover::before {
-    left: 100%;
-}
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  
-    
-    .header-login-btn {
-        padding: 9px 20px;
-        min-width: 100px;
-        height: 38px;
-        font-size: 13.5px;
-    }
-    
-  
-}
+        .line1 {
+            font-size: clamp(2.5rem, 5vw, 3.75rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
 
-@media (max-width: 480px) {
-  
-    .header-login-btn {
-        padding: 8px 18px;
-        min-width: 90px;
-        height: 36px;
-        font-size: 13px;
-    }
-    
-   
-}
+        .line2 {
+            font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+            font-weight: 400;
+            color: var(--text-secondary);
+            max-width: 80%;
+            margin: 0 auto;
+        }
 
-/* Add scroll effect for header */
-.home-header.scrolled {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    background: rgba(255, 255, 255, 0.98);
-    height: 65px;
-}
+        /* Ultra-thin divider (elegant touch) */
+        .divider {
+            width: 80px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 2rem auto;
+            opacity: 0;
+            animation: fadeIn 1s var(--ease-out-quint) forwards 1.2s;
+        }
 
-.home-header.scrolled .home-logo {
-    font-size: 26px;
-}
+        /* Subtle floating dot animation (dynamic) */
+        .floating-dots {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
 
-.home-header.scrolled .header-login-btn {
-    height: 38px;
-    padding: 8px 20px;
-}
+        .dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            animation: float 8s infinite var(--ease-smooth);
+        }
 
-@media (max-width: 768px) {
-   
-    
-    .home-header.scrolled .header-login-btn {
-        height: 36px;
-        padding: 6px 14px;
-    }
-}
-</style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.2; }
+            50% { transform: translateY(-20px) translateX(10px); opacity: 0.5; }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .line1 { font-size: clamp(2rem, 8vw, 3rem); }
+            .line2 { max-width: 90%; }
+        }
+
+        /* Motion reduction for accessibility */
+        @media (prefers-reduced-motion) {
+            .gradient-bg, .grid-overlay, .content, .divider, .dot {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Home Section Header (Only in Home) - Fixed at top -->
-   <div class="home-header" id="homeHeader">
-    <a href="#" class="home-logo">sahl</a>
-    <button class="header-login-btn" id="headerLoginBtn">
-        <span class="btn-text">S’inscrire</span>
-    </button>
-</div>
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav" aria-label="Main navigation">
-        <div class="nav-item active" data-target="home" role="button" tabindex="0">
-            <i class="fas fa-home nav-icon"></i>
-            <span class="nav-label">Accueil</span>
-        </div>
-        <div class="nav-item" data-target="search" role="button" tabindex="0">
-            <i class="fas fa-search nav-icon"></i>
-            <span class="nav-label">Recherche</span>
-        </div>
-        <div class="nav-item" data-target="speakwell" role="button" tabindex="0">
-            <i class="fas fa-book nav-icon"></i>
-            <span class="nav-label">SpeakWell</span>
-        </div>
-        <div class="nav-item" data-target="about" role="button" tabindex="0">
-            <i class="fas fa-users-rectangle nav-icon"></i>
-            <span class="nav-label">Stream</span>
-        </div>
-    </nav>
+    <div class="gradient-bg"></div>
+    <div class="grid-overlay"></div>
+    <div class="floating-dots" id="floatingDots"></div>
 
-    <!-- Home Content -->
-    <div id="home" class="content-section active animate-on-load">
-        <div class="container">
-            <!-- Gradient Header Section - Only in Home -->
-            <div class="header-section">
-                <div class="gradient-bg"></div>
-                
-                <div class="content">
-                    <div class="subtitle">E-Book</div>
-        <div class="main-title">
-            Le 
-            <span class="highlight-green">secret</span> 
-            pour
-            <span class="highlight-warm">réussir et progresser</span>
-        </div>
-                    <p class="subheading">
-Découvrez toutes les matières scientifiques essentielles pour réussir votre <spam> baccalauréat</spam>
-</p>
-                    <div class="specializations">
-                        <span class="tag motion-tag">Math</span>
-                        <span class="tag three-tag">Sciences</span>
-                        <span class="tag ui-tag">Anglais</span>
-                        <span class="tag branding-tag">Physique</span>
-                        <span class="tag brando-tag">Informatique</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Action Buttons Section -->
-            <div class="action-buttons">
-                 <a href="ebook.html" class="action-button">
-                    سارع باقتناء نسختك من الكتاب
-                    <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                    </svg>
-                </a>
-                <a href="https://wa.me/21647050644?text=مرحبا%20كيف%20أحصل%20على%20معلومات%20حول%20الكتاب" class="action-button">
-                    تواصل مع المكتبة
-                    <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                    </svg>
-                </a>
-               
-            </div>
-
-<section class="professional-showcase">
-     <div class="section-header">
-                    <div>
-                        <h2 class="section-title">Collection d'Applications</h2>
-                    </div>
-                   
-                </div>
-
-    <!-- Desktop Layout (50% image + 50% texte) -->
-    <div class="desktop-layout">
-        <!-- Section Image (50% à gauche) -->
-        <div class="image-section">
-            <div class="carousel-container">
-                <div class="carousel-aspect-ratio">
-                    <div class="carousel-slides">
-                        <!-- Slide 1 -->
-                        <div class="carousel-slide active">
-                            <img src="./assets/images/01.png" 
-                                 alt="Étudiants en cours de sciences"
-                                 loading="lazy">
-                        </div>
-                        
-                        <!-- Slide 2 -->
-                        <div class="carousel-slide">
-                            <img src="./assets/images/img_1768493036080.png" 
-                                 alt="Apprentissage interactif"
-                                 loading="lazy">
-                        </div>
-                        
-                        <!-- Slide 3 -->
-                        <div class="carousel-slide">
-                            <img src="./assets/images/img_1768492903561.png" 
-                                 alt="Technologie éducative"
-                                 loading="lazy">
-                        </div>
-                    </div>
-                    
-                    <!-- Overlay gradient -->
-                    <div class="carousel-gradient-overlay"></div>
-                    
-                    <!-- Compteur de slides -->
-                    <div class="slide-counter">
-                        <span class="current-slide">01</span> / <span class="total-slides">03</span>
-                    </div>
-                    
-                    <!-- Contrôles de navigation -->
-                    <div class="carousel-controls">
-                        <div class="nav-indicators">
-                            <div class="nav-indicator active" data-index="0"></div>
-                            <div class="nav-indicator" data-index="1"></div>
-                            <div class="nav-indicator" data-index="2"></div>
-                        </div>
-                        <div class="nav-buttons">
-                            <button class="nav-button prev-button" aria-label="Slide précédent">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path d="M15 18l-6-6 6-6"/>
-                                </svg>
-                            </button>
-                            <button class="nav-button next-button" aria-label="Slide suivant">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path d="M9 18l6-6-6-6"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Section Texte (50% à droite) -->
-        <div class="text-section">
-            <div class="text-content">
-                <!-- Texte Slide 1 -->
-                <div class="text-slide active">
-    <h3>E-Book Bac Sciences</h3>
-    <p>
-        Accédez à une collection d’e-books pédagogiques de haute qualité,
-        conçus spécialement pour les élèves du baccalauréat scientifique tunisien.
-    </p>
-    <ul class="feature-list">
-        <li>Cours clairs, bien expliqués et soigneusement structurés</li>
-        <li>Bibliothèque complète de séries Pilote, Sfax et Réo</li>
-        <li>Résumés efficaces et fiches méthodologiques pratiques</li>
-       
-    </ul>
-</div>
-
-                
-                <!-- Texte Slide 2 -->
-               <div class="text-slide">
-    <h3>Philosophie Assistée par l’IA</h3>
-    <p>
-        Des outils intelligents basés sur l’intelligence artificielle pour comprendre,
-        analyser et maîtriser la philosophie du baccalauréat scientifique tunisien.
-    </p>
-    <ul class="feature-list">
-        <li>Cours complets de philosophie, structurés selon le programme officiel</li>
-        <li>Explications simples et progressives des notions complexes</li>
-        <li>Chatbot intelligent pour discuter, poser des questions et comprendre chaque thème</li>
-       
-    </ul>
-</div>
-
-                
-                <!-- Texte Slide 3 -->
-                <div class="text-slide">
-    <h3>Application SVT – Bac Sciences</h3>
-    <p>
-        Une application éducative dédiée aux élèves en sciences,
-        conçue pour renforcer les acquis et réussir le baccalauréat tunisien.
-    </p>
-    <ul class="feature-list">
-        <li>Cours complets de SVT, clairs et conformes au programme officiel</li>
-        <li>Quiz interactifs et QCM pour s’entraîner efficacement</li>
-        <li>Exercices corrigés et séries Pilote & Réo pour une préparation optimale</li>
-       
-    </ul>
-</div>
-
-            </div>
-        </div>
+    <div class="content">
+        <h1 class="line1">This Page Is Still in the Lab</h1>
+        <p class="line2">We're cooking up something special right here — a mix of ideas, pixels, and a pinch of magic.</p>
+        <div class="divider"></div>
     </div>
 
-    <!-- Mobile Layout (seulement les photos) -->
-    <div class="mobile-layout">
-        <div class="mobile-carousel-container">
-            <div class="mobile-aspect-ratio">
-                <div class="mobile-slides">
-                    <!-- Slide 1 -->
-                    <div class="mobile-slide active">
-                        <img src="./assets/images/01.png" 
-                             alt="Étudiants en cours de sciences"
-                             loading="lazy">
-                    </div>
-                    
-                    <!-- Slide 2 -->
-                    <div class="mobile-slide">
-                         <img src="./assets/images/img_1768493036080.png" 
-                             alt="Apprentissage interactif"
-                             loading="lazy">
-                    </div>
-                    
-                    <!-- Slide 3 -->
-                    <div class="mobile-slide">
-                         <img src="./assets/images/img_1768492903561.png" 
-                             alt="Technologie éducative"
-                             loading="lazy">
-                    </div>
-                </div>
-                
-                <!-- Compteur mobile -->
-                <div class="mobile-slide-counter">
-                    <span class="mobile-current-slide">01</span> / <span class="mobile-total-slides">03</span>
-                </div>
-                
-                <!-- Contrôles mobile -->
-                <div class="mobile-controls">
-                    <div class="mobile-nav-indicators">
-                        <div class="mobile-nav-indicator active" data-index="0"></div>
-                        <div class="mobile-nav-indicator" data-index="1"></div>
-                        <div class="mobile-nav-indicator" data-index="2"></div>
-                    </div>
-                    <div class="mobile-nav-buttons">
-                        <button class="mobile-nav-button mobile-prev-button" aria-label="Slide précédent">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path d="M15 18l-6-6 6-6"/>
-                            </svg>
-                        </button>
-                        <button class="mobile-nav-button mobile-next-button" aria-label="Slide suivant">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path d="M9 18l6-6-6-6"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section><!-- في مكان animation-section السابق -->   
-
-
-          
-            <!-- Section 1: Horizontal Swipe Cards -->
-            <section class="section animate-slide-up">
-               
-                
-                <div class="cards-scroll-container">
-                    <div class="cards-wrapper" id="section1">
-                        
-                         
-                        <div class="app-card" data-app="analytics">
-                            <div class="app-icon-circle">
-                                <img src="./assets/images/dna.png" alt="App Icon" class="app-icon-img">
-                            </div>
-                            <h3 class="app-title">SVT App</h3>
-                        </div>
-                         <div class="app-card" data-app="design">
-                            <div class="app-icon-circle">
-                                <img src="./assets/images/united-kingdom.png" alt="App Icon" class="app-icon-img">
-                            </div>
-                            <h3 class="app-title">SpeakWell</h3>
-                        </div>
-                        <div class="app-card" data-app="cloud">
-                            <div class="app-icon-circle">
-                                <img src="./assets/images/philosopher.png" alt="App Icon" class="app-icon-img">
-                            </div>
-                            <h3 class="app-title">Chat فيلو</h3>
-                        </div>
-                        <div class="app-card" data-app="security">
-                            <div class="app-icon-circle">
-                                <img src="./assets/images/programming.png" alt="App Icon" class="app-icon-img">
-                            </div>
-                            <h3 class="app-title">STI App</h3>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section 3: Poster Cards -->
-            <section class="section animate-slide-up">
-                <div class="section-header">
-                    <div>
-                        <h2 class="section-title">Partenaires officiels</h2>
-                    </div>
-                </div>
-                
-                <div class="poster-container">
-
-                   
-                    <div class="poster-card" data-poster="ai">
-                        <div class="poster-icon-container">
-                            
-                            <div class="footer-logo-icon">
-                         <img src="./assets/images/home-img.png">
-                    </div>
-                        </div>
-                        <h3 class="poster-title">Sahl Academy</h3>
-                        <p class="poster-text">Découvrez une plateforme d’apprentissage simple et académique conçue pour vous aider à progresser</p>
-                    </div>
-
-
-                    <div class="poster-card" data-poster="wave">
-                        <div class="poster-icon-container">
-                             <div class="footer-logo-icon">
-                         <img src="./assets/images/about-img.png">
-                         </div>
-                        </div>
-                        <h3 class="poster-title">EduWell Classroom</h3>
-                        <p class="poster-text">Clique ici pour accéder à Eduwell Classroom et découvrir tout ce qu'il te faut pour réussir le Bac</p>
-                    </div>
-
-                     <div class="poster-card" data-poster="3d">
-                        <div class="poster-icon-container">
-                            
-                            <div class="footer-logo-icon">
-                         <img src="./assets/images/app-store.png">
-                    </div>
-                        </div>
-                        <h3 class="poster-title">Sahl App</h3>
-                        <p class="poster-text">Télécharge l’application Sahl sur ton téléphone et sois toujours prêt pour le Bac</p>
-                    </div>
-
-                    
-
-
-                   
-                </div>
-            </section>
-
-
-
-              <!-- Header 
-
-<section class="compact-animation-section">
-  
-    <div class="compact-header">
-        <div class="subtitle">Sahl Haven</div>
-        <div class="compact-title">
-            Une
-            <span class="highlight-purple">grande</span> 
-            source
-            <span class="highlight-green">d’apprentissage</span>
-        </div>
-    </div>
-    
-  
-    <button id="compactStartButton" class="compact-start-button">
-        <span>▶</span>
-        <span>Start Animation</span>
-    </button>
-
-    
-    <div id="compactContent" class="compact-content">
-        <div class="compact-content-inner">
-            <h3 id="compactTitle" class="compact-title-text">
-                <span id="compactTypedText" class="compact-typed-text"></span>
-            </h3>
-            
-            <p id="compactDescription" class="compact-description"></p>
-           
-            <div class="compact-progress">
-                <div class="compact-dots">
-                    <div class="compact-dot active" data-index="0"></div>
-                    <div class="compact-dot" data-index="1"></div>
-                    <div class="compact-dot" data-index="2"></div>
-                </div>
-                <div class="compact-progress-bar">
-                    <div class="compact-progress-fill" id="compactProgressFill"></div>
-                </div>
-            </div>
-        </div>
-        
-     
-        <button id="compactCloseButton" class="compact-close-button">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-</section> مصغر -->
-
-            <!-- Section 4: Additional Content -->
-            <section class="section animate-slide-up">
-                <div class="section-header">
-                    <div>
-                        <h2 class="section-title">Réussis ton Bac autrement</h2>
-                    </div>
-                </div>
-                
-                <div class="features-container">
-                    <div class="feature-card">
-                        <div class="feature-number">01</div>
-                        <h3 class="feature-title">Apprentissage simplifié et efficace</h3>
-                        <p class="feature-text">Une interface intuitive qui centralise toutes les fonctionnalités essentielles pour réviser le Bac sans perdre de temps.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-number">02</div>
-                        <h3 class="feature-title">IA personnalisée</h3>
-                        <p class="feature-text">L'application suit ton progrès, identifie tes points faibles et te propose des exercices personnalisés pour toujours t'améliorer.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-number">03</div>
-                        <h3 class="feature-title">Ressources variées</h3>
-                        <p class="feature-text">Accède à des centaines de documents, exercices et supports pédagogiques pour approfondir chaque notion facilement.</p>
-                    </div>
-                </div>
-            </section>
-            
-            <footer>
-                <p>Site développé par <span class="footer-highlight">Eduwell Quantum Group</span></p>
-            </footer>
-        </div>
-    </div>
-
-    <!-- Search Content -->
-    <div id="search" class="content-section">
-        
-        <div class="container">
-            <header class="search-header">
-                
-                <div class="search-logo">
-                    
-                    <h1 class="search-logo-text"></h1>
-                    <div class="subtitle">Sahl Haven</div>
-        <div class="main-title">
-            Une
-            <span class="highlight-purple">grande</span> 
-            source
-            <span class="highlight-green">d’apprentissage</span>
-        </div>
-                </div>
-                </header>
-
-            <div class="search-box-container">
-                <div class="search-input-container">
-                    <input type="text" class="search-input-box" id="searchInput" placeholder="Rechercher des cours, exercices, fiches de révision...">
-                    <div class="search-actions">
-                        <button class="search-clear hidden" id="searchClear">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div class="search-input-icon"><i class="fas fa-search"></i></div>
-                </div>
-
-                <div class="search-results-container" id="searchResults"></div>
-            </div>
-
-            <div class="subjects-filter" id="subjectsFilter">
-                <button class="subject-btn active" data-subject="all">Toutes les Matières</button>
-                <button class="subject-btn" data-subject="math">Mathématiques</button>
-                <button class="subject-btn" data-subject="physics">Physique</button>
-                <button class="subject-btn" data-subject="chemistry">Chimie</button>
-                <button class="subject-btn" data-subject="biology">Biologie</button>
-                <button class="subject-btn" data-subject="philosophy">Philosophie</button>
-                <button class="subject-btn" data-subject="french">Français</button>
-                <button class="subject-btn" data-subject="english">Anglais</button>
-            </div>
-
-            <div class="popular-searches">
-                <div class="popular-title"><i class="fas fa-chart-line"></i> Recherches Populaires</div>
-                <div class="popular-list">
-                    <div class="popular-item"><i class="fas fa-square-root-alt"></i> Nombres complexes</div>
-                    <div class="popular-item"><i class="fas fa-flask"></i> Acides et bases</div>
-                    <div class="popular-item"><i class="fas fa-calculator"></i> Calcul intégral</div>
-                    <div class="popular-item"><i class="fas fa-dna"></i> Génétique humaine</div>
-                </div>
-            </div>
-            
-            <footer>
-                <p>Eduwell Quantum Group &copy; <span class="footer-highlight">2026</span></p>
-            </footer>
-        </div>
-    </div>
-
-    <!-- SpeakWell Section -->
-    <div id="speakwell" class="content-section">
-        <div class="speakwell-container">
-            <!-- Page 1: Opening Section -->
-            <div class="speakwell-page active" id="speakwell-home">
-                <header class="speakwell-header">
-                     <header class="animate-slide-up">
-                    </header>
-                    <header class="animate-slide-up">
-                    </header>
-                    <div class="speakwell-logo">
-                        <i class="fas fa-language speakwell-logo-icon"></i>
-                        <h1 class="speakwell-logo-text">SpeakWell</h1>
-                    </div>
-                    <p class="speakwell-tagline">SpeakWell. Say More with Less.</p>
-                    <p class="speakwell-subtagline">Grammar and tenses designed to make you stand out.</p>
-                    <button class="speakwell-btn" id="beginJourneyBtn">
-                        <i class="fas fa-play"></i>
-                        <span>Begin Journey</span>
-                    </button>
-                </header>
-            </div>
-
-            <!-- Page 2: Choose Your Focus -->
-            <div class="speakwell-page" id="speakwell-focus">
-                <div class="speakwell-nav">
-                    <button class="speakwell-back-btn" data-back-to="home">
-                        <i class="fas fa-chevron-left"></i>
-                        <span>Back</span>
-                    </button>
-                    <h2 class="speakwell-nav-title">Choose Your Focus</h2>
-                    <div class="speakwell-progress">
-                        <i class="fas fa-circle"></i>
-                        <span>Step 1</span>
-                    </div>
-                </div>
-
-                <div class="content-page">
-                    <div class="focus-cards">
-                        <div class="focus-card" data-target="tenses">
-                            <div class="focus-card-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <h3 class="focus-card-title">Tenses Mastery</h3>
-                            <p class="focus-card-description">Master all English verb tenses with progressive exercises and real-world applications</p>
-                        </div>
-
-                        <div class="focus-card" data-target="grammar">
-                            <div class="focus-card-icon">
-                                <i class="fas fa-pen-fancy"></i>
-                            </div>
-                            <h3 class="focus-card-title">Grammar Precision</h3>
-                            <p class="focus-card-description">Perfect your sentence construction and grammatical accuracy with detailed lessons</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page 3: Tenses Mastery -->
-            <div class="speakwell-page" id="speakwell-tenses">
-                <div class="speakwell-nav">
-                    <button class="speakwell-back-btn" data-back-to="focus">
-                        <i class="fas fa-chevron-left"></i>
-                        <span>Back</span>
-                    </button>
-                    <h2 class="speakwell-nav-title">Tenses Mastery</h2>
-                    <div class="speakwell-progress">
-                        <i class="fas fa-circle"></i>
-                        <span>Tenses</span>
-                    </div>
-                </div>
-
-                <div class="content-page">
-                    <div class="tenses-cards">
-                        <div class="tense-card" data-target="difficulty">
-                            <div class="tense-card-number">1</div>
-                            <h3 class="tense-card-title">Past Tenses</h3>
-                            <p class="tense-card-description">Master past simple, continuous, perfect, and perfect continuous tenses</p>
-                        </div>
-
-                        <div class="tense-card" data-target="difficulty">
-                            <div class="tense-card-number">2</div>
-                            <h3 class="tense-card-title">Present Tenses</h3>
-                            <p class="tense-card-description">Learn present simple, continuous, perfect, and perfect continuous tenses</p>
-                        </div>
-
-                        <div class="tense-card" data-target="difficulty">
-                            <div class="tense-card-number">3</div>
-                            <h3 class="tense-card-title">Future Tenses</h3>
-                            <p class="tense-card-description">Explore future simple, continuous, perfect, and perfect continuous tenses</p>
-                        </div>
-
-                        <div class="tense-card" data-target="difficulty">
-                            <div class="tense-card-number">4</div>
-                            <h3 class="tense-card-title">Mixed Tenses</h3>
-                            <p class="tense-card-description">Advanced exercises combining all tenses for complete mastery</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page 4: Difficulty Levels -->
-            <div class="speakwell-page" id="speakwell-difficulty">
-                <div class="speakwell-nav">
-                    <button class="speakwell-back-btn" data-back-to="tenses">
-                        <i class="fas fa-chevron-left"></i>
-                        <span>Back</span>
-                    </button>
-                    <h2 class="speakwell-nav-title">Select Difficulty Level</h2>
-                    <div class="speakwell-progress">
-                        <i class="fas fa-circle"></i>
-                        <span>Difficulty</span>
-                    </div>
-                </div>
-
-                <div class="content-page">
-                    <div class="difficulty-cards">
-                        <a href="./sahl-speakwell/easy.html" class="difficulty-card easy">
-                            <div class="difficulty-card-icon">
-                                <i class="fas fa-seedling"></i>
-                            </div>
-                            <h3 class="difficulty-card-title">Easy Level</h3>
-                            <p class="difficulty-card-description">Basic tense forms and simple sentence construction for foundational learning</p>
-                            <div class="difficulty-card-level">Beginner Friendly</div>
-                        </a>
-
-                        <a href="./sahl-speakwell/Medium.html" class="difficulty-card medium">
-                            <div class="difficulty-card-icon">
-                                <i class="fas fa-mountain"></i>
-                            </div>
-                            <h3 class="difficulty-card-title">Medium Level</h3>
-                            <p class="difficulty-card-description">Complex tense usage and paragraph construction for confident communication</p>
-                            <div class="difficulty-card-level">Intermediate Level</div>
-                        </a>
-
-                        <a href="error.html" class="difficulty-card hard">
-                            <div class="difficulty-card-icon">
-                                <i class="fas fa-fire"></i>
-                            </div>
-                            <h3 class="difficulty-card-title">Hard Level</h3>
-                            <p class="difficulty-card-description">Master-level tense application and nuanced expression for fluency</p>
-                            <div class="difficulty-card-level">Advanced Level</div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page 5: Grammar Precision -->
-            <div class="speakwell-page" id="speakwell-grammar">
-                <div class="speakwell-nav">
-                    <button class="speakwell-back-btn" data-back-to="focus">
-                        <i class="fas fa-chevron-left"></i>
-                        <span>Back</span>
-                    </button>
-                    <h2 class="speakwell-nav-title">Grammar Precision</h2>
-                    <div class="speakwell-progress">
-                        <i class="fas fa-circle"></i>
-                        <span>Grammar Lessons</span>
-                    </div>
-                </div>
-
-                <div class="content-page">
-                    <div class="grammar-cards">
-                        <a href="./sahl-speakwell/grammar/s1.html" class="grammar-card">
-                            <div class="grammar-card-header">
-                                <div class="grammar-card-icon">
-                                    <i class="fas fa-font"></i>
-                                </div>
-                                <div class="grammar-card-title-section">
-                                    <div class="grammar-card-number">Lesson 1</div>
-                                    <h3 class="grammar-card-title">Parts of Speech</h3>
-                                </div>
-                            </div>
-                            <p class="grammar-card-description">
-                                Learn about nouns, verbs, adjectives, adverbs, pronouns, prepositions, conjunctions, and interjections.
-                            </p>
-                            <div class="grammar-card-footer">
-                                <div class="grammar-card-duration">
-                                    <i class="fas fa-clock"></i>
-                                    <span>15 min</span>
-                                </div>
-                                <div class="grammar-card-link">
-                                    <span>Start Lesson</span>
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a href="./sahl-speakwell/grammar/s2.html" class="grammar-card">
-                            <div class="grammar-card-header">
-                                <div class="grammar-card-icon">
-                                    <i class="fas fa-sitemap"></i>
-                                </div>
-                                <div class="grammar-card-title-section">
-                                    <div class="grammar-card-number">Lesson 2</div>
-                                    <h3 class="grammar-card-title">Sentence Structure</h3>
-                                </div>
-                            </div>
-                            <p class="grammar-card-description">
-                                Master subject-verb agreement, clause types, and sentence patterns.
-                            </p>
-                            <div class="grammar-card-footer">
-                                <div class="grammar-card-duration">
-                                    <i class="fas fa-clock"></i>
-                                    <span>20 min</span>
-                                </div>
-                                <div class="grammar-card-link">
-                                    <span>Start Lesson</span>
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a href="./sahl-speakwell/grammar/s3.html" class="grammar-card">
-                            <div class="grammar-card-header">
-                                <div class="grammar-card-icon">
-                                    <i class="fas fa-newspaper"></i>
-                                </div>
-                                <div class="grammar-card-title-section">
-                                    <div class="grammar-card-number">Lesson 3</div>
-                                    <h3 class="grammar-card-title">Articles</h3>
-                                </div>
-                            </div>
-                            <p class="grammar-card-description">
-                                Understand the proper use of definite and indefinite articles (a, an, the).
-                            </p>
-                            <div class="grammar-card-footer">
-                                <div class="grammar-card-duration">
-                                    <i class="fas fa-clock"></i>
-                                    <span>12 min</span>
-                                </div>
-                                <div class="grammar-card-link">
-                                    <span>Start Lesson</span>
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a href="./sahl-speakwell/grammar/s4.html" class="grammar-card">
-                            <div class="grammar-card-header">
-                                <div class="grammar-card-icon">
-                                    <i class="fas fa-bolt"></i>
-                                </div>
-                                <div class="grammar-card-title-section">
-                                    <div class="grammar-card-number">Lesson 4</div>
-                                    <h3 class="grammar-card-title">Modal Verbs</h3>
-                                </div>
-                            </div>
-                            <p class="grammar-card-description">
-                                Master the use of modal verbs (can, could, may, might, must, shall, should, will, would).
-                            </p>
-                            <div class="grammar-card-footer">
-                                <div class="grammar-card-duration">
-                                    <i class="fas fa-clock"></i>
-                                    <span>18 min</span>
-                                </div>
-                                <div class="grammar-card-link">
-                                    <span>Start Lesson</span>
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a href="./sahl-speakwell/grammar/s5.html" class="grammar-card">
-                            <div class="grammar-card-header">
-                                <div class="grammar-card-icon">
-                                    <i class="fas fa-exchange-alt"></i>
-                                </div>
-                                <div class="grammar-card-title-section">
-                                    <div class="grammar-card-number">Lesson 5</div>
-                                    <h3 class="grammar-card-title">Passive Voice</h3>
-                                </div>
-                            </div>
-                            <p class="grammar-card-description">
-                                Learn to transform active voice sentences into passive voice.
-                            </p>
-                            <div class="grammar-card-footer">
-                                <div class="grammar-card-duration">
-                                    <i class="fas fa-clock"></i>
-                                    <span>16 min</span>
-                                </div>
-                                <div class="grammar-card-link">
-                                    <span>Start Lesson</span>
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- About Content (EduFlow Section - eduSTREAM) -->
-    <div id="about" class="content-section">
-        <div class="edu-stream-container">
-            <!-- eduSTREAM Header -->
-            <header class="edu-header">
-                <a href="#" class="edu-logo" id="eduHomeLogo">
-                    <span class="stream-part">Sahl</span><span class="edu-part">Academy</span>
-                </a>
-                
-                <nav class="edu-nav" id="eduMainNav">
-                    <ul>
-                        <li><a href="#" class="edu-nav-link active" data-edu-page="home">Accueil</a></li>
-                        <li><a href="#" class="edu-nav-link" data-edu-page="feed">Bibliothèque</a></li>
-                        <li><a href="#" class="edu-nav-link" data-edu-page="categories">Matières </a></li>
-                        <li><a href="#" class="edu-nav-link" data-edu-page="search">Rechercher</a></li>
-                    </ul>
-                </nav>
-                
-                <div class="edu-nav-right">
-                    <button class="edu-search-icon" id="eduSearchIcon" title="Rechercher" aria-label="Rechercher">
-                        <i class="fas fa-search"></i>
-                    </button>
-                    <button class="edu-mobile-menu-btn" id="eduMobileMenuBtn" aria-label="Menu" aria-expanded="false">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-            </header>
-
-            <!-- Home Page -->
-            <section class="edu-page active" id="eduHomePage">
-                <div class="edu-hero">
-                    <div class="edu-hero-content">
-                        <div class="edu-hero-text">
-                            <div class="edu-hero-badge">
-                                <i class="fas fa-graduation-cap"></i>
-                                <span>Une nouvelle façon d'apprendre</span>
-                            </div>
-                            
-                            <div class="edu-hero-title-container">
-                                <h1 class="edu-hero-title">Améliorez vos résultats en</h1>
-                                <div class="edu-animated-text-container" id="eduAnimatedTextContainer">
-                                    <!-- Animated text will be inserted by JavaScript -->
-                                </div>
-                            </div>
-                            
-                            <p class="edu-hero-subtitle">Explorez des cours et ressources sélectionnés, dans un environnement clair et efficace</p>
-                            
-                            <a href="#" class="edu-cta-button" id="eduWatchNowBtn">
-                                <span>Commencer</span>
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                            
-                            <div class="edu-hero-stats">
-                                <div class="edu-stat-item">
-                                    <div class="edu-stat-number">100%</div>
-                                    <div class="edu-stat-label">Gratuit</div>
-                                </div>
-                                <div class="edu-stat-item">
-                                    <div class="edu-stat-number">Apprentissage</div>
-                                    <div class="edu-stat-label">à votre rythme</div>
-                                </div>
-                                <div class="edu-stat-item">
-                                    <div class="edu-stat-number">24/7</div>
-                                    <div class="edu-stat-label">Accès Partout</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="edu-hero-visual">
-                            <div class="edu-hero-visual-content">
-                                <div class="edu-visual-grid">
-                                    <div class="edu-visual-item">
-                                        <i class="fas fa-play-circle"></i>
-                                    </div>
-                                    <div class="edu-visual-item">
-                                        <i class="fas fa-chart-line"></i>
-                                    </div>
-                                    <div class="edu-visual-item">
-                                        <i class="fas fa-certificate"></i>
-                                    </div>
-                                    <div class="edu-visual-item">
-                                        <i class="fas fa-users"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="edu-scroll-indicator">
-                        <span>Explorer le Contenu</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Videos Feed Page -->
-            <section class="edu-page" id="eduFeedPage">
-                <div class="edu-page-content">
-                    <div class="edu-page-header">
-                        <button class="edu-back-button" id="eduFeedBackBtn" aria-label="Retour à l'accueil">
-                            <i class="fas fa-arrow-left"></i>
-                            <span>Retour à l'Accueil</span>
-                        </button>
-                        <h1 class="edu-page-title">Bibliothèque Éducative</h1>
-                        <p class="edu-page-description">Des parcours clairs et organisés pour le bac</p>
-                    </div>
-                    
-                    <div class="edu-videos-feed" id="eduVideosFeed"></div>
-                    
-                    <div class="edu-load-more">
-                        <button class="edu-load-more-btn" id="eduLoadMoreBtn">Charger Plus de Vidéos</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Categories Page -->
-            <section class="edu-page" id="eduCategoriesPage">
-                <div class="edu-page-content">
-                    <div class="edu-page-header">
-                        <button class="edu-back-button" id="eduCategoriesBackBtn" aria-label="Retour à l'accueil">
-                            <i class="fas fa-arrow-left"></i>
-                            <span>Retour à l'Accueil</span>
-                        </button>
-                        <h1 class="edu-page-title">Collections Éducatives</h1>
-                        <p class="edu-page-description">Contenus organisés par matière et par thème pour réussir le bac</p>
-                    </div>
-                    
-                    <div class="edu-categories-grid" id="eduCategoriesGrid"></div>
-                    
-                    <div class="edu-playlist-page" id="eduPlaylistPage">
-                        <div class="edu-page-header">
-                            <button class="edu-back-button" id="eduPlaylistBackBtn" aria-label="Retour aux collections">
-                                <i class="fas fa-arrow-left"></i>
-                                <span>Retour aux Collections</span>
-                            </button>
-                            <h1 class="edu-playlist-title" id="eduPlaylistTitle"></h1>
-                            <p class="edu-playlist-topic" id="eduPlaylistTopic"></p>
-                        </div>
-                        
-                        <div class="edu-playlist-videos" id="eduPlaylistVideos"></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Search Page -->
-            <section class="edu-page" id="eduSearchPage">
-                <div class="edu-page-content">
-                    <div class="edu-page-header">
-                        <button class="edu-back-button" id="eduSearchBackBtn" aria-label="Retour à l'accueil">
-                            <i class="fas fa-arrow-left"></i>
-                            <span>Retour à l'Accueil</span>
-                        </button>
-                        <div class="edu-search-container">
-                            <i class="fas fa-search edu-search-icon-large"></i>
-                            <input type="text" class="edu-search-input" id="eduSearchInput" placeholder="Rechercher des vidéos éducatives..." autocomplete="off" aria-label="Rechercher des vidéos éducatives">
-                        </div>
-                    </div>
-                    
-                    <div class="edu-search-results">
-                        <div class="edu-results-count" id="eduResultsCount"></div>
-                        <div class="edu-results-grid" id="eduSearchResults"></div>
-                        <div class="edu-no-results" id="eduNoResults">
-                            <i class="fas fa-search"></i>
-                            <h3>Aucune vidéo trouvée</h3>
-                            <p>Essayez d'autres mots-clés ou parcourez notre bibliothèque éducative</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Video Player Page -->
-            <section class="edu-page" id="eduPlayerPage">
-                <div class="edu-player-page">
-                    <button class="edu-back-button" id="eduPlayerBackBtn" aria-label="Retour">
-                        <i class="fas fa-arrow-left"></i>
-                        <span>Retour</span>
-                    </button>
-                    
-                    <div class="edu-player-container">
-                        <div class="edu-player-main">
-                            <div class="edu-main-player" id="eduYoutubePlayer">
-                                <!-- Video player will be inserted here by JavaScript -->
-                            </div>
-                            
-                            <div class="edu-player-info">
-                                <h1 class="edu-player-title" id="eduPlayerTitle"></h1>
-                                <div class="edu-player-description" id="eduPlayerDescription"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="edu-suggested-videos">
-                            <h3 class="edu-suggested-title">Vidéos suggérées</h3>
-                            <div class="edu-suggested-list" id="eduSuggestedVideos"></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Footer -->
-            <footer class="edu-footer">
-                <div class="edu-footer-content">
-                    <div class="edu-footer-logo">
-                        <span class="edu-part"></span><span class="stream-part">Sahl</span>
-                    </div>
-                    <p class="edu-footer-description">La plateforme qui centralise l’apprentissage</p>
-                    <div class="edu-copyright">
-                        Eduwell Quantum Group
-                    </div>
-                </div>
-            </footer>
-        </div>
-    </div>
-
-    <!-- MODALS (Keep existing modals) -->
-    <div class="modal-overlay" id="analytics-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">
-                    <i class="fas fa-dna modal-icon"></i>
-                    Bac Sciences
-                </h2>
-                <button class="close-btn" data-modal="analytics-modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-content app-modal-content">
-                <div class="app-modal-icon-large">
-                    <img src="./assets/images/dna.png" alt="App Icon" class="app-icon-img1">
-                </div>
-                <h3 class="app-modal-title">SVT App</h3>
-                <p class="app-modal-description">
-                    Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à utiliser
-                </p>
-               
-                <button class="app-modal-try-btn" onclick="window.location.href = './svtapp/login.html'">
-                    <i class="fas fa-play-circle"></i>
-                    <span>Commencer</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="security-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">
-                    <i class="fas fa-desktop modal-icon"></i>
-                    Bac informatique
-                </h2>
-                <button class="close-btn" data-modal="security-modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-content app-modal-content">
-                <div class="app-modal-icon-large">
-                    <img src="./assets/images/programming.png" alt="App Icon" class="app-icon-img1">
-                </div>
-                <h3 class="app-modal-title">STI App</h3>
-                <p class="app-modal-description">
-                    4ème Sciences de l'informatique<br>
-                    Testez vos connaissances sur les points clés du programme.
-                </p>
-                
-                <button class="app-modal-try-btn" onclick="window.location.href = 'sti.html'">
-                    <i class="fas fa-play-circle"></i>
-                    <span>Commencer le Quiz</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="cloud-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">
-                    <i class="fas fa-brain modal-icon"></i>
-                    toutes les sections
-                </h2>
-                <button class="close-btn" data-modal="cloud-modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-content app-modal-content">
-                <div class="app-modal-icon-large">
-                    <img src="./assets/images/philosopher.png" alt="App Icon" class="app-icon-img1">
-                </div>
-                <h3 class="app-modal-title">Chat فيلو</h3>
-                <p class="app-modal-description">
-                    شات يفهّمك الفلسفة بالدارجة التونسية،
-                    يفسّر الدروس، المفاهيم والأسئلة الصعيبة بطريقة سهلة وبلا تعقيد.
-                </p>
-                
-                <button class="app-modal-try-btn" onclick="window.location.href = './chatphi/index.html'">
-                    <i class="fas fa-play-circle"></i>
-                    <span>فسّرلي الفيلو</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-
-
-  <div class="modal-overlay" id="design-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">
-                    <i class="fas fa-language modal-icon"></i>
-                    toutes les sections
-                </h2>
-                <button class="close-btn" data-modal="design-modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-content app-modal-content">
-                <div class="app-modal-icon-large">
-                    <img src="./assets/images/united-kingdom.png" alt="App Icon" class="app-icon-img1">
-                </div>
-                <h3 class="app-modal-title">SpeakWell</h3>
-                <p class="app-modal-description">
-                  SpeakWell helps Bac students improve their English with clear courses and interactive quizzes
-                </p>
-                
-                <button class="app-modal-try-btn" onclick="window.location.href = './speakwell/index.html'">
-                    <i class="fas fa-play-circle"></i>
-                    <span>Start Learning</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
-<div class="modal-overlay" id="3d-modal">
-    <div class="modal">
-        <div class="modal-header">
-            <h2 class="modal-title">
-                <i class="fas fa-stream modal-icon"></i>
-                Sahl App
-            </h2>
-            <button class="close-btn" data-modal="3d-modal">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-content">
-            <p class="poster-description">
-                Télécharge l'application Sahl sur ton téléphone et sois toujours prêt pour le Bac
-            </p>
-            <div class="get-app-section">
-                <button class="pdf-link" onclick="window.location.href='./app.html'">
-                    <i class="fas fa-stream"></i>
-                    Télécharger l'app
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<div class="modal-overlay" id="ai-modal">
-    <div class="modal">
-        <div class="modal-header">
-            <h2 class="modal-title">
-                <i class="fas fa-stream modal-icon"></i>
-                Sahl Academy
-            </h2>
-            <button class="close-btn" data-modal="ai-modal">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-content">
-            <p class="poster-description">
-                Une plateforme d’apprentissage simple et académique
-            </p>
-            <div class="get-app-section">
-                <button class="pdf-link" onclick="window.location.href='./SahlAcademy/index.html'">
-                    <i class="fas fa-stream"></i>
-                    Accéder à Shal
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- MODALS SECTION - FIXED -->
-<div class="modal-overlay" id="ai-modal">
-    <div class="modal">
-        <div class="modal-header">
-            <h2 class="modal-title">
-                <i class="fas fa-stream modal-icon"></i>
-                Sahl App
-            </h2>
-            <button class="close-btn" data-modal="ai-modal">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-content">
-            <p class="poster-description">
-                Télécharge l'application Sahl sur ton téléphone et sois toujours prêt pour le Bac
-            </p>
-            <div class="get-app-section">
-                <button class="pdf-link" onclick="window.location.href='./app.html'">
-                    <i class="fas fa-stream"></i>
-                    Télécharger l'app
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-<div class="modal-overlay" id="wave-modal">
-    <div class="modal">
-        <div class="modal-header">
-            <h2 class="modal-title">
-                <i class="fas fa-school modal-icon"></i>
-                Eduwell Classroom
-            </h2>
-            <button class="close-btn" data-modal="wave-modal">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-content">
-            <p class="poster-description">
-                Clique ici pour accéder à Eduwell Classroom et découvrir tout ce qu'il te faut pour réussir le Bac
-            </p>
-            <div class="get-app-section">
-                <button class="pdf-link" onclick="window.location.href='inscription.html'">
-                    <i class="fas fa-wave-square"></i>
-                    Découvrir la Classroom
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    <div class="modal-overlay resource-modal" id="resource-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">Document Viewer</h2>
-                <button class="close-btn" id="modalClose" data-modal="resource-modal">&times;</button>
-            </div>
-            <div class="modal-content">
-                <div class="resource-container" id="resourceContainer"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- JavaScript Files -->
-    <script src="./assets/js/scriptplus.js"></script>
-    <script src="./assets/js/rsewdata1.js"></script>
-     <script src="./assets/js/edustreamdata.js"></script>
-      <script src="./edustream/data/js/data.js"></script>
-        <script src="./assets/js/image slide.js"></script>
-  <script>
-
-// Add this to your existing JavaScript file
-document.addEventListener('DOMContentLoaded', function() {
-    const headerLoginBtn = document.getElementById('headerLoginBtn');
-    const homeHeader = document.getElementById('homeHeader');
-    
-    // Login button click handler - redirect to page1.html
-    headerLoginBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        // Redirect to page1.html
-        window.location.href = 'inscrire.html';
-    });
-    
-    // Add scroll effect to header
-    let lastScrollTop = 0;
-    
-    window.addEventListener('scroll', function() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
-        // Add/remove scrolled class based on scroll position
-        if (scrollTop > 20) {
-            homeHeader.classList.add('scrolled');
-        } else {
-            homeHeader.classList.remove('scrolled');
+    <script>
+        // Generate floating dots dynamically
+        function createFloatingDots() {
+            const container = document.getElementById('floatingDots');
+            const dotCount = Math.floor(window.innerWidth / 20);
+
+            for (let i = 0; i < dotCount; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+
+                // Random positioning
+                dot.style.left = `${Math.random() * 100}%`;
+                dot.style.top = `${Math.random() * 100}%`;
+
+                // Random animation delay
+                dot.style.animationDelay = `${Math.random() * 5}s`;
+
+                container.appendChild(dot);
+            }
         }
-        
-        // Optional: Hide/show header on scroll
-        if (scrollTop > lastScrollTop && scrollTop > 200) {
-            // Scrolling down - hide header
-            homeHeader.style.transform = 'translateY(-100%)';
-        } else {
-            // Scrolling up - show header
-            homeHeader.style.transform = 'translateY(0)';
-        }
-        
-        lastScrollTop = scrollTop;
-    });
-    
-    // Add keyboard support for the login button
-    headerLoginBtn.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            this.click();
-        }
-    });
-});
 
+        // Smooth initial load
+        document.addEventListener('DOMContentLoaded', () => {
+            createFloatingDots();
+            document.body.style.opacity = 0;
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 1s var(--ease-out-quint)';
+                document.body.style.opacity = 1;
+            }, 100);
+        });
 
-
-
-  </script>
+        // Dynamic gradient adjustment on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            const bg = document.querySelector('.gradient-bg');
+            bg.style.backgroundPosition = `${x * 20}% ${y * 20}%`;
+        });
+    </script>
 </body>
 </html>

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="shortcut icon" href="./assets/images/speakwell.png" type="image/x-icon">
     <link rel="stylesheet" href="./assets/css/style.css">
-     <style>
+      <style>
         :root {
             --apple-white: #f5f5f7;
             --apple-light-gray: #d2d2d7;
@@ -1277,22 +1277,20 @@
             return true;
         }
 
-        // Logout function (automatically redirects to login)
+        // Logout function - logs out immediately without confirmation
         function logout() {
-            // Show confirmation dialog
-            if (confirm('Are you sure you want to logout?')) {
-                localStorage.removeItem(AUTH_CONFIG.isLoggedInKey);
-                localStorage.removeItem(AUTH_CONFIG.usernameKey);
-                localStorage.removeItem(AUTH_CONFIG.lastActivityKey);
-                
-                // Clear any timers
-                if (inactivityTimer) {
-                    clearInterval(inactivityTimer);
-                }
-                
-                // Redirect to login page
-                window.location.href = '../login/login.html';
+            // Clear session data
+            localStorage.removeItem(AUTH_CONFIG.isLoggedInKey);
+            localStorage.removeItem(AUTH_CONFIG.usernameKey);
+            localStorage.removeItem(AUTH_CONFIG.lastActivityKey);
+            
+            // Clear any timers
+            if (inactivityTimer) {
+                clearInterval(inactivityTimer);
             }
+            
+            // Redirect to login page immediately
+            window.location.href = './login.html';
         }
 
         // Update user activity timestamp
@@ -1323,7 +1321,7 @@
                 // Save the current URL for redirect after login
                 sessionStorage.setItem('eduwell_redirect_url', window.location.pathname);
                 // Redirect to login page
-                window.location.href = '../login/login.html';
+                window.location.href = './login.html';
                 return false;
             }
             return true;
@@ -1455,7 +1453,7 @@
             if (event.persisted) {
                 // Page was loaded from cache, re-check auth
                 if (!eduwell_isAuthenticated()) {
-                    window.location.href = '../login/login.html';
+                    window.location.href = './login.html';
                 }
             }
         });

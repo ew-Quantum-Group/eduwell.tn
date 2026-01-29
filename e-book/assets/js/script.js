@@ -77,32 +77,32 @@
     });
     
     // ==================== DATA ====================
-    const folderItems = [
-        // Math Category
-        { id: 1, title: "Mathématiques - Cours", description: "Concepts clairs ✓", category: "math", icon: "fa-solid fa-square-root-variable", color: "var(--math-color)" },
-        { id: 2, title: "Mathématiques - Exercices", description: "Pratique Réo/Bac", category: "math", icon: "fa-solid fa-border-all", color: "var(--math-color)" },
-        { id: 3, title: "Mathématiques - Fiches", description: "Révision rapide 📌", category: "math", icon: "fa-solid fa-chart-line", color: "var(--math-color)" },
-        
-        // Physics Category
-        { id: 4, title: "Physique - Cours", description: "Idées clés ✓", category: "physics", icon: "fa-solid fa-atom", color: "var(--physics-color)" },
-        { id: 5, title: "Physique - Exercices", description: "Pilote & Bac", category: "physics", icon: "fa-solid fa-bolt", color: "var(--physics-color)" },
-        { id: 6, title: "Physique - Fiches", description: "Analyse rapide 📌", category: "physics", icon: "fa-solid fa-wave-square", color: "var(--physics-color)" },
-        
-        // Science Category
-        { id: 7, title: "Chimie - Cours", description: "Cours complets ✓", category: "science", icon: "fa-solid fa-flask", color: "var(--science-color)" },
-        { id: 8, title: "Chimie - Exercices", description: "Exercices corrigés", category: "science", icon: "fa-solid fa-dna", color: "var(--science-color)" },
-        { id: 9, title: "Chimie - Fiches", description: "Résumé rapide 📌", category: "science", icon: "fa-solid fa-globe", color: "var(--science-color)" },
-        
-        // English Category
-        { id: 10, title: "Anglais - Cours", description: "Théorie claire ✓", category: "english", icon: "fa-solid fa-book-open", color: "var(--english-color)" },
-        { id: 11, title: "Anglais - Exercices", description: "Pratique écrite", category: "english", icon: "fa-solid fa-pen-fancy", color: "var(--english-color)" },
-        { id: 12, title: "Anglais - Fiches", description: "Mémo rapide 📌", category: "english", icon: "fa-solid fa-language", color: "var(--english-color)" },
-        
-        // Computer Science Category
-        { id: 13, title: "Informatique - Cours", description: "Algorithmes clés ✓", category: "cs", icon: "fa-solid fa-diagram-project", color: "var(--cs-color)" },
-        { id: 14, title: "Informatique - Exercices", description: "Exercices pratiques", category: "cs", icon: "fa-solid fa-code", color: "var(--cs-color)" },
-        { id: 15, title: "Informatique - Fiches", description: "Résumé rapide 📌", category: "cs", icon: "fa-solid fa-robot", color: "var(--cs-color)" }
-    ];
+const folderItems = [
+    // Math Category
+    { id: 1, title: "Mathématiques - Cours", description: "Cours complets de la bibliothèque numérique", category: "math", icon: "fa-solid fa-square-root-variable", color: "var(--math-color)" },
+    { id: 2, title: "Mathématiques - Exercices", description: "Collection Réo, Pilote et sujets Bac", category: "math", icon: "fa-solid fa-border-all", color: "var(--math-color)" },
+    { id: 3, title: "Mathématiques - Fiches", description: "Fiches méthodologiques et résumés", category: "math", icon: "fa-solid fa-chart-line", color: "var(--math-color)" },
+    
+    // Physics Category
+    { id: 4, title: "Physique - Cours", description: "Cours détaillés de la bibliothèque", category: "physics", icon: "fa-solid fa-atom", color: "var(--physics-color)" },
+    { id: 5, title: "Physique - Exercices", description: "Séries Pilote Sfax et Réo Mars", category: "physics", icon: "fa-solid fa-bolt", color: "var(--physics-color)" },
+    { id: 6, title: "Physique - Fiches", description: "Fiches de synthèse et analyse", category: "physics", icon: "fa-solid fa-wave-square", color: "var(--physics-color)" },
+    
+    // Science Category
+    { id: 7, title: "Sciences - Cours", description: "Cours SVT et Chimie complets", category: "science", icon: "fa-solid fa-flask", color: "var(--science-color)" },
+    { id: 8, title: "Sciences - Exercices", description: "Exercices et devoirs corrigés", category: "science", icon: "fa-solid fa-dna", color: "var(--science-color)" },
+    { id: 9, title: "Sciences - Fiches", description: "Résumés et fiches méthodologiques", category: "science", icon: "fa-solid fa-globe", color: "var(--science-color)" },
+    
+    // English Category
+    { id: 10, title: "Anglais - Cours", description: "Cours structurés de grammaire", category: "english", icon: "fa-solid fa-book-open", color: "var(--english-color)" },
+    { id: 11, title: "Anglais - Exercices", description: "Pratique écrite et orale", category: "english", icon: "fa-solid fa-pen-fancy", color: "var(--english-color)" },
+    { id: 12, title: "Anglais - Fiches", description: "Guides et mémentos de vocabulaire", category: "english", icon: "fa-solid fa-language", color: "var(--english-color)" },
+    
+    // Computer Science Category
+    { id: 13, title: "Informatique - Cours", description: "Cours d'algorithmes et programmation", category: "cs", icon: "fa-solid fa-diagram-project", color: "var(--cs-color)" },
+    { id: 14, title: "Informatique - Exercices", description: "Problèmes pratiques et TP", category: "cs", icon: "fa-solid fa-code", color: "var(--cs-color)" },
+    { id: 15, title: "Informatique - Fiches", description: "Résumés des concepts clés", category: "cs", icon: "fa-solid fa-robot", color: "var(--cs-color)" }
+];
     
     const categories = {
         "math": { name: "Mathématiques", color: "var(--math-color)", icon: "fa-solid fa-calculator" },
@@ -314,7 +314,7 @@
                     <div style="font-size: 14px; color: var(--apple-text-tertiary);">${item.description}</div>
                 </div>
             </div>
-            <p>Cette bibliothèque E-book propose des ressources d'étude complètes, incluant des cours structurés, des exercices pratiques, des séries Réo–Pilote–Bac avec correction, ainsi que des fiches méthodologiques et des guides de solutions. Idéale pour la révision, la préparation aux examens et la maîtrise des concepts essentiels.</p>
+                   <p>Collection complète pour le Bac Sciences : cours, séries d'exercices (Pilote, Réo, Bac), corrigés, fiches méthode et résumés. Tout pour réussir.</p>
         `;
         
         modalActionButton.innerHTML = `Ouvrir ${item.title} <span class="button-icon">↗</span>`;

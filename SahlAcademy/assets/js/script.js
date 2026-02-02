@@ -991,7 +991,7 @@
                         </div>
                     </div>
                     <div class="source-badge ${video.source || 'youtube'}">
-                        ${video.source === 'drive' ? 'Drive' : 'YT'}
+                        ${video.source === 'drive' ? 'Sahl' : 'YT'}
                     </div>
                     <button class="play-button-small" aria-label="Lire la vidéo ${index + 1}">
                         <i class="fas fa-play"></i>

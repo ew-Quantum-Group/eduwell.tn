@@ -89,7 +89,7 @@
                     id: "anglais_grammaire", 
                     name: "Old version", 
                     icon: "fas fa-book",
-                    videoCount: 8,
+                    videoCount: 9,
                     subject: "Anglais"
                 },
                 { 
@@ -123,14 +123,12 @@
        
          
 
-            // Chimie - Cinétique Chimique videos
+            // english - Cinétique Chimique videos
             {
-                id: 8,
-                title: "Vitesse des Réactions Chimiques",
-                description: "Facteurs influençant la vitesse des réactions et méthodes de mesure.",
-                
-                instructor: "Eduwell",
+                id: 1,
+                title: "Active And Passive Voice (1)",
                
+                instructor: "Eduwell",
                
                 subject: "Anglais",
                 course: "Old version",
@@ -140,108 +138,133 @@
                 isFeatured: true,
                 level: "Ancienne version"
             },
+             {
+                id: 2,
+                title: "Active And Passive Voice (2)",
+               
+                instructor: "Eduwell",
+               
+                subject: "Anglais",
+                course: "Old version",
+                source: "drive",
+                sourceId: "1WSXgnnoHJkxzyCFukRgGeQ0ff_TmHVNr",
+                isNew: true,
+                isFeatured: true,
+                level: "Ancienne version"
+            },
+             {
+                id: 3,
+                title: "Correction of the 2025 Baccalaureate Exam – Part 1",
+               
+                instructor: "Eduwell",
+               
+                subject: "Anglais",
+                course: "Old version",
+                source: "drive",
+                sourceId: "15mxWDTICcmEZz7HhIif84MXSNo3cgN4w",
+                isNew: true,
+                isFeatured: true,
+                level: "Ancienne version"
+            },
+             {
+                id: 3,
+                title: "Correction of the 2025 Baccalaureate Exam – Part 2",
+               
+                instructor: "Eduwell",
+               
+                subject: "Anglais",
+                course: "Old version",
+                source: "drive",
+                sourceId: "1M9DgB6Id1V1r5yjt1QwqJkoqZDEGh1vU",
+                isNew: true,
+                isFeatured: true,
+                level: "Ancienne version"
+            },
+             {
+                id: 4,
+                title: "Revision: Grammar Correction Exercises (Part 1)",
+               
+                instructor: "Eduwell",
+               
+                subject: "Anglais",
+                course: "Old version",
+                source: "drive",
+                sourceId: "1JtOD1EorV6ZGGx91UpO2bvdwqaq2IKtD",
+                isNew: true,
+                isFeatured: true,
+                level: "Ancienne version"
+            },
+             {
+                id: 5,
+                title: "Revision: Grammar Correction Exercises (Part 2)",
+               
+                instructor: "Eduwell",
+               
+                subject: "Anglais",
+                course: "Old version",
+                source: "drive",
+                sourceId: "1ghkCIi9V6HRvhHJ1EcVC70HyID31ciPX",
+                isNew: true,
+                isFeatured: true,
+                level: "Ancienne version"
+            },
+             {
+                id: 6,
+                title: "Revision: Grammar Correction Exercises (Part 3)",
+               
+                instructor: "Eduwell",
+               
+                subject: "Anglais",
+                course: "Old version",
+                source: "drive",
+                sourceId: "1TtJnXpOQKUc3YqHZGPl5Ou0YXf9v-i8j",
+                isNew: true,
+                isFeatured: true,
+                level: "Ancienne version"
+            },
+             {
+                id: 7,
+                title: "Adjectives & Adverbs – Lesson (Part 1)",
+               
+                instructor: "Eduwell",
+               
+                subject: "Anglais",
+                course: "Old version",
+                source: "drive",
+                sourceId: "173h5_PtCky6NEIQsWJuE0lVapfvxVx2u",
+                isNew: true,
+                isFeatured: true,
+                level: "Ancienne version"
+            },
+             {
+                id: 8,
+                title: "Adjectives & Adverbs – Lesson (Part 2)",
+               
+                instructor: "Eduwell",
+               
+                subject: "Anglais",
+                course: "Old version",
+                source: "drive",
+                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
+                isNew: true,
+                isFeatured: true,
+                level: "Ancienne version"
+            },
+             {
+                id: 9,
+                title: "Advanced Grammar Exercises – Revision ",
+               
+                instructor: "Eduwell",
+               
+                subject: "Anglais",
+                course: "Old version",
+                source: "drive",
+                sourceId: "1WctGTWbFVyyy4FH-R79JpbDMjlZC_kkl",
+                isNew: true,
+                isFeatured: true,
+                level: "Ancienne version"
+            },
 
             // Biologie - Biologie Cellulaire videos
-            {
-                id: 9,
-                title: "Structure de la Cellule Eucaryote",
-                description: "Organites cellulaires et leurs fonctions spécifiques.",
-                duration: "44:10",
-                instructor: "Dr. Jean Dupont",
-                date: "2024-03-16",
-                views: "2.1K",
-                subject: "science",
-                course: "Biologie Cellulaire",
-                source: "youtube",
-                sourceId: "jkl012mno345",
-                isNew: true,
-                isFeatured: true,
-                level: "beginner"
-            },
-            {
-                id: 10,
-                title: "Cycle Cellulaire et Mitose",
-                description: "Phases du cycle cellulaire et processus de division mitotique.",
-                duration: "39:55",
-                instructor: "Dr. Sophie Bernard",
-                date: "2024-03-13",
-                views: "1.6K",
-                subject: "Biologie",
-                course: "Biologie Cellulaire",
-                source: "youtube",
-                sourceId: "mno345pqr678",
-                isNew: false,
-                isFeatured: true,
-                level: "intermediate"
-            },
-
-            // Biologie - Génétique videos
-            {
-                id: 11,
-                title: "Mendel et les Lois de l'Hérédité",
-                description: "Expériences de Mendel et principes fondamentaux de la génétique.",
-                duration: "42:25",
-                instructor: "Dr. Jean Dupont",
-                date: "2024-03-09",
-                views: "1.7K",
-                subject: "Biologie",
-                course: "Génétique",
-                source: "drive",
-                sourceId: "pqr678stu901",
-                isNew: false,
-                isFeatured: false,
-                level: "advanced"
-            },
-
-            // Anglais - Grammaire videos
-            {
-                id: 12,
-                title: "Present Tenses: Simple and Continuous",
-                description: "Master the use of present simple and present continuous tenses.",
-                duration: "36:40",
-                instructor: "Prof. Emily Johnson",
-                date: "2024-03-17",
-                views: "2.2K",
-                subject: "Biologie",
-                course: "Génétique",
-                source: "youtube",
-                sourceId: "stu901vwx234",
-                isNew: true,
-                isFeatured: true,
-                level: "beginner"
-            },
-            {
-                id: 13,
-                title: "Past Tenses: Perfect and Perfect Continuous",
-                description: "Understanding and using past perfect and past perfect continuous.",
-                duration: "40:15",
-                instructor: "Prof. David Wilson",
-                date: "2024-03-14",
-                views: "1.8K",
-                subject: "Anglais",
-                course: "Grammaire",
-                source: "youtube",
-                sourceId: "vwx234yza567",
-                isNew: false,
-                isFeatured: true,
-                level: "intermediate"
-            },
-
-            // Anglais - Vocabulaire videos
-            {
-                id: 14,
-                title: "Academic Vocabulary for Essays",
-                description: "Essential vocabulary for academic writing and formal essays.",
-                duration: "34:50",
-                instructor: "Prof. Emily Johnson",
-                date: "2024-03-10",
-                views: "1.5K",
-                subject: "Anglais",
-                course: "Vocabulaire",
-                source: "drive",
-                sourceId: "yza567bcd890",
-                isNew: false,
-                isFeatured: false,
-                level: "advanced"
-            }
+            
         ];

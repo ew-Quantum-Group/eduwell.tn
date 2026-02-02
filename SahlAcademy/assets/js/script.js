@@ -954,18 +954,7 @@
                             <i class="fas fa-user-graduate"></i>
                             <span>${video.instructor}</span>
                         </div>
-                        <div class="video-info-meta-item">
-                            <i class="fas fa-clock"></i>
-                            <span>${video.duration}</span>
-                        </div>
-                        <div class="video-info-meta-item">
-                            <i class="fas fa-eye"></i>
-                            <span>${video.views} vues</span>
-                        </div>
-                        <div class="video-info-meta-item">
-                            <i class="fas fa-calendar"></i>
-                            <span>${formatDate(video.date)}</span>
-                        </div>
+                        
                         <div class="video-info-meta-item">
                             <i class="fas fa-chart-line"></i>
                             <span>${getLevelName(video.level)}</span>

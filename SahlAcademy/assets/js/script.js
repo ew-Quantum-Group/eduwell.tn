@@ -1,4 +1,113 @@
-   // ============================
+ // ============================
+        // VIDEO MANAGEMENT SYSTEM
+        // ============================
+        
+        // Video configuration storage
+        const VIDEO_CONFIG = {
+            selectedVideosKey: 'eduwell_selected_videos',
+            videoCountKey: 'eduwell_video_count',
+            activeLevelKey: 'eduwell_active_level'
+        };
+
+        // Video levels/types
+        const VIDEO_LEVELS = [
+            { id: 'beginner', name: 'Débutant', description: 'Vidéos pour les débutants' },
+            { id: 'intermediate', name: 'Intermédiaire', description: 'Vidéos de niveau intermédiaire' },
+            { id: 'advanced', name: 'Avancé', description: 'Vidéos pour utilisateurs avancés' }
+        ];
+
+        // Default video selection for each level
+        const DEFAULT_VIDEO_SELECTIONS = {
+            beginner: [1, 2, 9], // Video IDs for beginner level
+            intermediate: [3, 4, 6, 10, 13], // Video IDs for intermediate level
+            advanced: [5, 7, 8, 11, 14] // Video IDs for advanced level
+        };
+
+        // Get selected videos from localStorage or use defaults
+        function getSelectedVideos() {
+            const stored = localStorage.getItem(VIDEO_CONFIG.selectedVideosKey);
+            if (stored) {
+                return JSON.parse(stored);
+            }
+            // Return defaults if nothing stored
+            return DEFAULT_VIDEO_SELECTIONS;
+        }
+
+        // Save selected videos to localStorage
+        function saveSelectedVideos(selections) {
+            localStorage.setItem(VIDEO_CONFIG.selectedVideosKey, JSON.stringify(selections));
+        }
+
+        // Get video count from localStorage or use default
+        function getVideoCount() {
+            const stored = localStorage.getItem(VIDEO_CONFIG.videoCountKey);
+            return stored ? parseInt(stored) : 5; // Default to 5 videos
+        }
+
+        // Save video count to localStorage
+        function saveVideoCount(count) {
+            localStorage.setItem(VIDEO_CONFIG.videoCountKey, count.toString());
+        }
+
+        // Get active level from localStorage or use default
+        function getActiveLevel() {
+            const stored = localStorage.getItem(VIDEO_CONFIG.activeLevelKey);
+            return stored || 'beginner'; // Default to beginner level
+        }
+
+        // Save active level to localStorage
+        function saveActiveLevel(level) {
+            localStorage.setItem(VIDEO_CONFIG.activeLevelKey, level);
+        }
+
+      
+        // Get videos based on current settings
+        function getRecommendedVideos() {
+            const activeLevel = getActiveLevel();
+            const selectedVideos = getSelectedVideos();
+            const videoCount = getVideoCount();
+            
+            // Get selected video IDs for active level
+            const selectedVideoIds = selectedVideos[activeLevel] || [];
+            
+            // Filter videos by selected IDs
+            let recommended = videos.filter(video => 
+                selectedVideoIds.includes(video.id)
+            );
+            
+            // If no videos selected for this level, use level-based filtering
+            if (recommended.length === 0) {
+                recommended = videos.filter(video => video.level === activeLevel);
+            }
+            
+            // Limit number of videos based on setting
+            if (videoCount !== 'all') {
+                const count = parseInt(videoCount);
+                recommended = recommended.slice(0, count);
+            }
+            
+            return recommended;
+        }
+
+        // Function to get videos by subject and course
+        function getVideosBySubjectAndCourse(subject, course) {
+            return videos.filter(video => 
+                video.subject === subject && video.course === course
+            );
+        }
+
+        // Function to get videos by subject only (for homepage display)
+        function getVideosBySubject(subject) {
+            return videos.filter(video => video.subject === subject);
+        }
+
+        // Function to get all unique courses for a subject
+        function getCoursesBySubject(subject) {
+            return coursesBySubject[subject] || [];
+        }
+
+   
+        // ============================
         // AUTHENTICATION SYSTEM
         // ============================
         const AUTH_CONFIG = {
@@ -49,13 +158,12 @@
             window.location.href = redirectUrl;
         }
 
-       
-
         // ============================
         // STATE MANAGEMENT
         // ============================
         let currentUser = null;
         let currentSubject = null;
+        let currentCourse = null;
         let currentVideoIndex = 0;
         let currentVideos = [];
         let userVideos = JSON.parse(localStorage.getItem('eduwell_user_videos') || '[]');
@@ -83,6 +191,11 @@
         const videoPlayer = document.getElementById('videoPlayer');
         const playlistCount = document.getElementById('playlistCount');
         const playlistItems = document.getElementById('playlistItems');
+        const lessonPopupOverlay = document.getElementById('lessonPopupOverlay');
+        const lessonPopupContainer = document.getElementById('lessonPopupContainer');
+        const lessonPopupClose = document.getElementById('lessonPopupClose');
+        const lessonPopupTitle = document.getElementById('lessonPopupTitle');
+        const lessonPopupContent = document.getElementById('lessonPopupContent');
         const navPopupOverlay = document.getElementById('navPopupOverlay');
         const navPopupContainer = document.getElementById('navPopupContainer');
         const navPopupClose = document.getElementById('navPopupClose');
@@ -94,7 +207,16 @@
         const footerLinks = document.querySelectorAll('.footer-links a');
         const videoSourceIndicator = document.getElementById('videoSourceIndicator');
         const videoInfo = document.getElementById('videoInfo');
-        const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
+        
+        // Video Settings Elements
+        const videoSettingsTrigger = document.getElementById('videoSettingsTrigger');
+        const videoSettingsPanel = document.getElementById('videoSettingsPanel');
+        const videoSettingsClose = document.getElementById('videoSettingsClose');
+        const levelFilter = document.getElementById('levelFilter');
+        const videoCountSelect = document.getElementById('videoCountSelect');
+        const videoSelectionList = document.getElementById('videoSelectionList');
+        const settingsSaveBtn = document.getElementById('settingsSaveBtn');
+        const settingsCancelBtn = document.getElementById('settingsCancelBtn');
 
         // ============================
         // INITIALIZATION
@@ -129,18 +251,252 @@
             initUserMenu();
             initNavigationPopups();
             initLogoutButtons();
+            initVideoSettings();
             renderSubjects();
-            renderVideos();
+            renderRecommendedVideos();
             initFilterButtons();
             initPopup();
+            initLessonPopup();
             initNavPopup();
-            initQuickActions();
             initScrollAnimations();
             
             // Show welcome message
             setTimeout(() => {
                 showToast(`Bienvenue ${currentUser} !`, 'success');
             }, 1000);
+        }
+
+        // ============================
+        // VIDEO SETTINGS MANAGEMENT
+        // ============================
+        function initVideoSettings() {
+            // Open settings panel
+            videoSettingsTrigger.addEventListener('click', openVideoSettings);
+            videoSettingsClose.addEventListener('click', closeVideoSettings);
+            settingsCancelBtn.addEventListener('click', closeVideoSettings);
+            settingsSaveBtn.addEventListener('click', saveVideoSettings);
+            
+            // Close panel on overlay click
+            videoSettingsPanel.addEventListener('click', (e) => {
+                if (e.target === videoSettingsPanel) {
+                    closeVideoSettings();
+                }
+            });
+            
+            // Initialize level filter buttons
+            initLevelFilter();
+            
+            // Initialize video count selector
+            const savedCount = getVideoCount();
+            videoCountSelect.value = savedCount === 'all' ? 'all' : savedCount.toString();
+        }
+
+        function initLevelFilter() {
+            levelFilter.innerHTML = '';
+            
+            VIDEO_LEVELS.forEach(level => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'level-filter-btn';
+                button.textContent = level.name;
+                button.dataset.level = level.id;
+                
+                // Set active state based on saved level
+                if (level.id === getActiveLevel()) {
+                    button.classList.add('active');
+                }
+                
+                button.addEventListener('click', () => {
+                    // Update active level
+                    saveActiveLevel(level.id);
+                    
+                    // Update UI
+                    document.querySelectorAll('.level-filter-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    button.classList.add('active');
+                    
+                    // Load videos for this level
+                    loadVideoSelectionList(level.id);
+                    
+                    // Update main video display
+                    renderRecommendedVideos();
+                });
+                
+                levelFilter.appendChild(button);
+            });
+        }
+
+        function openVideoSettings() {
+            const activeLevel = getActiveLevel();
+            
+            // Load video selection for active level
+            loadVideoSelectionList(activeLevel);
+            
+            // Show settings panel
+            videoSettingsPanel.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVideoSettings() {
+            videoSettingsPanel.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function loadVideoSelectionList(level) {
+            const selectedVideos = getSelectedVideos();
+            const selectedVideoIds = selectedVideos[level] || [];
+            
+            videoSelectionList.innerHTML = '';
+            
+            // Filter videos by level
+            const levelVideos = videos.filter(video => video.level === level);
+            
+            if (levelVideos.length === 0) {
+                videoSelectionList.innerHTML = `
+                    <div style="text-align: center; padding: var(--space-8); color: var(--gray-500);">
+                        <i class="fas fa-video-slash" style="font-size: var(--font-size-2xl); margin-bottom: var(--space-3);"></i>
+                        <p>Aucune vidéo disponible pour ce niveau</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            levelVideos.forEach(video => {
+                const isSelected = selectedVideoIds.includes(video.id);
+                
+                const item = document.createElement('div');
+                item.className = `video-selection-item ${isSelected ? 'selected' : ''}`;
+                item.dataset.videoId = video.id;
+                
+                item.innerHTML = `
+                    <div class="video-selection-checkbox ${isSelected ? 'selected' : ''}">
+                        ${isSelected ? '<i class="fas fa-check"></i>' : ''}
+                    </div>
+                    <div class="video-selection-info">
+                        <div class="video-selection-title">${video.title}</div>
+                        <div class="video-selection-meta">
+                            <span>${video.subject}</span>
+                            <span>•</span>
+                            <span>${video.duration}</span>
+                        </div>
+                    </div>
+                `;
+                
+                item.addEventListener('click', () => {
+                    toggleVideoSelection(video.id, level);
+                });
+                
+                videoSelectionList.appendChild(item);
+            });
+        }
+
+        function toggleVideoSelection(videoId, level) {
+            const selectedVideos = getSelectedVideos();
+            const currentSelection = selectedVideos[level] || [];
+            
+            const index = currentSelection.indexOf(videoId);
+            
+            if (index > -1) {
+                // Remove video from selection
+                currentSelection.splice(index, 1);
+            } else {
+                // Add video to selection
+                currentSelection.push(videoId);
+            }
+            
+            // Update storage
+            selectedVideos[level] = currentSelection;
+            saveSelectedVideos(selectedVideos);
+            
+            // Update UI
+            loadVideoSelectionList(level);
+            
+            // Update main video display
+            renderRecommendedVideos();
+        }
+
+        function saveVideoSettings() {
+            // Video count is already saved when changed
+            const videoCount = videoCountSelect.value;
+            saveVideoCount(videoCount === 'all' ? 'all' : parseInt(videoCount));
+            
+            // Show success message
+            showToast('Paramètres enregistrés avec succès', 'success');
+            
+            // Update main video display
+            renderRecommendedVideos();
+            
+            // Close settings panel
+            closeVideoSettings();
+        }
+
+        // ============================
+        // RECOMMENDED VIDEOS RENDERING
+        // ============================
+        function renderRecommendedVideos() {
+            const recommendedVideos = getRecommendedVideos();
+            
+            videosGrid.innerHTML = '';
+            
+            if (recommendedVideos.length === 0) {
+                videosGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: var(--space-12); color: var(--gray-500);">
+                        <i class="fas fa-video-slash" style="font-size: var(--font-size-4xl); margin-bottom: var(--space-4);"></i>
+                        <h3 style="margin-bottom: var(--space-2); color: var(--gray-700);">Aucune vidéo disponible</h3>
+                        <p>Sélectionnez des vidéos dans les paramètres ou changez de niveau</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            recommendedVideos.forEach((video, index) => {
+                const videoCard = document.createElement('article');
+                videoCard.className = 'video-card fade-in';
+                videoCard.style.animationDelay = `${index * 0.1}s`;
+                videoCard.innerHTML = `
+                    <div class="video-thumbnail">
+                        <div class="play-button"><i class="fas fa-play"></i></div>
+                        ${video.isNew ? '<div class="video-badge">NOUVEAU</div>' : ''}
+                        ${video.addedByUser ? '<div class="video-badge" style="background: var(--green);">PERSONNELLE</div>' : ''}
+                        <div class="video-duration">${video.duration}</div>
+                    </div>
+                    <div class="video-content">
+                        <h3 class="video-title">${video.title}</h3>
+                        <p class="video-description">${video.description}</p>
+                        <div class="video-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-user-graduate"></i>
+                                <span>${video.instructor}</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-eye"></i>
+                                <span>${video.views} vues</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-book"></i>
+                                <span>${video.subject} • ${video.course}</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-chart-line"></i>
+                                <span>${getLevelName(video.level)}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Open course selection popup for the video's subject
+                videoCard.addEventListener('click', () => {
+                    openLessonPopup(video.subject);
+                });
+                
+                videosGrid.appendChild(videoCard);
+            });
+        }
+
+        function getLevelName(levelId) {
+            const level = VIDEO_LEVELS.find(l => l.id === levelId);
+            return level ? level.name : levelId;
         }
 
         // ============================
@@ -236,17 +592,6 @@
                 });
             });
 
-            // Mobile navigation items
-            mobileNavItems.forEach(item => {
-                item.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const popupType = item.getAttribute('data-popup');
-                    if (popupType) {
-                        openNavPopup(popupType);
-                    }
-                });
-            });
-
             // Dropdown menu items
             dropdownItems.forEach(item => {
                 item.addEventListener('click', (e) => {
@@ -324,6 +669,103 @@
         }
 
         // ============================
+        // LESSON SELECTION POPUP
+        // ============================
+        function initLessonPopup() {
+            lessonPopupOverlay.addEventListener('click', closeLessonPopup);
+            lessonPopupClose.addEventListener('click', closeLessonPopup);
+            
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && lessonPopupContainer.classList.contains('active')) {
+                    closeLessonPopup();
+                }
+            });
+            
+            // Prevent clicks inside popup from closing it
+            lessonPopupContainer.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        }
+
+        function openLessonPopup(subjectName) {
+            currentSubject = subjectName;
+            
+            const courses = getCoursesBySubject(subjectName);
+            if (!courses || courses.length === 0) {
+                showToast(`Aucun cours disponible pour ${subjectName}`, 'error');
+                return;
+            }
+            
+            eduwell_updateLastActivity();
+            
+            // Update popup title
+            lessonPopupTitle.innerHTML = `<i class="fas fa-book"></i><span>Cours de ${subjectName}</span>`;
+            
+            // Clear and render course cards
+            lessonPopupContent.innerHTML = `
+                <p style="margin-bottom: var(--space-6); color: var(--gray-700);">
+                    Sélectionnez un cours pour accéder aux vidéos correspondantes.
+                </p>
+                <div class="lesson-grid" id="courseGrid">
+                    <!-- Course cards will be populated here -->
+                </div>
+            `;
+            
+            const courseGrid = document.getElementById('courseGrid');
+            courseGrid.innerHTML = '';
+            
+            courses.forEach((course, index) => {
+                const courseCard = document.createElement('div');
+                courseCard.className = 'lesson-card fade-in';
+                courseCard.style.animationDelay = `${index * 0.1}s`;
+                courseCard.innerHTML = `
+                    <div class="lesson-icon">
+                        <i class="${course.icon}"></i>
+                    </div>
+                    <div class="lesson-name">${course.name}</div>
+                    <div style="position: absolute; bottom: var(--space-3); right: var(--space-3); font-size: var(--font-size-xs); color: var(--gray-500);">
+                        ${course.videoCount} vidéos
+                    </div>
+                `;
+                
+                courseCard.addEventListener('click', () => {
+                    selectCourse(course);
+                });
+                
+                courseGrid.appendChild(courseCard);
+            });
+            
+            // Show popup
+            document.body.style.overflow = 'hidden';
+            lessonPopupOverlay.classList.add('active');
+            lessonPopupContainer.classList.add('active');
+        }
+
+        function selectCourse(course) {
+            currentCourse = course;
+            closeLessonPopup();
+            
+            // Get videos for this specific subject and course
+            const courseVideos = getVideosBySubjectAndCourse(currentSubject, course.name);
+            
+            if (courseVideos.length === 0) {
+                showToast(`Aucune vidéo disponible pour ${course.name}`, 'error');
+                return;
+            }
+            
+            // Open video playlist popup
+            setTimeout(() => {
+                openVideoPopup(currentSubject, course.name, courseVideos, 0);
+            }, 300);
+        }
+
+        function closeLessonPopup() {
+            document.body.style.overflow = '';
+            lessonPopupOverlay.classList.remove('active');
+            lessonPopupContainer.classList.remove('active');
+        }
+
+        // ============================
         // RENDERING FUNCTIONS
         // ============================
         function renderSubjects() {
@@ -342,25 +784,59 @@
                     </div>
                 `;
                 
-                subjectCard.addEventListener('click', () => openSubjectPopup(subject.name));
+                // Open course selection popup
+                subjectCard.addEventListener('click', () => openLessonPopup(subject.name));
                 subjectsGrid.appendChild(subjectCard);
             });
         }
 
-        function renderVideos(filter = 'all') {
+        // ============================
+        // FILTER FUNCTIONALITY
+        // ============================
+        function initFilterButtons() {
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    const filter = button.dataset.filter;
+                    let filteredVideos = getRecommendedVideos();
+                    
+                    if (filter === 'new') {
+                        filteredVideos = filteredVideos.filter(video => video.isNew);
+                    } else if (filter === 'popular') {
+                        filteredVideos = filteredVideos.sort((a, b) => {
+                            const viewsA = parseInt(a.views) || 0;
+                            const viewsB = parseInt(b.views) || 0;
+                            return viewsB - viewsA;
+                        });
+                    } else if (filter === 'recent') {
+                        filteredVideos = filteredVideos.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    } else if (['beginner', 'intermediate', 'advanced'].includes(filter)) {
+                        // Change level and update display
+                        saveActiveLevel(filter);
+                        renderRecommendedVideos();
+                        return;
+                    }
+                    
+                    // For other filters, render the filtered videos
+                    renderFilteredVideos(filteredVideos);
+                });
+            });
+        }
+
+        function renderFilteredVideos(filteredVideos) {
             videosGrid.innerHTML = '';
-            let filteredVideos = [...videos, ...userVideos];
             
-            if (filter === 'new') {
-                filteredVideos = filteredVideos.filter(video => video.isNew);
-            } else if (filter === 'popular') {
-                filteredVideos = filteredVideos.sort((a, b) => {
-                    const viewsA = parseInt(a.views) || 0;
-                    const viewsB = parseInt(b.views) || 0;
-                    return viewsB - viewsA;
-                }).slice(0, 6);
-            } else if (filter === 'recent') {
-                filteredVideos = filteredVideos.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 6);
+            if (filteredVideos.length === 0) {
+                videosGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: var(--space-12); color: var(--gray-500);">
+                        <i class="fas fa-video-slash" style="font-size: var(--font-size-4xl); margin-bottom: var(--space-4);"></i>
+                        <h3 style="margin-bottom: var(--space-2); color: var(--gray-700);">Aucune vidéo trouvée</h3>
+                        <p>Essayez avec un autre filtre</p>
+                    </div>
+                `;
+                return;
             }
             
             filteredVideos.forEach((video, index) => {
@@ -388,31 +864,22 @@
                             </div>
                             <div class="meta-item">
                                 <i class="fas fa-book"></i>
-                                <span>${video.subject}</span>
+                                <span>${video.subject} • ${video.course}</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-chart-line"></i>
+                                <span>${getLevelName(video.level)}</span>
                             </div>
                         </div>
                     </div>
                 `;
                 
+                // Open course selection popup for the video's subject
                 videoCard.addEventListener('click', () => {
-                    const subjectVideos = [...videos, ...userVideos].filter(v => v.subject === video.subject);
-                    openSubjectPopup(video.subject, subjectVideos, subjectVideos.findIndex(v => v.id === video.id));
+                    openLessonPopup(video.subject);
                 });
                 
                 videosGrid.appendChild(videoCard);
-            });
-        }
-
-        // ============================
-        // FILTER FUNCTIONALITY
-        // ============================
-        function initFilterButtons() {
-            filterButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    renderVideos(button.dataset.filter);
-                });
             });
         }
 
@@ -435,18 +902,20 @@
             });
         }
 
-        function openSubjectPopup(subjectName, videosList = null, startIndex = 0) {
+        function openVideoPopup(subjectName, courseName, videosList = null, startIndex = 0) {
             currentSubject = subjectName;
-            currentVideos = videosList || [...videos, ...userVideos].filter(v => v.subject === subjectName);
+            currentCourse = courseName;
+            currentVideos = videosList || getVideosBySubjectAndCourse(subjectName, courseName);
             
             if (currentVideos.length === 0) {
-                showToast(`Aucune vidéo disponible pour ${subjectName}`, 'error');
+                showToast(`Aucune vidéo disponible pour ${courseName}`, 'error');
                 return;
             }
             
             eduwell_updateLastActivity();
             
-            popupSubjectTitle.textContent = `Vidéos de ${subjectName}`;
+            // Update title to include subject and course
+            popupSubjectTitle.textContent = `${subjectName} - ${courseName}`;
             loadVideo(currentVideos[startIndex], startIndex);
             renderPlaylist();
             
@@ -493,11 +962,28 @@
                             <i class="fas fa-eye"></i>
                             <span>${video.views} vues</span>
                         </div>
+                        <div class="video-info-meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>${formatDate(video.date)}</span>
+                        </div>
+                        <div class="video-info-meta-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>${getLevelName(video.level)}</span>
+                        </div>
                     </div>
                 `;
             }
             
             updateActivePlaylistItem();
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
         }
 
         function renderPlaylist() {
@@ -515,6 +1001,8 @@
                             <span>${video.duration}</span>
                             <span>•</span>
                             <span>${video.instructor}</span>
+                            <span>•</span>
+                            <span>${getLevelName(video.level)}</span>
                         </div>
                     </div>
                     <div class="source-badge ${video.source || 'youtube'}">
@@ -568,28 +1056,8 @@
             popupOverlay.classList.remove('active');
             popupContainer.classList.remove('active');
             currentSubject = null;
+            currentCourse = null;
             currentVideoIndex = 0;
-        }
-
-        // ============================
-        // QUICK ACTIONS
-        // ============================
-        function initQuickActions() {
-            document.getElementById('addVideoBtn').addEventListener('click', () => {
-                showToast('Fonctionnalité à venir : Ajout de vidéos', 'info');
-            });
-            
-            document.getElementById('scheduleBtn').addEventListener('click', () => {
-                showToast('Fonctionnalité à venir : Planificateur', 'info');
-            });
-            
-            document.getElementById('notesBtn').addEventListener('click', () => {
-                showToast('Fonctionnalité à venir : Notes personnelles', 'info');
-            });
-            
-            document.getElementById('communityBtn').addEventListener('click', () => {
-                showToast('Fonctionnalité à venir : Communauté', 'info');
-            });
         }
 
         // ============================
@@ -609,7 +1077,7 @@
                 });
             }, observerOptions);
             
-            document.querySelectorAll('.subject-card, .video-card, .action-card').forEach(card => {
+            document.querySelectorAll('.subject-card, .video-card, .lesson-card').forEach(card => {
                 observer.observe(card);
             });
         }

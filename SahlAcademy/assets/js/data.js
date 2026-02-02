@@ -11,7 +11,7 @@
                 color: "#FFFFFF",
                 bgColor: "var(--gradient-blue)",
                 progress: 72,
-                videos: 18
+                videos: 0
             },
             
             { 
@@ -21,7 +21,7 @@
                 color: "#FFFFFF",
                 bgColor: "var(--gradient-purple)",
                 progress: 79,
-                videos: 21
+                videos: 0
             },
             { 
                 id: 4, 
@@ -48,7 +48,7 @@
                     id: "forcecours", 
                     name: "RLC force Cours", 
                     icon: "fas fa-bolt",
-                    videoCount: 5,
+                    videoCount: 0,
                     subject: "Physique"
                 }
                 
@@ -59,28 +59,28 @@
                     id: "sc_analyse", 
                     name: "Révision", 
                     icon: "fas fa-microscope",
-                    videoCount: 6,
+                    videoCount: 0,
                     subject: "science"
                 },
                 { 
                     id: "genetique", 
                     name: "Génétique", 
                     icon: "fas fa-dna",
-                    videoCount: 5,
+                    videoCount: 0,
                     subject: "science"
                 },
                 { 
                     id: "ecologie", 
                     name: "Neurophysiologie", 
                     icon: "fas fa-leaf",
-                    videoCount: 4,
+                    videoCount: 0,
                     subject: "science"
                 },
                 { 
                     id: "biologie_physiologie", 
                     name: "Préparation Bac", 
                     icon: "fas fa-heartbeat",
-                    videoCount: 6,
+                    videoCount: 0,
                     subject: "science"
                 }
             ],
@@ -89,28 +89,28 @@
                     id: "anglais_grammaire", 
                     name: "Old version", 
                     icon: "fas fa-book",
-                    videoCount: 9,
+                    videoCount: 10,
                     subject: "Anglais"
                 },
                 { 
                     id: "anglais_vocabulaire", 
                     name: "Vocabulaire", 
                     icon: "fas fa-language",
-                    videoCount: 6,
+                    videoCount: 0,
                     subject: "Anglais"
                 },
                 { 
                     id: "anglais_comprehension", 
                     name: "Compréhension", 
                     icon: "fas fa-headphones",
-                    videoCount: 5,
+                    videoCount: 0,
                     subject: "Anglais"
                 },
                 { 
                     id: "anglais_expression", 
                     name: "Writing", 
                     icon: "fas fa-pen",
-                    videoCount: 7,
+                    videoCount: 0,
                     subject: "Anglais"
                 }
             ]
@@ -162,12 +162,12 @@
                 course: "Old version",
                 source: "drive",
                 sourceId: "15mxWDTICcmEZz7HhIif84MXSNo3cgN4w",
-                isNew: true,
-                isFeatured: true,
+                isNew: false,
+                isFeatured: false,
                 level: "Ancienne version"
             },
              {
-                id: 3,
+                id: 4,
                 title: "Correction of the 2025 Baccalaureate Exam – Part 2",
                
                 instructor: "Eduwell",
@@ -176,12 +176,12 @@
                 course: "Old version",
                 source: "drive",
                 sourceId: "1M9DgB6Id1V1r5yjt1QwqJkoqZDEGh1vU",
-                isNew: true,
-                isFeatured: true,
+                 isNew: false,
+                isFeatured: false,
                 level: "Ancienne version"
             },
              {
-                id: 4,
+                id: 5,
                 title: "Revision: Grammar Correction Exercises (Part 1)",
                
                 instructor: "Eduwell",
@@ -190,12 +190,12 @@
                 course: "Old version",
                 source: "drive",
                 sourceId: "1JtOD1EorV6ZGGx91UpO2bvdwqaq2IKtD",
-                isNew: true,
-                isFeatured: true,
+                isNew: false,
+                isFeatured: false,
                 level: "Ancienne version"
             },
              {
-                id: 5,
+                id: 6,
                 title: "Revision: Grammar Correction Exercises (Part 2)",
                
                 instructor: "Eduwell",
@@ -204,12 +204,12 @@
                 course: "Old version",
                 source: "drive",
                 sourceId: "1ghkCIi9V6HRvhHJ1EcVC70HyID31ciPX",
-                isNew: true,
-                isFeatured: true,
+                 isNew: false,
+                isFeatured: false,
                 level: "Ancienne version"
             },
              {
-                id: 6,
+                id: 7,
                 title: "Revision: Grammar Correction Exercises (Part 3)",
                
                 instructor: "Eduwell",
@@ -218,12 +218,12 @@
                 course: "Old version",
                 source: "drive",
                 sourceId: "1TtJnXpOQKUc3YqHZGPl5Ou0YXf9v-i8j",
-                isNew: true,
-                isFeatured: true,
+                isNew: false,
+                isFeatured: false,
                 level: "Ancienne version"
             },
              {
-                id: 7,
+                id: 8,
                 title: "Adjectives & Adverbs – Lesson (Part 1)",
                
                 instructor: "Eduwell",
@@ -237,7 +237,7 @@
                 level: "Ancienne version"
             },
              {
-                id: 8,
+                id: 9,
                 title: "Adjectives & Adverbs – Lesson (Part 2)",
                
                 instructor: "Eduwell",
@@ -251,7 +251,7 @@
                 level: "Ancienne version"
             },
              {
-                id: 9,
+                id: 10,
                 title: "Advanced Grammar Exercises – Revision ",
                
                 instructor: "Eduwell",
@@ -260,10 +260,10 @@
                 course: "Old version",
                 source: "drive",
                 sourceId: "1WctGTWbFVyyy4FH-R79JpbDMjlZC_kkl",
-                isNew: true,
-                isFeatured: true,
+                isNew: false,
+                isFeatured: false,
                 level: "Ancienne version"
-            },
+            }
 
             // Biologie - Biologie Cellulaire videos
             

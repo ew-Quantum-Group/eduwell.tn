@@ -950,11 +950,7 @@
                 videoInfo.innerHTML = `
                     <h4 class="video-info-title">${video.title}</h4>
                     <div class="video-info-meta">
-                        <div class="video-info-meta-item">
-                            <i class="fas fa-user-graduate"></i>
-                            <span>${video.instructor}</span>
-                        </div>
-                        
+                       
                         <div class="video-info-meta-item">
                             <i class="fas fa-chart-line"></i>
                             <span>${getLevelName(video.level)}</span>

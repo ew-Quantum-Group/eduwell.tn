@@ -273,7 +273,19 @@
             },
              {
                 id: 11,
-                title: "Past Tenses: Perfect and Perfect Continuous",
+                title: "Past Simple Tense | خاص بالبكالوريا",
+                instructor: "Eduwell",
+                subject: "Anglais",
+                course: "Tenses",
+                source: "youtube",
+                sourceId: "yRfKg-HL67s",
+                isNew: false,
+                isFeatured: true,
+                level: "intermediate"
+            },
+             {
+                id: 12,
+                title: "Past Perfect Tense Explained | English Grammar",
                 instructor: "Eduwell",
                 subject: "Anglais",
                 course: "Tenses",

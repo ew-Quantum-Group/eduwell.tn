@@ -128,17 +128,17 @@
                 id: 8,
                 title: "Vitesse des Réactions Chimiques",
                 description: "Facteurs influençant la vitesse des réactions et méthodes de mesure.",
-                duration: "38:20",
-                instructor: "Dr. Marie Laurent",
-                date: "2024-03-11",
-                views: "1.3K",
+                
+                instructor: "Eduwell",
+               
+               
                 subject: "Anglais",
-                course: "Writing",
+                course: "Old version",
                 source: "drive",
                 sourceId: "1ekhuLnJl5hHDxJlnzNdY2WbI98PgKiAN",
                 isNew: true,
                 isFeatured: true,
-                level: "advanced"
+                level: "Ancienne version"
             },
 
             // Biologie - Biologie Cellulaire videos

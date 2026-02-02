@@ -941,7 +941,7 @@
                 if (video.source === 'youtube') {
                     videoSourceIndicator.innerHTML = '<i class="fab fa-youtube"></i><span>YouTube</span>';
                 } else if (video.source === 'drive') {
-                    videoSourceIndicator.innerHTML = '<i class="fab fa-google-drive"></i><span>Google Drive</span>';
+                    videoSourceIndicator.innerHTML = '<i class="fab fa-youtube"></i><span>SahlAcademy</span>';
                 }
             }
             

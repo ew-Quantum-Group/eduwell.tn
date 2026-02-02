@@ -951,7 +951,10 @@
                     <h4 class="video-info-title">${video.title}</h4>
                     <div class="video-info-meta">
                        
-                       
+                        <div class="video-info-meta-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>${getLevelName(video.level)}</span>
+                        </div>
                     </div>
                 `;
             }
@@ -980,11 +983,10 @@
                     <div class="playlist-item-content">
                         <div class="playlist-item-title">${video.title}</div>
                         <div class="playlist-item-meta">
-                            <span>${video.duration}</span>
+                           
                             <span>•</span>
                             <span>${video.instructor}</span>
-                            <span>•</span>
-                            <span>${getLevelName(video.level)}</span>
+                           
                         </div>
                     </div>
                     <div class="source-badge ${video.source || 'youtube'}">

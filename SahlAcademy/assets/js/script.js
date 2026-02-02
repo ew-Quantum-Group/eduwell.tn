@@ -984,7 +984,7 @@
                         <div class="playlist-item-title">${video.title}</div>
                         <div class="playlist-item-meta">
                            
-                            <span>•</span>
+                          
                             <span>${video.instructor}</span>
                            
                         </div>

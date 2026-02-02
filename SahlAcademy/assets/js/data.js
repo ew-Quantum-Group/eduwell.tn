@@ -92,6 +92,13 @@
                     videoCount: 10,
                     subject: "Anglais"
                 },
+                 { 
+                    id: "anglais_tenses", 
+                    name: "Tenses", 
+                    icon: "fas fa-clock-rotate-left",
+                    videoCount: 0,
+                    subject: "Anglais"
+                },
                 { 
                     id: "anglais_vocabulaire", 
                     name: "Vocabulaire", 
@@ -119,7 +126,7 @@
         // Videos data - Each video is linked to both subject and course
         // Added level field to each video
         const videos = [
-            // Physique - Mécanique videos
+          
        
          
 
@@ -263,7 +270,20 @@
                 isNew: false,
                 isFeatured: false,
                 level: "Ancienne version"
+            },
+             {
+                id: 11,
+                title: "Past Tenses: Perfect and Perfect Continuous",
+                instructor: "Eduwell",
+                subject: "Anglais",
+                course: "Tenses",
+                source: "youtube",
+                sourceId: "o-rPnn8mU7s",
+                isNew: false,
+                isFeatured: true,
+                level: "intermediate"
             }
+
 
             // Biologie - Biologie Cellulaire videos
             

@@ -1112,7 +1112,13 @@
                     <div class="stat-label">En attente</div>
                 </div>
                 
-              
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="stat-value">+1</div>
+                    <div class="stat-label">Toutes les 10 min</div>
+                </div>
                 
                 <div class="stat-card">
                     <div class="stat-icon">
@@ -1135,10 +1141,12 @@
                     
                     <div class="counter-value-container">
                         <div class="counter-value" id="dynamic-counter">1,249</div>
-                        
+                        <div class="counter-label">et ça augmente toutes les 10 minutes</div>
                     </div>
                     
-                    
+                    <div class="counter-explanation">
+                        Le compteur a commencé le 2 février 2026 à 1,249 personnes. Il augmente automatiquement de +1 toutes les 10 minutes.
+                    </div>
                 </div>
             </div>
         </section>
@@ -1255,7 +1263,7 @@
         </div>
     </div>
 
-    <!-- JavaScript -->
+    <!-- JavaScript with Fixed Form Submission -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // ======================
@@ -1312,7 +1320,7 @@
             }
             
             // ======================
-            // FORM SYSTEM
+            // FORM SYSTEM - FIXED VERSION
             // ======================
             
             const whatsappInput = document.getElementById('whatsapp-input');
@@ -1323,24 +1331,12 @@
             const closeModal = document.getElementById('close-modal');
             const shareButton = document.getElementById('share-button');
             const modalPosition = document.getElementById('modal-position');
-            const prefWhatsapp = document.getElementById('pref-whatsapp');
-            const prefEarly = document.getElementById('pref-early');
             
             let isWhatsappValid = false;
             let currentPositionNumber = 1248;
             
             function initForm() {
                 whatsappInput.addEventListener('input', validateWhatsappNumber);
-                
-                prefWhatsapp.addEventListener('click', function() {
-                    const checkbox = this.querySelector('.checkbox-input');
-                    checkbox.checked = !checkbox.checked;
-                });
-                
-                prefEarly.addEventListener('click', function() {
-                    const checkbox = this.querySelector('.checkbox-input');
-                    checkbox.checked = !checkbox.checked;
-                });
                 
                 submitButton.addEventListener('click', formSubmit);
                 
@@ -1413,26 +1409,50 @@
                 if (!isWhatsappValid) return;
                 
                 const phoneNumber = "+216" + whatsappInput.value.replace(/\D/g, '');
+                const currentCount = calculateCurrentCount();
                 
-                const formData = {
-                    whatsapp_number: phoneNumber,
-                    notification_type: document.getElementById('notify-whatsapp').checked ? 'WhatsApp' : 'Email',
-                    early_access: document.getElementById('early-access').checked ? 'Oui' : 'Non',
-                    submission_date: new Date().toLocaleString('fr-FR'),
-                    current_waiting: calculateCurrentCount(),
-                    page_url: window.location.href,
-                    
-                    _subject: '📱 NOUVEAU NUMÉRO WHATSAPP TUNISIEN',
-                    _template: 'table',
-                    _captcha: 'false',
-                    _replyto: 'notification@inscriptions.com'
+                // Create form element
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'https://formsubmit.co/eduwelltn@gmail.com';
+                form.style.display = 'none';
+                
+                // Add necessary fields
+                const addField = (name, value) => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = name;
+                    input.value = value;
+                    form.appendChild(input);
                 };
+                
+                // Add all required data
+                addField('whatsapp_number', phoneNumber);
+                addField('notification_type', document.getElementById('notify-whatsapp').checked ? 'WhatsApp' : 'Email');
+                addField('early_access', document.getElementById('early-access').checked ? 'Oui' : 'Non');
+                addField('submission_date', new Date().toLocaleString('fr-FR'));
+                addField('current_waiting', currentCount);
+                addField('page_url', window.location.href);
+                addField('user_agent', navigator.userAgent);
+                
+                // FormSubmit specific fields
+                addField('_subject', '📱 NOUVEAU NUMÉRO WHATSAPP TUNISIEN - Liste d\'attente');
+                addField('_template', 'table');
+                addField('_captcha', 'false');
+                addField('_autoresponse', 'Merci de vous être inscrit à notre liste d\'attente. Nous vous contacterons dès que les inscriptions seront ouvertes.');
+                
+                // Redirect after submission
+                addField('_next', window.location.href + '?success=true&position=' + (currentCount + 1));
                 
                 submitButton.disabled = true;
                 submitButton.classList.add('loading');
                 showStatus('sending', 'Envoi en cours...');
                 
-                // Simulate API call
+                // Append form to body and submit
+                document.body.appendChild(form);
+                form.submit();
+                
+                // Show success message immediately (will be overridden by redirect)
                 setTimeout(() => {
                     handleSuccess();
                 }, 1500);
@@ -1450,10 +1470,7 @@
                     successModal.style.display = 'flex';
                 }, 1000);
                 
-                setTimeout(() => {
-                    resetForm();
-                    statusMessage.style.display = 'none';
-                }, 3000);
+                // Don't reset form here - let the redirect handle it
             }
             
             function resetForm() {
@@ -1497,6 +1514,36 @@
             }
             
             // ======================
+            // CHECK URL PARAMETERS
+            // ======================
+            
+            function checkUrlParameters() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const success = urlParams.get('success');
+                const position = urlParams.get('position');
+                
+                if (success === 'true') {
+                    // Update position if provided
+                    if (position) {
+                        currentPositionNumber = parseInt(position);
+                        modalPosition.textContent = `#${currentPositionNumber.toLocaleString()}`;
+                    }
+                    
+                    // Show success modal
+                    setTimeout(() => {
+                        successModal.style.display = 'flex';
+                    }, 500);
+                    
+                    // Reset form
+                    resetForm();
+                    
+                    // Clean URL (remove parameters)
+                    const cleanUrl = window.location.pathname;
+                    window.history.replaceState({}, document.title, cleanUrl);
+                }
+            }
+            
+            // ======================
             // INITIALIZE
             // ======================
             
@@ -1505,6 +1552,7 @@
             setInterval(updateCounter, 1000);
             
             initForm();
+            checkUrlParameters();
             
             // Improve mobile touch experience
             document.addEventListener('touchstart', function() {}, {passive: true});

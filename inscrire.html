@@ -2,304 +2,1513 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription • Portail Académique</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Inscriptions Prochainement | Liste d'attente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="shortcut icon" href="./assets/images/app-store.png" type="image/x-icon">
-     <link rel="stylesheet" href="./assets/css/accup.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Apple Color System */
+            --apple-blue: #0077ED;
+            --apple-blue-light: rgba(0, 119, 237, 0.08);
+            --apple-blue-lighter: rgba(0, 119, 237, 0.04);
+            --apple-blue-dark: #0066CC;
+            --apple-green: #30D158;
+            --apple-green-light: rgba(48, 209, 88, 0.08);
+            --apple-red: #FF453A;
+            --apple-red-light: rgba(255, 69, 58, 0.08);
+            --apple-orange: #FF9F0A;
+            --apple-purple: #BF5AF2;
+            --apple-gray-0: #FBFBFD;
+            --apple-gray-1: #F5F5F7;
+            --apple-gray-2: #EFEFF0;
+            --apple-gray-3: #E5E5E7;
+            --apple-gray-4: #D2D2D7;
+            --apple-gray-5: #8E8E93;
+            --apple-gray-6: #6E6E73;
+            --apple-gray-7: #424245;
+            --apple-gray-8: #1D1D1F;
+            --apple-white: #FFFFFF;
+            
+            /* Base Font Sizes - Mobile First */
+            --font-display-hero: 2.5rem; /* 40px */
+            --font-display-large: 2.25rem; /* 36px */
+            --font-headline-large: 1.75rem; /* 28px */
+            --font-headline: 1.5rem; /* 24px */
+            --font-title-1: 1.25rem; /* 20px */
+            --font-title-2: 1.125rem; /* 18px */
+            --font-title-3: 1rem; /* 16px */
+            --font-body-large: 1.125rem; /* 18px */
+            --font-body: 1rem; /* 16px */
+            --font-callout: 0.9375rem; /* 15px */
+            --font-subhead: 0.875rem; /* 14px */
+            --font-footnote: 0.8125rem; /* 13px */
+            --font-caption: 0.75rem; /* 12px */
+            
+            /* Line Heights */
+            --line-height-display: 1.1;
+            --line-height-headline: 1.15;
+            --line-height-title: 1.2;
+            --line-height-body: 1.5;
+            --line-height-caption: 1.4;
+            
+            /* Letter Spacing */
+            --letter-spacing-display: -0.01em;
+            --letter-spacing-headline: -0.005em;
+            --letter-spacing-body: -0.01em;
+            
+            /* Spacing - Mobile First */
+            --spacing-1: 0.25rem; /* 4px */
+            --spacing-2: 0.5rem; /* 8px */
+            --spacing-3: 0.75rem; /* 12px */
+            --spacing-4: 1rem; /* 16px */
+            --spacing-5: 1.25rem; /* 20px */
+            --spacing-6: 1.5rem; /* 24px */
+            --spacing-7: 2rem; /* 32px */
+            --spacing-8: 2.5rem; /* 40px */
+            --spacing-9: 3rem; /* 48px */
+            --spacing-10: 3.5rem; /* 56px */
+            --spacing-11: 4rem; /* 64px */
+            --spacing-12: 4.5rem; /* 72px */
+            
+            /* Border Radius */
+            --radius-small: 0.5rem; /* 8px */
+            --radius-medium: 0.875rem; /* 14px */
+            --radius-large: 1.25rem; /* 20px */
+            --radius-xlarge: 1.5rem; /* 24px */
+            --radius-xxlarge: 1.875rem; /* 30px */
+            --radius-pill: 9999px;
+            
+            /* Shadows */
+            --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-elevated: 0 6px 16px rgba(0, 0, 0, 0.1);
+            
+            /* Transitions */
+            --transition-smooth: 0.3s cubic-bezier(0.2, 0, 0, 1);
+            --transition-fast: 0.15s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+            background: var(--apple-gray-0);
+            color: var(--apple-gray-8);
+            min-height: 100vh;
+            line-height: var(--line-height-body);
+            font-weight: 400;
+            font-size: var(--font-body);
+            letter-spacing: var(--letter-spacing-body);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Enhanced Background */
+        .apple-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(0, 119, 237, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(48, 209, 88, 0.03) 0%, transparent 40%);
+            z-index: -2;
+        }
+
+        /* Main Container - Mobile First */
+        .main-container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 var(--spacing-4);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-10);
+            animation: elegantAppear 0.6s cubic-bezier(0.2, 0, 0, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+            box-sizing: border-box;
+        }
+
+        @keyframes elegantAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Navigation - Mobile Optimized */
+        .apple-nav {
+            padding: var(--spacing-5) var(--spacing-4);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-logo {
+            font-size: var(--font-title-2);
+            font-weight: 700;
+            color: var(--apple-gray-8);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-2);
+            padding: var(--spacing-2);
+        }
+
+        .nav-logo i {
+            color: var(--apple-blue);
+            font-size: 1.125rem;
+        }
+
+        .nav-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-1);
+            background: var(--apple-blue-light);
+            color: var(--apple-blue);
+            padding: var(--spacing-1) var(--spacing-3);
+            border-radius: var(--radius-pill);
+            font-size: var(--font-caption);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border: 1px solid rgba(0, 119, 237, 0.2);
+        }
+
+        /* Hero Section - Mobile Optimized */
+        .hero-section {
+            text-align: center;
+            padding: var(--spacing-8) var(--spacing-4) var(--spacing-6);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-2);
+            background: var(--apple-blue-light);
+            color: var(--apple-blue);
+            padding: var(--spacing-2) var(--spacing-3);
+            border-radius: var(--radius-pill);
+            font-size: var(--font-caption);
+            font-weight: 600;
+            margin-bottom: var(--spacing-5);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border: 1px solid rgba(0, 119, 237, 0.2);
+        }
+
+        .hero-badge i {
+            font-size: var(--font-caption);
+        }
+
+        .hero-title {
+            font-size: var(--font-display-hero);
+            font-weight: 800;
+            line-height: var(--line-height-display);
+            letter-spacing: var(--letter-spacing-display);
+            margin-bottom: var(--spacing-5);
+            color: var(--apple-gray-8);
+            text-align: center;
+            max-width: 100%;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+
+        .hero-title span {
+            display: block;
+            margin-bottom: var(--spacing-2);
+        }
+
+        .hero-subtitle {
+            font-size: var(--font-headline);
+            font-weight: 400;
+            line-height: var(--line-height-headline);
+            color: var(--apple-gray-6);
+            max-width: 100%;
+            margin: 0 auto var(--spacing-8);
+            letter-spacing: var(--letter-spacing-headline);
+            text-align: center;
+            padding: 0 var(--spacing-3);
+            box-sizing: border-box;
+            word-wrap: break-word;
+        }
+
+        /* Stats Section - Mobile Grid */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: var(--spacing-4);
+            margin-bottom: var(--spacing-8);
+            width: 100%;
+            padding: 0 var(--spacing-3);
+            box-sizing: border-box;
+        }
+
+        .stat-card {
+            background: var(--apple-white);
+            border-radius: var(--radius-large);
+            padding: var(--spacing-5);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            transition: all var(--transition-fast);
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--apple-blue-light), var(--apple-green-light));
+            border-radius: var(--radius-medium);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--spacing-3);
+            font-size: 1rem;
+            color: var(--apple-blue);
+            border: 1px solid rgba(0, 119, 237, 0.1);
+        }
+
+        .stat-value {
+            font-size: var(--font-headline-large);
+            font-weight: 700;
+            line-height: 1;
+            color: var(--apple-gray-8);
+            margin-bottom: var(--spacing-1);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-label {
+            font-size: var(--font-subhead);
+            color: var(--apple-gray-5);
+            font-weight: 450;
+            line-height: 1.3;
+        }
+
+        /* Counter Section - Mobile Optimized */
+        .counter-section {
+            width: 100%;
+            padding: 0 var(--spacing-3);
+            box-sizing: border-box;
+            margin-bottom: var(--spacing-8);
+        }
+
+        .counter-card {
+            background: var(--apple-white);
+            border-radius: var(--radius-xlarge);
+            padding: var(--spacing-6);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: var(--shadow-medium);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .counter-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-3);
+            margin-bottom: var(--spacing-5);
+        }
+
+        .counter-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--apple-blue-light), var(--apple-green-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: var(--apple-blue);
+            border: 1px solid rgba(0, 119, 237, 0.1);
+        }
+
+        .counter-title {
+            font-size: var(--font-title-1);
+            font-weight: 600;
+            color: var(--apple-gray-8);
+            line-height: var(--line-height-title);
+        }
+
+        .counter-value-container {
+            margin-bottom: var(--spacing-5);
+        }
+
+        .counter-value {
+            font-size: var(--font-display-large);
+            font-weight: 700;
+            line-height: 1;
+            color: var(--apple-blue);
+            margin-bottom: var(--spacing-2);
+            font-variant-numeric: tabular-nums;
+            word-break: break-word;
+        }
+
+        .counter-label {
+            font-size: var(--font-subhead);
+            color: var(--apple-gray-5);
+            font-weight: 450;
+            line-height: 1.4;
+        }
+
+        .counter-explanation {
+            background: var(--apple-gray-0);
+            border-radius: var(--radius-medium);
+            padding: var(--spacing-4);
+            font-size: var(--font-callout);
+            color: var(--apple-gray-6);
+            line-height: var(--line-height-body);
+            margin-top: var(--spacing-5);
+            border: 1px solid var(--apple-gray-2);
+        }
+
+        /* Form Section - Mobile Optimized */
+        .form-section {
+            background: var(--apple-white);
+            border-radius: var(--radius-xlarge);
+            padding: var(--spacing-6);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: var(--shadow-medium);
+            width: 100%;
+            margin: 0 auto var(--spacing-8);
+            box-sizing: border-box;
+        }
+
+        .form-title {
+            font-size: var(--font-title-1);
+            font-weight: 600;
+            line-height: var(--line-height-title);
+            color: var(--apple-gray-8);
+            margin-bottom: var(--spacing-2);
+            text-align: center;
+        }
+
+        .form-subtitle {
+            font-size: var(--font-body);
+            color: var(--apple-gray-5);
+            text-align: center;
+            margin-bottom: var(--spacing-6);
+            font-weight: 400;
+            line-height: 1.5;
+            padding: 0 var(--spacing-2);
+        }
+
+        .input-group {
+            margin-bottom: var(--spacing-6);
+        }
+
+        .input-label {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-2);
+            font-size: var(--font-body);
+            font-weight: 500;
+            color: var(--apple-gray-8);
+            margin-bottom: var(--spacing-3);
+        }
+
+        .input-label i {
+            color: #25D366;
+            font-size: 1.125rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .country-code {
+            position: absolute;
+            left: var(--spacing-4);
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: var(--font-body);
+            font-weight: 500;
+            color: var(--apple-gray-6);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .apple-input {
+            width: 100%;
+            padding: var(--spacing-4) var(--spacing-4) var(--spacing-4) 70px;
+            font-size: var(--font-body);
+            font-family: inherit;
+            background: var(--apple-gray-0);
+            border: 1.5px solid var(--apple-gray-3);
+            border-radius: var(--radius-medium);
+            color: var(--apple-gray-8);
+            transition: all var(--transition-fast);
+            line-height: var(--line-height-body);
+            font-weight: 400;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .apple-input:focus {
+            outline: none;
+            border-color: var(--apple-blue);
+            background: var(--apple-white);
+            box-shadow: 0 0 0 3px var(--apple-blue-light);
+        }
+
+        .apple-input.success {
+            border-color: var(--apple-green);
+        }
+
+        .apple-input.error {
+            border-color: var(--apple-red);
+        }
+
+        .input-feedback {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-2);
+            font-size: var(--font-footnote);
+            margin-top: var(--spacing-2);
+            min-height: 1.25rem;
+            color: var(--apple-gray-5);
+            line-height: 1.3;
+        }
+
+        /* Preferences - Mobile Optimized */
+        .preferences-container {
+            background: var(--apple-gray-0);
+            border-radius: var(--radius-large);
+            padding: var(--spacing-5);
+            margin-bottom: var(--spacing-6);
+            border: 1px solid var(--apple-gray-2);
+        }
+
+        .preferences-title {
+            font-size: var(--font-subhead);
+            font-weight: 600;
+            color: var(--apple-gray-8);
+            margin-bottom: var(--spacing-4);
+        }
+
+        .preference-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-3);
+            padding: var(--spacing-4);
+            background: var(--apple-white);
+            border-radius: var(--radius-medium);
+            margin-bottom: var(--spacing-3);
+            border: 1.5px solid var(--apple-gray-2);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .apple-checkbox {
+            position: relative;
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            margin-top: 0.125rem;
+        }
+
+        .checkbox-input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            background: var(--apple-white);
+            border: 2px solid var(--apple-gray-4);
+            border-radius: 6px;
+            transition: all var(--transition-fast);
+        }
+
+        .checkbox-input:checked ~ .checkmark {
+            background: var(--apple-blue);
+            border-color: var(--apple-blue);
+        }
+
+        .checkmark::after {
+            content: '';
+            position: absolute;
+            display: none;
+            left: 6px;
+            top: 2px;
+            width: 6px;
+            height: 10px;
+            border: solid var(--apple-white);
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .checkbox-input:checked ~ .checkmark::after {
+            display: block;
+        }
+
+        .preference-content {
+            flex: 1;
+        }
+
+        .preference-title {
+            font-size: var(--font-callout);
+            font-weight: 600;
+            color: var(--apple-gray-8);
+            margin-bottom: var(--spacing-1);
+            line-height: 1.3;
+        }
+
+        .preference-description {
+            font-size: var(--font-footnote);
+            color: var(--apple-gray-5);
+            line-height: var(--line-height-caption);
+        }
+
+        /* Submit Button - Mobile Optimized */
+        .submit-container {
+            text-align: center;
+            width: 100%;
+        }
+
+        .apple-button {
+            width: 100%;
+            background: linear-gradient(135deg, var(--apple-blue), var(--apple-blue-dark));
+            color: var(--apple-white);
+            border: none;
+            border-radius: var(--radius-large);
+            padding: var(--spacing-5);
+            font-size: var(--font-body);
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-3);
+            position: relative;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+            min-height: 54px;
+        }
+
+        .apple-button:disabled {
+            background: linear-gradient(135deg, var(--apple-gray-3), var(--apple-gray-4));
+            color: var(--apple-gray-5);
+            cursor: not-allowed;
+        }
+
+        .apple-button.loading {
+            color: transparent;
+        }
+
+        .apple-button.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--apple-white);
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Status Messages */
+        .status-message {
+            margin-top: var(--spacing-5);
+            padding: var(--spacing-4);
+            border-radius: var(--radius-medium);
+            text-align: center;
+            font-size: var(--font-callout);
+            font-weight: 500;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-2);
+            animation: fadeInUp 0.3s ease-out;
+        }
+
+        .status-message.success {
+            background: rgba(48, 209, 88, 0.1);
+            color: var(--apple-green);
+            border: 1px solid rgba(48, 209, 88, 0.2);
+            display: flex;
+        }
+
+        .status-message.error {
+            background: rgba(255, 69, 58, 0.1);
+            color: var(--apple-red);
+            border: 1px solid rgba(255, 69, 58, 0.2);
+            display: flex;
+        }
+
+        /* Footer - Mobile Optimized */
+        .apple-footer {
+            text-align: center;
+            margin-top: var(--spacing-8);
+            color: var(--apple-gray-5);
+            font-size: var(--font-footnote);
+            padding: var(--spacing-6) var(--spacing-4);
+            width: 100%;
+            box-sizing: border-box;
+            border-top: 1px solid var(--apple-gray-2);
+        }
+
+        .footer-text {
+            margin-bottom: var(--spacing-5);
+            line-height: var(--line-height-body);
+            padding: var(--spacing-4);
+            background: var(--apple-gray-0);
+            border-radius: var(--radius-medium);
+            border: 1px solid var(--apple-gray-2);
+            font-size: var(--font-callout);
+        }
+
+        .footer-text i {
+            margin-right: var(--spacing-2);
+            color: var(--apple-blue);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--spacing-4);
+            margin-bottom: var(--spacing-5);
+        }
+
+        .footer-link {
+            color: var(--apple-gray-5);
+            text-decoration: none;
+            font-size: var(--font-subhead);
+            transition: color var(--transition-fast);
+            padding: var(--spacing-1) 0;
+            white-space: nowrap;
+        }
+
+        .footer-link:hover {
+            color: var(--apple-blue);
+        }
+
+        .footer-copyright {
+            font-size: var(--font-caption);
+            color: var(--apple-gray-4);
+            padding-top: var(--spacing-4);
+            border-top: 1px solid var(--apple-gray-2);
+        }
+
+        /* Success Modal - Mobile Optimized */
+        .apple-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: var(--spacing-4);
+            z-index: 1000;
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        .apple-modal {
+            background: var(--apple-white);
+            border-radius: var(--radius-xlarge);
+            padding: var(--spacing-6);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            animation: modalSlideIn 0.4s cubic-bezier(0.2, 0, 0, 1);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-icon {
+            font-size: 3rem;
+            color: var(--apple-green);
+            margin-bottom: var(--spacing-5);
+        }
+
+        .modal-title {
+            font-size: var(--font-title-1);
+            font-weight: 700;
+            color: var(--apple-gray-8);
+            margin-bottom: var(--spacing-4);
+        }
+
+        .modal-position {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-2);
+            background: var(--apple-blue-light);
+            color: var(--apple-blue);
+            padding: var(--spacing-2) var(--spacing-4);
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            margin-bottom: var(--spacing-5);
+            font-size: var(--font-callout);
+            border: 1px solid rgba(0, 119, 237, 0.2);
+        }
+
+        .modal-message {
+            font-size: var(--font-body);
+            color: var(--apple-gray-6);
+            margin-bottom: var(--spacing-6);
+            line-height: var(--line-height-body);
+            padding: 0 var(--spacing-2);
+        }
+
+        .modal-actions {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-3);
+        }
+
+        .modal-button {
+            width: 100%;
+            padding: var(--spacing-4);
+            border-radius: var(--radius-medium);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            border: none;
+            font-family: inherit;
+            font-size: var(--font-callout);
+        }
+
+        .modal-button.primary {
+            background: linear-gradient(135deg, var(--apple-blue), var(--apple-blue-dark));
+            color: var(--apple-white);
+        }
+
+        .modal-button.secondary {
+            background: var(--apple-gray-0);
+            color: var(--apple-gray-8);
+            border: 1.5px solid var(--apple-gray-3);
+        }
+
+        /* Number increment animation */
+        @keyframes numberIncrement {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .incrementing {
+            animation: numberIncrement 0.3s ease-out;
+        }
+
+        /* Tablet Styles */
+        @media screen and (min-width: 768px) {
+            :root {
+                --font-display-hero: 3rem; /* 48px */
+                --font-display-large: 2.5rem; /* 40px */
+                --font-headline-large: 2rem; /* 32px */
+                --font-headline: 1.75rem; /* 28px */
+                --font-title-1: 1.5rem; /* 24px */
+                --font-body-large: 1.25rem; /* 20px */
+            }
+
+            .main-container {
+                padding: 0 var(--spacing-6);
+                max-width: 768px;
+            }
+
+            .hero-section {
+                padding: var(--spacing-10) var(--spacing-6) var(--spacing-8);
+            }
+
+            .stats-section {
+                grid-template-columns: repeat(3, 1fr);
+                gap: var(--spacing-6);
+                padding: 0;
+            }
+
+            .stat-card {
+                min-height: 140px;
+                padding: var(--spacing-6);
+            }
+
+            .stat-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 1.25rem;
+            }
+
+            .counter-card,
+            .form-section {
+                padding: var(--spacing-8);
+            }
+
+            .form-section {
+                max-width: 600px;
+            }
+
+            .modal-actions {
+                flex-direction: row;
+            }
+
+            .modal-button {
+                flex: 1;
+            }
+        }
+
+        /* Desktop Styles */
+        @media screen and (min-width: 1024px) {
+            :root {
+                --font-display-hero: 3.5rem; /* 56px */
+                --font-display-large: 3rem; /* 48px */
+                --font-headline-large: 2.25rem; /* 36px */
+                --font-headline: 2rem; /* 32px */
+                --font-title-1: 1.625rem; /* 26px */
+            }
+
+            .main-container {
+                max-width: 940px;
+                gap: var(--spacing-12);
+            }
+
+            .hero-section {
+                padding: var(--spacing-12) var(--spacing-8) var(--spacing-10);
+            }
+
+            .hero-title {
+                font-size: var(--font-display-hero);
+            }
+
+            .counter-value {
+                font-size: var(--font-display-large);
+            }
+
+            .form-section {
+                max-width: 640px;
+                padding: var(--spacing-10);
+            }
+
+            .apple-nav {
+                padding: var(--spacing-6) var(--spacing-8);
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+        }
+
+        /* Large Desktop */
+        @media screen and (min-width: 1280px) {
+            :root {
+                --font-display-hero: 4rem; /* 64px */
+                --font-display-large: 3.5rem; /* 56px */
+            }
+
+            .main-container {
+                max-width: 1200px;
+            }
+        }
+
+        /* Very Small Phones */
+        @media screen and (max-width: 360px) {
+            :root {
+                --font-display-hero: 2rem; /* 32px */
+                --font-display-large: 1.875rem; /* 30px */
+                --font-headline: 1.25rem; /* 20px */
+                --font-title-1: 1.125rem; /* 18px */
+                --font-body: 0.9375rem; /* 15px */
+            }
+
+            .main-container {
+                padding: 0 var(--spacing-3);
+                gap: var(--spacing-8);
+            }
+
+            .hero-section {
+                padding: var(--spacing-6) var(--spacing-3) var(--spacing-5);
+            }
+
+            .stats-section {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-3);
+            }
+
+            .stat-card {
+                min-height: 100px;
+                padding: var(--spacing-4);
+            }
+
+            .counter-card,
+            .form-section {
+                padding: var(--spacing-5);
+            }
+
+            .apple-button {
+                padding: var(--spacing-4);
+                font-size: var(--font-callout);
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: var(--spacing-3);
+            }
+        }
+
+        /* Fix for iOS input zoom */
+        @media screen and (max-width: 767px) {
+            input,
+            select,
+            textarea {
+                font-size: 16px !important;
+            }
+        }
+
+        /* Touch target sizes */
+        button,
+        .preference-item,
+        .footer-link {
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        .apple-checkbox {
+            min-width: 44px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Safe area insets for modern phones */
+        @supports (padding: max(0px)) {
+            .main-container,
+            .apple-nav {
+                padding-left: max(var(--spacing-4), env(safe-area-inset-left));
+                padding-right: max(var(--spacing-4), env(safe-area-inset-right));
+            }
+            
+            .apple-footer {
+                padding-bottom: max(var(--spacing-6), env(safe-area-inset-bottom));
+            }
+        }
+
+        /* Prevent text overflow */
+        .hero-title,
+        .hero-subtitle,
+        .counter-value,
+        .form-title,
+        .form-subtitle {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        /* Improve tap targets on mobile */
+        @media (hover: none) and (pointer: coarse) {
+            .apple-button,
+            .preference-item,
+            .footer-link {
+                cursor: pointer;
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            .apple-button:active {
+                transform: scale(0.98);
+            }
+            
+            .preference-item:active {
+                background: var(--apple-gray-1);
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="signup-container">
-        <!-- En-tête -->
-        <div class="header">
-            <h1>Portail Académique</h1>
-            <p>Complétez votre inscription en quelques étapes simples</p>
+    <!-- Background -->
+    <div class="apple-bg"></div>
+    
+    <!-- Navigation -->
+    <nav class="apple-nav">
+        <a href="#" class="nav-logo">
+            <i class="fas fa-rocket"></i>
+            WaitList
+        </a>
+        <div class="nav-badge">
+            <i class="fas fa-clock"></i>
+            Bientôt
         </div>
-
-        <!-- Indicateur d'étape -->
-        <div class="step-indicator">
-            <div class="step-dot active" id="stepDot1"></div>
-            <div class="step-dot" id="stepDot2"></div>
-            <div class="step-dot" id="stepDot3"></div>
-            <div class="step-dot" id="stepDot4"></div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-badge">
+                <i class="fas fa-clock"></i>
+                Inscriptions bientôt
+            </div>
+            
+            <h1 class="hero-title">
+                <span>Les inscriptions</span>
+                <span>seront disponibles</span>
+                <span>dans peu de temps</span>
+            </h1>
+            
+            <p class="hero-subtitle">
+                Laissez votre numéro WhatsApp pour être informé dès l'ouverture des inscriptions.
+            </p>
+            
+            <!-- Stats -->
+            <div class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-value" id="people-waiting">1,249</div>
+                    <div class="stat-label">En attente</div>
+                </div>
+                
+              
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-value">24h</div>
+                    <div class="stat-label">Avance</div>
+                </div>
+            </div>
+            
+            <!-- Counter -->
+            <div class="counter-section">
+                <div class="counter-card">
+                    <div class="counter-header">
+                        <div class="counter-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h2 class="counter-title">Personnes en attente</h2>
+                    </div>
+                    
+                    <div class="counter-value-container">
+                        <div class="counter-value" id="dynamic-counter">1,249</div>
+                        
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </section>
+        
+        <!-- Form Section -->
+        <section class="form-section">
+            <h2 class="form-title">Être notifié à l'ouverture</h2>
+            <p class="form-subtitle">Recevez une notification instantanée sur WhatsApp</p>
+            
+            <div class="input-group">
+                <label class="input-label">
+                    <i class="fab fa-whatsapp"></i>
+                    Numéro WhatsApp (Tunisie)
+                </label>
+                <div class="input-wrapper">
+                    <span class="country-code">+216</span>
+                    <input 
+                        type="tel" 
+                        id="whatsapp-input" 
+                        class="apple-input"
+                        placeholder="Ex: 20 123 456"
+                        inputmode="numeric"
+                        maxlength="15"
+                    >
+                </div>
+                <div class="input-feedback" id="input-feedback">
+                    <span id="feedback-text">Numéro: 8 chiffres, commence par 2,4,5 ou 9</span>
+                </div>
+            </div>
+            
+            <!-- Preferences -->
+            <div class="preferences-container">
+                <div class="preferences-title">Préférences de notification</div>
+                
+                <label class="preference-item" id="pref-whatsapp">
+                    <div class="apple-checkbox">
+                        <input type="checkbox" class="checkbox-input" id="notify-whatsapp" checked>
+                        <span class="checkmark"></span>
+                    </div>
+                    <div class="preference-content">
+                        <div class="preference-title">Notifications WhatsApp</div>
+                        <div class="preference-description">Message instantané dès l'ouverture</div>
+                    </div>
+                </label>
+                
+                <label class="preference-item" id="pref-early">
+                    <div class="apple-checkbox">
+                        <input type="checkbox" class="checkbox-input" id="early-access">
+                        <span class="checkmark"></span>
+                    </div>
+                    <div class="preference-content">
+                        <div class="preference-title">Accès anticipé</div>
+                        <div class="preference-description">24h d'avance sur les autres</div>
+                    </div>
+                </label>
+            </div>
+            
+            <!-- Status Messages -->
+            <div class="status-message" id="status-message"></div>
+            
+            <div class="submit-container">
+                <button id="submit-button" class="apple-button" disabled>
+                    <span class="button-text">Être notifié</span>
+                </button>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="apple-footer">
+        <p class="footer-text">
+            <i class="fas fa-shield-alt"></i>
+            Vos informations sont sécurisées et utilisées uniquement pour les notifications.
+        </p>
+        
+        <div class="footer-links">
+            <a href="#" class="footer-link">Assistance</a>
+            <a href="#" class="footer-link">Confidentialité</a>
+            <a href="#" class="footer-link">Conditions</a>
         </div>
-
-        <!-- Étapes du formulaire -->
-        <div class="form-container">
-            <!-- Étape 1 : Informations personnelles -->
-            <div class="form-step active" id="formStep1">
-                <h2 class="step-title">Informations Personnelles</h2>
-                <p class="step-description">Entrez vos coordonnées pour créer votre compte.</p>
-
-                <div class="input-group">
-                    <label class="input-label" for="firstName">Prénom</label>
-                    <input type="text" id="firstName" class="input-field" placeholder="Entrez votre prénom">
-                    <div class="validation-message" id="firstNameValidation"></div>
-                </div>
-
-                <div class="input-group">
-                    <label class="input-label" for="lastName">Nom</label>
-                    <input type="text" id="lastName" class="input-field" placeholder="Entrez votre nom">
-                    <div class="validation-message" id="lastNameValidation"></div>
-                </div>
-
-                <div class="input-group">
-                    <label class="input-label" for="email">Adresse Email</label>
-                    <input type="email" id="email" class="input-field" placeholder="nom@exemple.com">
-                    <div class="validation-message" id="emailValidation"></div>
-                </div>
-
-                <div class="input-group">
-                    <label class="input-label" for="phone">Numéro de Téléphone</label>
-                    <input type="tel" id="phone" class="input-field" placeholder="Entrez votre numéro">
-                    <div class="validation-message" id="phoneValidation"></div>
-                </div>
-
-                <div class="buttons-container">
-                    <button class="apple-button apple-button-primary" id="nextStep1" disabled>
-                        Continuer
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
+        
+        <div class="footer-copyright">
+            © 2026 WaitList. Tous droits réservés.
+        </div>
+    </footer>
+    
+    <!-- Success Modal -->
+    <div class="apple-modal-overlay" id="success-modal">
+        <div class="apple-modal">
+            <div class="modal-icon">
+                <i class="fas fa-check-circle"></i>
             </div>
-
-            <!-- Étape 2 : Création du mot de passe -->
-            <div class="form-step" id="formStep2">
-                <h2 class="step-title">Création du Mot de Passe</h2>
-                <p class="step-description">Créez un mot de passe sécurisé pour votre compte.</p>
-
-                <div class="input-group">
-                    <label class="input-label" for="password">Mot de Passe</label>
-                    <input type="password" id="password" class="input-field" placeholder="Créez un mot de passe">
-                    <div class="validation-message" id="passwordValidation"></div>
-                </div>
-
-                <div class="input-group">
-                    <label class="input-label" for="confirmPassword">Confirmer le Mot de Passe</label>
-                    <input type="password" id="confirmPassword" class="input-field" placeholder="Retapez votre mot de passe">
-                    <div class="validation-message" id="confirmPasswordValidation"></div>
-                </div>
-
-                <!-- Règles du mot de passe -->
-                <div class="password-rules">
-                    <div class="password-rules-title">
-                        <i class="fas fa-shield-alt"></i>
-                        Exigences du Mot de Passe
-                    </div>
-                    <div class="rule-item" id="ruleLength">
-                        <i class="fas fa-circle" style="font-size: 6px;"></i>
-                        Minimum 8 caractères
-                    </div>
-                    <div class="rule-item" id="ruleUppercase">
-                        <i class="fas fa-circle" style="font-size: 6px;"></i>
-                        Au moins une majuscule
-                    </div>
-                    <div class="rule-item" id="ruleLowercase">
-                        <i class="fas fa-circle" style="font-size: 6px;"></i>
-                        Au moins une minuscule
-                    </div>
-                    <div class="rule-item" id="ruleNumber">
-                        <i class="fas fa-circle" style="font-size: 6px;"></i>
-                        Au moins un chiffre
-                    </div>
-                    <div class="rule-item" id="ruleSpecial">
-                        <i class="fas fa-circle" style="font-size: 6px;"></i>
-                        Au moins un caractère spécial
-                    </div>
-                </div>
-
-                <div class="buttons-container">
-                    <button class="apple-button apple-button-secondary" id="prevStep2">
-                        <i class="fas fa-arrow-left"></i>
-                        Retour
-                    </button>
-                    <button class="apple-button apple-button-primary" id="nextStep2" disabled>
-                        Continuer
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
+            
+            <h2 class="modal-title">Ajouté à la liste</h2>
+            
+            <div class="modal-position">
+                <i class="fas fa-crown"></i>
+                Position : <span id="modal-position">#1,248</span>
             </div>
-
-            <!-- Étape 3 : Matières & Notes -->
-            <div class="form-step" id="formStep3">
-                <h2 class="step-title">Matières & Notes</h2>
-                <p class="step-description">Entrez vos notes pour chaque matière (0-20).</p>
-
-                <div class="subjects-container">
-                    <!-- Mathématiques -->
-                    <div class="subject-item">
-                        <div class="subject-header">
-                            <div class="subject-icon" style="background-color: #007aff;">
-                                <i class="fas fa-calculator"></i>
-                            </div>
-                            <div class="subject-name">Mathématiques</div>
-                        </div>
-                        <div class="grade-input-container">
-                            <input type="number" id="mathGrade" class="grade-input" min="0" max="20" step="0.5" placeholder="0-20" inputmode="decimal">
-                            <div class="grade-range">0 - 20</div>
-                        </div>
-                        <div class="validation-message" id="mathValidation"></div>
-                    </div>
-
-                    <!-- Physique -->
-                    <div class="subject-item">
-                        <div class="subject-header">
-                            <div class="subject-icon" style="background-color: #5856d6;">
-                                <i class="fas fa-atom"></i>
-                            </div>
-                            <div class="subject-name">Physique</div>
-                        </div>
-                        <div class="grade-input-container">
-                            <input type="number" id="physicsGrade" class="grade-input" min="0" max="20" step="0.5" placeholder="0-20" inputmode="decimal">
-                            <div class="grade-range">0 - 20</div>
-                        </div>
-                        <div class="validation-message" id="physicsValidation"></div>
-                    </div>
-
-                    <!-- Sciences -->
-                    <div class="subject-item">
-                        <div class="subject-header">
-                            <div class="subject-icon" style="background-color: #34c759;">
-                                <i class="fas fa-flask"></i>
-                            </div>
-                            <div class="subject-name">Sciences</div>
-                        </div>
-                        <div class="grade-input-container">
-                            <input type="number" id="scienceGrade" class="grade-input" min="0" max="20" step="0.5" placeholder="0-20" inputmode="decimal">
-                            <div class="grade-range">0 - 20</div>
-                        </div>
-                        <div class="validation-message" id="scienceValidation"></div>
-                    </div>
-
-                    <!-- Informatique -->
-                    <div class="subject-item">
-                        <div class="subject-header">
-                            <div class="subject-icon" style="background-color: #ff9500;">
-                                <i class="fas fa-laptop-code"></i>
-                            </div>
-                            <div class="subject-name">Informatique</div>
-                        </div>
-                        <div class="grade-input-container">
-                            <input type="number" id="csGrade" class="grade-input" min="0" max="20" step="0.5" placeholder="0-20" inputmode="decimal">
-                            <div class="grade-range">0 - 20</div>
-                        </div>
-                        <div class="validation-message" id="csValidation"></div>
-                    </div>
-
-                    <!-- Anglais -->
-                    <div class="subject-item">
-                        <div class="subject-header">
-                            <div class="subject-icon" style="background-color: #ff3b30;">
-                                <i class="fas fa-book-open"></i>
-                            </div>
-                            <div class="subject-name">Anglais</div>
-                        </div>
-                        <div class="grade-input-container">
-                            <input type="number" id="englishGrade" class="grade-input" min="0" max="20" step="0.5" placeholder="0-20" inputmode="decimal">
-                            <div class="grade-range">0 - 20</div>
-                        </div>
-                        <div class="validation-message" id="englishValidation"></div>
-                    </div>
-                </div>
-
-                <div class="buttons-container">
-                    <button class="apple-button apple-button-secondary" id="prevStep3">
-                        <i class="fas fa-arrow-left"></i>
-                        Retour
-                    </button>
-                    <button class="apple-button apple-button-primary" id="nextStep3" disabled>
-                        Continuer
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Étape 4 : Méthode de paiement -->
-            <div class="form-step" id="formStep4">
-                <h2 class="step-title">Paiement</h2>
-                <p class="step-description">Sélectionnez votre méthode de paiement préférée.</p>
-
-                <div class="subjects-container">
-                    <!-- Paiement D17 -->
-                    <div class="payment-option" data-method="d17">
-                        <div class="subject-header">
-                            <div class="subject-icon" style="background-color: #007aff;">
-                                <i class="fas fa-mobile-alt"></i>
-                            </div>
-                            <div>
-                                <div class="subject-name">Paiement D17</div>
-                                <div style="font-size: 13px; color: #86868b; margin-top: 2px;">Envoyer à : 47050644</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Carte postale -->
-                    <div class="payment-option" data-method="postal">
-                        <div class="subject-header">
-                            <div class="subject-icon" style="background-color: #34c759;">
-                                <i class="fas fa-credit-card"></i>
-                            </div>
-                            <div>
-                                <div class="subject-name">Carte Postale</div>
-                                <div style="font-size: 13px; color: #86868b; margin-top: 2px;">Carte : 5359 4017 4054 6870</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="important-notice">
-                    <div class="important-notice-header">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <div class="important-notice-title">Avis Important</div>
-                    </div>
-                    <div class="important-notice-text">
-                        Après paiement, envoyez une capture d'écran au <strong>47050644</strong>. Votre compte restera inactif jusqu'à vérification de votre paiement.
-                    </div>
-                </div>
-
-                <!-- Indicateur de chargement et message d'erreur -->
-                <div class="loading-spinner" id="loadingSpinner">
-                    <div class="spinner"></div>
-                    <p style="margin-top: 10px; font-size: 14px; color: #86868b;">Envoi des données en cours...</p>
-                </div>
-
-                <div id="errorMessage" style="display: none;"></div>
-
-                <div class="buttons-container">
-                    <button class="apple-button apple-button-secondary" id="prevStep4">
-                        <i class="fas fa-arrow-left"></i>
-                        Retour
-                    </button>
-                    <button class="apple-button apple-button-primary" id="finishBtn" disabled>
-                        Terminer l'Inscription
-                        <i class="fas fa-check"></i>
-                    </button>
-                </div>
+            
+            <p class="modal-message">
+                Vous recevrez une notification WhatsApp dès que les inscriptions seront ouvertes.
+            </p>
+            
+            <div class="modal-actions">
+                <button class="modal-button secondary" id="close-modal">
+                    Fermer
+                </button>
+                <button class="modal-button primary" id="share-button">
+                    <i class="fas fa-share-alt"></i>
+                    Partager
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Modal de confirmation -->
-    <div class="modal-overlay" id="confirmationModal">
-        <div class="modal-container">
-            <div class="modal-header">
-                <div class="modal-icon">
-                    <i class="fas fa-envelope"></i>
-                </div>
-                <h2 class="modal-title">Inscription Terminée</h2>
-            </div>
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ======================
+            // DYNAMIC COUNTER SYSTEM
+            // ======================
             
-            <div class="modal-message">
-                Vos informations ont été envoyées avec succès à <strong>eduwelltn@gmail.com</strong>.
-                <br><br>
-                Vous recevrez un email de confirmation avec les détails de votre compte dans les prochaines minutes.
-            </div>
+            const START_DATE = new Date('2026-02-02T00:00:00');
+            const INITIAL_COUNT = 1249;
+            const INCREMENT_MINUTES = 10;
+            const INCREMENT_VALUE = 1;
             
-            <button class="modal-button" id="closeModal">
-                Compris
-            </button>
-        </div>
-    </div>
-<script src="./assets/js/accup.js"></script>
+            const counterElement = document.getElementById('dynamic-counter');
+            const peopleWaitingElement = document.getElementById('people-waiting');
+            
+            function formatNumber(num) {
+                return num.toLocaleString('fr-FR');
+            }
+            
+            function calculateIncrements() {
+                const now = new Date();
+                const diffMs = now.getTime() - START_DATE.getTime();
+                
+                if (diffMs < 0) {
+                    return { totalIncrements: 0, elapsedDays: 0 };
+                }
+                
+                const diffMinutes = diffMs / (1000 * 60);
+                const totalIncrements = Math.floor(diffMinutes / INCREMENT_MINUTES);
+                const elapsedDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+                
+                return { totalIncrements, elapsedDays };
+            }
+            
+            function calculateCurrentCount() {
+                const { totalIncrements } = calculateIncrements();
+                return INITIAL_COUNT + (totalIncrements * INCREMENT_VALUE);
+            }
+            
+            function updateCounter() {
+                const currentCount = calculateCurrentCount();
+                const prevCount = parseInt(counterElement.textContent.replace(/\s/g, '')) || INITIAL_COUNT;
+                
+                if (currentCount > prevCount) {
+                    counterElement.classList.remove('incrementing');
+                    peopleWaitingElement.classList.remove('incrementing');
+                    void counterElement.offsetWidth;
+                    void peopleWaitingElement.offsetWidth;
+                    counterElement.classList.add('incrementing');
+                    peopleWaitingElement.classList.add('incrementing');
+                }
+                
+                counterElement.textContent = formatNumber(currentCount);
+                peopleWaitingElement.textContent = formatNumber(currentCount);
+            }
+            
+            // ======================
+            // FORM SYSTEM
+            // ======================
+            
+            const whatsappInput = document.getElementById('whatsapp-input');
+            const submitButton = document.getElementById('submit-button');
+            const feedbackText = document.getElementById('feedback-text');
+            const statusMessage = document.getElementById('status-message');
+            const successModal = document.getElementById('success-modal');
+            const closeModal = document.getElementById('close-modal');
+            const shareButton = document.getElementById('share-button');
+            const modalPosition = document.getElementById('modal-position');
+            const prefWhatsapp = document.getElementById('pref-whatsapp');
+            const prefEarly = document.getElementById('pref-early');
+            
+            let isWhatsappValid = false;
+            let currentPositionNumber = 1248;
+            
+            function initForm() {
+                whatsappInput.addEventListener('input', validateWhatsappNumber);
+                
+                prefWhatsapp.addEventListener('click', function() {
+                    const checkbox = this.querySelector('.checkbox-input');
+                    checkbox.checked = !checkbox.checked;
+                });
+                
+                prefEarly.addEventListener('click', function() {
+                    const checkbox = this.querySelector('.checkbox-input');
+                    checkbox.checked = !checkbox.checked;
+                });
+                
+                submitButton.addEventListener('click', formSubmit);
+                
+                closeModal.addEventListener('click', () => {
+                    successModal.style.display = 'none';
+                });
+                
+                shareButton.addEventListener('click', handleShare);
+                
+                whatsappInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && isWhatsappValid) {
+                        formSubmit();
+                    }
+                });
+            }
+            
+            function validateWhatsappNumber() {
+                const value = whatsappInput.value.replace(/\D/g, '');
+                const formatted = formatTunisianPhoneNumber(whatsappInput.value);
+                
+                whatsappInput.value = formatted;
+                
+                if (value === '') {
+                    resetValidation();
+                    isWhatsappValid = false;
+                    feedbackText.textContent = 'Numéro: 8 chiffres, commence par 2,4,5 ou 9';
+                } else if (value.length === 8 && /^[2459]/.test(value)) {
+                    showValidationSuccess();
+                    isWhatsappValid = true;
+                    feedbackText.textContent = '✓ Numéro valide';
+                } else {
+                    showValidationError();
+                    isWhatsappValid = false;
+                    if (value.length < 8) {
+                        feedbackText.textContent = '⛔ 8 chiffres requis';
+                    } else if (!/^[2459]/.test(value)) {
+                        feedbackText.textContent = '⛔ Commence par 2,4,5 ou 9';
+                    } else {
+                        feedbackText.textContent = '⛔ Format invalide';
+                    }
+                }
+                
+                submitButton.disabled = !isWhatsappValid;
+            }
+            
+            function formatTunisianPhoneNumber(number) {
+                const cleaned = number.replace(/\D/g, '');
+                
+                if (cleaned.length <= 2) return cleaned;
+                if (cleaned.length <= 4) return `${cleaned.slice(0, 2)} ${cleaned.slice(2)}`;
+                if (cleaned.length <= 6) return `${cleaned.slice(0, 2)} ${cleaned.slice(2, 4)} ${cleaned.slice(4)}`;
+                return `${cleaned.slice(0, 2)} ${cleaned.slice(2, 4)} ${cleaned.slice(4, 6)} ${cleaned.slice(6)}`;
+            }
+            
+            function resetValidation() {
+                whatsappInput.classList.remove('success', 'error');
+            }
+            
+            function showValidationSuccess() {
+                whatsappInput.classList.remove('error');
+                whatsappInput.classList.add('success');
+            }
+            
+            function showValidationError() {
+                whatsappInput.classList.remove('success');
+                whatsappInput.classList.add('error');
+            }
+            
+            function formSubmit() {
+                if (!isWhatsappValid) return;
+                
+                const phoneNumber = "+216" + whatsappInput.value.replace(/\D/g, '');
+                
+                const formData = {
+                    whatsapp_number: phoneNumber,
+                    notification_type: document.getElementById('notify-whatsapp').checked ? 'WhatsApp' : 'Email',
+                    early_access: document.getElementById('early-access').checked ? 'Oui' : 'Non',
+                    submission_date: new Date().toLocaleString('fr-FR'),
+                    current_waiting: calculateCurrentCount(),
+                    page_url: window.location.href,
+                    
+                    _subject: '📱 NOUVEAU NUMÉRO WHATSAPP TUNISIEN',
+                    _template: 'table',
+                    _captcha: 'false',
+                    _replyto: 'notification@inscriptions.com'
+                };
+                
+                submitButton.disabled = true;
+                submitButton.classList.add('loading');
+                showStatus('sending', 'Envoi en cours...');
+                
+                // Simulate API call
+                setTimeout(() => {
+                    handleSuccess();
+                }, 1500);
+            }
+            
+            function handleSuccess() {
+                submitButton.classList.remove('loading');
+                showStatus('success', 'Ajouté avec succès');
+                
+                const currentCount = calculateCurrentCount();
+                currentPositionNumber = currentCount + 1;
+                modalPosition.textContent = `#${currentPositionNumber.toLocaleString()}`;
+                
+                setTimeout(() => {
+                    successModal.style.display = 'flex';
+                }, 1000);
+                
+                setTimeout(() => {
+                    resetForm();
+                    statusMessage.style.display = 'none';
+                }, 3000);
+            }
+            
+            function resetForm() {
+                whatsappInput.value = '';
+                resetValidation();
+                isWhatsappValid = false;
+                submitButton.disabled = true;
+                feedbackText.textContent = 'Numéro: 8 chiffres, commence par 2,4,5 ou 9';
+                
+                document.getElementById('notify-whatsapp').checked = true;
+                document.getElementById('early-access').checked = false;
+            }
+            
+            function showStatus(type, message) {
+                statusMessage.className = `status-message ${type}`;
+                statusMessage.innerHTML = `
+                    <i class="fas fa-${type === 'sending' ? 'sync-alt fa-spin' : type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                    ${message}
+                `;
+            }
+            
+            function handleShare() {
+                const shareData = {
+                    title: 'Liste d\'attente',
+                    text: `Je viens de rejoindre la liste d'attente ! Position #${currentPositionNumber}.`,
+                    url: window.location.href
+                };
+                
+                if (navigator.share) {
+                    navigator.share(shareData);
+                } else {
+                    navigator.clipboard.writeText(shareData.text).then(() => {
+                        const originalText = shareButton.innerHTML;
+                        shareButton.innerHTML = '<i class="fas fa-check"></i> Copié';
+                        
+                        setTimeout(() => {
+                            shareButton.innerHTML = originalText;
+                        }, 2000);
+                    });
+                }
+            }
+            
+            // ======================
+            // INITIALIZE
+            // ======================
+            
+            updateCounter();
+            setInterval(updateCounter, 1000 * 60 * 10);
+            setInterval(updateCounter, 1000);
+            
+            initForm();
+            
+            // Improve mobile touch experience
+            document.addEventListener('touchstart', function() {}, {passive: true});
+        });
+    </script>
 </body>
 </html>

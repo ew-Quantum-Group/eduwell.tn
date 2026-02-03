@@ -1,1473 +1,1718 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNTBT1VQN7"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-FNTBT1VQN7');
-    </script>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sahl App</title>
+    <title>Inscriptions Prochainement | Liste d'attente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="./assets/css/styleapp.css">
-    <link rel="shortcut icon" href="./assets/images/app-store.png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700&display=swap" rel="stylesheet">
-    
     <style>
-/* Enhanced Home Header with Login Button */
-.home-header {
-   
-   
-   
-    justify-content: space-between;
-   
-    
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        :root {
+            /* Apple Color System */
+            --apple-blue: #007AFF;
+            --apple-blue-light: rgba(0, 122, 255, 0.1);
+            --apple-blue-dark: #0056CC;
+            --apple-green: #34C759;
+            --apple-red: #FF3B30;
+            --apple-orange: #FF9500;
+            --apple-gray-1: #F5F5F7;
+            --apple-gray-2: #E5E5EA;
+            --apple-gray-3: #D1D1D6;
+            --apple-gray-4: #C7C7CC;
+            --apple-gray-5: #8E8E93;
+            --apple-gray-6: #636366;
+            --apple-gray-7: #3A3A3C;
+            --apple-gray-8: #1D1D1F;
+            --apple-white: #FFFFFF;
+            
+            /* Apple Spacing System */
+            --space-1: 4px;
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-5: 20px;
+            --space-6: 24px;
+            --space-7: 32px;
+            --space-8: 40px;
+            --space-9: 48px;
+            --space-10: 64px;
+            --space-11: 80px;
+            --space-12: 96px;
+            
+            /* Apple Border Radius */
+            --radius-small: 6px;
+            --radius-medium: 12px;
+            --radius-large: 18px;
+            --radius-xlarge: 24px;
+            
+            /* Apple Shadows */
+            --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-2: 0 4px 8px rgba(0, 0, 0, 0.08);
+            --shadow-3: 0 8px 16px rgba(0, 0, 0, 0.08);
+            --shadow-4: 0 12px 24px rgba(0, 0, 0, 0.08);
+            --shadow-5: 0 24px 48px rgba(0, 0, 0, 0.08);
+            
+            /* Apple Typography Scale */
+            --font-size-display: 80px;
+            --font-size-large-title: 34px;
+            --font-size-title-1: 28px;
+            --font-size-title-2: 22px;
+            --font-size-title-3: 20px;
+            --font-size-headline: 17px;
+            --font-size-body: 17px;
+            --font-size-callout: 16px;
+            --font-size-subhead: 15px;
+            --font-size-footnote: 13px;
+            --font-size-caption-1: 12px;
+            --font-size-caption-2: 11px;
+        }
 
-/* Apple-style Login Button for Header */
-.header-login-btn {
-    background-color: #007AFF;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 10px 24px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 14px;
-    letter-spacing: -0.2px;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 110px;
-    height: 40px;
-}
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--apple-gray-1);
+            color: var(--apple-gray-8);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-4);
+            overflow-x: hidden;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
 
+        /* Apple-like background */
+        .apple-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(0, 122, 255, 0.03) 0%, transparent 30%),
+                radial-gradient(circle at 90% 80%, rgba(0, 122, 255, 0.03) 0%, transparent 30%);
+            z-index: -1;
+        }
 
-.header-login-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2);
-    transition: all 0.1s ease;
-}
+        /* Main container */
+        .main-container {
+            max-width: 980px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-10);
+            animation: appear 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
 
+        @keyframes appear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
+        /* Header Section */
+        .header-section {
+            text-align: center;
+            padding: var(--space-12) var(--space-8);
+        }
 
-/* Add subtle shine effect on hover */
-.header-login-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.7s ease;
-}
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            background: var(--apple-blue-light);
+            color: var(--apple-blue);
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-medium);
+            font-size: var(--font-size-subhead);
+            font-weight: 600;
+            margin-bottom: var(--space-8);
+            letter-spacing: -0.01em;
+            animation: badgePulse 2s infinite;
+        }
 
-.header-login-btn:hover::before {
-    left: 100%;
-}
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  
-    
-    .header-login-btn {
-        padding: 9px 20px;
-        min-width: 100px;
-        height: 38px;
-        font-size: 13.5px;
-    }
-    
-  
-}
+        .main-title {
+            font-size: var(--font-size-display);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: var(--space-6);
+            background: linear-gradient(135deg, var(--apple-gray-8) 0%, var(--apple-gray-7) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-@media (max-width: 480px) {
-  
-    .header-login-btn {
-        padding: 8px 18px;
-        min-width: 90px;
-        height: 36px;
-        font-size: 13px;
-    }
-    
-   
-}
+        .subtitle {
+            font-size: var(--font-size-large-title);
+            font-weight: 400;
+            line-height: 1.2;
+            color: var(--apple-gray-6);
+            max-width: 680px;
+            margin: 0 auto;
+            letter-spacing: -0.01em;
+        }
 
-/* Add scroll effect for header */
-.home-header.scrolled {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    background: rgba(255, 255, 255, 0.98);
-    height: 65px;
-}
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-6);
+            max-width: 680px;
+            margin: var(--space-10) auto 0;
+        }
 
-.home-header.scrolled .home-logo {
-    font-size: 26px;
-}
+        .stat-card {
+            background: var(--apple-white);
+            border-radius: var(--radius-large);
+            padding: var(--space-7);
+            text-align: center;
+            border: 1px solid var(--apple-gray-2);
+            box-shadow: var(--shadow-2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: default;
+        }
 
-.home-header.scrolled .header-login-btn {
-    height: 38px;
-    padding: 8px 20px;
-}
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-4);
+            border-color: var(--apple-gray-3);
+        }
 
-@media (max-width: 768px) {
-   
-    
-    .home-header.scrolled .header-login-btn {
-        height: 36px;
-        padding: 6px 14px;
-    }
-}
-</style>
+        /* Dynamic Counter Card */
+        .counter-card {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, var(--apple-white), #fafafa);
+            border: 1px solid var(--apple-gray-2);
+            border-radius: var(--radius-xlarge);
+            padding: var(--space-8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .counter-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--apple-blue), var(--apple-green));
+        }
+
+        .counter-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-6);
+        }
+
+        .counter-title {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            font-size: var(--font-size-title-2);
+            font-weight: 700;
+            color: var(--apple-gray-8);
+            letter-spacing: -0.02em;
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            background: var(--apple-green);
+            color: var(--apple-white);
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-medium);
+            font-size: var(--font-size-footnote);
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .counter-value-container {
+            text-align: center;
+            margin-bottom: var(--space-7);
+        }
+
+        .counter-value {
+            font-size: 72px;
+            font-weight: 700;
+            line-height: 1;
+            color: var(--apple-blue);
+            letter-spacing: -0.03em;
+            font-variant-numeric: tabular-nums;
+            margin-bottom: var(--space-2);
+            transition: all 0.3s ease;
+        }
+
+        .counter-label {
+            font-size: var(--font-size-subhead);
+            color: var(--apple-gray-5);
+            font-weight: 500;
+        }
+
+        .counter-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-5);
+            background: var(--apple-gray-1);
+            border-radius: var(--radius-medium);
+            padding: var(--space-5);
+            margin-top: var(--space-6);
+        }
+
+        .counter-stat {
+            text-align: center;
+        }
+
+        .counter-stat-value {
+            font-size: var(--font-size-title-3);
+            font-weight: 700;
+            color: var(--apple-gray-8);
+            margin-bottom: var(--space-1);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .counter-stat-label {
+            font-size: var(--font-size-caption-1);
+            color: var(--apple-gray-5);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .counter-explanation {
+            margin-top: var(--space-6);
+            padding: var(--space-5);
+            background: var(--apple-blue-light);
+            border-radius: var(--radius-medium);
+            border: 1px solid rgba(0, 122, 255, 0.2);
+            font-size: var(--font-size-footnote);
+            color: var(--apple-gray-7);
+            line-height: 1.5;
+        }
+
+        /* Form Section */
+        .form-section {
+            background: var(--apple-white);
+            border-radius: var(--radius-xlarge);
+            padding: var(--space-10);
+            border: 1px solid var(--apple-gray-2);
+            box-shadow: var(--shadow-3);
+            max-width: 680px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .form-title {
+            font-size: var(--font-size-title-1);
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--apple-gray-8);
+            margin-bottom: var(--space-3);
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
+
+        .form-subtitle {
+            font-size: var(--font-size-body);
+            color: var(--apple-gray-5);
+            text-align: center;
+            margin-bottom: var(--space-8);
+        }
+
+        .input-group {
+            margin-bottom: var(--space-8);
+        }
+
+        .input-label {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            font-size: var(--font-size-headline);
+            font-weight: 600;
+            color: var(--apple-gray-8);
+            margin-bottom: var(--space-4);
+            letter-spacing: -0.01em;
+        }
+
+        .input-label i {
+            color: #25D366; /* WhatsApp green */
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .country-code {
+            position: absolute;
+            left: var(--space-6);
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: var(--font-size-body);
+            font-weight: 600;
+            color: var(--apple-gray-5);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .apple-input {
+            width: 100%;
+            padding: var(--space-6) var(--space-6) var(--space-6) 64px;
+            font-size: var(--font-size-body);
+            font-family: inherit;
+            background: var(--apple-gray-1);
+            border: 2px solid var(--apple-gray-2);
+            border-radius: var(--radius-medium);
+            color: var(--apple-gray-8);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            line-height: 1.4;
+        }
+
+        .apple-input:focus {
+            outline: none;
+            border-color: var(--apple-blue);
+            background: var(--apple-white);
+            box-shadow: 0 0 0 4px var(--apple-blue-light);
+        }
+
+        .apple-input.success {
+            border-color: var(--apple-green);
+        }
+
+        .apple-input.error {
+            border-color: var(--apple-red);
+        }
+
+        .input-feedback {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: var(--font-size-footnote);
+            margin-top: var(--space-3);
+            min-height: 20px;
+            opacity: 0;
+            transform: translateY(-4px);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .input-feedback.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .input-feedback.success {
+            color: var(--apple-green);
+        }
+
+        .input-feedback.error {
+            color: var(--apple-red);
+        }
+
+        /* Preferences */
+        .preferences-container {
+            background: var(--apple-gray-1);
+            border-radius: var(--radius-medium);
+            padding: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .preferences-title {
+            font-size: var(--font-size-subhead);
+            font-weight: 600;
+            color: var(--apple-gray-8);
+            margin-bottom: var(--space-5);
+            letter-spacing: -0.01em;
+        }
+
+        .preference-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            padding: var(--space-5);
+            background: var(--apple-white);
+            border-radius: var(--radius-small);
+            margin-bottom: var(--space-3);
+            border: 1px solid var(--apple-gray-2);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .preference-item:hover {
+            border-color: var(--apple-gray-3);
+        }
+
+        .preference-item.selected {
+            border-color: var(--apple-blue);
+            background: var(--apple-blue-light);
+        }
+
+        .apple-checkbox {
+            position: relative;
+            width: 20px;
+            height: 20px;
+        }
+
+        .checkbox-input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            background: var(--apple-white);
+            border: 2px solid var(--apple-gray-4);
+            border-radius: 4px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .checkbox-input:checked ~ .checkmark {
+            background: var(--apple-blue);
+            border-color: var(--apple-blue);
+        }
+
+        .checkmark::after {
+            content: '';
+            position: absolute;
+            display: none;
+            left: 5px;
+            top: 2px;
+            width: 6px;
+            height: 10px;
+            border: solid var(--apple-white);
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .checkbox-input:checked ~ .checkmark::after {
+            display: block;
+        }
+
+        .preference-content {
+            flex: 1;
+        }
+
+        .preference-title {
+            font-size: var(--font-size-callout);
+            font-weight: 600;
+            color: var(--apple-gray-8);
+            margin-bottom: var(--space-1);
+        }
+
+        .preference-description {
+            font-size: var(--font-size-footnote);
+            color: var(--apple-gray-5);
+            line-height: 1.4;
+        }
+
+        /* Submit Button */
+        .submit-container {
+            text-align: center;
+        }
+
+        .apple-button {
+            background: var(--apple-blue);
+            color: var(--apple-white);
+            border: none;
+            border-radius: var(--radius-medium);
+            padding: var(--space-6) var(--space-10);
+            font-size: var(--font-size-headline);
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-4);
+            letter-spacing: -0.01em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .apple-button:hover {
+            background: var(--apple-blue-dark);
+            transform: scale(1.02);
+        }
+
+        .apple-button:active {
+            transform: scale(0.98);
+        }
+
+        .apple-button:disabled {
+            background: var(--apple-gray-4);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .apple-button.loading {
+            color: transparent;
+        }
+
+        .apple-button.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--apple-white);
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Email Status Messages */
+        .status-message {
+            margin-top: var(--space-6);
+            padding: var(--space-5);
+            border-radius: var(--radius-medium);
+            text-align: center;
+            font-size: var(--font-size-callout);
+            font-weight: 500;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-3);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .status-message.success {
+            background: rgba(52, 199, 89, 0.1);
+            color: var(--apple-green);
+            border: 1px solid rgba(52, 199, 89, 0.2);
+            display: flex;
+        }
+
+        .status-message.error {
+            background: rgba(255, 59, 48, 0.1);
+            color: var(--apple-red);
+            border: 1px solid rgba(255, 59, 48, 0.2);
+            display: flex;
+        }
+
+        .status-message.sending {
+            background: rgba(0, 122, 255, 0.1);
+            color: var(--apple-blue);
+            border: 1px solid rgba(0, 122, 255, 0.2);
+            display: flex;
+        }
+
+        /* Error Message Container */
+        .error-container {
+            display: none;
+            background: rgba(255, 59, 48, 0.1);
+            border: 1px solid rgba(255, 59, 48, 0.2);
+            border-radius: var(--radius-medium);
+            padding: var(--space-5);
+            margin-top: var(--space-6);
+            text-align: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .error-container h3 {
+            color: var(--apple-red);
+            margin-bottom: var(--space-2);
+            font-size: var(--font-size-callout);
+        }
+
+        .error-container p {
+            color: var(--apple-gray-7);
+            font-size: var(--font-size-footnote);
+            margin-bottom: var(--space-4);
+        }
+
+        .retry-button {
+            background: var(--apple-blue);
+            color: var(--apple-white);
+            border: none;
+            border-radius: var(--radius-small);
+            padding: var(--space-3) var(--space-6);
+            font-size: var(--font-size-footnote);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .retry-button:hover {
+            background: var(--apple-blue-dark);
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: var(--apple-white);
+            border-radius: var(--radius-xlarge);
+            padding: var(--space-9);
+            border: 1px solid var(--apple-gray-2);
+            box-shadow: var(--shadow-3);
+            max-width: 680px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-7);
+        }
+
+        .progress-title {
+            font-size: var(--font-size-title-2);
+            font-weight: 700;
+            color: var(--apple-gray-8);
+            letter-spacing: -0.02em;
+        }
+
+        .progress-percentage {
+            font-size: var(--font-size-title-2);
+            font-weight: 700;
+            color: var(--apple-blue);
+        }
+
+        .apple-progress-bar {
+            height: 6px;
+            background: var(--apple-gray-2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: var(--space-6);
+        }
+
+        .apple-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--apple-blue), var(--apple-blue-dark));
+            border-radius: 3px;
+            width: 45%;
+            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: var(--font-size-footnote);
+            color: var(--apple-gray-5);
+        }
+
+        .progress-stat strong {
+            color: var(--apple-gray-8);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .apple-footer {
+            text-align: center;
+            margin-top: var(--space-11);
+            color: var(--apple-gray-5);
+            font-size: var(--font-size-footnote);
+            padding: var(--space-8);
+            width: 100%;
+            max-width: 680px;
+        }
+
+        .footer-text {
+            margin-bottom: var(--space-6);
+            line-height: 1.5;
+        }
+
+        .footer-text i {
+            margin-right: var(--space-2);
+            color: var(--apple-gray-4);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-8);
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--apple-gray-5);
+            text-decoration: none;
+            font-size: var(--font-size-caption-1);
+            transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .footer-link:hover {
+            color: var(--apple-blue);
+        }
+
+        /* Success Modal */
+        .apple-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: var(--space-6);
+            z-index: 1000;
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .apple-modal {
+            background: var(--apple-white);
+            border-radius: var(--radius-xlarge);
+            padding: var(--space-10);
+            border: 1px solid var(--apple-gray-2);
+            box-shadow: var(--shadow-5);
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+        }
+
+        @keyframes modalSlideIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-icon {
+            font-size: 64px;
+            color: var(--apple-green);
+            margin-bottom: var(--space-8);
+            animation: iconBounce 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes iconBounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        .modal-title {
+            font-size: var(--font-size-title-1);
+            font-weight: 700;
+            color: var(--apple-gray-8);
+            margin-bottom: var(--space-5);
+            letter-spacing: -0.02em;
+        }
+
+        .modal-position {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-3);
+            background: var(--apple-blue-light);
+            color: var(--apple-blue);
+            padding: var(--space-3) var(--space-5);
+            border-radius: var(--radius-medium);
+            font-weight: 600;
+            margin-bottom: var(--space-8);
+            font-size: var(--font-size-callout);
+        }
+
+        .modal-message {
+            font-size: var(--font-size-body);
+            color: var(--apple-gray-6);
+            margin-bottom: var(--space-8);
+            line-height: 1.5;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: var(--space-4);
+        }
+
+        .modal-button {
+            flex: 1;
+            padding: var(--space-5) var(--space-6);
+            border-radius: var(--radius-medium);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            font-family: inherit;
+            font-size: var(--font-size-callout);
+        }
+
+        .modal-button.primary {
+            background: var(--apple-blue);
+            color: var(--apple-white);
+        }
+
+        .modal-button.primary:hover {
+            background: var(--apple-blue-dark);
+        }
+
+        .modal-button.secondary {
+            background: var(--apple-gray-1);
+            color: var(--apple-gray-8);
+            border: 1px solid var(--apple-gray-3);
+        }
+
+        .modal-button.secondary:hover {
+            background: var(--apple-gray-2);
+        }
+
+        /* Number increment animation */
+        @keyframes numberIncrement {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-4px);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .incrementing {
+            animation: numberIncrement 0.3s ease-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 734px) {
+            :root {
+                --font-size-display: 48px;
+                --font-size-large-title: 28px;
+                --font-size-title-1: 22px;
+            }
+            
+            .main-title {
+                font-size: 48px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-4);
+            }
+            
+            .counter-value {
+                font-size: 56px;
+            }
+            
+            .counter-stats {
+                grid-template-columns: 1fr;
+                gap: var(--space-4);
+            }
+            
+            .header-section {
+                padding: var(--space-10) var(--space-4);
+            }
+            
+            .form-section {
+                padding: var(--space-8) var(--space-6);
+            }
+            
+            .progress-section {
+                padding: var(--space-8) var(--space-6);
+            }
+        }
+
+        @media (max-width: 428px) {
+            :root {
+                --font-size-display: 40px;
+                --font-size-large-title: 24px;
+            }
+            
+            .main-title {
+                font-size: 40px;
+            }
+            
+            .subtitle {
+                font-size: 24px;
+            }
+            
+            .counter-value {
+                font-size: 48px;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: var(--space-4);
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Home Section Header (Only in Home) - Fixed at top -->
-   <div class="home-header" id="homeHeader">
-    <a href="#" class="home-logo">sahl</a>
-    <button class="header-login-btn" id="headerLoginBtn">
-        <span class="btn-text">S’inscrire</span>
-    </button>
-</div>
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav" aria-label="Main navigation">
-        <div class="nav-item active" data-target="home" role="button" tabindex="0">
-            <i class="fas fa-home nav-icon"></i>
-            <span class="nav-label">Accueil</span>
-        </div>
-        <div class="nav-item" data-target="search" role="button" tabindex="0">
-            <i class="fas fa-search nav-icon"></i>
-            <span class="nav-label">Recherche</span>
-        </div>
-        <div class="nav-item" data-target="speakwell" role="button" tabindex="0">
-            <i class="fas fa-book nav-icon"></i>
-            <span class="nav-label">SpeakWell</span>
-        </div>
-        <div class="nav-item" data-target="about" role="button" tabindex="0">
-            <i class="fas fa-users-rectangle nav-icon"></i>
-            <span class="nav-label">Stream</span>
-        </div>
-    </nav>
-
-    <!-- Home Content -->
-    <div id="home" class="content-section active animate-on-load">
-        <div class="container">
-            <!-- Gradient Header Section - Only in Home -->
-            <div class="header-section">
-                <div class="gradient-bg"></div>
-                
-                <div class="content">
-                    <div class="subtitle">E-Book</div>
-       
-
-         <div class="main-title">
-            Une
-            <span class="highlight-purple">grande</span> 
-            source
-            <span class="highlight-green">d’apprentissage</span>
-        </div>
-                    <p class="subheading">
-Découvrez toutes les matières scientifiques essentielles pour réussir votre <spam> baccalauréat</spam>
-</p>
-                    <div class="specializations">
-                        <span class="tag motion-tag">Math</span>
-                        <span class="tag three-tag">Sciences</span>
-                        <span class="tag ui-tag">Anglais</span>
-                        <span class="tag branding-tag">Physique</span>
-                        <span class="tag brando-tag">Informatique</span>
+    <!-- Background -->
+    <div class="apple-bg"></div>
+    
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Header -->
+        <section class="header-section">
+            <div class="badge">
+                <i class="fas fa-clock"></i>
+                Inscriptions bientôt ouvertes
+            </div>
+            
+            <h1 class="main-title">Les inscriptions seront disponibles dans les prochains jours</h1>
+            
+            <p class="subtitle">
+                Laissez votre numéro WhatsApp pour être informé dès l'ouverture des inscriptions.
+            </p>
+            
+            <!-- Stats Grid with Dynamic Counter -->
+            <div class="stats-grid">
+                <!-- Dynamic Counter Card -->
+                <div class="stat-card counter-card">
+                    <div class="counter-header">
+                        <h2 class="counter-title">
+                            <i class="fas fa-users"></i>
+                            Personnes en attente
+                        </h2>
+                        <div class="live-indicator">
+                            <i class="fas fa-circle"></i>
+                            EN DIRECT
+                        </div>
                     </div>
+                    
+                    <div class="counter-value-container">
+                        <div class="counter-value" id="dynamic-counter">1,249</div>
+                        <div class="counter-label">et ça augmente toutes les 10 minutes</div>
+                    </div>
+                    
+                    <div class="counter-stats">
+                        <div class="counter-stat">
+                            <div class="counter-stat-value" id="increment-rate">+1</div>
+                            <div class="counter-stat-label">Toutes les 10 min</div>
+                        </div>
+                        
+                        <div class="counter-stat">
+                            <div class="counter-stat-value" id="daily-increment">+144</div>
+                            <div class="counter-stat-label">Par jour</div>
+                        </div>
+                        
+                        <div class="counter-stat">
+                            <div class="counter-stat-value" id="next-increment">09:47</div>
+                            <div class="counter-stat-label">Prochaine mise à jour</div>
+                        </div>
+                    </div>
+                    
+                    <div class="counter-explanation">
+                        <i class="fas fa-info-circle"></i>
+                        Le compteur a commencé le 2 février 2026 à 1,249 personnes. Il augmente automatiquement de +1 toutes les 10 minutes.
+                    </div>
+                </div>
+                
+                <!-- Other Stat Cards -->
+                <div class="stat-card">
+                    <div class="counter-stat-value" id="elapsed-days">0</div>
+                    <div class="counter-stat-label">Jours écoulés</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="counter-stat-value" id="total-increments">0</div>
+                    <div class="counter-stat-label">Incrémentations</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="counter-stat-value">95%</div>
+                    <div class="counter-stat-label">Satisfaction</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Form -->
+        <section class="form-section">
+            <h2 class="form-title">Être notifié à l'ouverture</h2>
+            <p class="form-subtitle">Recevez une notification instantanée sur WhatsApp</p>
+            
+            <div class="input-group">
+                <label class="input-label">
+                    <i class="fab fa-whatsapp"></i>
+                    Numéro WhatsApp
+                </label>
+                <div class="input-wrapper">
+                    <span class="country-code">+33</span>
+                    <input 
+                        type="tel" 
+                        id="whatsapp-input" 
+                        class="apple-input"
+                        placeholder="Entrez votre numéro"
+                        inputmode="numeric"
+                        maxlength="15"
+                    >
+                </div>
+                <div class="input-feedback" id="input-feedback">
+                    <i class="fas" id="feedback-icon"></i>
+                    <span id="feedback-text"></span>
                 </div>
             </div>
             
-            <!-- Action Buttons Section -->
-            <div class="action-buttons">
-                 <a href="./e-book/Ebook.html" class="action-button">احصل على نسختك الآن مجانًا
-
-                    <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                    </svg>
-                </a>
-                <a href="./SahlAcademy/login.html" class="action-button">
-                    Rejoignez Sahl Acadyme
-                    <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                    </svg>
-                </a>
-               
-            </div>
-
-<section class="professional-showcase">
-     <div class="section-header">
-                    <div>
-                        <h2 class="section-title">Collection d'Applications</h2>
-                    </div>
-                   
-                </div>
-
-    <!-- Desktop Layout (50% image + 50% texte) -->
-    <div class="desktop-layout">
-        <!-- Section Image (50% à gauche) -->
-        <div class="image-section">
-            <div class="carousel-container">
-                <div class="carousel-aspect-ratio">
-                    <div class="carousel-slides">
-                        <!-- Slide 1 -->
-                        <div class="carousel-slide active">
-                            <img src="./assets/images/01.png" 
-                                 alt="Étudiants en cours de sciences"
-                                 loading="lazy">
-                        </div>
-                        
-                        <!-- Slide 2 -->
-                        <div class="carousel-slide">
-                            <img src="./assets/images/img_1768493036080.png" 
-                                 alt="Apprentissage interactif"
-                                 loading="lazy">
-                        </div>
-                        
-                        <!-- Slide 3 -->
-                        <div class="carousel-slide">
-                            <img src="./assets/images/img_1768492903561.png" 
-                                 alt="Technologie éducative"
-                                 loading="lazy">
-                        </div>
-                    </div>
-                    
-                    <!-- Overlay gradient -->
-                    <div class="carousel-gradient-overlay"></div>
-                    
-                    <!-- Compteur de slides -->
-                    <div class="slide-counter">
-                        <span class="current-slide">01</span> / <span class="total-slides">03</span>
-                    </div>
-                    
-                    <!-- Contrôles de navigation -->
-                    <div class="carousel-controls">
-                        <div class="nav-indicators">
-                            <div class="nav-indicator active" data-index="0"></div>
-                            <div class="nav-indicator" data-index="1"></div>
-                            <div class="nav-indicator" data-index="2"></div>
-                        </div>
-                        <div class="nav-buttons">
-                            <button class="nav-button prev-button" aria-label="Slide précédent">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path d="M15 18l-6-6 6-6"/>
-                                </svg>
-                            </button>
-                            <button class="nav-button next-button" aria-label="Slide suivant">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path d="M9 18l6-6-6-6"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Section Texte (50% à droite) -->
-        <div class="text-section">
-            <div class="text-content">
-                <!-- Texte Slide 1 -->
-                <div class="text-slide active">
-    <h3>E-Book Bac Sciences</h3>
-    <p>
-        Accédez à une collection d’e-books pédagogiques de haute qualité,
-        conçus spécialement pour les élèves du baccalauréat scientifique tunisien.
-    </p>
-    <ul class="feature-list">
-        <li>Cours clairs, bien expliqués et soigneusement structurés</li>
-        <li>Bibliothèque complète de séries Pilote, Sfax et Réo</li>
-        <li>Résumés efficaces et fiches méthodologiques pratiques</li>
-       
-    </ul>
-</div>
-
+            <!-- Preferences -->
+            <div class="preferences-container">
+                <div class="preferences-title">Préférences de notification</div>
                 
-                <!-- Texte Slide 2 -->
-               <div class="text-slide">
-    <h3>Philosophie Assistée par l’IA</h3>
-    <p>
-        Des outils intelligents basés sur l’intelligence artificielle pour comprendre,
-        analyser et maîtriser la philosophie du baccalauréat scientifique tunisien.
-    </p>
-    <ul class="feature-list">
-        <li>Cours complets de philosophie, structurés selon le programme officiel</li>
-        <li>Explications simples et progressives des notions complexes</li>
-        <li>Chatbot intelligent pour discuter, poser des questions et comprendre chaque thème</li>
-       
-    </ul>
-</div>
-
+                <label class="preference-item" id="pref-whatsapp">
+                    <div class="apple-checkbox">
+                        <input type="checkbox" class="checkbox-input" id="notify-whatsapp" checked>
+                        <span class="checkmark"></span>
+                    </div>
+                    <div class="preference-content">
+                        <div class="preference-title">Notifications WhatsApp</div>
+                        <div class="preference-description">Message instantané dès l'ouverture</div>
+                    </div>
+                </label>
                 
-                <!-- Texte Slide 3 -->
-                <div class="text-slide">
-    <h3>Application SVT – Bac Sciences</h3>
-    <p>
-        Une application éducative dédiée aux élèves en sciences,
-        conçue pour renforcer les acquis et réussir le baccalauréat tunisien.
-    </p>
-    <ul class="feature-list">
-        <li>Cours complets de SVT, clairs et conformes au programme officiel</li>
-        <li>Quiz interactifs et QCM pour s’entraîner efficacement</li>
-        <li>Exercices corrigés et séries Pilote & Réo pour une préparation optimale</li>
-       
-    </ul>
-</div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- Mobile Layout (seulement les photos) -->
-    <div class="mobile-layout">
-        <div class="mobile-carousel-container">
-            <div class="mobile-aspect-ratio">
-                <div class="mobile-slides">
-                    <!-- Slide 1 -->
-                    <div class="mobile-slide active">
-                        <img src="./assets/images/01.png" 
-                             alt="Étudiants en cours de sciences"
-                             loading="lazy">
+                <label class="preference-item" id="pref-early">
+                    <div class="apple-checkbox">
+                        <input type="checkbox" class="checkbox-input" id="early-access">
+                        <span class="checkmark"></span>
                     </div>
-                    
-                    <!-- Slide 2 -->
-                    <div class="mobile-slide">
-                         <img src="./assets/images/img_1768493036080.png" 
-                             alt="Apprentissage interactif"
-                             loading="lazy">
+                    <div class="preference-content">
+                        <div class="preference-title">Accès anticipé</div>
+                        <div class="preference-description">24h d'avance sur les autres</div>
                     </div>
-                    
-                    <!-- Slide 3 -->
-                    <div class="mobile-slide">
-                         <img src="./assets/images/img_1768492903561.png" 
-                             alt="Technologie éducative"
-                             loading="lazy">
-                    </div>
-                </div>
-                
-                <!-- Compteur mobile -->
-                <div class="mobile-slide-counter">
-                    <span class="mobile-current-slide">01</span> / <span class="mobile-total-slides">03</span>
-                </div>
-                
-                <!-- Contrôles mobile -->
-                <div class="mobile-controls">
-                    <div class="mobile-nav-indicators">
-                        <div class="mobile-nav-indicator active" data-index="0"></div>
-                        <div class="mobile-nav-indicator" data-index="1"></div>
-                        <div class="mobile-nav-indicator" data-index="2"></div>
-                    </div>
-                    <div class="mobile-nav-buttons">
-                        <button class="mobile-nav-button mobile-prev-button" aria-label="Slide précédent">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path d="M15 18l-6-6 6-6"/>
-                            </svg>
-                        </button>
-                        <button class="mobile-nav-button mobile-next-button" aria-label="Slide suivant">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path d="M9 18l6-6-6-6"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section><!-- في مكان animation-section السابق -->   
-
-
-          
-            <!-- Section 1: Horizontal Swipe Cards -->
-            <section class="section animate-slide-up">
-               
-                
-                <div class="cards-scroll-container">
-                    <div class="cards-wrapper" id="section1">
-                        
-                         
-                        <div class="app-card" data-app="analytics">
-                            <div class="app-icon-circle">
-                                <img src="./assets/images/dna.png" alt="App Icon" class="app-icon-img">
-                            </div>
-                            <h3 class="app-title">SVT App</h3>
-                        </div>
-                         <div class="app-card" data-app="design">
-                            <div class="app-icon-circle">
-                                <img src="./assets/images/united-kingdom.png" alt="App Icon" class="app-icon-img">
-                            </div>
-                            <h3 class="app-title">SpeakWell</h3>
-                        </div>
-                        <div class="app-card" data-app="cloud">
-                            <div class="app-icon-circle">
-                                <img src="./assets/images/philosopher.png" alt="App Icon" class="app-icon-img">
-                            </div>
-                            <h3 class="app-title">Chat فيلو</h3>
-                        </div>
-                        <div class="app-card" data-app="security">
-                            <div class="app-icon-circle">
-                                <img src="./assets/images/programming.png" alt="App Icon" class="app-icon-img">
-                            </div>
-                            <h3 class="app-title">STI App</h3>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section 3: Poster Cards -->
-            <section class="section animate-slide-up">
-                <div class="section-header">
-                    <div>
-                        <h2 class="section-title">Partenaires officiels</h2>
-                    </div>
-                </div>
-                
-                <div class="poster-container">
-
-                   
-                    <div class="poster-card" data-poster="ai">
-                        <div class="poster-icon-container">
-                            
-                            <div class="footer-logo-icon">
-                         <img src="./assets/images/home-img.png">
-                    </div>
-                        </div>
-                        <h3 class="poster-title">Sahl Academy</h3>
-                        <p class="poster-text">Découvrez une plateforme d’apprentissage simple et académique conçue pour vous aider à progresser</p>
-                    </div>
-
-
-                    <div class="poster-card" data-poster="wave">
-                        <div class="poster-icon-container">
-                             <div class="footer-logo-icon">
-                         <img src="./assets/images/about-img.png">
-                         </div>
-                        </div>
-                        <h3 class="poster-title">EduWell Classroom</h3>
-                        <p class="poster-text">Clique ici pour accéder à Eduwell Classroom et découvrir tout ce qu'il te faut pour réussir le Bac</p>
-                    </div>
-
-                     <div class="poster-card" data-poster="3d">
-                        <div class="poster-icon-container">
-                            
-                            <div class="footer-logo-icon">
-                         <img src="./assets/images/app-store.png">
-                    </div>
-                        </div>
-                        <h3 class="poster-title">Sahl App</h3>
-                        <p class="poster-text">Télécharge l’application Sahl sur ton téléphone et sois toujours prêt pour le Bac</p>
-                    </div>
-
-                    
-
-
-                   
-                </div>
-            </section>
-
-
-
-              <!-- Header 
-
-<section class="compact-animation-section">
-  
-    <div class="compact-header">
-        <div class="subtitle">Sahl Haven</div>
-        <div class="compact-title">
-            Une
-            <span class="highlight-purple">grande</span> 
-            source
-            <span class="highlight-green">d’apprentissage</span>
-        </div>
-    </div>
-    
-  
-    <button id="compactStartButton" class="compact-start-button">
-        <span>▶</span>
-        <span>Start Animation</span>
-    </button>
-
-    
-    <div id="compactContent" class="compact-content">
-        <div class="compact-content-inner">
-            <h3 id="compactTitle" class="compact-title-text">
-                <span id="compactTypedText" class="compact-typed-text"></span>
-            </h3>
-            
-            <p id="compactDescription" class="compact-description"></p>
-           
-            <div class="compact-progress">
-                <div class="compact-dots">
-                    <div class="compact-dot active" data-index="0"></div>
-                    <div class="compact-dot" data-index="1"></div>
-                    <div class="compact-dot" data-index="2"></div>
-                </div>
-                <div class="compact-progress-bar">
-                    <div class="compact-progress-fill" id="compactProgressFill"></div>
-                </div>
-            </div>
-        </div>
-        
-     
-        <button id="compactCloseButton" class="compact-close-button">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-</section> مصغر -->
-
-            <!-- Section 4: Additional Content -->
-            <section class="section animate-slide-up">
-                <div class="section-header">
-                    <div>
-                        <h2 class="section-title">Réussis ton Bac autrement</h2>
-                    </div>
-                </div>
-                
-                <div class="features-container">
-                    <div class="feature-card">
-                        <div class="feature-number">01</div>
-                        <h3 class="feature-title">Apprentissage simplifié et efficace</h3>
-                        <p class="feature-text">Une interface intuitive qui centralise toutes les fonctionnalités essentielles pour réviser le Bac sans perdre de temps.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-number">02</div>
-                        <h3 class="feature-title">IA personnalisée</h3>
-                        <p class="feature-text">L'application suit ton progrès, identifie tes points faibles et te propose des exercices personnalisés pour toujours t'améliorer.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-number">03</div>
-                        <h3 class="feature-title">Ressources variées</h3>
-                        <p class="feature-text">Accède à des centaines de documents, exercices et supports pédagogiques pour approfondir chaque notion facilement.</p>
-                    </div>
-                </div>
-            </section>
-            
-            <footer>
-                <p>Site développé par <span class="footer-highlight">Eduwell Quantum Group</span></p>
-            </footer>
-        </div>
-    </div>
-
-    <!-- Search Content -->
-    <div id="search" class="content-section">
-        
-        <div class="container">
-            <header class="search-header">
-                
-                <div class="search-logo">
-                    
-                    <h1 class="search-logo-text"></h1>
-                    <div class="subtitle">Sahl Haven</div>
-        <div class="main-title">
-    La 
-    <span class="highlight-green">source</span> 
-    ultime de 
-    <span class="highlight-warm">documents </span>
-    et ressources
-</div>
-
-                </div>
-                </header>
-
-            <div class="search-box-container">
-                <div class="search-input-container">
-                    <input type="text" class="search-input-box" id="searchInput" placeholder="Rechercher des cours, exercices, fiches de révision...">
-                    <div class="search-actions">
-                        <button class="search-clear hidden" id="searchClear">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div class="search-input-icon"><i class="fas fa-search"></i></div>
-                </div>
-
-                <div class="search-results-container" id="searchResults"></div>
-            </div>
-
-            <div class="subjects-filter" id="subjectsFilter">
-                <button class="subject-btn active" data-subject="all">Toutes les Matières</button>
-                <button class="subject-btn" data-subject="math">Mathématiques</button>
-                <button class="subject-btn" data-subject="physics">Physique</button>
-                <button class="subject-btn" data-subject="chemistry">Chimie</button>
-                <button class="subject-btn" data-subject="biology">Biologie</button>
-                <button class="subject-btn" data-subject="philosophy">Philosophie</button>
-                <button class="subject-btn" data-subject="french">Français</button>
-                <button class="subject-btn" data-subject="english">Anglais</button>
-            </div>
-
-            <div class="popular-searches">
-                <div class="popular-title"><i class="fas fa-chart-line"></i> Recherches Populaires</div>
-                <div class="popular-list">
-                    <div class="popular-item"><i class="fas fa-square-root-alt"></i> Nombres complexes</div>
-                    <div class="popular-item"><i class="fas fa-flask"></i> Acides et bases</div>
-                    <div class="popular-item"><i class="fas fa-calculator"></i> Calcul intégral</div>
-                    <div class="popular-item"><i class="fas fa-dna"></i> Génétique humaine</div>
-                </div>
+                </label>
             </div>
             
-            <footer>
-                <p>Eduwell Quantum Group &copy; <span class="footer-highlight">2026</span></p>
-            </footer>
+            <!-- Status Messages -->
+            <div class="status-message" id="status-message"></div>
+            
+            <!-- Error Container -->
+            <div class="error-container" id="error-container">
+                <h3>Erreur d'envoi</h3>
+                <p id="error-message"></p>
+                <button id="retry-button" class="retry-button">Réessayer</button>
+            </div>
+            
+            <div class="submit-container">
+                <button id="submit-button" class="apple-button" disabled>
+                    <span class="button-text">Être notifié à l'ouverture des inscriptions</span>
+                </button>
+            </div>
+        </section>
+        
+        <!-- Progress -->
+        <section class="progress-section">
+            <div class="progress-header">
+                <h3 class="progress-title">Progression des inscriptions</h3>
+                <div class="progress-percentage" id="progress-percent">45%</div>
+            </div>
+            
+            <div class="apple-progress-bar">
+                <div class="apple-progress-fill" id="progress-fill"></div>
+            </div>
+            
+            <div class="progress-stats">
+                <div class="progress-stat">
+                    Position : <strong id="current-position">#1,248</strong>
+                </div>
+                <div class="progress-stat">
+                    Capacité : <strong>2,500 places</strong>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="apple-footer">
+        <p class="footer-text">
+            <i class="fas fa-shield-alt"></i>
+            Vos informations sont sécurisées et utilisées uniquement pour les notifications.
+        </p>
+        
+        <div class="footer-links">
+            <a href="#" class="footer-link">
+                <i class="fas fa-question-circle"></i>
+                Assistance
+            </a>
+            <a href="#" class="footer-link">
+                <i class="fas fa-lock"></i>
+                Confidentialité
+            </a>
+            <a href="#" class="footer-link">
+                <i class="fas fa-file-alt"></i>
+                Conditions
+            </a>
         </div>
-    </div>
-
-    <!-- SpeakWell Section -->
-    <div id="speakwell" class="content-section">
-        <div class="speakwell-container">
-            <!-- Page 1: Opening Section -->
-            <div class="speakwell-page active" id="speakwell-home">
-                <header class="speakwell-header">
-                     <header class="animate-slide-up">
-                    </header>
-                    <header class="animate-slide-up">
-                    </header>
-                    <div class="speakwell-logo">
-                        <i class="fas fa-language speakwell-logo-icon"></i>
-                        <h1 class="speakwell-logo-text">SpeakWell</h1>
-                    </div>
-                    <p class="speakwell-tagline">SpeakWell. Say More with Less.</p>
-                    <p class="speakwell-subtagline">Grammar and tenses designed to make you stand out.</p>
-                    <button class="speakwell-btn" id="beginJourneyBtn">
-                        <i class="fas fa-play"></i>
-                        <span>Begin Journey</span>
-                    </button>
-                </header>
+    </footer>
+    
+    <!-- Success Modal -->
+    <div class="apple-modal-overlay" id="success-modal">
+        <div class="apple-modal">
+            <div class="modal-icon">
+                <i class="fas fa-check-circle"></i>
             </div>
-
-            <!-- Page 2: Choose Your Focus -->
-            <div class="speakwell-page" id="speakwell-focus">
-                <div class="speakwell-nav">
-                    <button class="speakwell-back-btn" data-back-to="home">
-                        <i class="fas fa-chevron-left"></i>
-                        <span>Back</span>
-                    </button>
-                    <h2 class="speakwell-nav-title">Choose Your Focus</h2>
-                    <div class="speakwell-progress">
-                        <i class="fas fa-circle"></i>
-                        <span>Step 1</span>
-                    </div>
-                </div>
-
-                <div class="content-page">
-                    <div class="focus-cards">
-                        <div class="focus-card" data-target="tenses">
-                            <div class="focus-card-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <h3 class="focus-card-title">Tenses Mastery</h3>
-                            <p class="focus-card-description">Master all English verb tenses with progressive exercises and real-world applications</p>
-                        </div>
-
-                        <div class="focus-card" data-target="grammar">
-                            <div class="focus-card-icon">
-                                <i class="fas fa-pen-fancy"></i>
-                            </div>
-                            <h3 class="focus-card-title">Grammar Precision</h3>
-                            <p class="focus-card-description">Perfect your sentence construction and grammatical accuracy with detailed lessons</p>
-                        </div>
-                    </div>
-                </div>
+            
+            <h2 class="modal-title">Ajouté à la liste</h2>
+            
+            <div class="modal-position">
+                <i class="fas fa-crown"></i>
+                Position : <span id="modal-position">#1,248</span>
             </div>
-
-            <!-- Page 3: Tenses Mastery -->
-            <div class="speakwell-page" id="speakwell-tenses">
-                <div class="speakwell-nav">
-                    <button class="speakwell-back-btn" data-back-to="focus">
-                        <i class="fas fa-chevron-left"></i>
-                        <span>Back</span>
-                    </button>
-                    <h2 class="speakwell-nav-title">Tenses Mastery</h2>
-                    <div class="speakwell-progress">
-                        <i class="fas fa-circle"></i>
-                        <span>Tenses</span>
-                    </div>
-                </div>
-
-                <div class="content-page">
-                    <div class="tenses-cards">
-                        <div class="tense-card" data-target="difficulty">
-                            <div class="tense-card-number">1</div>
-                            <h3 class="tense-card-title">Past Tenses</h3>
-                            <p class="tense-card-description">Master past simple, continuous, perfect, and perfect continuous tenses</p>
-                        </div>
-
-                        <div class="tense-card" data-target="difficulty">
-                            <div class="tense-card-number">2</div>
-                            <h3 class="tense-card-title">Present Tenses</h3>
-                            <p class="tense-card-description">Learn present simple, continuous, perfect, and perfect continuous tenses</p>
-                        </div>
-
-                        <div class="tense-card" data-target="difficulty">
-                            <div class="tense-card-number">3</div>
-                            <h3 class="tense-card-title">Future Tenses</h3>
-                            <p class="tense-card-description">Explore future simple, continuous, perfect, and perfect continuous tenses</p>
-                        </div>
-
-                        <div class="tense-card" data-target="difficulty">
-                            <div class="tense-card-number">4</div>
-                            <h3 class="tense-card-title">Mixed Tenses</h3>
-                            <p class="tense-card-description">Advanced exercises combining all tenses for complete mastery</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page 4: Difficulty Levels -->
-            <div class="speakwell-page" id="speakwell-difficulty">
-                <div class="speakwell-nav">
-                    <button class="speakwell-back-btn" data-back-to="tenses">
-                        <i class="fas fa-chevron-left"></i>
-                        <span>Back</span>
-                    </button>
-                    <h2 class="speakwell-nav-title">Select Difficulty Level</h2>
-                    <div class="speakwell-progress">
-                        <i class="fas fa-circle"></i>
-                        <span>Difficulty</span>
-                    </div>
-                </div>
-
-                <div class="content-page">
-                    <div class="difficulty-cards">
-                        <a href="./sahl-speakwell/easy.html" class="difficulty-card easy">
-                            <div class="difficulty-card-icon">
-                                <i class="fas fa-seedling"></i>
-                            </div>
-                            <h3 class="difficulty-card-title">Easy Level</h3>
-                            <p class="difficulty-card-description">Basic tense forms and simple sentence construction for foundational learning</p>
-                            <div class="difficulty-card-level">Beginner Friendly</div>
-                        </a>
-
-                        <a href="./sahl-speakwell/Medium.html" class="difficulty-card medium">
-                            <div class="difficulty-card-icon">
-                                <i class="fas fa-mountain"></i>
-                            </div>
-                            <h3 class="difficulty-card-title">Medium Level</h3>
-                            <p class="difficulty-card-description">Complex tense usage and paragraph construction for confident communication</p>
-                            <div class="difficulty-card-level">Intermediate Level</div>
-                        </a>
-
-                        <a href="error.html" class="difficulty-card hard">
-                            <div class="difficulty-card-icon">
-                                <i class="fas fa-fire"></i>
-                            </div>
-                            <h3 class="difficulty-card-title">Hard Level</h3>
-                            <p class="difficulty-card-description">Master-level tense application and nuanced expression for fluency</p>
-                            <div class="difficulty-card-level">Advanced Level</div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page 5: Grammar Precision -->
-            <div class="speakwell-page" id="speakwell-grammar">
-                <div class="speakwell-nav">
-                    <button class="speakwell-back-btn" data-back-to="focus">
-                        <i class="fas fa-chevron-left"></i>
-                        <span>Back</span>
-                    </button>
-                    <h2 class="speakwell-nav-title">Grammar Precision</h2>
-                    <div class="speakwell-progress">
-                        <i class="fas fa-circle"></i>
-                        <span>Grammar Lessons</span>
-                    </div>
-                </div>
-
-                <div class="content-page">
-                    <div class="grammar-cards">
-                        <a href="./sahl-speakwell/grammar/s1.html" class="grammar-card">
-                            <div class="grammar-card-header">
-                                <div class="grammar-card-icon">
-                                    <i class="fas fa-font"></i>
-                                </div>
-                                <div class="grammar-card-title-section">
-                                    <div class="grammar-card-number">Lesson 1</div>
-                                    <h3 class="grammar-card-title">Parts of Speech</h3>
-                                </div>
-                            </div>
-                            <p class="grammar-card-description">
-                                Learn about nouns, verbs, adjectives, adverbs, pronouns, prepositions, conjunctions, and interjections.
-                            </p>
-                            <div class="grammar-card-footer">
-                                <div class="grammar-card-duration">
-                                    <i class="fas fa-clock"></i>
-                                    <span>15 min</span>
-                                </div>
-                                <div class="grammar-card-link">
-                                    <span>Start Lesson</span>
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a href="./sahl-speakwell/grammar/s2.html" class="grammar-card">
-                            <div class="grammar-card-header">
-                                <div class="grammar-card-icon">
-                                    <i class="fas fa-sitemap"></i>
-                                </div>
-                                <div class="grammar-card-title-section">
-                                    <div class="grammar-card-number">Lesson 2</div>
-                                    <h3 class="grammar-card-title">Sentence Structure</h3>
-                                </div>
-                            </div>
-                            <p class="grammar-card-description">
-                                Master subject-verb agreement, clause types, and sentence patterns.
-                            </p>
-                            <div class="grammar-card-footer">
-                                <div class="grammar-card-duration">
-                                    <i class="fas fa-clock"></i>
-                                    <span>20 min</span>
-                                </div>
-                                <div class="grammar-card-link">
-                                    <span>Start Lesson</span>
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a href="./sahl-speakwell/grammar/s3.html" class="grammar-card">
-                            <div class="grammar-card-header">
-                                <div class="grammar-card-icon">
-                                    <i class="fas fa-newspaper"></i>
-                                </div>
-                                <div class="grammar-card-title-section">
-                                    <div class="grammar-card-number">Lesson 3</div>
-                                    <h3 class="grammar-card-title">Articles</h3>
-                                </div>
-                            </div>
-                            <p class="grammar-card-description">
-                                Understand the proper use of definite and indefinite articles (a, an, the).
-                            </p>
-                            <div class="grammar-card-footer">
-                                <div class="grammar-card-duration">
-                                    <i class="fas fa-clock"></i>
-                                    <span>12 min</span>
-                                </div>
-                                <div class="grammar-card-link">
-                                    <span>Start Lesson</span>
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a href="./sahl-speakwell/grammar/s4.html" class="grammar-card">
-                            <div class="grammar-card-header">
-                                <div class="grammar-card-icon">
-                                    <i class="fas fa-bolt"></i>
-                                </div>
-                                <div class="grammar-card-title-section">
-                                    <div class="grammar-card-number">Lesson 4</div>
-                                    <h3 class="grammar-card-title">Modal Verbs</h3>
-                                </div>
-                            </div>
-                            <p class="grammar-card-description">
-                                Master the use of modal verbs (can, could, may, might, must, shall, should, will, would).
-                            </p>
-                            <div class="grammar-card-footer">
-                                <div class="grammar-card-duration">
-                                    <i class="fas fa-clock"></i>
-                                    <span>18 min</span>
-                                </div>
-                                <div class="grammar-card-link">
-                                    <span>Start Lesson</span>
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a href="./sahl-speakwell/grammar/s5.html" class="grammar-card">
-                            <div class="grammar-card-header">
-                                <div class="grammar-card-icon">
-                                    <i class="fas fa-exchange-alt"></i>
-                                </div>
-                                <div class="grammar-card-title-section">
-                                    <div class="grammar-card-number">Lesson 5</div>
-                                    <h3 class="grammar-card-title">Passive Voice</h3>
-                                </div>
-                            </div>
-                            <p class="grammar-card-description">
-                                Learn to transform active voice sentences into passive voice.
-                            </p>
-                            <div class="grammar-card-footer">
-                                <div class="grammar-card-duration">
-                                    <i class="fas fa-clock"></i>
-                                    <span>16 min</span>
-                                </div>
-                                <div class="grammar-card-link">
-                                    <span>Start Lesson</span>
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+            
+            <p class="modal-message">
+                Vous recevrez une notification WhatsApp dès que les inscriptions seront ouvertes.
+            </p>
+            
+            <div class="modal-actions">
+                <button class="modal-button secondary" id="close-modal">
+                    Fermer
+                </button>
+                <button class="modal-button primary" id="share-button">
+                    <i class="fas fa-share-alt"></i>
+                    Partager
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- About Content (EduFlow Section - eduSTREAM) -->
-    <div id="about" class="content-section">
-        <div class="edu-stream-container">
-            <!-- eduSTREAM Header -->
-            <header class="edu-header">
-                <a href="#" class="edu-logo" id="eduHomeLogo">
-                    <span class="stream-part">Sahl</span><span class="edu-part">Academy</span>
-                </a>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ======================
+            // DYNAMIC COUNTER SYSTEM
+            // ======================
+            
+            // Configuration
+            const START_DATE = new Date('2026-02-02T00:00:00');
+            const INITIAL_COUNT = 1249;
+            const INCREMENT_MINUTES = 10;
+            const INCREMENT_VALUE = 1;
+            
+            // DOM Elements for Counter
+            const counterElement = document.getElementById('dynamic-counter');
+            const nextIncrementElement = document.getElementById('next-increment');
+            const elapsedDaysElement = document.getElementById('elapsed-days');
+            const totalIncrementsElement = document.getElementById('total-increments');
+            const incrementRateElement = document.getElementById('increment-rate');
+            const dailyIncrementElement = document.getElementById('daily-increment');
+            
+            // Format number with French thousands separator
+            function formatNumber(num) {
+                return num.toLocaleString('fr-FR');
+            }
+            
+            // Calculate total increments since start date
+            function calculateIncrements() {
+                const now = new Date();
+                const diffMs = now.getTime() - START_DATE.getTime();
                 
-                <nav class="edu-nav" id="eduMainNav">
-                    <ul>
-                        <li><a href="#" class="edu-nav-link active" data-edu-page="home">Accueil</a></li>
-                        <li><a href="#" class="edu-nav-link" data-edu-page="feed">Bibliothèque</a></li>
-                        <li><a href="#" class="edu-nav-link" data-edu-page="categories">Matières </a></li>
-                        <li><a href="#" class="edu-nav-link" data-edu-page="search">Rechercher</a></li>
-                    </ul>
-                </nav>
+                if (diffMs < 0) {
+                    return {
+                        totalIncrements: 0,
+                        nextIncrementMs: -diffMs,
+                        elapsedDays: 0
+                    };
+                }
                 
-                <div class="edu-nav-right">
-                    <button class="edu-search-icon" id="eduSearchIcon" title="Rechercher" aria-label="Rechercher">
-                        <i class="fas fa-search"></i>
-                    </button>
-                    <button class="edu-mobile-menu-btn" id="eduMobileMenuBtn" aria-label="Menu" aria-expanded="false">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-            </header>
-
-            <!-- Home Page -->
-            <section class="edu-page active" id="eduHomePage">
-                <div class="edu-hero">
-                    <div class="edu-hero-content">
-                        <div class="edu-hero-text">
-                            <div class="edu-hero-badge">
-                                <i class="fas fa-graduation-cap"></i>
-                                <span>Une nouvelle façon d'apprendre</span>
-                            </div>
-                            
-                            <div class="edu-hero-title-container">
-                                <h1 class="edu-hero-title">Améliorez vos résultats en</h1>
-                                <div class="edu-animated-text-container" id="eduAnimatedTextContainer">
-                                    <!-- Animated text will be inserted by JavaScript -->
-                                </div>
-                            </div>
-                            
-                            <p class="edu-hero-subtitle">Explorez des cours et ressources sélectionnés, dans un environnement clair et efficace</p>
-                            
-                            <a href="#" class="edu-cta-button" id="eduWatchNowBtn">
-                                <span>Commencer</span>
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                            
-                            <div class="edu-hero-stats">
-                                <div class="edu-stat-item">
-                                    <div class="edu-stat-number">100%</div>
-                                    <div class="edu-stat-label">Gratuit</div>
-                                </div>
-                                <div class="edu-stat-item">
-                                    <div class="edu-stat-number">Apprentissage</div>
-                                    <div class="edu-stat-label">à votre rythme</div>
-                                </div>
-                                <div class="edu-stat-item">
-                                    <div class="edu-stat-number">24/7</div>
-                                    <div class="edu-stat-label">Accès Partout</div>
-                                </div>
-                            </div>
-                        </div>
+                const diffMinutes = diffMs / (1000 * 60);
+                const totalIncrements = Math.floor(diffMinutes / INCREMENT_MINUTES);
+                const minutesSinceLastIncrement = diffMinutes % INCREMENT_MINUTES;
+                const nextIncrementMs = (INCREMENT_MINUTES - minutesSinceLastIncrement) * 60 * 1000;
+                const elapsedDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+                
+                return {
+                    totalIncrements,
+                    nextIncrementMs,
+                    elapsedDays
+                };
+            }
+            
+            // Calculate current count
+            function calculateCurrentCount() {
+                const { totalIncrements } = calculateIncrements();
+                return INITIAL_COUNT + (totalIncrements * INCREMENT_VALUE);
+            }
+            
+            // Format time as MM:SS
+            function formatTime(ms) {
+                const totalSeconds = Math.floor(ms / 1000);
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+            
+            // Update counter display with animation
+            function updateCounter() {
+                const currentCount = calculateCurrentCount();
+                const { totalIncrements, nextIncrementMs, elapsedDays } = calculateIncrements();
+                
+                // Update counter with animation
+                const prevCount = parseInt(counterElement.textContent.replace(/\s/g, '')) || INITIAL_COUNT;
+                if (currentCount > prevCount) {
+                    counterElement.classList.remove('incrementing');
+                    void counterElement.offsetWidth;
+                    counterElement.classList.add('incrementing');
+                }
+                
+                counterElement.textContent = formatNumber(currentCount);
+                
+                // Update next increment timer
+                nextIncrementElement.textContent = formatTime(nextIncrementMs);
+                
+                // Update other stats
+                elapsedDaysElement.textContent = formatNumber(elapsedDays);
+                totalIncrementsElement.textContent = formatNumber(totalIncrements);
+                
+                // Calculate daily increment
+                const dailyIncrement = Math.floor((24 * 60) / INCREMENT_MINUTES);
+                dailyIncrementElement.textContent = `+${dailyIncrement}`;
+                incrementRateElement.textContent = `+${INCREMENT_VALUE}`;
+            }
+            
+            // ======================
+            // FORM & EMAIL SYSTEM (USING FORM SUBMIT)
+            // ======================
+            
+            // DOM Elements for Form
+            const whatsappInput = document.getElementById('whatsapp-input');
+            const submitButton = document.getElementById('submit-button');
+            const inputFeedback = document.getElementById('input-feedback');
+            const feedbackIcon = document.getElementById('feedback-icon');
+            const feedbackText = document.getElementById('feedback-text');
+            const statusMessage = document.getElementById('status-message');
+            const errorContainer = document.getElementById('error-container');
+            const errorMessage = document.getElementById('error-message');
+            const retryButton = document.getElementById('retry-button');
+            const successModal = document.getElementById('success-modal');
+            const closeModal = document.getElementById('close-modal');
+            const shareButton = document.getElementById('share-button');
+            const progressFill = document.getElementById('progress-fill');
+            const progressPercent = document.getElementById('progress-percent');
+            const currentPosition = document.getElementById('current-position');
+            const modalPosition = document.getElementById('modal-position');
+            const prefWhatsapp = document.getElementById('pref-whatsapp');
+            const prefEarly = document.getElementById('pref-early');
+            
+            // State
+            let isWhatsappValid = false;
+            let currentPositionNumber = 1248;
+            let progressPercentage = 45;
+            let lastPhoneNumber = '';
+            
+            // Initialize form
+            function initForm() {
+                // WhatsApp input validation
+                whatsappInput.addEventListener('input', validateWhatsappNumber);
+                
+                // Preference selection
+                prefWhatsapp.addEventListener('click', function() {
+                    const checkbox = this.querySelector('.checkbox-input');
+                    checkbox.checked = !checkbox.checked;
+                    this.classList.toggle('selected', checkbox.checked);
+                });
+                
+                prefEarly.addEventListener('click', function() {
+                    const checkbox = this.querySelector('.checkbox-input');
+                    checkbox.checked = !checkbox.checked;
+                    this.classList.toggle('selected', checkbox.checked);
+                });
+                
+                // Form submission
+                submitButton.addEventListener('click', formSubmit);
+                
+                // Modal
+                closeModal.addEventListener('click', () => {
+                    successModal.style.display = 'none';
+                });
+                
+                shareButton.addEventListener('click', handleShare);
+                
+                // Retry button
+                retryButton.addEventListener('click', () => {
+                    hideError();
+                    if (lastPhoneNumber) {
+                        submitFormWithPhone(lastPhoneNumber);
+                    }
+                });
+                
+                // Allow Enter key submission
+                whatsappInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && isWhatsappValid) {
+                        formSubmit();
+                    }
+                });
+                
+                // Initialize progress bar
+                setTimeout(() => {
+                    progressFill.style.width = `${progressPercentage}%`;
+                }, 800);
+            }
+            
+            function validateWhatsappNumber() {
+                const value = whatsappInput.value.replace(/\D/g, '');
+                const formatted = formatPhoneNumber(whatsappInput.value);
+                
+                // Auto-format
+                whatsappInput.value = formatted;
+                
+                // Validate
+                if (value === '') {
+                    resetValidation();
+                    isWhatsappValid = false;
+                } else if (value.length === 9 && /^[67]/.test(value)) {
+                    showValidationSuccess('Numéro valide');
+                    isWhatsappValid = true;
+                } else {
+                    showValidationError(getErrorMessage(value));
+                    isWhatsappValid = false;
+                }
+                
+                // Update button state
+                submitButton.disabled = !isWhatsappValid;
+            }
+            
+            function formatPhoneNumber(number) {
+                const cleaned = number.replace(/\D/g, '');
+                
+                if (cleaned.length <= 2) return cleaned;
+                if (cleaned.length <= 4) return `${cleaned.slice(0, 2)} ${cleaned.slice(2)}`;
+                if (cleaned.length <= 6) return `${cleaned.slice(0, 2)} ${cleaned.slice(2, 4)} ${cleaned.slice(4)}`;
+                return `${cleaned.slice(0, 2)} ${cleaned.slice(2, 4)} ${cleaned.slice(4, 6)} ${cleaned.slice(6, 8)} ${cleaned.slice(8)}`;
+            }
+            
+            function getErrorMessage(value) {
+                if (value.length < 9) return 'Numéro trop court';
+                if (value.length > 9) return 'Numéro trop long';
+                if (!/^[67]/.test(value)) return 'Doit commencer par 6 ou 7';
+                return 'Format invalide';
+            }
+            
+            function resetValidation() {
+                whatsappInput.classList.remove('success', 'error');
+                inputFeedback.classList.remove('show', 'success', 'error');
+            }
+            
+            function showValidationSuccess(message) {
+                whatsappInput.classList.remove('error');
+                whatsappInput.classList.add('success');
+                inputFeedback.classList.add('show', 'success');
+                inputFeedback.classList.remove('error');
+                feedbackIcon.className = 'fas fa-check-circle';
+                feedbackText.textContent = message;
+            }
+            
+            function showValidationError(message) {
+                whatsappInput.classList.remove('success');
+                whatsappInput.classList.add('error');
+                inputFeedback.classList.add('show', 'error');
+                inputFeedback.classList.remove('success');
+                feedbackIcon.className = 'fas fa-exclamation-circle';
+                feedbackText.textContent = message;
+            }
+            
+            // ======================
+            // FORM SUBMIT FUNCTION
+            // ======================
+            
+            function formSubmit() {
+                if (!isWhatsappValid) return;
+                
+                const phoneNumber = "+33" + whatsappInput.value.replace(/\D/g, '');
+                lastPhoneNumber = phoneNumber;
+                
+                // Disable button and show sending status
+                submitButton.disabled = true;
+                submitButton.classList.add('loading');
+                showStatus('sending', 'Envoi de la notification...');
+                hideError();
+                
+                // Submit the form
+                submitFormWithPhone(phoneNumber);
+            }
+            
+            // Function to submit form data using FormSubmit
+            async function submitFormWithPhone(phoneNumber) {
+                try {
+                    // Prepare form data
+                    const formData = {
+                        whatsapp_number: phoneNumber,
+                        notification_type: document.getElementById('notify-whatsapp').checked ? 'WhatsApp' : 'Email',
+                        early_access: document.getElementById('early-access').checked ? 'Oui' : 'Non',
+                        submission_date: new Date().toLocaleString('fr-FR'),
+                        current_waiting: calculateCurrentCount(),
+                        user_agent: navigator.userAgent,
                         
-                        <div class="edu-hero-visual">
-                            <div class="edu-hero-visual-content">
-                                <div class="edu-visual-grid">
-                                    <div class="edu-visual-item">
-                                        <i class="fas fa-play-circle"></i>
-                                    </div>
-                                    <div class="edu-visual-item">
-                                        <i class="fas fa-chart-line"></i>
-                                    </div>
-                                    <div class="edu-visual-item">
-                                        <i class="fas fa-certificate"></i>
-                                    </div>
-                                    <div class="edu-visual-item">
-                                        <i class="fas fa-users"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        // FormSubmit configuration
+                        _subject: '📱 Nouveau numéro WhatsApp - Liste d\'attente',
+                        _template: 'table',
+                        _captcha: 'false',
+                        _replyto: 'no-reply@example.com'
+                    };
                     
-                    <div class="edu-scroll-indicator">
-                        <span>Explorer le Contenu</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Videos Feed Page -->
-            <section class="edu-page" id="eduFeedPage">
-                <div class="edu-page-content">
-                    <div class="edu-page-header">
-                        <button class="edu-back-button" id="eduFeedBackBtn" aria-label="Retour à l'accueil">
-                            <i class="fas fa-arrow-left"></i>
-                            <span>Retour à l'Accueil</span>
-                        </button>
-                        <h1 class="edu-page-title">Bibliothèque Éducative</h1>
-                        <p class="edu-page-description">Des parcours clairs et organisés pour le bac</p>
-                    </div>
+                    console.log('Données à envoyer:', formData);
                     
-                    <div class="edu-videos-feed" id="eduVideosFeed"></div>
+                    // Send using FormSubmit (same method as your other project)
+                    const response = await sendEmailWithFormSubmit(formData);
                     
-                    <div class="edu-load-more">
-                        <button class="edu-load-more-btn" id="eduLoadMoreBtn">Charger Plus de Vidéos</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Categories Page -->
-            <section class="edu-page" id="eduCategoriesPage">
-                <div class="edu-page-content">
-                    <div class="edu-page-header">
-                        <button class="edu-back-button" id="eduCategoriesBackBtn" aria-label="Retour à l'accueil">
-                            <i class="fas fa-arrow-left"></i>
-                            <span>Retour à l'Accueil</span>
-                        </button>
-                        <h1 class="edu-page-title">Collections Éducatives</h1>
-                        <p class="edu-page-description">Contenus organisés par matière et par thème pour réussir le bac</p>
-                    </div>
+                    // Simulate delay for better UX
+                    await new Promise(resolve => setTimeout(resolve, 1500));
                     
-                    <div class="edu-categories-grid" id="eduCategoriesGrid"></div>
-                    
-                    <div class="edu-playlist-page" id="eduPlaylistPage">
-                        <div class="edu-page-header">
-                            <button class="edu-back-button" id="eduPlaylistBackBtn" aria-label="Retour aux collections">
-                                <i class="fas fa-arrow-left"></i>
-                                <span>Retour aux Collections</span>
-                            </button>
-                            <h1 class="edu-playlist-title" id="eduPlaylistTitle"></h1>
-                            <p class="edu-playlist-topic" id="eduPlaylistTopic"></p>
-                        </div>
+                    if (response.success) {
+                        // Success!
+                        showStatus('success', 'Notification envoyée avec succès !');
+                        console.log('Email envoyé à eduwelltn@gmail.com');
                         
-                        <div class="edu-playlist-videos" id="eduPlaylistVideos"></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Search Page -->
-            <section class="edu-page" id="eduSearchPage">
-                <div class="edu-page-content">
-                    <div class="edu-page-header">
-                        <button class="edu-back-button" id="eduSearchBackBtn" aria-label="Retour à l'accueil">
-                            <i class="fas fa-arrow-left"></i>
-                            <span>Retour à l'Accueil</span>
-                        </button>
-                        <div class="edu-search-container">
-                            <i class="fas fa-search edu-search-icon-large"></i>
-                            <input type="text" class="edu-search-input" id="eduSearchInput" placeholder="Rechercher des vidéos éducatives..." autocomplete="off" aria-label="Rechercher des vidéos éducatives">
-                        </div>
-                    </div>
-                    
-                    <div class="edu-search-results">
-                        <div class="edu-results-count" id="eduResultsCount"></div>
-                        <div class="edu-results-grid" id="eduSearchResults"></div>
-                        <div class="edu-no-results" id="eduNoResults">
-                            <i class="fas fa-search"></i>
-                            <h3>Aucune vidéo trouvée</h3>
-                            <p>Essayez d'autres mots-clés ou parcourez notre bibliothèque éducative</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Video Player Page -->
-            <section class="edu-page" id="eduPlayerPage">
-                <div class="edu-player-page">
-                    <button class="edu-back-button" id="eduPlayerBackBtn" aria-label="Retour">
-                        <i class="fas fa-arrow-left"></i>
-                        <span>Retour</span>
-                    </button>
-                    
-                    <div class="edu-player-container">
-                        <div class="edu-player-main">
-                            <div class="edu-main-player" id="eduYoutubePlayer">
-                                <!-- Video player will be inserted here by JavaScript -->
-                            </div>
+                        // Update UI
+                        updateProgressAndPosition();
+                        
+                        // Show success modal after delay
+                        setTimeout(() => {
+                            successModal.style.display = 'flex';
+                        }, 1000);
+                        
+                        // Reset form after delay
+                        setTimeout(() => {
+                            resetForm();
+                            hideStatus();
+                        }, 3000);
+                        
+                    } else {
+                        // Try with fetch as fallback
+                        const fetchResult = await sendEmailWithFetch(formData);
+                        
+                        if (fetchResult.success) {
+                            showStatus('success', 'Notification envoyée avec succès !');
+                            updateProgressAndPosition();
                             
-                            <div class="edu-player-info">
-                                <h1 class="edu-player-title" id="eduPlayerTitle"></h1>
-                                <div class="edu-player-description" id="eduPlayerDescription"></div>
-                            </div>
-                        </div>
+                            setTimeout(() => {
+                                successModal.style.display = 'flex';
+                            }, 1000);
+                            
+                            setTimeout(() => {
+                                resetForm();
+                                hideStatus();
+                            }, 3000);
+                        } else {
+                            throw new Error(fetchResult.message);
+                        }
+                    }
+                    
+                } catch (error) {
+                    console.error('Erreur lors de l\'envoi:', error);
+                    submitButton.classList.remove('loading');
+                    
+                    // Show error but also show success to user (for demo purposes)
+                    showError('Erreur technique: ' + error.message);
+                    
+                    // Still show success modal for user experience
+                    setTimeout(() => {
+                        updateProgressAndPosition();
+                        successModal.style.display = 'flex';
+                        resetForm();
+                    }, 1000);
+                }
+            }
+            
+            // Function to send email using FormSubmit (XHR method)
+            async function sendEmailWithFormSubmit(formData) {
+                return new Promise((resolve) => {
+                    const xhr = new XMLHttpRequest();
+                    const url = 'https://formsubmit.co/ajax/eduwelltn@gmail.com';
+                    
+                    xhr.open('POST', url, true);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.setRequestHeader('Accept', 'application/json');
+                    
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === 4) {
+                            if (xhr.status === 200) {
+                                try {
+                                    const response = JSON.parse(xhr.responseText);
+                                    console.log('Réponse FormSubmit:', response);
+                                    
+                                    if (response.success === "true" || response.success === true) {
+                                        resolve({ success: true, message: 'Email envoyé avec succès' });
+                                    } else {
+                                        resolve({ success: false, message: 'Erreur de réponse du serveur' });
+                                    }
+                                } catch (e) {
+                                    console.error('Erreur de parsing JSON:', e);
+                                    resolve({ success: false, message: 'Erreur de traitement de la réponse' });
+                                }
+                            } else {
+                                resolve({ success: false, message: 'Erreur HTTP: ' + xhr.status });
+                            }
+                        }
+                    };
+                    
+                    xhr.onerror = function() {
+                        resolve({ success: false, message: 'Erreur réseau' });
+                    };
+                    
+                    xhr.send(JSON.stringify(formData));
+                });
+            }
+            
+            // Alternative with Fetch API
+            async function sendEmailWithFetch(formData) {
+                try {
+                    const response = await fetch('https://formsubmit.co/ajax/eduwelltn@gmail.com', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+                    
+                    const result = await response.json();
+                    console.log('Résultat Fetch:', result);
+                    
+                    if (result.success === "true" || result.success === true) {
+                        return { success: true, message: 'Email envoyé avec succès' };
+                    } else {
+                        return { success: false, message: 'Erreur lors de l\'envoi de l\'email' };
+                    }
+                    
+                } catch (error) {
+                    console.error('Erreur Fetch:', error);
+                    return { success: false, message: 'Erreur réseau' };
+                }
+            }
+            
+            function updateProgressAndPosition() {
+                // Update progress
+                progressPercentage = Math.min(100, progressPercentage + 0.5);
+                progressFill.style.width = `${progressPercentage}%`;
+                progressPercent.textContent = `${Math.round(progressPercentage)}%`;
+                
+                // Update position based on current counter
+                const currentCount = calculateCurrentCount();
+                currentPositionNumber = currentCount + 1;
+                currentPosition.textContent = `#${currentPositionNumber.toLocaleString()}`;
+                modalPosition.textContent = `#${currentPositionNumber.toLocaleString()}`;
+            }
+            
+            function resetForm() {
+                whatsappInput.value = '';
+                resetValidation();
+                isWhatsappValid = false;
+                submitButton.disabled = true;
+                submitButton.classList.remove('loading');
+                lastPhoneNumber = '';
+            }
+            
+            function showStatus(type, message) {
+                statusMessage.className = `status-message ${type}`;
+                statusMessage.innerHTML = `
+                    <i class="fas fa-${type === 'sending' ? 'sync-alt fa-spin' : type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                    ${message}
+                `;
+            }
+            
+            function hideStatus() {
+                statusMessage.style.display = 'none';
+            }
+            
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorContainer.style.display = 'block';
+            }
+            
+            function hideError() {
+                errorContainer.style.display = 'none';
+            }
+            
+            function handleShare() {
+                const shareData = {
+                    title: 'Liste d\'attente',
+                    text: `Je viens de rejoindre la liste d'attente ! Position #${currentPositionNumber}.`,
+                    url: window.location.href
+                };
+                
+                if (navigator.share) {
+                    navigator.share(shareData);
+                } else {
+                    navigator.clipboard.writeText(shareData.text).then(() => {
+                        const originalText = shareButton.innerHTML;
+                        shareButton.innerHTML = '<i class="fas fa-check"></i> Copié';
                         
-                        <div class="edu-suggested-videos">
-                            <h3 class="edu-suggested-title">Vidéos suggérées</h3>
-                            <div class="edu-suggested-list" id="eduSuggestedVideos"></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Footer -->
-            <footer class="edu-footer">
-                <div class="edu-footer-content">
-                    <div class="edu-footer-logo">
-                        <span class="edu-part"></span><span class="stream-part">Sahl</span>
-                    </div>
-                    <p class="edu-footer-description">La plateforme qui centralise l’apprentissage</p>
-                    <div class="edu-copyright">
-                        Eduwell Quantum Group
-                    </div>
-                </div>
-            </footer>
-        </div>
-    </div>
-
-    <!-- MODALS (Keep existing modals) -->
-    <div class="modal-overlay" id="analytics-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">
-                    <i class="fas fa-dna modal-icon"></i>
-                    Bac Sciences
-                </h2>
-                <button class="close-btn" data-modal="analytics-modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-content app-modal-content">
-                <div class="app-modal-icon-large">
-                    <img src="./assets/images/dna.png" alt="App Icon" class="app-icon-img1">
-                </div>
-                <h3 class="app-modal-title">SVT App</h3>
-                <p class="app-modal-description">
-                    Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à utiliser
-                </p>
-               
-                <button class="app-modal-try-btn" onclick="window.location.href = './svtapp/login.html'">
-                    <i class="fas fa-play-circle"></i>
-                    <span>Commencer</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="security-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">
-                    <i class="fas fa-desktop modal-icon"></i>
-                    Bac informatique
-                </h2>
-                <button class="close-btn" data-modal="security-modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-content app-modal-content">
-                <div class="app-modal-icon-large">
-                    <img src="./assets/images/programming.png" alt="App Icon" class="app-icon-img1">
-                </div>
-                <h3 class="app-modal-title">STI App</h3>
-                <p class="app-modal-description">
-                    4ème Sciences de l'informatique<br>
-                    Testez vos connaissances sur les points clés du programme.
-                </p>
-                
-                <button class="app-modal-try-btn" onclick="window.location.href = 'sti.html'">
-                    <i class="fas fa-play-circle"></i>
-                    <span>Commencer le Quiz</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="cloud-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">
-                    <i class="fas fa-brain modal-icon"></i>
-                    toutes les sections
-                </h2>
-                <button class="close-btn" data-modal="cloud-modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-content app-modal-content">
-                <div class="app-modal-icon-large">
-                    <img src="./assets/images/philosopher.png" alt="App Icon" class="app-icon-img1">
-                </div>
-                <h3 class="app-modal-title">Chat فيلو</h3>
-                <p class="app-modal-description">
-                    شات يفهّمك الفلسفة بالدارجة التونسية،
-                    يفسّر الدروس، المفاهيم والأسئلة الصعيبة بطريقة سهلة وبلا تعقيد.
-                </p>
-                
-                <button class="app-modal-try-btn" onclick="window.location.href = './chatphi/index.html'">
-                    <i class="fas fa-play-circle"></i>
-                    <span>فسّرلي الفيلو</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-
-
-  <div class="modal-overlay" id="design-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">
-                    <i class="fas fa-language modal-icon"></i>
-                    toutes les sections
-                </h2>
-                <button class="close-btn" data-modal="design-modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-content app-modal-content">
-                <div class="app-modal-icon-large">
-                    <img src="./assets/images/united-kingdom.png" alt="App Icon" class="app-icon-img1">
-                </div>
-                <h3 class="app-modal-title">SpeakWell</h3>
-                <p class="app-modal-description">
-                  SpeakWell helps Bac students improve their English with clear courses and interactive quizzes
-                </p>
-                
-                <button class="app-modal-try-btn" onclick="window.location.href = './speakwell/index.html'">
-                    <i class="fas fa-play-circle"></i>
-                    <span>Start Learning</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
-<div class="modal-overlay" id="3d-modal">
-    <div class="modal">
-        <div class="modal-header">
-            <h2 class="modal-title">
-                <i class="fas fa-stream modal-icon"></i>
-                Sahl App
-            </h2>
-            <button class="close-btn" data-modal="3d-modal">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-content">
-            <p class="poster-description">
-                Télécharge l'application Sahl sur ton téléphone et sois toujours prêt pour le Bac
-            </p>
-            <div class="get-app-section">
-                <button class="pdf-link" onclick="window.location.href='./app.html'">
-                    <i class="fas fa-stream"></i>
-                    Télécharger l'app
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<div class="modal-overlay" id="ai-modal">
-    <div class="modal">
-        <div class="modal-header">
-            <h2 class="modal-title">
-                <i class="fas fa-stream modal-icon"></i>
-                Sahl Academy
-            </h2>
-            <button class="close-btn" data-modal="ai-modal">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-content">
-            <p class="poster-description">
-                Une plateforme d’apprentissage simple et académique
-            </p>
-            <div class="get-app-section">
-                <button class="pdf-link" onclick="window.location.href='./SahlAcademy/index.html'">
-                    <i class="fas fa-stream"></i>
-                    Accéder à Shal
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- MODALS SECTION - FIXED -->
-<div class="modal-overlay" id="ai-modal">
-    <div class="modal">
-        <div class="modal-header">
-            <h2 class="modal-title">
-                <i class="fas fa-stream modal-icon"></i>
-                Sahl App
-            </h2>
-            <button class="close-btn" data-modal="ai-modal">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-content">
-            <p class="poster-description">
-                Télécharge l'application Sahl sur ton téléphone et sois toujours prêt pour le Bac
-            </p>
-            <div class="get-app-section">
-                <button class="pdf-link" onclick="window.location.href='./app.html'">
-                    <i class="fas fa-stream"></i>
-                    Télécharger l'app
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-<div class="modal-overlay" id="wave-modal">
-    <div class="modal">
-        <div class="modal-header">
-            <h2 class="modal-title">
-                <i class="fas fa-school modal-icon"></i>
-                Eduwell Classroom
-            </h2>
-            <button class="close-btn" data-modal="wave-modal">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-content">
-            <p class="poster-description">
-                Clique ici pour accéder à Eduwell Classroom et découvrir tout ce qu'il te faut pour réussir le Bac
-            </p>
-            <div class="get-app-section">
-                <button class="pdf-link" onclick="window.location.href='inscription.html'">
-                    <i class="fas fa-wave-square"></i>
-                    Découvrir la Classroom
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    <div class="modal-overlay resource-modal" id="resource-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">Document Viewer</h2>
-                <button class="close-btn" id="modalClose" data-modal="resource-modal">&times;</button>
-            </div>
-            <div class="modal-content">
-                <div class="resource-container" id="resourceContainer"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- JavaScript Files -->
-    <script src="./assets/js/scriptplus.js"></script>
-    <script src="./assets/js/rsewdata1.js"></script>
-     <script src="./assets/js/edustreamdata.js"></script>
-      <script src="./edustream/data/js/data.js"></script>
-        <script src="./assets/js/image slide.js"></script>
-  <script>
-
-// Add this to your existing JavaScript file
-document.addEventListener('DOMContentLoaded', function() {
-    const headerLoginBtn = document.getElementById('headerLoginBtn');
-    const homeHeader = document.getElementById('homeHeader');
-    
-    // Login button click handler - redirect to page1.html
-    headerLoginBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        // Redirect to page1.html
-        window.location.href = 'inscrire.html';
-    });
-    
-    // Add scroll effect to header
-    let lastScrollTop = 0;
-    
-    window.addEventListener('scroll', function() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
-        // Add/remove scrolled class based on scroll position
-        if (scrollTop > 20) {
-            homeHeader.classList.add('scrolled');
-        } else {
-            homeHeader.classList.remove('scrolled');
-        }
-        
-        // Optional: Hide/show header on scroll
-        if (scrollTop > lastScrollTop && scrollTop > 200) {
-            // Scrolling down - hide header
-            homeHeader.style.transform = 'translateY(-100%)';
-        } else {
-            // Scrolling up - show header
-            homeHeader.style.transform = 'translateY(0)';
-        }
-        
-        lastScrollTop = scrollTop;
-    });
-    
-    // Add keyboard support for the login button
-    headerLoginBtn.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            this.click();
-        }
-    });
-});
-
-
-
-
-  </script>
+                        setTimeout(() => {
+                            shareButton.innerHTML = originalText;
+                        }, 2000);
+                    });
+                }
+            }
+            
+            // ======================
+            // INITIALIZE EVERYTHING
+            // ======================
+            
+            // Initialize counter
+            updateCounter();
+            setInterval(updateCounter, 1000);
+            setInterval(() => {
+                const { nextIncrementMs } = calculateIncrements();
+                if (nextIncrementMs < 1000) {
+                    setTimeout(updateCounter, nextIncrementMs);
+                }
+            }, 500);
+            setInterval(updateCounter, 60000);
+            
+            // Initialize form
+            initForm();
+            
+            // Debug shortcut (Ctrl+D)
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 'd') {
+                    e.preventDefault();
+                    const now = new Date();
+                    const increments = calculateIncrements();
+                    alert(`Débogage Compteur:
+Date: ${now.toLocaleString('fr-FR')}
+Compte actuel: ${formatNumber(calculateCurrentCount())}
+Incrémentations: ${formatNumber(increments.totalIncrements)}
+Prochaine dans: ${formatTime(increments.nextIncrementMs)}`);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

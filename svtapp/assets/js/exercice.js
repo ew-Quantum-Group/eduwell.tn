@@ -108,24 +108,44 @@
                 id: "ex06",
                 title: "Devoir Contrôle 3 · SVT",
                 description: "Toutes les copies types du Devoir de Contrôle 3 en SVT, analysées et expliquées pour préparer le Bac efficacement",
-                exerciseCount: "4",
+                exerciseCount: "8",
                 progress: 0,
                 pdfs: [
-                    { title: "Devoir C3 · Copie 1", url: "https://drive.google.com/file/d/19Vv6TvcjLp4EEyDbtrBAbJ4ChA6iSf4h/preview" },
-                    { title: "Devoir C3 · Copie 2", url: "https://drive.google.com/file/d/1efk9JOUP76seNloNQdFwTb6_p8Qwxt8R/preview" },
-                    { title: "Devoir C3 · Copie 3", url: "https://drive.google.com/file/d/1G32y-WsfAo1CcNd1vAW18mIspsThd3NU/preview" }
-                ]
+                   { title: "Devoir de contrôle n°3- 1 ", url: "https://drive.google.com/file/d/1K6vk4qaWpWWe1rhTxxtYtR5J09BcTJHI/preview" },
+                   { title: "Correction n°3- 1", url: "https://drive.google.com/file/d/1QLiAtoc_2mDlqgK6X6IPX7TnnjdnPRLh/preview" },
+                    { title: "Devoir de contrôle n°3- 2", url: "https://drive.google.com/file/d/1QMQ1pOca3wS9lV3qKGZM0Ep5cbynY546/preview" },
+                   { title: "Correction n°3- 2", url: "https://drive.google.com/file/d/1-LfuH_zX8WFKMXhZxj0xdtjbgqhMzx-0/preview" },
+                    { title: "Devoir de contrôle n°3- 3", url: "https://drive.google.com/file/d/1OLrGzA_ROLbN3OMyJoS_GleC3IyLsYk9/preview" },
+                   { title: "Correction n°3- 3", url: "https://drive.google.com/file/d/1VGIfxq5pil1sDciZxpi-sEv1NpiiiCIW/preview" },
+                    { title: "Devoir de contrôle n°3- 4", url: "https://drive.google.com/file/d/19mnZ2gUdOYfUCZm6a1pu3a9o497CctSP/preview" },
+                   { title: "Correction n°3- 4", url: "https://drive.google.com/file/d/#/preview" }
+                      ]
             },
             "ex02": {
                 id: "ex04",
                 title: "Devoir de Synthèse 3 · SVT",
                 description: "Analyse complète des devoirs SVT – Copies modèles et corrections pour le Bac",
-                exerciseCount: "3",
+                exerciseCount: "14",
                 progress: 0,
                 pdfs: [
-                    { title: "Devoir S3 · Copie 1", url: "https://drive.google.com/file/d/1XTl8S7_aek_-KOBD2ow9RY2CBSs4cflK/preview" },
-                    { title: "Devoir S3 · Copie 2", url: "https://drive.google.com/file/d/1bm0ngOyVmSrCe3Cdqdv0C_AhFElU8Gjx/preview" },
-                    { title: "Devoir S3 · Copie 2", url: "https://drive.google.com/file/d/1vVqFBqRb0kgLLev8Sc43S9I3x6uPscp-/preview" }
+                    { title: "Devoir de Synthèse n°3- 1", url: "https://drive.google.com/file/d/1Pcu_KJDtsCIxu4r-4el4P9LsygMe0cCV/preview" },
+                    { title: "Correction n°3- 1", url: "https://drive.google.com/file/d/1M0uy7SQAWv_qChiiie8Az9SynlUnYLFf/preview" },
+                    { title: "Devoir de Synthèse n°3- 2", url: "https://drive.google.com/file/d/1XRh_EKWpNjSdA13ei_H4K-4P9twCjZNs/preview" },
+                    { title: "Correction n°3- 2", url: "https://drive.google.com/file/d/1bW4QT1nxrqKDrYQhs9Ou57QuMJy6fY1l/preview" },
+                    { title: "Devoir de Synthèse n°3- 3", url: "https://drive.google.com/file/d/11ci6vka0YS6FDM0C0S32xqgdP29wkPFQ/preview" },
+                    { title: "Correction n°3- 3", url: "https://drive.google.com/file/d/13niJzN6AcdAZQMpNExjIzEbezBbQGCeY/preview" },
+                    { title: "Devoir de Synthèse n°3- 4", url: "https://drive.google.com/file/d/1MHTIiC9fGejsIyNV0aKOe-uYbQbcRtMc/preview" },
+                    { title: "Correction n°3- 4", url: "https://drive.google.com/file/d/1ukBKHXibt1vMvoBih8lQs5VuabOh7sF9/preview" },
+                    { title: "Devoir de Synthèse n°3- 5", url: "https://drive.google.com/file/d/1uIgdnRIUR6mrttLnRLBI0mr1oj211IV6/preview" },
+                    { title: "Correction n°3- 5", url: "https://drive.google.com/file/d/1E6K4uXlZ7WLdJtQG30GNEF4rNUG-JKas/preview" },
+                    { title: "Devoir de Synthèse n°3- 6", url: "https://drive.google.com/file/d/1bgGsiLGVqeZ_MowdSiwmxF3KOfwLn81I/preview" },
+                    { title: "Correction n°3- 6", url: "https://drive.google.com/file/d/1p_p2dl9W1uEh3gBcRe4NyoT7hVtGxjAg/preview" },
+                    { title: "Devoir de Synthèse n°3- 7", url: "https://drive.google.com/file/d/1spZ83XEB2oBk4XQNNgXx-g2fCI9S5bE3/preview" },
+                    { title: "Correction n°3- 7", url: "https://drive.google.com/file/d/1_7wzkJgJUKxXiaGPvFy0D4D3t0gY5sld/preview" }
+
+
+
+                    
                 ]
             }
         };

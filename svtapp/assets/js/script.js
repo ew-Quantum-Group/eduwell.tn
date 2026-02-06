@@ -8,19 +8,20 @@
         const strategiesData = {
             biologyCards: [
                 {
+                    id: 'bio-card-2',
+                    title: 'Flash Cards',
+                    description: 'Comprendre le Bac devient plus simple avec des schémas et des visuels 3D',
+                    link: 'Flashcards.html',
+                    linkText: 'Découvrir'
+                },
+                {
                     id: 'bio-card-1',
                     title: 'Analyse des exercices',
                     description: 'Comprendre les types de questions et identifier les pièges pour mieux réussir',
                     link: 'error.html',
                     linkText: 'Voir les exercices'
                 },
-                {
-                    id: 'bio-card-2',
-                    title: 'Planification des révisions',
-                    description: 'Organiser le temps et établir un planning efficace pour chaque matière',
-                    link: 'error.html',
-                    linkText: 'Créer mon planning'
-                },
+                
                 {
                     id: 'bio-card-3',
                     title: 'Techniques de mémorisation',
@@ -714,7 +715,12 @@
                 'reproduction-humaine2': 'fas fa-heartbeat',
                 'reproduction-humaine3': 'fas fa-heartbeat',
                 'evolution-biologique': 'fas fa-dna',
-                'genetique-humaine': 'fas fa-flask'
+                'genetique-humaine': 'fas fa-dna',
+                'evolution-des-especes': 'fas fa-frog',  
+                'système-nerveux': 'fas fa-brain',
+                'musqule': 'fas fa-bone',
+                'presion': 'fas fa-tachometer-alt',
+                'immu': 'fas fa-shield-virus'
             };
             return icons[courseId] || 'fas fa-book';
         }
@@ -727,7 +733,7 @@
                 'evolution-biologique': ' ',
                 'genetique-humaine': ' '
             };
-            return durations[courseId] || '3h 00min';
+            return durations[courseId] || '';
         }
 
         function getYourCourseLessons(courseId) {
@@ -736,9 +742,13 @@
                 'reproduction-humaine2': '7',
                 'reproduction-humaine3': '3',
                 'evolution-biologique': '15',
-                'genetique-humaine': '2'
+                'genetique-humaine': '2',
+                'système-nerveux': '5',
+                'musqule': '2',
+                'presion': '3',
+                'immu': '4'
             };
-            return lessons[courseId] || '12';
+            return lessons[courseId] || '2';
         }
 
         function getYourCourseProgress(courseId) {
@@ -747,9 +757,9 @@
                 'reproduction-humaine2': '100%',
                 'reproduction-humaine3': '100%',
                 'evolution-biologique': '40%',
-                'genetique-humaine': '50%'
+                'genetique-humaine': '100%'
             };
-            return progress[courseId] || '50%';
+            return progress[courseId] || '100%';
         }
 
         function getExerciseIcon(exerciseId) {
@@ -759,7 +769,7 @@
                 'ex03': 'fas fa-flask',
                 'ex04': 'fas fa-shield-virus'
             };
-            return icons[exerciseId] || 'fas fa-file-alt';
+            return icons[exerciseId] || 'fas fa-file-pdf';
         }
 
         // Setup event listeners

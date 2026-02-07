@@ -3,516 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscriptions - Disponible bientôt</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Pro+Text:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        /* Reset et base - Style Apple Minimal */
-        :root {
-            --apple-white: #ffffff;
-            --apple-light-gray: #f5f5f7;
-            --apple-gray: #86868b;
-            --apple-dark-gray: #424245;
-            --apple-black: #1d1d1f;
-            --apple-blue: #0066cc;
-            --apple-light-blue: #0077ed;
-            --transition: all 0.3s ease;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background-color: var(--apple-white);
-            color: var(--apple-black);
-            line-height: 1.47059;
-            font-weight: 400;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 24px;
-            position: relative;
-            overflow-x: hidden;
-        }
-        
-        /* Effet de fond très subtil */
-        .background-lines {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.02;
-            background-image: 
-                linear-gradient(90deg, transparent 95%, var(--apple-blue) 100%),
-                linear-gradient(180deg, transparent 95%, var(--apple-blue) 100%);
-            background-size: 60px 60px;
-        }
-        
-        /* Conteneur principal - Minimal Apple */
-        .container {
-            max-width: 800px;
-            width: 100%;
-            text-align: center;
-            padding: 48px 40px;
-            position: relative;
-        }
-        
-        /* Titre principal - Petit et élégant */
-        .main-title {
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            font-size: 40px;
-            font-weight: 600;
-            line-height: 1.1;
-            letter-spacing: -0.003em;
-            margin-bottom: 16px;
-            color: var(--apple-black);
-        }
-        
-        .main-title span {
-            color: var(--apple-blue);
-        }
-        
-        /* Sous-titre */
-        .subtitle {
-            font-size: 20px;
-            font-weight: 400;
-            line-height: 1.4;
-            letter-spacing: 0.004em;
-            color: var(--apple-gray);
-            margin-bottom: 48px;
-        }
-        
-        /* Section du compteur - Compact */
-        .countdown-section {
-            margin-bottom: 48px;
-        }
-        
-        .countdown-title {
-            font-size: 13px;
-            font-weight: 500;
-            letter-spacing: 0.08em;
-            color: var(--apple-gray);
-            margin-bottom: 24px;
-            text-transform: uppercase;
-        }
-        
-        /* Compteur minimal */
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            flex-wrap: wrap;
-        }
-        
-        .countdown-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .countdown-value {
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            font-size: 40px;
-            font-weight: 500;
-            letter-spacing: -0.01em;
-            color: var(--apple-black);
-            margin-bottom: 6px;
-            line-height: 1;
-        }
-        
-        .countdown-label {
-            font-size: 12px;
-            font-weight: 500;
-            letter-spacing: 0.06em;
-            color: var(--apple-gray);
-            text-transform: uppercase;
-        }
-        
-        /* Séparateur minimal */
-        .separator {
-            width: 120px;
-            height: 1px;
-            background-color: rgba(0, 0, 0, 0.05);
-            margin: 32px auto;
-        }
-        
-        /* Message informatif */
-        .message {
-            font-size: 18px;
-            font-weight: 400;
-            line-height: 1.5;
-            color: var(--apple-dark-gray);
-            max-width: 500px;
-            margin: 0 auto 32px;
-        }
-        
-        /* Points importants - Style Apple minimal */
-        .points {
-            display: flex;
-            justify-content: center;
-            gap: 32px;
-            margin-bottom: 48px;
-            flex-wrap: wrap;
-        }
-        
-        .point {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .point-icon {
-            color: var(--apple-blue);
-            font-size: 14px;
-        }
-        
-        .point-text {
-            font-size: 14px;
-            color: var(--apple-gray);
-        }
-        
-        /* Message d'ouverture - Très discret */
-        .open-message {
-            display: none;
-            padding: 32px;
-            border-radius: 12px;
-            background-color: rgba(0, 102, 204, 0.03);
-            border: 1px solid rgba(0, 102, 204, 0.1);
-            max-width: 500px;
-            margin: 0 auto;
-            animation: fadeInUp 0.6s ease-out;
-        }
-        
-        @keyframes fadeInUp {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .open-title {
-            font-size: 24px;
-            font-weight: 600;
-            color: var(--apple-blue);
-            margin-bottom: 8px;
-        }
-        
-        .open-text {
-            font-size: 16px;
-            color: var(--apple-dark-gray);
-        }
-        
-        /* Animation pour les valeurs du compteur */
-        @keyframes numberUpdate {
-            0% {
-                opacity: 0.6;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
-        
-        .countdown-value.updated {
-            animation: numberUpdate 0.3s ease;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                padding: 40px 24px;
-            }
-            
-            .main-title {
-                font-size: 32px;
-            }
-            
-            .subtitle {
-                font-size: 18px;
-                margin-bottom: 40px;
-            }
-            
-            .countdown {
-                gap: 20px;
-            }
-            
-            .countdown-value {
-                font-size: 32px;
-            }
-            
-            .message {
-                font-size: 16px;
-            }
-            
-            .points {
-                gap: 24px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            body {
-                padding: 16px;
-            }
-            
-            .container {
-                padding: 32px 20px;
-            }
-            
-            .main-title {
-                font-size: 28px;
-            }
-            
-            .subtitle {
-                font-size: 16px;
-                margin-bottom: 32px;
-            }
-            
-            .countdown {
-                gap: 16px;
-            }
-            
-            .countdown-item {
-                min-width: 70px;
-            }
-            
-            .countdown-value {
-                font-size: 28px;
-            }
-            
-            .countdown-label {
-                font-size: 11px;
-            }
-            
-            .message {
-                font-size: 15px;
-            }
-            
-            .points {
-                flex-direction: column;
-                gap: 12px;
-            }
-        }
-        
-        /* Animation de la date d'ouverture */
-        .date-highlight {
-            position: relative;
-            display: inline-block;
-        }
-        
-        .date-highlight::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background-color: var(--apple-blue);
-            opacity: 0.3;
-        }
-        
-        /* Effet de hover subtil sur les éléments du compteur */
-        .countdown-item:hover .countdown-value {
-            color: var(--apple-blue);
-            transition: var(--transition);
-        }
-        
-        /* Effet de chargement minimal */
-        .loading {
-            opacity: 0;
-            animation: fadeIn 0.8s ease-out forwards;
-        }
-        
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
-        }
-        
-        /* Délai d'animation pour chaque élément */
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-        .delay-4 { animation-delay: 0.4s; }
-        .delay-5 { animation-delay: 0.5s; }
-    </style>
+    <title>Inscription • Portail Académique</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="./assets/images/app-store.png" type="image/x-icon">
+     <link rel="stylesheet" href="./assets/css/accup.css">
 </head>
 <body>
-    <!-- Effet de fond très subtil -->
-    <div class="background-lines"></div>
-    
-    <div class="container">
-        <!-- Titre principal -->
-        <h1 class="main-title loading delay-1">Inscriptions <span>bientôt</span></h1>
-        
-        <!-- Sous-titre -->
-        <p class="subtitle loading delay-2">
-            Disponible le <span class="date-highlight">7 février 2026</span>
-        </p>
-        
-        <!-- Séparateur -->
-        <div class="separator loading delay-2"></div>
-        
-        <!-- Section du compteur -->
-        <div class="countdown-section loading delay-3">
-            <div class="countdown-title">Temps restant</div>
-            <div class="countdown">
-                <div class="countdown-item">
-                    <div id="days" class="countdown-value">00</div>
-                    <div class="countdown-label">Jours</div>
-                </div>
-                <div class="countdown-item">
-                    <div id="hours" class="countdown-value">00</div>
-                    <div class="countdown-label">Heures</div>
-                </div>
-                <div class="countdown-item">
-                    <div id="minutes" class="countdown-value">00</div>
-                    <div class="countdown-label">Minutes</div>
-                </div>
-                <div class="countdown-item">
-                    <div id="seconds" class="countdown-value">00</div>
-                    <div class="countdown-label">Secondes</div>
-                </div>
-            </div>
+    <div class="signup-container">
+        <!-- En-tête -->
+        <div class="header">
+            <h1>Portail Académique</h1>
+            <p>Complétez votre inscription en quelques étapes simples</p>
         </div>
-        
-        <!-- Séparateur -->
-        <div class="separator"></div>
-        
-        <!-- Message informatif -->
-        <p class="message loading delay-4">
-            Notre plateforme ouvrira ses inscriptions à la date indiquée. 
-            Revenez à ce moment pour commencer le processus.
-        </p>
-        
-        <!-- Points importants -->
-        <div class="points loading delay-5">
-            <div class="point">
-                <div class="point-icon">✓</div>
-                <div class="point-text">Sécurisé</div>
-            </div>
-            <div class="point">
-                <div class="point-icon">✓</div>
-                <div class="point-text">Rapide</div>
-            </div>
-            <div class="point">
-                <div class="point-icon">✓</div>
-                <div class="point-text">Simple</div>
-            </div>
+
+        <!-- Indicateur d'étape -->
+        <div class="step-indicator">
+            <div class="step-dot active" id="stepDot1"></div>
+            <div class="step-dot" id="stepDot2"></div>
+            <div class="step-dot" id="stepDot3"></div>
+            <div class="step-dot" id="stepDot4"></div>
         </div>
-        
-        <!-- Message d'ouverture (caché initialement) -->
-        <div id="openMessage" class="open-message">
-            <div class="open-title">Inscriptions ouvertes</div>
-            <div class="open-text">Les inscriptions sont maintenant disponibles sur notre plateforme.</div>
+
+        <!-- Étapes du formulaire -->
+        <div class="form-container">
+            <!-- Étape 1 : Informations personnelles -->
+            <div class="form-step active" id="formStep1">
+                <h2 class="step-title">Informations Personnelles</h2>
+                <p class="step-description">Entrez vos coordonnées pour créer votre compte.</p>
+
+                <div class="input-group">
+                    <label class="input-label" for="firstName">Prénom</label>
+                    <input type="text" id="firstName" class="input-field" placeholder="Entrez votre prénom">
+                    <div class="validation-message" id="firstNameValidation"></div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="lastName">Nom</label>
+                    <input type="text" id="lastName" class="input-field" placeholder="Entrez votre nom">
+                    <div class="validation-message" id="lastNameValidation"></div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="email">Adresse Email</label>
+                    <input type="email" id="email" class="input-field" placeholder="nom@exemple.com">
+                    <div class="validation-message" id="emailValidation"></div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="phone">Numéro de Téléphone</label>
+                    <input type="tel" id="phone" class="input-field" placeholder="Entrez votre numéro">
+                    <div class="validation-message" id="phoneValidation"></div>
+                </div>
+
+                <div class="buttons-container">
+                    <button class="apple-button apple-button-primary" id="nextStep1" disabled>
+                        Continuer
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Étape 2 : Création du mot de passe -->
+            <div class="form-step" id="formStep2">
+                <h2 class="step-title">Création du Mot de Passe</h2>
+                <p class="step-description">Créez un mot de passe sécurisé pour votre compte.</p>
+
+                <div class="input-group">
+                    <label class="input-label" for="password">Mot de Passe</label>
+                    <input type="password" id="password" class="input-field" placeholder="Créez un mot de passe">
+                    <div class="validation-message" id="passwordValidation"></div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="confirmPassword">Confirmer le Mot de Passe</label>
+                    <input type="password" id="confirmPassword" class="input-field" placeholder="Retapez votre mot de passe">
+                    <div class="validation-message" id="confirmPasswordValidation"></div>
+                </div>
+
+                <!-- Règles du mot de passe -->
+                <div class="password-rules">
+                    <div class="password-rules-title">
+                        <i class="fas fa-shield-alt"></i>
+                        Exigences du Mot de Passe
+                    </div>
+                    <div class="rule-item" id="ruleLength">
+                        <i class="fas fa-circle" style="font-size: 6px;"></i>
+                        Minimum 8 caractères
+                    </div>
+                    <div class="rule-item" id="ruleUppercase">
+                        <i class="fas fa-circle" style="font-size: 6px;"></i>
+                        Au moins une majuscule
+                    </div>
+                    <div class="rule-item" id="ruleLowercase">
+                        <i class="fas fa-circle" style="font-size: 6px;"></i>
+                        Au moins une minuscule
+                    </div>
+                    <div class="rule-item" id="ruleNumber">
+                        <i class="fas fa-circle" style="font-size: 6px;"></i>
+                        Au moins un chiffre
+                    </div>
+                    <div class="rule-item" id="ruleSpecial">
+                        <i class="fas fa-circle" style="font-size: 6px;"></i>
+                        Au moins un caractère spécial
+                    </div>
+                </div>
+
+                <div class="buttons-container">
+                    <button class="apple-button apple-button-secondary" id="prevStep2">
+                        <i class="fas fa-arrow-left"></i>
+                        Retour
+                    </button>
+                    <button class="apple-button apple-button-primary" id="nextStep2" disabled>
+                        Continuer
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Étape 3 : Matières & Notes -->
+            <div class="form-step" id="formStep3">
+                <h2 class="step-title">Matières & Notes</h2>
+                <p class="step-description">Entrez vos notes pour chaque matière (0-20).</p>
+
+                <div class="subjects-container">
+                    <!-- Mathématiques -->
+                    <div class="subject-item">
+                        <div class="subject-header">
+                            <div class="subject-icon" style="background-color: #007aff;">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <div class="subject-name">Mathématiques</div>
+                        </div>
+                        <div class="grade-input-container">
+                            <input type="number" id="mathGrade" class="grade-input" min="0" max="20" step="0.5" placeholder="0-20" inputmode="decimal">
+                            <div class="grade-range">0 - 20</div>
+                        </div>
+                        <div class="validation-message" id="mathValidation"></div>
+                    </div>
+
+                    <!-- Physique -->
+                    <div class="subject-item">
+                        <div class="subject-header">
+                            <div class="subject-icon" style="background-color: #5856d6;">
+                                <i class="fas fa-atom"></i>
+                            </div>
+                            <div class="subject-name">Physique</div>
+                        </div>
+                        <div class="grade-input-container">
+                            <input type="number" id="physicsGrade" class="grade-input" min="0" max="20" step="0.5" placeholder="0-20" inputmode="decimal">
+                            <div class="grade-range">0 - 20</div>
+                        </div>
+                        <div class="validation-message" id="physicsValidation"></div>
+                    </div>
+
+                    <!-- Sciences -->
+                    <div class="subject-item">
+                        <div class="subject-header">
+                            <div class="subject-icon" style="background-color: #34c759;">
+                                <i class="fas fa-flask"></i>
+                            </div>
+                            <div class="subject-name">Sciences</div>
+                        </div>
+                        <div class="grade-input-container">
+                            <input type="number" id="scienceGrade" class="grade-input" min="0" max="20" step="0.5" placeholder="0-20" inputmode="decimal">
+                            <div class="grade-range">0 - 20</div>
+                        </div>
+                        <div class="validation-message" id="scienceValidation"></div>
+                    </div>
+
+                    <!-- Informatique -->
+                    <div class="subject-item">
+                        <div class="subject-header">
+                            <div class="subject-icon" style="background-color: #ff9500;">
+                                <i class="fas fa-laptop-code"></i>
+                            </div>
+                            <div class="subject-name">Informatique</div>
+                        </div>
+                        <div class="grade-input-container">
+                            <input type="number" id="csGrade" class="grade-input" min="0" max="20" step="0.5" placeholder="0-20" inputmode="decimal">
+                            <div class="grade-range">0 - 20</div>
+                        </div>
+                        <div class="validation-message" id="csValidation"></div>
+                    </div>
+
+                    <!-- Anglais -->
+                    <div class="subject-item">
+                        <div class="subject-header">
+                            <div class="subject-icon" style="background-color: #ff3b30;">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <div class="subject-name">Anglais</div>
+                        </div>
+                        <div class="grade-input-container">
+                            <input type="number" id="englishGrade" class="grade-input" min="0" max="20" step="0.5" placeholder="0-20" inputmode="decimal">
+                            <div class="grade-range">0 - 20</div>
+                        </div>
+                        <div class="validation-message" id="englishValidation"></div>
+                    </div>
+                </div>
+
+                <div class="buttons-container">
+                    <button class="apple-button apple-button-secondary" id="prevStep3">
+                        <i class="fas fa-arrow-left"></i>
+                        Retour
+                    </button>
+                    <button class="apple-button apple-button-primary" id="nextStep3" disabled>
+                        Continuer
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Étape 4 : Méthode de paiement -->
+            <div class="form-step" id="formStep4">
+                <h2 class="step-title">Paiement</h2>
+                <p class="step-description">Sélectionnez votre méthode de paiement préférée.</p>
+
+                <div class="subjects-container">
+                    <!-- Paiement D17 -->
+                    <div class="payment-option" data-method="d17">
+                        <div class="subject-header">
+                            <div class="subject-icon" style="background-color: #007aff;">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div>
+                                <div class="subject-name">Paiement D17</div>
+                                <div style="font-size: 13px; color: #86868b; margin-top: 2px;">Envoyer à : 47050644</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Carte postale -->
+                    <div class="payment-option" data-method="postal">
+                        <div class="subject-header">
+                            <div class="subject-icon" style="background-color: #34c759;">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div>
+                                <div class="subject-name">Carte Postale</div>
+                                <div style="font-size: 13px; color: #86868b; margin-top: 2px;">Carte : 5359 4017 4054 6870</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="important-notice">
+                    <div class="important-notice-header">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div class="important-notice-title">Avis Important</div>
+                    </div>
+                    <div class="important-notice-text">
+                        Après paiement, envoyez une capture d'écran au <strong>47050644</strong>. Votre compte restera inactif jusqu'à vérification de votre paiement.
+                    </div>
+                </div>
+
+                <!-- Indicateur de chargement et message d'erreur -->
+                <div class="loading-spinner" id="loadingSpinner">
+                    <div class="spinner"></div>
+                    <p style="margin-top: 10px; font-size: 14px; color: #86868b;">Envoi des données en cours...</p>
+                </div>
+
+                <div id="errorMessage" style="display: none;"></div>
+
+                <div class="buttons-container">
+                    <button class="apple-button apple-button-secondary" id="prevStep4">
+                        <i class="fas fa-arrow-left"></i>
+                        Retour
+                    </button>
+                    <button class="apple-button apple-button-primary" id="finishBtn" disabled>
+                        Terminer l'Inscription
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script>
-        // Date d'ouverture des inscriptions
-        const targetDate = new Date('February 7, 2026 00:00:00').getTime();
-        
-        // Références aux éléments DOM
-        const daysElement = document.getElementById('days');
-        const hoursElement = document.getElementById('hours');
-        const minutesElement = document.getElementById('minutes');
-        const secondsElement = document.getElementById('seconds');
-        const openMessageElement = document.getElementById('openMessage');
-        const countdownSection = document.querySelector('.countdown-section');
-        const messageElement = document.querySelector('.message');
-        const pointsElement = document.querySelector('.points');
-        const subtitleElement = document.querySelector('.subtitle');
-        
-        // Fonction pour mettre à jour le compteur
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const timeRemaining = targetDate - now;
+    <!-- Modal de confirmation -->
+    <div class="modal-overlay" id="confirmationModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h2 class="modal-title">Inscription Terminée</h2>
+            </div>
             
-            // Si la date est atteinte
-            if (timeRemaining <= 0) {
-                // Afficher le message d'inscriptions ouvertes
-                openMessageElement.style.display = 'block';
-                countdownSection.style.display = 'none';
-                messageElement.style.display = 'none';
-                pointsElement.style.display = 'none';
-                subtitleElement.style.display = 'none';
-                document.querySelectorAll('.separator').forEach(el => el.style.display = 'none');
-                
-                // Arrêter l'intervalle
-                clearInterval(countdownInterval);
-                return;
-            }
+            <div class="modal-message">
+                Vos informations ont été envoyées avec succès à <strong>eduwelltn@gmail.com</strong>.
+                <br><br>
+                Vous recevrez un email de confirmation avec les détails de votre compte dans les prochaines minutes.
+            </div>
             
-            // Calculer les jours, heures, minutes et secondes
-            const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-            
-            // Mettre à jour les éléments avec animation
-            updateWithAnimation(daysElement, days);
-            updateWithAnimation(hoursElement, hours);
-            updateWithAnimation(minutesElement, minutes);
-            updateWithAnimation(secondsElement, seconds);
-        }
-        
-        // Fonction pour mettre à jour avec animation
-        function updateWithAnimation(element, value) {
-            // Vérifier si la valeur a changé
-            if (element.textContent !== formatTime(value)) {
-                // Ajouter la classe d'animation
-                element.classList.add('updated');
-                
-                // Mettre à jour la valeur
-                element.textContent = formatTime(value);
-                
-                // Retirer la classe après l'animation
-                setTimeout(() => {
-                    element.classList.remove('updated');
-                }, 300);
-            }
-        }
-        
-        // Fonction pour formater le temps
-        function formatTime(time) {
-            return time < 10 ? `0${time}` : time;
-        }
-        
-        // Animation d'entrée
-        document.addEventListener('DOMContentLoaded', function() {
-            // Appliquer la classe loading à tous les éléments
-            document.querySelectorAll('.loading').forEach(el => {
-                el.style.animation = 'fadeIn 0.8s ease-out forwards';
-            });
-            
-            // Mettre à jour le compteur immédiatement
-            updateCountdown();
-        });
-        
-        // Mettre à jour le compteur toutes les secondes
-        const countdownInterval = setInterval(updateCountdown, 1000);
-        
-        // Effet de hover sur les éléments du compteur
-        document.querySelectorAll('.countdown-item').forEach(item => {
-            item.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-2px)';
-                this.style.transition = 'transform 0.2s ease';
-            });
-            
-            item.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-        });
-    </script>
+            <button class="modal-button" id="closeModal">
+                Compris
+            </button>
+        </div>
+    </div>
+<script src="./assets/js/accup.js"></script>
 </body>
 </html>

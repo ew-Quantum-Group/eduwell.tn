@@ -41,7 +41,7 @@
         const videoIframe = document.getElementById('videoIframe');
 
         // YouTube video URL: https://youtu.be/-0bgc73860s
-        const youtubeVideoId = '-0bgc73860s';
+        const youtubeVideoId = 'XSP2LBKky5c';
         const youtubeEmbedUrl = `https://www.youtube.com/embed/${youtubeVideoId}`;
 
         btnSeeHow.addEventListener('click', () => {

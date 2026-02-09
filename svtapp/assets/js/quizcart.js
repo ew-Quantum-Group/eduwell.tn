@@ -80,25 +80,19 @@
                         link: "./pages/seek11.html",
                         color: "green"
                     },
-                    {
-                        title: "Génétique des diploïdes (P2)",
-                        description: "",
-                        icon: "fas fa-dna",
-                        link: "#",
-                        color: "blue"
-                    },
+                    
                     {
                         title: "Génétique Humaine (1)",
                         description: "",
                         icon: "fas fa-user-md",
-                        link: "#",
+                        link: "./pages/seek12.html",
                         color: "green"
                     },
                     {
                         title: "Génétique Humaine (2)",
                         description: "",
                         icon: "fas fa-user-md",
-                        link: "#",
+                        link: "./pages/seek13.html",
                         color: "purple"
                     }
                 ]
@@ -111,42 +105,42 @@
                         title: "Tissu Nerveux",
                         description: "",
                         icon: "fas fa-brain",
-                        link: "#",
+                        link: "./pages/seek14.html",
                         color: "green"
                     },
                     {
                         title: "Réflexe myotatique (1)",
                         description: "",
                         icon: "fas fa-running",
-                        link: "#",
+                        link: "./pages/seek15.html",
                         color: "blue"
                     },
                     {
                         title: "Réflexe myotatique (2)",
                         description: "",
                         icon: "fas fa-running",
-                        link: "#",
+                        link: "./pages/seek16.html",
                         color: "green"
                     },
                     {
                         title: "Fonctionnement du muscle squelettique",
                         description: "",
                         icon: "fas fa-dumbbell",
-                        link: "#",
+                        link: "./pages/seek17.html",
                         color: "blue"
                     },
                     {
                         title: "Régulation de la pression artérielle",
                         description: "",
                         icon: "fas fa-heartbeat",
-                        link: "#",
+                        link: "./pages/seek18.html",
                         color: "green"
                     },
                     {
                         title: "Hygiène du système nerveux",
                         description: "",
                         icon: "fas fa-shield-alt",
-                        link: "#",
+                        link: "./pages/seek19.html",
                         color: "purple"
                     }
                 ]
@@ -159,28 +153,28 @@
                         title: "Réponse immunitaire spécifique (1)",
                         description: "",
                         icon: "fas fa-shield-virus",
-                        link: "#",
+                        link: "./pages/seek20.html",
                         color: "green"
                     },
                     {
                         title: "Réponse immunitaire spécifique (2)",
                         description: "",
                         icon: "fas fa-shield-virus",
-                        link: "#",
+                        link: "./pages/seek21.html",
                         color: "blue"
                     },
                     {
                         title: "Allergies",
                         description: "",
                         icon: "fas fa-allergies",
-                        link: "#",
+                        link: "./pages/seek22.html",
                         color: "green"
                     },
                     {
                         title: "SIDA",
                         description: "",
                         icon: "fas fa-virus",
-                        link: "#",
+                        link: "./pages/seek23.html",
                         color: "blue"
                     }
                 ]

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SVT App | EduWell</title>
+    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/styleseek.css">
+</head>
+<body>
+    <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    
+    <div class="floating-element floating-1"></div>
+    <div class="floating-element floating-2"></div>
+    <div class="floating-element floating-3"></div>
+    
+    <a href="../index.html" class="back-btn" id="backBtn">
+        ← Retour
+    </a>
+    
+    <div class="app-container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    SVT
+                </div>
+            </div>
+            <h1>SVT App</h1>
+            <p>Glissez vers la droite pour Vrai, vers la gauche pour Faux</p>
+        </div>
+
+        <div class="card-container">
+            <div class="quiz-card" id="current-card">
+                <div class="card-pattern"></div>
+                <div class="question-number" id="question-number">Question 1/5</div>
+                <h2 id="question-text">Un exemple de question apparaîtra ici</h2>
+                <div class="swipe-hints">
+                    <div class="swipe-hint false">
+                        FAUX
+                    </div>
+                    <div class="swipe-hint true">
+                        VRAI
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="overlay" id="overlay"></div>
+
+        <div class="feedback-popup" id="feedback-popup">
+            <div class="feedback-icon" id="feedback-icon">
+                ✓
+            </div>
+            <h3 id="feedback-title">Correct !</h3>
+            <p id="feedback-message">Vous avez trouvé la bonne réponse !</p>
+            <div class="correct-answer" id="correct-answer">La bonne réponse est : Vrai</div>
+            <div class="explanation" id="explanation">L'explication apparaîtra ici.</div>
+            <button id="continue-btn">
+                Continuer
+            </button>
+        </div>
+
+        <div class="results-screen" id="results-screen">
+            <div class="results-icon">
+                🏆
+            </div>
+            <h2>Quiz Terminé !</h2>
+            <p>Bravo pour avoir terminé le quiz !</p>
+            <div class="percentage" id="final-percentage" data-value="100%">100%</div>
+            <div class="score-container">
+                <div class="score-row">
+                    <span class="score-label">Réponses correctes :</span>
+                    <span class="score-value" id="correct-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Réponses incorrectes :</span>
+                    <span class="score-value" id="incorrect-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Score Total :</span>
+                    <span class="score-value" id="total-score">0/5</span>
+                </div>
+            </div>
+            <button class="retry-btn" id="retry-btn">
+                Recommencer
+            </button>
+        </div>
+    </div>
+
+    <!-- ORIGINAL QUIZ DATA - Only runs if authenticated -->
+    <script>
+        // Données des questions du quiz avec explications
+        const quizQuestions =  [
+  // t
+
+
+  
+  {
+    "question": "Le caractère unidirectionnel de la propagation du potentiel d’action est dû à la période réfractaire.",
+    "answer": true,
+    "explanation": "Pendant la période réfractaire, la membrane ne peut pas générer un nouveau PA dans le sens inverse."
+  },
+  {
+    "question": "Le caractère unidirectionnel du potentiel d’action est dû au blocage momentané des canaux voltage-dépendants.",
+    "answer": true,
+    "explanation": "Les canaux Na+ se bloquent brièvement après ouverture, empêchant la propagation inverse."
+  },
+  {
+    "question": "Le caractère unidirectionnel du PA est dû à l’existence de courants locaux.",
+    "answer": false,
+    "explanation": "Les courants locaux favorisent la propagation mais ne déterminent pas l’unidirectionnalité."
+  },
+  {
+    "question": "Les canaux ioniques de la membrane nerveuse sont spécifiques.",
+    "answer": true,
+    "explanation": "Chaque canal laisse passer seulement certains ions (Na+, K+, Ca2+, Cl-)."
+  },
+  {
+    "question": "Tous les canaux ioniques font passer les ions par diffusion sans consommer d’énergie.",
+    "answer": true,
+    "explanation": "Les canaux facilitent la diffusion passive; seule la pompe Na+/K+ utilise de l’énergie."
+  },
+  {
+    "question": "Les canaux ioniques sont de nature lipidique.",
+    "answer": false,
+    "explanation": "Ils sont des protéines intégrales de membrane, pas lipidiques."
+  },
+  {
+    "question": "Les canaux ioniques font passer les ions en consommant de l’énergie.",
+    "answer": false,
+    "explanation": "Les canaux permettent le passage passif; seule la pompe Na+/K+ consomme de l’énergie."
+  },
+  {
+    "question": "Les ions Ca2+ interviennent dans la transmission synaptique.",
+    "answer": true,
+    "explanation": "L’entrée de Ca2+ dans le bouton déclenche la libération de neurotransmetteurs."
+  },
+  {
+    "question": "Les ions Ca2+ interviennent dans l’exocytose des neurotransmetteurs.",
+    "answer": true,
+    "explanation": "La fusion des vésicules à la membrane dépend de Ca2+."
+  },
+  {
+    "question": "Les ions Ca2+ interviennent dans la phase de repolarisation du PA.",
+    "answer": false,
+    "explanation": "La repolarisation dépend surtout de K+, pas de Ca2+."
+  },
+  {
+    "question": "L’arrivée d’un PA au bouton synaptique est directement provoquée par Ca2+.",
+    "answer": false,
+    "explanation": "Le PA arrive par propagation le long de l’axone; Ca2+ intervient ensuite pour libérer le neurotransmetteur."
+  },
+  {
+    "question": "Pendant la repolarisation, les canaux voltage-dépendants à Na+ se ferment.",
+    "answer": true,
+    "explanation": "La fermeture des canaux Na+ stoppe l’entrée de Na+ et permet la repolarisation."
+  },
+  {
+    "question": "Pendant la repolarisation, des ions K+ quittent en quantité importante la cellule.",
+    "answer": true,
+    "explanation": "L’ouverture des canaux K+ permet le retour du potentiel négatif intracellulaire."
+  },
+  {
+    "question": "Pendant la repolarisation, des ions négatifs entrent pour rétablir la négativité interne.",
+    "answer": false,
+    "explanation": "Le retour à la polarité est dû à la sortie de K+, pas à l’entrée d’anions."
+  },
+  {
+    "question": "Le temps de parcours d’un PA dans une chaîne de 3 neurones de 25 cm avec un délai synaptique de 0.5 ms est de 6 ms.",
+    "answer": true,
+    "explanation": "Le temps total = conduction + 2 × délai synaptique ≈ 6 ms."
+  },
+  {
+    "question": "La fixation d’acétylcholine déclenche l’ouverture de canaux chimio-dépendants aux ions Na+.",
+    "answer": true,
+    "explanation": "L’ACh ouvre les canaux ligand-dépendants permettant l’entrée de Na+ dans la cellule."
+  },
+  {
+    "question": "La sommation spatiale des PPS se produit au niveau du cône axonique.",
+    "answer": true,
+    "explanation": "Les PPS provenant de différentes synapses se combinent au cône axonique pour déclencher un PA."
+  },
+  {
+    "question": "La sommation spatiale des PPS se produit au niveau de la membrane présynaptique.",
+    "answer": false,
+    "explanation": "Elle se fait sur la membrane postsynaptique/cône axonique, pas la présynaptique."
+  },
+  {
+    "question": "Les réflexes d’étirement font intervenir deux types de circuits neuroniques.",
+    "answer": true,
+    "explanation": "Ils impliquent des circuits monosynaptiques et polysynaptiques."
+  },
+  {
+    "question": "Les réflexes d’étirement permettent d’éviter la perte d’équilibre du corps.",
+    "answer": true,
+    "explanation": "Ces réflexes ajustent la tension musculaire pour maintenir la posture."
+  }
+
+
+  
+];
+
+
+    </script>
+    
+    <script src="../assets/js/arcseek.js"></script>
+    
+    <footer class="footer">
+        Eduwell Quantum Group
+    </footer>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SVT App | EduWell</title>
+    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/styleseek.css">
+</head>
+<body>
+    <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    
+    <div class="floating-element floating-1"></div>
+    <div class="floating-element floating-2"></div>
+    <div class="floating-element floating-3"></div>
+    
+    <a href="../index.html" class="back-btn" id="backBtn">
+        ← Retour
+    </a>
+    
+    <div class="app-container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    SVT
+                </div>
+            </div>
+            <h1>SVT App</h1>
+            <p>Glissez vers la droite pour Vrai, vers la gauche pour Faux</p>
+        </div>
+
+        <div class="card-container">
+            <div class="quiz-card" id="current-card">
+                <div class="card-pattern"></div>
+                <div class="question-number" id="question-number">Question 1/5</div>
+                <h2 id="question-text">Un exemple de question apparaîtra ici</h2>
+                <div class="swipe-hints">
+                    <div class="swipe-hint false">
+                        FAUX
+                    </div>
+                    <div class="swipe-hint true">
+                        VRAI
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="overlay" id="overlay"></div>
+
+        <div class="feedback-popup" id="feedback-popup">
+            <div class="feedback-icon" id="feedback-icon">
+                ✓
+            </div>
+            <h3 id="feedback-title">Correct !</h3>
+            <p id="feedback-message">Vous avez trouvé la bonne réponse !</p>
+            <div class="correct-answer" id="correct-answer">La bonne réponse est : Vrai</div>
+            <div class="explanation" id="explanation">L'explication apparaîtra ici.</div>
+            <button id="continue-btn">
+                Continuer
+            </button>
+        </div>
+
+        <div class="results-screen" id="results-screen">
+            <div class="results-icon">
+                🏆
+            </div>
+            <h2>Quiz Terminé !</h2>
+            <p>Bravo pour avoir terminé le quiz !</p>
+            <div class="percentage" id="final-percentage" data-value="100%">100%</div>
+            <div class="score-container">
+                <div class="score-row">
+                    <span class="score-label">Réponses correctes :</span>
+                    <span class="score-value" id="correct-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Réponses incorrectes :</span>
+                    <span class="score-value" id="incorrect-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Score Total :</span>
+                    <span class="score-value" id="total-score">0/5</span>
+                </div>
+            </div>
+            <button class="retry-btn" id="retry-btn">
+                Recommencer
+            </button>
+        </div>
+    </div>
+
+    <!-- ORIGINAL QUIZ DATA - Only runs if authenticated -->
+    <script>
+        // Données des questions du quiz avec explications
+        const quizQuestions =  [
+  // t
+
+
+
+  {
+    "question": "Dans le cas d’une maladie récessive autosomale, le mariage consanguin augmente le risque d’apparition de la maladie chez les descendants.",
+    "answer": true,
+    "explanation": "La consanguinité augmente la probabilité que deux allèles récessifs identiques se rencontrent."
+  },
+  {
+    "question": "Dans une maladie récessive autosomale, tout individu sain est obligatoirement homozygote.",
+    "answer": false,
+    "explanation": "Un individu sain peut être homozygote sain ou hétérozygote porteur."
+  },
+  {
+    "question": "Dans une maladie récessive autosomale, un garçon atteint hérite forcément la maladie uniquement de son père.",
+    "answer": false,
+    "explanation": "Dans les maladies autosomales, l’allèle pathologique peut venir du père ou de la mère."
+  },
+  {
+    "question": "Dans le cas d’une maladie dominante autosomale, des enfants sains peuvent avoir deux parents atteints.",
+    "answer": true,
+    "explanation": "Deux parents atteints hétérozygotes peuvent transmettre un allèle sain."
+  },
+  {
+    "question": "Dans une maladie dominante autosomale, deux parents sains peuvent avoir un enfant atteint.",
+    "answer": false,
+    "explanation": "Un enfant atteint doit hériter au moins d’un allèle dominant pathologique."
+  },
+  {
+    "question": "Dans une maladie dominante autosomale, les enfants d’un père atteint homozygote sont tous atteints.",
+    "answer": true,
+    "explanation": "Un père homozygote transmet obligatoirement l’allèle pathologique à tous ses enfants."
+  },
+  {
+    "question": "Dans une maladie récessive liée au chromosome X, tous les fils d’une mère atteinte sont atteints.",
+    "answer": true,
+    "explanation": "Les fils reçoivent le chromosome X uniquement de leur mère."
+  },
+  {
+    "question": "Dans une maladie récessive liée au chromosome X, le père d’une fille atteinte est atteint.",
+    "answer": true,
+    "explanation": "Une fille atteinte reçoit un chromosome X pathologique de son père."
+  },
+  {
+    "question": "Dans une maladie récessive liée au chromosome X, le père d’une fille atteinte peut être sain.",
+    "answer": false,
+    "explanation": "Le père transmet son chromosome X à sa fille, il doit donc être atteint."
+  },
+  {
+    "question": "Dans une maladie dominante liée au chromosome X, un homme atteint marié à une femme saine donne des filles atteintes et des fils sains.",
+    "answer": true,
+    "explanation": "Le père transmet son chromosome X pathologique uniquement à ses filles."
+  },
+  {
+    "question": "La formule chromosomique d’un garçon atteint du syndrome de Down est 45 autosomes + XY.",
+    "answer": true,
+    "explanation": "Le syndrome de Down correspond à une trisomie 21, soit un autosome supplémentaire."
+  },
+  {
+    "question": "Un garçon atteint du syndrome de Down possède une formule chromosomique normale.",
+    "answer": false,
+    "explanation": "La trisomie 21 entraîne la présence de 47 chromosomes au lieu de 46."
+  }
+
+
+
+  
+];
+
+
+    </script>
+    
+    <script src="../assets/js/arcseek.js"></script>
+    
+    <footer class="footer">
+        Eduwell Quantum Group
+    </footer>
+</body>
+</html>

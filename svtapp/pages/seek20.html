@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SVT App | EduWell</title>
+    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/styleseek.css">
+</head>
+<body>
+    <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    
+    <div class="floating-element floating-1"></div>
+    <div class="floating-element floating-2"></div>
+    <div class="floating-element floating-3"></div>
+    
+    <a href="../index.html" class="back-btn" id="backBtn">
+        ← Retour
+    </a>
+    
+    <div class="app-container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    SVT
+                </div>
+            </div>
+            <h1>SVT App</h1>
+            <p>Glissez vers la droite pour Vrai, vers la gauche pour Faux</p>
+        </div>
+
+        <div class="card-container">
+            <div class="quiz-card" id="current-card">
+                <div class="card-pattern"></div>
+                <div class="question-number" id="question-number">Question 1/5</div>
+                <h2 id="question-text">Un exemple de question apparaîtra ici</h2>
+                <div class="swipe-hints">
+                    <div class="swipe-hint false">
+                        FAUX
+                    </div>
+                    <div class="swipe-hint true">
+                        VRAI
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="overlay" id="overlay"></div>
+
+        <div class="feedback-popup" id="feedback-popup">
+            <div class="feedback-icon" id="feedback-icon">
+                ✓
+            </div>
+            <h3 id="feedback-title">Correct !</h3>
+            <p id="feedback-message">Vous avez trouvé la bonne réponse !</p>
+            <div class="correct-answer" id="correct-answer">La bonne réponse est : Vrai</div>
+            <div class="explanation" id="explanation">L'explication apparaîtra ici.</div>
+            <button id="continue-btn">
+                Continuer
+            </button>
+        </div>
+
+        <div class="results-screen" id="results-screen">
+            <div class="results-icon">
+                🏆
+            </div>
+            <h2>Quiz Terminé !</h2>
+            <p>Bravo pour avoir terminé le quiz !</p>
+            <div class="percentage" id="final-percentage" data-value="100%">100%</div>
+            <div class="score-container">
+                <div class="score-row">
+                    <span class="score-label">Réponses correctes :</span>
+                    <span class="score-value" id="correct-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Réponses incorrectes :</span>
+                    <span class="score-value" id="incorrect-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Score Total :</span>
+                    <span class="score-value" id="total-score">0/5</span>
+                </div>
+            </div>
+            <button class="retry-btn" id="retry-btn">
+                Recommencer
+            </button>
+        </div>
+    </div>
+
+    <!-- ORIGINAL QUIZ DATA - Only runs if authenticated -->
+    <script>
+        // Données des questions du quiz avec explications
+        const quizQuestions =  [
+  // t
+
+
+ 
+  
+  {
+    "question": "Les marqueurs membranaires des cellules immunitaires sont des molécules HLA et des glycoprotéines codées par le CMH.",
+    "answer": true,
+    "explanation": "Ces molécules permettent aux cellules immunitaires de distinguer le soi du non-soi et de présenter les antigènes aux lymphocytes T."
+  },
+  {
+    "question": "Les lymphocytes T4 (LT4) reconnaissent les antigènes grâce à leurs récepteurs TCR et nécessitent des cellules présentatrices de l’antigène.",
+    "answer": true,
+    "explanation": "Les LT4 ne peuvent reconnaître un antigène qu’en présence de cellules présentatrices (comme les macrophages ou cellules dendritiques) via leurs TCR."
+  },
+  {
+    "question": "Les lymphocytes B utilisent les récepteurs TCR pour reconnaître les antigènes.",
+    "answer": false,
+    "explanation": "Les lymphocytes B possèdent des récepteurs BCR spécifiques aux antigènes; le TCR est propre aux lymphocytes T."
+  },
+  {
+    "question": "Le complément intervient dans les réactions immunitaires à médiation humorale (anticorps) pour amplifier la réponse.",
+    "answer": true,
+    "explanation": "Le complément est activé par les complexes antigène-anticorps et participe à la destruction des agents pathogènes."
+  },
+  {
+    "question": "La fixation des IgE sur les mastocytes est suffisante pour provoquer la libération d’histamine.",
+    "answer": false,
+    "explanation": "La dégranulation des mastocytes se produit seulement lorsque l’antigène se lie aux IgE fixées sur leur membrane."
+  },
+  {
+    "question": "Lors d’une allergie, les mastocytes sont sensibilisés par la fixation des IgE.",
+    "answer": true,
+    "explanation": "La fixation des IgE prépare les mastocytes à libérer de l’histamine lors de la rencontre avec l’allergène."
+  },
+  {
+    "question": "Le VIH est un rétrovirus car il contient de l’ADN bicaténaire.",
+    "answer": false,
+    "explanation": "Le VIH est un rétrovirus à ARN simple brin et utilise la transcriptase inverse pour créer de l’ADN dans la cellule hôte."
+  },
+  {
+    "question": "Le VIH se réplique dans la cellule hôte après avoir intégré son génome dans l’ADN de cette cellule.",
+    "answer": true,
+    "explanation": "Le virus utilise la machinerie de la cellule hôte pour produire de nouvelles particules virales."
+  },
+  {
+    "question": "Les LT4 peuvent reconnaître les antigènes sans cellule présentatrice.",
+    "answer": false,
+    "explanation": "Les LT4 ont besoin de cellules présentatrices (macrophages, dendritiques) pour identifier l’antigène via le TCR."
+  },
+  {
+    "question": "Les molécules HLA de classe I et II permettent la distinction entre le soi et le non-soi.",
+    "answer": true,
+    "explanation": "HLA-I et HLA-II présentent des peptides aux lymphocytes T pour activer la réponse immunitaire appropriée."
+  },
+  {
+    "question": "Les anticorps IgE sont synthétisés par les mastocytes.",
+    "answer": false,
+    "explanation": "Les IgE sont produits par les lymphocytes B; les mastocytes ne font que les fixer sur leur membrane."
+  },
+  {
+    "question": "La reconnaissance d’un antigène par les LT4 nécessite l’intervention de cellules présentatrices.",
+    "answer": true,
+    "explanation": "Sans cellules présentatrices, les LT4 ne peuvent pas identifier correctement l’antigène et déclencher la réponse immunitaire."
+  },
+  {
+    "question": "Le complément est activé uniquement lors de réactions immunitaires à médiation cellulaire.",
+    "answer": false,
+    "explanation": "Le complément est surtout impliqué dans la réponse humorale, pas directement dans la réponse cellulaire."
+  },
+  {
+    "question": "La présentation des antigènes par les cellules dendritiques est essentielle pour activer les LT4.",
+    "answer": true,
+    "explanation": "Les cellules dendritiques phagocytent les pathogènes et présentent leurs antigènes aux LT4 via HLA de classe II."
+  },
+  {
+    "question": "Les lymphocytes B peuvent produire des anticorps sans reconnaissance antigénique préalable.",
+    "answer": false,
+    "explanation": "La production d’anticorps par les lymphocytes B nécessite la reconnaissance spécifique de l’antigène."
+  },
+  {
+    "question": "La fixation des IgE sur les mastocytes ne déclenche la réaction allergique que si l’antigène est présent.",
+    "answer": true,
+    "explanation": "Seule la rencontre avec l’allergène provoque la libération d’histamine et les symptômes de l’allergie."
+  },
+  {
+    "question": "Les molécules HLA ne jouent aucun rôle dans la présentation des antigènes aux LT4.",
+    "answer": false,
+    "explanation": "HLA est indispensable pour que les LT4 reconnaissent les antigènes et activent la réponse immunitaire."
+  },
+  {
+    "question": "Les lymphocytes B reconnaissent directement les antigènes solubles grâce aux récepteurs BCR.",
+    "answer": true,
+    "explanation": "Contrairement aux LT4, les lymphocytes B peuvent identifier certains antigènes directement via les BCR."
+  }
+
+
+  
+];
+
+
+    </script>
+    
+    <script src="../assets/js/arcseek.js"></script>
+    
+    <footer class="footer">
+        Eduwell Quantum Group
+    </footer>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SVT App | EduWell</title>
+    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/styleseek.css">
+</head>
+<body>
+    <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    
+    <div class="floating-element floating-1"></div>
+    <div class="floating-element floating-2"></div>
+    <div class="floating-element floating-3"></div>
+    
+    <a href="../index.html" class="back-btn" id="backBtn">
+        ← Retour
+    </a>
+    
+    <div class="app-container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    SVT
+                </div>
+            </div>
+            <h1>SVT App</h1>
+            <p>Glissez vers la droite pour Vrai, vers la gauche pour Faux</p>
+        </div>
+
+        <div class="card-container">
+            <div class="quiz-card" id="current-card">
+                <div class="card-pattern"></div>
+                <div class="question-number" id="question-number">Question 1/5</div>
+                <h2 id="question-text">Un exemple de question apparaîtra ici</h2>
+                <div class="swipe-hints">
+                    <div class="swipe-hint false">
+                        FAUX
+                    </div>
+                    <div class="swipe-hint true">
+                        VRAI
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="overlay" id="overlay"></div>
+
+        <div class="feedback-popup" id="feedback-popup">
+            <div class="feedback-icon" id="feedback-icon">
+                ✓
+            </div>
+            <h3 id="feedback-title">Correct !</h3>
+            <p id="feedback-message">Vous avez trouvé la bonne réponse !</p>
+            <div class="correct-answer" id="correct-answer">La bonne réponse est : Vrai</div>
+            <div class="explanation" id="explanation">L'explication apparaîtra ici.</div>
+            <button id="continue-btn">
+                Continuer
+            </button>
+        </div>
+
+        <div class="results-screen" id="results-screen">
+            <div class="results-icon">
+                🏆
+            </div>
+            <h2>Quiz Terminé !</h2>
+            <p>Bravo pour avoir terminé le quiz !</p>
+            <div class="percentage" id="final-percentage" data-value="100%">100%</div>
+            <div class="score-container">
+                <div class="score-row">
+                    <span class="score-label">Réponses correctes :</span>
+                    <span class="score-value" id="correct-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Réponses incorrectes :</span>
+                    <span class="score-value" id="incorrect-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Score Total :</span>
+                    <span class="score-value" id="total-score">0/5</span>
+                </div>
+            </div>
+            <button class="retry-btn" id="retry-btn">
+                Recommencer
+            </button>
+        </div>
+    </div>
+
+    <!-- ORIGINAL QUIZ DATA - Only runs if authenticated -->
+    <script>
+        // Données des questions du quiz avec explications
+        const quizQuestions =  [
+  // t
+
+
+ 
+ 
+  {
+    "question": "Le VIH est un rétrovirus car il renferme des molécules d’acide ribonucléique.",
+    "answer": true,
+    "explanation": "Le VIH contient de l’ARN comme matériel génétique, ce qui le classe parmi les rétrovirus."
+  },
+  {
+    "question": "Le VIH est un rétrovirus car il renferme de l’ADN comme matériel génétique.",
+    "answer": false,
+    "explanation": "Le VIH ne contient pas d’ADN initialement; il utilise la transcriptase inverse pour produire de l’ADN à partir de son ARN."
+  },
+  {
+    "question": "Le VIH se réplique dans la cellule hôte infectée.",
+    "answer": true,
+    "explanation": "Comme tous les virus, le VIH utilise la machinerie de la cellule hôte pour produire de nouveaux virus."
+  },
+  {
+    "question": "Le VIH retourne à la cellule hôte après bourgeonnement.",
+    "answer": false,
+    "explanation": "Après le bourgeonnement, les virions quittent la cellule pour infecter d’autres cellules; ils ne retournent pas à la cellule initiale."
+  },
+  {
+    "question": "Le VIH infecte préférentiellement les lymphocytes T4 (LT4).",
+    "answer": true,
+    "explanation": "Le VIH se fixe sur le récepteur CD4 présent à la surface des LT4, provoquant leur destruction progressive."
+  },
+  {
+    "question": "Le VIH peut infecter les LT8 directement sans passer par les LT4.",
+    "answer": false,
+    "explanation": "Les LT8 ne possèdent pas le récepteur CD4; l’infection directe par VIH est très rare."
+  },
+  {
+    "question": "La diminution du nombre de LT4 entraîne une immunodéficience chez les patients SIDA.",
+    "answer": true,
+    "explanation": "La destruction des LT4 empêche la coordination de la réponse immunitaire, ce qui rend le patient vulnérable aux infections."
+  },
+  {
+    "question": "La multiplication du VIH n’affecte pas le système immunitaire.",
+    "answer": false,
+    "explanation": "Au contraire, la multiplication du virus détruit progressivement les LT4 et affaiblit le système immunitaire."
+  },
+  {
+    "question": "Les lymphocytes B peuvent produire des anticorps contre le VIH.",
+    "answer": true,
+    "explanation": "Les LB reconnaissent les antigènes viraux et produisent des anticorps, mais ils ne suffisent pas à éliminer le virus."
+  },
+  {
+    "question": "Le VIH peut être éliminé complètement par les anticorps circulants.",
+    "answer": false,
+    "explanation": "Le virus intègre son génome dans les cellules hôtes, ce qui le protège des anticorps circulants."
+  },
+  {
+    "question": "Le diagnostic du SIDA repose sur la détection d’anticorps anti-VIH dans le sang.",
+    "answer": true,
+    "explanation": "Les tests sérologiques détectent la présence d’anticorps spécifiques produits par le corps contre le VIH."
+  },
+  {
+    "question": "Le SIDA peut se diagnostiquer uniquement par les symptômes cliniques sans test sanguin.",
+    "answer": false,
+    "explanation": "Les symptômes apparaissent tardivement; seul un test sanguin peut confirmer la présence du virus ou des anticorps anti-VIH."
+  }
+
+  
+
+
+  
+];
+
+
+    </script>
+    
+    <script src="../assets/js/arcseek.js"></script>
+    
+    <footer class="footer">
+        Eduwell Quantum Group
+    </footer>
+</body>
+</html>

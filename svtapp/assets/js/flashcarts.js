@@ -41,11 +41,15 @@
                 description: "Schémas et illustrations des gènes, ADN et mécanismes héréditaires",
                 icon: "fas fa-dna",
                 images: [
-                    { src: "./flashcarts/6.webp", alt: "Cellule 1" },
-                    { src: "./flashcarts/7.webp", alt: "Cellule 2" },
-                    { src: "./flashcarts/8.webp", alt: "Cellule 3" },
-                    { src: "./flashcarts/9.webp", alt: "Cellule 4" },
-                    { src: "./flashcarts/10.webp", alt: "Cellule 5" }
+                   { src: "https://drive.google.com/thumbnail?id=15OMkxGZ3QRVmSXIC00KycQoatDflaEo2&sz=w1000",alt: "Cellule 1"},
+                   { src: "https://drive.google.com/thumbnail?id=1h5Kl3S8-dX5bixHksgrrtLyoaD0iqume&sz=w1000",alt: "Cellule 1"},
+                   { src: "https://drive.google.com/thumbnail?id=1r86nzVZa4ThaWXOK45XzOlGP6cZeZ407&sz=w1000",alt: "Cellule 1"},
+                   { src: "https://drive.google.com/thumbnail?id=1yHxM47zsY-cEO4ZTEt2S2HIR0YYLNwhh&sz=w1000",alt: "Cellule 1"},
+                   { src: "https://drive.google.com/thumbnail?id=1h2iuEC1OBA0ibUgcavec2-oeJ4pd3-6W&sz=w1000",alt: "Cellule 1"},
+                   { src: "https://drive.google.com/thumbnail?id=1iTrGKkm9aqx3qQJ43Dbu5zFEqKpoABE1&sz=w1000",alt: "Cellule 1"},
+                   { src: "https://drive.google.com/thumbnail?id=1qKYto4ndqVBsK_GzPMPfyUTmodglbxKA&sz=w1000",alt: "Cellule 1"},
+  
+  {  src: "https://drive.google.com/thumbnail?id=1ExtY4Vi2tSV3mD8adgQXOnPrZ6Lb7VDc&sz=w1000",alt: "Cellule 1" }
                 ]
             },
             "neuro": {
@@ -77,11 +81,20 @@
                 description: " Schémas du squelette et des muscles expliquant le mouvement et le soutien du corps",
                 icon: "fas fa-bone",
                 images: [
-                    { src: "./flashcarts/6.webp", alt: "Cellule 1" },
-                    { src: "./flashcarts/7.webp", alt: "Cellule 2" },
-                    { src: "./flashcarts/8.webp", alt: "Cellule 3" },
-                    { src: "./flashcarts/9.webp", alt: "Cellule 4" },
-                    { src: "./flashcarts/10.webp", alt: "Cellule 5" }
+                   { src: "https://drive.google.com/thumbnail?id=1lszSL1Wqb-z_wMbHvZM5-uBueEKBzCkK&sz=w1000",alt: "Cellule 1"},
+                    { src: "https://drive.google.com/thumbnail?id=1JVjWiTo7kgSbFaZ8fUPSr7EQZ4OQyIcT&sz=w1000",alt: "Cellule 1"},
+                     { src: "https://drive.google.com/thumbnail?id=1ozZRdTPqwCe4J2ZNAbyAtACkFVAbY_Ny&sz=w1000",alt: "Cellule 1"},
+                      { src: "https://drive.google.com/thumbnail?id=1HSl-NY6eGbuVl5BYI_XuTy2w3XS8xuRq&sz=w1000",alt: "Cellule 1"},
+                       { src: "https://drive.google.com/thumbnail?id=1MCBgxp1_mZoNKiY2zs_XqlwQpYODYIoy&sz=w1000",alt: "Cellule 1"},
+                        { src: "https://drive.google.com/thumbnail?id=1Ap2PUUCORqZkEeB_gYVkmYmj4eyb8gZC&sz=w1000",alt: "Cellule 6"},
+                         { src: "https://drive.google.com/thumbnail?id=1hsGfrLnQLnXWsX6hbuBn_E_EzYQwWnbM&sz=w1000",alt: "Cellule 1"},
+                          { src: "https://drive.google.com/thumbnail?id=1crpb1RGAHczr3wLUw2jGKzeC_iOhWcg-&sz=w1000",alt: "Cellule 1"},
+                           { src: "https://drive.google.com/thumbnail?id=1ESG767XOwMJ9sebDC_LDFiq9natrYoNQ&sz=w1000",alt: "Cellule 1"},
+                            { src: "https://drive.google.com/thumbnail?id=18klWx_yCy5eVsexz-Ry0PwsPHdGCXwvP&sz=w1000",alt: "Cellule 1"},
+                             { src: "https://drive.google.com/thumbnail?id=1NB8TFe0saVfu6l-lWhgSNBj2aBepDPSh&sz=w1000",alt: "Cellule 1"},
+                              { src: "https://drive.google.com/thumbnail?id=1XPMBA6TxmNvJhX0zCjP7ZF8eeQR0fiv_&sz=w1000",alt: "Cellule 1"},
+  
+  {  src: "https://drive.google.com/thumbnail?id=1v9je3lWxXBJTttOh__kJR20vwRdrYokE&sz=w1000",alt: "Cellule 1" }
                 ]
             },
             "presion": {
@@ -89,11 +102,11 @@
                 description: " Schémas expliquant la pression du sang et son rôle dans la circulation",
                 icon: "fas fa-tachometer-alt",
                 images: [
-                    { src: "./flashcarts/6.webp", alt: "Cellule 1" },
-                    { src: "./flashcarts/7.webp", alt: "Cellule 2" },
-                    { src: "./flashcarts/8.webp", alt: "Cellule 3" },
-                    { src: "./flashcarts/9.webp", alt: "Cellule 4" },
-                    { src: "./flashcarts/10.webp", alt: "Cellule 5" }
+                   { src: "https://drive.google.com/thumbnail?id=1pcCH0Mx3BxlNng1LaDQXa10AmGlvTOzN&sz=w1000",alt: "Cellule 1"},
+                     { src: "https://drive.google.com/thumbnail?id=1Nzg6oESGffepdHUzHnQKundo3wj2qw_W&sz=w1000",alt: "Cellule 1"},
+                       { src: "https://drive.google.com/thumbnail?id=1g5kK1pqcF6bFXfYpmOUJvKKqUiiyqhaJ&sz=w1000",alt: "Cellule 1"},
+  
+  {  src: "https://drive.google.com/thumbnail?id=1iR1TTWBUVFb2wjKR2cdRt5ybJFQdq2TB&sz=w1000",alt: "Cellule 1" }
                 ]
             },
             "immu": {
@@ -101,11 +114,7 @@
                 description: " Schémas des cellules immunitaires et des mécanismes de défense de l’organisme",
                 icon: "fas fa-shield-virus",
                 images: [
-                    { src: "./flashcarts/6.webp", alt: "Cellule 1" },
-                    { src: "./flashcarts/7.webp", alt: "Cellule 2" },
-                    { src: "./flashcarts/8.webp", alt: "Cellule 3" },
-                    { src: "./flashcarts/9.webp", alt: "Cellule 4" },
-                    { src: "./flashcarts/10.webp", alt: "Cellule 5" }
+                   
                 ]
             }
 

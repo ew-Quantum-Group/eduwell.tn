@@ -2,709 +2,408 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Sahl Academy</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenue sur SAHL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=SF+Pro+Text:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        /* Your existing CSS styles remain exactly the same */
-        /* ===== Apple-Inspired CSS Variables - LIGHT MODE ONLY ===== */
+        /* CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
-            /* Your existing CSS variables */
-            --white: #FFFFFF;
-            --white-soft: #F5F5F7;
-            --white-mute: #EFEFF4;
-            
-            /* ... rest of your CSS styles ... */
+            --sahl-blue: #007AFF;
+            --sahl-blue-hover: #0056CC;
+            --text-primary: #1D1D1F;
+            --text-secondary: #86868B;
+            --text-tertiary: #C7C7CC;
+            --background: #FFFFFF;
+            --surface: #FBFBFD;
+            --border: #E5E5EA;
+            --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --border-radius: 12px;
+            --border-radius-button: 20px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
-        /* ... rest of your CSS styles remain exactly as you provided ... */
-        
-        /* ===== NEW STYLES FOR VIDEO SETTINGS ===== */
-        .video-settings-panel {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--white);
-            border-radius: var(--radius-2xl);
-            box-shadow: var(--shadow-xl);
-            padding: var(--space-8);
-            width: 90%;
-            max-width: 500px;
-            max-height: 80vh;
-            overflow-y: auto;
-            z-index: var(--z-popup);
-            border: 1px solid var(--gray-200);
-        }
-        
-        .video-settings-panel.active {
-            display: block;
-        }
-        
-        .video-settings-header {
+
+        body {
+            font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            min-height: 100vh;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: var(--space-6);
-            padding-bottom: var(--space-4);
-            border-bottom: 1px solid var(--gray-200);
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.8s ease-out forwards;
         }
-        
-        .video-settings-title {
-            font-size: var(--font-size-xl);
+
+        /* Main Container */
+        .welcome-container {
+            max-width: 560px;
+            width: 100%;
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            padding: 60px 48px;
+            text-align: center;
+            position: relative;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-light);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.6s ease-out forwards 0.2s;
+        }
+
+        /* Logo */
+        .logo {
+            margin-bottom: 32px;
+            font-family: 'SF Pro Display', sans-serif;
             font-weight: 700;
-            color: var(--black-soft);
+            font-size: 1.75rem;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
-        
-        .video-settings-close {
-            background: var(--gray-100);
+
+        .logo-emoji {
+            font-size: 1.625rem;
+            animation: gentleWave 2.5s ease-in-out infinite;
+        }
+
+        /* Main Heading */
+        .welcome-heading {
+            font-family: 'SF Pro Display', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.08349;
+            letter-spacing: -0.003em;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            opacity: 0;
+            transform: translateY(10px);
+            animation: slideUp 0.6s ease-out forwards 0.4s;
+        }
+
+        /* Subtitle */
+        .subtitle {
+            font-size: 1.125rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.47059;
+            letter-spacing: -0.022em;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: slideUp 0.6s ease-out forwards 0.5s;
+        }
+
+        /* Welcome Text */
+        .welcome-text {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 440px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.47059;
+            letter-spacing: -0.022em;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: slideUp 0.6s ease-out forwards 0.6s;
+        }
+
+        .text-highlight {
+            color: var(--sahl-blue);
+            font-weight: 500;
+        }
+
+        /* Primary Button */
+        .continue-button {
+            background: var(--sahl-blue);
+            color: white;
             border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: var(--radius-circle);
-            display: flex;
+            border-radius: var(--border-radius-button);
+            padding: 12px 32px;
+            font-size: 1.063rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            color: var(--gray-600);
-            transition: all var(--transition-fast);
-        }
-        
-        .video-settings-close:hover {
-            background: var(--gray-200);
-        }
-        
-        .settings-section {
-            margin-bottom: var(--space-8);
-        }
-        
-        .settings-section-title {
-            font-size: var(--font-size-lg);
-            font-weight: 600;
-            color: var(--black-soft);
-            margin-bottom: var(--space-4);
-        }
-        
-        .level-filter {
-            display: flex;
-            gap: var(--space-3);
-            margin-bottom: var(--space-6);
-            flex-wrap: wrap;
-        }
-        
-        .level-filter-btn {
-            padding: var(--space-2) var(--space-4);
-            background: var(--white);
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius-lg);
-            color: var(--gray-700);
-            font-size: var(--font-size-sm);
-            font-weight: 500;
-            cursor: pointer;
-            transition: all var(--transition-fast);
-        }
-        
-        .level-filter-btn.active {
-            background: var(--blue);
-            border-color: var(--blue);
-            color: var(--white);
-        }
-        
-        .video-count-control {
-            display: flex;
-            align-items: center;
-            gap: var(--space-4);
-            margin-bottom: var(--space-8);
-        }
-        
-        .video-count-label {
-            font-size: var(--font-size-base);
-            color: var(--gray-700);
-            font-weight: 500;
-        }
-        
-        .video-count-select {
-            padding: var(--space-2) var(--space-4);
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius-lg);
-            background: var(--white);
-            color: var(--gray-800);
-            font-size: var(--font-size-base);
-            min-width: 80px;
-        }
-        
-        .video-selection-list {
-            max-height: 300px;
-            overflow-y: auto;
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius-lg);
-            padding: var(--space-4);
-        }
-        
-        .video-selection-item {
-            display: flex;
-            align-items: center;
-            gap: var(--space-3);
-            padding: var(--space-3);
-            border-bottom: 1px solid var(--gray-100);
-            cursor: pointer;
-            transition: all var(--transition-fast);
-        }
-        
-        .video-selection-item:last-child {
-            border-bottom: none;
-        }
-        
-        .video-selection-item:hover {
-            background: var(--gray-50);
-        }
-        
-        .video-selection-item.selected {
-            background: var(--blue-light);
-            border-left: 3px solid var(--blue);
-        }
-        
-        .video-selection-checkbox {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--gray-300);
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        
-        .video-selection-checkbox.selected {
-            background: var(--blue);
-            border-color: var(--blue);
-            color: var(--white);
-        }
-        
-        .video-selection-info {
-            flex: 1;
-            min-width: 0;
-        }
-        
-        .video-selection-title {
-            font-size: var(--font-size-sm);
-            font-weight: 500;
-            color: var(--black-soft);
-            margin-bottom: var(--space-1);
+            gap: 8px;
+            position: relative;
             overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: slideUp 0.6s ease-out forwards 0.7s;
         }
-        
-        .video-selection-meta {
-            font-size: var(--font-size-xs);
-            color: var(--gray-500);
-            display: flex;
-            gap: var(--space-2);
-        }
-        
-        .settings-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: var(--space-4);
-            margin-top: var(--space-8);
-            padding-top: var(--space-6);
-            border-top: 1px solid var(--gray-200);
-        }
-        
-        .settings-save-btn {
-            padding: var(--space-3) var(--space-8);
-            background: var(--blue);
-            color: var(--white);
-            border: none;
-            border-radius: var(--radius-xl);
-            font-size: var(--font-size-base);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all var(--transition-fast);
-        }
-        
-        .settings-save-btn:hover {
-            background: var(--blue-dark);
+
+        .continue-button:hover {
+            background: var(--sahl-blue-hover);
             transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(0, 122, 255, 0.15);
         }
-        
-        .settings-cancel-btn {
-            padding: var(--space-3) var(--space-8);
-            background: var(--gray-100);
-            color: var(--gray-700);
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius-xl);
-            font-size: var(--font-size-base);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all var(--transition-fast);
+
+        .continue-button:active {
+            transform: translateY(0);
         }
-        
-        .settings-cancel-btn:hover {
-            background: var(--gray-200);
+
+        .button-emoji {
+            font-size: 1.125rem;
+            opacity: 0;
+            transform: translateX(-4px);
+            transition: var(--transition);
         }
-        
-        .video-settings-trigger {
-            position: absolute;
-            top: var(--space-4);
-            right: var(--space-4);
-            background: var(--white);
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius-lg);
-            padding: var(--space-2);
-            cursor: pointer;
-            color: var(--gray-600);
-            transition: all var(--transition-fast);
-            z-index: 10;
+
+        .continue-button:hover .button-emoji {
+            opacity: 1;
+            transform: translateX(0);
         }
-        
-        .video-settings-trigger:hover {
-            background: var(--blue);
-            color: var(--white);
-            border-color: var(--blue);
+
+        /* Footer Note */
+        .footer-note {
+            margin-top: 32px;
+            font-size: 0.813rem;
+            color: var(--text-tertiary);
+            font-weight: 400;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards 0.9s;
         }
-        
-        @media (max-width: 768px) {
-            .video-settings-panel {
-                width: 95%;
-                padding: var(--space-6);
+
+        /* Divider */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 32px 0;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards 0.8s;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes gentleWave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(3deg); }
+            75% { transform: rotate(-3deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 734px) {
+            .welcome-container {
+                padding: 48px 32px;
+                margin: 0 20px;
+                max-width: 480px;
             }
             
-            .settings-actions {
-                flex-direction: column;
+            .welcome-heading {
+                font-size: 2rem;
+                line-height: 1.125;
             }
             
-            .settings-save-btn,
-            .settings-cancel-btn {
+            .subtitle {
+                font-size: 1.063rem;
+            }
+            
+            .logo {
+                font-size: 1.625rem;
+                margin-bottom: 28px;
+            }
+            
+            .welcome-text {
+                font-size: 0.938rem;
+            }
+            
+            .continue-button {
+                padding: 11px 28px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 16px;
+                background: var(--surface);
+            }
+            
+            .welcome-container {
+                padding: 40px 24px;
+                border: none;
+                box-shadow: none;
+                margin: 0;
+            }
+            
+            .welcome-heading {
+                font-size: 1.75rem;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .welcome-text {
+                font-size: 0.875rem;
+            }
+            
+            .continue-button {
                 width: 100%;
-                padding: var(--space-4);
+                max-width: 280px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Page de Chargement -->
-    <div class="loader-overlay" id="loader">
-        <div class="loader-content">
-            <div class="loader-logo">
-                <i class="fas fa-graduation-cap"></i>
-            </div>
-            <div class="loader-text">Chargement...</div>
-            <div class="loader-progress">
-                <div class="loader-progress-bar"></div>
-            </div>
+         <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = './login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    <div class="welcome-container" id="welcomeContainer">
+        <div class="logo">
+            SAHL <span class="logo-emoji">👋</span>
         </div>
+        
+        <h1 class="welcome-heading">
+            Bienvenue sur SAHL
+        </h1>
+        
+        <p class="subtitle">
+            Nous sommes ravis de vous accueillir
+        </p>
+        
+        <div class="divider"></div>
+        
+        <p class="welcome-text"><span class="text-highlight">Bienvenue chez SAHL !</span> Nous sommes ravis de vous compter parmi nous. Cette page d'accueil apparaît uniquement lors de votre première connexion. Nous travaillons constamment pour vous offrir une expérience éducative optimale, et très bientôt, vous recevrez une notification pour savoir que vous pouvez accéder à cette page à tout moment. Profitez pleinement de <span class="text-highlight">toutes les fonctionnalités</span> de notre plateforme.
+ </p>
+        
+        <button class="continue-button" id="continueButton">
+            Continuer vers la Plateforme
+            <span class="button-emoji">→</span>
+        </button>
+        
+        <p class="footer-note">
+            Cette page n'est disponible que la première fois où votre compte est créé
+        </p>
     </div>
 
-    <!-- En-tête -->
-    <header class="header" id="mainHeader">
-        <a href="#main" class="logo" aria-label="EduLearn Accueil">
-            <span class="logo-text">Sahl</span>
-        </a>
-        
-        <!-- Desktop Navigation -->
-        <nav class="header-nav">
-            <a href="#resources" class="nav-link" data-popup="resources">
-                <i class="fas fa-folder"></i>
-                <span class="hidden-mobile">Ressources</span>
-            </a>
-        </nav>
-        
-        <div class="header-actions">
-            <button class="user-button" id="userMenuButton">
-                <div class="user-avatar" id="userAvatar">AA</div>
-                <span class="user-name" id="userName">AA AAA</span>
-                <i class="fas fa-chevron-down"></i>
-            </button>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const continueButton = document.getElementById('continueButton');
             
-            <div class="user-dropdown" id="userDropdown">
-                <div class="dropdown-item" data-popup="profile">
-                    <i class="fas fa-user"></i>
-                    Mon Profil
-                </div>
-               
-                <div class="dropdown-item" data-popup="help">
-                    <i class="fas fa-question-circle"></i>
-                    Aide
-                </div>
-                <div class="dropdown-item logout" id="logoutButton">
-                    <i class="fas fa-sign-out-alt"></i>
-                    Déconnexion
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Contenu Principal -->
-    <main class="main" id="main">
-        <!-- Hero Section -->
-        <section class="hero-section" id="profile">
-            <div class="container">
-                <div class="hero-content">
-                   <h1 class="hero-title">Votre Plateforme Éducative</h1>
-                   <p class="hero-subtitle">
-                       Cours structurés, exercices corrigés et accompagnement pour la réussite scolaire.
-                   </p>
-
-                   <div class="hero-stats">
-                       <div class="stat-item">
-                           <div class="stat-value">22h+</div>
-                           <div class="stat-label">Heures de Contenu</div>
-                       </div>
-                       <div class="stat-item">
-                           <div class="stat-value">5000+</div>
-                           <div class="stat-label">Documents Pédagogiques</div>
-                       </div>
-                   </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Profile Section -->
-        <section class="profile-section">
-            <div class="container">
-                <div class="profile-grid">
-                    <!-- Profile Card -->
-                    <div class="profile-card fade-in">
-                        <div class="profile-header">
-                            <div class="profile-avatar">
-                                <div class="avatar-large" id="profileAvatar">AJ</div>
-                                <div class="profile-online"></div>
-                            </div>
-                            <div class="profile-info">
-                                <h2 class="profile-name" id="profileName">Alex Johnson</h2>
-                                <p class="profile-title">Bac Science</p>
-                                <div class="profile-university">
-                                    <i class="fas fa-university"></i>
-                                    <span>Sahl Académie Membership</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                            
-                    <!-- Progress and Activity -->
-                    <div class="profile-details fade-in" style="animation-delay: 0.1s;">
-                        <!-- Progress Section -->
-                        <div class="progress-section mb-8">
-                            <h3 class="section-title">
-                                <i class="fas fa-chart-line"></i>
-                                Progression de l'Année Scolaire
-                            </h3>
-                            <div class="progress-container">
-                                <div class="progress-header">
-                                    <h4 class="progress-title">Avancement Global</h4>
-                                    <span class="progress-percentage">51% Terminé</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 51%;"></div>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; font-size: var(--font-size-sm); color: var(--gray-500);">
-                                    <span>15 Septembre</span>
-                                    <span>30 Mai</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Activity Section -->
-                        <div class="activity-section">
-                            <div class="activity-container">
-                                <div class="activity-header">
-                                    <h4 class="activity-title">
-                                        <i class="fas fa-history"></i>
-                                        Activité Récente
-                                    </h4>
-                                    <a href="#activity" class="view-all-button" data-popup="activity">
-                                        Tout voir
-                                        <i class="fas fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                                
-                                <div class="activity-list">
-                                    <div class="activity-item">
-                                        <div class="activity-icon">
-                                            <i class="fas fa-book"></i>
-                                        </div>
-                                        <div class="activity-content">
-                                            <p class="activity-text">Préparation du devoir de contrôle n°2</p>
-                                            <div class="activity-time">
-                                                <i class="far fa-clock"></i>
-                                                <span>En cours</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="activity-item">
-                                        <div class="activity-icon" style="background: var(--gradient-green);">
-                                            <i class="fas fa-sync-alt"></i>
-                                        </div>
-                                        <div class="activity-content">
-                                            <p class="activity-text">Révision des matières secondaires</p>
-                                            <div class="activity-time">
-                                                <i class="far fa-clock"></i>
-                                                <span>Cette semaine</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="activity-item">
-                                        <div class="activity-icon" style="background: var(--gradient-purple);">
-                                            <i class="fas fa-clock"></i>
-                                        </div>
-                                        <div class="activity-content">
-                                            <p class="activity-text">Organisation du temps et amélioration du niveau</p>
-                                            <div class="activity-time">
-                                                <i class="far fa-clock"></i>
-                                                <span>En cours</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Subjects Section -->
-        <section class="subjects-section" id="subjects">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-header-title">Explorez Vos Matières</h2>
-                    <p class="section-header-subtitle">Accédez à des ressources complètes pour chaque matière de votre cursus</p>
-                </div>
+            // Gestionnaire de clic du bouton
+            continueButton.addEventListener('click', function() {
+                // Sauvegarder dans localStorage que la page a été vue
+                localStorage.setItem('sahl_welcome_seen', 'true');
                 
-                <div class="subjects-grid" id="subjectsGrid">
-                    <!-- Subjects will be populated by JavaScript -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Videos Section -->
-        <section class="videos-section" id="videos">
-            <div class="container">
-                <div class="section-header mb-12">
-                    <h2 class="section-header-title">Vidéos Recommandées</h2>
-                    <p class="section-header-subtitle">Contenu éducatif sélectionné pour votre progression académique</p>
-                </div>
+                // Animation de clic
+                this.style.transform = 'scale(0.95)';
                 
-                <div class="videos-header mb-8">
-                    <div class="filter-buttons">
-                       
-                        <button class="filter-button active" data-filter="beginner">Débutant</button>
-                        <button class="filter-button" data-filter="intermediate">Intermédiaire</button>
-                        <button class="filter-button" data-filter="advanced">Avancé</button>
-                    </div>
-                    
-                    <!-- Video Settings Trigger Button -->
-                    <button class="video-settings-trigger" id="videoSettingsTrigger" aria-label="Paramètres des vidéos">
-                        <i class="fas fa-cog"></i>
-                    </button>
-                </div>
+                // Animation de chargement
+                const originalText = this.innerHTML;
+                this.innerHTML = 'Redirection...';
+                this.style.pointerEvents = 'none';
                 
-                <div class="videos-grid" id="videosGrid">
-                    <!-- Videos will be populated by JavaScript -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Mobile Logout Button -->
-        <div class="mobile-logout-container">
-            <button class="mobile-logout-button" id="mobileLogoutButton">
-                <i class="fas fa-sign-out-alt"></i>
-                Déconnexion
-            </button>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-               <div class="footer-section">
-                   <h3>Sahl</h3>
-                   <p style="color: var(--gray-300); margin-bottom: var(--space-6);">
-                      Powered by Eduwell & Edubridge Content
-                   </p>
-               </div>
-                
-                <div class="footer-section">
-                    <h3>Navigation</h3>
-                    <ul class="footer-links">
-                        <li><a href="#profile" data-popup="profile">Profil</a></li>
-                        <li><a href="#subjects" data-popup="subjects">Matières</a></li>
-                        <li><a href="#resources" data-popup="resources">Ressources</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>Support</h3>
-                    <ul class="footer-links">
-                        <li><a href="#contact" data-popup="contact">Contact</a></li>
-                        <li><a href="#faq" data-popup="faq">FAQ</a></li>
-                        <li><a href="#privacy" data-popup="privacy">Confidentialité</a></li>
-                    </ul>
-                </div>
-                
-               
-            </div>
+                // Redirection après un court délai pour l'animation
+                setTimeout(() => {
+                    // Rediriger vers index.html
+                    window.location.href = './index.html';
+                }, 500);
+            });
             
-            <div class="footer-bottom">
-                <p>&copy; Eduwell Quantum Group</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Video Settings Panel -->
-    <div class="video-settings-panel" id="videoSettingsPanel">
-        <div class="video-settings-header">
-            <h3 class="video-settings-title">Paramètres des Vidéos</h3>
-            <button class="video-settings-close" id="videoSettingsClose">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        
-        <div class="settings-content">
-            <!-- Level Filter Section -->
-            <div class="settings-section">
-                <h4 class="settings-section-title">Filtrer par Niveau</h4>
-                <div class="level-filter" id="levelFilter">
-                    <!-- Level buttons will be populated by JavaScript -->
-                </div>
-            </div>
+            // Effet de survol pour la flèche du bouton
+            continueButton.addEventListener('mouseenter', function() {
+                const arrow = this.querySelector('.button-emoji');
+                if (arrow) {
+                    arrow.style.transform = 'translateX(2px)';
+                }
+            });
             
-            <!-- Video Count Control -->
-            <div class="settings-section">
-                <h4 class="settings-section-title">Nombre de Vidéos à Afficher</h4>
-                <div class="video-count-control">
-                    <span class="video-count-label">Afficher :</span>
-                    <select class="video-count-select" id="videoCountSelect">
-                        <option value="3">3 vidéos</option>
-                        <option value="5">5 vidéos</option>
-                        <option value="8">8 vidéos</option>
-                        <option value="10">10 vidéos</option>
-                        <option value="15">15 vidéos</option>
-                        <option value="20">20 vidéos</option>
-                        <option value="all">Toutes</option>
-                    </select>
-                </div>
-            </div>
+            continueButton.addEventListener('mouseleave', function() {
+                const arrow = this.querySelector('.button-emoji');
+                if (arrow && !this.innerHTML.includes('Redirection')) {
+                    arrow.style.transform = 'translateX(0)';
+                }
+            });
             
-            <!-- Video Selection Section -->
-            <div class="settings-section">
-                <h4 class="settings-section-title">Sélectionner les Vidéos</h4>
-                <div class="video-selection-list" id="videoSelectionList">
-                    <!-- Video selection items will be populated by JavaScript -->
-                </div>
-            </div>
-        </div>
-        
-        <div class="settings-actions">
-            <button class="settings-cancel-btn" id="settingsCancelBtn">Annuler</button>
-            <button class="settings-save-btn" id="settingsSaveBtn">Enregistrer</button>
-        </div>
-    </div>
-
-    <!-- Video Popup -->
-    <div class="popup-overlay" id="popupOverlay"></div>
-    
-    <div class="popup-container" id="popupContainer">
-        <div class="popup-header">
-            <div class="popup-title">
-                <i class="fas fa-play-circle"></i>
-                <span id="popupSubjectTitle">Vidéos</span>
-            </div>
-            <button class="popup-close" id="popupClose" aria-label="Fermer la popup">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        
-        <div class="popup-content">
-            <div class="video-player-container">
-                <div class="video-wrapper">
-                    <iframe 
-                        id="videoPlayer"
-                        class="video-player"
-                        src=""
-                        title="Lecteur vidéo"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                        loading="lazy">
-                    </iframe>
-                    <div class="video-source-indicator" id="videoSourceIndicator">
-                        <i class="fab fa-youtube"></i>
-                        <span>YouTube</span>
-                    </div>
-                </div>
-                <div class="video-info" id="videoInfo">
-                    <!-- Video info will be populated by JavaScript -->
-                </div>
-            </div>
+            // Vérifier si l'utilisateur a déjà vu cette page
+            // Si oui, rediriger directement vers index.html
+            if (localStorage.getItem('sahl_welcome_seen') === 'true') {
+                console.log('Page de bienvenue déjà vue, redirection automatique...');
+                // Vous pouvez activer cette ligne pour rediriger automatiquement :
+                // window.location.href = './index.html';
+            }
             
-            <div class="video-playlist">
-                <div class="playlist-header">
-                    <h3 class="playlist-title">Liste de lecture</h3>
-                    <span class="playlist-count" id="playlistCount">0 vidéos</span>
-                </div>
-                
-                <div class="playlist-items-container">
-                    <div class="playlist-items" id="playlistItems">
-                        <!-- Playlist items will be populated by JavaScript -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Lesson Selection Popup -->
-    <div class="popup-overlay" id="lessonPopupOverlay"></div>
-    
-    <div class="popup-container lesson-popup-container" id="lessonPopupContainer">
-        <div class="popup-header">
-            <div class="popup-title" id="lessonPopupTitle">
-                <i class="fas fa-book"></i>
-                <span>Choisissez une leçon</span>
-            </div>
-            <button class="popup-close" id="lessonPopupClose" aria-label="Fermer la popup">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
+            // Ajouter le support du clavier (Entrée/Espace)
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    const button = document.getElementById('continueButton');
+                    if (document.activeElement !== button) {
+                        e.preventDefault();
+                        button.click();
+                    }
+                }
+            });
+        });
         
-        <div class="lesson-popup-content" id="lessonPopupContent">
-            <!-- Lesson cards will be populated by JavaScript -->
-        </div>
-    </div>
-
-    <!-- Navigation Popup Template -->
-    <div class="popup-overlay" id="navPopupOverlay"></div>
-    
-    <div class="popup-container nav-popup-container" id="navPopupContainer">
-        <div class="popup-header">
-            <div class="popup-title" id="navPopupTitle">
-                <i class="fas fa-info-circle"></i>
-                <span>Informations</span>
-            </div>
-            <button class="popup-close" id="navPopupClose" aria-label="Fermer la popup">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
+        // Fonction pour forcer le thème clair
+        function forceLightTheme() {
+            // Définir les variables CSS en thème clair
+            document.documentElement.style.setProperty('--text-primary', '#1D1D1F');
+            document.documentElement.style.setProperty('--text-secondary', '#86868B');
+            document.documentElement.style.setProperty('--text-tertiary', '#C7C7CC');
+            document.documentElement.style.setProperty('--background', '#FFFFFF');
+            document.documentElement.style.setProperty('--surface', '#FBFBFD');
+            document.documentElement.style.setProperty('--border', '#E5E5EA');
+            document.documentElement.style.setProperty('--shadow-light', '0 4px 20px rgba(0, 0, 0, 0.06)');
+            
+            // Forcer les couleurs de fond et texte
+            document.body.style.backgroundColor = '#FFFFFF';
+            document.body.style.color = '#1D1D1F';
+        }
         
-        <div class="nav-popup-content" id="navPopupContent">
-            <!-- Content will be populated by JavaScript -->
-        </div>
-    </div>
-
-    <!-- Toast Container -->
-    <div class="toast-container" id="toastContainer"></div>
-
-    <script src="./assets/js/data.js"></script>
-    <script src="./assets/js/script web data message.js"></script>
-    <script src="./assets/js/script.js"></script>
+        // Appeler la fonction au chargement
+        window.addEventListener('load', forceLightTheme);
+        
+        // Surveiller les changements de préférence de thème pour maintenir le thème clair
+        if (window.matchMedia) {
+            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+            mediaQuery.addEventListener('change', forceLightTheme);
+        }
+    </script>
 </body>
 </html>

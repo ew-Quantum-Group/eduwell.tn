@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakWell | Sahl</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="./data/img/speakwell.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="./data/css/style.css">
+     
+</head>
+<body>
+        <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    <!-- Back Button -->
+    <button class="back-button" id="backButton" aria-label="Go back to previous page">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading quiz...</div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container hidden" id="appContainer">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="quiz-title">Grammar Quiz</h1>
+                <div class="quiz-subtitle">Present tenses</div>
+                <div class="progress-indicator">
+                    <span id="currentScore">0</span> pts
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content" id="quizContent">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text">
+                    <span>Question <span id="currentQuestionNum">1</span> of <span id="totalQuestions">10</span></span>
+                    <span id="progressPercent">10%</span>
+                </div>
+            </div>
+
+            <!-- Question Container -->
+            <div class="question-container">
+                <div class="question-number">Question <span id="questionNum">1</span></div>
+                <h2 class="question-text" id="questionText">
+                    She usually ___ (to get) up at 7 a.m.
+                </h2>
+                <div class="question-hint">
+                    <i class="fas fa-lightbulb"></i>
+                    <span id="questionHint">Look for time expressions that indicate habits</span>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="options-container" id="optionsContainer">
+                <!-- Options will be inserted here -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="prevButton" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="btn btn-primary" id="submitButton" disabled>
+                    Check Answer
+                </button>
+            </div>
+
+            <!-- Next Button (separate for better flow) -->
+            <button class="btn btn-primary hidden" id="nextButton">
+                Next Question <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <!-- Explanation Panel -->
+            <div class="explanation-panel" id="explanationPanel">
+                <div class="explanation-header">
+                    <i class="fas fa-info-circle"></i>
+                    Explanation
+                </div>
+                <div class="explanation-content" id="explanationText">
+                    <!-- Explanation will be inserted here -->
+                </div>
+                <div class="explanation-tip" id="explanationTip">
+                    <i class="fas fa-tip"></i>
+                    <!-- Tip will be inserted here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Results Screen -->
+        <div class="results-screen hidden" id="resultsScreen">
+            <div class="results-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h2 class="results-title">Quiz Completed!</h2>
+            <div class="results-score" id="finalScore">0/10</div>
+            <p class="results-message" id="resultsMessage">
+                Great effort! Review your answers to improve.
+            </p>
+            
+            <div class="results-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="correctAnswers">0</span>
+                    <span class="stat-label">Correct</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="scorePoints">0</span>
+                    <span class="stat-label">Points</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="completionTime">0:00</span>
+                    <span class="stat-label">Time</span>
+                </div>
+            </div>
+
+            <div class="results-actions">
+                <button class="btn btn-secondary" id="reviewButton">
+                    <i class="fas fa-redo"></i> Review
+                </button>
+                <button class="btn btn-primary" id="restartButton">
+                    <i class="fas fa-play"></i> Try Again
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div>SpeakWell • Eduwell Quantum Group </div>
+        </footer>
+    </div>
+
+    <script>
+        // Quiz Data
+        const quizData = [        
+            {
+                question: "Although she ___ (to typically, avoid) spicy food, she ___ (to currently, enjoy) this curry because she ___ (to develop) a tolerance recently.",
+                options: [
+                    { text: "is typically avoiding, has enjoyed, is developing", example: "Is typically avoiding, has enjoyed, is developing" },
+                    { text: "has typically avoided, enjoys, develops", example: "Has typically avoided, enjoys, develops" },
+                    { text: "typically avoids, is currently enjoying, has developed", example: "Typically avoids but is enjoying now because has developed tolerance" }
+                ],
+                correctAnswer: 2,
+                explanation: "'Typically' with habit requires Present Simple. 'Currently' requires Present Continuous. Recent change with present result requires Present Perfect.",
+                hint: "Habit + current exception + recent change with result",
+                tip: "Three different aspects in a cause-effect chain"
+            },
+            {
+                question: "While he ___ (to claim) to understand quantum physics, he clearly ___ (to not, grasp) the concepts we ___ (to discuss) right now.",
+                options: [
+                    { text: "claims, doesn't grasp, are discussing", example: "Claims to understand but doesn't grasp concepts we are discussing" },
+                    { text: "is claiming, hasn't grasped, discuss", example: "Is claiming, hasn't grasped, discuss" },
+                    { text: "has claimed, isn't grasping, have discussed", example: "Has claimed, isn't grasping, have discussed" }
+                ],
+                correctAnswer: 0,
+                explanation: "General claim requires Present Simple. Current inability requires Present Simple. Action happening now requires Present Continuous.",
+                hint: "General assertion + current inability + ongoing discussion",
+                tip: "'Grasp' as a state verb usually takes Simple, not Continuous"
+            },
+            {
+                question: "Ever since they ___ (to move) to the city, they ___ (to miss) the countryside, yet they ___ (to adapt) surprisingly well to urban life.",
+                options: [
+                    { text: "have moved, are missing, adapt", example: "Have moved, are missing, adapt" },
+                    { text: "moved, miss, have adapted", example: "Since they moved, they miss countryside but have adapted well" },
+                    { text: "move, have missed, are adapting", example: "Move, have missed, are adapting" }
+                ],
+                correctAnswer: 1,
+                explanation: "'Ever since' with specific past event requires Simple Past (implied). Current feeling requires Present Simple. Result up to now requires Present Perfect.",
+                hint: "Past starting point + current state + present result",
+                tip: "'Ever since' often implies a past starting point for present situations"
+            },
+            {
+                question: "The committee ___ (to still, debate) the proposal that they ___ (to receive) three weeks ago, but no one ___ (to seem) optimistic about its approval.",
+                options: [
+                    { text: "still debates, have received, is seeming", example: "Still debates, have received, is seeming" },
+                    { text: "has still debated, receive, has seemed", example: "Has still debated, receive, has seemed" },
+                    { text: "is still debating, received, seems", example: "Is still debating proposal they received weeks ago, but no one seems optimistic" }
+                ],
+                correctAnswer: 2,
+                explanation: "Ongoing action requires Present Continuous. Specific past event requires Simple Past. Current appearance requires Present Simple.",
+                hint: "Ongoing debate + past receipt + current appearance",
+                tip: "Mixed time references requiring different tenses"
+            },
+            {
+                question: "I ___ (to never, trust) people who ___ (to constantly, change) their opinions, which is why I ___ (to have) doubts about her leadership now.",
+                options: [
+                    { text: "never trust, are constantly changing, am having", example: "Never trust, are constantly changing, am having" },
+                    { text: "have never trusted, constantly change, have", example: "Have never trusted people who constantly change opinions, so have doubts now" },
+                    { text: "am never trusting, constantly change, have had", example: "Am never trusting, constantly change, have had" }
+                ],
+                correctAnswer: 1,
+                explanation: "'Never' with life philosophy requires Present Perfect. Habitual behavior requires Present Simple. Current possession requires Present Simple.",
+                hint: "Life philosophy + habitual behavior + current possession",
+                tip: "Present Perfect for lifelong patterns/attitudes"
+            },
+            {
+                question: "As we ___ (to speak), the situation ___ (to deteriorate) rapidly, although the authorities ___ (to assure) us that everything is under control.",
+                options: [
+                    { text: "have spoken, deteriorates, have assured", example: "Have spoken, deteriorates, have assured" },
+                    { text: "speak, has deteriorated, are assuring", example: "Speak, has deteriorated, are assuring" },
+                    { text: "are speaking, is deteriorating, assure", example: "As we are speaking, situation is deteriorating but authorities assure us" }
+                ],
+                correctAnswer: 2,
+                explanation: "Action at exact moment requires Present Continuous. Ongoing change requires Present Continuous. General claim requires Present Simple.",
+                hint: "Simultaneous actions + ongoing process + general claim",
+                tip: "Present Continuous for actions happening exactly now"
+            },
+            {
+                question: "Despite what the manual ___ (to say), the machine ___ (to not, function) properly, and we ___ (to already, contact) technical support.",
+                options: [
+                    { text: "says, isn't functioning, have already contacted", example: "Despite what manual says, machine isn't functioning and we have contacted support" },
+                    { text: "has said, hasn't functioned, are already contacting", example: "Has said, hasn't functioned, are already contacting" },
+                    { text: "is saying, doesn't function, already contact", example: "Is saying, doesn't function, already contact" }
+                ],
+                correctAnswer: 0,
+                explanation: "Written information requires Present Simple. Current malfunction requires Present Continuous. Completed action with present relevance requires Present Perfect.",
+                hint: "Written statement + current problem + completed action with result",
+                tip: "'Already' with Present Perfect emphasizes completion"
+            },
+            {
+                question: "The team that usually ___ (to dominate) the league ___ (to struggle) this season, and they ___ (to lose) their last five matches.",
+                options: [
+                    { text: "is dominating, struggles, lose", example: "Is dominating, struggles, lose" },
+                    { text: "dominates, is struggling, have lost", example: "Team that dominates league is struggling this season and has lost last five matches" },
+                    { text: "has dominated, has struggled, are losing", example: "Has dominated, has struggled, are losing" }
+                ],
+                correctAnswer: 1,
+                explanation: "Habitual dominance requires Present Simple. Temporary struggle requires Present Continuous. Recent results require Present Perfect.",
+                hint: "Habit + temporary situation + recent repeated results",
+                tip: "Present Perfect for series of recent events"
+            },
+            {
+                question: "Whereas traditional methods ___ (to remain) effective, new technologies ___ (to gradually, replace) them in industries that ___ (to seek) efficiency.",
+                options: [
+                    { text: "remain, are gradually replacing, seek", example: "Traditional methods remain effective but new technologies are replacing them in industries that seek efficiency" },
+                    { text: "have remained, have gradually replaced, seek", example: "Have remained, have gradually replaced, seek" },
+                    { text: "are remaining, gradually replace, are seeking", example: "Are remaining, gradually replace, are seeking" }
+                ],
+                correctAnswer: 0,
+                explanation: "Current state requires Present Simple. Ongoing gradual change requires Present Continuous. General characteristic requires Present Simple.",
+                hint: "Current state + ongoing change + general characteristic",
+                tip: "Present Continuous for gradual, ongoing changes"
+            },
+            {
+                question: "I ___ (to realize) that I ___ (to make) the same mistake repeatedly, which is why I ___ (to decide) to change my approach now.",
+                options: [
+                    { text: "am realizing, make, decide", example: "Am realizing, make, decide" },
+                    { text: "realize, have been making, am deciding", example: "I realize I have been making same mistake, so am deciding to change" },
+                    { text: "have realized, am making, have decided", example: "Have realized, am making, have decided" }
+                ],
+                correctAnswer: 1,
+                explanation: "Current awareness requires Present Simple. Repeated action up to now requires Present Perfect Continuous (implied). Current decision-making requires Present Continuous.",
+                hint: "Current awareness + repeated past action + current decision",
+                tip: "Complex self-reflection with multiple time aspects"
+            },
+            {
+                question: "The theory that he ___ (to propose) last year ___ (to gain) widespread acceptance, although some experts still ___ (to question) its validity.",
+                options: [
+                    { text: "proposed, has gained, question", example: "Theory he proposed last year has gained acceptance though experts still question it" },
+                    { text: "proposes, is gaining, have questioned", example: "Proposes, is gaining, have questioned" },
+                    { text: "has proposed, gains, are questioning", example: "Has proposed, gains, are questioning" }
+                ],
+                correctAnswer: 0,
+                explanation: "Specific past action requires Simple Past. Result up to now requires Present Perfect. Continuing skepticism requires Present Simple.",
+                hint: "Past proposal + present result + continuing skepticism",
+                tip: "Mixed time frame: past event, present result, ongoing attitude"
+            },
+            {
+                question: "While most people ___ (to prefer) summer vacations, we ___ (to always, choose) winter destinations because we ___ (to enjoy) cold weather.",
+                options: [
+                    { text: "are preferring, have always chosen, are enjoying", example: "Are preferring, have always chosen, are enjoying" },
+                    { text: "prefer, always choose, enjoy", example: "Most people prefer summer but we always choose winter because we enjoy cold" },
+                    { text: "prefer, are always choosing, enjoy", example: "Prefer, are always choosing, enjoy" }
+                ],
+                correctAnswer: 1,
+                explanation: "General preference requires Present Simple. Habitual choice requires Present Simple. General enjoyment requires Present Simple.",
+                hint: "Three parallel states/habits",
+                tip: "All state/habit verbs requiring Present Simple"
+            },
+            {
+                question: "The company ___ (to face) unprecedented challenges that it ___ (to never, encounter) before, which is why management ___ (to consider) drastic measures.",
+                options: [
+                    { text: "faces, never encounters, considers", example: "Faces, never encounters, considers" },
+                    { text: "is facing, has never encountered, is considering", example: "Company is facing challenges it has never encountered, so management is considering measures" },
+                    { text: "has faced, is never encountering, has considered", example: "Has faced, is never encountering, has considered" }
+                ],
+                correctAnswer: 1,
+                explanation: "Current situation requires Present Continuous. Life experience requires Present Perfect. Current deliberation requires Present Continuous.",
+                hint: "Current challenge + past experience + current consideration",
+                tip: "Present Perfect with 'never' for unprecedented experiences"
+            },
+            {
+                question: "What ___ (to surprise) me is that despite all the warnings, many people still ___ (to ignore) the risks that experts ___ (to consistently, identify).",
+                options: [
+                    { text: "has surprised, ignore, are consistently identifying", example: "Has surprised, ignore, are consistently identifying" },
+                    { text: "is surprising, are ignoring, have consistently identified", example: "Is surprising, are ignoring, have consistently identified" },
+                    { text: "surprises, ignore, consistently identify", example: "What surprises me is people ignore risks experts consistently identify" }
+                ],
+                correctAnswer: 2,
+                explanation: "General truth about feelings requires Present Simple. Habitual ignoring requires Present Simple. Regular action requires Present Simple.",
+                hint: "Three parallel general truths/habits",
+                tip: "All expressing general patterns/truths"
+            },
+            {
+                question: "The artist who ___ (to paint) this masterpiece ___ (to work) in obscurity for years before he ___ (to receive) any recognition.",
+                options: [
+                    { text: "has painted, has worked, has received", example: "Has painted, has worked, has received" },
+                    { text: "paints, is working, receives", example: "Paints, is working, receives" },
+                    { text: "painted, worked, received", example: "Artist who painted this worked in obscurity before he received recognition" }
+                ],
+                correctAnswer: 2,
+                explanation: "Completed past action requires Simple Past. Past duration requires Simple Past. Past event requires Simple Past.",
+                hint: "Three past events in sequence",
+                tip: "All events clearly in the past, requiring Simple Past"
+            },
+            {
+                question: "I ___ (to find) it remarkable that while technology ___ (to advance) rapidly, basic human nature ___ (to change) very little over centuries.",
+                options: [
+                    { text: "find, is advancing, changes", example: "I find it remarkable technology is advancing rapidly but human nature changes little" },
+                    { text: "have found, has advanced, has changed", example: "Have found, has advanced, has changed" },
+                    { text: "am finding, advances, is changing", example: "Am finding, advances, is changing" }
+                ],
+                correctAnswer: 0,
+                explanation: "Current opinion requires Present Simple. Ongoing process requires Present Continuous. General truth requires Present Simple.",
+                hint: "Current opinion + ongoing process + general truth",
+                tip: "Contrast between rapid change and stability"
+            },
+            {
+                question: "The regulations that ___ (to govern) this industry ___ (to become) increasingly complex, which ___ (to pose) significant challenges for new entrants.",
+                options: [
+                    { text: "govern, are becoming, has posed", example: "Govern, are becoming, has posed" },
+                    { text: "are governing, become, is posing", example: "Are governing, become, is posing" },
+                    { text: "govern, have become, poses", example: "Regulations that govern industry have become complex, which poses challenges" }
+                ],
+                correctAnswer: 2,
+                explanation: "Current rules require Present Simple. Change up to now requires Present Perfect. Current result requires Present Simple.",
+                hint: "Current state + completed change + current result",
+                tip: "Present Perfect for changes with present consequences"
+            },
+            {
+                question: "Even though she ___ (to study) the material thoroughly, she ___ (to still, have) difficulty with concepts that we ___ (to cover) yesterday.",
+                options: [
+                    { text: "studies, is still having, have covered", example: "Studies, is still having, have covered" },
+                    { text: "has studied, still has, covered", example: "Even though she has studied thoroughly, she still has difficulty with concepts we covered yesterday" },
+                    { text: "is studying, still has, were covering", example: "Is studying, still has, were covering" }
+                ],
+                correctAnswer: 1,
+                explanation: "Completed preparation requires Present Perfect. Current difficulty requires Present Simple. Specific past lesson requires Simple Past.",
+                hint: "Completed action + current state + past event",
+                tip: "Present Perfect for completed preparation with present relevance"
+            },
+            {
+                question: "The phenomenon that scientists ___ (to observe) in the lab ___ (to contradict) established theories, which ___ (to prompt) a complete re-evaluation.",
+                options: [
+                    { text: "observe, has contradicted, has prompted", example: "Observe, has contradicted, has prompted" },
+                    { text: "have observed, is contradicting, prompts", example: "Have observed, is contradicting, prompts" },
+                    { text: "are observing, contradicts, is prompting", example: "Phenomenon scientists are observing contradicts theories and is prompting re-evaluation" }
+                ],
+                correctAnswer: 2,
+                explanation: "Ongoing observation requires Present Continuous. Current contradiction requires Present Simple. Current result requires Present Continuous.",
+                hint: "Ongoing research + current contradiction + ongoing consequence",
+                tip: "Scientific discovery in progress with current implications"
+            },
+            {
+                question: "What ___ (to bother) me most is not the mistake itself, but the fact that no one ___ (to take) responsibility even though everyone ___ (to know) what happened.",
+                options: [
+                    { text: "bothers, is taking, knows", example: "What bothers me is no one is taking responsibility though everyone knows what happened" },
+                    { text: "has bothered, has taken, knew", example: "Has bothered, has taken, knew" },
+                    { text: "is bothering, takes, has known", example: "Is bothering, takes, has known" }
+                ],
+                correctAnswer: 0,
+                explanation: "Current concern requires Present Simple. Current avoidance requires Present Continuous. Current knowledge requires Present Simple.",
+                hint: "Current feeling + current avoidance + current knowledge",
+                tip: "Frustration about current situation with known past event"
+            }
+        ];
+    </script>
+     <script src="./data/js/script.js"></script>
+</body>
+</html>

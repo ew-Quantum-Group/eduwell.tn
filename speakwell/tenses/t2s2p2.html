@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakWell | Sahl</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="../data/img/speakwell.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="../data/css/style.css">
+     
+</head>
+<body>
+        <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    <!-- Back Button -->
+    <button class="back-button" id="backButton" aria-label="Go back to previous page">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading quiz...</div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container hidden" id="appContainer">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="quiz-title">Grammar Quiz</h1>
+                <div class="quiz-subtitle">Past tenses</div>
+                <div class="progress-indicator">
+                    <span id="currentScore">0</span> pts
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content" id="quizContent">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text">
+                    <span>Question <span id="currentQuestionNum">1</span> of <span id="totalQuestions">10</span></span>
+                    <span id="progressPercent">10%</span>
+                </div>
+            </div>
+
+            <!-- Question Container -->
+            <div class="question-container">
+                <div class="question-number">Question <span id="questionNum">1</span></div>
+                <h2 class="question-text" id="questionText">
+                    She usually ___ (to get) up at 7 a.m.
+                </h2>
+                <div class="question-hint">
+                    <i class="fas fa-lightbulb"></i>
+                    <span id="questionHint">Look for time expressions that indicate habits</span>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="options-container" id="optionsContainer">
+                <!-- Options will be inserted here -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="prevButton" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="btn btn-primary" id="submitButton" disabled>
+                    Check Answer
+                </button>
+            </div>
+
+            <!-- Next Button (separate for better flow) -->
+            <button class="btn btn-primary hidden" id="nextButton">
+                Next Question <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <!-- Explanation Panel -->
+            <div class="explanation-panel" id="explanationPanel">
+                <div class="explanation-header">
+                    <i class="fas fa-info-circle"></i>
+                    Explanation
+                </div>
+                <div class="explanation-content" id="explanationText">
+                    <!-- Explanation will be inserted here -->
+                </div>
+                <div class="explanation-tip" id="explanationTip">
+                    <i class="fas fa-tip"></i>
+                    <!-- Tip will be inserted here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Results Screen -->
+        <div class="results-screen hidden" id="resultsScreen">
+            <div class="results-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h2 class="results-title">Quiz Completed!</h2>
+            <div class="results-score" id="finalScore">0/10</div>
+            <p class="results-message" id="resultsMessage">
+                Great effort! Review your answers to improve.
+            </p>
+            
+            <div class="results-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="correctAnswers">0</span>
+                    <span class="stat-label">Correct</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="scorePoints">0</span>
+                    <span class="stat-label">Points</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="completionTime">0:00</span>
+                    <span class="stat-label">Time</span>
+                </div>
+            </div>
+
+            <div class="results-actions">
+                <button class="btn btn-secondary" id="reviewButton">
+                    <i class="fas fa-redo"></i> Review
+                </button>
+                <button class="btn btn-primary" id="restartButton">
+                    <i class="fas fa-play"></i> Try Again
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div>SpeakWell • Eduwell Quantum Group </div>
+        </footer>
+    </div>
+
+    <script>
+  const quizData = [
+    {
+        question: "The police discovered that the thief ___ (to escape) through the back window.",
+        options: [
+            { text: "escaped", example: "The thief escaped yesterday" },
+            { text: "had escaped", example: "The thief had escaped before police arrived" },
+            { text: "was escaping", example: "The thief was escaping when police came" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows an action completed before the discovery (another past action), requiring Past Perfect.",
+        hint: "Actions completed before discovery in the past use Past Perfect",
+        tip: "Past Perfect: for actions completed before other past discoveries"
+    },
+    {
+        question: "While the children ___ (to sleep), their parents decorated the Christmas tree.",
+        options: [
+            { text: "slept", example: "The children slept peacefully" },
+            { text: "had slept", example: "The children had slept earlier" },
+            { text: "were sleeping", example: "While the children were sleeping, parents decorated" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes a background action in progress during another action, requiring Past Continuous.",
+        hint: "Background conditions during another action use Past Continuous",
+        tip: "Past Continuous: for ongoing conditions during other past actions"
+    },
+    {
+        question: "I realized I ___ (to meet) that person somewhere before.",
+        options: [
+            { text: "met", example: "I met that person yesterday" },
+            { text: "had met", example: "I realized I had met that person before" },
+            { text: "was meeting", example: "I was meeting that person" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows an experience that happened before the realization, requiring Past Perfect.",
+        hint: "Past experiences realized later use Past Perfect",
+        tip: "Past Perfect: for experiences that occurred before realization"
+    },
+    {
+        question: "The students ___ (to take) their exam when the fire alarm went off.",
+        options: [
+            { text: "took", example: "The students took their exam" },
+            { text: "had taken", example: "The students had taken the exam earlier" },
+            { text: "were taking", example: "The students were taking their exam when alarm sounded" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes an action in progress when interrupted, requiring Past Continuous.",
+        hint: "Actions interrupted by sudden events use Past Continuous",
+        tip: "Past Continuous: for ongoing activities interrupted by sudden events"
+    },
+    {
+        question: "She was tired because she ___ (to work) for twelve hours straight.",
+        options: [
+            { text: "worked", example: "She worked hard yesterday" },
+            { text: "had worked", example: "She was tired because she had worked for hours" },
+            { text: "was working", example: "She was working when she got tired" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows the cause (completed action) of a past state, requiring Past Perfect.",
+        hint: "Causes of past states use Past Perfect",
+        tip: "Past Perfect: for actions that caused past conditions"
+    },
+    {
+        question: "As I ___ (to drive) to work, I noticed the strange car following me.",
+        options: [
+            { text: "drove", example: "I drove to work yesterday" },
+            { text: "had driven", example: "I had driven that route before" },
+            { text: "was driving", example: "As I was driving, I noticed something" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes an ongoing action when noticing occurred, requiring Past Continuous.",
+        hint: "Ongoing actions during observations use Past Continuous",
+        tip: "Past Continuous: for actions in progress during observations"
+    },
+    {
+        question: "The concert was cancelled because the lead singer ___ (to lose) his voice.",
+        options: [
+            { text: "lost", example: "The singer lost his voice" },
+            { text: "had lost", example: "The concert was cancelled because the singer had lost his voice" },
+            { text: "was losing", example: "The singer was losing his voice" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows an action completed before the cancellation, requiring Past Perfect.",
+        hint: "Causes that happened before results use Past Perfect",
+        tip: "Past Perfect: for causes that preceded past results"
+    },
+    {
+        question: "They ___ (to discuss) the project when the boss walked in unexpectedly.",
+        options: [
+            { text: "discussed", example: "They discussed the project" },
+            { text: "had discussed", example: "They had discussed it earlier" },
+            { text: "were discussing", example: "They were discussing when boss entered" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes an action in progress when interrupted by another, requiring Past Continuous.",
+        hint: "Discussions interrupted by arrivals use Past Continuous",
+        tip: "Past Continuous: for conversations interrupted by entries"
+    },
+    {
+        question: "By the time help arrived, the firefighters ___ (to control) the blaze.",
+        options: [
+            { text: "controlled", example: "Firefighters controlled the fire" },
+            { text: "had controlled", example: "By the time help arrived, they had controlled it" },
+            { text: "were controlling", example: "Firefighters were controlling the fire" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows completion before another past time, requiring Past Perfect.",
+        hint: "Completion before specific past moments use Past Perfect",
+        tip: "Past Perfect: for actions completed before specific past times"
+    },
+    {
+        question: "The phone rang while I ___ (to take) a shower.",
+        options: [
+            { text: "took", example: "I took a shower yesterday" },
+            { text: "had taken", example: "I had taken a shower earlier" },
+            { text: "was taking", example: "The phone rang while I was taking a shower" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes an action in progress when interrupted, requiring Past Continuous.",
+        hint: "Personal activities interrupted by calls use Past Continuous",
+        tip: "Past Continuous: for personal activities interrupted by calls"
+    },
+    {
+        question: "I didn't recognize her because she ___ (to change) her hairstyle completely.",
+        options: [
+            { text: "changed", example: "She changed her hairstyle" },
+            { text: "had changed", example: "I didn't recognize her because she had changed her hair" },
+            { text: "was changing", example: "She was changing her hairstyle" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows a change completed before the non-recognition, requiring Past Perfect.",
+        hint: "Changes that caused past non-recognition use Past Perfect",
+        tip: "Past Perfect: for changes that affected past perceptions"
+    },
+    {
+        question: "The children ___ (to play) in the garden when it started to hail.",
+        options: [
+            { text: "played", example: "The children played in the garden" },
+            { text: "had played", example: "The children had played earlier" },
+            { text: "were playing", example: "The children were playing when it hailed" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes an activity in progress when weather changed, requiring Past Continuous.",
+        hint: "Outdoor activities interrupted by weather use Past Continuous",
+        tip: "Past Continuous: for outdoor activities interrupted by weather"
+    },
+    {
+        question: "The witness claimed she ___ (to see) the suspect near the crime scene.",
+        options: [
+            { text: "saw", example: "She saw the suspect" },
+            { text: "had seen", example: "She claimed she had seen the suspect" },
+            { text: "was seeing", example: "She was seeing the suspect" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows an action completed before the claim, requiring Past Perfect.",
+        hint: "Observations that happened before claims use Past Perfect",
+        tip: "Past Perfect: for observations that preceded reports"
+    },
+    {
+        question: "He ___ (to repair) the car when he discovered the real problem.",
+        options: [
+            { text: "repaired", example: "He repaired the car" },
+            { text: "had repaired", example: "He had repaired it earlier" },
+            { text: "was repairing", example: "He was repairing it when he discovered the problem" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes an action in progress when discovery occurred, requiring Past Continuous.",
+        hint: "Repair work during discoveries use Past Continuous",
+        tip: "Past Continuous: for repair activities during discoveries"
+    },
+    {
+        question: "The team celebrated because they ___ (to win) the championship for the first time.",
+        options: [
+            { text: "won", example: "The team won the championship" },
+            { text: "had won", example: "They celebrated because they had won" },
+            { text: "were winning", example: "The team was winning" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows an achievement completed before the celebration, requiring Past Perfect.",
+        hint: "Achievements that caused celebrations use Past Perfect",
+        tip: "Past Perfect: for achievements that caused past celebrations"
+    },
+    {
+        question: "The birds ___ (to sing) beautifully as the sun rose.",
+        options: [
+            { text: "sang", example: "The birds sang this morning" },
+            { text: "had sung", example: "The birds had sung earlier" },
+            { text: "were singing", example: "The birds were singing as the sun rose" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes a background action in progress during an event, requiring Past Continuous.",
+        hint: "Natural background sounds during events use Past Continuous",
+        tip: "Past Continuous: for natural phenomena during events"
+    },
+    {
+        question: "She was disappointed that nobody ___ (to read) her report.",
+        options: [
+            { text: "read", example: "Nobody read her report" },
+            { text: "had read", example: "She was disappointed that nobody had read it" },
+            { text: "was reading", example: "Nobody was reading her report" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows a non-action that occurred before the disappointment, requiring Past Perfect.",
+        hint: "Past non-actions that caused emotions use Past Perfect",
+        tip: "Past Perfect: for things that didn't happen before past feelings"
+    },
+    {
+        question: "The chef ___ (to prepare) the special dish when the VIP guests arrived.",
+        options: [
+            { text: "prepared", example: "The chef prepared the dish" },
+            { text: "had prepared", example: "The chef had prepared it earlier" },
+            { text: "was preparing", example: "The chef was preparing it when guests arrived" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes an action in progress when interrupted, requiring Past Continuous.",
+        hint: "Cooking activities interrupted by arrivals use Past Continuous",
+        tip: "Past Continuous: for preparation activities interrupted by arrivals"
+    },
+    {
+        question: "The archaeologists found artifacts that ancient people ___ (to use) thousands of years ago.",
+        options: [
+            { text: "used", example: "Ancient people used these tools" },
+            { text: "had used", example: "They found artifacts that people had used long ago" },
+            { text: "were using", example: "People were using these tools" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows actions completed long before the discovery, requiring Past Perfect.",
+        hint: "Ancient uses discovered later use Past Perfect",
+        tip: "Past Perfect: for ancient activities discovered in modern times"
+    },
+    {
+        question: "I ___ (to wait) at the bus stop for twenty minutes when the bus finally came.",
+        options: [
+            { text: "waited", example: "I waited for the bus" },
+            { text: "had waited", example: "I had waited for 20 minutes when it came" },
+            { text: "was waiting", example: "I was waiting when it came" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows a duration completed before another past action, requiring Past Perfect.",
+        hint: "Waiting durations before arrivals use Past Perfect",
+        tip: "Past Perfect: for durations completed before past arrivals"
+    }
+];
+    </script>
+     <script src="../data/js/script.js"></script>
+</body>
+</html>

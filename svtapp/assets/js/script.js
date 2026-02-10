@@ -16,25 +16,25 @@
                 },
                 {
                     id: 'bio-card-1',
-                    title: 'Analyse des exercices',
+                    title: 'Exercices RÉO : Types Bac',
                     description: 'Comprendre les types de questions et identifier les pièges pour mieux réussir',
-                    link: 'error.html',
+                    link: 'https://drive.google.com/drive/folders/1je-WStaNG1dblcSwIN7Cqo1VXin5_rTG?usp=drive_link',
                     linkText: 'Voir les exercices'
                 },
                 
                 {
                     id: 'bio-card-3',
-                    title: 'Techniques de mémorisation',
-                    description: 'Utiliser flashcards, mind maps et répétition espacée pour retenir l\'essentiel',
+                    title: 'Sahl AI à vos côtés',
+                    description: 'Résolvez les exercices facilement grâce à Sahl AI',
                     link: 'error.html',
-                    linkText: 'Découvrir les techniques'
+                    linkText: 'Essayer Sahl AI'
                 },
                 {
                     id: 'bio-card-4',
                     title: 'Techniques de concentration et gestion du stress',
-                    description: 'Adopter des méthodes de concentration et gérer le stress pour optimiser la révision',
+                    description: 'Optimisez votre concentration grâce à un planning de révision intelligent avec Sahl AI',
                     link: 'error.html',
-                    linkText: 'Améliorer ma concentration'
+                    linkText: 'Optimiser mes révisions'
                 }
             ]
         };

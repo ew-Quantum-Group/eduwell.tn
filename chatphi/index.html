@@ -1,175 +1,409 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="fr">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNTBT1VQN7"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-FNTBT1VQN7');
-    </script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Sahl App</title>
-    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-   <link rel="stylesheet" href="./assets/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenue sur SAHL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=SF+Pro+Text:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --sahl-blue: #007AFF;
+            --sahl-blue-hover: #0056CC;
+            --text-primary: #1D1D1F;
+            --text-secondary: #86868B;
+            --text-tertiary: #C7C7CC;
+            --background: #FFFFFF;
+            --surface: #FBFBFD;
+            --border: #E5E5EA;
+            --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --border-radius: 12px;
+            --border-radius-button: 20px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        /* Main Container */
+        .welcome-container {
+            max-width: 560px;
+            width: 100%;
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            padding: 60px 48px;
+            text-align: center;
+            position: relative;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-light);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.6s ease-out forwards 0.2s;
+        }
+
+        /* Logo */
+        .logo {
+            margin-bottom: 32px;
+            font-family: 'SF Pro Display', sans-serif;
+            font-weight: 700;
+            font-size: 1.75rem;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-emoji {
+            font-size: 1.625rem;
+            animation: gentleWave 2.5s ease-in-out infinite;
+        }
+
+        /* Main Heading */
+        .welcome-heading {
+            font-family: 'SF Pro Display', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.08349;
+            letter-spacing: -0.003em;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            opacity: 0;
+            transform: translateY(10px);
+            animation: slideUp 0.6s ease-out forwards 0.4s;
+        }
+
+        /* Subtitle */
+        .subtitle {
+            font-size: 1.125rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.47059;
+            letter-spacing: -0.022em;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: slideUp 0.6s ease-out forwards 0.5s;
+        }
+
+        /* Welcome Text */
+        .welcome-text {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 440px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.47059;
+            letter-spacing: -0.022em;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: slideUp 0.6s ease-out forwards 0.6s;
+        }
+
+        .text-highlight {
+            color: var(--sahl-blue);
+            font-weight: 500;
+        }
+
+        /* Primary Button */
+        .continue-button {
+            background: var(--sahl-blue);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius-button);
+            padding: 12px 32px;
+            font-size: 1.063rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: slideUp 0.6s ease-out forwards 0.7s;
+        }
+
+        .continue-button:hover {
+            background: var(--sahl-blue-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(0, 122, 255, 0.15);
+        }
+
+        .continue-button:active {
+            transform: translateY(0);
+        }
+
+        .button-emoji {
+            font-size: 1.125rem;
+            opacity: 0;
+            transform: translateX(-4px);
+            transition: var(--transition);
+        }
+
+        .continue-button:hover .button-emoji {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Footer Note */
+        .footer-note {
+            margin-top: 32px;
+            font-size: 0.813rem;
+            color: var(--text-tertiary);
+            font-weight: 400;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards 0.9s;
+        }
+
+        /* Divider */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 32px 0;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards 0.8s;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes gentleWave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(3deg); }
+            75% { transform: rotate(-3deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 734px) {
+            .welcome-container {
+                padding: 48px 32px;
+                margin: 0 20px;
+                max-width: 480px;
+            }
+            
+            .welcome-heading {
+                font-size: 2rem;
+                line-height: 1.125;
+            }
+            
+            .subtitle {
+                font-size: 1.063rem;
+            }
+            
+            .logo {
+                font-size: 1.625rem;
+                margin-bottom: 28px;
+            }
+            
+            .welcome-text {
+                font-size: 0.938rem;
+            }
+            
+            .continue-button {
+                padding: 11px 28px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 16px;
+                background: var(--surface);
+            }
+            
+            .welcome-container {
+                padding: 40px 24px;
+                border: none;
+                box-shadow: none;
+                margin: 0;
+            }
+            
+            .welcome-heading {
+                font-size: 1.75rem;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .welcome-text {
+                font-size: 0.875rem;
+            }
+            
+            .continue-button {
+                width: 100%;
+                max-width: 280px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Fixed Navigation Header -->
-    <nav class="nav-container" id="navContainer">
-        <div class="nav-content">
-            <!-- Logo on left (RTL layout) -->
-            <a href="#" class="nav-logo">
-                <span>Sahl</span>
-            </a>
+         <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
             
-            <!-- Logout Button on right (RTL layout) -->
-            <button class="nav-logout-btn" id="logoutBtn">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>تسجيل الخروج</span>
-            </button>
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    <div class="welcome-container" id="welcomeContainer">
+        <div class="logo">
+            SAHL <span class="logo-emoji">👋</span>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero-section" id="hero">
-        <div class="hero-background"></div>
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <i class="fas fa-sparkles"></i>
-                    <span class="label">Eduwell Quantum Group</span>
-                </div>
-                <h1 class="hero-title display-large">Sahl</h1>
-                <p class="hero-description body-large">
-                    مشاريع مبتكرة تجمع الإبداع بالذكاء الاصطناعي من Eduwell Quantum Group.
-                </p>
-                <!-- User welcome message will appear here -->
-                <div class="user-welcome" id="userWelcome"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Horizontal Topics Carousel -->
-    <section class="topics-section" id="topics">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">أدوات التعلّم</span>
-                <h2 class="headline-large">أدوات لفهم الفلسفة</h2>
-                <p class="body-medium">
-                    اختر الأداة المناسبة لمساعدتك على تحليل المفاهيم الفلسفية وفهم الدروس بطريقة أبسط.
-                </p>
-            </div>
-
-            <!-- Topics Tabs -->
-            <div class="topics-tabs" id="topicsTabs">
-                <!-- Tabs will be generated by JavaScript -->
-            </div>
-
-            <!-- Carousel -->
-            <div class="carousel-container" id="carouselContainer">
-                <div class="carousel-track" id="carouselTrack">
-                    <!-- Slides will be generated by JavaScript -->
-                </div>
-            </div>
-
-            <!-- Carousel Controls -->
-            <div class="carousel-controls">
-                <button class="carousel-button" id="prevBtn" aria-label="السابق">
-                    <i class="fas fa-arrow-right"></i>
-                </button>
-                <div class="slide-counter">
-                    <span id="currentSlide">1</span> / <span id="totalSlides">4</span>
-                </div>
-                <div class="carousel-dots" id="carouselDots">
-                    <!-- Dots will be generated by JavaScript -->
-                </div>
-                <button class="carousel-button" id="nextBtn" aria-label="التالي">
-                    <i class="fas fa-arrow-left"></i>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Resources Grid -->
-    <section class="resources-section" id="resources">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">Philosophy</span>
-                <h2 class="headline-large">دروس الفلسفة</h2>
-                <p class="body-medium">
-                    المفاهيم الأساسية، بشكل مبسّط ومنظّم.
-                </p>
-            </div>
-
-            <div class="resources-grid" id="resourcesGrid">
-                <!-- Cards will be generated by JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">Sahl</div>
-                <p class="footer-tagline">
-                    منصة تعليمية متميزة توفر محتوى فريد وتجارب تعليمية مبتكرة للطلاب.
-                </p>
-                <p class="footer-copyright"> Eduwell Quantum Group </p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scroll to Top -->
-    <button class="scroll-top" id="scrollTop" aria-label="العودة للأعلى">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-
-    <!-- PDF Modal -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h3 class="modal-title" id="modalTitle">
-                    <i class="fas fa-file-pdf"></i>
-                    <span>مصدر التصميم</span>
-                </h3>
-                <button class="modal-close" id="modalClose" aria-label="إغلاق النافذة">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="pdf-loading" id="pdfLoading">
-                    <i class="fas fa-spinner"></i>
-                    <span>جاري تحميل المستند...</span>
-                </div>
-                <iframe class="pdf-viewer" id="pdfViewer" frameborder="0" allow="fullscreen"></iframe>
-            </div>
-        </div>
+        
+        <h1 class="welcome-heading">
+            Bienvenue sur SAHL
+        </h1>
+        
+        <p class="subtitle">
+            Nous sommes ravis de vous accueillir
+        </p>
+        
+        <div class="divider"></div>
+        
+        <p class="welcome-text"><span class="text-highlight">Bienvenue chez SAHL !</span> Nous sommes ravis de vous compter parmi nous. Cette page d'accueil apparaît uniquement lors de votre première connexion. Nous travaillons constamment pour vous offrir une expérience éducative optimale, et très bientôt, vous recevrez une notification pour savoir que vous pouvez accéder à cette page à tout moment. Profitez pleinement de <span class="text-highlight">toutes les fonctionnalités</span> de notre plateforme.
+ </p>
+        
+        <button class="continue-button" id="continueButton">
+            Continuer vers la Plateforme
+            <span class="button-emoji">→</span>
+        </button>
+        
+        <p class="footer-note">
+            Cette page n'est disponible que la première fois où votre compte est créé
+        </p>
     </div>
 
-    <!-- Apple-style Logout Confirmation Modal -->
-    <div class="logout-confirmation-overlay" id="logoutConfirmationPopup">
-        <div class="logout-confirmation-content">
-            <div class="confirmation-icon">
-                <i class="fas fa-sign-out-alt"></i>
-            </div>
-            <h3 class="confirmation-title">تسجيل الخروج؟</h3>
-            <p class="confirmation-text">سيتم تسجيل خروجك وإعادة توجيهك إلى صفحة تسجيل الدخول.</p>
-            <div class="confirmation-buttons">
-                <button class="confirmation-btn cancel-btn" id="logoutCancelBtn">
-                    إلغاء
-                </button>
-                <button class="confirmation-btn confirm-btn" id="logoutConfirmBtn">
-                    تسجيل الخروج
-                </button>
-            </div>
-        </div>
-    </div>
- <script src="./assets/js/data.js"></script>
- <script src="./assets/js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const continueButton = document.getElementById('continueButton');
+            
+            // Gestionnaire de clic du bouton
+            continueButton.addEventListener('click', function() {
+                // Sauvegarder dans localStorage que la page a été vue
+                localStorage.setItem('sahl_welcome_seen', 'true');
+                
+                // Animation de clic
+                this.style.transform = 'scale(0.95)';
+                
+                // Animation de chargement
+                const originalText = this.innerHTML;
+                this.innerHTML = 'Redirection...';
+                this.style.pointerEvents = 'none';
+                
+                // Redirection après un court délai pour l'animation
+                setTimeout(() => {
+                    // Rediriger vers index.html
+                    window.location.href = './index.html';
+                }, 500);
+            });
+            
+            // Effet de survol pour la flèche du bouton
+            continueButton.addEventListener('mouseenter', function() {
+                const arrow = this.querySelector('.button-emoji');
+                if (arrow) {
+                    arrow.style.transform = 'translateX(2px)';
+                }
+            });
+            
+            continueButton.addEventListener('mouseleave', function() {
+                const arrow = this.querySelector('.button-emoji');
+                if (arrow && !this.innerHTML.includes('Redirection')) {
+                    arrow.style.transform = 'translateX(0)';
+                }
+            });
+            
+            // Vérifier si l'utilisateur a déjà vu cette page
+            // Si oui, rediriger directement vers index.html
+            if (localStorage.getItem('sahl_welcome_seen') === 'true') {
+                console.log('Page de bienvenue déjà vue, redirection automatique...');
+                // Vous pouvez activer cette ligne pour rediriger automatiquement :
+                // window.location.href = './index.html';
+            }
+            
+            // Ajouter le support du clavier (Entrée/Espace)
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    const button = document.getElementById('continueButton');
+                    if (document.activeElement !== button) {
+                        e.preventDefault();
+                        button.click();
+                    }
+                }
+            });
+        });
+        
+        // Fonction pour forcer le thème clair
+        function forceLightTheme() {
+            // Définir les variables CSS en thème clair
+            document.documentElement.style.setProperty('--text-primary', '#1D1D1F');
+            document.documentElement.style.setProperty('--text-secondary', '#86868B');
+            document.documentElement.style.setProperty('--text-tertiary', '#C7C7CC');
+            document.documentElement.style.setProperty('--background', '#FFFFFF');
+            document.documentElement.style.setProperty('--surface', '#FBFBFD');
+            document.documentElement.style.setProperty('--border', '#E5E5EA');
+            document.documentElement.style.setProperty('--shadow-light', '0 4px 20px rgba(0, 0, 0, 0.06)');
+            
+            // Forcer les couleurs de fond et texte
+            document.body.style.backgroundColor = '#FFFFFF';
+            document.body.style.color = '#1D1D1F';
+        }
+        
+        // Appeler la fonction au chargement
+        window.addEventListener('load', forceLightTheme);
+        
+        // Surveiller les changements de préférence de thème pour maintenir le thème clair
+        if (window.matchMedia) {
+            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+            mediaQuery.addEventListener('change', forceLightTheme);
+        }
+    </script>
 </body>
 </html>

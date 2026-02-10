@@ -13,7 +13,7 @@
             this.style.transform = 'scale(0.9)';
             setTimeout(() => {
                 this.style.transform = '';
-                window.location.href = '../index.html';
+                window.location.href = './index.html';
             }, 200);
         });
 

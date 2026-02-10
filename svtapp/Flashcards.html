@@ -1,247 +1,1471 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNTBT1VQN7"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-FNTBT1VQN7');
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SVT App | Sahl</title>
     <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-      <link rel="stylesheet" href="./assets/css/flashback.css">
+    <style>
+        /* Apple SF Pro Font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Apple Colors */
+            --black: #000000;
+            --dark: #1d1d1f;
+            --gray: #86868b;
+            --light-gray: #f5f5f7;
+            --lighter-gray: #fbfbfd;
+            --white: #ffffff;
+            --blue: #0071e3;
+            --blue-hover: #0077ed;
+            --border: #d2d2d7;
+            
+            /* Subtle Professional Gradients */
+            --gradient-1: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%);
+            --gradient-2: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            --gradient-3: linear-gradient(135deg, #e1f5fe 0%, #b3e5fc 100%);
+            --gradient-4: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            --gradient-5: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+            --gradient-6: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%);
+            --gradient-7: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            
+            /* Typography */
+            --text-hero: clamp(56px, 8vw, 96px);
+            --text-xl: clamp(40px, 5vw, 64px);
+            --text-lg: clamp(28px, 3.5vw, 48px);
+            --text-md: clamp(21px, 2.5vw, 32px);
+            --text-base: 17px;
+            --text-sm: 14px;
+            --text-xs: 12px;
+            
+            /* Spacing */
+            --space-xs: 8px;
+            --space-sm: 16px;
+            --space-md: 24px;
+            --space-lg: 40px;
+            --space-xl: 60px;
+            --space-2xl: 80px;
+            --space-3xl: 120px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: var(--white);
+            color: var(--dark);
+            line-height: 1.5;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 max(22px, env(safe-area-inset-right));
+        }
+
+        /* Hero Section - Clean & Minimal */
+        .hero {
+            position: relative;
+            min-height: 75vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            background: linear-gradient(180deg, var(--lighter-gray) 0%, var(--white) 100%);
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        .hero-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+        }
+
+        .blob-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 113, 227, 0.15) 0%, transparent 70%);
+            top: -20%;
+            right: -10%;
+        }
+
+        .blob-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 113, 227, 0.08) 0%, transparent 70%);
+            bottom: -15%;
+            left: -5%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            padding: var(--space-3xl) var(--space-md);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: 8px 20px;
+            background: rgba(0, 113, 227, 0.06);
+            border: 1px solid rgba(0, 113, 227, 0.15);
+            border-radius: 100px;
+            font-size: var(--text-xs);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: var(--space-md);
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.2s forwards;
+        }
+
+        .hero-title {
+            font-size: var(--text-hero);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            color: var(--black);
+            margin-bottom: var(--space-md);
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.4s forwards;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #0071e3 0%, #0077ed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+
+        .hero-description {
+            font-size: var(--text-md);
+            font-weight: 400;
+            line-height: 1.4;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto var(--space-lg);
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.6s forwards;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: 14px 28px;
+            background: var(--blue);
+            color: var(--white);
+            border-radius: 100px;
+            font-size: var(--text-base);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.8s forwards;
+        }
+
+        .hero-cta:hover {
+            background: var(--blue-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 113, 227, 0.25);
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+
+        /* Cards Section */
+        .cards-section {
+            padding: var(--space-2xl) 0 var(--space-3xl);
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+        }
+
+        .section-eyebrow {
+            font-size: var(--text-xs);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: var(--space-sm);
+        }
+
+        .section-title {
+            font-size: var(--text-lg);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--black);
+            margin-bottom: var(--space-sm);
+        }
+
+        .section-description {
+            font-size: var(--text-base);
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Horizontal Scroll Container */
+        .cards-wrapper {
+            position: relative;
+            margin: 0 -22px;
+        }
+
+        .cards-scroll {
+            display: flex;
+            gap: var(--space-md);
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
+            padding: var(--space-md) 22px var(--space-lg);
+            scrollbar-width: none;
+            -ms-overflow-scrolling: touch;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .cards-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Navigation Arrows */
+        .scroll-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--white);
+            border: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .cards-wrapper:hover .scroll-nav {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .scroll-nav:hover {
+            background: var(--black);
+            color: var(--white);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .scroll-nav.prev {
+            left: 0;
+        }
+
+        .scroll-nav.next {
+            right: 0;
+        }
+
+        /* Card Design - Premium */
+        .card {
+            flex: 0 0 340px;
+            background: var(--white);
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+            border-color: transparent;
+        }
+
+        .card:hover::before {
+            opacity: 0.03;
+        }
+
+        .card-image {
+            height: 220px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .card-bg {
+            position: absolute;
+            inset: 0;
+            opacity: 1;
+            transition: all 0.5s ease;
+        }
+
+        .card:hover .card-bg {
+            transform: scale(1.05);
+        }
+
+        .card-icon {
+            position: relative;
+            z-index: 1;
+            font-size: 72px;
+            color: var(--white);
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.08);
+        }
+
+        .card-content {
+            padding: var(--space-md);
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-label {
+            font-size: var(--text-xs);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: var(--space-xs);
+        }
+
+        .card-title {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            color: var(--black);
+            margin-bottom: var(--space-sm);
+            line-height: 1.2;
+        }
+
+        .card-description {
+            font-size: var(--text-sm);
+            line-height: 1.5;
+            color: var(--gray);
+            margin-bottom: var(--space-md);
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-size: var(--text-base);
+            font-weight: 500;
+            color: var(--blue);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .card-link i {
+            font-size: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .card-link i {
+            transform: translateX(4px);
+        }
+
+        /* Card Specific Gradients */
+        .card-1 .card-bg { background: var(--gradient-1); }
+        .card-2 .card-bg { background: var(--gradient-2); }
+        .card-3 .card-bg { background: var(--gradient-3); }
+        .card-4 .card-bg { background: var(--gradient-4); }
+        .card-5 .card-bg { background: var(--gradient-5); }
+        .card-6 .card-bg { background: var(--gradient-6); }
+        .card-7 .card-bg { background: var(--gradient-7); }
+
+        /* Modal - Ultra Premium */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: saturate(180%) blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--white);
+            border-radius: 28px;
+            width: 90%;
+            max-width: 1100px;
+            max-height: 90vh;
+            overflow: hidden;
+            transform: scale(0.9) translateY(30px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .modal-header {
+            padding: var(--space-lg) var(--space-lg);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
+        }
+
+        .modal-title {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--black);
+        }
+
+        .modal-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--gray);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--black);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+
+        .modal-content {
+            padding: var(--space-lg);
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--space-md);
+        }
+
+        .modal-card {
+            background: var(--white);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 20px;
+            padding: var(--space-md);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+            border-color: var(--blue);
+        }
+
+        .modal-card:hover::before {
+            opacity: 1;
+        }
+
+        .modal-card-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-md);
+            font-size: 24px;
+            color: var(--white);
+            position: relative;
+            z-index: 1;
+        }
+
+        .modal-card-title {
+            font-size: 19px;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: var(--space-xs);
+            position: relative;
+            z-index: 1;
+        }
+
+        .modal-card-description {
+            font-size: var(--text-sm);
+            line-height: 1.5;
+            color: var(--gray);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Viewer Modal */
+        .viewer-modal {
+            max-width: 1400px;
+        }
+
+        .viewer-header {
+            padding: var(--space-lg);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
+        }
+
+        .viewer-back {
+            background: var(--black);
+            color: var(--white);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 100px;
+            font-size: var(--text-sm);
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            transition: all 0.3s ease;
+        }
+
+        .viewer-back:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .viewer-content {
+            position: relative;
+            height: 700px;
+            background: #f8f9fa;
+        }
+
+        .viewer-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .viewer-iframe.loaded {
+            opacity: 1;
+        }
+
+        .viewer-loading {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top-color: var(--blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            margin-top: var(--space-md);
+            font-size: var(--text-base);
+            font-weight: 500;
+            color: var(--gray);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: var(--space-2xl) 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .footer-brand {
+            font-size: var(--text-base);
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: var(--space-xs);
+        }
+
+        .footer-sub {
+            font-size: var(--text-sm);
+            color: var(--gray);
+        }
+
+        /* Responsive */
+        @media (max-width: 1068px) {
+            .card {
+                flex: 0 0 300px;
+            }
+        }
+
+        @media (max-width: 734px) {
+            .hero {
+                min-height: 60vh;
+            }
+
+            .hero-content {
+                padding: var(--space-2xl) var(--space-md);
+            }
+
+            .card {
+                flex: 0 0 280px;
+            }
+
+            .scroll-nav {
+                display: none;
+            }
+
+            .modal {
+                width: 95%;
+                border-radius: 20px;
+            }
+
+            .modal-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .viewer-content {
+                height: 450px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
 </head>
 <body>
-      <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
-    <script>
-        // Run IMMEDIATELY when page loads (before anything else)
-        (function() {
-            // Check if user is authenticated
-            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
-            
-            // If NOT logged in, redirect to login page
-            if (!isLoggedIn) {
-                // Store current page for redirect back
-                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
-                // Redirect immediately
-                window.location.href = './login.html';
-                // Stop all further execution
-                throw new Error('Authentication required');
-            }
-        })();
-    </script>
     <div class="container">
-        <!-- Enhanced Header -->
-        <header class="header">
-            <!-- Floating elements -->
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
-            
-            <div class="header-content">
-               
-                
-                <h1>Science <span style="color: #0071e3; font-weight: 900;">Flash Cards</span> 3D</h1>
-                
-               <div class="header-subtitle">
-    Explorez les sciences à travers des modèles 3D clairs et interactifs.
-    <span style="color: #0071e3; font-weight: 500;">Des schémas visuels</span> pour mieux comprendre les concepts et réussir le Bac.
-</div>
-
-                
-                
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-bg">
+                <div class="hero-blob blob-1"></div>
+                <div class="hero-blob blob-2"></div>
             </div>
-        </header>
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-sparkles"></i>
+                    Biologie Interactive 3D
+                </div>
+                <h1 class="hero-title">
+                    Science <span class="gradient-text">Flash Cards</span>
+                </h1>
+                <p class="hero-description">
+                    Découvrez les sciences de la vie à travers des modèles 3D interactifs 
+                    de nouvelle génération. Une expérience immersive pour réussir le Bac.
+                </p>
+                <a href="#explore" class="hero-cta">
+                    Commencer l'exploration
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </section>
 
-        <!-- Main Content Section -->
-        <div class="cards-section">
-            <h2 class="section-title">Explorez les Systèmes Biologiques</h2>
-            <div class="cards-container">
-                <button class="nav-button prev" aria-label="Cartes précédentes">
+        <!-- Cards Section -->
+        <section class="cards-section" id="explore">
+            <div class="section-header">
+                <p class="section-eyebrow">Explorer</p>
+                <h2 class="section-title">Systèmes Biologiques</h2>
+                <p class="section-description">
+                    Plongez dans l'univers fascinant de la biologie avec nos modèles 3D interactifs
+                </p>
+            </div>
+
+            <div class="cards-wrapper">
+                <button class="scroll-nav prev" aria-label="Précédent">
                     <i class="fas fa-chevron-left"></i>
                 </button>
-                
-                <!-- Horizontal Cards -->
+
                 <div class="cards-scroll" id="cardsScroll">
-                    <!-- Card 1: Reproduction -->
-                    <div class="card card-1 fade-in" data-card-id="1">
+                    <!-- Card 1 -->
+                    <div class="card card-1" data-card-id="1">
                         <div class="card-image">
-                            <i class="fas fa-heartbeat"></i>
+                            <div class="card-bg"></div>
+                            <i class="fas fa-heartbeat card-icon"></i>
                         </div>
                         <div class="card-content">
-                            <span class="card-badge">BIOLOGIE CELLULAIRE</span>
-                            <h3 class="card-title">Reproduction Humaine</h3>
-                            <p class="card-description">Explorez les processus et mécanismes de reproduction cellulaire</p>
-                            <div class="card-cta">
-                                <span>Voir les modèles</span>
+                            <p class="card-label">Biologie Cellulaire</p>
+                            <h3 class="card-title">Reproduction Cellulaire</h3>
+                            <p class="card-description">
+                                Explorez les processus de division cellulaire et les mécanismes de reproduction
+                            </p>
+                            <a href="#" class="card-link">
+                                Explorer
                                 <i class="fas fa-arrow-right"></i>
-                            </div>
+                            </a>
                         </div>
                     </div>
 
-                    <!-- Card 2: Human Reproduction -->
-                    <div class="card card-2 fade-in delay-1" data-card-id="2">
+                    <!-- Card 2 -->
+                    <div class="card card-2" data-card-id="2">
                         <div class="card-image">
-                            <i class="fas fa-baby"></i>
+                            <div class="card-bg"></div>
+                            <i class="fas fa-baby card-icon"></i>
                         </div>
                         <div class="card-content">
-                            <span class="card-badge">BIOLOGIE HUMAINE</span>
+                            <p class="card-label">Biologie Humaine</p>
                             <h3 class="card-title">Reproduction Humaine</h3>
-                            <p class="card-description">Étudiez les systèmes reproducteurs et le développement humain</p>
-                            <div class="card-cta">
-                                <span>Voir les modèles</span>
+                            <p class="card-description">
+                                Découvrez les systèmes reproducteurs et le développement embryonnaire
+                            </p>
+                            <a href="#" class="card-link">
+                                Explorer
                                 <i class="fas fa-arrow-right"></i>
-                            </div>
+                            </a>
                         </div>
                     </div>
 
-                    <!-- Card 3: Diploid Genetics -->
-                    <div class="card card-3 fade-in delay-1" data-card-id="3">
+                    <!-- Card 3 -->
+                    <div class="card card-3" data-card-id="3">
                         <div class="card-image">
-                            <i class="fas fa-dna"></i>
+                            <div class="card-bg"></div>
+                            <i class="fas fa-dna card-icon"></i>
                         </div>
                         <div class="card-content">
-                            <span class="card-badge">GÉNÉTIQUE</span>
+                            <p class="card-label">Génétique</p>
                             <h3 class="card-title">Génétique Diploïde</h3>
-                            <p class="card-description">Explorez l'héritage génétique et les structures chromosomiques</p>
-                            <div class="card-cta">
-                                <span>Voir les modèles</span>
+                            <p class="card-description">
+                                Comprenez l'héritage génétique et les structures chromosomiques
+                            </p>
+                            <a href="#" class="card-link">
+                                Explorer
                                 <i class="fas fa-arrow-right"></i>
-                            </div>
+                            </a>
                         </div>
                     </div>
 
-                    <!-- Card 4: Species Evolution -->
-                    <div class="card card-4 fade-in delay-2" data-card-id="4">
+                    <!-- Card 4 -->
+                    <div class="card card-4" data-card-id="4">
                         <div class="card-image">
-                            <i class="fas fa-fish"></i>
+                            <div class="card-bg"></div>
+                            <i class="fas fa-fish card-icon"></i>
                         </div>
                         <div class="card-content">
-                            <span class="card-badge">ÉVOLUTION</span>
+                            <p class="card-label">Évolution</p>
                             <h3 class="card-title">Évolution des Espèces</h3>
-                            <p class="card-description">Étudiez les processus évolutifs et les adaptations</p>
-                            <div class="card-cta">
-                                <span>Voir les modèles</span>
+                            <p class="card-description">
+                                Étudiez les processus évolutifs et les adaptations naturelles
+                            </p>
+                            <a href="#" class="card-link">
+                                Explorer
                                 <i class="fas fa-arrow-right"></i>
-                            </div>
+                            </a>
                         </div>
                     </div>
 
-                    <!-- Card 5: Nervous System -->
-                    <div class="card card-5 fade-in delay-2" data-card-id="5">
+                    <!-- Card 5 -->
+                    <div class="card card-5" data-card-id="5">
                         <div class="card-image">
-                            <i class="fas fa-brain"></i>
+                            <div class="card-bg"></div>
+                            <i class="fas fa-brain card-icon"></i>
                         </div>
                         <div class="card-content">
-                            <span class="card-badge">NEUROBIOLOGIE</span>
+                            <p class="card-label">Neurobiologie</p>
                             <h3 class="card-title">Système Nerveux</h3>
-                            <p class="card-description">Explorez les structures neurales et l'anatomie cérébrale</p>
-                            <div class="card-cta">
-                                <span>Voir les modèles</span>
+                            <p class="card-description">
+                                Plongez dans l'anatomie cérébrale et les connexions neuronales
+                            </p>
+                            <a href="#" class="card-link">
+                                Explorer
                                 <i class="fas fa-arrow-right"></i>
-                            </div>
+                            </a>
                         </div>
                     </div>
 
-                    <!-- Card 6: Musculoskeletal System -->
-                    <div class="card card-6 fade-in delay-3" data-card-id="6">
+                    <!-- Card 6 -->
+                    <div class="card card-6" data-card-id="6">
                         <div class="card-image">
-                            <i class="fas fa-running"></i>
+                            <div class="card-bg"></div>
+                            <i class="fas fa-running card-icon"></i>
                         </div>
                         <div class="card-content">
-                            <span class="card-badge">ANATOMIE</span>
+                            <p class="card-label">Anatomie</p>
                             <h3 class="card-title">Système Musculosquelettique</h3>
-                            <p class="card-description">Étudiez les os, les muscles et les systèmes de mouvement</p>
-                            <div class="card-cta">
-                                <span>Voir les modèles</span>
+                            <p class="card-description">
+                                Analysez la structure des os, muscles et articulations
+                            </p>
+                            <a href="#" class="card-link">
+                                Explorer
                                 <i class="fas fa-arrow-right"></i>
-                            </div>
+                            </a>
                         </div>
                     </div>
 
-                    <!-- Card 7: Immune System -->
-                    <div class="card card-7 fade-in delay-3" data-card-id="7">
+                    <!-- Card 7 -->
+                    <div class="card card-7" data-card-id="7">
                         <div class="card-image">
-                            <i class="fas fa-shield-virus"></i>
+                            <div class="card-bg"></div>
+                            <i class="fas fa-shield-virus card-icon"></i>
                         </div>
                         <div class="card-content">
-                            <span class="card-badge">IMMUNOLOGIE</span>
+                            <p class="card-label">Immunologie</p>
                             <h3 class="card-title">Système Immunitaire</h3>
-                            <p class="card-description">Explorez les cellules immunitaires et les mécanismes de défense</p>
-                            <div class="card-cta">
-                                <span>Voir les modèles</span>
+                            <p class="card-description">
+                                Explorez les défenses de l'organisme et les cellules immunitaires
+                            </p>
+                            <a href="#" class="card-link">
+                                Explorer
                                 <i class="fas fa-arrow-right"></i>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>
 
-                <button class="nav-button next" aria-label="Cartes suivantes">
+                <button class="scroll-nav next" aria-label="Suivant">
                     <i class="fas fa-chevron-right"></i>
                 </button>
             </div>
-        </div>
+        </section>
 
         <!-- Footer -->
         <footer class="footer">
-            <p>Eduwell Quantum Group</p>
-            <p style="margin-top: 8px; font-size: 12px; color: #a1a1a6;">Sahl  App</p>
+            <p class="footer-brand">Eduwell Quantum Group</p>
+            <p class="footer-sub">Sahl App — Excellence en Éducation</p>
         </footer>
     </div>
 
-    <!-- Popup Overlay - Secondary Cards -->
-    <div class="popup-overlay" id="secondaryPopup">
-        <div class="popup-container">
-            <div class="popup-header">
-                <h2 class="popup-title" id="popupTitle">Modèles Secondaires</h2>
-                <button class="close-btn" id="closeSecondaryBtn">
+    <!-- Secondary Modal -->
+    <div class="modal-overlay" id="secondaryModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Modèles 3D</h2>
+                <button class="modal-close" id="closeModal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="secondary-cards-container" id="secondaryCardsContainer">
-                <!-- Secondary cards will be dynamically inserted here -->
+            <div class="modal-content">
+                <div class="modal-grid" id="modalGrid"></div>
             </div>
         </div>
     </div>
 
-    <!-- Popup Overlay - 3D Viewer -->
-    <div class="popup-overlay" id="viewerPopup">
-        <div class="popup-3d-container">
+    <!-- Viewer Modal -->
+    <div class="modal-overlay" id="viewerModal">
+        <div class="modal viewer-modal">
+            <div class="viewer-header">
+                <h2 class="modal-title" id="viewerTitle">Visionneuse 3D</h2>
+                <button class="viewer-back" id="backButton">
+                    <i class="fas fa-arrow-left"></i>
+                    Retour
+                </button>
+            </div>
             <div class="viewer-content">
-                <div class="viewer-header">
-                    <h2 class="viewer-title" id="viewerTitle">Visionneuse 3D</h2>
-                    <button class="back-btn" id="backToSecondaryBtn">
-                        <i class="fas fa-arrow-left"></i>
-                        Retour aux modèles
-                    </button>
+                <div class="viewer-loading" id="viewerLoading">
+                    <div class="loading-spinner"></div>
+                    <p class="loading-text">Chargement du modèle 3D...</p>
                 </div>
-                <div class="embed-container">
-                    <div class="embed-placeholder" id="embedPlaceholder">
-                        <i class="fas fa-cube"></i>
-                        <p>Chargement de la visionneuse 3D...</p>
-                        <div class="loading">
-                            <div class="loading-spinner"></div>
-                            <p>Chargement du modèle interactif</p>
-                        </div>
-                    </div>
-                    <iframe class="sketchfab-embed-wrapper" id="sketchfabEmbed" 
-                            frameborder="0" 
-                            allowfullscreen 
-                            mozallowfullscreen="true" 
-                            webkitallowfullscreen="true" 
-                            allow="autoplay; fullscreen; xr-spatial-tracking" 
-                            title="Modèle 3D">
-                    </iframe>
-                </div>
+                <iframe class="viewer-iframe" id="viewerIframe"></iframe>
             </div>
         </div>
     </div>
-<script src="./assets/js/3dmodel.js"></script>
-<script src="./assets/js/scriptflashcart.js"></script>
+
+    <script>
+        // Biology data
+        const biologyData = {
+            1: {
+                title: "Reproduction Cellulaire",
+                secondaryCards: [
+                    {
+        id: "human_anatomy",
+        title: "Anatomie Humaine",
+        description: "Représentation détaillée de l'anatomie du corps humain",
+        icon: "fas fa-user",
+        color: "linear-gradient(135deg, #5e72e4 0%, #825ee4 100%)",
+        sketchfabId: "6e3a378a83054e60a7f2299dbaeb1b52"
+    },
+    {
+        id: "animated_sperm",
+        title: "Spermatozoïde 3D Animé",
+        description: "Animation 3D d'un spermatozoïde en mouvement",
+        icon: "fas fa-flag",
+        color: "linear-gradient(135deg, #f5576c 0%, #ff5e7e 100%)",
+        sketchfabId: "d5f3e2b4656d423895647adc5b9515cd"
+    },
+    {
+        id: "meiosis_animation",
+        title: "Méiose 3D Animée",
+        description: "Animation 3D illustrant le processus de méiose",
+        icon: "fas fa-divide",
+        color: "linear-gradient(135deg, #11cdef 0%, #1171ef 100%)",
+        sketchfabId: "1772cb63102b4f1c9ff5e607643cde83"
+    },  {
+        id: "female_reproductive",
+        title: "Appareil Reproducteur Féminin",
+        description: "Représentation 3D détaillée de l'appareil reproducteur féminin",
+        icon: "fas fa-venus",
+        color: "linear-gradient(135deg, #f5576c 0%, #ff5e7e 100%)",
+        sketchfabId: "4e307241420b4827b57405b54ffe8567"
+    },
+    {
+        id: "animated_sperm",
+        title: "Spermatozoïde Animé",
+        description: "Animation 3D d'un spermatozoïde en mouvement",
+        icon: "fas fa-flag",
+        color: "linear-gradient(135deg, #11cdef 0%, #1171ef 100%)",
+        sketchfabId: "d5f3e2b4656d423895647adc5b9515cd"
+    },
+    {
+        id: "human_egg_cell",
+        title: "Ovule Humain 3D",
+        description: "Représentation 3D d'une cellule œuf humaine",
+        icon: "fas fa-circle",
+        color: "linear-gradient(135deg, #5e72e4 0%, #825ee4 100%)",
+        sketchfabId: "21c19e1b34dd4e4d9cfefa5c8163e8c6"
+    },
+    {
+        id: "ovulation_phase",
+        title: "Phase d'Ovulation 3D",
+        description: "Animation 3D illustrant la phase d'ovulation",
+        icon: "fas fa-sync-alt",
+        color: "linear-gradient(135deg, #fbc531 0%, #f5af19 100%)",
+        sketchfabId: "8212b5621d1242e8b5fc2426e36e03b3"
+    },
+    {
+        id: "uterus_shedding",
+        title: "Desquamation de l'Utérus",
+        description: "Animation 3D montrant le processus de desquamation utérine",
+        icon: "fas fa-heart",
+        color: "linear-gradient(135deg, #e84393 0%, #d63031 100%)",
+        sketchfabId: "a51369ed5c5549f99c24164850a1fc67"
+    }
+                ]
+            },
+            2: {
+                title: "Systèmes Reproducteurs Humains",
+                secondaryCards: [
+                    {
+                        id: "fertilization",
+                        title: "Fécondation Ovule et Spermatozoïde",
+                        description: "Visualisation 3D détaillée du processus",
+                        icon: "fas fa-egg",
+                        color: "linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%)",
+                        sketchfabId: "176d526066ca4c33b4b5fdfe33998e76"
+                    },
+                    {
+                        id: "conception_week1",
+                        title: "Première Semaine de Conception",
+                        description: "Modèle 3D du développement précoce",
+                        icon: "fas fa-baby",
+                        color: "linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%)",
+                        sketchfabId: "81815e43185344f981498052118804c8"
+                    },
+                    {
+                        id: "early_conception",
+                        title: "Début de la Conception",
+                        description: "Visualisation des premières étapes",
+                        icon: "fas fa-microscope",
+                        color: "linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%)",
+                        sketchfabId: "81815e43185344f981498052118804c8"
+                    }
+                ]
+            },
+            3: {
+                title: "Structures Génétiques",
+                secondaryCards: [
+                    {
+                        id: "meiosis_prophase",
+                        title: "Méiose I – Prophase I Diplotène",
+                        description: "Division cellulaire en détail",
+                        icon: "fas fa-dna",
+                        color: "linear-gradient(135deg, #0071e3 0%, #0077ed 100%)",
+                        sketchfabId: "50cbb0db95194b84a9f7908525cf35b2"
+                    },
+                    {
+                        id: "cell_division",
+                        title: "Division Cellulaire",
+                        description: "Processus de division en 3D",
+                        icon: "fas fa-divide",
+                        color: "linear-gradient(135deg, #0071e3 0%, #0077ed 100%)",
+                        sketchfabId: "dbb61c9222b547b7b819a5e077721464"
+                    },
+                    {
+                        id: "genetic_diversity",
+                        title: "Diversité Génétique",
+                        description: "Simulation interactive",
+                        icon: "fas fa-project-diagram",
+                        color: "linear-gradient(135deg, #0071e3 0%, #0077ed 100%)",
+                        embedUrl: "https://javalab.org/en/human_gene_transfer_en/"
+                    },
+                    {
+                        id: "meiosis_animation",
+                        title: "Méiose – Animation 3D",
+                        description: "Visualisation animée",
+                        icon: "fas fa-film",
+                        color: "linear-gradient(135deg, #0071e3 0%, #0077ed 100%)",
+                        sketchfabId: "1772cb63102b4f1c9ff5e607643cde83"
+                    },
+                    {
+                        id: "drosophila",
+                        title: "Mouche du Fruit Drosophile",
+                        description: "Modèle 3D complet",
+                        icon: "fas fa-bug",
+                        color: "linear-gradient(135deg, #0071e3 0%, #0077ed 100%)",
+                        sketchfabId: "bb82f275798740ec9154d21e3fe36e25"
+                    },
+                    {
+                        id: "dna_electrophoresis",
+                        title: "Électrophorèse de l'ADN",
+                        description: "Technique de séparation",
+                        icon: "fas fa-flask",
+                        color: "linear-gradient(135deg, #0071e3 0%, #0077ed 100%)",
+                        embedUrl: "https://javalab.org/en/dna-electrophoresis/"
+                    }
+                ]
+            },
+            4: {
+                title: "Adaptations Évolutives",
+                secondaryCards: [
+                    {
+                        id: "homologous",
+                        title: "Structures Homologues",
+                        description: "Structures similaires dans différentes espèces",
+                        icon: "fas fa-bone",
+                        color: "linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)",
+                        sketchfabId: "9e8f7a6b5c4d3e2f1a0b9c8b7a6b5c4d"
+                    },
+                    {
+                        id: "fossils",
+                        title: "Comparaison Fossile",
+                        description: "Anatomie comparative",
+                        icon: "fas fa-monument",
+                        color: "linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)",
+                        sketchfabId: "8f7a6b5c4d3e2f1a0b9c8b7a6b5c4d3e"
+                    },
+                    {
+                        id: "natural_selection",
+                        title: "Sélection Naturelle",
+                        description: "Visualisation des pressions",
+                        icon: "fas fa-leaf",
+                        color: "linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)",
+                        sketchfabId: "7a6b5c4d3e2f1a0b9c8b7a6b5c4d3e2f"
+                    }
+                ]
+            },
+            5: {
+                title: "Anatomie Neurale",
+                secondaryCards: [
+                    {
+                        id: "brain_3d",
+                        title: "Cerveau 3D",
+                        description: "Modèle détaillé du cerveau humain",
+                        icon: "fas fa-brain",
+                        color: "linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)",
+                        sketchfabId: "a002e06b09ca45b2b7b521fbf745b18b"
+                    },
+                    {
+                        id: "nervous_system",
+                        title: "Système Nerveux 3D",
+                        description: "Visualisation des connexions neuronales",
+                        icon: "fas fa-project-diagram",
+                        color: "linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)",
+                        sketchfabId: "be679731525c457cb01036fcf25afc37"
+                    },
+                    {
+                        id: "neuron",
+                        title: "Neurone 3D",
+                        description: "Structure complète d'un neurone",
+                        icon: "fas fa-network-wired",
+                        color: "linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)",
+                        sketchfabId: "6ef85cb9061a4ef2abb9e87258c7d0fb"
+                    },
+                    {
+                        id: "brain_nerves",
+                        title: "Cerveau et Nerfs",
+                        description: "Structures cérébrales détaillées",
+                        icon: "fas fa-brain",
+                        color: "linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)",
+                        sketchfabId: "a87a33a1f54c4ba0942217e3d37cc324"
+                    },
+                    {
+                        id: "brain_detailed",
+                        title: "Cerveau détaillé",
+                        description: "Exploration approfondie",
+                        icon: "fas fa-brain",
+                        color: "linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)",
+                        sketchfabId: "1300870efedf40cfb50b43e463ef360a"
+                    },
+                    {
+                        id: "brain_system",
+                        title: "Système Cérébral",
+                        description: "Connexions et structures",
+                        icon: "fas fa-project-diagram",
+                        color: "linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)",
+                        sketchfabId: "70e43c1afc9d4ab280c5f5be03f8487f"
+                    },
+                    {
+                        id: "neuron_interactive",
+                        title: "Neurone Interactif",
+                        description: "Visualisation interactive",
+                        icon: "fas fa-network-wired",
+                        color: "linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)",
+                        sketchfabId: "42d2791d85c74a31873e369583262ec0"
+                    },
+                    {
+                        id: "muscle_neuron",
+                        title: "Interaction Muscle-Neurone",
+                        description: "Connexion neuromusculaire",
+                        icon: "fas fa-dumbbell",
+                        color: "linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)",
+                        sketchfabId: "e660db1f374b45e6a2ab6c29aac7130c"
+                    }
+                ]
+            },
+            6: {
+                title: "Systèmes de Mouvement",
+                secondaryCards: [
+                    {
+        id: "skeletal_muscle_structure",
+        title: "Structure Musculaire Squelettique",
+        description: "Représentation 3D détaillée des muscles squelettiques",
+        icon: "fas fa-dumbbell",
+        color: "linear-gradient(135deg, #5e72e4 0%, #825ee4 100%)",
+        sketchfabId: "b86266b76c874de58d59bf3572815541"
+    },
+    {
+        id: "muscle_myofibre",
+        title: "Myofibre Musculaire",
+        description: "Modèle 3D d'une myofibre musculaire",
+        icon: "fas fa-wave-square",
+        color: "linear-gradient(135deg, #f5576c 0%, #ff5e7e 100%)",
+        sketchfabId: "df76014cc9344eb4a9f04d3ad341c04f"
+    },
+    {
+        id: "myocyte_model",
+        title: "Modèle de Myocyte",
+        description: "Représentation 3D d'un myocyte",
+        icon: "fas fa-circle",
+        color: "linear-gradient(135deg, #11cdef 0%, #1171ef 100%)",
+        sketchfabId: "5e18a4489dae49918f156b8c4e13751b"
+    },
+    {
+        id: "neuromuscular",
+        title: "Jonction Neuromusculaire",
+        description: "Animation 3D montrant la jonction neuromusculaire",
+        icon: "fas fa-brain",
+        color: "linear-gradient(135deg, #fbc531 0%, #f5af19 100%)",
+        sketchfabId: "5dabfc25875448459c460a07b9c68343"
+    },
+    {
+        id: "arterial_vessel",
+        title: "Vaisseau Artériel",
+        description: "Modèle 3D illustrant un vaisseau artériel",
+        icon: "fas fa-heartbeat",
+        color: "linear-gradient(135deg, #e84393 0%, #d63031 100%)",
+        sketchfabId: "246576050a644cb4ae16840922385e39"
+    },
+    {
+        id: "sympathetic_vs_parasympathetic",
+        title: "Système Sympathique vs Parasympathique",
+        description: "Comparaison 3D des systèmes nerveux sympathique et parasympathique",
+        icon: "fas fa-network-wired",
+        color: "linear-gradient(135deg, #6c5ce7 0%, #00b894 100%)",
+        sketchfabId: "9dffb28a4a5d4e0f89f5a036b56745d7"
+    },
+    {
+        id: "human_artery_vein_system",
+        title: "Système Artériel et Veineux Humain 3D",
+        description: "Représentation 3D des artères et veines du corps humain",
+        icon: "fas fa-random",
+        color: "linear-gradient(135deg, #fd79a8 0%, #e17055 100%)",
+        sketchfabId: "974e23da8f4b49da9928ce369167cb02"
+    },
+    {
+        id: "role_of_aldosterone",
+        title: "Rôle de l'Aldostérone",
+        description: "Animation expliquant le rôle de l'aldostérone dans le corps",
+        icon: "fas fa-prescription-bottle-alt",
+        color: "linear-gradient(135deg, #00cec9 0%, #0984e3 100%)",
+        sketchfabId: "2ec463cc3b9345eea6467dc30f83a002"
+    },
+    {
+        id: "renal_system",
+        title: "Système Rénal",
+        description: "Représentation 3D des reins et des voies urinaires",
+        icon: "fas fa-kidneys",
+        color: "linear-gradient(135deg, #fdcb6e 0%, #e17055 100%)",
+        sketchfabId: "c814ef7d5d31414dada7a33f3a88bf83"
+    },
+    {
+        id: "elastic_artery",
+        title: "Artère Élastique",
+        description: "Modèle 3D montrant une artère élastique",
+        icon: "fas fa-circle-notch",
+        color: "linear-gradient(135deg, #00b894 0%, #6c5ce7 100%)",
+        sketchfabId: "7a0c4c6bd5d84f7daf5fcfc5d20516c9"
+    }
+                ]
+            },
+            7: {
+                title: "Défense Immunitaire",
+                secondaryCards: [
+                   {
+        id: "blood_types",
+        title: "Types Sanguins AB, A, B, O 3D",
+        description: "Représentation 3D des différents groupes sanguins",
+        icon: "fas fa-tint",
+        color: "linear-gradient(135deg, #e84393 0%, #d63031 100%)",
+        sketchfabId: "aff5f2e9a05d434889dd2e3efccb60d0"
+    },
+    {
+        id: "lymphatic_system",
+        title: "Système Lymphatique",
+        description: "Modèle 3D du système lymphatique humain",
+        icon: "fas fa-network-wired",
+        color: "linear-gradient(135deg, #00cec9 0%, #0984e3 100%)",
+        sketchfabId: "00d877fa9fbc44218237dbc0a4cc96e1"
+    },
+    {
+        id: "igg_binding",
+        title: "Fixation des IgG 3D",
+        description: "Animation 3D illustrant la liaison des anticorps IgG",
+        icon: "fas fa-dna",
+        color: "linear-gradient(135deg, #fd79a8 0%, #e17055 100%)",
+        sketchfabId: "22ea02e3cd84411a800d34a83790b498"
+    },
+    {
+        id: "white_blood_cells",
+        title: "Globules Blancs 3D",
+        description: "Modèle 3D des globules blancs et leur fonction",
+        icon: "fas fa-heartbeat",
+        color: "linear-gradient(135deg, #6c5ce7 0%, #00b894 100%)",
+        sketchfabId: "4b0561323abb4a71af3b61e8b4951ca3"
+    }
+                ]
+            }
+        };
+
+        // DOM Elements
+        const cardsScroll = document.getElementById('cardsScroll');
+        const scrollPrev = document.querySelector('.scroll-nav.prev');
+        const scrollNext = document.querySelector('.scroll-nav.next');
+        const cards = document.querySelectorAll('.card');
+        const secondaryModal = document.getElementById('secondaryModal');
+        const viewerModal = document.getElementById('viewerModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalGrid = document.getElementById('modalGrid');
+        const closeModal = document.getElementById('closeModal');
+        const backButton = document.getElementById('backButton');
+        const viewerTitle = document.getElementById('viewerTitle');
+        const viewerIframe = document.getElementById('viewerIframe');
+        const viewerLoading = document.getElementById('viewerLoading');
+
+        // Scroll Navigation
+        scrollPrev.addEventListener('click', () => {
+            cardsScroll.scrollBy({ left: -360, behavior: 'smooth' });
+        });
+
+        scrollNext.addEventListener('click', () => {
+            cardsScroll.scrollBy({ left: 360, behavior: 'smooth' });
+        });
+
+        // Open Secondary Modal
+        function openSecondaryModal(cardId) {
+            const data = biologyData[cardId];
+            if (!data) return;
+
+            modalTitle.textContent = data.title;
+            modalGrid.innerHTML = '';
+
+            data.secondaryCards.forEach(card => {
+                const cardEl = document.createElement('div');
+                cardEl.className = 'modal-card';
+                cardEl.innerHTML = `
+                    <div class="modal-card-icon" style="background: ${card.color}">
+                        <i class="${card.icon}"></i>
+                    </div>
+                    <h3 class="modal-card-title">${card.title}</h3>
+                    <p class="modal-card-description">${card.description}</p>
+                `;
+                cardEl.addEventListener('click', () => openViewer(card));
+                modalGrid.appendChild(cardEl);
+            });
+
+            secondaryModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Open 3D Viewer
+        function openViewer(card) {
+            viewerTitle.textContent = card.title;
+            viewerLoading.style.display = 'flex';
+            viewerIframe.classList.remove('loaded');
+
+            const embedUrl = card.embedUrl || `https://sketchfab.com/models/${card.sketchfabId}/embed`;
+            viewerIframe.src = embedUrl;
+
+            secondaryModal.classList.remove('active');
+            setTimeout(() => {
+                viewerModal.classList.add('active');
+                setTimeout(() => {
+                    viewerLoading.style.display = 'none';
+                    viewerIframe.classList.add('loaded');
+                }, 1500);
+            }, 300);
+        }
+
+        // Close All Modals
+        function closeAllModals() {
+            secondaryModal.classList.remove('active');
+            viewerModal.classList.remove('active');
+            viewerIframe.src = '';
+            viewerIframe.classList.remove('loaded');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Back to Secondary
+        function backToSecondary() {
+            viewerModal.classList.remove('active');
+            viewerIframe.src = '';
+            viewerIframe.classList.remove('loaded');
+            setTimeout(() => {
+                secondaryModal.classList.add('active');
+            }, 300);
+        }
+
+        // Event Listeners
+        cards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+                const cardId = card.dataset.cardId;
+                openSecondaryModal(cardId);
+            });
+        });
+
+        closeModal.addEventListener('click', closeAllModals);
+        backButton.addEventListener('click', backToSecondary);
+
+        secondaryModal.addEventListener('click', (e) => {
+            if (e.target === secondaryModal) closeAllModals();
+        });
+
+        viewerModal.addEventListener('click', (e) => {
+            if (e.target === viewerModal) backToSecondary();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (viewerModal.classList.contains('active')) {
+                    backToSecondary();
+                } else if (secondaryModal.classList.contains('active')) {
+                    closeAllModals();
+                }
+            }
+        });
+
+        // Touch Swipe for Mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        cardsScroll.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        cardsScroll.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const swipeThreshold = 50;
+            const difference = touchStartX - touchEndX;
+
+            if (Math.abs(difference) > swipeThreshold) {
+                if (difference > 0) {
+                    cardsScroll.scrollBy({ left: 360, behavior: 'smooth' });
+                } else {
+                    cardsScroll.scrollBy({ left: -360, behavior: 'smooth' });
+                }
+            }
+        }, { passive: true });
+
+        // Smooth scroll anchor
+        document.querySelector('.hero-cta').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('explore').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
 </body>
 </html>

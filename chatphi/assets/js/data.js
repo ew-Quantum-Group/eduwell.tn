@@ -18,6 +18,7 @@
                 { value: 'درس 1', label: 'فلسفة' }
             ],
             externalLink: 'chat1.html'
+            
         },
         {
             id: 'brand-strategy',
@@ -36,7 +37,7 @@
                 { value: '100%', label: 'مطابق للبرنامج' },
                 { value: 'درس 2', label: 'فلسفة' }
             ],
-            externalLink: '#'
+            externalLink: 'chat2.html'
         },
         {
             id: 'visual-identity',
@@ -55,7 +56,7 @@
                 { value: '100%', label: 'مطابق للبرنامج' },
                 { value: 'درس 3', label: 'فلسفة' }
             ],
-            externalLink: '#'
+            externalLink: './chat3.html'
         }
     ];
 

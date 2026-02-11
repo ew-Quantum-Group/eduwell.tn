@@ -66,21 +66,21 @@
             title: "الأنية والغيرية",
             description: "درس فلسفي يعرّف بمفهوم الأنية وعلاقتها بالغير، ودور الآخر في بناء الوعي بالذات وتشكّل الهوية.",
             icon: "fas fa-user-friends",
-            pdfUrl: "https://drive.google.com/file/d/lesson1-identity/preview",
+            pdfUrl: "https://drive.google.com/file/d/1lgQtrt8w5feiJ4pV9lhP0laKfLq5OX8j/preview",
             fileName: "الأنية-والغيرية.pdf"
         },
         {
             title: "الخصوصية والكونية",
             description: "درس فلسفي يدرس العلاقة بين الخصوصية الثقافية والكونية الإنسانية، وكيف يمكن التوفيق بين الاختلاف والمشترك.",
             icon: "fas fa-globe-africa",
-            pdfUrl: "https://drive.google.com/file/d/lesson2-universal/preview",
+            pdfUrl: "https://drive.google.com/file/d/1yMiRH-usumvip9CsYp_FLq5fJzBa_Byt/preview",
             fileName: "الخصوصية-والكونية.pdf"
         },
         {
             title: "النمذجة",
             description: "درس فلسفي يوضّح مفهوم النمذجة باعتبارها أداة معرفية لفهم الواقع وتبسيطه وبناء التفكير العلمي.",
             icon: "fas fa-project-diagram",
-            pdfUrl: "https://drive.google.com/file/d/lesson3-modeling/preview",
+            pdfUrl: "https://drive.google.com/file/d/1i03yMC4njP9235OBnL3v28M2saaN31BD/preview",
             fileName: "النمذجة.pdf"
         }
     ];

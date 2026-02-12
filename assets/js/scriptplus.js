@@ -95,6 +95,7 @@
             const posterModals = {
                 '3d': '3d-modal',
                 'wave': 'wave-modal',
+                'sur': 'sur-modal',
                 'ai': 'ai-modal'
             };
             

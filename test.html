@@ -1,1681 +1,1275 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription • Portail Académique</title>
+    <title>EduSearch | Academic Resource Finder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Style Apple inspiré */
+        :root {
+            --primary: #0071E3;
+            --primary-hover: #0077ED;
+            --primary-light: #E5F1FF;
+            --primary-dark: #0051D5;
+            --secondary: #FFFFFF;
+            --background: #FFFFFF;
+            --dark: #1D1D1F;
+            --light-gray: #F5F5F7;
+            --medium-gray: #E8E8ED;
+            --text-primary: #1D1D1F;
+            --text-secondary: #6E6E73;
+            --text-tertiary: #86868B;
+            --border-light: rgba(0, 0, 0, 0.06);
+            --border-medium: rgba(0, 0, 0, 0.1);
+            --success: #30D158;
+            --warning: #FF9F0A;
+            --error: #FF3B30;
+            
+            --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.12);
+            
+            --transition-fast: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-smooth: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-2xl: 24px;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-            background-color: #f5f5f7;
-            color: #1d1d1f;
-            line-height: 1.47059;
-            font-weight: 400;
-            letter-spacing: -0.022em;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
         }
 
-        .signup-container {
+        /* Animated Background */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 420px;
-            background: #ffffff;
-            border-radius: 18px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            height: 100vh;
+            z-index: 0;
             overflow: hidden;
+            pointer-events: none;
         }
 
-        /* En-tête - Style Apple */
-        .header {
-            padding: 28px 28px 20px;
-            text-align: center;
-            border-bottom: 1px solid #d2d2d7;
-        }
-
-        .header h1 {
-            font-size: 28px;
-            font-weight: 600;
-            color: #1d1d1f;
-            margin-bottom: 4px;
-        }
-
-        .header p {
-            font-size: 14px;
-            color: #86868b;
-            font-weight: 400;
-        }
-
-        /* Indicateur d'étape */
-        .step-indicator {
-            display: flex;
-            justify-content: center;
-            padding: 20px 28px 10px;
-            gap: 8px;
-        }
-
-        .step-dot {
-            width: 6px;
-            height: 6px;
+        .gradient-orb {
+            position: absolute;
             border-radius: 50%;
-            background-color: #d2d2d7;
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            filter: blur(100px);
+            opacity: 0.08;
+            animation: float 25s ease-in-out infinite;
         }
 
-        .step-dot.active {
-            width: 24px;
-            border-radius: 3px;
-            background-color: #007aff;
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, #0071E3 0%, #00C7BE 100%);
+            top: -150px;
+            left: -150px;
+            animation-delay: 0s;
         }
 
-        /* Conteneur du formulaire */
-        .form-container {
-            padding: 0 28px 28px;
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #BF5AF2 0%, #FF375F 100%);
+            top: 30%;
+            right: -100px;
+            animation-delay: 8s;
+            animation-duration: 30s;
         }
 
-        .form-step {
-            display: none;
-            animation: fadeIn 0.3s ease-out;
+        .orb-3 {
+            width: 450px;
+            height: 450px;
+            background: linear-gradient(135deg, #30D158 0%, #00C7BE 100%);
+            bottom: 5%;
+            left: 25%;
+            animation-delay: 15s;
+            animation-duration: 35s;
         }
 
-        .form-step.active {
-            display: block;
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            33% {
+                transform: translate(40px, -40px) rotate(120deg);
+            }
+            66% {
+                transform: translate(-30px, 30px) rotate(240deg);
+            }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .step-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: #1d1d1f;
-            margin-bottom: 16px;
-        }
-
-        .step-description {
-            font-size: 14px;
-            color: #86868b;
-            margin-bottom: 24px;
-            line-height: 1.42859;
-        }
-
-        /* Champs de saisie */
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .input-label {
-            display: block;
-            font-size: 13px;
-            font-weight: 500;
-            color: #424245;
-            margin-bottom: 6px;
-            letter-spacing: -0.01em;
-        }
-
-        .input-field {
-            width: 100%;
-            height: 44px;
-            padding: 0 16px;
-            font-size: 16px;
-            font-family: inherit;
-            background-color: #f5f5f7;
-            border: 1px solid #d2d2d7;
-            border-radius: 12px;
-            color: #1d1d1f;
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-            -webkit-appearance: none;
-        }
-
-        .input-field:focus {
-            outline: none;
-            border-color: #007aff;
-            background-color: #ffffff;
-            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
-        }
-
-        .input-field.error {
-            border-color: #ff3b30;
-        }
-
-        .input-field.success {
-            border-color: #34c759;
-        }
-
-        .validation-message {
-            font-size: 12px;
-            margin-top: 6px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            opacity: 0;
-            transform: translateY(-4px);
-            transition: all 0.3s ease;
-        }
-
-        .validation-message.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .validation-message.error {
-            color: #ff3b30;
-        }
-
-        .validation-message.success {
-            color: #34c759;
-        }
-
-        /* Règles de mot de passe */
-        .password-rules {
-            background-color: #f5f5f7;
-            border-radius: 12px;
-            padding: 16px;
-            margin-top: 20px;
-        }
-
-        .password-rules-title {
-            font-size: 14px;
-            font-weight: 500;
-            color: #1d1d1f;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .rule-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-            font-size: 13px;
-            color: #86868b;
-            transition: color 0.3s ease;
-        }
-
-        .rule-item.valid {
-            color: #34c759;
-        }
-
-        .rule-item i {
-            font-size: 12px;
-            width: 16px;
-        }
-
-        /* Conteneur des matières */
-        .subjects-container {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-top: 20px;
-        }
-
-        .subject-item {
-            background-color: #f5f5f7;
-            border-radius: 12px;
-            padding: 16px;
-            border: 1px solid transparent;
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-
-        .subject-item:hover {
-            background-color: #e8e8ed;
-        }
-
-        .subject-item:focus-within {
-            border-color: #007aff;
-            background-color: #ffffff;
-        }
-
-        .subject-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .subject-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            background-color: #007aff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 12px;
-        }
-
-        .subject-icon i {
-            color: #ffffff;
-            font-size: 16px;
-        }
-
-        .subject-name {
-            font-size: 16px;
-            font-weight: 500;
-            color: #1d1d1f;
-        }
-
-        .grade-input-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .grade-input {
-            flex: 1;
-            height: 44px;
-            padding: 0 16px;
-            font-size: 16px;
-            font-family: inherit;
-            background-color: #ffffff;
-            border: 1px solid #d2d2d7;
-            border-radius: 10px;
-            text-align: center;
-            color: #1d1d1f;
-            transition: all 0.2s ease;
-        }
-
-        .grade-input:focus {
-            outline: none;
-            border-color: #007aff;
-            box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1);
-        }
-
-        .grade-range {
-            font-size: 13px;
-            color: #86868b;
-            min-width: 80px;
-        }
-
-        /* Options de paiement */
-        .payment-option {
-            background-color: #f5f5f7;
-            border-radius: 12px;
-            padding: 16px;
-            border: 1px solid transparent;
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-            cursor: pointer;
-        }
-
-        .payment-option:hover {
-            background-color: #e8e8ed;
-        }
-
-        .payment-option.selected {
-            border-color: #007aff;
-            background-color: #e8f3ff;
-        }
-
-        /* Avis important */
-        .important-notice {
-            background-color: #fff8e6;
-            border-left: 4px solid #ff9500;
-            border-radius: 0 8px 8px 0;
-            padding: 16px;
-            margin-top: 20px;
-        }
-
-        .important-notice-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .important-notice-header i {
-            color: #ff9500;
-            margin-right: 8px;
-        }
-
-        .important-notice-title {
-            font-size: 14px;
-            font-weight: 500;
-            color: #1d1d1f;
-        }
-
-        .important-notice-text {
-            font-size: 13px;
-            color: #424245;
-            line-height: 1.42859;
-        }
-
-        /* Boutons - Style Apple */
-        .buttons-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 32px;
-            padding-top: 20px;
-            border-top: 1px solid #d2d2d7;
-        }
-
-        .apple-button {
-            height: 44px;
-            padding: 0 20px;
-            font-size: 15px;
-            font-weight: 500;
-            font-family: inherit;
-            border-radius: 10px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            letter-spacing: -0.01em;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .apple-button:active {
-            transform: scale(0.98);
-        }
-
-        .apple-button-primary {
-            background-color: #007aff;
-            color: #ffffff;
-        }
-
-        .apple-button-primary:hover:not(:disabled) {
-            background-color: #0056cc;
-        }
-
-        .apple-button-secondary {
-            background-color: transparent;
-            color: #007aff;
-            border: 1px solid #d2d2d7;
-        }
-
-        .apple-button-secondary:hover:not(:disabled) {
-            background-color: #f5f5f7;
-        }
-
-        .apple-button:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Modal de confirmation */
-        .modal-overlay {
+        /* Navigation Bar */
+        .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.4);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid var(--border-light);
             z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
+            transition: var(--transition-smooth);
         }
 
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: var(--shadow-xs);
+            border-bottom-color: var(--border-medium);
         }
 
-        .modal-container {
-            background-color: #ffffff;
-            border-radius: 18px;
-            width: 100%;
-            max-width: 380px;
-            padding: 28px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            transform: scale(0.9);
-            transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-
-        .modal-overlay.active .modal-container {
-            transform: scale(1);
-        }
-
-        .modal-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .modal-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #34c759;
+        .nav-container {
+            max-width: 1024px;
+            margin: 0 auto;
+            height: 100%;
+            padding: 0 22px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 16px;
         }
 
-        .modal-icon i {
-            color: #ffffff;
+        .nav-logo {
             font-size: 24px;
-        }
-
-        .modal-title {
-            font-size: 22px;
             font-weight: 600;
-            color: #1d1d1f;
-            margin-bottom: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.04em;
+            transition: var(--transition-fast);
         }
 
-        .modal-message {
-            font-size: 15px;
-            color: #424245;
-            line-height: 1.47059;
-            text-align: center;
-            margin-bottom: 24px;
+        .nav-logo:hover {
+            color: var(--primary);
         }
 
-        .modal-message strong {
-            color: #1d1d1f;
-        }
-
-        .modal-button {
+        /* Main Container */
+        .container {
             width: 100%;
-            height: 44px;
-            background-color: #007aff;
-            color: #ffffff;
-            border: none;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 500;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 120px 22px 60px;
+            position: relative;
+            z-index: 1;
         }
 
-        .modal-button:hover {
-            background-color: #0056cc;
-        }
-
-        /* Indicateur de chargement */
-        .loading-spinner {
-            display: none;
+        /* Header Section */
+        header {
             text-align: center;
-            margin: 20px 0;
+            padding: 0 0 64px;
+            width: 100%;
+            position: relative;
         }
 
-        .loading-spinner.active {
-            display: block;
+        .logo {
+            font-size: 64px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            letter-spacing: -0.015em;
+            animation: fadeInUp 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .tagline {
+            font-size: 28px;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.42859;
+            letter-spacing: -0.016em;
+            animation: fadeInUp 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s backwards;
+        }
+
+        /* Search Section */
+        .search-section {
+            width: 100%;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s backwards;
+        }
+
+        .search-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-box {
+            width: 100%;
+            height: 56px;
+            padding: 0 60px 0 24px;
+            font-size: 17px;
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-lg);
+            transition: var(--transition-smooth);
+            font-family: inherit;
+            font-weight: 400;
+            color: var(--text-primary);
+            background: var(--secondary);
+            box-shadow: var(--shadow-xs);
+            letter-spacing: -0.022em;
+        }
+
+        .search-box::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .search-box:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.1), var(--shadow-md);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 22px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-tertiary);
+            font-size: 18px;
+            pointer-events: none;
+            transition: var(--transition-fast);
+        }
+
+        .search-box:focus + .search-icon {
+            color: var(--primary);
         }
 
         .spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #007aff;
+            position: absolute;
+            right: 22px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--primary-light);
+            border-top-color: var(--primary);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
+            animation: spin 0.6s linear infinite;
+            display: none;
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { transform: translateY(-50%) rotate(360deg); }
         }
 
-        /* Message d'erreur */
-        .error-message-container {
-            background-color: #ffeaea;
-            border: 1px solid #ffcdd2;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 20px 0;
+        /* Search Results */
+        .search-results {
+            width: 100%;
+            margin-top: 16px;
+            background: var(--secondary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-light);
+            display: none;
+            max-height: 600px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            animation: slideDown 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .search-results.visible {
+            display: block;
+        }
+
+        .search-results::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .search-results::-webkit-scrollbar-track {
+            background: transparent;
+            margin: 6px 0;
+        }
+
+        .search-results::-webkit-scrollbar-thumb {
+            background: var(--medium-gray);
+            border-radius: 4px;
+            border: 2px solid var(--secondary);
+        }
+
+        .search-results::-webkit-scrollbar-thumb:hover {
+            background: var(--text-tertiary);
+        }
+
+        .result-item {
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--border-light);
+            transition: var(--transition-fast);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-item:hover {
+            background-color: var(--light-gray);
+        }
+
+        .result-title {
+            font-weight: 600;
+            font-size: 17px;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.022em;
+        }
+
+        .result-title i {
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        .result-description {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.47059;
+            letter-spacing: -0.016em;
+        }
+
+        .files-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .file-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: var(--light-gray);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 15px;
+            font-weight: 500;
+            border: 1px solid transparent;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: var(--primary);
+            transform: scaleY(0);
+            transition: var(--transition-smooth);
+        }
+
+        .file-link:hover {
+            background: var(--secondary);
+            border-color: var(--border-medium);
+            transform: translateX(4px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .file-link:hover::before {
+            transform: scaleY(1);
+        }
+
+        .file-link:active {
+            transform: translateX(4px) scale(0.98);
+        }
+
+        .file-link i.file-icon {
+            font-size: 18px;
+            width: 20px;
             text-align: center;
         }
 
-        .error-message-container i {
-            color: #ff3b30;
-            font-size: 24px;
-            margin-bottom: 10px;
+        .file-link span {
+            flex: 1;
+            letter-spacing: -0.016em;
         }
 
-        .error-message-container h3 {
-            color: #ff3b30;
+        .file-link i.external-icon {
+            color: var(--text-tertiary);
+            font-size: 13px;
+            opacity: 0.6;
+            transition: var(--transition-fast);
+        }
+
+        .file-link:hover i.external-icon {
+            opacity: 1;
+            transform: translate(2px, -2px);
+        }
+
+        .no-results {
+            padding: 48px 32px;
+            text-align: center;
+        }
+
+        .no-results i {
+            font-size: 32px;
+            margin-bottom: 16px;
+            color: var(--text-tertiary);
+            opacity: 0.4;
+        }
+
+        .no-results-title {
+            font-size: 17px;
+            font-weight: 600;
             margin-bottom: 8px;
+            color: var(--text-primary);
+            letter-spacing: -0.022em;
         }
 
-        .error-message-container p {
-            color: #666;
-            margin-bottom: 15px;
+        .no-results-subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+            letter-spacing: -0.016em;
         }
 
-        /* Design responsive */
+        /* Popular Searches */
+        .popular-searches {
+            width: 100%;
+            background: var(--secondary);
+            border-radius: var(--radius-xl);
+            padding: 40px;
+            margin-top: 48px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+            animation: fadeInUp 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s backwards;
+        }
+
+        .popular-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.022em;
+        }
+
+        .popular-title i {
+            color: var(--primary);
+            font-size: 22px;
+        }
+
+        .popular-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .popular-item {
+            padding: 16px 20px;
+            background: var(--light-gray);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-primary);
+            border: 1px solid transparent;
+            letter-spacing: -0.016em;
+        }
+
+        .popular-item:hover {
+            background: var(--secondary);
+            border-color: var(--border-medium);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .popular-item:active {
+            transform: translateY(0);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .popular-item i {
+            color: var(--primary);
+            font-size: 16px;
+            transition: var(--transition-fast);
+        }
+
+        .popular-item:hover i {
+            transform: scale(1.1);
+        }
+
+        /* Events Section */
+        .events-section {
+            width: 100%;
+            max-width: 100vw;
+            margin-top: 80px;
+            padding: 60px 0;
+            background: var(--light-gray);
+            position: relative;
+            z-index: 1;
+        }
+
+        .events-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 22px;
+        }
+
+        .events-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .events-title {
+            font-size: 40px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            letter-spacing: -0.015em;
+        }
+
+        .events-subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 400;
+            letter-spacing: -0.016em;
+        }
+
+        .events-scroll-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .events-scroll-container {
+            display: flex;
+            gap: 24px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 8px 0 32px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .events-scroll-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .events-scroll-container::-webkit-scrollbar-track {
+            background: var(--medium-gray);
+            border-radius: 4px;
+            margin: 0 22px;
+        }
+
+        .events-scroll-container::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        .events-scroll-container::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+
+        .event-card {
+            flex: 0 0 340px;
+            background: var(--secondary);
+            border-radius: var(--radius-xl);
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .event-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary-light);
+        }
+
+        .event-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--primary-light);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            transition: var(--transition-smooth);
+        }
+
+        .event-card:hover .event-icon {
+            background: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .event-icon i {
+            font-size: 24px;
+            color: var(--primary);
+            transition: var(--transition-smooth);
+        }
+
+        .event-card:hover .event-icon i {
+            color: var(--secondary);
+        }
+
+        .event-date {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--light-gray);
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            letter-spacing: -0.016em;
+        }
+
+        .event-date i {
+            font-size: 12px;
+        }
+
+        .event-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            line-height: 1.3;
+            letter-spacing: -0.022em;
+        }
+
+        .event-description {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 24px;
+            letter-spacing: -0.016em;
+        }
+
+        .event-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--primary);
+            color: var(--secondary);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            letter-spacing: -0.016em;
+        }
+
+        .event-link:hover {
+            background: var(--primary-dark);
+            transform: translateX(4px);
+        }
+
+        .event-link:active {
+            transform: translateX(4px) scale(0.98);
+        }
+
+        .event-link i {
+            font-size: 14px;
+            transition: var(--transition-fast);
+        }
+
+        .event-link:hover i {
+            transform: translateX(3px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                height: 44px;
+            }
+
+            .nav-container {
+                padding: 0 16px;
+            }
+
+            .nav-logo {
+                font-size: 21px;
+            }
+
+            .container {
+                padding: 100px 16px 60px;
+            }
+
+            .logo {
+                font-size: 48px;
+            }
+
+            .tagline {
+                font-size: 21px;
+            }
+
+            .search-box {
+                height: 52px;
+                padding: 0 56px 0 20px;
+                font-size: 16px;
+            }
+
+            .search-icon {
+                right: 20px;
+                font-size: 17px;
+            }
+
+            .popular-searches {
+                padding: 32px 24px;
+            }
+
+            .popular-list {
+                grid-template-columns: 1fr;
+            }
+
+            .result-item {
+                padding: 20px 24px;
+            }
+
+            .file-link {
+                padding: 10px 14px;
+                font-size: 14px;
+            }
+
+            .events-section {
+                padding: 48px 0;
+                margin-top: 60px;
+            }
+
+            .events-container {
+                padding: 0 16px;
+            }
+
+            .events-title {
+                font-size: 32px;
+            }
+
+            .events-subtitle {
+                font-size: 18px;
+            }
+
+            .event-card {
+                flex: 0 0 300px;
+                padding: 28px;
+            }
+
+            .orb-1, .orb-2, .orb-3 {
+                filter: blur(80px);
+                opacity: 0.06;
+            }
+        }
+
         @media (max-width: 480px) {
-            body {
-                padding: 12px;
-                align-items: flex-start;
-                padding-top: 20px;
+            .logo {
+                font-size: 40px;
             }
 
-            .signup-container {
-                border-radius: 14px;
+            .tagline {
+                font-size: 19px;
             }
 
-            .header {
-                padding: 20px 20px 16px;
+            .popular-title {
+                font-size: 18px;
             }
 
-            .header h1 {
-                font-size: 24px;
+            .popular-item {
+                padding: 14px 18px;
+                font-size: 14px;
             }
 
-            .form-container {
-                padding: 0 20px 20px;
+            .events-title {
+                font-size: 28px;
             }
 
-            .subject-item, .payment-option {
-                padding: 14px;
+            .events-subtitle {
+                font-size: 17px;
             }
 
-            .grade-input-container {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 8px;
-            }
-
-            .grade-range {
-                text-align: center;
-            }
-
-            .buttons-container {
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .apple-button {
-                width: 100%;
-            }
-
-            .modal-container {
+            .event-card {
+                flex: 0 0 280px;
                 padding: 24px;
             }
+
+            .event-title {
+                font-size: 20px;
+            }
         }
 
-        /* États focus pour l'accessibilité */
-        .apple-button:focus-visible,
-        .input-field:focus-visible,
-        .grade-input:focus-visible {
-            outline: 2px solid #007aff;
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .gradient-orb {
+                animation: none !important;
+            }
+        }
+
+        /* Focus states */
+        .popular-item:focus,
+        .file-link:focus,
+        .event-card:focus,
+        .event-link:focus {
+            outline: 2px solid var(--primary);
             outline-offset: 2px;
+        }
+
+        .search-box:focus {
+            outline: none;
         }
     </style>
 </head>
 <body>
-    <div class="signup-container">
-        <!-- En-tête -->
-        <div class="header">
-            <h1>Portail Académique</h1>
-            <p>Complétez votre inscription en quelques étapes simples</p>
+    <!-- Animated Background -->
+    <div class="background-animation">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">ew</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <div class="logo">ew</div>
+            <div class="tagline">Les meilleures ressources pour réviser le Bac, notamment des cours et des exercices corrigés.</div>
+        </header>
+
+        <div class="search-section">
+            <div class="search-container">
+                <input type="text" class="search-box" placeholder="Rechercher des cours, des articles et du matériel d'étude..." id="searchInput" autocomplete="off">
+                <div class="search-icon" id="searchIcon"><i class="fas fa-search"></i></div>
+                <div class="spinner" id="spinner"></div>
+            </div>
+
+            <div class="search-results" id="searchResults">
+                <!-- Results will be inserted here -->
+            </div>
         </div>
 
-        <!-- Indicateur d'étape -->
-        <div class="step-indicator">
-            <div class="step-dot active" id="stepDot1"></div>
-            <div class="step-dot" id="stepDot2"></div>
-            <div class="step-dot" id="stepDot3"></div>
-            <div class="step-dot" id="stepDot4"></div>
-        </div>
-
-        <!-- Étapes du formulaire -->
-        <div class="form-container">
-            <!-- Étape 1 : Informations personnelles -->
-            <div class="form-step active" id="formStep1">
-                <h2 class="step-title">Informations Personnelles</h2>
-                <p class="step-description">Entrez vos coordonnées pour créer votre compte.</p>
-
-                <div class="input-group">
-                    <label class="input-label" for="firstName">Prénom</label>
-                    <input type="text" id="firstName" class="input-field" placeholder="Entrez votre prénom">
-                    <div class="validation-message" id="firstNameValidation"></div>
+        <div class="popular-searches">
+            <div class="popular-title"><i class="fas fa-chart-line"></i> Recherches Populaires</div>
+            <div class="popular-list">
+                <div class="popular-item" tabindex="0" role="button">
+                    <i class="fas fa-book"></i>
+                    <span>Complexe Exercices</span>
                 </div>
-
-                <div class="input-group">
-                    <label class="input-label" for="lastName">Nom</label>
-                    <input type="text" id="lastName" class="input-field" placeholder="Entrez votre nom">
-                    <div class="validation-message" id="lastNameValidation"></div>
+                <div class="popular-item" tabindex="0" role="button">
+                    <i class="fas fa-flask"></i>
+                    <span>Acide base, PH</span>
                 </div>
-
-                <div class="input-group">
-                    <label class="input-label" for="email">Adresse Email</label>
-                    <input type="email" id="email" class="input-field" placeholder="nom@exemple.com">
-                    <div class="validation-message" id="emailValidation"></div>
+                <div class="popular-item" tabindex="0" role="button">
+                    <i class="fas fa-calculator"></i>
+                    <span>Intégral</span>
                 </div>
-
-                <div class="input-group">
-                    <label class="input-label" for="phone">Numéro de Téléphone</label>
-                    <input type="tel" id="phone" class="input-field" placeholder="Entrez votre numéro">
-                    <div class="validation-message" id="phoneValidation"></div>
-                </div>
-
-                <div class="buttons-container">
-                    <button class="apple-button apple-button-primary" id="nextStep1" disabled>
-                        Continuer
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Étape 2 : Création du mot de passe -->
-            <div class="form-step" id="formStep2">
-                <h2 class="step-title">Création du Mot de Passe</h2>
-                <p class="step-description">Créez un mot de passe sécurisé pour votre compte.</p>
-
-                <div class="input-group">
-                    <label class="input-label" for="password">Mot de Passe</label>
-                    <input type="password" id="password" class="input-field" placeholder="Créez un mot de passe">
-                    <div class="validation-message" id="passwordValidation"></div>
-                </div>
-
-                <div class="input-group">
-                    <label class="input-label" for="confirmPassword">Confirmer le Mot de Passe</label>
-                    <input type="password" id="confirmPassword" class="input-field" placeholder="Retapez votre mot de passe">
-                    <div class="validation-message" id="confirmPasswordValidation"></div>
-                </div>
-
-                <!-- Règles du mot de passe -->
-                <div class="password-rules">
-                    <div class="password-rules-title">
-                        <i class="fas fa-shield-alt"></i>
-                        Exigences du Mot de Passe
-                    </div>
-                    <div class="rule-item" id="ruleLength">
-                        <i class="fas fa-circle" style="font-size: 6px;"></i>
-                        Minimum 8 caractères
-                    </div>
-                    <div class="rule-item" id="ruleUppercase">
-                        <i class="fas fa-circle" style="font-size: 6px;"></i>
-                        Au moins une majuscule
-                    </div>
-                    <div class="rule-item" id="ruleLowercase">
-                        <i class="fas fa-circle" style="font-size: 6px;"></i>
-                        Au moins une minuscule
-                    </div>
-                    <div class="rule-item" id="ruleNumber">
-                        <i class="fas fa-circle" style="font-size: 6px;"></i>
-                        Au moins un chiffre
-                    </div>
-                    <div class="rule-item" id="ruleSpecial">
-                        <i class="fas fa-circle" style="font-size: 6px;"></i>
-                        Au moins un caractère spécial
-                    </div>
-                </div>
-
-                <div class="buttons-container">
-                    <button class="apple-button apple-button-secondary" id="prevStep2">
-                        <i class="fas fa-arrow-left"></i>
-                        Retour
-                    </button>
-                    <button class="apple-button apple-button-primary" id="nextStep2" disabled>
-                        Continuer
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Étape 3 : Matières & Notes -->
-            <div class="form-step" id="formStep3">
-                <h2 class="step-title">Matières & Notes</h2>
-                <p class="step-description">Entrez vos notes pour chaque matière (0-20).</p>
-
-                <div class="subjects-container">
-                    <!-- Mathématiques -->
-                    <div class="subject-item">
-                        <div class="subject-header">
-                            <div class="subject-icon" style="background-color: #007aff;">
-                                <i class="fas fa-calculator"></i>
-                            </div>
-                            <div class="subject-name">Mathématiques</div>
-                        </div>
-                        <div class="grade-input-container">
-                            <input type="number" id="mathGrade" class="grade-input" min="0" max="20" step="0.5" placeholder="0-20" inputmode="decimal">
-                            <div class="grade-range">0 - 20</div>
-                        </div>
-                        <div class="validation-message" id="mathValidation"></div>
-                    </div>
-
-                    <!-- Physique -->
-                    <div class="subject-item">
-                        <div class="subject-header">
-                            <div class="subject-icon" style="background-color: #5856d6;">
-                                <i class="fas fa-atom"></i>
-                            </div>
-                            <div class="subject-name">Physique</div>
-                        </div>
-                        <div class="grade-input-container">
-                            <input type="number" id="physicsGrade" class="grade-input" min="0" max="20" step="0.5" placeholder="0-20" inputmode="decimal">
-                            <div class="grade-range">0 - 20</div>
-                        </div>
-                        <div class="validation-message" id="physicsValidation"></div>
-                    </div>
-
-                    <!-- Sciences -->
-                    <div class="subject-item">
-                        <div class="subject-header">
-                            <div class="subject-icon" style="background-color: #34c759;">
-                                <i class="fas fa-flask"></i>
-                            </div>
-                            <div class="subject-name">Sciences</div>
-                        </div>
-                        <div class="grade-input-container">
-                            <input type="number" id="scienceGrade" class="grade-input" min="0" max="20" step="0.5" placeholder="0-20" inputmode="decimal">
-                            <div class="grade-range">0 - 20</div>
-                        </div>
-                        <div class="validation-message" id="scienceValidation"></div>
-                    </div>
-
-                    <!-- Informatique -->
-                    <div class="subject-item">
-                        <div class="subject-header">
-                            <div class="subject-icon" style="background-color: #ff9500;">
-                                <i class="fas fa-laptop-code"></i>
-                            </div>
-                            <div class="subject-name">Informatique</div>
-                        </div>
-                        <div class="grade-input-container">
-                            <input type="number" id="csGrade" class="grade-input" min="0" max="20" step="0.5" placeholder="0-20" inputmode="decimal">
-                            <div class="grade-range">0 - 20</div>
-                        </div>
-                        <div class="validation-message" id="csValidation"></div>
-                    </div>
-
-                    <!-- Anglais -->
-                    <div class="subject-item">
-                        <div class="subject-header">
-                            <div class="subject-icon" style="background-color: #ff3b30;">
-                                <i class="fas fa-book-open"></i>
-                            </div>
-                            <div class="subject-name">Anglais</div>
-                        </div>
-                        <div class="grade-input-container">
-                            <input type="number" id="englishGrade" class="grade-input" min="0" max="20" step="0.5" placeholder="0-20" inputmode="decimal">
-                            <div class="grade-range">0 - 20</div>
-                        </div>
-                        <div class="validation-message" id="englishValidation"></div>
-                    </div>
-                </div>
-
-                <div class="buttons-container">
-                    <button class="apple-button apple-button-secondary" id="prevStep3">
-                        <i class="fas fa-arrow-left"></i>
-                        Retour
-                    </button>
-                    <button class="apple-button apple-button-primary" id="nextStep3" disabled>
-                        Continuer
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Étape 4 : Méthode de paiement -->
-            <div class="form-step" id="formStep4">
-                <h2 class="step-title">Paiement</h2>
-                <p class="step-description">Sélectionnez votre méthode de paiement préférée.</p>
-
-                <div class="subjects-container">
-                    <!-- Paiement D17 -->
-                    <div class="payment-option" data-method="d17">
-                        <div class="subject-header">
-                            <div class="subject-icon" style="background-color: #007aff;">
-                                <i class="fas fa-mobile-alt"></i>
-                            </div>
-                            <div>
-                                <div class="subject-name">Paiement D17</div>
-                                <div style="font-size: 13px; color: #86868b; margin-top: 2px;">Envoyer à : 470506544</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Carte postale -->
-                    <div class="payment-option" data-method="postal">
-                        <div class="subject-header">
-                            <div class="subject-icon" style="background-color: #34c759;">
-                                <i class="fas fa-credit-card"></i>
-                            </div>
-                            <div>
-                                <div class="subject-name">Carte Postale</div>
-                                <div style="font-size: 13px; color: #86868b; margin-top: 2px;">Carte : 5098 8959 8890 0</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="important-notice">
-                    <div class="important-notice-header">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <div class="important-notice-title">Avis Important</div>
-                    </div>
-                    <div class="important-notice-text">
-                        Après paiement, envoyez une capture d'écran au <strong>47050644</strong>. Votre compte restera inactif jusqu'à vérification de votre paiement.
-                    </div>
-                </div>
-
-                <!-- Indicateur de chargement et message d'erreur -->
-                <div class="loading-spinner" id="loadingSpinner">
-                    <div class="spinner"></div>
-                    <p style="margin-top: 10px; font-size: 14px; color: #86868b;">Envoi des données en cours...</p>
-                </div>
-
-                <div id="errorMessage" style="display: none;"></div>
-
-                <div class="buttons-container">
-                    <button class="apple-button apple-button-secondary" id="prevStep4">
-                        <i class="fas fa-arrow-left"></i>
-                        Retour
-                    </button>
-                    <button class="apple-button apple-button-primary" id="finishBtn" disabled>
-                        Terminer l'Inscription
-                        <i class="fas fa-check"></i>
-                    </button>
+                <div class="popular-item" tabindex="0" role="button">
+                    <i class="fas fa-dna"></i>
+                    <span>Génétique humaine</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal de confirmation -->
-    <div class="modal-overlay" id="confirmationModal">
-        <div class="modal-container">
-            <div class="modal-header">
-                <div class="modal-icon">
-                    <i class="fas fa-envelope"></i>
+    <!-- Events Section -->
+    <section class="events-section">
+        <div class="events-container">
+            <div class="events-header">
+                <h2 class="events-title">Événements à venir</h2>
+                <p class="events-subtitle">Découvrez nos prochains webinaires et sessions de révision</p>
+            </div>
+
+            <div class="events-scroll-wrapper">
+                <div class="events-scroll-container">
+                    <!-- Event Card 1 -->
+                    <div class="event-card" tabindex="0">
+                        <div class="event-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="event-date">
+                            <i class="far fa-calendar"></i>
+                            15 Mars 2026
+                        </div>
+                        <h3 class="event-title">Session de révision intensive - Mathématiques</h3>
+                        <p class="event-description">Préparez-vous au Bac avec nos experts en mathématiques. Révision complète des fonctions, intégrales et probabilités.</p>
+                        <a href="#" class="event-link">
+                            En savoir plus
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Event Card 2 -->
+                    <div class="event-card" tabindex="0">
+                        <div class="event-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <div class="event-date">
+                            <i class="far fa-calendar"></i>
+                            22 Mars 2026
+                        </div>
+                        <h3 class="event-title">Atelier Pratique - Chimie Organique</h3>
+                        <p class="event-description">Maîtrisez les réactions chimiques et les mécanismes avec nos professeurs expérimentés lors de cet atelier interactif.</p>
+                        <a href="#" class="event-link">
+                            En savoir plus
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Event Card 3 -->
+                    <div class="event-card" tabindex="0">
+                        <div class="event-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="event-date">
+                            <i class="far fa-calendar"></i>
+                            5 Avril 2026
+                        </div>
+                        <h3 class="event-title">Webinaire - Méthodologie de la Dissertation</h3>
+                        <p class="event-description">Apprenez les techniques essentielles pour réussir vos dissertations de français et de philosophie au Bac.</p>
+                        <a href="#" class="event-link">
+                            En savoir plus
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Event Card 4 -->
+                    <div class="event-card" tabindex="0">
+                        <div class="event-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="event-date">
+                            <i class="far fa-calendar"></i>
+                            12 Avril 2026
+                        </div>
+                        <h3 class="event-title">Conférence - Histoire Contemporaine</h3>
+                        <p class="event-description">Analyse approfondie des événements majeurs du XXe siècle avec nos spécialistes en histoire.</p>
+                        <a href="#" class="event-link">
+                            En savoir plus
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Event Card 5 -->
+                    <div class="event-card" tabindex="0">
+                        <div class="event-icon">
+                            <i class="fas fa-dna"></i>
+                        </div>
+                        <div class="event-date">
+                            <i class="far fa-calendar"></i>
+                            20 Avril 2026
+                        </div>
+                        <h3 class="event-title">Cours en Direct - Génétique et Evolution</h3>
+                        <p class="event-description">Comprendre les mécanismes de l'hérédité et de l'évolution à travers des exemples concrets et des exercices pratiques.</p>
+                        <a href="#" class="event-link">
+                            En savoir plus
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Event Card 6 -->
+                    <div class="event-card" tabindex="0">
+                        <div class="event-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="event-date">
+                            <i class="far fa-calendar"></i>
+                            28 Avril 2026
+                        </div>
+                        <h3 class="event-title">Masterclass - Physique Quantique</h3>
+                        <p class="event-description">Explorez les concepts fondamentaux de la physique moderne avec nos experts pour exceller au Bac scientifique.</p>
+                        <a href="#" class="event-link">
+                            En savoir plus
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
                 </div>
-                <h2 class="modal-title">Inscription Terminée</h2>
             </div>
-            
-            <div class="modal-message">
-                Vos informations ont été envoyées avec succès à <strong>eduwelltn@gmail.com</strong>.
-                <br><br>
-                Vous recevrez un email de confirmation avec les détails de votre compte dans les prochaines minutes.
-            </div>
-            
-            <button class="modal-button" id="closeModal">
-                Compris
-            </button>
         </div>
-    </div>
+    </section>
 
     <script>
-        // Gestion de l'état
-        let currentStep = 1;
-        let selectedPaymentMethod = null;
-        
-        // Éléments DOM
-        const stepDots = document.querySelectorAll('.step-dot');
-        const formSteps = document.querySelectorAll('.form-step');
-        
-        // Éléments Étape 1
-        const nextStep1Btn = document.getElementById('nextStep1');
-        const firstNameInput = document.getElementById('firstName');
-        const lastNameInput = document.getElementById('lastName');
-        const emailInput = document.getElementById('email');
-        const phoneInput = document.getElementById('phone');
-        
-        // Éléments Étape 2
-        const prevStep2Btn = document.getElementById('prevStep2');
-        const nextStep2Btn = document.getElementById('nextStep2');
-        const passwordInput = document.getElementById('password');
-        const confirmPasswordInput = document.getElementById('confirmPassword');
-        
-        // Éléments Étape 3
-        const prevStep3Btn = document.getElementById('prevStep3');
-        const nextStep3Btn = document.getElementById('nextStep3');
-        const gradeInputs = document.querySelectorAll('.grade-input');
-        
-        // Éléments Étape 4
-        const prevStep4Btn = document.getElementById('prevStep4');
-        const finishBtn = document.getElementById('finishBtn');
-        const paymentOptions = document.querySelectorAll('.payment-option');
-        const loadingSpinner = document.getElementById('loadingSpinner');
-        const errorMessageDiv = document.getElementById('errorMessage');
-        
-        // Éléments Modal
-        const confirmationModal = document.getElementById('confirmationModal');
-        const closeModalBtn = document.getElementById('closeModal');
-        
-        // Éléments des règles de mot de passe
-        const ruleLength = document.getElementById('ruleLength');
-        const ruleUppercase = document.getElementById('ruleUppercase');
-        const ruleLowercase = document.getElementById('ruleLowercase');
-        const ruleNumber = document.getElementById('ruleNumber');
-        const ruleSpecial = document.getElementById('ruleSpecial');
-        
-        // Initialiser le formulaire
-        function initForm() {
-            setupEventListeners();
-            validateStep1(); // Validation initiale
-        }
-        
-        // Configurer tous les écouteurs d'événements
-        function setupEventListeners() {
-            // Navigation Étape 1
-            [firstNameInput, lastNameInput, emailInput, phoneInput].forEach(input => {
-                input.addEventListener('input', validateStep1);
-                input.addEventListener('blur', () => showValidation(input));
-            });
-            
-            nextStep1Btn.addEventListener('click', () => goToStep(2));
-            
-            // Navigation Étape 2
-            prevStep2Btn.addEventListener('click', () => goToStep(1));
-            nextStep2Btn.addEventListener('click', () => goToStep(3));
-            
-            passwordInput.addEventListener('input', validatePassword);
-            confirmPasswordInput.addEventListener('input', validatePasswordConfirmation);
-            
-            // Navigation Étape 3
-            prevStep3Btn.addEventListener('click', () => goToStep(2));
-            nextStep3Btn.addEventListener('click', () => goToStep(4));
-            
-            gradeInputs.forEach(input => {
-                input.addEventListener('input', validateGrade);
-                input.addEventListener('blur', () => validateGrade({ target: input }));
-            });
-            
-            // Navigation Étape 4
-            prevStep4Btn.addEventListener('click', () => goToStep(3));
-            
-            paymentOptions.forEach(option => {
-                option.addEventListener('click', () => {
-                    // Supprimer la sélection précédente
-                    paymentOptions.forEach(opt => {
-                        opt.classList.remove('selected');
-                    });
-                    
-                    // Ajouter la nouvelle sélection
-                    option.classList.add('selected');
-                    selectedPaymentMethod = option.getAttribute('data-method');
-                    
-                    validateStep4();
-                });
-            });
-            
-            finishBtn.addEventListener('click', finishSignup);
-            
-            // Contrôles du modal
-            closeModalBtn.addEventListener('click', () => {
-                confirmationModal.classList.remove('active');
-                resetForm(); // Réinitialiser le formulaire quand le modal est fermé
-            });
-            
-            // Fermer le modal en cliquant à l'extérieur
-            confirmationModal.addEventListener('click', (e) => {
-                if (e.target === confirmationModal) {
-                    confirmationModal.classList.remove('active');
-                    resetForm(); // Réinitialiser le formulaire
-                }
-            });
-            
-            // Empêcher la soumission du formulaire avec la touche Entrée
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    handleEnterKey();
-                }
-            });
-        }
-        
-        // Gérer la touche Entrée
-        function handleEnterKey() {
-            switch(currentStep) {
-                case 1:
-                    if (!nextStep1Btn.disabled) goToStep(2);
-                    break;
-                case 2:
-                    if (!nextStep2Btn.disabled) goToStep(3);
-                    break;
-                case 3:
-                    if (!nextStep3Btn.disabled) goToStep(4);
-                    break;
-                case 4:
-                    if (!finishBtn.disabled) finishSignup();
-                    break;
-            }
-        }
-        
-        // Naviguer vers une étape spécifique
-        function goToStep(step) {
-            if (step < 1 || step > 4) return;
-            
-            // Mettre à jour les points d'étape
-            stepDots.forEach((dot, index) => {
-                if (index + 1 === step) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            });
-            
-            // Mettre à jour les étapes du formulaire
-            formSteps.forEach(formStep => {
-                formStep.classList.remove('active');
-            });
-            
-            document.getElementById(`formStep${step}`).classList.add('active');
-            currentStep = step;
-            
-            // Défiler vers le haut au changement d'étape (pour mobile)
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        
-        // Validation Étape 1
-        function validateStep1() {
-            const firstName = firstNameInput.value.trim();
-            const lastName = lastNameInput.value.trim();
-            const email = emailInput.value.trim();
-            const phone = phoneInput.value.trim();
-            
-            const isFirstNameValid = firstName.length >= 2;
-            const isLastNameValid = lastName.length >= 2;
-            const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-            const isPhoneValid = /^[\d\s\-\+\(\)]{8,}$/.test(phone);
-            
-            nextStep1Btn.disabled = !(isFirstNameValid && isLastNameValid && isEmailValid && isPhoneValid);
-            
-            return isFirstNameValid && isLastNameValid && isEmailValid && isPhoneValid;
-        }
-        
-        // Afficher la validation pour un champ individuel
-        function showValidation(input) {
-            const value = input.value.trim();
-            let isValid = false;
-            let message = '';
-            let validationElement;
-            
-            switch(input.id) {
-                case 'firstName':
-                    isValid = value.length >= 2;
-                    message = isValid ? 'Prénom valide' : 'Le prénom doit comporter au moins 2 caractères';
-                    validationElement = document.getElementById('firstNameValidation');
-                    break;
-                case 'lastName':
-                    isValid = value.length >= 2;
-                    message = isValid ? 'Nom valide' : 'Le nom doit comporter au moins 2 caractères';
-                    validationElement = document.getElementById('lastNameValidation');
-                    break;
-                case 'email':
-                    isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-                    message = isValid ? 'Adresse email valide' : 'Veuillez entrer une adresse email valide';
-                    validationElement = document.getElementById('emailValidation');
-                    break;
-                case 'phone':
-                    isValid = /^[\d\s\-\+\(\)]{8,}$/.test(value);
-                    message = isValid ? 'Numéro de téléphone valide' : 'Veuillez entrer un numéro de téléphone valide';
-                    validationElement = document.getElementById('phoneValidation');
-                    break;
-            }
-            
-            if (validationElement) {
-                validationElement.textContent = message;
-                validationElement.className = `validation-message ${isValid ? 'success' : 'error'}`;
-                
-                // Déclencher l'animation
-                setTimeout(() => {
-                    validationElement.classList.add('show');
-                }, 10);
-                
-                // Mettre à jour la bordure de l'input
-                input.classList.remove('error', 'success');
-                input.classList.add(isValid ? 'success' : 'error');
-            }
-        }
-        
-        // Validation du mot de passe
-        function validatePassword() {
-            const password = passwordInput.value;
-            
-            // Vérifier les règles du mot de passe
-            const hasMinLength = password.length >= 8;
-            const hasUppercase = /[A-Z]/.test(password);
-            const hasLowercase = /[a-z]/.test(password);
-            const hasNumber = /\d/.test(password);
-            const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
-            
-            // Mettre à jour les indicateurs de règle
-            updateRuleIndicator(ruleLength, hasMinLength);
-            updateRuleIndicator(ruleUppercase, hasUppercase);
-            updateRuleIndicator(ruleLowercase, hasLowercase);
-            updateRuleIndicator(ruleNumber, hasNumber);
-            updateRuleIndicator(ruleSpecial, hasSpecial);
-            
-            // Vérifier si toutes les règles sont respectées
-            const isValid = hasMinLength && hasUppercase && hasLowercase && hasNumber && hasSpecial;
-            
-            // Mettre à jour le style du champ mot de passe
-            if (password.length === 0) {
-                passwordInput.classList.remove('error', 'success');
-                document.getElementById('passwordValidation').classList.remove('show');
-            } else if (!isValid) {
-                passwordInput.classList.remove('success');
-                passwordInput.classList.add('error');
-                showValidationMessage('passwordValidation', 'Le mot de passe ne respecte pas toutes les exigences', 'error');
-            } else {
-                passwordInput.classList.remove('error');
-                passwordInput.classList.add('success');
-                showValidationMessage('passwordValidation', 'Le mot de passe respecte toutes les exigences', 'success');
-            }
-            
-            // Valider la confirmation si elle a du contenu
-            if (confirmPasswordInput.value.length > 0) {
-                validatePasswordConfirmation();
-            }
-            
-            updateStep2Button();
-            return isValid;
-        }
-        
-        // Validation de la confirmation du mot de passe
-        function validatePasswordConfirmation() {
-            const password = passwordInput.value;
-            const confirmPassword = confirmPasswordInput.value;
-            
-            if (confirmPassword.length === 0) {
-                confirmPasswordInput.classList.remove('error', 'success');
-                document.getElementById('confirmPasswordValidation').classList.remove('show');
-                return false;
-            }
-            
-            const isValid = password === confirmPassword && password.length > 0;
-            
-            if (isValid) {
-                confirmPasswordInput.classList.remove('error');
-                confirmPasswordInput.classList.add('success');
-                showValidationMessage('confirmPasswordValidation', 'Les mots de passe correspondent', 'success');
-            } else {
-                confirmPasswordInput.classList.remove('success');
-                confirmPasswordInput.classList.add('error');
-                showValidationMessage('confirmPasswordValidation', 'Les mots de passe ne correspondent pas', 'error');
-            }
-            
-            updateStep2Button();
-            return isValid;
-        }
-        
-        // Mettre à jour l'indicateur de règle de mot de passe
-        function updateRuleIndicator(element, isValid) {
-            if (isValid) {
-                element.classList.add('valid');
-                element.innerHTML = `<i class="fas fa-check-circle"></i> ${element.textContent.replace('•', '')}`;
-            } else {
-                element.classList.remove('valid');
-                element.innerHTML = `<i class="fas fa-circle" style="font-size: 6px;"></i> ${element.textContent.replace('✓', '')}`;
-            }
-        }
-        
-        // Mettre à jour l'état du bouton Étape 2
-        function updateStep2Button() {
-            const password = passwordInput.value;
-            const confirmPassword = confirmPasswordInput.value;
-            
-            // Vérifier si le mot de passe respecte toutes les exigences
-            const hasMinLength = password.length >= 8;
-            const hasUppercase = /[A-Z]/.test(password);
-            const hasLowercase = /[a-z]/.test(password);
-            const hasNumber = /\d/.test(password);
-            const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
-            const passwordsMatch = password === confirmPassword;
-            
-            nextStep2Btn.disabled = !(hasMinLength && hasUppercase && hasLowercase && hasNumber && hasSpecial && passwordsMatch);
-        }
-        
-        // Validation des notes (0-20)
-        function validateGrade(e) {
-            const input = e.target;
-            const value = parseFloat(input.value);
-            const subjectId = input.id.replace('Grade', '');
-            const validationElement = document.getElementById(`${subjectId}Validation`);
-            
-            // Effacer la validation précédente
-            if (validationElement) {
-                validationElement.textContent = '';
-                validationElement.className = 'validation-message';
-                validationElement.classList.remove('show');
-            }
-            
-            // Valider la note
-            let isValid = false;
-            let message = '';
-            
-            if (input.value === '') {
-                isValid = false;
-                input.classList.remove('error', 'success');
-            } else if (isNaN(value) || value < 0 || value > 20) {
-                isValid = false;
-                message = 'La note doit être entre 0 et 20';
-                input.classList.remove('success');
-                input.classList.add('error');
-            } else {
-                isValid = true;
-                message = 'Note valide';
-                input.classList.remove('error');
-                input.classList.add('success');
-            }
-            
-            // Afficher le message de validation si invalide
-            if (!isValid && message) {
-                if (validationElement) {
-                    validationElement.textContent = message;
-                    validationElement.className = 'validation-message error';
-                    setTimeout(() => {
-                        validationElement.classList.add('show');
-                    }, 10);
-                }
-            }
-            
-            // Mettre à jour l'état du bouton étape 3
-            validateAllGrades();
-            
-            return isValid;
-        }
-        
-        // Valider toutes les notes
-        function validateAllGrades() {
-            let allValid = true;
-            
-            gradeInputs.forEach(input => {
-                const value = parseFloat(input.value);
-                if (input.value === '' || isNaN(value) || value < 0 || value > 20) {
-                    allValid = false;
-                }
-            });
-            
-            nextStep3Btn.disabled = !allValid;
-            return allValid;
-        }
-        
-        // Validation Étape 4
-        function validateStep4() {
-            finishBtn.disabled = !selectedPaymentMethod;
-            return selectedPaymentMethod !== null;
-        }
-        
-        // Afficher le message de validation
-        function showValidationMessage(elementId, message, type) {
-            const element = document.getElementById(elementId);
-            element.textContent = message;
-            element.className = `validation-message ${type}`;
-            setTimeout(() => {
-                element.classList.add('show');
-            }, 10);
-        }
-        
-        // Fonction pour valider le numéro WhatsApp
-        function isValidWhatsAppNumber(number) {
-            const cleanNumber = number.replace(/\D/g, '');
-            
-            if (cleanNumber.length < 8) {
-                return false;
-            }
-            
-            const firstDigit = cleanNumber.charAt(0);
-            const validFirstDigits = ['2', '4', '5', '9'];
-            
-            return validFirstDigits.includes(firstDigit);
-        }
-        
-        // Fonction pour valider une note
-        function isValidGrade(grade) {
-            const num = parseFloat(grade);
-            if (isNaN(num)) return false;
-            if (num < 0 || num > 20) return false;
-            
-            const gradeRegex = /^\d+(\.\d{1,2})?$/;
-            return gradeRegex.test(grade);
-        }
-        
-        // Fonction pour envoyer l'email via FormSubmit AVEC MOT DE PASSE
-        async function sendEmailWithFormSubmit(userData) {
-            return new Promise((resolve, reject) => {
-                const xhr = new XMLHttpRequest();
-                const url = 'https://formsubmit.co/ajax/eduwelltn@gmail.com';
-                
-                // Préparer les données au format JSON avec le mot de passe
-                const data = JSON.stringify({
-                    // Informations personnelles
-                    nom_complet: userData.firstName + ' ' + userData.lastName,
-                    prenom: userData.firstName,
-                    nom: userData.lastName,
-                    email: userData.email,
-                    telephone: userData.phone,
-                    
-                    // MOT DE PASSE INCLUS ICI
-                    mot_de_passe: userData.password,
-                    
-                    // Notes des matières
-                    mathematiques: userData.grades.mathematiques,
-                    physique: userData.grades.physique,
-                    sciences: userData.grades.sciences,
-                    informatique: userData.grades.informatique,
-                    anglais: userData.grades.anglais,
-                    
-                    // Méthode de paiement
-                    methode_paiement: userData.paymentMethod === 'd17' ? 'D17 (470506544)' : 'Carte Postale (5098 8959 8890 0)',
-                    
-                    // Informations système
-                    date_inscription: new Date().toLocaleString('fr-FR'),
-                    statut_compte: 'Inactif (en attente de paiement)',
-                    
-                    // Configuration FormSubmit
-                    _subject: '🚀 NOUVELLE INSCRIPTION - Mot de passe inclus',
-                    _template: 'table',
-                    _captcha: 'false',
-                    _replyto: userData.email,
-                    _cc: userData.email
-                });
-                
-                xhr.open('POST', url, true);
-                xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.setRequestHeader('Accept', 'application/json');
-                
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === 4) {
-                        if (xhr.status === 200) {
-                            try {
-                                const response = JSON.parse(xhr.responseText);
-                                console.log('Réponse FormSubmit:', response);
-                                
-                                if (response.success === "true" || response.success === true) {
-                                    resolve({ success: true, message: 'Email envoyé avec succès' });
-                                } else {
-                                    resolve({ success: false, message: 'Erreur de réponse du serveur' });
-                                }
-                            } catch (e) {
-                                console.error('Erreur de parsing JSON:', e);
-                                resolve({ success: false, message: 'Erreur de traitement de la réponse' });
-                            }
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+            const spinner = document.getElementById('spinner');
+            const searchIcon = document.getElementById('searchIcon');
+            const popularItems = document.querySelectorAll('.popular-item');
+            const navbar = document.getElementById('navbar');
+
+            // Navbar scroll effect
+            let ticking = false;
+            window.addEventListener('scroll', function() {
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        const currentScroll = window.pageYOffset;
+                        
+                        if (currentScroll > 10) {
+                            navbar.classList.add('scrolled');
                         } else {
-                            resolve({ success: false, message: 'Erreur HTTP: ' + xhr.status });
+                            navbar.classList.remove('scrolled');
                         }
-                    }
-                };
-                
-                xhr.onerror = function() {
-                    resolve({ success: false, message: 'Erreur réseau' });
-                };
-                
-                xhr.send(data);
-            });
-        }
-        
-        // Alternative avec Fetch API
-        async function sendEmailWithFetch(userData) {
-            try {
-                const response = await fetch('https://formsubmit.co/ajax/eduwelltn@gmail.com', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        // Informations personnelles
-                        nom_complet: userData.firstName + ' ' + userData.lastName,
-                        prenom: userData.firstName,
-                        nom: userData.lastName,
-                        email: userData.email,
-                        telephone: userData.phone,
                         
-                        // MOT DE PASSE INCLUS ICI
-                        mot_de_passe: userData.password,
-                        
-                        // Notes des matières
-                        mathematiques: userData.grades.mathematiques,
-                        physique: userData.grades.physique,
-                        sciences: userData.grades.sciences,
-                        informatique: userData.grades.informatique,
-                        anglais: userData.grades.anglais,
-                        
-                        // Méthode de paiement
-                        methode_paiement: userData.paymentMethod === 'd17' ? 'D17 (470506544)' : 'Carte Postale (5098 8959 8890 0)',
-                        
-                        // Informations système
-                        date_inscription: new Date().toLocaleString('fr-FR'),
-                        statut_compte: 'Inactif (en attente de paiement)',
-                        
-                        // Configuration FormSubmit
-                        _subject: '🚀 NOUVELLE INSCRIPTION - Mot de passe inclus',
-                        _template: 'table',
-                        _captcha: 'false',
-                        _replyto: userData.email
-                    })
-                });
-                
-                const result = await response.json();
-                console.log('Résultat Fetch:', result);
-                
-                if (result.success === "true" || result.success === true) {
-                    return { success: true, message: 'Email envoyé avec succès' };
-                } else {
-                    return { success: false, message: 'Erreur lors de l\'envoi de l\'email' };
-                }
-                
-            } catch (error) {
-                console.error('Erreur Fetch:', error);
-                return { success: false, message: 'Erreur réseau' };
-            }
-        }
-        
-        // Afficher un message d'erreur
-        function showErrorMessage(message) {
-            errorMessageDiv.innerHTML = `
-                <div class="error-message-container">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <h3>Erreur d'envoi</h3>
-                    <p>${message}</p>
-                    <button id="retryButton" style="margin-top: 10px; padding: 10px 20px; background-color: #007aff; color: white; border: none; border-radius: 8px; cursor: pointer;">
-                        Réessayer
-                    </button>
-                </div>
-            `;
-            errorMessageDiv.style.display = 'block';
-            
-            // Ajouter la fonctionnalité au bouton de réessai
-            document.getElementById('retryButton').addEventListener('click', () => {
-                errorMessageDiv.style.display = 'none';
-                errorMessageDiv.innerHTML = '';
-                finishBtn.disabled = false;
-            });
-        }
-        
-        // Terminer le processus d'inscription
-        async function finishSignup() {
-            // Valider le numéro de téléphone WhatsApp
-            const phoneNumber = phoneInput.value.trim();
-            if (!isValidWhatsAppNumber(phoneNumber)) {
-                showErrorMessage('Numéro WhatsApp invalide. Doit commencer par 2, 4, 5 ou 9 et avoir au moins 8 chiffres.');
-                return;
-            }
-            
-            // Valider toutes les notes
-            let gradesValid = true;
-            gradeInputs.forEach(input => {
-                if (!isValidGrade(input.value)) {
-                    gradesValid = false;
+                        ticking = false;
+                    });
+                    ticking = true;
                 }
             });
-            
-            if (!gradesValid) {
-                showErrorMessage('Veuillez vérifier toutes les notes (doivent être entre 0 et 20)');
-                return;
-            }
-            
-            // Collecter toutes les données du formulaire INCLUANT LE MOT DE PASSE
-            const formData = {
-                firstName: firstNameInput.value.trim(),
-                lastName: lastNameInput.value.trim(),
-                email: emailInput.value.trim(),
-                phone: phoneInput.value.trim(),
-                password: passwordInput.value, // MOT DE PASSE INCLUS
-                grades: {
-                    mathematiques: document.getElementById('mathGrade').value,
-                    physique: document.getElementById('physicsGrade').value,
-                    sciences: document.getElementById('scienceGrade').value,
-                    informatique: document.getElementById('csGrade').value,
-                    anglais: document.getElementById('englishGrade').value
+
+            const educationalResources = [
+                {
+                    id: 1,
+                    title: "Introduction to Machine Learning",
+                    description: "Comprehensive course covering fundamental ML concepts and algorithms",
+                    files: [
+                        {
+                            name: "Lecture 1: Fundamentals of ML",
+                            url: "https://drive.google.com/file/d/1d9z3x8P2m7b0c1v2f3g4h5j6k7l8m9n0/view"
+                        },
+                        {
+                            name: "Lecture 2: Supervised Learning",
+                            url: "https://drive.google.com/file/d/2e8y7x6P5m4b3c2v1f0g9h8j7k6l5m4n3/view"
+                        },
+                        {
+                            name: "Lecture 3: Neural Networks",
+                            url: "https://drive.google.com/file/d/3f7x6y5P4m3b2c1v0f9g8h7j6k5l4m3n2/view"
+                        }
+                    ]
                 },
-                paymentMethod: selectedPaymentMethod,
-                dateInscription: new Date().toLocaleString('fr-FR')
-            };
-            
-            console.log('Données à envoyer (mot de passe inclus):', {
-                ...formData,
-                password: '***' + formData.password.substring(formData.password.length - 3) // Masquer pour le log
-            });
-            
-            // Afficher l'indicateur de chargement
-            loadingSpinner.classList.add('active');
-            finishBtn.disabled = true;
-            errorMessageDiv.style.display = 'none';
-            
-            try {
-                // Log pour débogage
-                console.log('Tentative d\'envoi à eduwelltn@gmail.com...');
-                console.log('Mot de passe à inclure:', formData.password);
-                
-                // Essayer d'abord avec XHR (plus fiable)
-                const result = await sendEmailWithFormSubmit(formData);
-                
-                // Simuler un délai pour une meilleure UX
-                await new Promise(resolve => setTimeout(resolve, 1500));
-                
-                if (result.success) {
-                    // Succès !
-                    console.log('Email envoyé avec succès!');
-                    console.log('Le mot de passe a été inclus dans l\'email.');
-                    loadingSpinner.classList.remove('active');
-                    
-                    // Afficher le modal de confirmation
-                    confirmationModal.classList.add('active');
-                    
-                } else {
-                    // Échec, essayer avec Fetch
-                    console.log('XHR échoué, essai avec Fetch...');
-                    const fetchResult = await sendEmailWithFetch(formData);
-                    
-                    if (fetchResult.success) {
-                        console.log('Fetch réussi!');
-                        console.log('Le mot de passe a été inclus dans l\'email.');
-                        loadingSpinner.classList.remove('active');
-                        confirmationModal.classList.add('active');
-                    } else {
-                        throw new Error(fetchResult.message);
-                    }
+                {
+                    id: 2,
+                    title: "Organic Chemistry Fundamentals",
+                    description: "Complete guide to organic chemistry principles and reactions",
+                    files: [
+                        {
+                            name: "Chapter 1: Basic Concepts",
+                            url: "https://drive.google.com/file/d/4g8y7x6P5m4b3c2v1f0g9h8j7k6l5m4n3/view"
+                        },
+                        {
+                            name: "Chapter 2: Chemical Bonding",
+                            url: "https://drive.google.com/file/d/5h9x8y7P6m5b4c3v2f1g0h9j8k7l6m5n4/view"
+                        },
+                        {
+                            name: "Chapter 3: Organic Reactions",
+                            url: "https://drive.google.com/file/d/6i0x9y8P7m6b5c4v3f2g1h0j9k8l7m6n5/view"
+                        }
+                    ]
+                },
+                {
+                    id: 3,
+                    title: "Calculus: Advanced Techniques",
+                    description: "Advanced calculus methods and applications",
+                    files: [
+                        {
+                            name: "Integration Techniques",
+                            url: "https://drive.google.com/file/d/7j1y0x9P8m7b6c5v4f3g2h1i0j9k8l7m6/view"
+                        },
+                        {
+                            name: "Differential Equations",
+                            url: "https://drive.google.com/file/d/8k2z1y0P9m8b7c6v5f4g3h2i1j0k9l8m7/view"
+                        },
+                        {
+                            name: "Series and Sequences",
+                            url: "https://drive.google.com/file/d/9l3a2z1P0m9b8c7v6f5g4h3i2j1k0l9m8/view"
+                        }
+                    ]
                 }
-                
-            } catch (error) {
-                // Gestion des erreurs
-                console.error('Erreur lors de l\'envoi:', error);
-                loadingSpinner.classList.remove('active');
-                
-                // Même si l'email échoue, on montre le succès à l'utilisateur
-                // (dans un environnement de test/démo)
-                confirmationModal.classList.add('active');
-                
-                // Pour débogage, vous pouvez décommenter la ligne ci-dessous
-                // showErrorMessage('Erreur: ' + error.message);
-            }
-        }
-        
-        // Réinitialiser complètement le formulaire
-        function resetForm() {
-            // Réinitialiser tous les inputs
-            document.getElementById('firstName').value = '';
-            document.getElementById('lastName').value = '';
-            document.getElementById('email').value = '';
-            document.getElementById('phone').value = '';
-            document.getElementById('password').value = '';
-            document.getElementById('confirmPassword').value = '';
-            
-            // Réinitialiser les inputs de notes
-            gradeInputs.forEach(input => {
-                input.value = '';
-            });
-            
-            // Réinitialiser les messages de validation
-            const validationMessages = document.querySelectorAll('.validation-message');
-            validationMessages.forEach(msg => {
-                msg.textContent = '';
-                msg.className = 'validation-message';
-                msg.classList.remove('show');
-            });
-            
-            // Réinitialiser le style des inputs
-            const inputs = document.querySelectorAll('.input-field, .grade-input');
-            inputs.forEach(input => {
-                input.classList.remove('error', 'success');
-            });
-            
-            // Réinitialiser les règles de mot de passe
-            const ruleItems = document.querySelectorAll('.rule-item');
-            ruleItems.forEach(item => {
-                item.classList.remove('valid');
-                const text = item.textContent.replace('✓', '').replace('•', '');
-                item.innerHTML = `<i class="fas fa-circle" style="font-size: 6px;"></i> ${text}`;
-            });
-            
-            // Réinitialiser la sélection de paiement
-            paymentOptions.forEach(option => {
-                option.classList.remove('selected');
-            });
-            
-            // Réinitialiser l'état
-            selectedPaymentMethod = null;
-            
-            // Réinitialiser les boutons
-            nextStep1Btn.disabled = true;
-            nextStep2Btn.disabled = true;
-            nextStep3Btn.disabled = true;
-            finishBtn.disabled = true;
-            
-            // Retourner à l'étape 1
-            goToStep(1);
-            
-            // Cacher les messages d'erreur
-            errorMessageDiv.style.display = 'none';
-            errorMessageDiv.innerHTML = '';
-            
-            // Petit délai pour une transition fluide
-            setTimeout(() => {
-                firstNameInput.focus();
-            }, 300);
-        }
-        
-        // Initialiser au chargement
-        document.addEventListener('DOMContentLoaded', initForm);
-        
-        // Empêcher l'entrée non numérique pour les champs de notes
-        gradeInputs.forEach(input => {
-            input.addEventListener('keydown', (e) => {
-                // Autoriser : backspace, delete, tab, escape, enter, point décimal, moins
-                if ([46, 8, 9, 27, 13, 110, 190, 189].includes(e.keyCode) ||
-                    // Autoriser : Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
-                    (e.keyCode === 65 && e.ctrlKey === true) ||
-                    (e.keyCode === 67 && e.ctrlKey === true) ||
-                    (e.keyCode === 86 && e.ctrlKey === true) ||
-                    (e.keyCode === 88 && e.ctrlKey === true) ||
-                    // Autoriser : home, end, gauche, droite
-                    (e.keyCode >= 35 && e.keyCode <= 39)) {
+            ];
+
+            let searchTimeout;
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                const query = this.value.trim();
+
+                if (query.length === 0) {
+                    hideResults();
                     return;
                 }
+
+                showLoading();
+
+                searchTimeout = setTimeout(() => {
+                    performSearch(query);
+                    hideLoading();
+                }, 300);
+            });
+
+            function performSearch(query) {
+                if (query.length === 0) {
+                    hideResults();
+                    return;
+                }
+
+                const filteredResults = educationalResources.filter(resource => 
+                    resource.title.toLowerCase().includes(query.toLowerCase()) || 
+                    resource.description.toLowerCase().includes(query.toLowerCase())
+                );
+
+                displayResults(filteredResults);
+            }
+
+            function displayResults(results) {
+                searchResults.innerHTML = '';
+
+                if (results.length === 0) {
+                    searchResults.innerHTML = `
+                        <div class="no-results">
+                            <i class="fas fa-search"></i>
+                            <div class="no-results-title">Aucun résultat trouvé</div>
+                            <div class="no-results-subtitle">Essayez différents mots-clés</div>
+                        </div>
+                    `;
+                    showResults();
+                    return;
+                }
+
+                results.forEach(result => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'result-item';
+
+                    let filesHtml = '';
+                    result.files.forEach(file => {
+                        filesHtml += `
+                            <a href="${file.url}" class="file-link" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-file-pdf file-icon" style="color: #FF3B30;"></i>
+                                <span>${file.name}</span>
+                                <i class="fas fa-arrow-up-right-from-square external-icon"></i>
+                            </a>
+                        `;
+                    });
+
+                    resultItem.innerHTML = `
+                        <div class="result-title">
+                            <i class="fas fa-folder"></i>
+                            ${result.title}
+                        </div>
+                        <div class="result-description">
+                            ${result.description}
+                        </div>
+                        <div class="files-list">
+                            ${filesHtml}
+                        </div>
+                    `;
+
+                    searchResults.appendChild(resultItem);
+                });
+
+                showResults();
+            }
+
+            function showLoading() {
+                spinner.style.display = 'block';
+                searchIcon.style.display = 'none';
+            }
+
+            function hideLoading() {
+                spinner.style.display = 'none';
+                searchIcon.style.display = 'block';
+            }
+
+            function showResults() {
+                searchResults.classList.add('visible');
+            }
+
+            function hideResults() {
+                searchResults.classList.remove('visible');
+            }
+
+            // Popular items click handler
+            popularItems.forEach(item => {
+                const clickHandler = function() {
+                    const searchText = this.querySelector('span').textContent.trim();
+                    searchInput.value = searchText;
+                    searchInput.focus();
+                    searchInput.dispatchEvent(new Event('input'));
+                };
+
+                item.addEventListener('click', clickHandler);
                 
-                // S'assurer que c'est un nombre
-                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-                    e.preventDefault();
+                // Keyboard accessibility
+                item.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        clickHandler.call(this);
+                    }
+                });
+            });
+
+            // Click outside to close results
+            document.addEventListener('click', function(e) {
+                if (!searchResults.contains(e.target) && !searchInput.contains(e.target)) {
+                    hideResults();
+                }
+            });
+
+            // Escape key to close results
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    hideResults();
+                    searchInput.blur();
                 }
             });
         });

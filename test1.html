@@ -1,1563 +1,1388 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sahl App | Excellence Académique</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* Variables CSS - Style Apple Premium Compact */
-        :root {
-            --apple-blue: #007AFF;
-            --apple-blue-light: #5AC8FA;
-            --apple-blue-dark: #0056CC;
-            --apple-purple: #5856D6;
-            --apple-red: #FF3B30;
-            --apple-gray-1: #1D1D1F;
-            --apple-gray-2: #86868B;
-            --apple-gray-3: #A1A1A6;
-            --apple-gray-4: #D2D2D7;
-            --apple-gray-5: #F5F5F7;
-            --apple-white: #FFFFFF;
-            --apple-green: #34C759;
-            --apple-orange: #FF9500;
-            --apple-pink: #FF2D55;
-            
-            --bg: #000000;
-            --bg-secondary: #0A0A0B;
-            --bg-card: rgba(255, 255, 255, 0.02);
-            --text-primary: #F5F5F7;
-            --text-secondary: #A1A1A6;
-            --text-light: #86868B;
-            
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-            --shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
-            --shadow-md: 0 8px 36px rgba(0, 0, 0, 0.3);
-            --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.35);
-            --radius: 16px;
-            --radius-lg: 20px;
-            --radius-xl: 24px;
-            --radius-2xl: 32px;
-            
-            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            --gradient-primary: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
-            --gradient-secondary: linear-gradient(135deg, #FF3B30 0%, #FF9500 100%);
-            --gradient-accent: linear-gradient(135deg, #34C759 0%, #5AC8FA 100%);
-            --gradient-pink: linear-gradient(135deg, #FF2D55 0%, #FF9500 100%);
-        }
-
-        /* Reset et styles de base */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            color: var(--text-primary);
-            background-color: var(--bg);
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden;
-            font-size: 14px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* Bouton Retour - Compact */
-        .back-button {
-            position: fixed;
-            top: 28px;
-            left: 28px;
-            z-index: 1000;
-            opacity: 0;
-            animation: fadeIn 0.6s ease 0.3s forwards;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        .back-button a {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            color: var(--text-secondary);
-            font-size: 13px;
-            font-weight: 500;
-            padding: 10px 16px;
-            border-radius: 50px;
-            background: rgba(29, 29, 31, 0.8);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: var(--transition);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .back-button a:hover {
-            color: var(--apple-blue);
-            transform: translateX(-4px);
-            background: rgba(29, 29, 31, 0.95);
-            border-color: rgba(0, 122, 255, 0.3);
-        }
-
-        /* Section Hero - Compact Premium */
-        .hero {
-            min-height: 100vh;
-            padding: 120px 0 60px;
-            background: 
-                radial-gradient(circle at 20% 10%, rgba(0, 122, 255, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 80% 30%, rgba(88, 86, 214, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 40% 80%, rgba(52, 199, 89, 0.05) 0%, transparent 40%);
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(255, 255, 255, 0.1), 
-                transparent);
-        }
-
-        .hero-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 60px;
-            position: relative;
-            z-index: 10;
-        }
-
-        .hero-content {
-            flex: 1;
-            max-width: 520px;
-        }
-
-        .app-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 32px;
-            backdrop-filter: blur(20px);
-            animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .badge-icon {
-            width: 20px;
-            height: 20px;
-            background: var(--gradient-primary);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            color: white;
-        }
-
-        .hero h1 {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            line-height: 1.1;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, #FFFFFF 0%, rgba(255, 255, 255, 0.9) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
-            opacity: 0;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero-tagline {
-            font-size: 16px;
-            color: var(--text-secondary);
-            margin-bottom: 40px;
-            line-height: 1.6;
-            font-weight: 400;
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
-            opacity: 0;
-        }
-
-        .download-btn-hero {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--gradient-primary);
-            color: white;
-            padding: 16px 32px;
-            border-radius: var(--radius-xl);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 15px;
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
-            opacity: 0;
-            box-shadow: 0 6px 24px rgba(0, 122, 255, 0.2);
-        }
-
-        .download-btn-hero:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 36px rgba(0, 122, 255, 0.25);
-        }
-
-        .hero-image {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            position: relative;
-        }
-
-        .phone-mockup {
-            width: 280px;
-            position: relative;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) rotate(-1deg);
-            }
-            50% {
-                transform: translateY(-15px) rotate(1deg);
-            }
-        }
-
-        .phone-frame {
-            width: 50%;
-            border-radius: 40px;
-            box-shadow: 
-                var(--shadow-md),
-                0 0 0 1px rgba(255, 255, 255, 0.05);
-            border: 14px solid #0A0A0C;
-            position: relative;
-            z-index: 20;
-        }
-
-        .phone-glow {
-            position: absolute;
-            width: 120%;
-            height: 120%;
-            background: var(--gradient-primary);
-            border-radius: 50px;
-            filter: blur(60px);
-            opacity: 0.4;
-            z-index: 10;
-            animation: pulse 4s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 0.3;
-            }
-            50% {
-                opacity: 0.5;
-            }
-        }
-
-        /* Section Fonctionnalités - Compact */
-        .features-section {
-            padding: 120px 0;
-            background: var(--bg-secondary);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .features-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(255, 255, 255, 0.1), 
-                transparent);
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 80px;
-            position: relative;
-        }
-
-        .section-title {
-            font-size: 40px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            line-height: 1.1;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #FFFFFF 0%, #A1A1A6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
-        }
-
-        .section-subtitle {
-            font-size: 16px;
-            color: var(--text-secondary);
-            max-width: 560px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-            position: relative;
-        }
-
-        .feature-card {
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            padding: 40px 32px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            backdrop-filter: blur(10px);
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--gradient-primary);
-            opacity: 0;
-            transition: var(--transition);
-            z-index: 2;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-12px);
-            background: rgba(255, 255, 255, 0.03);
-            border-color: rgba(0, 122, 255, 0.2);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .feature-card:hover::before {
-            opacity: 1;
-        }
-
-        .feature-icon-wrapper {
-            width: 64px;
-            height: 64px;
-            border-radius: 18px;
-            background: rgba(0, 122, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
-            position: relative;
-            overflow: hidden;
-            transition: var(--transition);
-        }
-
-        .feature-card:hover .feature-icon-wrapper {
-            transform: scale(1.1) rotate(5deg);
-            background: var(--gradient-primary);
-        }
-
-        .feature-icon {
-            font-size: 24px;
-            color: var(--apple-blue);
-            transition: var(--transition);
-            position: relative;
-            z-index: 2;
-        }
-
-        .feature-card:hover .feature-icon {
-            color: white;
-            transform: scale(1.05);
-        }
-
-        .feature-number {
-            position: absolute;
-            top: 32px;
-            right: 32px;
-            font-size: 40px;
-            font-weight: 800;
-            color: rgba(255, 255, 255, 0.02);
-            -webkit-text-fill-color: transparent;
-            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05);
-            transition: var(--transition);
-        }
-
-        .feature-card:hover .feature-number {
-            color: rgba(0, 122, 255, 0.1);
-            -webkit-text-fill-color: transparent;
-            -webkit-text-stroke: 1px rgba(0, 122, 255, 0.1);
-        }
-
-        .feature-card h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--text-primary);
-            letter-spacing: -0.3px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .feature-card p {
-            color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.6;
-            flex-grow: 1;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Section Téléchargement - Compact */
-        .download-section {
-            padding: 140px 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(0, 122, 255, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(88, 86, 214, 0.06) 0%, transparent 50%),
-                var(--bg);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .download-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(255, 255, 255, 0.1), 
-                transparent);
-        }
-
-        .download-content {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
-
-        .download-subtitle {
-            font-size: 16px;
-            color: var(--text-secondary);
-            margin-bottom: 48px;
-            line-height: 1.6;
-            font-weight: 400;
-        }
-
-        .download-buttons {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            margin-bottom: 64px;
-            flex-wrap: wrap;
-        }
-
-        .download-btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--gradient-primary);
-            color: white;
-            padding: 16px 36px;
-            border-radius: var(--radius-xl);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 15px;
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            min-width: 200px;
-            justify-content: center;
-            box-shadow: 0 6px 24px rgba(0, 122, 255, 0.2);
-        }
-
-        .download-btn-primary:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 36px rgba(0, 122, 255, 0.25);
-        }
-
-        .download-btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(255, 255, 255, 0.04);
-            color: white;
-            padding: 16px 36px;
-            border-radius: var(--radius-xl);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 15px;
-            transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            cursor: pointer;
-            min-width: 200px;
-            justify-content: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .download-btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.15);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 36px rgba(255, 255, 255, 0.1);
-        }
-
-        .trust-signals {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-            max-width: 720px;
-            margin: 0 auto;
-        }
-
-        .trust-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-            padding: 32px 24px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: var(--radius-lg);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: var(--transition);
-            backdrop-filter: blur(10px);
-        }
-
-        .trust-item:hover {
-            background: rgba(255, 255, 255, 0.04);
-            transform: translateY(-6px);
-            border-color: rgba(0, 122, 255, 0.2);
-            box-shadow: var(--shadow);
-        }
-
-        .trust-icon {
-            width: 48px;
-            height: 48px;
-            background: rgba(52, 199, 89, 0.1);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--apple-green);
-            font-size: 20px;
-            transition: var(--transition);
-        }
-
-        .trust-item:hover .trust-icon {
-            background: var(--gradient-accent);
-            color: white;
-            transform: scale(1.1) rotate(8deg);
-        }
-
-        .trust-item span {
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            text-align: center;
-            line-height: 1.5;
-        }
-
-        /* Footer Compact Premium */
-        footer {
-            background: var(--bg-secondary);
-            padding: 100px 0 60px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            position: relative;
-            overflow: hidden;
-        }
-
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(255, 255, 255, 0.1), 
-                transparent);
-        }
-
-        .footer-container {
-            max-width: 640px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .footer-logo {
-            display: inline-flex;
-            align-items: center;
-            gap: 16px;
-            text-decoration: none;
-            color: white;
-            font-weight: 600;
-            font-size: 20px;
-            letter-spacing: -0.3px;
-            margin-bottom: 32px;
-            transition: var(--transition);
-        }
-
-        .footer-logo:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
-
-        .footer-logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--gradient-primary);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            box-shadow: 0 4px 20px rgba(0, 122, 255, 0.2);
-        }
-
-        .footer-text {
-            color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.6;
-            max-width: 480px;
-            margin: 0 auto 40px;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 32px;
-            margin-bottom: 48px;
-            flex-wrap: wrap;
-        }
-
-        .footer-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 14px;
-            transition: var(--transition);
-            padding: 8px 16px;
-            border-radius: 50px;
-            border: 1px solid transparent;
-        }
-
-        .footer-link:hover {
-            color: var(--apple-blue);
-            background: rgba(0, 122, 255, 0.1);
-            border-color: rgba(0, 122, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 48px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .copyright {
-            color: var(--text-secondary);
-            font-size: 13px;
-            opacity: 0.6;
-            letter-spacing: 0.3px;
-        }
-
-        /* Modal Compact Premium */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            transition: background-color 0.4s ease;
-            backdrop-filter: blur(0px);
-        }
-
-        .modal-overlay.active {
-            display: flex;
-            background-color: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(20px);
-        }
-
-        .modal {
-            background: rgba(17, 17, 19, 0.95);
-            border-radius: var(--radius-xl);
-            padding: 40px;
-            max-width: 440px;
-            width: 90%;
-            box-shadow: var(--shadow-lg);
-            transform: scale(0.9) translateY(30px);
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-        }
-
-        .modal-overlay.active .modal {
-            transform: scale(1) translateY(0);
-            opacity: 1;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 18px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: var(--transition);
-        }
-
-        .modal-close:hover {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.1);
-            transform: rotate(90deg);
-        }
-
-        .modal-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--text-primary);
-            letter-spacing: -0.5px;
-        }
-
-        .modal-subtitle {
-            color: var(--text-secondary);
-            margin-bottom: 36px;
-            font-size: 15px;
-            line-height: 1.5;
-        }
-
-        .platform-options {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-bottom: 32px;
-        }
-
-        .platform-btn {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 24px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius-lg);
-            cursor: pointer;
-            transition: var(--transition);
-            text-align: left;
-        }
-
-        .platform-btn:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: var(--apple-blue);
-            transform: translateX(8px);
-        }
-
-        .platform-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: white;
-            flex-shrink: 0;
-            box-shadow: var(--shadow);
-        }
-
-        .android .platform-icon {
-            background: linear-gradient(135deg, #3DDC84, #34A853);
-        }
-
-        .ios .platform-icon {
-            background: linear-gradient(135deg, #000000, #5F5F5F);
-        }
-
-        .platform-info h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: var(--text-primary);
-        }
-
-        .platform-info p {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-
-        .coming-soon-message {
-            display: none;
-            text-align: center;
-            padding: 40px 0;
-        }
-
-        .coming-soon-icon {
-            font-size: 48px;
-            color: var(--apple-blue);
-            margin-bottom: 24px;
-            animation: pulse 3s ease-in-out infinite;
-        }
-
-        .coming-soon-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--text-primary);
-        }
-
-        .coming-soon-text {
-            color: var(--text-secondary);
-            margin-bottom: 32px;
-            line-height: 1.6;
-            font-size: 15px;
-        }
-
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--gradient-primary);
-            color: white;
-            padding: 14px 28px;
-            border-radius: var(--radius-lg);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-        }
-
-        .back-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 122, 255, 0.2);
-        }
-
-        .footer-logo-icon {
-  display: flex;
-  align-items: center;
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Apple – Endless Entertainment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f2f2f7;
+  --nav-h: 52px;
+  --gap: 14px;
+  --r-lg: 22px;
+  --r-sm: 18px;
+  --white: #ffffff;
+  --ink: #1c1c1e;
+  --muted: #8e8e93;
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.footer-logo-icon img {
-  width: 130px;          /* حجم بروفيشنال كيما Apple */
-  max-width: 100%;
-  height: auto;
-  cursor: pointer;
-  transition: transform 0.25s ease, opacity 0.25s ease;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  cursor: default;
 }
 
-.footer-logo-icon img:hover {
-  transform: scale(1.04);
-  opacity: 0.95;
+/* ═══════════════════════ PAGE LOAD ANIMATION ═══════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; } to { opacity: 1; }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33%       { transform: translateY(-8px) rotate(1deg); }
+  66%       { transform: translateY(-4px) rotate(-0.5deg); }
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.08); }
+}
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes dot-slide {
+  from { width: 6px; } to { width: 24px; }
+}
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(40px) scale(0.94); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-@media (max-width: 768px) {
-  .footer-logo-icon img {
-    width: 110px;
-  }
+/* ═══════════════════════ NAV ═══════════════════════ */
+nav {
+  position: sticky; top: 0; z-index: 999;
+  height: var(--nav-h);
+  background: rgba(242,242,247,0.75);
+  backdrop-filter: saturate(200%) blur(24px);
+  -webkit-backdrop-filter: saturate(200%) blur(24px);
+  border-bottom: 0.5px solid rgba(60,60,67,0.12);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px;
+  animation: fadeIn .6s var(--ease-out) both;
 }
 
+.nav-logo { display: flex; align-items: center; }
+.nav-logo svg { width: 17px; height: 21px; fill: var(--ink); transition: opacity .2s; }
+.nav-logo:hover svg { opacity: .65; }
 
-        /* Responsive Compact */
-        @media (max-width: 1100px) {
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .hero h1 {
-                font-size: 44px;
-            }
-            
-            .section-title {
-                font-size: 36px;
-            }
-        }
+.nav-actions { display: flex; align-items: center; gap: 4px; }
+.nav-btn {
+  background: none; border: none; cursor: pointer;
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+  position: relative;
+}
+.nav-btn:hover { background: rgba(0,0,0,.06); }
+.nav-btn:active { background: rgba(0,0,0,.1); transform: scale(.94); }
+.nav-btn svg { width: 18px; height: 18px; fill: none; stroke: var(--ink); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 
-        @media (max-width: 900px) {
-            .hero-container {
-                gap: 48px;
-            }
-            
-            .hero h1 {
-                font-size: 40px;
-            }
-            
-            .section-title {
-                font-size: 32px;
-            }
-            
-            .phone-mockup {
-                width: 260px;
-            }
-            
-            .trust-signals {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+/* Cart badge */
+.nav-btn .badge {
+  position: absolute; top: 5px; right: 5px;
+  width: 8px; height: 8px; background: #ff3b30;
+  border-radius: 50%; border: 1.5px solid var(--bg);
+}
 
-        @media (max-width: 768px) {
-            .hero-container {
-                flex-direction: column;
-                text-align: center;
-                gap: 60px;
-            }
-            
-            .hero-content {
-                max-width: 100%;
-            }
-            
-            .hero h1 {
-                font-size: 36px;
-            }
-            
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-            
-            .download-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .trust-signals {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-            
-            .modal {
-                padding: 32px 24px;
-            }
-            
-            .footer-links {
-                gap: 20px;
-            }
-        }
+/* ═══════════════════════ HERO HEADLINE ═══════════════════════ */
+.hero {
+  padding: 44px 22px 10px;
+  animation: fadeUp .7s .15s var(--ease-out) both;
+}
+.hero-eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 8px;
+}
+.hero-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(34px, 9vw, 54px);
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  line-height: 1.02;
+  color: var(--ink);
+  position: relative;
+  display: inline-block;
+}
+.hero-title .accent {
+  background: linear-gradient(135deg, #007aff 0%, #5ac8fa 40%, #af52de 80%, #ff2d55 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
 
-        @media (max-width: 640px) {
-            .hero {
-                padding: 100px 0 40px;
-            }
-            
-            .hero h1 {
-                font-size: 32px;
-            }
-            
-            .hero-tagline {
-                font-size: 15px;
-            }
-            
-            .section-title {
-                font-size: 28px;
-            }
-            
-            .section-subtitle {
-                font-size: 15px;
-            }
-            
-            .download-subtitle {
-                font-size: 15px;
-            }
-            
-            .container {
-                padding: 0 20px;
-            }
-            
-            .feature-card {
-                padding: 32px 24px;
-            }
-            
-            .phone-mockup {
-                width: 240px;
-            }
-        }
+/* ═══════════════════════ SECTION LABEL ═══════════════════════ */
+.section-label {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 22px 10px;
+  animation: fadeUp .7s .25s var(--ease-out) both;
+}
+.section-label h2 {
+  font-size: 20px; font-weight: 700; letter-spacing: -.3px;
+}
+.section-label a {
+  font-size: 14px; font-weight: 500; color: #007aff;
+  text-decoration: none; letter-spacing: -.1px;
+  transition: opacity .2s;
+}
+.section-label a:hover { opacity: .7; }
 
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 28px;
-            }
-            
-            .hero-tagline {
-                font-size: 14px;
-            }
-            
-            .download-btn-primary,
-            .download-btn-secondary {
-                padding: 14px 28px;
-                width: 100%;
-                min-width: auto;
-                font-size: 14px;
-            }
-            
-            .back-button {
-                top: 20px;
-                left: 20px;
-            }
-            
-            .modal {
-                padding: 28px 20px;
-            }
-            
-            .footer-links {
-                flex-direction: column;
-                gap: 12px;
-            }
-            
-            .footer-logo {
-                font-size: 18px;
-            }
-            
-            .footer-logo-icon {
-                width: 36px;
-                height: 36px;
-                font-size: 16px;
-            }
-        }
+/* ═══════════════════════ SCROLL TRACK ═══════════════════════ */
+.track-wrap { position: relative; overflow: hidden; }
 
-        /* Animations compactes */
-        .fade-in {
-            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
+.track {
+  display: flex; gap: var(--gap);
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
+  padding: 8px 22px 16px;
+  cursor: grab;
+}
+.track:active { cursor: grabbing; }
+.track::-webkit-scrollbar { display: none; }
+.track { scrollbar-width: none; }
 
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
+/* fade edges */
+.track-wrap::before,
+.track-wrap::after {
+  content: ''; position: absolute; top: 0; bottom: 16px;
+  width: 28px; pointer-events: none; z-index: 10;
+}
+.track-wrap::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
+.track-wrap::after  { right: 0; background: linear-gradient(to left,  var(--bg), transparent); }
 
-        /* Animation scroll */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+/* ═══════════════════════ LARGE CARD ═══════════════════════ */
+.card-lg {
+  flex: 0 0 min(73vw, 310px);
+  scroll-snap-align: center;
+  border-radius: var(--r-lg);
+  overflow: hidden; position: relative;
+  aspect-ratio: 2 / 3;
+  cursor: pointer; user-select: none;
+  box-shadow:
+    0 4px 16px rgba(0,0,0,.12),
+    0 1px 3px rgba(0,0,0,.08);
+  transition:
+    transform .5s var(--ease-spring),
+    box-shadow .4s var(--ease-out);
+  animation: card-in .65s var(--ease-spring) both;
+  transform-origin: bottom center;
+  will-change: transform;
+}
+.card-lg:nth-child(1) { animation-delay: .3s; }
+.card-lg:nth-child(2) { animation-delay: .4s; }
+.card-lg:nth-child(3) { animation-delay: .5s; }
+.card-lg:nth-child(4) { animation-delay: .6s; }
 
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+.card-lg:hover {
+  transform: translateY(-6px) scale(1.024);
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.26),
+    0 6px 16px rgba(0,0,0,.14);
+}
+.card-lg:active { transform: scale(.97); }
+
+/* ═══════════════════════ SMALL CARD ═══════════════════════ */
+.card-sm {
+  flex: 0 0 min(44vw, 188px);
+  scroll-snap-align: start;
+  border-radius: var(--r-sm);
+  overflow: hidden; position: relative;
+  aspect-ratio: 1 / 1.12;
+  cursor: pointer; user-select: none;
+  box-shadow:
+    0 4px 14px rgba(0,0,0,.1),
+    0 1px 3px rgba(0,0,0,.07);
+  transition:
+    transform .5s var(--ease-spring),
+    box-shadow .4s var(--ease-out);
+  animation: card-in .65s var(--ease-spring) both;
+}
+.card-sm:nth-child(1) { animation-delay: .35s; }
+.card-sm:nth-child(2) { animation-delay: .45s; }
+.card-sm:nth-child(3) { animation-delay: .55s; }
+.card-sm:nth-child(4) { animation-delay: .65s; }
+.card-sm:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 16px 40px rgba(0,0,0,.22);
+}
+.card-sm:active { transform: scale(.96); }
+
+/* ═══════════════════════ CARD INTERNALS ═══════════════════════ */
+.card-canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  display: block;
+}
+
+/* Multi-layer scrim for depth */
+.card-lg .card-scrim {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(0,0,0,.06) 0%, transparent 100%),
+    linear-gradient(to bottom,
+      transparent 0%,
+      transparent 34%,
+      rgba(0,0,0,.08) 50%,
+      rgba(0,0,0,.55) 78%,
+      rgba(0,0,0,.82) 100%);
+}
+.card-sm .card-scrim {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to bottom, transparent 35%, rgba(0,0,0,.75) 100%);
+}
+
+/* Glass noise texture overlay */
+.card-lg::after,
+.card-sm::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay; opacity: .5; z-index: 5;
+  border-radius: inherit;
+}
+
+/* Content layer */
+.card-body {
+  position: absolute; inset: 0; z-index: 10;
+  display: flex; flex-direction: column;
+}
+
+/* ── Large card: service badge top-center ── */
+.card-lg .card-body { padding: 16px 16px 20px; justify-content: space-between; }
+.card-lg .badge-wrap {
+  display: flex; justify-content: center; align-items: center;
+  padding-top: 2px;
+}
+.card-lg .svc-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(255,255,255,.15);
+  backdrop-filter: blur(10px);
+  border: .5px solid rgba(255,255,255,.22);
+  border-radius: 20px; padding: 5px 11px 5px 7px;
+  font-size: 12px; font-weight: 600; color: #fff;
+  letter-spacing: -.1px;
+  transition: background .25s, transform .2s;
+}
+.card-lg:hover .svc-badge { background: rgba(255,255,255,.22); transform: scale(1.04); }
+.svc-badge svg { width: 15px; height: 15px; fill: #fff; }
+
+/* Show title art */
+.show-art {
+  position: absolute; top: 54px; left: 0; right: 0;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 1px; pointer-events: none; z-index: 8;
+  text-align: center; padding: 0 12px;
+}
+.show-art .pre  { font-size: 11px; font-weight: 700; letter-spacing: .25em; color: rgba(255,255,255,.8); text-transform: uppercase; }
+.show-art .main { font-family: 'Playfair Display', serif; font-size: clamp(22px,6vw,30px); font-weight: 900; color: #fff; letter-spacing: -1px; line-height: 1; text-transform: uppercase; text-shadow: 0 2px 20px rgba(0,0,0,.5); }
+.show-art .sub  { font-size: 10px; font-weight: 600; letter-spacing: .3em; color: rgba(255,255,255,.75); text-transform: uppercase; margin-top: 3px; }
+
+/* Bottom info */
+.card-info { color: #fff; }
+.card-genre {
+  font-size: 11px; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(255,255,255,.65);
+  margin-bottom: 4px;
+}
+.card-title { font-size: 16px; font-weight: 700; line-height: 1.2; margin-bottom: 3px; letter-spacing: -.2px; }
+.card-sub   { font-size: 12px; color: rgba(255,255,255,.72); margin-bottom: 13px; line-height: 1.35; font-style: italic; }
+
+/* CTA button */
+.cta {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  width: 100%; background: rgba(255,255,255,.96); color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 600; border: none; border-radius: 50px;
+  padding: 10px 0; cursor: pointer; letter-spacing: -.1px;
+  position: relative; overflow: hidden;
+  transition: transform .2s var(--ease-spring), box-shadow .2s;
+  box-shadow: 0 2px 10px rgba(0,0,0,.2);
+  text-decoration: none;
+}
+.cta::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.3) 50%, rgba(255,255,255,0) 100%);
+  transform: translateX(-100%); transition: transform .4s;
+}
+.cta:hover::before { transform: translateX(100%); }
+.cta:hover { transform: scale(.98); box-shadow: 0 1px 6px rgba(0,0,0,.18); }
+.cta:active { transform: scale(.95); }
+.cta-icon { width: 11px; height: 12px; fill: var(--ink); flex-shrink: 0; }
+
+/* ── Small card body ── */
+.card-sm .card-body { padding: 11px 12px 13px; justify-content: space-between; }
+.card-sm .top-badge { display: flex; align-items: center; gap: 5px; }
+.card-sm .top-badge svg { width: 14px; height: 14px; fill: #fff; }
+.card-sm .top-badge span { font-size: 12px; font-weight: 700; color: #fff; letter-spacing: .02em; }
+.card-sm .card-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 3px; line-height: 1.25; letter-spacing: -.1px; }
+.card-sm .card-sub   { font-size: 11px; color: rgba(255,255,255,.7); margin-bottom: 9px; font-style: italic; }
+.card-sm .cta        { font-size: 12px; padding: 8px 0; }
+
+/* ═══════════════════════ DOTS BAR ═══════════════════════ */
+.dots-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 5px; padding: 4px 22px 12px; position: relative;
+  animation: fadeIn .8s .6s both;
+}
+.dot {
+  height: 6px; border-radius: 3px; cursor: pointer;
+  background: rgba(0,0,0,.18);
+  transition: width .3s var(--ease-spring), background .25s, transform .2s;
+  width: 6px;
+}
+.dot.active {
+  width: 24px; background: var(--ink);
+  animation: dot-slide .3s var(--ease-spring);
+}
+.dot:hover:not(.active) { background: rgba(0,0,0,.35); transform: scaleY(1.3); }
+
+.play-wrap {
+  position: absolute; right: 22px;
+  display: flex; align-items: center; gap: 8px;
+}
+.play-toggle {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(0,0,0,.07); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s, transform .2s var(--ease-spring);
+}
+.play-toggle:hover { background: rgba(0,0,0,.12); transform: scale(1.1); }
+.play-toggle:active { transform: scale(.92); }
+.play-toggle svg { width: 12px; height: 12px; fill: var(--ink); }
+
+/* ═══════════════════════ FEATURED STRIP ═══════════════════════ */
+.featured-strip {
+  margin: 4px 22px 0;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #1c1c2e 0%, #2d1f3d 50%, #1a2540 100%);
+  padding: 18px 20px;
+  display: flex; align-items: center; gap: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.15);
+  animation: fadeUp .7s .5s var(--ease-out) both;
+  position: relative; overflow: hidden; cursor: pointer;
+  transition: transform .3s var(--ease-spring), box-shadow .3s;
+}
+.featured-strip:hover { transform: scale(1.015); box-shadow: 0 8px 30px rgba(0,0,0,.22); }
+.featured-strip::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(88,86,214,.35), transparent);
+  pointer-events: none;
+}
+.strip-icon {
+  width: 52px; height: 52px; border-radius: 14px;
+  background: linear-gradient(135deg, #5856d6, #af52de);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(88,86,214,.45);
+  animation: float 6s ease-in-out infinite;
+}
+.strip-icon svg { width: 28px; height: 28px; fill: #fff; }
+.strip-text { flex: 1; }
+.strip-text .strip-label { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: 3px; }
+.strip-text .strip-title { font-size: 16px; font-weight: 700; color: #fff; letter-spacing: -.2px; margin-bottom: 2px; }
+.strip-text .strip-sub { font-size: 12px; color: rgba(255,255,255,.6); font-style: italic; }
+.strip-cta {
+  background: rgba(255,255,255,.12); border: .5px solid rgba(255,255,255,.2);
+  color: #fff; font-size: 13px; font-weight: 600;
+  border-radius: 50px; padding: 8px 16px; cursor: pointer;
+  transition: background .2s, transform .2s;
+  white-space: nowrap; flex-shrink: 0;
+  text-decoration: none; display: inline-flex; align-items: center;
+}
+.strip-cta:hover { background: rgba(255,255,255,.2); transform: scale(1.05); }
+
+/* ═══════════════════════ FOOTNOTE ═══════════════════════ */
+.footnote {
+  padding: 16px 22px 48px;
+  font-size: 11px; color: var(--muted); line-height: 1.6;
+  font-style: italic;
+  animation: fadeIn 1s .8s both;
+}
+
+/* ═══════════════════════ CARD SVG ARTWORK ═══════════════════════ */
+
+/* Parallax subtle on scroll */
+.card-canvas { transition: transform .1s linear; }
+
+</style>
 </head>
 <body>
-    <!-- Bouton Retour -->
-    <div class="back-button">
-        <a href="./index.html" id="backButton">
-            <i class="fas fa-chevron-left"></i>
-            <span>Retour</span>
-        </a>
+
+<!-- ══════════ NAV ══════════ -->
+<nav>
+  <div class="nav-logo">
+    <svg viewBox="0 0 814 1000"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 436.5 10 350 10 272.8c0-133.3 86.4-203.8 170.8-203.8 80.3 0 136.4 52.9 172.5 52.9 35.5 0 97.1-57.1 188.9-57.1 30.5 0 116.1 2.7 167.2 99.9zm-73.4-150.3c33.9-41.3 58.8-99.3 58.8-157.3 0-8-.6-16.1-2-23.3-55.5 2.1-120.7 37-161.4 83.1-31.2 35.5-60.2 93.3-60.2 152 0 8.7 1.4 17.3 2.1 20.1 3.5.6 9.4 1.4 15.2 1.4 49.8 0 110.6-33.2 147.5-75.9z"/></svg>
+  </div>
+  <div class="nav-actions">
+    <button class="nav-btn" aria-label="Search">
+      <svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="15.5" y1="15.5" x2="22" y2="22"/></svg>
+    </button>
+    <button class="nav-btn" aria-label="Bag" style="position:relative">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <span class="badge"></span>
+    </button>
+    <button class="nav-btn" aria-label="Menu">
+      <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<div class="hero">
+  <p class="hero-eyebrow">Apple Services</p>
+  <h1 class="hero-title">Endless <span class="accent">entertainment.</span></h1>
+</div>
+
+<!-- ══════════ TOP ROW: Large Cards ══════════ -->
+<div class="section-label">
+  <h2>Featured</h2>
+  <a href="#">See all</a>
+</div>
+
+<div class="track-wrap">
+  <div class="track" id="topTrack">
+
+    <!-- ── CARD 1: The Morning Show ── -->
+    <div class="card-lg">
+      <svg class="card-canvas" viewBox="0 0 310 465" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ms-sky" x1="0" y1="0" x2=".3" y2="1">
+            <stop offset="0%"   stop-color="#243050"/>
+            <stop offset="60%"  stop-color="#141a2e"/>
+            <stop offset="100%" stop-color="#0a0c14"/>
+          </linearGradient>
+          <radialGradient id="ms-atm" cx="55%" cy="22%" r="60%">
+            <stop offset="0%" stop-color="rgba(130,155,210,.42)"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+          <radialGradient id="ms-ground" cx="50%" cy="100%" r="60%">
+            <stop offset="0%" stop-color="rgba(240,180,80,.14)"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+          <filter id="ms-blur"><feGaussianBlur stdDeviation="3"/></filter>
+        </defs>
+        <rect width="310" height="465" fill="url(#ms-sky)"/>
+        <rect width="310" height="465" fill="url(#ms-atm)"/>
+        <rect width="310" height="465" fill="url(#ms-ground)"/>
+
+        <!-- Deep bg buildings -->
+        <rect x="-8" y="80"  width="72" height="390" fill="#19273f" rx="2"/>
+        <rect x="50" y="60"  width="56" height="410" fill="#142030" rx="2"/>
+        <rect x="262" y="72" width="68" height="400" fill="#192840" rx="2"/>
+        <rect x="278" y="54" width="50" height="420" fill="#12202e" rx="2"/>
+
+        <!-- Center tall hero building -->
+        <rect x="182" y="28" width="98" height="440" fill="#1c2e4a" rx="2"/>
+        <!-- Building detail -->
+        <rect x="198" y="28" width="30" height="440" fill="#1a2c48"/>
+        <rect x="250" y="28" width="15" height="440" fill="#1a2c48"/>
+
+        <!-- Windows – far left -->
+        <rect x="4"  y="100" width="10" height="8" rx="1.5" fill="rgba(255,215,100,.52)"/>
+        <rect x="22" y="100" width="10" height="8" rx="1.5" fill="rgba(255,215,100,.35)"/>
+        <rect x="40" y="100" width="10" height="8" rx="1.5" fill="rgba(255,215,100,.45)"/>
+        <rect x="4"  y="122" width="10" height="8" rx="1.5" fill="rgba(255,215,100,.28)"/>
+        <rect x="22" y="122" width="10" height="8" rx="1.5" fill="rgba(255,215,100,.48)"/>
+        <rect x="4"  y="144" width="10" height="8" rx="1.5" fill="rgba(255,215,100,.38)"/>
+        <!-- Windows – far right -->
+        <rect x="272" y="90"  width="10" height="8" rx="1.5" fill="rgba(255,215,100,.5)"/>
+        <rect x="290" y="90"  width="10" height="8" rx="1.5" fill="rgba(255,215,100,.3)"/>
+        <rect x="272" y="112" width="10" height="8" rx="1.5" fill="rgba(255,215,100,.42)"/>
+        <rect x="290" y="112" width="10" height="8" rx="1.5" fill="rgba(255,215,100,.5)"/>
+        <!-- Windows – center building -->
+        <rect x="192" y="48" width="8" height="6" rx="1" fill="rgba(200,218,255,.28)"/>
+        <rect x="208" y="48" width="8" height="6" rx="1" fill="rgba(200,218,255,.2)"/>
+        <rect x="224" y="48" width="8" height="6" rx="1" fill="rgba(200,218,255,.24)"/>
+        <rect x="254" y="48" width="8" height="6" rx="1" fill="rgba(200,218,255,.22)"/>
+        <rect x="264" y="48" width="8" height="6" rx="1" fill="rgba(200,218,255,.18)"/>
+        <rect x="192" y="68" width="8" height="6" rx="1" fill="rgba(200,218,255,.18)"/>
+        <rect x="224" y="68" width="8" height="6" rx="1" fill="rgba(200,218,255,.25)"/>
+
+        <!-- Atmospheric haze layer -->
+        <ellipse cx="155" cy="195" rx="145" ry="75" fill="rgba(160,172,200,.1)" filter="url(#ms-blur)"/>
+
+        <!-- PERSON 1 – left, dark jacket -->
+        <g transform="translate(36,132)">
+          <!-- legs -->
+          <rect x="12" y="182" width="21" height="90" rx="6" fill="#0e1220"/>
+          <rect x="40" y="182" width="21" height="90" rx="6" fill="#0e1220"/>
+          <rect x="8"  y="264" width="28" height="14" rx="5" fill="#1a1a2e"/>
+          <rect x="36" y="264" width="28" height="14" rx="5" fill="#1a1a2e"/>
+          <!-- body jacket -->
+          <rect x="10" y="68" width="54" height="120" rx="7" fill="#191d30"/>
+          <!-- lapels -->
+          <path d="M10,68 L34,90 L34,68Z" fill="#121520"/>
+          <path d="M64,68 L34,90 L64,68Z" fill="#121520"/>
+          <!-- shirt glimpse -->
+          <rect x="28" y="68" width="18" height="28" rx="2" fill="#22283a"/>
+          <!-- neck -->
+          <rect x="27" y="56" width="18" height="18" rx="3" fill="#c2917c"/>
+          <!-- head -->
+          <ellipse cx="36" cy="43" rx="22" ry="25" fill="#c2917c"/>
+          <!-- long dark hair -->
+          <path d="M14,37 Q16,10 36,8 Q56,10 58,37 Q56,57 50,76 L46,76 Q51,56 49,37 Q36,30 23,37 Q21,56 26,76 L22,76 Q17,56 14,37Z" fill="#261610"/>
+          <!-- ear -->
+          <ellipse cx="14" cy="44" rx="4" ry="6" fill="#b88070"/>
+          <!-- subtle face details -->
+          <circle cx="28" cy="38" r="2" fill="rgba(0,0,0,.08)"/>
+          <circle cx="44" cy="38" r="2" fill="rgba(0,0,0,.08)"/>
+          <path d="M28 52 Q36 56 44 52" stroke="rgba(0,0,0,.15)" stroke-width="1.5" fill="none"/>
+        </g>
+
+        <!-- PERSON 2 – center-right, taller, foreground hero -->
+        <g transform="translate(145,100)">
+          <!-- legs -->
+          <rect x="14" y="202" width="24" height="108" rx="7" fill="#0c1018"/>
+          <rect x="46" y="202" width="24" height="108" rx="7" fill="#0c1018"/>
+          <rect x="10" y="300" width="30" height="16" rx="5" fill="#161822"/>
+          <rect x="44" y="300" width="30" height="16" rx="5" fill="#161822"/>
+          <!-- sleeveless top -->
+          <rect x="12" y="78" width="58" height="130" rx="7" fill="#1b1f30"/>
+          <!-- bare arms -->
+          <path d="M12,94 Q-4,118 2,164" stroke="#d4a27e" stroke-width="22" fill="none" stroke-linecap="round"/>
+          <path d="M70,94 Q84,118 80,164" stroke="#d4a27e" stroke-width="22" fill="none" stroke-linecap="round"/>
+          <!-- hands -->
+          <ellipse cx="2"  cy="168" rx="11" ry="10" fill="#d4a27e"/>
+          <ellipse cx="80" cy="168" rx="11" ry="10" fill="#d4a27e"/>
+          <!-- neck -->
+          <rect x="30" y="62" width="22" height="24" rx="4" fill="#d4a27e"/>
+          <!-- head -->
+          <ellipse cx="41" cy="47" rx="26" ry="29" fill="#d4a27e"/>
+          <!-- blonde hair -->
+          <path d="M15,42 Q17,10 41,8 Q65,10 67,42 Q65,68 59,94 L55,94 Q61,68 59,42 Q41,34 23,42 Q21,68 27,94 L23,94 Q17,68 15,42Z" fill="#c09030"/>
+          <!-- hair highlights -->
+          <path d="M23,42 L26,94 L22,94 Q18,67 18,42Z" fill="rgba(230,190,80,.22)"/>
+          <path d="M55,42 L58,94 L54,94 Q52,67 54,42Z" fill="rgba(230,190,80,.22)"/>
+          <!-- ear -->
+          <ellipse cx="15" cy="48" rx="5" ry="7" fill="#c8957a"/>
+          <!-- face details -->
+          <ellipse cx="29" cy="42" rx="3" ry="3.5" fill="rgba(0,0,0,.07)"/>
+          <ellipse cx="53" cy="42" rx="3" ry="3.5" fill="rgba(0,0,0,.07)"/>
+          <path d="M30 57 Q41 62 52 57" stroke="rgba(0,0,0,.12)" stroke-width="1.5" fill="none"/>
+          <!-- necklace -->
+          <path d="M26 68 Q41 76 56 68" stroke="rgba(220,190,130,.5)" stroke-width="1.5" fill="none"/>
+        </g>
+
+        <!-- Street / ground -->
+        <rect x="0" y="440" width="310" height="25" fill="rgba(0,0,0,.65)"/>
+        <!-- Sidewalk -->
+        <rect x="0" y="430" width="310" height="15" fill="rgba(60,65,85,.7)"/>
+        <!-- Taxi glow -->
+        <ellipse cx="60" cy="438" rx="45" ry="8" fill="rgba(245,197,24,.2)" filter="url(#ms-blur)"/>
+        <rect x="20" y="408" width="80" height="32" rx="5" fill="rgba(245,197,24,.72)"/>
+        <rect x="34" y="397" width="52" height="20" rx="3" fill="rgba(228,173,0,.72)"/>
+        <circle cx="30" cy="442" r="7" fill="#1a1a22"/>
+        <circle cx="86" cy="442" r="7" fill="#1a1a22"/>
+        <!-- Taxi stripe -->
+        <rect x="20" y="421" width="80" height="5" fill="rgba(0,0,0,.22)"/>
+        <!-- "TAXI" text -->
+        <text x="42" y="419" font-family="sans-serif" font-size="7" font-weight="700" fill="rgba(0,0,0,.55)">TAXI</text>
+
+        <!-- Street lamps -->
+        <rect x="8"   y="300" width="4" height="130" fill="#2a3040"/>
+        <rect x="298" y="300" width="4" height="130" fill="#2a3040"/>
+        <ellipse cx="10"  cy="300" rx="10" ry="5" fill="rgba(255,240,180,.7)"/>
+        <ellipse cx="300" cy="300" rx="10" ry="5" fill="rgba(255,240,180,.7)"/>
+        <ellipse cx="10"  cy="300" rx="20" ry="12" fill="rgba(255,240,180,.12)"/>
+        <ellipse cx="300" cy="300" rx="20" ry="12" fill="rgba(255,240,180,.12)"/>
+      </svg>
+
+      <div class="card-scrim"></div>
+      <div class="show-art">
+        <div class="pre">Apple TV+</div>
+        <div class="main">The Morning</div>
+        <div class="main" style="margin-top:-4px">Show</div>
+      </div>
+      <div class="card-body">
+        <div class="badge-wrap">
+          <div class="svc-badge">
+            <svg viewBox="0 0 16 16"><path d="M8 1C4.1 1 1 4.1 1 8s3.1 7 7 7 7-3.1 7-7-3.1-7-7-7zm3 9.5c0 .8-.7 1.5-1.5 1.5S8 11.3 8 10.5V6.8L5.5 7.6v3c0 .8-.7 1.5-1.5 1.5S2.5 11.4 2.5 10.5V7c0-.7.5-1.3 1.2-1.5L9 3.4c.8-.2 1 .2 1 .8v6.3z"/></svg>
+            tv+
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-genre">Drama · Season 4</div>
+          <div class="card-title">The Morning Show</div>
+          <div class="card-sub">"The truth is the top story."</div>
+          <a href="https://www.est1.com" target="_blank" rel="noopener" class="cta">
+            <svg class="cta-icon" viewBox="0 0 10 12"><path d="M1 1l8 5-8 5V1z"/></svg>
+            Stream now
+          </a>
+        </div>
+      </div>
+    </div><!-- /Morning Show -->
+
+    <!-- ── CARD 2: Severance ── -->
+    <div class="card-lg">
+      <svg class="card-canvas" viewBox="0 0 310 465" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sev-bg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"  stop-color="#0a1020"/>
+            <stop offset="100%" stop-color="#040609"/>
+          </linearGradient>
+          <radialGradient id="sev-blue" cx="50%" cy="48%" r="48%">
+            <stop offset="0%" stop-color="rgba(40,80,200,.28)"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+          <radialGradient id="sev-hall-end" cx="50%" cy="52%" r="25%">
+            <stop offset="0%" stop-color="rgba(140,180,255,.55)"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+          <filter id="sev-blur"><feGaussianBlur stdDeviation="2.5"/></filter>
+        </defs>
+        <rect width="310" height="465" fill="url(#sev-bg)"/>
+        <rect width="310" height="465" fill="url(#sev-blue)"/>
+
+        <!-- Corridor walls -->
+        <path d="M0,0 L80,120 L80,380 L0,465Z" fill="#0e1830"/>
+        <path d="M310,0 L230,120 L230,380 L310,465Z" fill="#0e1830"/>
+        <rect x="80" y="120" width="150" height="260" fill="#0c1628"/>
+        <!-- Ceiling -->
+        <path d="M0,0 L310,0 L230,120 L80,120Z" fill="#090d1e"/>
+        <!-- Floor -->
+        <path d="M0,465 L310,465 L230,380 L80,380Z" fill="#060b18"/>
+        <!-- Floor reflection -->
+        <path d="M80,380 L230,380 L230,465 L80,465Z" fill="rgba(40,80,180,.08)"/>
+
+        <!-- Hall vanishing point glow -->
+        <rect width="310" height="465" fill="url(#sev-hall-end)"/>
+
+        <!-- Ceiling light strip -->
+        <rect x="130" y="120" width="50" height="12" rx="2" fill="rgba(150,195,255,.75)"/>
+        <rect x="137" y="155" width="36" height="8" rx="2" fill="rgba(150,195,255,.5)"/>
+        <rect x="142" y="185" width="26" height="6" rx="2" fill="rgba(150,195,255,.35)"/>
+        <rect x="146" y="210" width="18" height="5" rx="2" fill="rgba(150,195,255,.22)"/>
+        <!-- Light shafts -->
+        <path d="M130,132 L80,380 L80,420 L155,140Z" fill="rgba(100,155,255,.03)"/>
+        <path d="M180,132 L230,380 L230,420 L155,140Z" fill="rgba(100,155,255,.03)"/>
+
+        <!-- Side wall doors (perspective) -->
+        <rect x="80"  y="160" width="18" height="80" rx="2" fill="rgba(20,40,80,.9)" stroke="rgba(60,100,180,.3)" stroke-width="1"/>
+        <rect x="212" y="160" width="18" height="80" rx="2" fill="rgba(20,40,80,.9)" stroke="rgba(60,100,180,.3)" stroke-width="1"/>
+
+        <!-- Man in suit, silhouette against light -->
+        <g transform="translate(118,200)" filter="url(#sev-blur)">
+          <rect x="16" y="60" width="40" height="82" rx="5" fill="#0e1525"/>
+          <rect x="25" y="54" width="22" height="14" rx="3" fill="#c08060"/>
+          <ellipse cx="36" cy="42" rx="18" ry="20" fill="#c08060"/>
+          <path d="M18,62 L36,74 L54,62" fill="#090e18"/>
+          <path d="M32,74 L40,74 L38,110 L36,115 L34,110Z" fill="#8a1010"/>
+          <rect x="18" y="140" width="16" height="62" rx="4" fill="#0e1525"/>
+          <rect x="38" y="140" width="16" height="62" rx="4" fill="#0e1525"/>
+          <!-- Briefcase -->
+          <rect x="56" y="120" width="28" height="22" rx="4" fill="#1a2540"/>
+          <rect x="63" y="116" width="14" height="8" rx="2" fill="none" stroke="#1a2540" stroke-width="2"/>
+        </g>
+        <!-- Man outline glow (backlit) -->
+        <g transform="translate(118,200)">
+          <ellipse cx="36" cy="268" rx="20" ry="5" fill="rgba(100,150,255,.12)" filter="url(#sev-blur)"/>
+        </g>
+
+        <!-- "LUMON" logo on wall -->
+        <text x="118" y="148" font-family="monospace" font-size="11" letter-spacing="5" fill="rgba(100,150,255,.35)" font-weight="600">LUMON</text>
+      </svg>
+      <div class="card-scrim"></div>
+      <div class="card-body">
+        <div class="badge-wrap">
+          <div class="svc-badge">
+            <svg viewBox="0 0 16 16"><path d="M8 1C4.1 1 1 4.1 1 8s3.1 7 7 7 7-3.1 7-7-3.1-7-7-7zm3 9.5c0 .8-.7 1.5-1.5 1.5S8 11.3 8 10.5V6.8L5.5 7.6v3c0 .8-.7 1.5-1.5 1.5S2.5 11.4 2.5 10.5V7c0-.7.5-1.3 1.2-1.5L9 3.4c.8-.2 1 .2 1 .8v6.3z"/></svg>
+            tv+
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-genre">Sci-Fi Thriller · S2</div>
+          <div class="card-title">Severance</div>
+          <div class="card-sub">"Do you wish you could leave work at work?"</div>
+          <a href="https://www.est2.com" target="_blank" rel="noopener" class="cta"><svg class="cta-icon" viewBox="0 0 10 12"><path d="M1 1l8 5-8 5V1z"/></svg> Stream now</a>
+        </div>
+      </div>
     </div>
 
-    <!-- Section Hero -->
-    <section class="hero" id="home">
-        <div class="container hero-container">
-            <div class="hero-content">
-                <div class="app-badge fade-in">
-                    
-                    <span class="badge-text"> Bac 2026</span>
-                </div>
-                
-                <h1 class="fade-in">Sahl App</h1>
-                
-                <p class="hero-tagline fade-in delay-1">
-                   Une nouvelle façon d’apprendre pour réussir le Bac Tunisien.
-Contenus experts, outils intelligents et méthodes efficaces pour atteindre l’excellence.
+    <!-- ── CARD 3: Ted Lasso ── -->
+    <div class="card-lg">
+      <svg class="card-canvas" viewBox="0 0 310 465" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ted-sky" x1="0" y1="0" x2=".2" y2="1">
+            <stop offset="0%"  stop-color="#1a3a10"/>
+            <stop offset="60%" stop-color="#112606"/>
+            <stop offset="100%" stop-color="#050d02"/>
+          </linearGradient>
+          <radialGradient id="ted-sun" cx="50%" cy="55%" r="55%">
+            <stop offset="0%" stop-color="rgba(60,180,50,.35)"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+          <filter id="ted-blur"><feGaussianBlur stdDeviation="3"/></filter>
+        </defs>
+        <rect width="310" height="465" fill="url(#ted-sky)"/>
+        <rect width="310" height="465" fill="url(#ted-sun)"/>
+        <!-- Pitch stripes -->
+        <rect x="0"   y="210" width="310" height="38" fill="rgba(22,72,14,.85)"/>
+        <rect x="0"   y="286" width="310" height="38" fill="rgba(22,72,14,.85)"/>
+        <rect x="0"   y="362" width="310" height="38" fill="rgba(22,72,14,.85)"/>
+        <rect x="0"   y="210" width="310" height="255" fill="rgba(24,68,16,.55)"/>
+        <!-- Pitch lines -->
+        <line x1="155" y1="210" x2="155" y2="465" stroke="rgba(255,255,255,.2)" stroke-width="2.5"/>
+        <circle cx="155" cy="325" r="52" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="2.5"/>
+        <circle cx="155" cy="325" r="4" fill="rgba(255,255,255,.35)"/>
+        <!-- Penalty box top -->
+        <rect x="80" y="210" width="150" height="52" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="2"/>
+        <rect x="108" y="210" width="94" height="28" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
+        <!-- Penalty box bottom -->
+        <rect x="80" y="413" width="150" height="52" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="2"/>
+        <!-- Goalkeeper area -->
+        <rect x="120" y="430" width="70" height="35" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
+        <!-- Corner flags -->
+        <line x1="2"   y1="212" x2="2"   y2="232" stroke="rgba(255,255,255,.4)" stroke-width="2"/>
+        <line x1="308" y1="212" x2="308" y2="232" stroke="rgba(255,255,255,.4)" stroke-width="2"/>
 
-                </p>
-                
-                <button class="download-btn-hero fade-in delay-2" id="downloadBtnHero">
-                  
-                  Télécharger
-                </button>
-            </div>
-            
-            <div class="hero-image">
-                <div class="phone-glow"></div>
-                <div class="phone-mockup fade-in delay-3">
-                    <img src="./assets/images/app-store.png" 
-                         alt="Interface Sahl App" 
-                         class="phone-frame">
-                </div>
-            </div>
+        <!-- COACH figure centered, arms wide, big grin -->
+        <g transform="translate(92,100)">
+          <!-- arms wide open -->
+          <path d="M28,90 Q-8,78 -16,62" stroke="#e8c44a" stroke-width="24" fill="none" stroke-linecap="round"/>
+          <path d="M98,90 Q134,78 142,62" stroke="#e8c44a" stroke-width="24" fill="none" stroke-linecap="round"/>
+          <!-- fists -->
+          <circle cx="-18" cy="58" r="12" fill="#d4a060"/>
+          <circle cx="144" cy="58" r="12" fill="#d4a060"/>
+          <!-- body / kit yellow -->
+          <rect x="22" y="82" width="82" height="108" rx="8" fill="#e8c44a"/>
+          <!-- kit number -->
+          <text x="48" y="150" font-family="sans-serif" font-size="26" font-weight="900" fill="rgba(0,0,0,.2)">14</text>
+          <!-- shorts -->
+          <rect x="22" y="184" width="36" height="86" rx="7" fill="#1a2240"/>
+          <rect x="68" y="184" width="36" height="86" rx="7" fill="#1a2240"/>
+          <!-- socks -->
+          <rect x="24" y="258" width="32" height="36" rx="4" fill="#e8c44a"/>
+          <rect x="70" y="258" width="32" height="36" rx="4" fill="#e8c44a"/>
+          <!-- boots -->
+          <rect x="20" y="285" width="38" height="16" rx="6" fill="#1a1a2e"/>
+          <rect x="68" y="285" width="38" height="16" rx="6" fill="#1a1a2e"/>
+          <!-- neck -->
+          <rect x="52" y="68" width="22" height="22" rx="4" fill="#d4a060"/>
+          <!-- head -->
+          <ellipse cx="63" cy="52" rx="30" ry="33" fill="#d4a060"/>
+          <!-- mustache -->
+          <path d="M46,62 Q55,70 63,67 Q71,70 80,62" stroke="#5a2e0a" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <!-- smile teeth -->
+          <path d="M48,72 Q63,84 78,72" stroke="rgba(0,0,0,.1)" stroke-width="1" fill="rgba(255,255,255,.7)"/>
+          <!-- eyes squinting with smile -->
+          <path d="M44,44 Q50,40 56,44" stroke="#5a2e0a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M70,44 Q76,40 82,44" stroke="#5a2e0a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- cap red -->
+          <rect x="34" y="28" width="58" height="18" rx="4" fill="#c82020"/>
+          <rect x="26" y="40" width="74" height="10" rx="3" fill="#c82020"/>
+          <!-- cap brim shadow -->
+          <rect x="26" y="48" width="74" height="4" rx="2" fill="rgba(0,0,0,.2)"/>
+        </g>
+
+        <!-- Football -->
+        <circle cx="155" cy="435" r="17" fill="white"/>
+        <path d="M144,425 L155,417 L166,425 L163,437 L147,437Z" fill="#222"/>
+        <path d="M137,430 L144,425 L147,437 L140,442Z" fill="rgba(0,0,0,.12)"/>
+        <path d="M173,430 L166,425 L163,437 L170,442Z" fill="rgba(0,0,0,.12)"/>
+        <circle cx="155" cy="435" r="17" fill="none" stroke="rgba(0,0,0,.08)" stroke-width="1"/>
+      </svg>
+      <div class="card-scrim"></div>
+      <div class="card-body">
+        <div class="badge-wrap">
+          <div class="svc-badge">
+            <svg viewBox="0 0 16 16"><path d="M8 1C4.1 1 1 4.1 1 8s3.1 7 7 7 7-3.1 7-7-3.1-7-7-7zm3 9.5c0 .8-.7 1.5-1.5 1.5S8 11.3 8 10.5V6.8L5.5 7.6v3c0 .8-.7 1.5-1.5 1.5S2.5 11.4 2.5 10.5V7c0-.7.5-1.3 1.2-1.5L9 3.4c.8-.2 1 .2 1 .8v6.3z"/></svg>
+            tv+
+          </div>
         </div>
-    </section>
-
-    <!-- Section Fonctionnalités -->
-    <section class="features-section" id="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title reveal">L'excellence réinventée</h2>
-                <p class="section-subtitle reveal delay-1">
-                    Des outils conçus pour optimiser chaque aspect de votre préparation. 
-                    Intelligence, précision et résultats garantis.
-                </p>
-            </div>
-            
-            <div class="features-grid">
-                <!-- SVT Tool -->
-                <div class="feature-card reveal">
-                    <div class="feature-number">01</div>
-                    <div class="feature-icon-wrapper">
-                        <i class="fas fa-dna feature-icon"></i>
-                    </div>
-                    <h3>SVT Tool Expert</h3>
-                    <p>
-                        Programme complet validé par des enseignants experts. 
-                        QCM intelligents, fiches de révision premium et 
-                        suivi personnalisé avancé.
-                    </p>
-                </div>
-                
-                <!-- ChatPhilo -->
-                <div class="feature-card reveal delay-1">
-                    <div class="feature-number">02</div>
-                    <div class="feature-icon-wrapper">
-                        <i class="fas fa-brain feature-icon"></i>
-                    </div>
-                    <h3>ChatPhilo IA</h3>
-                    <p>
-                        Assistant intelligent 24/7. Posez vos questions, 
-                        obtenez des explications claires et maîtrisez 
-                        la philosophie avec aisance.
-                    </p>
-                </div>
-                
-                <!-- STI Informatique -->
-                <div class="feature-card reveal delay-2">
-                    <div class="feature-number">03</div>
-                    <div class="feature-icon-wrapper">
-                        <i class="fas fa-code feature-icon"></i>
-                    </div>
-                    <h3>STI Informatique</h3>
-                    <p>
-                        Espace premium avec projets avancés, 
-                        exercices corrigés et préparation intensive 
-                        pour l'excellence académique.
-                    </p>
-                </div>
-
-                <!-- SpeakWell -->
-                <div class="feature-card reveal">
-                    <div class="feature-number">04</div>
-                    <div class="feature-icon-wrapper">
-                        <i class="fas fa-language feature-icon"></i>
-                    </div>
-                    <h3>SpeakWell Pro</h3>
-                    <p>
-                        Maîtrisez l'anglais académique avec une méthode 
-                        progressive avancée. Cours adaptés, exercices 
-                        interactifs et suivi expert.
-                    </p>
-                </div>
-
-                <!-- EduStream -->
-                <div class="feature-card reveal delay-1">
-                    <div class="feature-number">05</div>
-                    <div class="feature-icon-wrapper">
-                        <i class="fas fa-play-circle feature-icon"></i>
-                    </div>
-                    <h3>EduStream Premium</h3>
-                    <p>
-                        Bibliothèque vidéo complète en qualité premium. 
-                        Cours en streaming HD, accessibles hors ligne 
-                        et organisés intelligemment.
-                    </p>
-                </div>
-
-                <!-- Sahl Haven -->
-                <div class="feature-card reveal delay-2">
-                    <div class="feature-number">06</div>
-                    <div class="feature-icon-wrapper">
-                        <i class="fas fa-search feature-icon"></i>
-                    </div>
-                    <h3>Sahl Haven</h3>
-                    <p>
-                        Recherche intelligente qui trouve instantanément 
-                        n'importe quelle ressource premium dans toute 
-                        la plateforme.
-                    </p>
-                </div>
-            </div>
+        <div class="card-info">
+          <div class="card-genre">Comedy · S3</div>
+          <div class="card-title">Ted Lasso</div>
+          <div class="card-sub">"Believe in the impossible."</div>
+          <a href="https://www.est3.com" target="_blank" rel="noopener" class="cta"><svg class="cta-icon" viewBox="0 0 10 12"><path d="M1 1l8 5-8 5V1z"/></svg> Stream now</a>
         </div>
-    </section>
-
-    <!-- Section Téléchargement -->
-    <section class="download-section" id="download">
-        <div class="container">
-            <div class="download-content">
-                <h2 class="section-title reveal">Votre excellence commence ici</h2>
-                
-                <p class="download-subtitle reveal delay-1">
-                    Rejoignez la communauté d'élèves qui transforment leur avenir. 
-                    Téléchargez Sahl App et accédez à l'éducation du futur, 
-                    conçue pour votre succès.
-                </p>
-                
-                <div class="download-buttons reveal delay-2">
-                    <button class="download-btn-primary" id="downloadBtnPrimary">
-                        <i class="fab fa-apple"></i>
-                        Télécharger pour iOS
-                    </button>
-                    <button class="download-btn-secondary" id="downloadBtnSecondary">
-                        <i class="fab fa-google-play"></i>
-                        Télécharger pour Android
-                    </button>
-                </div>
-                
-                <div class="trust-signals reveal delay-3">
-                    <div class="trust-item">
-                        <div class="trust-icon">
-                            <i class="fas fa-award"></i>
-                        </div>
-                        <span>Contenu Expert<br>Validé par des Enseignants</span>
-                    </div>
-                    <div class="trust-item">
-                        <div class="trust-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <span>+95% de Réussite<br>Améliorée</span>
-                    </div>
-                    <div class="trust-item">
-                        <div class="trust-icon">
-                            <i class="fas fa-infinity"></i>
-                        </div>
-                        <span>Accès Illimité<br>Toujours à jour</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pied de page -->
-    <footer>
-        <div class="container">
-            <div class="footer-container">
-                <a href="#home" class="footer-logo">
-                    <div class="footer-logo-icon">
-                         <img src="./assets/images/app-store.png">
-                    </div>
-                    Sahl App
-                </a>
-                
-                <p class="footer-text">
-                    Réinventons l'éducation ensemble. Excellence, innovation 
-                    et réussite pour chaque élève. L'avenir de l'éducation 
-                    commence ici.
-                </p>
-                
-                <div class="footer-links">
-                    <a href="#features" class="footer-link">Fonctionnalités</a>
-                    <a href="#download" class="footer-link">Télécharger</a>
-                    <a href="#" class="footer-link">Premium</a>
-                    <a href="#" class="footer-link">Support</a>
-                </div>
-                
-                <div class="footer-bottom">
-                    <p class="copyright">
-                        © 2024 Sahl App. Tous droits réservés.<br>
-                        Conçu avec excellence en Tunisie.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Modal de Sélection de Plateforme -->
-    <div class="modal-overlay" id="platformModal">
-        <div class="modal">
-            <button class="modal-close" id="closeModal">
-                <i class="fas fa-times"></i>
-            </button>
-            
-            <div class="platform-selection" id="platformSelection">
-                <h2 class="modal-title">Choisissez votre plateforme</h2>
-                <p class="modal-subtitle">Sélectionnez votre appareil pour commencer votre parcours d'excellence</p>
-                
-                <div class="platform-options">
-                    <button class="platform-btn android" id="androidBtn">
-                        <div class="platform-icon">
-                            <i class="fab fa-android"></i>
-                        </div>
-                        <div class="platform-info">
-                            <h3>Android</h3>
-                            <p>Télécharger depuis Google Play Store</p>
-                        </div>
-                    </button>
-                    
-                    <button class="platform-btn ios" id="iosBtn">
-                        <div class="platform-icon">
-                            <i class="fab fa-apple"></i>
-                        </div>
-                        <div class="platform-info">
-                            <h3>iOS</h3>
-                            <p>Télécharger depuis l'App Store</p>
-                        </div>
-                    </button>
-                </div>
-            </div>
-            
-            <div class="coming-soon-message" id="comingSoonMessage">
-                <div class="coming-soon-icon">
-                    <i class="fas fa-rocket"></i>
-                </div>
-                <h3 class="coming-soon-title">Excellence en préparation</h3>
-                <p class="coming-soon-text">
-                    La version iOS sera disponible très prochainement. 
-                    Inscrivez-vous pour être parmi les premiers à découvrir 
-                    l'éducation réinventée.
-                </p>
-                <button class="back-btn" id="backBtn">
-                    <i class="fas fa-arrow-left"></i>
-                    Retour au choix
-                </button>
-            </div>
-        </div>
+      </div>
     </div>
 
-    <script>
-        // Initialisation des animations au scroll
-        function initScrollAnimations() {
-            const reveals = document.querySelectorAll('.reveal');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -30px 0px'
-            });
-            
-            reveals.forEach(element => {
-                observer.observe(element);
-            });
-        }
+    <!-- ── CARD 4: Slow Horses ── -->
+    <div class="card-lg">
+      <svg class="card-canvas" viewBox="0 0 310 465" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sh-bg" x1="0" y1="0" x2=".1" y2="1">
+            <stop offset="0%"  stop-color="#1a1008"/>
+            <stop offset="100%" stop-color="#050302"/>
+          </linearGradient>
+          <radialGradient id="sh-amber" cx="42%" cy="30%" r="50%">
+            <stop offset="0%" stop-color="rgba(220,140,40,.42)"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+        </defs>
+        <rect width="310" height="465" fill="url(#sh-bg)"/>
+        <rect width="310" height="465" fill="url(#sh-amber)"/>
+        <!-- London skyline silhouette -->
+        <rect x="0"   y="260" width="40" height="205" fill="#111008"/>
+        <rect x="35"  y="220" width="55" height="245" fill="#0d0c06"/>
+        <rect x="80"  y="240" width="30" height="225" fill="#111008"/>
+        <rect x="104" y="200" width="20" height="265" fill="#0d0c06"/>
+        <rect x="120" y="230" width="45" height="235" fill="#111008"/>
+        <rect x="160" y="185" width="25" height="280" fill="#0d0c06"/>
+        <!-- Big Ben style tower -->
+        <rect x="182" y="130" width="38" height="335" fill="#1a1506"/>
+        <rect x="180" y="120" width="42" height="20" rx="2" fill="#1a1506"/>
+        <rect x="188" y="100" width="26" height="28" rx="3" fill="#1a1506"/>
+        <rect x="196" y="88"  width="10" height="18" rx="1" fill="#1a1506"/>
+        <circle cx="201" cy="155" r="14" fill="none" stroke="rgba(220,180,80,.4)" stroke-width="2.5"/>
+        <line x1="201" y1="145" x2="201" y2="155" stroke="rgba(220,180,80,.6)" stroke-width="2"/>
+        <line x1="201" y1="155" x2="208" y2="160" stroke="rgba(220,180,80,.6)" stroke-width="2"/>
+        <rect x="230" y="250" width="45" height="215" fill="#111008"/>
+        <rect x="268" y="200" width="42" height="265" fill="#0d0c06"/>
+        <!-- River Thames shimmer -->
+        <rect x="0" y="395" width="310" height="70" fill="rgba(50,55,80,.7)"/>
+        <!-- Reflections in Thames -->
+        <rect x="40" y="405" width="6" height="30" rx="2" fill="rgba(220,140,40,.18)"/>
+        <rect x="198" y="408" width="6" height="25" rx="2" fill="rgba(220,140,40,.15)"/>
+        <!-- Rain streaks -->
+        <line x1="50"  y1="0" x2="42"  y2="100" stroke="rgba(150,160,180,.07)" stroke-width="1"/>
+        <line x1="100" y1="0" x2="92"  y2="120" stroke="rgba(150,160,180,.06)" stroke-width="1"/>
+        <line x1="160" y1="0" x2="152" y2="110" stroke="rgba(150,160,180,.07)" stroke-width="1"/>
+        <line x1="220" y1="0" x2="212" y2="130" stroke="rgba(150,160,180,.05)" stroke-width="1"/>
+        <line x1="275" y1="0" x2="267" y2="95"  stroke="rgba(150,160,180,.06)" stroke-width="1"/>
+        <!-- Trench-coat figure -->
+        <g transform="translate(96,148)">
+          <rect x="20" y="72" width="78" height="165" rx="8" fill="#1e1408"/>
+          <!-- coat collar up -->
+          <path d="M20,72 L59,100 L59,72Z" fill="#161005"/>
+          <path d="M98,72 L59,100 L98,72Z" fill="#161005"/>
+          <!-- belt -->
+          <rect x="20" y="180" width="78" height="8" rx="2" fill="#2a1c0a"/>
+          <rect x="54" y="178" width="10" height="12" rx="2" fill="#3a2c14"/>
+          <!-- legs -->
+          <rect x="20" y="232" width="32" height="90" rx="6" fill="#0e0c06"/>
+          <rect x="66" y="232" width="32" height="90" rx="6" fill="#0e0c06"/>
+          <!-- coat tail flutter -->
+          <path d="M98 232 Q108 280 104 320" stroke="#1e1408" stroke-width="22" fill="none" stroke-linecap="round"/>
+          <!-- neck -->
+          <rect x="48" y="58" width="22" height="22" rx="4" fill="#b8846a"/>
+          <!-- head -->
+          <ellipse cx="59" cy="45" rx="25" ry="27" fill="#b8846a"/>
+          <!-- scruffy grey-brown hair -->
+          <path d="M34 40 Q36 18 59 16 Q82 18 84 40" fill="#4a3520"/>
+          <rect x="32" y="30" width="8" height="22" rx="4" fill="#4a3520"/>
+          <rect x="76" y="30" width="8" height="20" rx="4" fill="#4a3520"/>
+          <!-- 5 o'clock shadow -->
+          <ellipse cx="59" cy="55" rx="18" ry="10" fill="rgba(40,20,10,.18)"/>
+          <!-- eyes -->
+          <ellipse cx="47" cy="38" rx="4" ry="4.5" fill="rgba(0,0,0,.6)"/>
+          <ellipse cx="71" cy="38" rx="4" ry="4.5" fill="rgba(0,0,0,.6)"/>
+          <!-- umbrella -->
+          <line x1="20" y1="90" x2="-20" y2="40" stroke="#2a2010" stroke-width="4"/>
+          <path d="M-42,40 Q-20,20 0,40 Q20,20 42,40" stroke="#2a2010" stroke-width="3" fill="rgba(30,24,12,.8)"/>
+        </g>
+      </svg>
+      <div class="card-scrim"></div>
+      <div class="card-body">
+        <div class="badge-wrap">
+          <div class="svc-badge">
+            <svg viewBox="0 0 16 16"><path d="M8 1C4.1 1 1 4.1 1 8s3.1 7 7 7 7-3.1 7-7-3.1-7-7-7zm3 9.5c0 .8-.7 1.5-1.5 1.5S8 11.3 8 10.5V6.8L5.5 7.6v3c0 .8-.7 1.5-1.5 1.5S2.5 11.4 2.5 10.5V7c0-.7.5-1.3 1.2-1.5L9 3.4c.8-.2 1 .2 1 .8v6.3z"/></svg>
+            tv+
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-genre">Spy Thriller · S4</div>
+          <div class="card-title">Slow Horses</div>
+          <div class="card-sub">"Britain's most reluctant spies."</div>
+          <a href="https://www.est4.com" target="_blank" rel="noopener" class="cta"><svg class="cta-icon" viewBox="0 0 10 12"><path d="M1 1l8 5-8 5V1z"/></svg> Stream now</a>
+        </div>
+      </div>
+    </div>
 
-        // Bouton Retour
-        const backButton = document.getElementById('backButton');
-        backButton.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (document.getElementById('platformModal').classList.contains('active')) {
-                closeModal();
-            } else if (window.history.length > 1) {
-                window.history.back();
-            } else {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        });
+  </div>
+</div>
 
-        // Logique du Modal
-        const downloadBtnHero = document.getElementById('downloadBtnHero');
-        const downloadBtnPrimary = document.getElementById('downloadBtnPrimary');
-        const downloadBtnSecondary = document.getElementById('downloadBtnSecondary');
-        const platformModal = document.getElementById('platformModal');
-        const closeModalBtn = document.getElementById('closeModal');
-        const androidBtn = document.getElementById('androidBtn');
-        const iosBtn = document.getElementById('iosBtn');
-        const backBtn = document.getElementById('backBtn');
-        const platformSelection = document.getElementById('platformSelection');
-        const comingSoonMessage = document.getElementById('comingSoonMessage');
+<div class="dots-row" id="topDots">
+  <div class="dot active" data-i="0"></div>
+  <div class="dot" data-i="1"></div>
+  <div class="dot" data-i="2"></div>
+  <div class="dot" data-i="3"></div>
+  <div class="play-wrap">
+    <button class="play-toggle" id="topPlay" aria-label="Autoplay">
+      <svg viewBox="0 0 10 12"><path d="M1 1l8 5-8 5V1z"/></svg>
+    </button>
+  </div>
+</div>
 
-        function openModal() {
-            platformModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            platformSelection.style.display = 'block';
-            comingSoonMessage.style.display = 'none';
-        }
+<!-- ══════════ FEATURED STRIP ══════════ -->
+<div class="featured-strip">
+  <div class="strip-icon">
+    <svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 100 10A5 5 0 0012 2zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z" fill="white"/></svg>
+  </div>
+  <div class="strip-text">
+    <div class="strip-label">Apple One</div>
+    <div class="strip-title">All of Apple, one price.</div>
+    <div class="strip-sub">TV+, Music, Arcade, Fitness+ and more.</div>
+  </div>
+  <a href="https://www.est5.com" target="_blank" rel="noopener" class="strip-cta">Get started</a>
+</div>
 
-        function closeModal() {
-            platformModal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            setTimeout(() => {
-                platformSelection.style.display = 'block';
-                comingSoonMessage.style.display = 'none';
-            }, 200);
-        }
+<!-- ══════════ BOTTOM ROW: Small Cards ══════════ -->
+<div class="section-label">
+  <h2>Services</h2>
+  <a href="#">See all</a>
+</div>
 
-        [downloadBtnHero, downloadBtnPrimary, downloadBtnSecondary].forEach(btn => {
-            btn.addEventListener('click', openModal);
-        });
+<div class="track-wrap">
+  <div class="track" id="botTrack">
 
-        closeModalBtn.addEventListener('click', closeModal);
-        
-        platformModal.addEventListener('click', function(e) {
-            if (e.target === platformModal) closeModal();
-        });
+    <!-- Music -->
+    <div class="card-sm">
+      <svg class="card-canvas" viewBox="0 0 188 210" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="mus-g" x1="0" y1="0" x2=".5" y2="1">
+            <stop offset="0%"  stop-color="#1e0505"/>
+            <stop offset="100%" stop-color="#080202"/>
+          </linearGradient>
+          <radialGradient id="mus-red" cx="50%" cy="25%" r="55%">
+            <stop offset="0%" stop-color="rgba(240,30,30,.72)"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+          <radialGradient id="mus-spot" cx="50%" cy="0%" r="80%">
+            <stop offset="0%" stop-color="rgba(255,80,80,.25)"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+        </defs>
+        <rect width="188" height="210" fill="url(#mus-g)"/>
+        <rect width="188" height="210" fill="url(#mus-red)"/>
+        <rect width="188" height="210" fill="url(#mus-spot)"/>
+        <!-- Stage boards -->
+        <rect x="0" y="175" width="188" height="35" fill="rgba(40,15,10,.7)"/>
+        <!-- Decorative note -->
+        <text x="24" y="185" font-size="170" font-family="serif" fill="rgba(255,255,255,.035)">♪</text>
+        <!-- Artist -->
+        <g transform="translate(48,14)">
+          <ellipse cx="46" cy="30" rx="22" ry="24" fill="#904a28"/>
+          <path d="M24,24 Q26,4 46,2 Q66,4 68,24" fill="#1c0800"/>
+          <rect x="24" y="52" width="44" height="78" rx="7" fill="#c81818"/>
+          <rect x="24" y="124" width="19" height="62" rx="5" fill="#0e0400"/>
+          <rect x="49" y="124" width="19" height="62" rx="5" fill="#0e0400"/>
+          <!-- mic arm -->
+          <path d="M24,66 Q4,58 -2,42" stroke="#c81818" stroke-width="16" fill="none" stroke-linecap="round"/>
+          <rect x="-10" y="35" width="14" height="22" rx="7" fill="#bbb"/>
+          <!-- other arm raised -->
+          <path d="M68,66 Q88,55 92,38" stroke="#c81818" stroke-width="16" fill="none" stroke-linecap="round"/>
+          <circle cx="93" cy="34" r="9" fill="#c89048"/>
+        </g>
+        <!-- Crowd shapes -->
+        <ellipse cx="18"  cy="178" rx="16" ry="18" fill="rgba(0,0,0,.85)"/>
+        <ellipse cx="52"  cy="182" rx="14" ry="16" fill="rgba(0,0,0,.85)"/>
+        <ellipse cx="86"  cy="176" rx="18" ry="20" fill="rgba(0,0,0,.9)"/>
+        <ellipse cx="124" cy="180" rx="16" ry="18" fill="rgba(0,0,0,.85)"/>
+        <ellipse cx="162" cy="177" rx="16" ry="19" fill="rgba(0,0,0,.9)"/>
+        <!-- Phone lights -->
+        <rect x="82"  y="160" width="6" height="4" rx="1" fill="rgba(255,255,255,.7)"/>
+        <rect x="120" y="164" width="6" height="4" rx="1" fill="rgba(255,255,255,.6)"/>
+        <rect x="44"  y="166" width="6" height="4" rx="1" fill="rgba(255,255,255,.65)"/>
+      </svg>
+      <div class="card-scrim"></div>
+      <div class="card-body">
+        <div class="top-badge">
+          <svg width="14" height="14" viewBox="0 0 36 36"><path d="M18 2C9.2 2 2 9.2 2 18s7.2 16 16 16 16-7.2 16-16S26.8 2 18 2zm3.5 24.4c0 1.3-1.1 2.4-2.4 2.4s-2.4-1.1-2.4-2.4V16.6l-5 1.7v7.5c0 1.3-1.1 2.4-2.4 2.4S9.9 27.1 9.9 25.8V15c0-1.1.8-2.1 1.9-2.3l9-3c1.3-.4 1.7.3 1.7 1.3v16.4z" fill="white"/></svg>
+          <span>Music</span>
+        </div>
+        <div class="card-info">
+          <div class="card-title">Music Daily</div>
+          <div class="card-sub">New music, every day.</div>
+          <a href="https://www.est6.com" target="_blank" rel="noopener" class="cta"><svg class="cta-icon" viewBox="0 0 10 12"><path d="M1 1l8 5-8 5V1z"/></svg> Listen now</a>
+        </div>
+      </div>
+    </div>
 
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && platformModal.classList.contains('active')) {
-                closeModal();
-            }
-        });
+    <!-- Arcade -->
+    <div class="card-sm">
+      <svg class="card-canvas" viewBox="0 0 188 210" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="arc-g" x1="0" y1="0" x2=".3" y2="1">
+            <stop offset="0%" stop-color="#0c6a9a"/>
+            <stop offset="100%" stop-color="#042436"/>
+          </linearGradient>
+          <radialGradient id="arc-glow" cx="50%" cy="65%" r="58%">
+            <stop offset="0%" stop-color="rgba(0,220,250,.4)"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+          <radialGradient id="arc-top" cx="50%" cy="0%" r="60%">
+            <stop offset="0%" stop-color="rgba(100,220,255,.2)"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+        </defs>
+        <rect width="188" height="210" fill="url(#arc-g)"/>
+        <rect width="188" height="210" fill="url(#arc-glow)"/>
+        <rect width="188" height="210" fill="url(#arc-top)"/>
+        <!-- Flower bubbles -->
+        <circle cx="94"  cy="20" r="14" fill="rgba(255,210,60,.58)"/>
+        <circle cx="52"  cy="32" r="11" fill="rgba(255,140,200,.52)"/>
+        <circle cx="136" cy="32" r="11" fill="rgba(80,210,255,.52)"/>
+        <circle cx="22"  cy="58" r="8"  fill="rgba(160,255,90,.42)"/>
+        <circle cx="166" cy="58" r="8"  fill="rgba(255,90,160,.42)"/>
+        <!-- SpongeBob -->
+        <g transform="translate(50,72)">
+          <!-- pants/belt -->
+          <rect x="6"  y="96" width="28" height="54" rx="5" fill="#8B6310"/>
+          <rect x="52" y="96" width="28" height="54" rx="5" fill="#8B6310"/>
+          <rect x="4"  y="93" width="80" height="11" rx="3" fill="#5a3e08"/>
+          <!-- shoes -->
+          <rect x="0"  y="142" width="34" height="13" rx="5" fill="#111"/>
+          <rect x="52" y="142" width="34" height="13" rx="5" fill="#111"/>
+          <!-- body yellow sponge -->
+          <rect x="4" y="28" width="80" height="72" rx="9" fill="#FFD700"/>
+          <!-- holes -->
+          <circle cx="22" cy="48" r="5"   fill="rgba(150,100,0,.32)"/>
+          <circle cx="56" cy="55" r="4"   fill="rgba(150,100,0,.28)"/>
+          <circle cx="72" cy="40" r="3.5" fill="rgba(150,100,0,.28)"/>
+          <circle cx="36" cy="74" r="4"   fill="rgba(150,100,0,.25)"/>
+          <circle cx="68" cy="70" r="3"   fill="rgba(150,100,0,.22)"/>
+          <!-- white shirt -->
+          <rect x="8" y="74" width="72" height="28" rx="3" fill="white"/>
+          <!-- tie -->
+          <path d="M41,74 L55,74 L52,96 L48,102 L44,96Z" fill="#ee1111"/>
+          <!-- head -->
+          <rect x="4" y="-46" width="80" height="80" rx="11" fill="#FFD700"/>
+          <!-- big eyes -->
+          <circle cx="30" cy="-20" r="14" fill="white"/>
+          <circle cx="58" cy="-20" r="14" fill="white"/>
+          <circle cx="33" cy="-18" r="7"  fill="#3366ff"/>
+          <circle cx="61" cy="-18" r="7"  fill="#3366ff"/>
+          <circle cx="35" cy="-16" r="3.5" fill="black"/>
+          <circle cx="63" cy="-16" r="3.5" fill="black"/>
+          <!-- sparkle in eyes -->
+          <circle cx="38" cy="-20" r="2" fill="rgba(255,255,255,.8)"/>
+          <circle cx="66" cy="-20" r="2" fill="rgba(255,255,255,.8)"/>
+          <!-- smile + teeth -->
+          <path d="M18,4 Q44,20 74,4" stroke="#333" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <rect x="28" y="6"  width="10" height="8" rx="1.5" fill="white"/>
+          <rect x="40" y="7"  width="10" height="8" rx="1.5" fill="white"/>
+          <rect x="52" y="6"  width="10" height="8" rx="1.5" fill="white"/>
+          <!-- freckles -->
+          <circle cx="12"  cy="-2" r="3.5" fill="rgba(160,80,0,.42)"/>
+          <circle cx="76"  cy="-2" r="3.5" fill="rgba(160,80,0,.42)"/>
+          <!-- eyebrows -->
+          <path d="M18,-36 Q30,-42 42,-36" stroke="#8B6310" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M46,-36 Q58,-42 70,-36" stroke="#8B6310" stroke-width="3" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Enemy critter right -->
+        <g transform="translate(148,118)">
+          <circle cx="0" cy="0" r="14" fill="rgba(70,190,70,.9)"/>
+          <circle cx="-4" cy="-5" r="3.5" fill="white"/>
+          <circle cx="5" cy="-5" r="3.5" fill="white"/>
+          <circle cx="-3" cy="-4" r="1.8" fill="black"/>
+          <circle cx="6" cy="-4" r="1.8" fill="black"/>
+          <path d="M-5,4 Q0,9 5,4" stroke="black" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- antennae -->
+          <line x1="-3" y1="-14" x2="-6" y2="-22" stroke="rgba(70,190,70,.8)" stroke-width="2"/>
+          <circle cx="-7" cy="-23" r="2" fill="rgba(70,190,70,.8)"/>
+          <line x1="4" y1="-14" x2="7" y2="-22" stroke="rgba(70,190,70,.8)" stroke-width="2"/>
+          <circle cx="8" cy="-23" r="2" fill="rgba(70,190,70,.8)"/>
+        </g>
+        <!-- Small critter left -->
+        <g transform="translate(18,140)">
+          <circle cx="0" cy="0" r="10" fill="rgba(100,200,100,.75)"/>
+          <circle cx="-3" cy="-3" r="2.5" fill="white"/>
+          <circle cx="3" cy="-3" r="2.5" fill="white"/>
+        </g>
+      </svg>
+      <div class="card-scrim"></div>
+      <div class="card-body">
+        <div class="top-badge">
+          <svg width="14" height="14" viewBox="0 0 36 36"><rect width="36" height="36" rx="9" fill="rgba(255,255,255,.15)"/><path d="M18 7l-11 11 11 11 11-11-11-11zm0 4l7 7-7 7-7-7 7-7z" fill="white"/></svg>
+          <span>Arcade</span>
+        </div>
+        <div class="card-info">
+          <div class="card-title">SpongeBob: Patty Pursuit 2</div>
+          <div class="card-sub">Save Bikini Bottom!</div>
+          <a href="https://www.est7.com" target="_blank" rel="noopener" class="cta"><svg class="cta-icon" viewBox="0 0 10 12"><path d="M1 1l8 5-8 5V1z"/></svg> Play now</a>
+        </div>
+      </div>
+    </div>
 
-        androidBtn.addEventListener('click', function() {
-            this.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                this.style.transform = '';
-                window.location.href = 'https://play.google.com/store/apps/details?id=com.sahlapp.education';
-            }, 150);
-        });
+    <!-- Fitness+ -->
+    <div class="card-sm">
+      <svg class="card-canvas" viewBox="0 0 188 210" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fit-g" x1="0" y1="0" x2=".2" y2="1">
+            <stop offset="0%" stop-color="#3a2012"/>
+            <stop offset="100%" stop-color="#0e0806"/>
+          </linearGradient>
+          <radialGradient id="fit-warm" cx="50%" cy="30%" r="55%">
+            <stop offset="0%" stop-color="rgba(220,110,40,.52)"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+        </defs>
+        <rect width="188" height="210" fill="url(#fit-g)"/>
+        <rect width="188" height="210" fill="url(#fit-warm)"/>
+        <!-- Trainer with arms raised -->
+        <g transform="translate(30,10)">
+          <!-- fists up -->
+          <circle cx="16" cy="28" r="11" fill="#c87050"/>
+          <circle cx="112" cy="28" r="11" fill="#c87050"/>
+          <!-- arms -->
+          <path d="M34,82 Q16,56 16,28" stroke="#7c2ea8" stroke-width="22" fill="none" stroke-linecap="round"/>
+          <path d="M94,82 Q112,56 112,28" stroke="#7c2ea8" stroke-width="22" fill="none" stroke-linecap="round"/>
+          <!-- body -->
+          <rect x="28" y="80" width="72" height="90" rx="8" fill="#7c2ea8"/>
+          <!-- workout design on shirt -->
+          <path d="M42 110 L64 95 L86 110" stroke="rgba(255,255,255,.25)" stroke-width="2" fill="none"/>
+          <!-- leggings -->
+          <rect x="28" y="164" width="31" height="88" rx="7" fill="#521870"/>
+          <rect x="69" y="164" width="31" height="88" rx="7" fill="#521870"/>
+          <!-- shoes -->
+          <rect x="22" y="244" width="40" height="16" rx="6" fill="#f5f5f0"/>
+          <rect x="66" y="244" width="40" height="16" rx="6" fill="#f5f5f0"/>
+          <!-- neck -->
+          <rect x="54" y="66" width="20" height="22" rx="4" fill="#c87050"/>
+          <!-- head -->
+          <ellipse cx="64" cy="52" rx="25" ry="27" fill="#c87050"/>
+          <!-- ponytail hair -->
+          <path d="M40 46 Q42 22 64 20 Q86 22 88 46" fill="#1c0e06"/>
+          <rect x="38" y="36" width="8" height="28" rx="4" fill="#1c0e06"/>
+          <rect x="82" y="36" width="8" height="24" rx="4" fill="#1c0e06"/>
+          <!-- ponytail -->
+          <path d="M86 46 Q96 52 92 72" stroke="#1c0e06" stroke-width="10" fill="none" stroke-linecap="round"/>
+          <!-- sweatband -->
+          <rect x="40" y="32" width="48" height="10" rx="5" fill="rgba(255,255,255,.25)"/>
+        </g>
+        <!-- Energy rings bg -->
+        <circle cx="94" cy="105" r="85" fill="none" stroke="rgba(200,100,40,.08)" stroke-width="6"/>
+        <circle cx="94" cy="105" r="65" fill="none" stroke="rgba(200,100,40,.1)" stroke-width="4"/>
+      </svg>
+      <div class="card-scrim"></div>
+      <div class="card-body">
+        <div class="top-badge">
+          <svg width="14" height="14" viewBox="0 0 36 36"><path d="M18 2C9.2 2 2 9.2 2 18s7.2 16 16 16 16-7.2 16-16S26.8 2 18 2zm2 27h-4V17h4v11zm0-15h-4v-4h4v4z" fill="white"/></svg>
+          <span>Fitness+</span>
+        </div>
+        <div class="card-info">
+          <div class="card-title">HIIT Workout</div>
+          <div class="card-sub">Push your limits.</div>
+          <a href="https://www.est8.com" target="_blank" rel="noopener" class="cta"><svg class="cta-icon" viewBox="0 0 10 12"><path d="M1 1l8 5-8 5V1z"/></svg> Watch now</a>
+        </div>
+      </div>
+    </div>
 
-        iosBtn.addEventListener('click', function() {
-            this.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                this.style.transform = '';
-                setTimeout(() => {
-                    platformSelection.style.display = 'none';
-                    comingSoonMessage.style.display = 'block';
-                }, 200);
-            }, 150);
-        });
+    <!-- Podcasts -->
+    <div class="card-sm">
+      <svg class="card-canvas" viewBox="0 0 188 210" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="pod-g" x1="0" y1="0" x2=".3" y2="1">
+            <stop offset="0%" stop-color="#280d38"/>
+            <stop offset="100%" stop-color="#0e0518"/>
+          </linearGradient>
+          <radialGradient id="pod-glow" cx="50%" cy="42%" r="52%">
+            <stop offset="0%" stop-color="rgba(180,55,230,.58)"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+        </defs>
+        <rect width="188" height="210" fill="url(#pod-g)"/>
+        <rect width="188" height="210" fill="url(#pod-glow)"/>
+        <!-- Concentric rings -->
+        <circle cx="94" cy="92" r="80" fill="none" stroke="rgba(200,80,255,.14)" stroke-width="8"/>
+        <circle cx="94" cy="92" r="64" fill="none" stroke="rgba(200,80,255,.18)" stroke-width="6"/>
+        <circle cx="94" cy="92" r="48" fill="none" stroke="rgba(200,80,255,.22)" stroke-width="5"/>
+        <circle cx="94" cy="92" r="32" fill="none" stroke="rgba(200,80,255,.28)" stroke-width="4"/>
+        <!-- Large mic -->
+        <rect x="75" y="36" width="38" height="64" rx="19" fill="rgba(210,75,255,.85)"/>
+        <!-- mic grille -->
+        <line x1="83" y1="50" x2="105" y2="50" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
+        <line x1="81" y1="60" x2="107" y2="60" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
+        <line x1="81" y1="70" x2="107" y2="70" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
+        <line x1="83" y1="80" x2="105" y2="80" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
+        <!-- mic stand -->
+        <path d="M62 102 Q62 132 94 132 Q126 132 126 102" stroke="rgba(210,75,255,.7)" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <rect x="90" y="130" width="8" height="24" rx="3" fill="rgba(210,75,255,.7)"/>
+        <rect x="76" y="152" width="36" height="5" rx="2" fill="rgba(210,75,255,.5)"/>
+        <!-- Sound wave bars -->
+        <rect x="20"  y="172" width="6" height="20" rx="3" fill="rgba(200,80,255,.4)"/>
+        <rect x="30"  y="162" width="6" height="30" rx="3" fill="rgba(200,80,255,.5)"/>
+        <rect x="40"  y="168" width="6" height="24" rx="3" fill="rgba(200,80,255,.4)"/>
+        <rect x="136" y="168" width="6" height="24" rx="3" fill="rgba(200,80,255,.4)"/>
+        <rect x="146" y="158" width="6" height="34" rx="3" fill="rgba(200,80,255,.5)"/>
+        <rect x="156" y="165" width="6" height="27" rx="3" fill="rgba(200,80,255,.4)"/>
+      </svg>
+      <div class="card-scrim"></div>
+      <div class="card-body">
+        <div class="top-badge">
+          <svg width="14" height="14" viewBox="0 0 36 36"><rect x="2" y="2" width="32" height="32" rx="9" fill="rgba(180,55,220,.75)"/><rect x="13" y="8" width="10" height="16" rx="5" fill="white"/><path d="M8 22 Q8 30 18 30 Q28 30 28 22" stroke="white" stroke-width="2.5" fill="none"/><rect x="15" y="28" width="6" height="6" rx="2" fill="white"/></svg>
+          <span>Podcasts</span>
+        </div>
+        <div class="card-info">
+          <div class="card-title">Top Stories</div>
+          <div class="card-sub">Stories that move you.</div>
+          <a href="https://www.est9.com" target="_blank" rel="noopener" class="cta"><svg class="cta-icon" viewBox="0 0 10 12"><path d="M1 1l8 5-8 5V1z"/></svg> Listen now</a>
+        </div>
+      </div>
+    </div>
 
-        backBtn.addEventListener('click', function() {
-            comingSoonMessage.style.display = 'none';
-            platformSelection.style.display = 'block';
-        });
+    <!-- News+ -->
+    <div class="card-sm">
+      <svg class="card-canvas" viewBox="0 0 188 210" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="news-g" x1="0" y1="0" x2=".3" y2="1">
+            <stop offset="0%" stop-color="#1c0808"/>
+            <stop offset="100%" stop-color="#060202"/>
+          </linearGradient>
+          <radialGradient id="news-glow" cx="42%" cy="28%" r="55%">
+            <stop offset="0%" stop-color="rgba(255,40,40,.45)"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+        </defs>
+        <rect width="188" height="210" fill="url(#news-g)"/>
+        <rect width="188" height="210" fill="url(#news-glow)"/>
+        <!-- Newspaper layout -->
+        <rect x="20" y="30"  width="148" height="5"  rx="2" fill="rgba(255,255,255,.6)"/>
+        <rect x="20" y="42"  width="90"  height="3"  rx="1" fill="rgba(255,255,255,.3)"/>
+        <rect x="20" y="52"  width="148" height="65" rx="4" fill="rgba(255,255,255,.05)"/>
+        <!-- Headline text placeholder -->
+        <rect x="26" y="58"  width="100" height="8"  rx="2" fill="rgba(255,255,255,.6)"/>
+        <rect x="26" y="72"  width="80"  height="6"  rx="2" fill="rgba(255,255,255,.45)"/>
+        <rect x="26" y="84"  width="90"  height="5"  rx="2" fill="rgba(255,255,255,.3)"/>
+        <rect x="26" y="96"  width="70"  height="4"  rx="2" fill="rgba(255,255,255,.2)"/>
+        <rect x="26" y="106" width="50"  height="4"  rx="2" fill="rgba(255,255,255,.15)"/>
+        <!-- Image placeholder -->
+        <rect x="120" y="58" width="40" height="52" rx="4" fill="rgba(255,50,50,.25)"/>
+        <!-- Article dividers -->
+        <rect x="20" y="124" width="148" height="1" fill="rgba(255,255,255,.12)"/>
+        <rect x="20" y="132" width="60" height="4" rx="2" fill="rgba(255,255,255,.4)"/>
+        <rect x="20" y="140" width="50" height="3" rx="2" fill="rgba(255,255,255,.2)"/>
+        <rect x="90" y="132" width="60" height="4" rx="2" fill="rgba(255,255,255,.4)"/>
+        <rect x="90" y="140" width="44" height="3" rx="2" fill="rgba(255,255,255,.2)"/>
+        <rect x="20" y="150" width="148" height="1" fill="rgba(255,255,255,.1)"/>
+        <rect x="20" y="158" width="55" height="4" rx="2" fill="rgba(255,255,255,.35)"/>
+        <rect x="20" y="166" width="45" height="3" rx="2" fill="rgba(255,255,255,.18)"/>
+        <!-- "+" badge -->
+        <circle cx="162" cy="38" r="10" fill="rgba(255,40,40,.8)"/>
+        <text x="157" y="43" font-size="14" font-weight="700" fill="white">+</text>
+      </svg>
+      <div class="card-scrim"></div>
+      <div class="card-body">
+        <div class="top-badge">
+          <svg width="14" height="14" viewBox="0 0 36 36"><path d="M18 2L4 10v4l14-8 14 8v-4L18 2zM4 16v18h10V22h8v12h10V16L18 8 4 16z" fill="white"/></svg>
+          <span>News+</span>
+        </div>
+        <div class="card-info">
+          <div class="card-title">Today's Top Stories</div>
+          <div class="card-sub">500+ publications.</div>
+          <a href="https://www.est10.com" target="_blank" rel="noopener" class="cta"><svg class="cta-icon" viewBox="0 0 10 12"><path d="M1 1l8 5-8 5V1z"/></svg> Read now</a>
+        </div>
+      </div>
+    </div>
 
-        // Effet ripple
-        document.querySelectorAll('.download-btn-hero, .download-btn-primary, .download-btn-secondary, .platform-btn, .footer-link').forEach(button => {
-            button.addEventListener('click', function(e) {
-                const rect = this.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const size = Math.max(rect.width, rect.height);
-                
-                const ripple = document.createElement('span');
-                ripple.style.cssText = `
-                    position: absolute;
-                    border-radius: 50%;
-                    background: rgba(255, 255, 255, 0.3);
-                    transform: scale(0);
-                    animation: ripple 0.6s linear;
-                    width: ${size}px;
-                    height: ${size}px;
-                    top: ${y - size/2}px;
-                    left: ${x - size/2}px;
-                    pointer-events: none;
-                    z-index: 1;
-                `;
-                
-                this.style.position = 'relative';
-                this.style.overflow = 'hidden';
-                this.appendChild(ripple);
-                
-                setTimeout(() => {
-                    if (ripple.parentNode === this) {
-                        this.removeChild(ripple);
-                    }
-                }, 600);
-            });
-        });
+  </div>
+</div>
 
-        // Navigation fluide
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 60,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
+<div class="dots-row" id="botDots">
+  <div class="dot active" data-i="0"></div>
+  <div class="dot" data-i="1"></div>
+  <div class="dot" data-i="2"></div>
+  <div class="dot" data-i="3"></div>
+  <div class="dot" data-i="4"></div>
+  <div class="play-wrap">
+    <button class="play-toggle" id="botPlay" aria-label="Autoplay">
+      <svg viewBox="0 0 10 12"><path d="M1 1l8 5-8 5V1z"/></svg>
+    </button>
+  </div>
+</div>
 
-        // Initialisation
-        window.addEventListener('DOMContentLoaded', function() {
-            initScrollAnimations();
-            
-            // Ajout du style ripple
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes ripple {
-                    to {
-                        transform: scale(4);
-                        opacity: 0;
-                    }
-                }
-            `;
-            document.head.appendChild(style);
-        });
-    </script>
+<p class="footnote">1. Trade-in values will vary based on the condition, year, and configuration of your eligible trade-in device. Not all devices are eligible for trade-in. Subscription required for Apple services. Terms apply.</p>
+
+<script>
+// ── Shared row logic ──
+function initRow(trackId, dotsId, playId, cardSel) {
+  const track = document.getElementById(trackId);
+  const dotsEl = document.getElementById(dotsId);
+  const dots = dotsEl.querySelectorAll('.dot');
+  const btn = document.getElementById(playId);
+  const cards = track.querySelectorAll(cardSel);
+  let playing = false, timer = null;
+
+  // Drag scroll
+  let dn = false, sx, sl;
+  track.addEventListener('mousedown', e => {
+    dn = true; sx = e.pageX - track.offsetLeft; sl = track.scrollLeft;
+    track.style.cursor = 'grabbing';
+  });
+  ['mouseup','mouseleave'].forEach(ev =>
+    track.addEventListener(ev, () => { dn = false; track.style.cursor = 'grab'; })
+  );
+  track.addEventListener('mousemove', e => {
+    if (!dn) return; e.preventDefault();
+    track.scrollLeft = sl - (e.pageX - track.offsetLeft - sx) * 1.35;
+  });
+
+  // Smooth dot sync
+  function sync() {
+    const gap = parseFloat(getComputedStyle(track).gap) || 14;
+    const cw = cards[0].offsetWidth + gap;
+    const idx = Math.min(Math.round(track.scrollLeft / cw), cards.length - 1);
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  }
+  track.addEventListener('scroll', sync, { passive: true });
+
+  // Dot clicks → smooth scroll
+  dots.forEach(d => d.addEventListener('click', () => {
+    const gap = parseFloat(getComputedStyle(track).gap) || 14;
+    const cw = cards[0].offsetWidth + gap;
+    track.scrollTo({ left: parseInt(d.dataset.i) * cw, behavior: 'smooth' });
+  }));
+
+  // Autoplay
+  const PAUSE = `<svg viewBox="0 0 16 16"><rect x="2" y="1" width="5" height="14" rx="1.5"/><rect x="9" y="1" width="5" height="14" rx="1.5"/></svg>`;
+  const PLAY  = `<svg viewBox="0 0 10 12"><path d="M1 1l8 5-8 5V1z"/></svg>`;
+
+  btn.addEventListener('click', () => {
+    if (playing) {
+      playing = false; clearInterval(timer); btn.innerHTML = PLAY;
+    } else {
+      playing = true; btn.innerHTML = PAUSE;
+      timer = setInterval(() => {
+        const gap = parseFloat(getComputedStyle(track).gap) || 14;
+        const cw = cards[0].offsetWidth + gap;
+        let next = track.scrollLeft + cw;
+        if (next > cw * (cards.length - 1)) next = 0;
+        track.scrollTo({ left: next, behavior: 'smooth' });
+      }, 3400);
+    }
+  });
+
+  sync();
+}
+
+initRow('topTrack', 'topDots', 'topPlay', '.card-lg');
+initRow('botTrack', 'botDots', 'botPlay', '.card-sm');
+
+// ── Subtle card parallax on mouse move ──
+document.querySelectorAll('.card-lg, .card-sm').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width  - 0.5;
+    const y = (e.clientY - r.top)  / r.height - 0.5;
+    card.style.transform = `translateY(-6px) scale(1.024) rotateX(${-y*6}deg) rotateY(${x*6}deg)`;
+    card.style.transition = 'transform .1s linear, box-shadow .4s';
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+    card.style.transition = 'transform .5s cubic-bezier(0.34,1.56,0.64,1), box-shadow .4s';
+  });
+});
+</script>
 </body>
 </html>

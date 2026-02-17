@@ -5,6 +5,11 @@
                 password: 'KoKo200@', 
                 name: 'ssuri' 
             },
+{ 
+                username: 'bensaidasma09@gmail.com',
+                password: 'Asmabensaid.0', 
+                name: 'Asma' 
+            },
        
 { 
                 username: '21766038',

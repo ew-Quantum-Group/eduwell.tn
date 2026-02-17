@@ -717,6 +717,121 @@ description: "Ensemble structuré de devoirs de controle 1 en Sciences de la Vie
         }
     ]
 },
+{
+    "id": 13,
+    "title": "Oscillation Mécanique – Force",
+    "description": "Fiches de méthode et séries d'exercices avec corrections pour maîtriser les oscillations mecaniques force.",
+    "files": [
+        {
+            "name": "Fiche de méthode – Oscillation Mécanique Force",
+            "url": "https://drive.google.com/file/d/1_5OSDcNtn0XncXGjEQTW6ts7gvqzLRFi/view?usp=drive_link"
+        },
+        {
+            "name": "Série d'exercices 1 – Oscillation Mécanique Force",
+            "url": "https://drive.google.com/file/d/1emPCMvH4KIpMgpJnSr6pAP61To0QBZ-h/view?usp=drive_link"
+        },
+        {
+            "name": "Correction Série 1 – Oscillation Mécanique Force",
+            "url": "https://drive.google.com/file/d/1W3RXFxRDqCYjg7ATPjQeAj-pai8b1gac/view?usp=drive_link"
+        },
+        {
+            "name": "Série d'exercices 2 – Oscillation Mecanique Force",
+            "url": "https://drive.google.com/file/d/18VlBXxdq3chrZsHG5p--11fonRxrRUyl/view?usp=drive_link"
+        },
+        {
+            "name": "Correction Série 2 – Oscillation Mécanique Force",
+            "url": "https://drive.google.com/file/d/1ZAYJJuihlO17yNBaeiwGTgMlXe-UTmLV/view?usp=drive_link"
+        },
+        {
+            "name": "Série d'exercices 3 – Oscillation Mécanique Force",
+            "url": "https://drive.google.com/file/d/1_Lfd8DKzUZUDh16QFbSNaPWEMkUqOaPh/view?usp=drive_link"
+        },
+        {
+            "name": "Correction Série 3 – Oscillation Mécanique Force",
+            "url": "https://drive.google.com/file/d/1IAkGRc44UmBAhK4wQK5R8WPmVh5AymJP/view?usp=drive_link"
+        },
+        {
+            "name": "Série d'exercices 4 – Oscillation Mécanique Force",
+            "url": "https://drive.google.com/file/d/1q6xbmPXfu0mh8_V0S4pL463KjSuxiwKI/view?usp=drive_link"
+        },
+        {
+            "name": "Correction Série 4 – Oscillation Mécanique Force",
+            "url": "https://drive.google.com/file/d/1NQKYcXWo2bnUfel4yu04wYXBsZ16PYad/view?usp=drive_link"
+        }
+    ]
+},
+
+{
+    "id": 14,
+    "title": "Oscillation Mécanique Libre",
+    "description": "Séries d'exercices et corrections pour étudier l'oscillation mecanique libre et consolider les notions avant le Bac.",
+    "files": [
+        {
+            "name": "Série 1 – Oscillation Mécanique Libre",
+            "url": "https://drive.google.com/file/d/1NHv0lICGxHAX4rS2hx8Z7djUkPXi9MfL/view?usp=drive_link"
+        },
+        {
+            "name": "Correction Série 1 – Oscillation Mécanique Libre",
+            "url": "https://drive.google.com/file/d/1hRhhdoo3qKUQ-WsIkIYsG4tP4G6J-X5z/view?usp=drive_link"
+        },
+        {
+            "name": "Série 2 – Oscillation Mécanique Libre",
+            "url": "https://drive.google.com/file/d/1PpmRx_T8H1zC2NONWEupK0GQunKup7Hz/view?usp=drive_link"
+        },
+        {
+            "name": "Correction Série 2 – Oscillation Mécanique Libre",
+            "url": "https://drive.google.com/file/d/1DpZqaqkoncpPBvkqkeLne7e_RqrgTpyO/view?usp=drive_link"
+        }
+    ]
+},
+
+{
+    "id": 15,
+    "title": "Math – Intégrale",
+    "description": "Séries d'exercices avec corrections pour maîtriser le calcul integral et se préparer au Bac.",
+    "files": [
+        {
+            "name": "Série 1 – Intégrale",
+            "url": "https://drive.google.com/file/d/1wFWsbHSXBTV8snVzx6hHpB7Hkr9LUmAt/view?usp=drive_link"
+        },
+        {
+            "name": "Correction Série 1 – Intégrale",
+            "url": "https://drive.google.com/file/d/1wFWsbHSXBTV8snVzx6hHpB7Hkr9LUmAt/view?usp=drive_link"
+        },
+        {
+            "name": "Série 2 – Intégrale",
+            "url": "https://drive.google.com/file/d/1_qmruUYcu4d4OCsnGyqNpnP-ogk19eKd/view?usp=drive_link"
+        },
+        {
+            "name": "Correction Série 2 – Intégrale",
+            "url": "https://drive.google.com/file/d/1_qmruUYcu4d4OCsnGyqNpnP-ogk19eKd/view?usp=drive_link"
+        },
+        {
+            "name": "Série 3 – Intégrale",
+            "url": "https://drive.google.com/file/d/14SkWEinpVwyL114OuJLZU2B6dSJxEht8/view?usp=drive_link"
+        },
+        {
+            "name": "Correction Série 3 – Intégrale",
+            "url": "https://drive.google.com/file/d/14SkWEinpVwyL114OuJLZU2B6dSJxEht8/view?usp=drive_link"
+        },
+        {
+            "name": "Série 4 – Intégrale",
+            "url": "https://drive.google.com/file/d/1lGi9bMBsbThj3QBdun27ODQs6VvjQ6J1/view?usp=drive_link"
+        },
+        {
+            "name": "Correction Série 4 – Intégrale",
+            "url": "https://drive.google.com/file/d/1lGi9bMBsbThj3QBdun27ODQs6VvjQ6J1/view?usp=drive_link"
+        },
+        {
+            "name": "Série 5 – Intégrale",
+            "url": "https://drive.google.com/file/d/1l5aDIRTmSekTjDt6pQ388e6IO2AUVTrk/view?usp=drive_link"
+        },
+        {
+            "name": "Correction Série 5 – Intégrale",
+            "url": "https://drive.google.com/file/d/1da0QPlsTou8M0m1ygAUYFijrvy_p6Sr_/view?usp=drive_link"
+        }
+    ]
+}
 
 
 
@@ -727,23 +842,9 @@ description: "Ensemble structuré de devoirs de controle 1 en Sciences de la Vie
 
 
 
-                {
-                    id: 30000,
-                    title: "Calculus: Advanced Techniques",
-                    description: "Advanced calculus methods and applications",
-                    files: [
-                        {
-                            name: "Integration Techniques",
-                            url: "https://drive.google.com/file/d/7j1y0x9P8m7b6c5v4f3g2h1i0j9k8l7m6/view"
-                        },
-                        {
-                            name: "Differential Equations",
-                            url: "https://drive.google.com/file/d/8k2z1y0P9m8b7c6v5f4g3h2i1j0k9l8m7/view"
-                        },
-                        {
-                            name: "Series and Sequences",
-                            url: "https://drive.google.com/file/d/9l3a2z1P0m9b8c7v6f5g4h3i2j1k0l9m8/view"
-                        }
-                    ]
-                }
+
+
+
+
+               
             ];

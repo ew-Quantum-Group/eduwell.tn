@@ -1,514 +1,217 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>Apple TV+ · refined hero</title>
-  <style>
-    /* reset & base */
-    *,
-    *::before,
-    *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background: #f5f5f7;
-      font-family: -apple-system, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* navigation (unchanged, just for context) */
-    nav {
-      height: 48px;
-      background: rgba(251, 251, 253, 0.94);
-      backdrop-filter: saturate(180%) blur(20px);
-      -webkit-backdrop-filter: saturate(180%) blur(20px);
-      border-bottom: 0.5px solid rgba(0, 0, 0, 0.12);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      position: sticky;
-      top: 0;
-      z-index: 200;
-    }
-    .nav-apple svg {
-      width: 18px;
-      height: 22px;
-      fill: #1d1d1f;
-      display: block;
-    }
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-    .nav-right svg {
-      width: 19px;
-      height: 19px;
-      fill: none;
-      stroke: #1d1d1f;
-      stroke-width: 1.6;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      cursor: pointer;
-      transition: opacity 0.15s;
-    }
-    .nav-right svg:hover {
-      opacity: 0.5;
-    }
-
-    /* carousel outer */
-    .carousel-outer {
-      position: relative;
-      overflow: hidden;
-      background: #000;
-    }
-
-    .carousel-track {
-      display: flex;
-      transition: transform 0.48s cubic-bezier(0.32, 0.72, 0, 1);
-      will-change: transform;
-    }
-
-    /* hero-card — exact same dimensions, flex centering */
-    .hero-card {
-      min-width: 100%;
-      position: relative;
-      overflow: hidden;
-      user-select: none;
-      flex-shrink: 0;
-      height: 50vh;                /* consistent height */
-      display: flex;               /* activate flex for absolute-free centering */
-      align-items: center;         /* vertical centering */
-      justify-content: center;      /* horizontal centering */
-    }
-
-    /* background image */
-    .hero-card img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      pointer-events: none;
-      transform-origin: center center;
-      transform: scale(1);
-      transition: transform 7s ease;
-      z-index: 1;
-    }
-
-    .hero-card.active img {
-      transform: scale(1.05);
-    }
-
-    /* overlay gradient – also full cover, placed above img */
-    .hero-card .overlay {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.15) 0%,
-        rgba(0, 0, 0, 0.45) 50%,
-        rgba(0, 0, 0, 0.75) 100%
-      );
-      z-index: 2;
-      pointer-events: none;        /* so buttons inside stay clickable */
-    }
-
-    /* text container — centered using flex on parent + this block */
-    .hero-content {
-      position: relative;          /* above overlay & image */
-      z-index: 3;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      width: 100%;
-      max-width: 340px;            /* slightly wider to accommodate longer taglines */
-      padding: 0 20px;
-      pointer-events: auto;        /* re-enable click for buttons */
-      /* removed opacity transition – we control children */
-    }
-
-    /* each piece fades in independently */
-    .service-badge,
-    .hero-title,
-    .hero-meta,
-    .hero-tagline,
-    .hero-actions {
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
-
-    .hero-card.active .service-badge  { opacity: 1; transition-delay: 0.08s; }
-    .hero-card.active .hero-title     { opacity: 1; transition-delay: 0.18s; }
-    .hero-card.active .hero-meta      { opacity: 1; transition-delay: 0.26s; }
-    .hero-card.active .hero-tagline   { opacity: 1; transition-delay: 0.32s; }
-    .hero-card.active .hero-actions   { opacity: 1; transition-delay: 0.38s; }
-
-    /* badge */
-    .service-badge {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      margin-bottom: 10px;
-    }
-
-    .service-badge .apple-glyph {
-      width: 10px;
-      height: 12px;
-      fill: #fff;
-    }
-
-    .service-badge span {
-      font-size: 12px;
-      font-weight: 500;
-      color: rgba(255, 255, 255, 0.92);
-    }
-
-    .service-badge .plus {
-      font-size: 10px;
-      font-weight: 300;
-      margin-left: -1px;
-      color: rgba(255, 255, 255, 0.92);
-    }
-
-    /* title */
-    .hero-title {
-      font-size: 38px;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: -1.5px;
-      line-height: 1.0;
-      margin-bottom: 6px;
-      font-style: italic;
-      width: 100%;
-      text-align: center;
-    }
-
-    /* meta (genre) */
-    .hero-meta {
-      font-size: 11px;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.82);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-      width: 100%;
-      text-align: center;
-    }
-
-    /* tagline */
-    .hero-tagline {
-      font-size: 13px;
-      font-weight: 400;
-      color: rgba(255, 255, 255, 0.78);
-      margin-bottom: 18px;
-      line-height: 1.4;
-      width: 100%;
-      max-width: 280px;            /* better readability */
-      text-align: center;
-    }
-
-    /* action buttons */
-    .hero-actions {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-    }
-
-    .btn-primary {
-      background: #fff;
-      color: #1d1d1f;
-      border: none;
-      border-radius: 980px;
-      padding: 9px 22px;
-      font-size: 13px;
-      font-weight: 500;
-      font-family: inherit;
-      cursor: pointer;
-      transition: background 0.15s, transform 0.15s;
-    }
-    .btn-primary:hover {
-      background: rgba(255, 255, 255, 0.88);
-      transform: scale(0.97);
-    }
-    .btn-primary:active {
-      transform: scale(0.94);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.16);
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.38);
-      border-radius: 980px;
-      padding: 9px 18px;
-      font-size: 13px;
-      font-weight: 500;
-      font-family: inherit;
-      cursor: pointer;
-      backdrop-filter: blur(8px);
-      transition: background 0.15s, transform 0.15s;
-    }
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.25);
-      transform: scale(0.97);
-    }
-
-    /* arrows */
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 20;                 /* above content */
-      background: rgba(255, 255, 255, 0.16);
-      border: none;
-      border-radius: 50%;
-      width: 34px;
-      height: 34px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      backdrop-filter: blur(12px);
-      transition: background 0.2s, opacity 0.25s;
-      opacity: 0;
-      pointer-events: auto;
-    }
-    .carousel-outer:hover .arrow {
-      opacity: 1;
-    }
-    .arrow:hover {
-      background: rgba(255, 255, 255, 0.3);
-    }
-    .arrow svg {
-      width: 14px;
-      height: 14px;
-      stroke: #fff;
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      fill: none;
-    }
-    .arrow-prev {
-      left: 12px;
-    }
-    .arrow-next {
-      right: 12px;
-    }
-
-    /* progress dots */
-    .progress-wrap {
-      padding: 9px 0 5px;
-      background: #f5f5f7;
-      display: flex;
-      justify-content: center;
-      gap: 5px;
-      align-items: center;
-    }
-    .prog-dot {
-      height: 3.5px;
-      border-radius: 2px;
-      background: #c7c7cc;
-      cursor: pointer;
-      transition: width 0.35s ease, background 0.25s;
-      width: 14px;
-    }
-    .prog-dot.active {
-      width: 26px;
-      background: #1d1d1f;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SVT App | EduWell</title>
+    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/styleseek.css">
 </head>
 <body>
-  <!-- minimal nav (cosmetic) -->
-  <nav>
-    <div class="nav-apple">
-      <svg viewBox="0 0 814 1000">
-        <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 442.9 0 332.4 0 226.8c0-168.3 109.7-257.6 217.4-257.6 64.8 0 118.6 42.5 159.3 42.5 38.8 0 99.9-45.2 172.4-45.2 27.5 0 126.1 2.6 197.3 97.2z"/>
-        <path d="M504.1 55.5C534.2 20.9 555.7-.3 554.7 0c-1 .3-7.9 1.3-14.3 3.8-80.8 30.9-132.5 119.8-128.9 208.1.3 7.9.8 19.9 1.3 28.1 5.8-1.5 11.3-3.2 16.3-5.1 45.7-17.8 95.4-56.8 125-179.4z"/>
-      </svg>
-    </div>
-    <div class="nav-right">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5.5 20v-2.5c0-2.5 2-4.5 4.5-4.5h4c2.5 0 4.5 2 4.5 4.5V20"/></svg>
-      <svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="1"/><path d="M8 4v4M16 4v4"/></svg>
-    </div>
-  </nav>
-
-  <!-- CAROUSEL FIXED: all text perfectly centered -->
-  <div class="carousel-outer" id="carouselOuter">
-    <button class="arrow arrow-prev" id="arrowPrev" aria-label="Previous">
-      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-    </button>
-    <button class="arrow arrow-next" id="arrowNext" aria-label="Next">
-      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-    </button>
-
-    <div class="carousel-track" id="carouselTrack">
-      <!-- slide 1 -->
-      <div class="hero-card active">
-        <img src="https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=700&q=85" alt="Eternity">
-        <div class="overlay"></div>  <!-- separate overlay -->
-        <div class="hero-content">   <!-- new unified content container -->
-          <div class="service-badge">
-            <svg class="apple-glyph" viewBox="0 0 814 1000"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 442.9 0 332.4 0 226.8c0-168.3 109.7-257.6 217.4-257.6 64.8 0 118.6 42.5 159.3 42.5 38.8 0 99.9-45.2 172.4-45.2 27.5 0 126.1 2.6 197.3 97.2z"/><path d="M504.1 55.5C534.2 20.9 555.7-.3 554.7 0c-1 .3-7.9 1.3-14.3 3.8-80.8 30.9-132.5 119.8-128.9 208.1.3 7.9.8 19.9 1.3 28.1 5.8-1.5 11.3-3.2 16.3-5.1 45.7-17.8 95.4-56.8 125-179.4z"/></svg>
-            <span>TV</span><span class="plus">+</span>
-          </div>
-          <div class="hero-title">Eternity</div>
-          <div class="hero-meta">Romance</div>
-          <div class="hero-tagline">Do you believe in love after life?</div>
-          <div class="hero-actions">
-            <button class="btn-primary">Stream now</button>
-            <button class="btn-secondary">More info</button>
-          </div>
+    <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+  
+    <div class="floating-element floating-1"></div>
+    <div class="floating-element floating-2"></div>
+    <div class="floating-element floating-3"></div>
+    
+    <a href="./index.html" class="back-btn" id="backBtn">
+        ← Retour
+    </a>
+    
+    <div class="app-container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    SVT
+                </div>
+            </div>
+            <h1>SVT App</h1>
+            <p>Glissez vers la droite pour Vrai, vers la gauche pour Faux</p>
         </div>
-      </div>
 
-      <!-- slide 2 -->
-      <div class="hero-card">
-        <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=700&q=85" alt="Stellar">
-        <div class="overlay"></div>
-        <div class="hero-content">
-          <div class="service-badge">
-            <svg class="apple-glyph" viewBox="0 0 814 1000"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 442.9 0 332.4 0 226.8c0-168.3 109.7-257.6 217.4-257.6 64.8 0 118.6 42.5 159.3 42.5 38.8 0 99.9-45.2 172.4-45.2 27.5 0 126.1 2.6 197.3 97.2z"/><path d="M504.1 55.5C534.2 20.9 555.7-.3 554.7 0c-1 .3-7.9 1.3-14.3 3.8-80.8 30.9-132.5 119.8-128.9 208.1.3 7.9.8 19.9 1.3 28.1 5.8-1.5 11.3-3.2 16.3-5.1 45.7-17.8 95.4-56.8 125-179.4z"/></svg>
-            <span>TV</span><span class="plus">+</span>
-          </div>
-          <div class="hero-title">Stellar</div>
-          <div class="hero-meta">Sci-Fi</div>
-          <div class="hero-tagline">The universe holds its breath.</div>
-          <div class="hero-actions">
-            <button class="btn-primary">Stream now</button>
-            <button class="btn-secondary">More info</button>
-          </div>
+        <div class="card-container">
+            <div class="quiz-card" id="current-card">
+                <div class="card-pattern"></div>
+                <div class="question-number" id="question-number">Question 1/5</div>
+                <h2 id="question-text">Un exemple de question apparaîtra ici</h2>
+                <div class="swipe-hints">
+                    <div class="swipe-hint false">
+                        FAUX
+                    </div>
+                    <div class="swipe-hint true">
+                        VRAI
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+         <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
 
-      <!-- slide 3 -->
-      <div class="hero-card">
-        <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=700&q=85" alt="Silence">
-        <div class="overlay"></div>
-        <div class="hero-content">
-          <div class="service-badge">
-            <svg class="apple-glyph" viewBox="0 0 814 1000"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 442.9 0 332.4 0 226.8c0-168.3 109.7-257.6 217.4-257.6 64.8 0 118.6 42.5 159.3 42.5 38.8 0 99.9-45.2 172.4-45.2 27.5 0 126.1 2.6 197.3 97.2z"/><path d="M504.1 55.5C534.2 20.9 555.7-.3 554.7 0c-1 .3-7.9 1.3-14.3 3.8-80.8 30.9-132.5 119.8-128.9 208.1.3 7.9.8 19.9 1.3 28.1 5.8-1.5 11.3-3.2 16.3-5.1 45.7-17.8 95.4-56.8 125-179.4z"/></svg>
-            <span>TV</span><span class="plus">+</span>
-          </div>
-          <div class="hero-title">Silence</div>
-          <div class="hero-meta">Drama</div>
-          <div class="hero-tagline">Some secrets demand to be heard.</div>
-          <div class="hero-actions">
-            <button class="btn-primary">Stream now</button>
-            <button class="btn-secondary">More info</button>
-          </div>
+        <div class="overlay" id="overlay"></div>
+
+        <div class="feedback-popup" id="feedback-popup">
+            <div class="feedback-icon" id="feedback-icon">
+                ✓
+            </div>
+            <h3 id="feedback-title">Correct !</h3>
+            <p id="feedback-message">Vous avez trouvé la bonne réponse !</p>
+            <div class="correct-answer" id="correct-answer">La bonne réponse est : Vrai</div>
+            <div class="explanation" id="explanation">L'explication apparaîtra ici.</div>
+            <button id="continue-btn">
+                Continuer
+            </button>
         </div>
-      </div>
+
+        <div class="results-screen" id="results-screen">
+            <div class="results-icon">
+                🏆
+            </div>
+            <h2>Quiz Terminé !</h2>
+            <p>Bravo pour avoir terminé le quiz !</p>
+            <div class="percentage" id="final-percentage" data-value="100%">100%</div>
+            <div class="score-container">
+                <div class="score-row">
+                    <span class="score-label">Réponses correctes :</span>
+                    <span class="score-value" id="correct-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Réponses incorrectes :</span>
+                    <span class="score-value" id="incorrect-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Score Total :</span>
+                    <span class="score-value" id="total-score">0/5</span>
+                </div>
+            </div>
+            <button class="retry-btn" id="retry-btn">
+                Recommencer
+            </button>
+        </div>
     </div>
-  </div>
 
-  <!-- progress dots -->
-  <div class="progress-wrap">
-    <div class="prog-dot active" data-idx="0"></div>
-    <div class="prog-dot" data-idx="1"></div>
-    <div class="prog-dot" data-idx="2"></div>
-  </div>
+    <!-- ORIGINAL QUIZ DATA - Only runs if authenticated -->
+    <script>
+        // Données des questions du quiz avec explications
+        const quizQuestions =  [
+  // t
 
-  <script>
-    (function() {
-      const track = document.getElementById('carouselTrack');
-      const cards = Array.from(track.querySelectorAll('.hero-card'));
-      const dots = Array.from(document.querySelectorAll('.prog-dot'));
-      const total = cards.length;
-      let current = 0;
-      let startX = 0;
-      let dragging = false;
-      let autoTimer;
 
-      // core function: update slide + active class + dots
-      function goTo(idx) {
-        // remove active from current card
-        cards[current].classList.remove('active');
-        // compute new index (wrap safely)
-        current = ((idx % total) + total) % total;
-        // move track
-        track.style.transform = `translateX(-${current * 100}%)`;
-        // use double rAF to ensure active class adds after transform (smooth fade)
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            cards[current].classList.add('active');
-          });
-        });
-        // update dots
-        dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+  
+  {
+    "question": "Le caractère unidirectionnel de la propagation du potentiel d’action est dû à la période réfractaire.",
+    "answer": true,
+    "explanation": "Pendant la période réfractaire, la membrane ne peut pas générer un nouveau PA dans le sens inverse."
+  },
+  {
+    "question": "Le caractère unidirectionnel du potentiel d’action est dû au blocage momentané des canaux voltage-dépendants.",
+    "answer": true,
+    "explanation": "Les canaux Na+ se bloquent brièvement après ouverture, empêchant la propagation inverse."
+  },
+  {
+    "question": "Le caractère unidirectionnel du PA est dû à l’existence de courants locaux.",
+    "answer": false,
+    "explanation": "Les courants locaux favorisent la propagation mais ne déterminent pas l’unidirectionnalité."
+  },
+  {
+    "question": "Les canaux ioniques de la membrane nerveuse sont spécifiques.",
+    "answer": true,
+    "explanation": "Chaque canal laisse passer seulement certains ions (Na+, K+, Ca2+, Cl-)."
+  },
+  {
+    "question": "Tous les canaux ioniques font passer les ions par diffusion sans consommer d’énergie.",
+    "answer": true,
+    "explanation": "Les canaux facilitent la diffusion passive; seule la pompe Na+/K+ utilise de l’énergie."
+  },
+  {
+    "question": "Les canaux ioniques sont de nature lipidique.",
+    "answer": false,
+    "explanation": "Ils sont des protéines intégrales de membrane, pas lipidiques."
+  },
+  {
+    "question": "Les canaux ioniques font passer les ions en consommant de l’énergie.",
+    "answer": false,
+    "explanation": "Les canaux permettent le passage passif; seule la pompe Na+/K+ consomme de l’énergie."
+  },
+  {
+    "question": "Les ions Ca2+ interviennent dans la transmission synaptique.",
+    "answer": true,
+    "explanation": "L’entrée de Ca2+ dans le bouton déclenche la libération de neurotransmetteurs."
+  },
+  {
+    "question": "Les ions Ca2+ interviennent dans l’exocytose des neurotransmetteurs.",
+    "answer": true,
+    "explanation": "La fusion des vésicules à la membrane dépend de Ca2+."
+  },
+  {
+    "question": "Les ions Ca2+ interviennent dans la phase de repolarisation du PA.",
+    "answer": false,
+    "explanation": "La repolarisation dépend surtout de K+, pas de Ca2+."
+  },
+  {
+    "question": "L’arrivée d’un PA au bouton synaptique est directement provoquée par Ca2+.",
+    "answer": false,
+    "explanation": "Le PA arrive par propagation le long de l’axone; Ca2+ intervient ensuite pour libérer le neurotransmetteur."
+  },
+  {
+    "question": "Pendant la repolarisation, les canaux voltage-dépendants à Na+ se ferment.",
+    "answer": true,
+    "explanation": "La fermeture des canaux Na+ stoppe l’entrée de Na+ et permet la repolarisation."
+  },
+  {
+    "question": "Pendant la repolarisation, des ions K+ quittent en quantité importante la cellule.",
+    "answer": true,
+    "explanation": "L’ouverture des canaux K+ permet le retour du potentiel négatif intracellulaire."
+  },
+  {
+    "question": "Pendant la repolarisation, des ions négatifs entrent pour rétablir la négativité interne.",
+    "answer": false,
+    "explanation": "Le retour à la polarité est dû à la sortie de K+, pas à l’entrée d’anions."
+  },
+  {
+    "question": "Le temps de parcours d’un PA dans une chaîne de 3 neurones de 25 cm avec un délai synaptique de 0.5 ms est de 6 ms.",
+    "answer": true,
+    "explanation": "Le temps total = conduction + 2 × délai synaptique ≈ 6 ms."
+  },
+  {
+    "question": "La fixation d’acétylcholine déclenche l’ouverture de canaux chimio-dépendants aux ions Na+.",
+    "answer": true,
+    "explanation": "L’ACh ouvre les canaux ligand-dépendants permettant l’entrée de Na+ dans la cellule."
+  },
+  {
+    "question": "La sommation spatiale des PPS se produit au niveau du cône axonique.",
+    "answer": true,
+    "explanation": "Les PPS provenant de différentes synapses se combinent au cône axonique pour déclencher un PA."
+  },
+  {
+    "question": "La sommation spatiale des PPS se produit au niveau de la membrane présynaptique.",
+    "answer": false,
+    "explanation": "Elle se fait sur la membrane postsynaptique/cône axonique, pas la présynaptique."
+  },
+  {
+    "question": "Les réflexes d’étirement font intervenir deux types de circuits neuroniques.",
+    "answer": true,
+    "explanation": "Ils impliquent des circuits monosynaptiques et polysynaptiques."
+  },
+  {
+    "question": "Les réflexes d’étirement permettent d’éviter la perte d’équilibre du corps.",
+    "answer": true,
+    "explanation": "Ces réflexes ajustent la tension musculaire pour maintenir la posture."
+  }
 
-        // restart auto timer
-        clearInterval(autoTimer);
-        autoTimer = setInterval(() => goTo(current + 1), 5500);
-      }
 
-      // event listeners
-      dots.forEach(dot => {
-        dot.addEventListener('click', () => goTo(parseInt(dot.dataset.idx)));
-      });
+  
+];
 
-      document.getElementById('arrowPrev').addEventListener('click', () => goTo(current - 1));
-      document.getElementById('arrowNext').addEventListener('click', () => goTo(current + 1));
 
-      // touch drag
-      track.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-      }, { passive: true });
-
-      track.addEventListener('touchend', (e) => {
-        const diff = startX - e.changedTouches[0].clientX;
-        if (Math.abs(diff) > 42) {
-          goTo(diff > 0 ? current + 1 : current - 1);
-        }
-      });
-
-      // mouse drag simulation
-      track.addEventListener('mousedown', (e) => {
-        startX = e.clientX;
-        dragging = true;
-        e.preventDefault(); // avoid accidental selection
-      });
-
-      window.addEventListener('mouseup', (e) => {
-        if (!dragging) return;
-        dragging = false;
-        const diff = startX - e.clientX;
-        if (Math.abs(diff) > 42) {
-          goTo(diff > 0 ? current + 1 : current - 1);
-        }
-      });
-
-      // prevent track mouse drag from triggering page text selection
-      track.addEventListener('dragstart', (e) => e.preventDefault());
-
-      // initial active and timer
-      cards.forEach((c, i) => c.classList.toggle('active', i === current));
-      autoTimer = setInterval(() => goTo(current + 1), 5500);
-
-      // optional: pause timer on hover (keeps ux nice)
-      document.getElementById('carouselOuter').addEventListener('mouseenter', () => {
-        clearInterval(autoTimer);
-      });
-      document.getElementById('carouselOuter').addEventListener('mouseleave', () => {
-        clearInterval(autoTimer);
-        autoTimer = setInterval(() => goTo(current + 1), 5500);
-      });
-    })();
-  </script>
+    </script>
+    
+    <script src="../assets/js/arcseek.js"></script>
+    
+    <footer class="footer">
+        Eduwell Quantum Group
+    </footer>
 </body>
 </html>

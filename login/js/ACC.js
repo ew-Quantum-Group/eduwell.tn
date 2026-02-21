@@ -5,6 +5,11 @@
                 password: 'KoKo200@', 
                 name: 'ssuri' 
             },
+            { 
+                username: 'stu67@edu.com',
+                password: 'Studi2026', 
+                name: 'Bac2026' 
+            },
 { 
                 username: 'bensaidasma09@gmail.com',
                 password: 'Asmabensaid.0', 
@@ -23,3 +28,4 @@
                 name: 'Rawen' 
             }
         ];
+

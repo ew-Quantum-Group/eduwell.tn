@@ -15,8 +15,8 @@
     <title>Sahl App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="./assets/css/styleapp.css">
-    <link rel="stylesheet" href="./assets/css/styleapp2.css">
-    <link rel="stylesheet" href="./assets/css/popup.css">
+     <link rel="stylesheet" href="./assets/css/styleapp2.css">
+      <link rel="stylesheet" href="./assets/css/popup.css">
     <link rel="shortcut icon" href="./assets/images/app-store.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700&display=swap" rel="stylesheet">
@@ -26,7 +26,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-    /* Home page specific styles - Using the original design's variables */
+    /* Global fixes for scrolling */
+    html, body {
+        overflow-x: hidden;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        scroll-behavior: smooth;
+    }
+
+    body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Home page specific styles only */
     #home {
         --ink: #0A0907;
         --ink-2: #1C1A16;
@@ -65,15 +80,19 @@
         font-family: 'Outfit', system-ui, sans-serif;
         background: var(--paper);
         color: var(--ink-3);
-        padding-top: 80px; /* Add padding to account for fixed header */
+        overflow-y: visible !important;
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
     }
 
-    /* Keep original header */
-    #home .home-header {
-        z-index: 1000;
+    #home .container {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 0;
+        width: 100%;
     }
 
-    /* Hero texture */
     #home .hero-texture {
         position: absolute; inset: 0; pointer-events: none;
         background-image:
@@ -225,7 +244,10 @@
         opacity: 0; animation: fadein .9s .28s var(--ease-out) forwards;
     }
 
-    @keyframes fadein { from{ opacity:0; } to{ opacity:1; } }
+    @keyframes fadein {
+        from{ opacity:0; }
+        to{ opacity:1; }
+    }
 
     #home .dash-card {
         background: var(--white);
@@ -347,7 +369,6 @@
         to{ opacity:1; transform:none; }
     }
 
-    /* Marquee Strip */
     #home .strip {
         border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
         background: var(--paper-2); height: 44px;
@@ -375,7 +396,6 @@
         to{ transform:translateX(-50%); }
     }
 
-    /* Apps Carousel */
     #home .apps-section {
         background: var(--ink-2);
         padding: 64px 0 56px;
@@ -419,14 +439,23 @@
         max-width: 300px; line-height: 1.65; text-align: right;
     }
 
-    #home .track-wrap { position: relative; width: 100%; }
+    #home .track-wrap { 
+        position: relative; 
+        width: 100%;
+        overflow: hidden;
+    }
 
     #home .track {
-        display: flex; gap: 14px;
-        overflow-x: auto; scroll-snap-type: x mandatory;
-        scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
-        padding: 8px clamp(20px,5vw,80px) 24px; cursor: grab;
+        display: flex;
+        gap: 14px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding: 8px clamp(20px,5vw,80px) 24px;
+        cursor: grab;
         scrollbar-width: none;
+        -ms-overflow-style: none;
+        width: 100%;
     }
 
     #home .track:active { cursor: grabbing; }
@@ -448,9 +477,14 @@
     }
 
     #home .card-lg {
-        flex: 0 0 min(72vw, 300px); scroll-snap-align: center;
-        border-radius: 20px; overflow: hidden; position: relative;
-        aspect-ratio: 2/3; cursor: pointer; user-select: none;
+        flex: 0 0 min(72vw, 300px); 
+        scroll-snap-align: start;
+        border-radius: 20px; 
+        overflow: hidden; 
+        position: relative;
+        aspect-ratio: 2/3; 
+        cursor: pointer; 
+        user-select: none;
         box-shadow: 0 6px 24px rgba(0,0,0,0.3);
         transition: transform .5s var(--ease-out), box-shadow .4s;
         animation: cardIn .65s var(--ease-out) both;
@@ -459,6 +493,7 @@
     #home .card-lg:nth-child(1){ animation-delay:.3s; }
     #home .card-lg:nth-child(2){ animation-delay:.4s; }
     #home .card-lg:nth-child(3){ animation-delay:.5s; }
+    #home .card-lg:nth-child(4){ animation-delay:.6s; }
 
     #home .card-lg:hover {
         transform: translateY(-7px) scale(1.02);
@@ -585,9 +620,10 @@
 
     #home .strip-btn:hover { background: rgba(255,255,255,.2); }
 
-    /* Featured AI Section */
     #home .section {
         padding: clamp(80px,10vw,128px) clamp(20px,5vw,80px);
+        background: var(--paper);
+        width: 100%;
     }
 
     #home .eyebrow {
@@ -818,7 +854,6 @@
         font-size: 0.78rem; color: var(--mid); line-height: 1.6;
     }
 
-    /* Apps Table */
     #home .apps-table {
         background: var(--white); border: 1px solid var(--rule);
         border-radius: var(--r-xl); overflow: hidden;
@@ -904,7 +939,6 @@
         border: 1px solid var(--rule);
     }
 
-    /* CTA Box */
     #home .cta-box {
         background: var(--ink-2); border-radius: var(--r-2xl);
         display: grid; grid-template-columns: 1fr auto;
@@ -977,7 +1011,6 @@
 
     #home .btn-cta:hover i { transform: translateX(3px); }
 
-    /* Footer */
     #home footer {
         background: var(--white); border-top: 1px solid var(--rule);
         padding: 64px clamp(20px,5vw,80px) 36px;
@@ -989,6 +1022,8 @@
         display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
         gap: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--rule);
     }
+
+    #home .ft-brand {}
 
     #home .ft-logo {
         display: inline-flex; align-items: center; gap: 10px;
@@ -1051,9 +1086,6 @@
         text-decoration: none; transition: color .2s;
     }
 
-    #home .ft-legal a:hover { color: var(--ink); }
-
-    /* Responsive */
     @media(max-width:1100px){
         #home .hero-body{ grid-template-columns:1fr; }
         #home .hero-left{ border-right:none; padding-right:0; padding-bottom:0; }
@@ -1084,6 +1116,123 @@
     @media(max-width:500px){
         #home .hero-ctas{ flex-direction:column; }
         #home .btn-primary, #home .btn-secondary{ justify-content:center; width:100%; }
+    }
+
+    /* Content sections */
+    .content-section {
+        display: none;
+        width: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        min-height: calc(100vh - 70px);
+    }
+
+    .content-section.active {
+        display: block;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 70px;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid var(--rule);
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        z-index: 1000;
+        padding: 0 10px;
+        box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+    }
+
+    .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        padding: 8px 12px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        color: var(--mid);
+        flex: 1;
+        max-width: 80px;
+    }
+
+    .nav-item.active {
+        color: var(--blue-m);
+        background: var(--blue-bg);
+    }
+
+    .nav-item .nav-icon {
+        font-size: 1.2rem;
+    }
+
+    .nav-item .nav-label {
+        font-size: 0.7rem;
+        font-weight: 500;
+        text-align: center;
+    }
+
+    /* Home Header */
+    .home-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--rule);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        z-index: 999;
+    }
+
+    .home-logo {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--ink);
+        text-decoration: none;
+    }
+
+    .header-login-btn {
+        background: var(--blue-m);
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .header-login-btn:hover {
+        background: var(--blue);
+        transform: translateY(-2px);
+    }
+
+    /* Adjust main content for fixed headers */
+    body {
+        padding-top: 60px;
+        padding-bottom: 70px;
+    }
+
+    #home {
+        padding-bottom: 0;
+    }
+
+    /* Fix for scroll reveal */
+    [data-reveal] {
+        opacity: 1 !important;
+        transform: none !important;
     }
     </style>
 </head>
@@ -1117,7 +1266,7 @@
         </div>
     </nav> 
 
-    <!-- Home Content - New Design -->
+    <!-- Home Content - Completely Replaced with New Design -->
     <div id="home" class="content-section active animate-on-load">
         <!-- Hero Section -->
         <div class="hero-texture"></div>
@@ -1525,7 +1674,7 @@
             <div class="footer-inner">
                 <div class="footer-top">
                     <div class="ft-brand">
-                        <a href="#" class="ft-logo">
+                        <a href="#" class="ft-logo logo">
                             <div class="logo-mark" style="width:26px;height:26px;border-radius:7px; background: var(--ink-2); display: flex; align-items: center; justify-content: center;">
                                 <svg viewBox="0 0 24 24" style="width:14px;height:14px; fill: none; stroke: #fff; stroke-width: 1.8;"><path d="M17 7C17 4.8 15.2 3 13 3H7v6h6a2 2 0 010 4H7v6h6c2.2 0 4-1.8 4-4" /></svg>
                             </div>
@@ -2726,6 +2875,9 @@
     <script src="./assets/js/heder serche sechtion.js"></script>
     <script src="./assets/js/speakwellimageslide.js"></script>
 
+
+
+
     <!-- Main Popup -->
     <div class="sahl-popup-overlay" id="sahlPopupOverlay">
       <div class="sahl-popup-container">
@@ -2824,10 +2976,10 @@
       </div>
     </div>
 
-    <script src="./assets/js/popup.js"></script>
-    
-    <!-- Home page specific scroll reveal - Fixed to only target #home elements -->
-    <script>
+
+   <script src="./assets/js/popup.js"></script>
+   <script>
+        // Home page specific scripts - Fixed scroll reveal (no conflict)
         document.addEventListener('DOMContentLoaded', function() {
             // Progress bars animation - only for home section
             const barObserver = new IntersectionObserver(entries => {
@@ -2845,7 +2997,7 @@
             
             document.querySelectorAll('#home .dash-card').forEach(el => barObserver.observe(el));
 
-            // Scroll reveal for home section only - Fixed to only target #home elements
+            // Scroll reveal for home section only - FIXED: Now only observes #home elements
             const revealObserver = new IntersectionObserver(entries => {
                 entries.forEach(e => { 
                     if(e.isIntersecting){ 
@@ -2862,6 +3014,7 @@
             document.querySelectorAll('#home .track').forEach(track => {
                 let isDown=false, startX, scrollLeft;
                 track.addEventListener('mousedown', e => { 
+                    e.preventDefault();
                     isDown=true; 
                     startX=e.pageX-track.offsetLeft; 
                     scrollLeft=track.scrollLeft; 
@@ -2873,8 +3026,36 @@
                 });
                 track.addEventListener('mousemove', e => {
                     if(!isDown) return;
+                    e.preventDefault();
                     const x = e.pageX - track.offsetLeft;
                     track.scrollLeft = scrollLeft - (x-startX);
+                });
+                
+                // Prevent default drag behavior
+                track.addEventListener('dragstart', (e) => e.preventDefault());
+            });
+
+            // Navigation functionality
+            const navItems = document.querySelectorAll('.nav-item');
+            const sections = document.querySelectorAll('.content-section');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const targetId = this.dataset.target;
+                    
+                    // Update active nav item
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update active section
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                        if(section.id === targetId) {
+                            section.classList.add('active');
+                            // Scroll to top of section
+                            window.scrollTo(0, 0);
+                        }
+                    });
                 });
             });
         });

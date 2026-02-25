@@ -15,8 +15,8 @@
     <title>Sahl App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="./assets/css/styleapp.css">
-     <link rel="stylesheet" href="./assets/css/styleapp2.css">
-      <link rel="stylesheet" href="./assets/css/popup.css">
+    <link rel="stylesheet" href="./assets/css/styleapp2.css">
+    <link rel="stylesheet" href="./assets/css/popup.css">
     <link rel="shortcut icon" href="./assets/images/app-store.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700&display=swap" rel="stylesheet">
@@ -26,7 +26,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-    /* Home page specific styles only */
+    /* Home page specific styles - Using the original design's variables */
     #home {
         --ink: #0A0907;
         --ink-2: #1C1A16;
@@ -65,14 +65,15 @@
         font-family: 'Outfit', system-ui, sans-serif;
         background: var(--paper);
         color: var(--ink-3);
+        padding-top: 80px; /* Add padding to account for fixed header */
     }
 
-    #home .container {
-        max-width: 1320px;
-        margin: 0 auto;
-        padding: 0;
+    /* Keep original header */
+    #home .home-header {
+        z-index: 1000;
     }
 
+    /* Hero texture */
     #home .hero-texture {
         position: absolute; inset: 0; pointer-events: none;
         background-image:
@@ -224,10 +225,7 @@
         opacity: 0; animation: fadein .9s .28s var(--ease-out) forwards;
     }
 
-    @keyframes fadein {
-        from{ opacity:0; }
-        to{ opacity:1; }
-    }
+    @keyframes fadein { from{ opacity:0; } to{ opacity:1; } }
 
     #home .dash-card {
         background: var(--white);
@@ -349,6 +347,7 @@
         to{ opacity:1; transform:none; }
     }
 
+    /* Marquee Strip */
     #home .strip {
         border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
         background: var(--paper-2); height: 44px;
@@ -376,6 +375,7 @@
         to{ transform:translateX(-50%); }
     }
 
+    /* Apps Carousel */
     #home .apps-section {
         background: var(--ink-2);
         padding: 64px 0 56px;
@@ -459,7 +459,6 @@
     #home .card-lg:nth-child(1){ animation-delay:.3s; }
     #home .card-lg:nth-child(2){ animation-delay:.4s; }
     #home .card-lg:nth-child(3){ animation-delay:.5s; }
-    #home .card-lg:nth-child(4){ animation-delay:.6s; }
 
     #home .card-lg:hover {
         transform: translateY(-7px) scale(1.02);
@@ -586,9 +585,9 @@
 
     #home .strip-btn:hover { background: rgba(255,255,255,.2); }
 
+    /* Featured AI Section */
     #home .section {
         padding: clamp(80px,10vw,128px) clamp(20px,5vw,80px);
-        background: var(--paper);
     }
 
     #home .eyebrow {
@@ -819,6 +818,7 @@
         font-size: 0.78rem; color: var(--mid); line-height: 1.6;
     }
 
+    /* Apps Table */
     #home .apps-table {
         background: var(--white); border: 1px solid var(--rule);
         border-radius: var(--r-xl); overflow: hidden;
@@ -904,6 +904,7 @@
         border: 1px solid var(--rule);
     }
 
+    /* CTA Box */
     #home .cta-box {
         background: var(--ink-2); border-radius: var(--r-2xl);
         display: grid; grid-template-columns: 1fr auto;
@@ -976,6 +977,7 @@
 
     #home .btn-cta:hover i { transform: translateX(3px); }
 
+    /* Footer */
     #home footer {
         background: var(--white); border-top: 1px solid var(--rule);
         padding: 64px clamp(20px,5vw,80px) 36px;
@@ -987,8 +989,6 @@
         display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
         gap: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--rule);
     }
-
-    #home .ft-brand {}
 
     #home .ft-logo {
         display: inline-flex; align-items: center; gap: 10px;
@@ -1053,6 +1053,7 @@
 
     #home .ft-legal a:hover { color: var(--ink); }
 
+    /* Responsive */
     @media(max-width:1100px){
         #home .hero-body{ grid-template-columns:1fr; }
         #home .hero-left{ border-right:none; padding-right:0; padding-bottom:0; }
@@ -1116,7 +1117,7 @@
         </div>
     </nav> 
 
-    <!-- Home Content - Completely Replaced with New Design -->
+    <!-- Home Content - New Design -->
     <div id="home" class="content-section active animate-on-load">
         <!-- Hero Section -->
         <div class="hero-texture"></div>
@@ -1524,7 +1525,7 @@
             <div class="footer-inner">
                 <div class="footer-top">
                     <div class="ft-brand">
-                        <a href="#" class="ft-logo logo">
+                        <a href="#" class="ft-logo">
                             <div class="logo-mark" style="width:26px;height:26px;border-radius:7px; background: var(--ink-2); display: flex; align-items: center; justify-content: center;">
                                 <svg viewBox="0 0 24 24" style="width:14px;height:14px; fill: none; stroke: #fff; stroke-width: 1.8;"><path d="M17 7C17 4.8 15.2 3 13 3H7v6h6a2 2 0 010 4H7v6h6c2.2 0 4-1.8 4-4" /></svg>
                             </div>
@@ -2725,9 +2726,6 @@
     <script src="./assets/js/heder serche sechtion.js"></script>
     <script src="./assets/js/speakwellimageslide.js"></script>
 
-
-
-
     <!-- Main Popup -->
     <div class="sahl-popup-overlay" id="sahlPopupOverlay">
       <div class="sahl-popup-container">
@@ -2826,10 +2824,10 @@
       </div>
     </div>
 
-
-   <script src="./assets/js/popup.js"></script>
-   <script>
-        // Home page specific scripts - Fixed scroll reveal (no conflict)
+    <script src="./assets/js/popup.js"></script>
+    
+    <!-- Home page specific scroll reveal - Fixed to only target #home elements -->
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Progress bars animation - only for home section
             const barObserver = new IntersectionObserver(entries => {
@@ -2847,7 +2845,7 @@
             
             document.querySelectorAll('#home .dash-card').forEach(el => barObserver.observe(el));
 
-            // Scroll reveal for home section only - FIXED: Now only observes #home elements
+            // Scroll reveal for home section only - Fixed to only target #home elements
             const revealObserver = new IntersectionObserver(entries => {
                 entries.forEach(e => { 
                     if(e.isIntersecting){ 

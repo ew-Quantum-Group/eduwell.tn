@@ -39,6 +39,96 @@
         min-height: 100vh;
         display: flex;
         flex-direction: column;
+        padding-top: 0; /* Remove default padding - header is fixed */
+        padding-bottom: 70px; /* Keep bottom nav padding */
+    }
+
+    /* Home Section Header - Original Design */
+    .home-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 70px;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--rule);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 32px;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        transition: transform 0.3s ease;
+        box-sizing: border-box;
+    }
+
+    .home-header.hidden {
+        transform: translateY(-100%);
+    }
+
+    .home-logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--ink);
+        text-decoration: none;
+        letter-spacing: -0.02em;
+        background: linear-gradient(135deg, var(--ink) 0%, var(--blue-m) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .header-login-btn {
+        background: transparent;
+        color: var(--blue-m);
+        border: 1.5px solid var(--blue-xl);
+        padding: 10px 28px;
+        border-radius: 40px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.3s var(--ease-out);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        letter-spacing: 0.3px;
+    }
+
+    .header-login-btn:hover {
+        background: var(--blue-m);
+        color: white;
+        border-color: var(--blue-m);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(43,79,130,0.2);
+    }
+
+    .header-login-btn .btn-text {
+        position: relative;
+    }
+
+    .header-login-btn .btn-text::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 1.5px;
+        background: white;
+        transition: width 0.3s ease;
+    }
+
+    .header-login-btn:hover .btn-text::after {
+        width: 100%;
+    }
+
+    /* Hide home header in other sections */
+    body:not(.home-active) .home-header {
+        transform: translateY(-100%);
+    }
+
+    body.home-active .home-header {
+        transform: translateY(0);
     }
 
     /* Home page specific styles only */
@@ -84,6 +174,7 @@
         overflow-x: hidden;
         width: 100%;
         position: relative;
+        padding-top: 70px; /* Add padding to account for fixed header */
     }
 
     #home .container {
@@ -1111,6 +1202,9 @@
         #home .footer-top{ grid-template-columns:1fr; }
         #home .apps-header{ flex-direction: column; align-items: flex-start; }
         #home .apps-lead{ text-align: left; max-width: 100%; }
+        .home-header { padding: 0 20px; }
+        .home-logo { font-size: 1.5rem; }
+        .header-login-btn { padding: 8px 20px; font-size: 0.85rem; }
     }
 
     @media(max-width:500px){
@@ -1178,57 +1272,6 @@
         text-align: center;
     }
 
-    /* Home Header */
-    .home-header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 60px;
-        background: rgba(255, 255, 255, 0.98);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid var(--rule);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 20px;
-        z-index: 999;
-    }
-
-    .home-logo {
-        font-size: 1.4rem;
-        font-weight: 700;
-        color: var(--ink);
-        text-decoration: none;
-    }
-
-    .header-login-btn {
-        background: var(--blue-m);
-        color: white;
-        border: none;
-        padding: 8px 20px;
-        border-radius: 30px;
-        font-weight: 600;
-        font-size: 0.85rem;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-
-    .header-login-btn:hover {
-        background: var(--blue);
-        transform: translateY(-2px);
-    }
-
-    /* Adjust main content for fixed headers */
-    body {
-        padding-top: 60px;
-        padding-bottom: 70px;
-    }
-
-    #home {
-        padding-bottom: 0;
-    }
-
     /* Fix for scroll reveal */
     [data-reveal] {
         opacity: 1 !important;
@@ -1237,7 +1280,7 @@
     </style>
 </head>
 <body>
-    <!-- Home Section Header (Only in Home) - Fixed at top -->
+    <!-- Home Section Header - Original Design (Only shows in home) -->
     <div class="home-header" id="homeHeader">
         <a href="#" class="home-logo">sahl</a>
         <button class="header-login-btn" id="headerLoginBtn">
@@ -1266,8 +1309,8 @@
         </div>
     </nav> 
 
-    <!-- Home Content - Completely Replaced with New Design -->
-    <div id="home" class="content-section active animate-on-load">
+    <!-- Home Content -->
+    <div id="home" class="content-section active">
         <!-- Hero Section -->
         <div class="hero-texture"></div>
         <div class="hero-grid"></div>
@@ -1395,6 +1438,7 @@
                 <div class="sitem"><i class="fa-solid fa-circle"></i>Bac-Aligned</div>
                 <div class="sitem"><i class="fa-solid fa-circle"></i>AI-Powered</div>
                 <div class="sitem"><i class="fa-solid fa-circle"></i>Personalized</div>
+                <!-- Duplicate for continuous scroll -->
                 <div class="sitem"><i class="fa-solid fa-circle"></i>Sahl AI Tutor</div>
                 <div class="sitem"><i class="fa-solid fa-circle"></i>SpeakWell</div>
                 <div class="sitem"><i class="fa-solid fa-circle"></i>SVT App</div>
@@ -1724,1057 +1768,19 @@
         </footer>
     </div>
 
-    <!-- Search Content - EduFlow Design -->
+    <!-- Search Content -->
     <div id="search" class="content-section">
-        <!-- NAV -->
-
-
-        <!-- HERO — SPLIT LAYOUT -->
-        <section class="hero">
-            <div class="hero-bg-circle c1"></div>
-            <div class="hero-bg-circle c2"></div>
-            <div class="hero-bg-circle c3"></div>
-            <div class="hero-bg-dots"></div>
-
-            <!-- LEFT -->
-            <div class="hero-left">
-                <div class="hero-badge">
-    <div class="badge-pip"><i class="fas fa-book-open"></i></div>
-    <span class="hero-badge-text">Ressources Bac centralisées</span>
-    <span class="hero-badge-new">Nouveau</span>
-</div>
-
-              <h1>
-    La plus grande bibliothèque<br>
-    <em class="underline-wave">du Bac réunie</em>
-</h1>
-
-              <p class="hero-desc">
-    Accède à <em>toutes les ressources</em> du Bac — cours, exercices corrigés, fiches méthodologiques et devoirs pour exceller dans chaque matière.
-</p>
-
-               <div class="hero-actions">
-    <a href="./Sahl Haven/Espace-sahl.html" class="btn-hero-primary">
-        Explorer les e-Books
-        <i class="fas fa-arrow-right"></i>
-    </a>
-    <a href="./SahlAcademy/Espace-sahl.html" class="btn-hero-secondary">
-        Rejoindre Sahl Academy
-        <i class="fas fa-user-graduate"></i>
-    </a>
-</div>
-                <div class="hero-proof">
-    <div class="proof-avatars">
-        <div class="proof-av"><i class="fas fa-book"></i></div>
-        <div class="proof-av"><i class="fas fa-book"></i></div>
-        <div class="proof-av"><i class="fas fa-book"></i></div>
-        <div class="proof-av"><i class="fas fa-book"></i></div>
-        <div class="proof-av"><i class="fas fa-book"></i></div>
-    </div>
-    <div class="proof-text">
-        <strong>12,000+ documents</strong><br>
-        disponibles pour réviser
-    </div>
-    <div class="proof-divider"></div>
-    <div class="proof-rating">
-        <div class="proof-stars">★★★★★</div>
-        <div class="proof-rating-text">5 / 5 rating</div>
-    </div>
-</div>
-            </div>
-
-            <!-- RIGHT — visual -->
-           <div class="hero-right">
-    <div class="hero-visual">
-        <!-- Floating cards adapted for Bac -->
-        <div class="hero-float f1">
-            <div class="float-icon fi-amber"><i class="fas fa-book"></i></div>
-            <div class="float-text">
-                <div class="float-title">12,000+ documents</div>
-                <div class="float-sub">Cours & exercices</div>
-            </div>
-        </div>
-
-        <div class="hero-float f2">
-            <div class="float-icon fi-emerald"><i class="fas fa-star"></i></div>
-            <div class="float-text">
-                <div class="float-title">5 / 5 rating</div>
-                <div class="float-sub">Évalué par les étudiants</div>
-            </div>
-        </div>
-
-        <div class="hero-float f3">
-            <div class="float-icon fi-violet"><i class="fas fa-graduation-cap"></i></div>
-            <div class="float-text">
-                <div class="float-title">120k élèves actifs</div>
-                <div class="float-sub">Révisent chaque jour</div>
-            </div>
-        </div>
-
-        <!-- Main dashboard card adapted for Bac -->
-        <div class="hero-card-main">
-            <div class="hc-header">
-                <div class="hc-course-thumb"><i class="fas fa-book-open"></i></div>
-                <div class="hc-course-info">
-                    <div class="hc-course-tag">Physique</div>
-                    <div class="hc-course-title">Oscillations mécaniques</div>
-                </div>
-            </div>
-            <div class="hc-progress-label">
-                <span>Progression</span>
-                <span>72%</span>
-            </div>
-            <div class="hc-progress-bar">
-                <div class="hc-progress-fill"></div>
-            </div>
-            <div class="hc-lessons">
-                <div class="hc-lesson">
-                    <div class="hc-lesson-icon done"><i class="fas fa-check"></i></div>
-                    <div class="hc-lesson-text">
-                        <div class="hc-lesson-name">Forces et Newton</div>
-                        <div class="hc-lesson-dur">Terminé</div>
-                    </div>
-                </div>
-                <div class="hc-lesson">
-                    <div class="hc-lesson-icon done"><i class="fas fa-check"></i></div>
-                    <div class="hc-lesson-text">
-                        <div class="hc-lesson-name">Oscillation libre</div>
-                        <div class="hc-lesson-dur">Terminé</div>
-                    </div>
-                </div>
-                <div class="hc-lesson">
-                    <div class="hc-lesson-icon active"><i class="fas fa-play"></i></div>
-                    <div class="hc-lesson-text">
-                        <div class="hc-lesson-name">Oscillation amortie</div>
-                        <div class="hc-lesson-dur">En cours · 24 min</div>
-                    </div>
-                </div>
-                <div class="hc-lesson">
-                    <div class="hc-lesson-icon locked"><i class="fas fa-lock"></i></div>
-                    <div class="hc-lesson-text">
-                        <div class="hc-lesson-name">Exercices corrigés</div>
-                        <div class="hc-lesson-dur">Bloqué</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-        </section>
-
-        <!-- BRAND STRIP -->
-       <div class="brand-strip" data-reveal>
-    <span class="brand-strip-label">Sources</span>
-    <div class="brand-track-wrap">
-        <div class="brand-track">
-            <span class="brand-item"><i class="fas fa-school"></i> Pilote Sfax</span>
-            <span class="brand-item"><i class="fas fa-school"></i> Pilote Mahdia</span>
-            <span class="brand-item"><i class="fas fa-school"></i> Pilote Médenine</span>
-            <span class="brand-item"><i class="fas fa-school"></i> Pilote Tunis</span>
-            <span class="brand-item"><i class="fas fa-people-arrows"></i> Réos mixtes</span>
-            <span class="brand-item"><i class="fas fa-university"></i> Université de la Manar</span>
-            <span class="brand-item"><i class="fas fa-calendar-alt"></i> Bac 2007 – 2025</span>
-
-            <!-- duplicate for continuous scrolling -->
-            <span class="brand-item"><i class="fas fa-school"></i> Pilote Sfax</span>
-            <span class="brand-item"><i class="fas fa-school"></i> Pilote Mahdia</span>
-            <span class="brand-item"><i class="fas fa-school"></i> Pilote Médenine</span>
-            <span class="brand-item"><i class="fas fa-school"></i> Pilote Tunis</span>
-            <span class="brand-item"><i class="fas fa-people-arrows"></i> Réos mixtes</span>
-            <span class="brand-item"><i class="fas fa-university"></i> Université de la Manar</span>
-            <span class="brand-item"><i class="fas fa-calendar-alt"></i> Bac 2007 – 2025</span>
-        </div>
-    </div>
-</div>
-
-        <!-- STATS -->
-       <div class="stats-band" data-reveal>
-    <div class="stats-inner">
-        <div class="stat-item">
-            <div class="stat-icon"><i class="fas fa-book-open"></i></div>
-            <div class="stat-num">12<span>k</span></div>
-            <div class="stat-label">Documents dans la bibliothèque E-Books</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-icon"><i class="fas fa-users"></i></div>
-            <div class="stat-num">120<span></span></div>
-            <div class="stat-label">Élèves actifs utilisant les ressources</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-icon"><i class="fas fa-layer-group"></i></div>
-            <div class="stat-num">7</div>
-            <div class="stat-label">Matières couvertes</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-icon"><i class="fas fa-lightbulb"></i></div>
-            <div class="stat-num">100<span>%</span></div>
-            <div class="stat-label">Contenu optimisé pour réussir</div>
-        </div>
-    </div>
-</div>
-
-        <!-- SECTION 1 — FEATURE CARDS -->
-        <section id="s1" class="section-wrap">
-           <div class="section-head-row" data-reveal>
-    <div class="section-head-left">
-        <div class="s-eyebrow"><i class="fas fa-video"></i> Sahl Academy</div>
-        <h2 class="s-title-serif">Révisez & <em>apprenez</em> en vidéo</h2>
-    </div>
-    <a href="./SahlAcademy/Espace-sahl.html" class="s-view-all">Voir toutes les vidéos <i class="fas fa-arrow-right"></i></a>
-</div>
-
-            <div class="feat-grid">
-                <a href="./SahlAcademy/Espace-sahl.html" class="fc" data-reveal data-delay="1">
-    <div class="fc-accent-line acc-indigo"></div>
-    <i class="fas fa-atom fc-bg-icon"></i>
-    <div class="fc-top">
-        <div class="fc-icon-row">
-            <div class="fc-icon-wrap ic-indigo"><i class="fas fa-atom"></i></div>
-            <span class="fc-badge new"><i class="fas fa-bolt"></i> Updated</span>
-        </div>
-        <div class="fc-category">Physique</div>
-        <h3 class="fc-title">Oscillation Mécanique – Force</h3>
-        <p class="fc-desc">
-            Découvrez les questions fréquentes, leurs réponses détaillées et des astuces pratiques pour maîtriser ce chapitre d’oscillation mécanique et force. Idéal pour réviser efficacement et progresser.
-        </p>
-    </div>
-    <div class="fc-bottom">
-        <span class="fc-cta-btn">Voir le playlist <i class="fas fa-arrow-right"></i></span>
-        <span class="fc-meta"><i class="fas fa-sync-alt"></i> Mis à jour régulièrement</span>
-    </div>
-</a>
-
-              <a href="./SahlAcademy/Espace-sahl.html" class="fc" data-reveal data-delay="2">
-    <div class="fc-accent-line acc-violet"></div>
-    <i class="fas fa-wave-square fc-bg-icon"></i>
-    <div class="fc-top">
-        <div class="fc-icon-row">
-            <div class="fc-icon-wrap ic-violet"><i class="fas fa-wave-square"></i></div>
-            <span class="fc-badge beta"><i class="fas fa-flask"></i> Astuces</span>
-        </div>
-        <div class="fc-category">Physique</div>
-        <h3 class="fc-title">Onde Mécanique – QS & Astuces</h3>
-        <p class="fc-desc">
-            Découvrez les questions fréquentes, leurs réponses détaillées et des astuces pratiques pour mieux comprendre le chapitre des ondes mécaniques. Idéal pour réviser efficacement et réussir les exercices récurrents.
-        </p>
-    </div>
-    <div class="fc-bottom">
-        <span class="fc-cta-btn">Voir les questions <i class="fas fa-arrow-right"></i></span>
-        <span class="fc-meta"><i class="fas fa-lightbulb"></i> Méthodes & astuces incluses</span>
-    </div>
-</a>
-
-               <a href="./SahlAcademy/Espace-sahl.html" class="fc" data-reveal data-delay="3">
-    <div class="fc-accent-line acc-amber"></div>
-    <i class="fas fa-pencil-alt fc-bg-icon"></i>
-    <div class="fc-top">
-        <div class="fc-icon-row">
-            <div class="fc-icon-wrap ic-amber"><i class="fas fa-pencil-alt"></i></div>
-            <span class="fc-badge pop"><i class="fas fa-fire"></i> Popular</span>
-        </div>
-        <div class="fc-category">Bac English</div>
-        <h3 class="fc-title">Grammar & Exercises Revision</h3>
-        <p class="fc-desc">
-            Révisez la grammaire anglaise avec des exercices corrigés spécialement conçus pour le Bac. Pratique, clair et efficace pour réussir vos examens.
-        </p>
-    </div>
-    <div class="fc-bottom">
-        <span class="fc-cta-btn">Voir les exercices <i class="fas fa-arrow-right"></i></span>
-        <span class="fc-meta"><i class="fas fa-book"></i> +100 exercices</span>
-    </div>
-</a>
-
-               <a href="./SahlAcademy/Espace-sahl.html" class="fc" data-reveal data-delay="2">
-    <div class="fc-accent-line acc-blue"></div>
-    <i class="fas fa-wave-square fc-bg-icon"></i>
-    <div class="fc-top">
-        <div class="fc-icon-row">
-            <div class="fc-icon-wrap ic-blue"><i class="fas fa-wave-square"></i></div>
-            <span class="fc-badge beta"><i class="fas fa-lightbulb"></i> Astuces</span>
-        </div>
-        <div class="fc-category">Physique</div>
-        <h3 class="fc-title">Oscillation Mécanique Libre – Amorti & Non Amorti</h3>
-        <p class="fc-desc">
-            Maîtrisez les oscillations libres, amorties et non amorties avec les questions qui reviennent souvent, leurs réponses détaillées et des astuces pratiques pour mieux comprendre le cours et résoudre les exercices efficacement.
-        </p>
-    </div>
-    <div class="fc-bottom">
-        <span class="fc-cta-btn">Voir les questions <i class="fas fa-arrow-right"></i></span>
-        <span class="fc-meta"><i class="fas fa-brain"></i> Méthodes & astuces </span>
-    </div>
-</a>
-
-
-            </div>
-        </section>
-
-        <div class="divider"></div>
-
-        <!-- SECTION 2 — HORIZONTAL SCROLL -->
-        <section id="s2">
-           <div class="section-head-row" data-reveal>
-    <div class="section-head-left">
-        <div class="s-eyebrow"><i class="fas fa-compass"></i> Matières</div>
-        <h2 class="s-title-clean">Explorez chaque <span>domaine d’apprentissage</span></h2>
-    </div>
-    <a href="./Sahl Haven/Espace-sahl.html" class="s-view-all">Voir tous <i class="fas fa-arrow-right"></i></a>
-</div>
-
-            <div class="hscroll-outer">
-                <div class="htrack" id="htrack">
-                    <a href="/subjects/physique" class="sq ac-indigo">
-    <div class="sq-top">
-        <div class="sq-icon ic-indigo"><i class="fas fa-atom"></i></div>
-        <i class="fas fa-arrow-up-right-from-square sq-arrow"></i>
-    </div>
-    <div class="sq-bottom">
-        <div class="sq-count">320+ Exercices & Fiches Méthode</div>
-        <div class="sq-label">Sciences</div>
-        <div class="sq-name">Physique</div>
-    </div>
-</a>
-
-<a href="/subjects/math" class="sq ac-violet">
-    <div class="sq-top">
-        <div class="sq-icon ic-violet"><i class="fas fa-square-root-alt"></i></div>
-        <i class="fas fa-arrow-up-right-from-square sq-arrow"></i>
-    </div>
-    <div class="sq-bottom">
-        <div class="sq-count">650+ Exercices & Fiches Méthode</div>
-        <div class="sq-label">Analyse</div>
-        <div class="sq-name">Mathématiques</div>
-    </div>
-</a>
-
-<a href="/subjects/svt" class="sq ac-emerald">
-    <div class="sq-top">
-        <div class="sq-icon ic-emerald"><i class="fas fa-dna"></i></div>
-        <i class="fas fa-arrow-up-right-from-square sq-arrow"></i>
-    </div>
-    <div class="sq-bottom">
-        <div class="sq-count">390+ sujets</div>
-        <div class="sq-label">Biologie</div>
-        <div class="sq-name">Sciences (SVT)</div>
-    </div>
-</a>
-
-<a href="/subjects/philo" class="sq ac-amber">
-    <div class="sq-top">
-        <div class="sq-icon ic-amber"><i class="fas fa-feather"></i></div>
-        <i class="fas fa-arrow-up-right-from-square sq-arrow"></i>
-    </div>
-    <div class="sq-bottom">
-        <div class="sq-count">+70 موضوع</div>
-        <div class="sq-label">الدروس</div>
-        <div class="sq-name">الفلسفة</div>
-    </div>
-</a>
-
-<a href="/subjects/english" class="sq ac-sky">
-    <div class="sq-top">
-        <div class="sq-icon ic-sky"><i class="fas fa-language"></i></div>
-        <i class="fas fa-arrow-up-right-from-square sq-arrow"></i>
-    </div>
-    <div class="sq-bottom">
-        <div class="sq-count">85+ lessons</div>
-        <div class="sq-label">Languages</div>
-        <div class="sq-name">English</div>
-    </div>
-</a>
-
-<a href="/subjects/info" class="sq ac-teal">
-    <div class="sq-top">
-        <div class="sq-icon ic-teal"><i class="fas fa-laptop-code"></i></div>
-        <i class="fas fa-arrow-up-right-from-square sq-arrow"></i>
-    </div>
-    <div class="sq-bottom">
-        <div class="sq-count">60+ exercices</div>
-        <div class="sq-label">Technologie</div>
-        <div class="sq-name">Informatique</div>
-    </div>
-</a>
-
-<a href="/subjects/chimie" class="sq ac-rose">
-    <div class="sq-top">
-        <div class="sq-icon ic-rose"><i class="fas fa-flask"></i></div>
-        <i class="fas fa-arrow-up-right-from-square sq-arrow"></i>
-    </div>
-    <div class="sq-bottom">
-        <div class="sq-count">175+ Exercices & Fiches Méthode</div>
-        <div class="sq-label">Sciences</div>
-        <div class="sq-name">Chimie</div>
-    </div>
-</a>
-                </div>
-            </div>
-        </section>
-
-
-
-        <div class="divider"></div>
-
-        <!-- SECTION 3 — VERTICAL GRID -->
-        <section id="s3" class="section-wrap">
-           <div class="section-head-row" data-reveal>
-    <div class="section-head-left">
-        <div class="s-eyebrow"><i class="fas fa-box-open"></i> Packs Bac</div>
-        <h2 class="s-title-clean">Révisez avec <span>le pack idéal</span></h2>
-    </div>
-    <a href="./Sahl Haven/Espace-sahl.html" class="s-view-all">Voir tous <i class="fas fa-arrow-right"></i></a>
-</div>
-
-            <div class="vgrid">
-               <a href="./Sahl Haven/Espace-sahl.html" class="vc" data-reveal data-delay="1">
-    <i class="fas fa-book-open vc-bg-icon"></i>
-    <div class="vc-top">
-        <div class="vc-top-row">
-            <div class="vc-num">01</div>
-            <div class="vc-level-dot" style="background:#10b981"></div>
-        </div>
-        <div class="vc-cat">Bac Pack</div>
-        <h3 class="vc-title">Devoirs Bac 2007 - 2025</h3>
-        <p class="vc-desc">
-            Collection complète de devoirs avec corrections détaillées pour toutes les matières principales.
-        </p>
-    </div>
-    <div class="vc-bottom">
-        <span class="vc-pill">Explore <i class="fas fa-arrow-right"></i></span>
-        <span class="vc-students"><i class="fas fa-users"></i> Bac 2026</span>
-    </div>
-</a>
-
-                <a href="./Sahl Haven/Espace-sahl.html" class="vc" data-reveal data-delay="2">
-                    <i class="fas fa-hammer vc-bg-icon"></i>
-                    <div class="vc-top">
-                        <div class="vc-top-row">
-                            <div class="vc-num">02</div>
-                            <div class="vc-level-dot" style="background:#f59e0b"></div>
-                        </div>
-                        <div class="vc-cat">Bac Pack</div>
-         <h3 class="vc-title">Préparation Synthèse 2</h3>
-        <p class="vc-desc">
-            Collection complète d’exercices de synthèse, devoirs pilotes et Bac réels pour Math, Physique et Sciences. Corrigés détaillés pour préparer efficacement les épreuves principales.
-        </p>
-    </div>
-    <div class="vc-bottom">
-        <span class="vc-pill">Explore <i class="fas fa-arrow-right"></i></span>
-        <span class="vc-students"><i class="fas fa-users"></i> Bac 2026</span>
-    </div>
-                </a>
-
-                <a href="./Sahl Haven/Espace-sahl.html" class="vc" data-reveal data-delay="3">
-                    <i class="fas fa-star vc-bg-icon"></i>
-                    <div class="vc-top">
-                        <div class="vc-top-row">
-                            <div class="vc-num">03</div>
-                            <div class="vc-level-dot" style="background:#f43f5e"></div>
-                        </div>
-                        <div class="vc-cat">Bac Pack</div>
-        <h3 class="vc-title">Préparation Bac Pratique Info</h3>
-        <p class="vc-desc">
-            Cours pratiques, devoirs corrigés et méthodologie complète pour réussir le Bac pratique en Informatique. Plus de 112 devoirs analysés et expliqués pour maîtriser chaque étape.
-        </p>
-    </div>
-    <div class="vc-bottom">
-        <span class="vc-pill">Explore <i class="fas fa-arrow-right"></i></span>
-                        <span class="vc-students"><i class="fas fa-users"></i> Bac 2026</span>
-                    </div>
-                </a>
-
-                <a href="./Sahl Haven/Espace-sahl.html" class="vc" data-reveal data-delay="1">
-                    <i class="fas fa-people-group vc-bg-icon"></i>
-                    <div class="vc-top">
-                        <div class="vc-top-row">
-                            <div class="vc-num">04</div>
-                            <div class="vc-level-dot" style="background:#8b5cf6"></div>
-                        </div>
-                       <div class="vc-cat">Bac Pack</div>
-        <h3 class="vc-title">Bac Success Kit</h3>
-        <p class="vc-desc">
-            Fiches méthodologiques et questions fréquentes du Bac en Mathématiques, Physique et Sciences, avec méthodes détaillées pour résoudre chaque problème correctement.
-        </p>
-    </div>
-    <div class="vc-bottom">
-        <span class="vc-pill">Explore <i class="fas fa-arrow-right"></i></span>
-                        <span class="vc-students"><i class="fas fa-users"></i> Bac 2026</span>
-                    </div>
-                </a>
-
-              <a href="./Sahl Haven/Espace-sahl.html" class="vc" data-reveal data-delay="3">
-    <i class="fas fa-language vc-bg-icon"></i>
-    <div class="vc-top">
-        <div class="vc-top-row">
-            <div class="vc-num">06</div>
-            <div class="vc-level-dot" style="background:#10b981"></div>
-        </div>
-        <div class="vc-cat">Bac Pack</div>
-        <h3 class="vc-title">Regional Bac Pilots</h3>
-        <p class="vc-desc">
-            Collection complète de devoirs pilotes de Sfax, Tunis, Nabeul et Médenine, avec corrections détaillées et méthodologie pas-à-pas pour chaque exercice.
-      </p>
-    </div>
-    <div class="vc-bottom">
-        <span class="vc-pill">Explore <i class="fas fa-arrow-right"></i></span>
-        <span class="vc-students"><i class="fas fa-users"></i>Bac 2026</span>
-    </div>
-</a>
-               <a href="./Sahl Haven/Espace-sahl.html" class="vc" data-reveal data-delay="3">
-    <i class="fas fa-language vc-bg-icon"></i>
-    <div class="vc-top">
-        <div class="vc-top-row">
-            <div class="vc-num">06</div>
-            <div class="vc-level-dot" style="background:#10b981"></div>
-        </div>
-        <div class="vc-cat">Bac Pack</div>
-        <h3 class="vc-title">English Mastery Pack</h3>
-        <p class="vc-desc">
-            Grammar exercises, chapter-by-chapter revision, and writing practice to prepare effectively for the Bac English exam.
-        </p>
-    </div>
-    <div class="vc-bottom">
-        <span class="vc-pill">Explore <i class="fas fa-arrow-right"></i></span>
-        <span class="vc-students"><i class="fas fa-users"></i> Bac 2026</span>
-    </div>
-</a>
-            </div>
-        </section>
-
-       <!-- CTA BAND - Free Pack -->
-<div class="cta-band" data-reveal>
-    <div class="cta-left">
-        <div class="cta-tag"><i class="fas fa-gift"></i> &nbsp;Pack Gratuit</div>
-        <h2 class="cta-title">Commencez vos révisions<br>avec notre pack gratuit !</h2>
-        <p class="cta-sub">
-            Accédez gratuitement à des exercices, cours et fiches méthodologiques pour tester nos packs et booster votre préparation au Bac.
-        </p>
-    </div>
-    <div class="cta-right">
-        <a href="https://drive.google.com/drive/folders/1gFL60k8bLul26Vj3fU6ng_F1wRcB1xqD" class="btn-cta-primary"><i class="fas fa-box-open"></i> Découvrir le pack</a>
-        <a href="./Sahl Haven/Espace-sahl.html" class="btn-cta-ghost"><i class="fas fa-id-badge"></i> Créer un Sahl ID</a>
-    </div>
-</div>
-<script src="./assets/js/ebookhome.js"></script>
+        <!-- Your search content here -->
     </div>
 
-    <!-- SpeakWell Section - Arc Design with Links -->
+    <!-- SpeakWell Section -->
     <div id="speakwell" class="content-section">
-        <!-- Custom Cursor -->
-        <div id="cursor"></div>
-
-
-        <nav>
-            <div class="nav-logo">
-                <a href="./speakwell/">
-                    SpeakWell <span class="nav-logo-dot"></span>
-                </a>
-            </div>
-            <div class="nav-center">
-                <a href="./speakwell/home" class="active">Home</a>
-                <a href="./speakwell/features">Grammar</a>
-                <a href="./speakwell/solutions">Writing</a>
-                <a href="./speakwell/pricing">Speaking</a>
-            </div>
-            <div class="nav-right">
-                <div class="nav-avatar">
-                    <a href="./speakwell/Espace-sahl.html"></a>
-                </div>
-                <a href="./speakwell/Espace-sahl.html" class="btn-primary">Sahl ID</a>
-            </div>
-        </nav>
-
-       <!-- HERO for Sahl Academy -->
-<section class="hero">
-    <div class="hero-left">
-        <a href="./speakwell/Espace-sahl.html" class="hero-badge">
-            <span class="badge-pill">NEW</span>
-               Explore Sahl Academy Courses
-        </a>
-        <h1>
-            <a href="./speakwell/Espace-sahl.html">Master English</a><br>
-            <em><a href="./speakwell/Espace-sahl.html">Grammar & Writing</a></em><br>
-            <a href="./speakwell/Espace-sahl.html">for BAC Success.</a>
-        </h1>
-        <p class="hero-desc">Learn grammar, writing, vocabulary, and speaking with interactive lessons and practice exercises designed for BAC students.</p>
-        <div class="hero-actions">
-            <a href="./speakwell/Espace-sahl.html" class="btn-primary">Start Learning →</a>
-            <a href="./inscrire.html" class="btn-ghost">Get Your Sahl ID</a>
-        </div>
-    </div>
-    <div class="hero-right">
-        <div class="hero-stats">
-            <a href="./speakwell/stats/users" class="stat-card">
-                <div>
-                    <div class="stat-num">100+</div>
-                    <div class="stat-label">Active Students</div>
-                </div>
-                <span class="stat-tag">↑ 25% this month</span>
-            </a>
-            <a href="./speakwell/stats/uptime" class="stat-card">
-                <div class="stat-num">99.9%</div>
-                <div class="stat-label">Course Availability</div>
-                <div class="stat-chart">
-                    <div class="bar" style="height:60%"></div>
-                    <div class="bar" style="height:80%"></div>
-                    <div class="bar active" style="height:100%"></div>
-                    <div class="bar" style="height:70%"></div>
-                    <div class="bar active" style="height:90%"></div>
-                    <div class="bar" style="height:55%"></div>
-                    <div class="bar active" style="height:100%"></div>
-                </div>
-            </a>
-            <a href="./speakwell/stats/integrations" class="stat-card">
-                <div class="stat-num">50+</div>
-                <div class="stat-label">Interactive Lessons</div>
-                <div class="stat-chart">
-                    <div class="bar" style="height:40%"></div>
-                    <div class="bar active" style="height:75%"></div>
-                    <div class="bar" style="height:55%"></div>
-                    <div class="bar active" style="height:100%"></div>
-                    <div class="bar" style="height:65%"></div>
-                    <div class="bar active" style="height:85%"></div>
-                    <div class="bar" style="height:50%"></div>
-                </div>
-            </a>
-        </div>
-    </div>
-</section>
-
-
-        <!-- SECTION 1 — HORIZONTAL CARDS with Links -->
-        <section class="sec1">
-            <div class="section-header">
-                <div>
-                    <div class="section-kicker">Core Features</div>
-                    <div class="section-title">Everything you need,<br>nothing you don't.</div>
-                </div>
-                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
-                    <a href="./speakwell/Espace-sahl.html" class="link-arrow">View all features →</a>
-                    <div class="section-scroll-hint"><div class="scroll-hint-line"></div>Drag to explore</div>
-                </div>
-            </div>
-
-            <div class="h-track-wrapper">
-                <div class="h-track" id="hTrack">
-                   <a href="./speakwell/Espace-sahl.html" class="h-card tint-green">
-    <div class="h-card-icon-wrap"><i class="fas fa-graduation-cap"></i></div>
-    <div class="h-card-bottom">
-        <div class="h-card-tag">Bac Essential</div>
-        <div class="h-card-title">Present Perfect vs Past Simple</div>
-    </div>
-    <span class="h-card-pill new">Bac</span>
-</a>
-
-<a href="./speakwell/Espace-sahl.html" class="h-card">
-    <div class="h-card-icon-wrap"><i class="fas fa-clock"></i></div>
-    <div class="h-card-bottom">
-        <div class="h-card-tag">Narration</div>
-        <div class="h-card-title">Past Simple vs Past Perfect</div>
-    </div>
-</a>
-
-<a href="./speakwell/Espace-sahl.html" class="h-card tint-blue">
-    <div class="h-card-icon-wrap"><i class="fas fa-hourglass-half"></i></div>
-    <div class="h-card-bottom">
-        <div class="h-card-tag">Daily Use</div>
-        <div class="h-card-title">Present Simple vs Present Continuous</div>
-    </div>
-</a>
-
-<a href="./speakwell/Espace-sahl.html" class="h-card">
-    <div class="h-card-icon-wrap"><i class="fas fa-forward"></i></div>
-    <div class="h-card-bottom">
-        <div class="h-card-tag">Future</div>
-        <div class="h-card-title">Will vs Going To vs Present Continuous</div>
-    </div>
-    <span class="h-card-pill">Exam</span>
-</a>
-
-<a href="./speakwell/Espace-sahl.html" class="h-card tint-peach">
-    <div class="h-card-icon-wrap"><i class="fas fa-code-branch"></i></div>
-    <div class="h-card-bottom">
-        <div class="h-card-tag">Conditionals</div>
-        <div class="h-card-title">Zero, First, Second & Third Conditionals</div>
-    </div>
-    <span class="h-card-pill new">Important</span>
-</a>
-
-<a href="./speakwell/Espace-sahl.html" class="h-card">
-    <div class="h-card-icon-wrap"><i class="fas fa-exchange-alt"></i></div>
-    <div class="h-card-bottom">
-        <div class="h-card-tag">Transformation</div>
-        <div class="h-card-title">Active Voice vs Passive Voice</div>
-    </div>
-</a>
-
-<a href="./speakwell/Espace-sahl.html" class="h-card tint-green">
-    <div class="h-card-icon-wrap"><i class="fas fa-comments"></i></div>
-    <div class="h-card-bottom">
-        <div class="h-card-tag">Reported Speech</div>
-        <div class="h-card-title">Direct vs Indirect Speech</div>
-    </div>
-</a>
-
-<a href="./speakwell/Espace-sahl.html" class="h-card">
-    <div class="h-card-icon-wrap"><i class="fas fa-gavel"></i></div>
-    <div class="h-card-bottom">
-        <div class="h-card-tag">Modals</div>
-        <div class="h-card-title">Must, Have To, Should</div>
-    </div>
-</a>
-
-<a href="./speakwell/Espace-sahl.html" class="h-card tint-blue">
-    <div class="h-card-icon-wrap"><i class="fas fa-lightbulb"></i></div>
-    <div class="h-card-bottom">
-        <div class="h-card-tag">Modals</div>
-        <div class="h-card-title">May, Might, Could</div>
-    </div>
-</a>
-
-<a href="./speakwell/Espace-sahl.html" class="h-card">
-    <div class="h-card-icon-wrap"><i class="fas fa-link"></i></div>
-    <div class="h-card-bottom">
-        <div class="h-card-tag">Writing</div>
-        <div class="h-card-title">Linking Words & Connectors</div>
-    </div>
-</a>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- DIVIDER -->
-        <div class="sep">
-            <div class="sep-line"></div>
-            <div class="sep-text">Lessons</div>
-            <div class="sep-line"></div>
-        </div>
-
-        <!-- SECTION 2 — PASTEL GRID with Links -->
-        <section class="sec2">
-            <div class="section-header" style="padding:0;margin-bottom:32px;">
-                <div>
-                    <div class="section-kicker">Explore solutions</div>
-                    <div class="section-title">For every team,<br>at every stage.</div>
-                </div>
-                <a href="./speakwell/Espace-sahl.html" class="link-arrow">Browse all solutions →</a>
-            </div>
-
-            <div class="v-grid">
-                <!-- Featured dark card -->
-                <a href="./speakwell/Espace-sahl.html" class="v-card c-featured featured">
-                    <div class="v-card-content">
-                       <div class="v-card-kicker" style="color:rgba(200,240,96,0.5)">Flagship</div>
-<div class="v-card-title">SpeakWell Bac English Mastery</div>
-<div class="v-card-desc">An all-in-one Bac English guide with grammar, spelling, writing, and exam exercises to help students achieve top results.</div>
-<div class="v-card-footer">
-    <div class="v-meta">
-        <div class="v-meta-val">1500+</div>
-        <div class="v-meta-label">Lessons & Practice Exercises</div>
-
-
-                            </div>
-                            <div class="v-btn">→</div>
-                        </div>
-                    </div>
-                    <div class="v-card-visual">
-                        <div class="visual-ring">
-                            <div class="visual-ring-inner">🏢</div>
-                        </div>
-                    </div>
-                </a>
-
- <!-- Chapter 1: Travelling & Holidays -->
-<a href="./speakwell/Espace-sahl.html" class="v-card c-sage">
-    <div class="v-card-content">
-        <div class="v-card-kicker">Travelling & Holidays</div>
-        <div class="v-card-title">Explore Destinations & Experiences</div>
-        <div class="v-card-desc">Discuss the advantages and disadvantages of travelling, holiday planning, tourism spots, and the impact of travel on cultural understanding.</div>
-    </div>
-    <div class="v-card-footer">
-        <div class="v-meta">
-            <div class="v-meta-val">Key Theme</div>
-            <div class="v-meta-label">Useful for Essays & Speaking</div>
-        </div>
-        <div class="v-btn">→</div>
-    </div>
-    <div class="v-bg-icon">🌍</div>
-</a>
-
-<!-- Chapter 2: Education -->
-<a href="./speakwell/Espace-sahl.html" class="v-card c-sky">
-    <div class="v-card-content">
-        <div class="v-card-kicker">Education</div>
-        <div class="v-card-title">School Life & Online Learning</div>
-        <div class="v-card-desc">Talk about the positives and negatives of education, online learning benefits, drawbacks of school systems, and exam stress management.</div>
-    </div>
-    <div class="v-card-footer">
-        <div class="v-meta">
-            <div class="v-meta-val">High Priority</div>
-            <div class="v-meta-label">Important for Essays & Reading</div>
-        </div>
-        <div class="v-btn">→</div>
-    </div>
-    <div class="v-bg-icon">🎓</div>
-</a>
-
-<!-- Chapter 3: Life Issues -->
-<a href="./speakwell/Espace-sahl.html" class="v-card c-peach">
-    <div class="v-card-content">
-        <div class="v-card-kicker">Life Issues</div>
-        <div class="v-card-title">Modern Social Challenges</div>
-        <div class="v-card-desc">Cover youth problems like smoking, excessive gaming, pollution, wars, and other social issues affecting society today.</div>
-    </div>
-    <div class="v-card-footer">
-        <div class="v-meta">
-            <div class="v-meta-val">Core Theme</div>
-            <div class="v-meta-label">Highly Relevant for BAC</div>
-        </div>
-        <div class="v-btn">→</div>
-    </div>
-    <div class="v-bg-icon">⚡</div>
-</a>
-
-<!-- Chapter 4: Technology -->
-<a href="./speakwell/Espace-sahl.html" class="v-card c-lav">
-    <div class="v-card-content">
-        <div class="v-card-kicker">Technology & Innovation</div>
-        <div class="v-card-title">AI, Robotics & Digital Advances</div>
-        <div class="v-card-desc">Discuss the pros and cons of technology, AI, robotics, digital tools, and how tech transforms work, learning, and daily life.</div>
-    </div>
-    <div class="v-card-footer">
-        <div class="v-meta">
-            <div class="v-meta-val">Trending</div>
-            <div class="v-meta-label">Important for Writing & Speaking</div>
-        </div>
-        <div class="v-btn">→</div>
-    </div>
-    <div class="v-bg-icon">🤖</div>
-</a>
-
-            </div>
-        </section>
-
-        <!-- FOOTER BAND with Links -->
-      <div class="footer-band">
-    <div class="footer-band-text">
-        <h2>Boost Your English with Sahl Academy</h2>
-        <p>Join thousands of students improving their grammar, writing, and speaking skills. Learn efficiently and get ready for your BAC exams!</p>
-    </div>
-    <div class="footer-band-actions">
-        <a href="./speakwell/Espace-sahl.html" class="btn-accent">Start Learning Now →</a>
-    </div>
-</div>
-
-        <script src="./assets/js/speakwellhome.js"></script>
+        <!-- Your speakwell content here -->
     </div>
 
-    <!-- About Content (EduFlow Section - eduSTREAM) -->
+    <!-- About Content -->
     <div id="about" class="content-section">
-        <div class="edu-stream-container">
-            <!-- eduSTREAM Header -->
-            <header class="edu-header">
-                <a href="#" class="edu-logo" id="eduHomeLogo">
-                    <span class="stream-part">Sahl</span><span class="edu-part">Academy</span>
-                </a>
-
-                <nav class="edu-nav" id="eduMainNav">
-                    <ul>
-                        <li><a href="#" class="edu-nav-link active" data-edu-page="home">Accueil</a></li>
-                        <li><a href="#" class="edu-nav-link" data-edu-page="feed">Bibliothèque</a></li>
-                        <li><a href="#" class="edu-nav-link" data-edu-page="categories">Matières</a></li>
-                        <li><a href="#" class="edu-nav-link" data-edu-page="search">Rechercher</a></li>
-                    </ul>
-                </nav>
-
-                <div class="edu-nav-right">
-                    <button class="edu-search-icon" id="eduSearchIcon" title="Rechercher" aria-label="Rechercher">
-                        <i class="fas fa-search"></i>
-                    </button>
-                    <button class="edu-mobile-menu-btn" id="eduMobileMenuBtn" aria-label="Menu" aria-expanded="false">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-            </header>
-
-            <!-- Home Page -->
-            <section class="edu-page active" id="eduHomePage">
-                <div class="edu-hero">
-                    <div class="edu-hero-content">
-                        <div class="edu-hero-text">
-                            <div class="edu-hero-badge">
-                                <i class="fas fa-graduation-cap"></i>
-                                <span>Une nouvelle façon d'apprendre</span>
-                            </div>
-
-                            <div class="edu-hero-title-container">
-                                <h1 class="edu-hero-title">Améliorez vos résultats en</h1>
-                                <div class="edu-animated-text-container" id="eduAnimatedTextContainer"></div>
-                            </div>
-
-                            <p class="edu-hero-subtitle">Explorez des cours et ressources sélectionnés, dans un environnement clair et efficace</p>
-
-                            <a href="#" class="edu-cta-button" id="eduWatchNowBtn">
-                                <span>Commencer</span>
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-
-                            <div class="edu-hero-stats">
-                                <div class="edu-stat-item">
-                                    <div class="edu-stat-number">100%</div>
-                                    <div class="edu-stat-label">Gratuit</div>
-                                </div>
-                                <div class="edu-stat-item">
-                                    <div class="edu-stat-number">Apprentissage</div>
-                                    <div class="edu-stat-label">à votre rythme</div>
-                                </div>
-                                <div class="edu-stat-item">
-                                    <div class="edu-stat-number">24/7</div>
-                                    <div class="edu-stat-label">Accès Partout</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="edu-hero-visual">
-                            <div class="edu-hero-visual-content">
-                                <div class="edu-visual-grid">
-                                    <div class="edu-visual-item">
-                                        <i class="fas fa-play-circle"></i>
-                                    </div>
-                                    <div class="edu-visual-item">
-                                        <i class="fas fa-chart-line"></i>
-                                    </div>
-                                    <div class="edu-visual-item">
-                                        <i class="fas fa-certificate"></i>
-                                    </div>
-                                    <div class="edu-visual-item">
-                                        <i class="fas fa-users"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="edu-scroll-indicator">
-                        <span>Explorer le Contenu</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Videos Feed Page -->
-            <section class="edu-page" id="eduFeedPage">
-                <div class="edu-page-content">
-                    <div class="edu-page-header">
-                        <button class="edu-back-button" id="eduFeedBackBtn" aria-label="Retour à l'accueil">
-                            <i class="fas fa-arrow-left"></i>
-                            <span>Retour à l'Accueil</span>
-                        </button>
-                        <h1 class="edu-page-title">Bibliothèque Éducative</h1>
-                        <p class="edu-page-description">Des parcours clairs et organisés pour le bac</p>
-                    </div>
-
-                    <div class="edu-videos-feed" id="eduVideosFeed"></div>
-
-                    <div class="edu-load-more">
-                        <button class="edu-load-more-btn" id="eduLoadMoreBtn">Charger Plus de Vidéos</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Categories Page -->
-            <section class="edu-page" id="eduCategoriesPage">
-                <div class="edu-page-content">
-                    <div class="edu-page-header">
-                        <button class="edu-back-button" id="eduCategoriesBackBtn" aria-label="Retour à l'accueil">
-                            <i class="fas fa-arrow-left"></i>
-                            <span>Retour à l'Accueil</span>
-                        </button>
-                        <h1 class="edu-page-title">Collections Éducatives</h1>
-                        <p class="edu-page-description">Contenus organisés par matière et par thème pour réussir le bac</p>
-                    </div>
-
-                    <div class="edu-categories-grid" id="eduCategoriesGrid"></div>
-
-                    <div class="edu-playlist-page" id="eduPlaylistPage">
-                        <div class="edu-page-header">
-                            <button class="edu-back-button" id="eduPlaylistBackBtn" aria-label="Retour aux collections">
-                                <i class="fas fa-arrow-left"></i>
-                                <span>Retour aux Collections</span>
-                            </button>
-                            <h1 class="edu-playlist-title" id="eduPlaylistTitle"></h1>
-                            <p class="edu-playlist-topic" id="eduPlaylistTopic"></p>
-                        </div>
-
-                        <div class="edu-playlist-videos" id="eduPlaylistVideos"></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Search Page -->
-            <section class="edu-page" id="eduSearchPage">
-                <div class="edu-page-content">
-                    <div class="edu-page-header">
-                        <button class="edu-back-button" id="eduSearchBackBtn" aria-label="Retour à l'accueil">
-                            <i class="fas fa-arrow-left"></i>
-                            <span>Retour à l'Accueil</span>
-                        </button>
-                        <div class="edu-search-container">
-                            <i class="fas fa-search edu-search-icon-large"></i>
-                            <input type="text" class="edu-search-input" id="eduSearchInput" placeholder="Rechercher des vidéos éducatives..." autocomplete="off" aria-label="Rechercher des vidéos éducatives">
-                        </div>
-                    </div>
-
-                    <div class="edu-search-results">
-                        <div class="edu-results-count" id="eduResultsCount"></div>
-                        <div class="edu-results-grid" id="eduSearchResults"></div>
-                        <div class="edu-no-results" id="eduNoResults">
-                            <i class="fas fa-search"></i>
-                            <h3>Aucune vidéo trouvée</h3>
-                            <p>Essayez d'autres mots-clés ou parcourez notre bibliothèque éducative</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Video Player Page -->
-            <section class="edu-page" id="eduPlayerPage">
-                <div class="edu-player-page">
-                    <button class="edu-back-button" id="eduPlayerBackBtn" aria-label="Retour">
-                        <i class="fas fa-arrow-left"></i>
-                        <span>Retour</span>
-                    </button>
-
-                    <div class="edu-player-container">
-                        <div class="edu-player-main">
-                            <div class="edu-main-player" id="eduYoutubePlayer"></div>
-
-                            <div class="edu-player-info">
-                                <h1 class="edu-player-title" id="eduPlayerTitle"></h1>
-                                <div class="edu-player-description" id="eduPlayerDescription"></div>
-                            </div>
-                        </div>
-
-                        <div class="edu-suggested-videos">
-                            <h3 class="edu-suggested-title">Vidéos suggérées</h3>
-                            <div class="edu-suggested-list" id="eduSuggestedVideos"></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Footer -->
-            <footer class="edu-footer">
-                <div class="edu-footer-content">
-                    <div class="edu-footer-logo">
-                        <span class="edu-part"></span><span class="stream-part">Sahl</span>
-                    </div>
-                    <p class="edu-footer-description">La plateforme qui centralise l'apprentissage</p>
-                    <div class="edu-copyright">
-                        Quantum Group
-                    </div>
-                </div>
-            </footer>
-        </div>
+        <!-- Your about content here -->
     </div>
 
     <!-- Modals -->
@@ -2874,114 +1880,16 @@
     <script src="./assets/js/homepage.js"></script>
     <script src="./assets/js/heder serche sechtion.js"></script>
     <script src="./assets/js/speakwellimageslide.js"></script>
-
-
-
+    <script src="./assets/js/popup.js"></script>
 
     <!-- Main Popup -->
     <div class="sahl-popup-overlay" id="sahlPopupOverlay">
-      <div class="sahl-popup-container">
-        <button class="sahl-popup-close" id="sahlPopupCloseBtn" aria-label="Close">×</button>
-
-        <!-- Progress Indicator -->
-        <div class="sahl-popup-progress">
-          <span class="sahl-progress-dot active" id="sahlProgressDot1"></span>
-          <span class="sahl-progress-dot" id="sahlProgressDot2"></span>
-          <span class="sahl-progress-dot" id="sahlProgressDot3"></span>
-        </div>
-
-        <!-- Step Container -->
-        <div class="sahl-popup-step-container">
-          <!-- Step 1: Welcome / Updates -->
-          <div class="sahl-popup-step active" id="sahlStep1">
-            <div class="sahl-popup-content">
-              <div class="sahl-popup-left">
-                <div class="sahl-popup-icon-wrapper">
-                  <div class="sahl-popup-icon">✨</div>
-                </div>
-              </div>
-              <div class="sahl-popup-right">
-                <h2 class="sahl-popup-title">Nouvelles Mises à Jour Disponibles</h2>
-<p class="sahl-popup-subtitle">Documents ajoutés à la bibliothèque E-Books du 17/02 au 19/02.</p>
-
-<ul class="sahl-popup-features">
-  <li> <strong>Révision : Oscillations de la Force Mécanique</strong> — Fiches méthodiques & exercices</li>
-  <li><strong>Exercices Ondes Progressives</strong> — Exercices avec correction</li>
-  <li> <strong>Révision Bac Pratique</strong> — 62 exercices corrigés</li>
-  <li> <strong>Révision Grammaire</strong> — Synthèse 2</li>
-</ul>
-
-                <div class="sahl-popup-footer">
-
-                  <button class="sahl-popup-button" id="sahlStep1NextBtn">Suivant →</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 2: Features & Improvements -->
-          <div class="sahl-popup-step" id="sahlStep2">
-            <div class="sahl-popup-content">
-              <div class="sahl-popup-left">
-                <div class="sahl-popup-icon-wrapper">
-                  <div class="sahl-popup-icon">🚀</div>
-                </div>
-              </div>
-              <div class="sahl-popup-right">
-               <h2 class="sahl-popup-title">Fonctionnalités Améliorées</h2>
-<p class="sahl-popup-subtitle">Les outils disponibles dans l'application Sahl.</p>
-
-<ul class="sahl-popup-features">
-  <li> <strong>Nouveaux QCM & Quiz</strong> — Disponible dans l'application SVT</li>
-  <li> <strong>Cours supplémentaires</strong> — Ajouts dans Chaphilo, exemple de leçon incluse</li>
-  <li><strong>Améliorations générales</strong> — Meilleure expérience utilisateur</li>
-  <li><strong>Optimisation mobile</strong> — Apprenez partout</li>
-</ul>
-
-                <div class="sahl-popup-footer">
-                  <button class="sahl-popup-button secondary" id="sahlStep2BackBtn">← Retour</button>
-                  <button class="sahl-popup-button" id="sahlStep2NextBtn">Suivant →</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 3: Coming Soon / Final -->
-          <div class="sahl-popup-step" id="sahlStep3">
-            <div class="sahl-popup-content">
-              <div class="sahl-popup-left">
-                <div class="sahl-popup-icon-wrapper">
-                  <div class="sahl-popup-icon">🌟</div>
-                </div>
-              </div>
-              <div class="sahl-popup-right">
-                <h2 class="sahl-popup-title">Bientôt Disponible</h2>
-<p class="sahl-popup-subtitle">Nous préparons des nouveautés passionnantes pour vous.</p>
-
-<ul class="sahl-popup-features">
-  <li><strong>Vidéos & Playlists</strong> — Pour tous les cours de Sahl Academy</li>
-  <li> <strong>Cours Ondes Mécaniques</strong> — Avec exercices intégrés</li>
-  <li><strong>Exercices en Anglais</strong> — Pratique et corrections incluses</li>
-  <li><strong>Mécanique : Force</strong> — Nouvelles leçons et exercices à venir</li>
-</ul>
-
-                <div class="sahl-popup-footer" style="justify-content: flex-end;">
-                  <button class="sahl-popup-button secondary" id="sahlStep3BackBtn">← Retour</button>
-                  <button class="sahl-popup-button" id="sahlStep3FinishBtn">Allons-y</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        <!-- Popup content here -->
     </div>
 
-
-   <script src="./assets/js/popup.js"></script>
-   <script>
-        // Home page specific scripts - Fixed scroll reveal (no conflict)
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Progress bars animation - only for home section
+            // Progress bars animation
             const barObserver = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if(entry.isIntersecting){
@@ -2997,7 +1905,7 @@
             
             document.querySelectorAll('#home .dash-card').forEach(el => barObserver.observe(el));
 
-            // Scroll reveal for home section only - FIXED: Now only observes #home elements
+            // Scroll reveal for home section
             const revealObserver = new IntersectionObserver(entries => {
                 entries.forEach(e => { 
                     if(e.isIntersecting){ 
@@ -3007,10 +1915,9 @@
                 });
             }, { threshold:.08, rootMargin:'0px 0px -32px 0px' });
             
-            // Only observe elements with class 'r' that are INSIDE #home
             document.querySelectorAll('#home .r').forEach(el => revealObserver.observe(el));
 
-            // Carousel drag - only for home section
+            // Carousel drag
             document.querySelectorAll('#home .track').forEach(track => {
                 let isDown=false, startX, scrollLeft;
                 track.addEventListener('mousedown', e => { 
@@ -3030,33 +1937,53 @@
                     const x = e.pageX - track.offsetLeft;
                     track.scrollLeft = scrollLeft - (x-startX);
                 });
-                
-                // Prevent default drag behavior
                 track.addEventListener('dragstart', (e) => e.preventDefault());
             });
 
             // Navigation functionality
             const navItems = document.querySelectorAll('.nav-item');
             const sections = document.querySelectorAll('.content-section');
+            const body = document.body;
             
+            // Function to update active section and header visibility
+            function setActiveSection(targetId) {
+                // Update nav items
+                navItems.forEach(nav => nav.classList.remove('active'));
+                document.querySelector(`.nav-item[data-target="${targetId}"]`).classList.add('active');
+                
+                // Update sections
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                    if(section.id === targetId) {
+                        section.classList.add('active');
+                    }
+                });
+                
+                // Update body class for header visibility (header only shows in home)
+                if(targetId === 'home') {
+                    body.classList.add('home-active');
+                } else {
+                    body.classList.remove('home-active');
+                }
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            }
+            
+            // Add click handlers to nav items
             navItems.forEach(item => {
                 item.addEventListener('click', function() {
                     const targetId = this.dataset.target;
-                    
-                    // Update active nav item
-                    navItems.forEach(nav => nav.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Update active section
-                    sections.forEach(section => {
-                        section.classList.remove('active');
-                        if(section.id === targetId) {
-                            section.classList.add('active');
-                            // Scroll to top of section
-                            window.scrollTo(0, 0);
-                        }
-                    });
+                    setActiveSection(targetId);
                 });
+            });
+            
+            // Initialize with home active
+            body.classList.add('home-active');
+            
+            // Header login button
+            document.getElementById('headerLoginBtn').addEventListener('click', function() {
+                window.location.href = './inscrire.html';
             });
         });
     </script>

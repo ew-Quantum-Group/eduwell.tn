@@ -45,6 +45,13 @@
                     subject: "Physique"
                 },
                 { 
+    id: "ondes", 
+    name: "Ondes", 
+    icon: "fas fa-wave-square",
+    videoCount: 40,
+    subject: "Physique"
+},
+                { 
                     id: "forcecours", 
                     name: "RLC force Cours", 
                     icon: "fas fa-bolt",
@@ -294,7 +301,129 @@
                 isNew: false,
                 isFeatured: true,
                 level: "intermediate"
+            },
+             {
+                id: 13,
+                title: "1) Différence entre une onde transversale et une onde longitudinale",
+                instructor: "Sahl",
+                subject: "Physique",
+                course: "Ondes",
+                source: "drive",
+                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
+                isNew: false,
+                isFeatured: true,
+                level: "intermediate"
+            },
+             {
+                id: 14,
+                title: "2) Allure de la courbe (lecture graphique)",
+                instructor: "Sahl",
+                subject: "Physique",
+                course: "Ondes",
+                 source: "drive",
+                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
+                isNew: false,
+                isFeatured: true,
+                level: "intermediate"
+            },
+             {
+                id: 15,
+                title: "2) Comment déterminer l’équation horaire (partie 1)",
+                instructor: "Sahl",
+                subject: "Physique",
+                course: "Ondes",
+                source: "drive",
+                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
+                isNew: false,
+                isFeatured: true,
+                level: "intermediate"
+            },
+             {
+                id: 16,
+                title: "3) Comment déterminer l’équation horaire (partie 2)",
+                instructor: "Sahl",
+                subject: "Physique",
+                course: "Ondes",
+                source: "drive",
+                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
+                isNew: false,
+                isFeatured: true,
+                level: "intermediate"
+            },
+             {
+                id: 17,
+                title: "4) Le stroboscope",
+                instructor: "Sahl",
+                subject: "Physique",
+                course: "Ondes",
+                source: "drive",
+                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
+                isNew: false,
+                isFeatured: true,
+                level: "intermediate"
+            },
+              {
+                id: 18,
+                title: "4) Le stroboscope",
+                instructor: "Sahl",
+                subject: "Physique",
+                course: "Ondes",
+                source: "drive",
+                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
+                isNew: false,
+                isFeatured: true,
+                level: "intermediate"
+            },
+              {
+                id: 19,
+                title: "4) Le stroboscope",
+                instructor: "Sahl",
+                subject: "Physique",
+                course: "Ondes",
+                source: "drive",
+                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
+                isNew: false,
+                isFeatured: true,
+                level: "intermediate"
+            },
+              {
+                id: 20,
+                title: "4) Le stroboscope",
+                instructor: "Sahl",
+                subject: "Physique",
+                course: "Ondes",
+                source: "drive",
+                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
+                isNew: false,
+                isFeatured: true,
+                level: "intermediate"
+            },
+              {
+                id: 21,
+                title: "4) Le stroboscope",
+                instructor: "Sahl",
+                subject: "Physique",
+                course: "Ondes",
+                source: "drive",
+                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
+                isNew: false,
+                isFeatured: true,
+                level: "intermediate"
+            },
+              {
+                id: 22,
+                title: "4) Le stroboscope",
+                instructor: "Sahl",
+                subject: "Physique",
+                course: "Ondes",
+                source: "drive",
+                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
+                isNew: false,
+                isFeatured: true,
+                level: "intermediate"
             }
+
+
 
 
             // Biologie - Biologie Cellulaire videos

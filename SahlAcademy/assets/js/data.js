@@ -328,7 +328,7 @@
             },
              {
                 id: 15,
-                title: "2) Comment déterminer l’équation horaire (partie 1)",
+                title: "3) Comment déterminer l’équation horaire (partie 1)",
                 instructor: "Sahl",
                 subject: "Physique",
                 course: "Ondes",
@@ -340,7 +340,7 @@
             },
              {
                 id: 16,
-                title: "3) Comment déterminer l’équation horaire (partie 2)",
+                title: "4) Comment déterminer l’équation horaire (partie 2)",
                 instructor: "Sahl",
                 subject: "Physique",
                 course: "Ondes",
@@ -352,7 +352,7 @@
             },
              {
                 id: 17,
-                title: "4) Le stroboscope",
+                title: "5) Le stroboscope",
                 instructor: "Sahl",
                 subject: "Physique",
                 course: "Ondes",

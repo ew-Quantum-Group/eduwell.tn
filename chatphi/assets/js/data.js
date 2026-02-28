@@ -159,5 +159,12 @@
     icon: "fas fa-project-diagram",
     pdfUrl: "https://drive.google.com/file/d/1J22_4pdNnp7urZ_6r084PMei8CX3tTQ-/preview",
     fileName: "تمارين-باك-النمذجة.pdf"
-}
+},
+{
+    title: "منهجية الإجابة في فرض الفلسفة",
+    description: "دليل عملي يوضّح منهجية الإجابة في فرض الفلسفة، من فهم المطلوب وتحليل السؤال، إلى بناء الإشكالية وتنظيم الحجج وصياغة خاتمة متماسكة وفق المعايير المعتمدة في البكالوريا.",
+    icon: "fas fa-pen-fancy",
+    pdfUrl: "https://drive.google.com/file/d/1wkw2Cq5xZ49JZkCPGH7yWoslr5oqNTSL/preview",
+    fileName: "منهجية-الإجابة-في-فرض-الفلسفة.pdf"
+},
     ];

@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>Sahl — Bibliothèque (favoris)</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>/* ----- TOKENS (unchanged) ----- */
+:root {
+  --bg:        #fafaf8;
+  --bg1:       #f2f1ed;
+  --bg2:       #e8e6df;
+  --bg3:       #d4d0c4;
+  --surface:   rgba(0,0,0,.035);
+  --surface2:  rgba(0,0,0,.06);
+  --border:    rgba(0,0,0,.08);
+  --border2:   rgba(0,0,0,.15);
+  --ink:       #18180f;
+  --ink2:      #3d3d30;
+  --ink3:      #7a7a68;
+  --ink4:      #b0af9e;
+  --accent:    #2563eb;
+  --accent-h:  #1d4ed8;
+  --accent-s:  rgba(37,99,235,.12);
+  --gold:      #c9a227;
+  --gold-s:    rgba(201,162,39,.15);
+  --warm:      #f5f0e8;
+  --nav-h:     58px;
+  --bnav-h:    64px;
+  --ease:      cubic-bezier(.4,0,.2,1);
+  --spring:    cubic-bezier(.34,1.56,.64,1);
+  --safe-t:    env(safe-area-inset-top,0px);
+  --safe-b:    env(safe-area-inset-bottom,0px);
+  --safe-l:    env(safe-area-inset-left,0px);
+  --safe-r:    env(safe-area-inset-right,0px);
+}
+
+/* ----- RESET (unchanged) ----- */
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0 }
+html { scroll-behavior:smooth; -webkit-text-size-adjust:100% }
+body {
+  font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:transparent;
+}
+a { text-decoration:none; color:inherit }
+button { font-family:inherit; cursor:pointer; border:none; background:none; outline:none }
+input,select { font-family:inherit }
+::-webkit-scrollbar { width:4px }
+::-webkit-scrollbar-track { background:transparent }
+::-webkit-scrollbar-thumb { background:var(--bg3); border-radius:4px }
+
+/* ----- ANIMATIONS (unchanged) ----- */
+@keyframes fadeUp   { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:none} }
+@keyframes fadeIn   { from{opacity:0} to{opacity:1} }
+@keyframes cardIn   { from{opacity:0;transform:translateY(18px) scale(.97)} to{opacity:1;transform:none} }
+@keyframes spin     { to{transform:rotate(360deg)} }
+@keyframes pulse    { 0%,100%{opacity:1} 50%{opacity:.4} }
+@keyframes lbWave   { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(1.6)} }
+@keyframes dotPop   { 0%{content:''} 33%{content:'.'} 66%{content:'..'} 100%{content:'...'} }
+@keyframes floatUp  { 0%,100%{transform:translateY(0) rotate(-1.5deg)} 50%{transform:translateY(-8px) rotate(1.5deg)} }
+@keyframes orbDrift { 0%,100%{transform:translate(0,0)} 33%{transform:translate(40px,-50px)} 66%{transform:translate(-30px,35px)} }
+
+/* ----- LANDING (unchanged) ----- */
+#landing {
+  position:fixed; inset:0; z-index:900;
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+  background:var(--warm);
+  transition:opacity 1s var(--ease), transform 1s var(--ease);
+}
+#landing.exit { opacity:0; transform:scale(1.06) translateY(-10px); pointer-events:none }
+.orb {
+  position:absolute; border-radius:50%; pointer-events:none;
+  animation:orbDrift 18s ease-in-out infinite;
+  filter:blur(80px);
+}
+.orb-1 { width:600px;height:600px;background:rgba(37,99,235,.07);top:-20%;left:-15%;animation-duration:22s }
+.orb-2 { width:480px;height:480px;background:rgba(201,162,39,.09);bottom:-15%;right:-10%;animation-duration:17s;animation-delay:-9s }
+.orb-3 { width:320px;height:320px;background:rgba(99,102,241,.05);top:35%;left:55%;animation-duration:14s;animation-delay:-6s }
+.land-grain {
+  position:absolute; inset:0; pointer-events:none; opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size:180px;
+}
+.land-rule { position:absolute; pointer-events:none }
+.land-rule-h { top:15%; left:5%; right:5%; height:1px; background:linear-gradient(90deg, transparent, rgba(0,0,0,.08) 20%, rgba(0,0,0,.08) 80%, transparent); }
+.land-rule-h2 { bottom:15%; left:5%; right:5%; height:1px; background:linear-gradient(90deg, transparent, rgba(0,0,0,.06) 20%, rgba(0,0,0,.06) 80%, transparent); }
+.land-rule-v { left:12%; top:10%; bottom:10%; width:1px; background:linear-gradient(180deg, transparent, rgba(0,0,0,.07) 30%, rgba(0,0,0,.07) 70%, transparent); }
+.land-rule-v2 { right:12%; top:10%; bottom:10%; width:1px; background:linear-gradient(180deg, transparent, rgba(0,0,0,.07) 30%, rgba(0,0,0,.07) 70%, transparent); }
+.land-issue {
+  position:absolute; top:2.2rem; left:2.5rem;
+  font-family:'Fira Mono',monospace;
+  font-size:.6rem; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--ink4);
+  opacity:0; animation:fadeIn .6s .2s var(--ease) forwards;
+}
+.land-date {
+  position:absolute; top:2.2rem; right:2.5rem;
+  font-family:'Fira Mono',monospace;
+  font-size:.6rem; letter-spacing:.12em;
+  color:var(--ink4);
+  opacity:0; animation:fadeIn .6s .3s var(--ease) forwards;
+}
+.land-previews {
+  position:absolute; pointer-events:none;
+  display:flex; flex-direction:column; gap:14px;
+}
+.land-previews-l { left:4%; top:50%; transform:translateY(-50%) }
+.land-previews-r { right:4%; top:50%; transform:translateY(-50%) }
+.mp {
+  width:58px; height:84px; border-radius:10px; overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,.18), 0 2px 6px rgba(0,0,0,.1);
+  animation:floatUp 6s ease-in-out infinite;
+  position:relative;
+}
+.mp:nth-child(2) { animation-delay:-2.1s; margin-left:12px }
+.mp:nth-child(3) { animation-delay:-4.3s }
+.mp-icon {
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+}
+.mp-icon i { color:rgba(255,255,255,.7); font-size:.95rem }
+.land-content {
+  position:relative; z-index:10;
+  text-align:center;
+  padding:2rem;
+  max-width:680px; width:100%;
+}
+.land-eyebrow {
+  display:inline-flex; align-items:center; gap:.6rem;
+  font-family:'Fira Mono',monospace;
+  font-size:.62rem; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--ink3);
+  margin-bottom:1.6rem;
+  opacity:0; animation:fadeUp .6s .1s var(--ease) forwards;
+}
+.land-eyebrow::before,.land-eyebrow::after {
+  content:''; flex:1; height:1px; background:var(--border2); width:32px;
+}
+.land-h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3.4rem,10vw,8rem);
+  font-weight:900;
+  line-height:.9;
+  letter-spacing:-.03em;
+  color:var(--ink);
+  opacity:0; animation:fadeUp .8s .22s var(--ease) forwards;
+}
+.land-h1 em { font-style:italic; color:var(--accent); }
+.land-sub {
+  font-size:.98rem; font-weight:400;
+  color:var(--ink3); line-height:1.75;
+  margin:1.6rem auto 2.6rem;
+  max-width:400px;
+  opacity:0; animation:fadeUp .7s .38s var(--ease) forwards;
+}
+.land-ctas {
+  display:flex; align-items:center; justify-content:center;
+  gap:.85rem; flex-wrap:wrap;
+  opacity:0; animation:fadeUp .6s .52s var(--ease) forwards;
+}
+.btn-main {
+  display:inline-flex; align-items:center; gap:.6rem;
+  padding:.88rem 2.2rem;
+  background:var(--ink);
+  color:#fff;
+  font-size:.86rem; font-weight:600;
+  border-radius:999px;
+  transition:background .2s,transform .18s,box-shadow .2s;
+  box-shadow:0 4px 20px rgba(24,24,15,.25);
+  letter-spacing:.01em;
+}
+.btn-main:hover { background:var(--accent); transform:translateY(-1px); box-shadow:0 8px 28px rgba(37,99,235,.32) }
+.btn-outline {
+  display:inline-flex; align-items:center; gap:.5rem;
+  padding:.88rem 1.8rem;
+  background:transparent;
+  color:var(--ink2);
+  font-size:.86rem; font-weight:500;
+  border-radius:999px;
+  border:1.5px solid var(--border2);
+  transition:all .18s;
+}
+.btn-outline:hover { border-color:var(--ink); background:var(--surface); transform:translateY(-1px) }
+.land-strip {
+  position:absolute; bottom:0; left:0; right:0;
+  height:3px;
+  background:linear-gradient(90deg, var(--accent) 0%, var(--gold) 50%, var(--accent) 100%);
+  opacity:0; animation:fadeIn .5s 1s var(--ease) forwards;
+}
+
+/* ----- LIBRARY ----- */
+#library {
+  opacity:0; transform:translateY(10px);
+  transition:opacity .7s var(--ease), transform .7s var(--ease);
+  pointer-events:none;
+  min-height:100vh;
+  background:var(--bg);
+}
+#library.show { opacity:1; transform:none; pointer-events:all }
+
+/* ----- TOP NAV (unchanged) ----- */
+.nav {
+  position:sticky; top:0; z-index:200;
+  height:var(--nav-h);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 max(1.5rem,var(--safe-l)) 0 max(1.5rem,var(--safe-r));
+  background:rgba(250,250,248,.92);
+  backdrop-filter:blur(20px) saturate(160%);
+  -webkit-backdrop-filter:blur(20px) saturate(160%);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo {
+  display:flex; align-items:center; gap:.6rem;
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem; font-weight:700;
+  color:var(--ink); letter-spacing:-.01em;
+}
+.nav-logo-mark {
+  width:32px; height:32px; border-radius:10px;
+  background:var(--ink);
+  display:flex; align-items:center; justify-content:center;
+  font-size:.7rem; color:#fff; flex-shrink:0;
+  transition:background .2s;
+}
+.nav-logo:hover .nav-logo-mark { background:var(--accent) }
+.nav-tabs {
+  position:absolute; left:50%; transform:translateX(-50%);
+  display:flex; gap:0;
+  background:var(--bg1);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:3px;
+}
+.nav-tab {
+  padding:.3rem .85rem;
+  border-radius:9px;
+  font-size:.75rem; font-weight:500; color:var(--ink3);
+  transition:all .2s;
+  white-space:nowrap;
+}
+.nav-tab:hover { color:var(--ink) }
+.nav-tab.on {
+  background:var(--bg);
+  color:var(--ink);
+  box-shadow:0 1px 4px rgba(0,0,0,.1);
+}
+.nav-end { display:flex; align-items:center; gap:.5rem }
+.nav-search-wrap {
+  display:flex; align-items:center; gap:.5rem;
+  background:var(--bg1);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:.38rem .85rem;
+  transition:border-color .2s, box-shadow .2s, background .2s;
+}
+.nav-search-wrap:focus-within {
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px var(--accent-s);
+  background:var(--bg);
+}
+.nav-search-wrap i { color:var(--ink4); font-size:.72rem; flex-shrink:0 }
+.nav-search-wrap input {
+  background:none; border:none; outline:none;
+  font-size:.8rem; color:var(--ink); width:150px;
+}
+.nav-search-wrap input::placeholder { color:var(--ink4) }
+.nav-btn {
+  width:36px; height:36px; border-radius:10px;
+  background:var(--bg1); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--ink3); font-size:.78rem;
+  transition:all .2s; flex-shrink:0; position:relative;
+}
+.nav-btn:hover { color:var(--ink); border-color:var(--border2) }
+.nav-btn-dot {
+  position:absolute; top:7px; right:7px;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--accent); border:1.5px solid var(--bg);
+}
+.nav-mobile-search { display:none }
+
+/* ----- MOBILE SEARCH (unchanged) ----- */
+.m-search-bar {
+  display:none;
+  padding:.55rem 1rem;
+  background:var(--bg);
+  border-bottom:1px solid var(--border);
+  position:sticky; top:var(--nav-h); z-index:190;
+}
+.m-search-bar label {
+  display:flex; align-items:center; gap:.55rem;
+  background:var(--bg1);
+  border:1.5px solid var(--border);
+  border-radius:14px; padding:.65rem 1rem;
+  transition:border-color .2s, box-shadow .2s;
+}
+.m-search-bar label:focus-within {
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px var(--accent-s);
+}
+.m-search-bar i { color:var(--ink4); font-size:.8rem }
+.m-search-bar input {
+  flex:1; background:none; border:none; outline:none;
+  font-size:.9rem; color:var(--ink);
+}
+.m-search-bar input::placeholder { color:var(--ink4) }
+
+/* ----- HERO (unchanged) ----- */
+.hero {
+  position:relative;
+  padding:56px 1.8rem 52px;
+  overflow:hidden;
+  border-bottom:1px solid var(--border);
+}
+.hero-bg-pattern {
+  position:absolute; inset:0; pointer-events:none; opacity:.35;
+  background-image:radial-gradient(circle, var(--border2) 1px, transparent 1px);
+  background-size:28px 28px;
+}
+.hero-inner {
+  max-width:1200px; margin:0 auto;
+  display:flex; align-items:flex-end; justify-content:space-between;
+  gap:2rem; flex-wrap:wrap;
+}
+.hero-left { flex:1; min-width:260px }
+.hero-kicker {
+  display:inline-flex; align-items:center; gap:.45rem;
+  font-family:'Fira Mono',monospace;
+  font-size:.6rem; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:.9rem;
+}
+.hero-kicker-dot {
+  width:5px; height:5px; border-radius:50%;
+  background:var(--accent);
+  animation:pulse 2s ease-in-out infinite;
+}
+.hero-h {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,5vw,4rem);
+  font-weight:900; line-height:.95;
+  letter-spacing:-.03em; color:var(--ink);
+}
+.hero-h em { font-style:italic; color:var(--accent) }
+.hero-p {
+  font-size:.9rem; font-weight:400; color:var(--ink3);
+  line-height:1.7; max-width:360px; margin-top:.9rem;
+}
+.hero-right { display:flex; gap:1rem; flex-wrap:wrap; align-items:flex-end }
+.stat-card {
+  background:var(--bg1);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:1.1rem 1.4rem;
+  min-width:100px; text-align:center;
+  transition:box-shadow .2s, transform .2s;
+}
+.stat-card:hover { box-shadow:0 4px 16px rgba(0,0,0,.08); transform:translateY(-2px) }
+.stat-n {
+  font-family:'Playfair Display',serif;
+  font-size:2rem; font-weight:900; color:var(--ink); line-height:1; display:block;
+}
+.stat-l {
+  font-size:.6rem; color:var(--ink4); margin-top:.3rem;
+  letter-spacing:.1em; text-transform:uppercase; display:block;
+}
+.hero-ribbon {
+  display:flex; align-items:center; gap:.4rem;
+  margin-top:1.4rem; flex-wrap:wrap;
+}
+.ribbon-tag {
+  display:inline-flex; align-items:center; gap:.3rem;
+  background:var(--gold-s);
+  border:1px solid rgba(201,162,39,.25);
+  color:var(--gold);
+  border-radius:999px;
+  padding:.22rem .7rem;
+  font-size:.65rem; font-weight:600;
+  letter-spacing:.06em;
+}
+.ribbon-tag i { font-size:.58rem }
+.ribbon-sep { color:var(--ink4); font-size:.7rem }
+.ribbon-title {
+  font-size:.78rem; color:var(--ink2);
+  font-style:italic;
+  font-family:'Playfair Display',serif;
+}
+
+/* ----- BOOK SECTIONS ----- */
+.lib-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.2rem 1.5rem calc(var(--bnav-h) + 2rem + max(0px, var(--safe-b)));
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.6rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.section-title i {
+  color: var(--accent);
+  font-size: 1.1rem;
+}
+.section-meta {
+  font-family: 'Fira Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--ink4);
+  letter-spacing: 0.05em;
+}
+
+/* ----- BOOK GRID (unchanged) ----- */
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+  gap: 1.6rem;
+}
+.books-grid.list-view { grid-template-columns: 1fr; gap: .55rem; }
+
+/* ----- BOOK CARD (added favorite button) ----- */
+.bk {
+  opacity:0; transform:translateY(16px) scale(.975);
+  animation:cardIn .5s var(--ease) forwards;
+  position: relative;
+}
+.bk-inner { display:flex; flex-direction:column; cursor:pointer }
+.bk-cover {
+  position:relative;
+  height:252px;
+  border-radius:18px;
+  overflow:hidden;
+  transition:transform .38s var(--spring), box-shadow .35s var(--ease);
+  will-change:transform;
+  box-shadow:0 2px 12px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.08);
+}
+.bk:hover .bk-cover {
+  transform:translateY(-8px) scale(1.02);
+  box-shadow:0 24px 56px rgba(0,0,0,.2), 0 4px 12px rgba(0,0,0,.1);
+}
+.bk-cover-bg { position:absolute; inset:0; z-index:0 }
+.bk-cover-grain {
+  position:absolute; inset:0; z-index:1; pointer-events:none;
+  opacity:.04;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:100px;
+}
+.bk-cover-stripe {
+  position:absolute; top:0; left:0; right:0; height:3px; z-index:5;
+}
+.bk-badge {
+  position:absolute; top:12px; left:12px; z-index:6;
+  display:inline-flex; align-items:center; gap:.28rem;
+  background:rgba(255,255,255,.14);
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:6px;
+  padding:.2rem .52rem;
+  font-size:.52rem; font-weight:700;
+  letter-spacing:.1em; text-transform:uppercase;
+  color:rgba(255,255,255,.92);
+}
+.bk-badge i { font-size:.48rem }
+.bk-year {
+  position:absolute; top:14px; right:12px; z-index:6;
+  font-family:'Fira Mono',monospace;
+  font-size:.55rem; color:rgba(255,255,255,.3);
+}
+.bk-icon {
+  position:absolute; inset:0; z-index:3;
+  display:flex; align-items:center; justify-content:center;
+}
+.bk-icon i {
+  font-size:3.8rem;
+  color:rgba(255,255,255,.85);
+  filter:drop-shadow(0 3px 14px rgba(0,0,0,.35));
+  transition:transform .32s var(--spring);
+}
+.bk:hover .bk-icon i { transform:scale(1.12) translateY(-4px) }
+.bk-foot {
+  position:absolute; bottom:0; left:0; right:0; z-index:5;
+  padding:2.4rem 1rem .88rem;
+  background:linear-gradient(to top, rgba(0,0,0,.78) 0%, transparent 100%);
+}
+.bk-title {
+  font-family:'Playfair Display',serif;
+  font-size:.9rem; font-weight:700; color:#fff;
+  line-height:1.2; letter-spacing:-.01em;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+}
+.bk-author {
+  font-size:.6rem; font-weight:400;
+  color:rgba(255,255,255,.48); margin-top:.18rem;
+  letter-spacing:.02em;
+}
+.bk-overlay {
+  position:absolute; inset:0; z-index:7;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(0,0,0,0);
+  transition:background .25s;
+  border-radius:18px;
+}
+.bk:hover .bk-overlay { background:rgba(0,0,0,.08) }
+.bk-cta {
+  display:inline-flex; align-items:center; gap:.45rem;
+  padding:.5rem 1.3rem;
+  background:rgba(255,255,255,.2);
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.32);
+  border-radius:999px;
+  font-size:.7rem; font-weight:600; color:#fff;
+  opacity:0; transform:translateY(10px);
+  transition:opacity .2s, transform .2s;
+}
+.bk:hover .bk-cta { opacity:1; transform:translateY(0) }
+.bk-meta { padding:.72rem .1rem 0 }
+.bk-meta-title {
+  font-family:'Playfair Display',serif;
+  font-size:.9rem; font-weight:700;
+  color:var(--ink); letter-spacing:-.01em; line-height:1.25;
+}
+.bk-meta-row { display:flex; align-items:center; justify-content:space-between; margin-top:.22rem }
+.bk-meta-author { font-size:.68rem; color:var(--ink3) }
+.bk-meta-pp {
+  font-family:'Fira Mono',monospace;
+  font-size:.6rem; color:var(--ink4);
+  display:flex; align-items:center; gap:.2rem;
+}
+.bk-meta-pp i { font-size:.55rem; color:var(--accent) }
+
+/* Favorite button (heart) */
+.bk-fav {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 20;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.bk-fav:hover {
+  transform: scale(1.15);
+  background: rgba(255,255,255,0.4);
+}
+.bk-fav.active {
+  color: #ff3040;
+  background: rgba(255,255,255,0.9);
+  border-color: #ff3040;
+}
+.bk-fav.active i {
+  font-weight: 900;
+}
+
+/* LIST VIEW adjustments */
+.books-grid.list-view .bk-fav {
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+}
+.books-grid.list-view .bk-fav:hover {
+  transform: translateY(-50%) scale(1.15);
+}
+
+/* ----- EMPTY FAV STATE ----- */
+.empty-fav {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: var(--bg1);
+  border-radius: 24px;
+  border: 1px dashed var(--border2);
+  margin-top: 1rem;
+}
+.empty-fav i {
+  font-size: 2.5rem;
+  color: var(--ink4);
+  margin-bottom: 1rem;
+}
+.empty-fav p {
+  color: var(--ink3);
+  font-size: 0.9rem;
+}
+
+/* LIST VIEW (unchanged) */
+.books-grid.list-view .bk { transform:none !important }
+.books-grid.list-view .bk-inner {
+  flex-direction:row; align-items:center; gap:.9rem;
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:.8rem 1.1rem .8rem .8rem;
+  transition:border-color .18s, box-shadow .18s, transform .18s;
+}
+.books-grid.list-view .bk:hover .bk-inner {
+  border-color:var(--border2);
+  box-shadow:0 4px 18px rgba(0,0,0,.07);
+  transform:translateX(3px);
+}
+.books-grid.list-view .bk-cover {
+  width:52px; height:72px; border-radius:10px; flex-shrink:0;
+  box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+.books-grid.list-view .bk-icon i { font-size:1.5rem }
+.books-grid.list-view .bk-foot { display:none }
+.books-grid.list-view .bk-badge { font-size:.42rem; padding:.12rem .38rem; top:6px; left:6px }
+.books-grid.list-view .bk-year { display:none }
+.books-grid.list-view .bk-cover-stripe { height:2px }
+.books-grid.list-view .bk-overlay { display:none }
+.books-grid.list-view .bk-meta { flex:1; padding:0 }
+.books-grid.list-view .bk-meta-title { font-size:.98rem }
+.books-grid.list-view .bk-meta-pp { margin-left:auto }
+.books-grid.list-view .bk:hover .bk-cover { transform:none; box-shadow:0 2px 8px rgba(0,0,0,.15) }
+.books-grid.list-view .bk-open-btn {
+  display:flex; align-items:center; gap:.35rem;
+  padding:.42rem .9rem; border-radius:999px;
+  background:var(--bg1); border:1.5px solid var(--border);
+  font-size:.68rem; font-weight:600; color:var(--ink3);
+  transition:all .18s; flex-shrink:0;
+}
+.books-grid.list-view .bk:hover .bk-open-btn {
+  background:var(--accent); color:#fff; border-color:var(--accent);
+}
+.bk-open-row { display:none }
+
+.empty-state { display:none; text-align:center; padding:6rem 2rem }
+.empty-state.show { display:block }
+.empty-icon {
+  width:70px; height:70px; border-radius:20px;
+  background:var(--bg1); border:1.5px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.6rem; color:var(--ink4); margin:0 auto 1.2rem;
+}
+.empty-state h3 {
+  font-family:'Playfair Display',serif;
+  font-size:1.4rem; font-weight:700; color:var(--ink);
+}
+.empty-state p { font-size:.82rem; color:var(--ink3); margin-top:.4rem }
+
+/* ----- MODAL (unchanged) ----- */
+.modal-bg {
+  position:fixed; inset:0; z-index:800;
+  background:rgba(24,24,15,.45);
+  backdrop-filter:blur(16px) saturate(1.4);
+  -webkit-backdrop-filter:blur(16px) saturate(1.4);
+  display:flex; align-items:flex-end; justify-content:center;
+  padding:0 .75rem max(.75rem,var(--safe-b));
+  opacity:0; pointer-events:none;
+  transition:opacity .3s var(--ease);
+}
+.modal-bg.open { opacity:1; pointer-events:all }
+.modal-sheet {
+  background:var(--bg);
+  border:1px solid var(--border2);
+  border-radius:28px 28px 20px 20px;
+  width:100%; max-width:960px; max-height:92vh;
+  display:flex; flex-direction:column; overflow:hidden;
+  transform:translateY(48px);
+  transition:transform .45s var(--spring);
+  box-shadow:0 -8px 60px rgba(0,0,0,.18), 0 0 0 1px rgba(255,255,255,.6) inset;
+}
+.modal-bg.open .modal-sheet { transform:translateY(0) }
+.modal-pill { width:38px; height:4px; border-radius:2px; background:var(--bg3); margin:.7rem auto 0; flex-shrink:0; }
+.modal-head { display:flex; align-items:center; gap:1.1rem; padding:.95rem 1.4rem; border-bottom:1px solid var(--border); flex-shrink:0; }
+.modal-cover-mini { width:46px; height:64px; border-radius:10px; flex-shrink:0; overflow:hidden; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 18px rgba(0,0,0,.2); position:relative; }
+.modal-cover-mini i { position:relative; z-index:2; font-size:1.1rem; color:rgba(255,255,255,.9) }
+.modal-info { flex:1; min-width:0 }
+.modal-cat-tag { display:inline-flex; align-items:center; gap:.3rem; font-family:'Fira Mono',monospace; font-size:.58rem; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin-bottom:.1rem; }
+.modal-book-title { font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; letter-spacing:-.02em; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.modal-book-author { font-size:.74rem; color:var(--ink3); margin-top:.05rem }
+.modal-actions { display:flex; gap:.4rem; flex-shrink:0 }
+.m-action { display:inline-flex; align-items:center; gap:.35rem; padding:.42rem .85rem; border-radius:10px; border:1.5px solid var(--border); background:var(--bg1); color:var(--ink3); font-size:.7rem; font-weight:500; transition:all .18s; }
+.m-action:hover { border-color:var(--accent); color:var(--accent) }
+.m-action.red:hover { border-color:#dc2626; color:#dc2626 }
+.modal-body { flex:1; position:relative; overflow:hidden; min-height:400px }
+.m-loading { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2rem; background:var(--bg); z-index:10; transition:opacity .3s; }
+.m-loading.gone { opacity:0; pointer-events:none }
+.m-bars { display:flex; gap:5px; align-items:flex-end; height:56px }
+.m-bar { width:10px; border-radius:4px 4px 0 0; transform-origin:bottom; animation:lbWave 1.2s ease-in-out infinite; }
+.m-bar:nth-child(1) { height:40px; background:#2563eb; animation-delay:0s }
+.m-bar:nth-child(2) { height:56px; background:#7c3aed; animation-delay:.1s }
+.m-bar:nth-child(3) { height:36px; background:#059669; animation-delay:.2s }
+.m-bar:nth-child(4) { height:52px; background:#d97706; animation-delay:.3s }
+.m-bar:nth-child(5) { height:44px; background:#dc2626; animation-delay:.4s }
+.m-shelf { width:96px; height:2px; background:var(--bg2); border-radius:1px; margin-top:2px }
+.m-loading-txt { font-family:'Playfair Display',serif; font-size:.9rem; font-weight:700; color:var(--ink2) }
+.m-loading-txt::after { content:''; animation:dotPop 1.2s steps(4,end) infinite }
+.m-loading-sub { font-size:.7rem; color:var(--ink4); margin-top:-.8rem }
+.pdf-iframe { width:100%; border:none; display:block; height:min(76vh,680px) }
+
+/* ----- BOTTOM NAV (unchanged) ----- */
+.bnav {
+  display:none;
+  position:fixed; bottom:0; left:0; right:0; z-index:300;
+  background:rgba(250,250,248,.96);
+  backdrop-filter:blur(20px) saturate(160%);
+  -webkit-backdrop-filter:blur(20px) saturate(160%);
+  border-top:1px solid var(--border);
+  padding:.45rem 0 max(.45rem,var(--safe-b));
+  flex-direction:row; justify-content:space-around; align-items:flex-start;
+}
+.bn {
+  display:flex; flex-direction:column; align-items:center; gap:.2rem;
+  padding:.3rem .9rem; min-width:56px;
+  font-size:.55rem; font-weight:600; color:var(--ink4);
+  letter-spacing:.04em; text-transform:uppercase;
+  transition:color .2s;
+}
+.bn i { font-size:1.18rem; transition:transform .22s var(--spring) }
+.bn.on { color:var(--accent) }
+.bn.on i { transform:scale(1.14) }
+
+/* ----- SORT SHEET (unchanged) ----- */
+.sort-sheet-bg { z-index:850 }
+.sort-sheet-head { padding:1rem 1.5rem .9rem; border-bottom:1px solid var(--border); }
+.sort-sheet-head p { font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700; color:var(--ink); }
+.sort-sheet-body { padding:.9rem 1.2rem 1.4rem; display:flex; flex-direction:column; gap:.4rem; }
+.sort-opt { display:flex; align-items:center; gap:.75rem; padding:.8rem 1rem; border-radius:14px; background:var(--bg1); border:1.5px solid transparent; font-size:.86rem; color:var(--ink); cursor:pointer; transition:all .18s; width:100%; text-align:left; }
+.sort-opt i { width:16px; color:var(--ink4); flex-shrink:0 }
+.sort-opt.on { border-color:var(--accent); background:var(--accent-s) }
+.sort-opt.on i { color:var(--accent) }
+
+/* ----- FOOTER (unchanged) ----- */
+footer {
+  border-top:1px solid var(--border);
+  padding:2rem 1.5rem;
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:1rem;
+  background:var(--warm);
+}
+.foot-brand {
+  display:flex; align-items:center; gap:.6rem;
+  font-family:'Playfair Display',serif;
+  font-size:.95rem; font-weight:700; color:var(--ink3);
+}
+.foot-brand-mark {
+  width:22px; height:22px; border-radius:6px;
+  background:var(--ink); display:flex; align-items:center; justify-content:center;
+  font-size:.58rem; color:#fff;
+}
+.foot-copy { font-size:.68rem; color:var(--ink4); font-family:'Fira Mono',monospace }
+.foot-links { display:flex; gap:.8rem }
+.foot-lnk {
+  font-size:.7rem; color:var(--ink4);
+  display:flex; align-items:center; gap:.28rem;
+  transition:color .2s;
+}
+.foot-lnk:hover { color:var(--accent) }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width:900px) { .nav-tabs { display:none } }
+
+@media (max-width:640px) {
+  .nav-search-wrap { display:none }
+  .nav-mobile-search { display:flex }
+  .m-search-bar { display:block }
+  .m-search-bar.hidden { display:none }
+  .bnav { display:flex }
+
+  .hero { padding:36px 1.1rem 32px }
+  .hero-inner { flex-direction:column; gap:1.2rem; align-items:flex-start }
+  .hero-h { font-size:clamp(1.8rem,8vw,2.6rem) }
+  .hero-right { width:100%; justify-content:flex-start }
+  .stat-card { padding:.8rem 1rem; min-width:80px }
+  .stat-n { font-size:1.5rem }
+  .land-previews { display:none }
+  .land-h1 { font-size:clamp(3rem,14vw,5rem) }
+  .land-sub { font-size:.88rem }
+  .btn-main,.btn-outline { font-size:.82rem; padding:.78rem 1.5rem }
+  .land-issue,.land-date { display:none }
+  .books-grid { grid-template-columns:repeat(2,1fr); gap:.85rem }
+  .bk-cover { height:200px }
+  .bk-icon i { font-size:2.8rem }
+  .lib-section { padding:1.6rem 1rem calc(var(--bnav-h) + 1.5rem + max(0px,var(--safe-b))) }
+  .section-header { margin-bottom:1.4rem; }
+  .modal-bg { padding:0 }
+  .modal-sheet { border-radius:24px 24px 0 0; max-height:95vh }
+  .modal-head { padding:.8rem 1rem }
+  .modal-book-title { font-size:1rem }
+  .m-action span { display:none }
+  .m-action { padding:.4rem .6rem }
+  footer { flex-direction:column; text-align:center; padding-bottom:calc(var(--bnav-h) + max(1rem,var(--safe-b))) }
+  .foot-links { justify-content:center }
+}
+
+@media (max-width:380px) {
+  .books-grid { gap:.65rem }
+  .bk-cover { height:178px }
+  .bk-icon i { font-size:2.3rem }
+}
+</style>
+</head>
+<body>
+<!-- LANDING -->
+<section id="landing">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="land-grain"></div>
+  <div class="land-rule land-rule-h"></div>
+  <div class="land-rule land-rule-h2"></div>
+  <div class="land-rule land-rule-v"></div>
+  <div class="land-rule land-rule-v2"></div>
+  <div class="land-issue">Sahl · Édition 2026</div>
+  <div class="land-date">Réussite au Bac</div>
+<div class="land-previews land-previews-l" id="prevL"></div>
+<div class="land-previews land-previews-r" id="prevR"></div>
+
+<div class="land-content">
+  <div class="land-eyebrow"><span></span>Plateforme Bac<span></span></div>
+
+  <h1 class="land-h1">Sahl.<br><em>Révisez.</em><br>Réussissez.</h1>
+
+  <p class="land-sub">
+    Une plateforme complète pour préparer le Bac : cours, résumés, exercices corrigés et outils intelligents pour progresser efficacement.
+  </p>
+
+  <div class="land-ctas">
+    <button class="btn-main" id="openLibBtn">
+      <i class="fas fa-graduation-cap"></i> Commencer la révision
+    </button>
+
+    <button class="btn-outline">
+      <i class="fas fa-lightbulb"></i> Découvrir les matières
+    </button>
+  
+    </div>
+  </div>
+  <div class="land-strip"></div>
+</section>
+
+<!-- LIBRARY -->
+<div id="library">
+  <!-- TOP NAV -->
+  <nav class="nav">
+    <a href="#" class="nav-logo"><div class="nav-logo-mark"><i class="fas fa-book-bookmark"></i></div>Sahl</a>
+    <div class="nav-tabs">
+      <button class="nav-tab on" id="tabLibrary">Bibliothèque</button>
+      <button class="nav-tab" id="tabFavorites">Favoris</button>
+      <button class="nav-tab">Récents</button>
+      <button class="nav-tab">Sélection</button>
+    </div>
+    <div class="nav-end">
+      <label class="nav-search-wrap"><i class="fas fa-magnifying-glass"></i><input type="search" id="srchD" placeholder="Rechercher…" autocomplete="off"/></label>
+      <button class="nav-btn nav-mobile-search" id="mSrchToggle" aria-label="Rechercher"><i class="fas fa-magnifying-glass"></i></button>
+      <button class="nav-btn" aria-label="Notifications"><i class="fas fa-bell"></i><div class="nav-btn-dot"></div></button>
+    </div>
+  </nav>
+
+  <!-- MOBILE SEARCH BAR -->
+  <div class="m-search-bar hidden" id="mSrchBar">
+    <label><i class="fas fa-magnifying-glass"></i><input type="search" id="srchM" placeholder="Titre, auteur, discipline…" autocomplete="off"/></label>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-kicker"><div class="hero-kicker-dot"></div> Révision Bac Sahl</div>
+        <h2 class="hero-h"> Votre<br><em>espace</em><br>de réussite</h2>
+        <p class="hero-p">
+  Cours structurés, résumés clairs, exercices corrigés et méthodes efficaces pour exceller au Bac dans toutes les matières.
+</p>
+        <div class="hero-ribbon"><span class="ribbon-tag"><i class="fas fa-crown"></i> Coup de cœur</span><span class="ribbon-sep">·</span><span class="ribbon-title">E-Books by Sahl</span></div>
+      </div>
+      <div class="hero-right">
+        <div class="stat-card"><span class="stat-n" id="statCount">+12K</span><span class="stat-l">Volumes</span></div>
+        <div class="stat-card"><span class="stat-n">8</span><span class="stat-l">Disciplines</span></div>
+        <div class="stat-card"><span class="stat-n">∞</span><span class="stat-l">Savoir</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN LIBRARY SECTION (all books) -->
+  <div class="lib-section" id="librarySection">
+    <div class="section-header">
+      <h3 class="section-title"><i class="fas fa-book"></i> Tous les livres</h3>
+      <span class="section-meta" id="metaCount">12 VOLUMES</span>
+    </div>
+    <div class="books-grid" id="bGrid"></div>
+    <div class="empty-state" id="emptyState"><div class="empty-icon"><i class="fas fa-book-open"></i></div><h3>Aucun résultat</h3><p>Essayez une autre recherche.</p></div>
+  </div>
+
+  <!-- FAVORITES SECTION (initially hidden) -->
+  <div class="lib-section" id="favoritesSection" style="display: none;">
+    <div class="section-header">
+      <h3 class="section-title"><i class="fas fa-heart" style="color: #ff3040;"></i> Mes favoris</h3>
+      <span class="section-meta" id="favCount">0 FAVORI</span>
+    </div>
+    <div class="books-grid" id="favGrid"></div>
+    <div class="empty-fav" id="emptyFav" style="display: flex; flex-direction: column; align-items: center;">
+      <i class="far fa-heart"></i>
+      <p>Vous n'avez aucun favori pour le moment.<br>Cliquez sur le cœur d'un livre pour l'ajouter.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="foot-brand"><div class="foot-brand-mark"><i class="fas fa-book-bookmark"></i></div>Sahl Bibliothèque</div>
+    <div class="foot-copy">© 2026 SAHL </div>
+    <div class="foot-links"><a href="#" class="foot-lnk"><i class="fas fa-circle-info"></i> À propos</a><a href="#" class="foot-lnk"><i class="fas fa-envelope"></i> Contact</a><a href="#" class="foot-lnk"><i class="fas fa-shield-halved"></i> Confidentialité</a></div>
+  </footer>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bnav">
+    <button class="bn on" id="bnLibrary"><i class="fas fa-books"></i><span>Livres</span></button>
+    <button class="bn" id="bnFavorites"><i class="fas fa-heart"></i><span>Favoris</span></button>
+    <button class="bn" id="bnSearch"><i class="fas fa-magnifying-glass"></i><span>Chercher</span></button>
+    <button class="bn"><i class="fas fa-star"></i><span>Sélection</span></button>
+    <button class="bn" id="bnSort"><i class="fas fa-sliders"></i><span>Trier</span></button>
+  </nav>
+</div>
+
+<!-- MODAL & SORT SHEET (unchanged) -->
+<div class="modal-bg" id="bookModal"><div class="modal-sheet"><div class="modal-pill"></div><div class="modal-head"><div class="modal-cover-mini" id="mCoverMini"></div><div class="modal-info"><div class="modal-cat-tag"><i class="fas fa-book-open-reader"></i><span id="mCat">—</span></div><div class="modal-book-title" id="mTitle">—</div><div class="modal-book-author" id="mAuthor">—</div></div><div class="modal-actions"><button class="m-action"><i class="far fa-bookmark"></i><span> Sauver</span></button><button class="m-action"><i class="fas fa-share-nodes"></i><span> Partager</span></button><button class="m-action red" id="closeModal"><i class="fas fa-xmark"></i><span> Fermer</span></button></div></div><div class="modal-body"><div class="m-loading" id="mLoading"><div class="m-bars"><div class="m-bar"></div><div class="m-bar"></div><div class="m-bar"></div><div class="m-bar"></div><div class="m-bar"></div></div><div class="m-shelf"></div><div class="m-loading-txt">Ouverture</div><div class="m-loading-sub">Chargement depuis la bibliothèque</div></div><iframe id="pdfFrame" class="pdf-iframe" src="about:blank" title="Lecteur"></iframe></div></div></div>
+<div class="modal-bg sort-sheet-bg" id="sortSheet"><div class="modal-sheet" style="max-height:46vh;"><div class="modal-pill"></div><div class="sort-sheet-head"><p>Trier les livres</p></div><div class="sort-sheet-body" id="sortOpts"><button class="sort-opt on" data-s="default"><i class="fas fa-list-ol"></i> Ordre par défaut</button><button class="sort-opt" data-s="az"><i class="fas fa-arrow-down-a-z"></i> Alphabétique A → Z</button><button class="sort-opt" data-s="pages"><i class="fas fa-arrow-down-wide-short"></i> Plus de pages d'abord</button></div></div></div>
+
+<script>
+(() => {
+  // ==================== MODERN, SCALABLE CORE ====================
+  'use strict';
+
+  // --- 1. CLEAN JSON DATA (easily add/remove books) ---
+  const DISC = {
+    philosophy: 'fa-infinity',
+    science: 'fa-flask-conical',
+    history: 'fa-scroll',
+    literature: 'fa-feather-pointed',
+    technology: 'fa-microchip',
+    psychology: 'fa-head-side-brain'
+  };
+
+  const RAW_BOOKS = [
+     { id:2,  title:'Devoir de Synthèse n°2- 1',   author:'EduWell',       cat:'science',    pages:5, tag:'SVT', yr:'2026', icon:'fa-book',          bg:'linear-gradient(145deg,#000d24,#003a7a)',    stripe:'linear-gradient(90deg,#3b82f6,#0ea5e9)',  pdf:'https://drive.google.com/file/d/1BppMoMAQusin8pBD8aZRlz21DLJyOkv_/preview' },
+    { id:3,  title:'Correction n°2- 1',   author:'EduWell',       cat:'science',    pages:5, tag:'SVT', yr:'2026', icon:'fa-book',          bg:'linear-gradient(145deg,#000d24,#003a7a)',    stripe:'linear-gradient(90deg,#3b82f6,#0ea5e9)',  pdf:'https://drive.google.com/file/d/1MgQY2IcxI-OVcFLEUeIYbLyqEb5PyTc3/preview' },
+    { id:4,  title:'Devoir de Synthèse n°2- 2',   author:'EduWell',       cat:'science',    pages:5, tag:'SVT', yr:'2026', icon:'fa-book',          bg:'linear-gradient(145deg,#000d24,#003a7a)',    stripe:'linear-gradient(90deg,#3b82f6,#0ea5e9)',  pdf:'https://drive.google.com/file/d/1ljEq_kYXoz_TFxtxGmAg3DDiv4bmpvB1/preview' },
+    { id:5,  title:'Correction n°2- 2',   author:'EduWell',       cat:'science',    pages:5, tag:'SVT', yr:'2026', icon:'fa-book',          bg:'linear-gradient(145deg,#000d24,#003a7a)',    stripe:'linear-gradient(90deg,#3b82f6,#0ea5e9)',  pdf:'https://drive.google.com/file/d/1KVwdGlXKGonSFx0FdD_CNhRcXeAWptug/preview' },
+
+
+
+    { id:8,  title:'Réflexe myotatique 1',   author:'EduWell',       cat:'science',    pages:5, tag:'SVT', yr:'2026', icon:'fa-book',          bg:'linear-gradient(145deg,#000d24,#003a7a)',    stripe:'linear-gradient(90deg,#3b82f6,#0ea5e9)',  pdf:'https://drive.google.com/file/d/1urvxKyZa5lltfqyRj89aQqJtKoJR5Bac/preview' },
+    { id:9,  title:'Correction Réflexe myotatique 1',   author:'EduWell',       cat:'science',    pages:5, tag:'SVT', yr:'2026', icon:'fa-book',          bg:'linear-gradient(145deg,#000d24,#003a7a)',    stripe:'linear-gradient(90deg,#3b82f6,#0ea5e9)',  pdf:'https://drive.google.com/file/d/1Eeazgp2dvArV3chRxjts0M6WLcMt8-uE/preview' },
+
+    
+    { id:10,  title:'Réflexe myotatique 1',   author:'EduWell',       cat:'science',    pages:5, tag:'SVT', yr:'2026', icon:'fa-book',          bg:'linear-gradient(145deg,#000d24,#003a7a)',    stripe:'linear-gradient(90deg,#3b82f6,#0ea5e9)',  pdf:'https://drive.google.com/file/d/11W3h0T2dI8xUSIOs0YM2EFxl9s7lBuah/preview' },
+    { id:11,  title:'Correction Réflexe myotatique 1',   author:'EduWell',       cat:'science',    pages:5, tag:'SVT', yr:'2026', icon:'fa-book',          bg:'linear-gradient(145deg,#000d24,#003a7a)',    stripe:'linear-gradient(90deg,#3b82f6,#0ea5e9)',  pdf:'https://drive.google.com/file/d/1PkSN89APuopgwnsPpOQwOco7hBcBNSpF/preview' },
+
+    { id:6,  title:'Système 1 / Système 2',          author:'EduWell',       cat:'science', pages:7, tag:'Biologie',  icon:'fa-brain',         bg:'linear-gradient(145deg,#001e06,#005518)',    stripe:'linear-gradient(90deg,#22c55e,#16a34a)',  pdf:'https://drive.google.com/file/d/1-MfQN24ogZHwOGgNVqAQ7OwNGl1T46-I/preview' }
+   
+   
+  ];
+
+  // --- 2. SAFE BOOK STORE (defensive, future API ready) ---
+  const BookStore = {
+    // raw immutable data
+    _raw: RAW_BOOKS,
+
+    // returns all books (safe copy)
+    getAll() {
+      return this._raw.map(b => ({ ...b })); // shallow copy (enough)
+    },
+
+    // get by id, returns undefined if missing
+    getById(id) {
+      return this._raw.find(b => b.id === id);
+    },
+
+    // filter & sort with defensive checks
+    filterAndSort({ query = '', sort = 'default' } = {}) {
+      let list = this._raw.filter(b => 
+        !query || 
+        b.title.toLowerCase().includes(query) || 
+        b.author.toLowerCase().includes(query)
+      );
+
+      if (sort === 'az') {
+        list = list.slice().sort((a,b) => a.title.localeCompare(b.title, 'fr'));
+      } else if (sort === 'pages') {
+        list = list.slice().sort((a,b) => b.pages - a.pages);
+      }
+      return list.map(b => ({ ...b })); // copy
+    },
+
+    // check existence (for modal / favorites)
+    exists(id) {
+      return this._raw.some(b => b.id === id);
+    }
+  };
+
+  // --- 3. FAVORITES MANAGER (auto‑clean on init) ---
+  const Favorites = {
+    _favorites: new Set(),
+
+    // load from localStorage and remove stale IDs
+    init() {
+      try {
+        const stored = JSON.parse(localStorage.getItem('sahlFavs')) || [];
+        const validIds = stored.filter(id => BookStore.exists(Number(id)));
+        this._favorites = new Set(validIds.map(Number));
+        this._persist();
+      } catch (e) {
+        this._favorites = new Set();
+      }
+    },
+
+    _persist() {
+      localStorage.setItem('sahlFavs', JSON.stringify([...this._favorites]));
+    },
+
+    has(id) {
+      return this._favorites.has(id);
+    },
+
+    toggle(id) {
+      if (!BookStore.exists(id)) return false; // ignore if book gone
+      if (this._favorites.has(id)) {
+        this._favorites.delete(id);
+      } else {
+        this._favorites.add(id);
+      }
+      this._persist();
+      return true;
+    },
+
+    getAll() {
+      // return only existing books
+      return BookStore.getAll().filter(b => this._favorites.has(b.id));
+    },
+
+    count() {
+      return this._favorites.size;
+    },
+
+    // used after book deletion (but we never delete, just for safety)
+    cleanStale() {
+      const valid = [...this._favorites].filter(id => BookStore.exists(id));
+      this._favorites = new Set(valid);
+      this._persist();
+    }
+  };
+
+  // --- 4. UI STATE (immutable updates) ---
+  const UIState = {
+    query: '',
+    sort: 'default',
+    isList: false,
+    activeTab: 'library', // 'library' or 'favorites'
+    // methods
+    setQuery(val) { this.query = val.toLowerCase().trim(); },
+    setSort(val) { this.sort = val; },
+    toggleView() { this.isList = !this.isList; },
+    setView(list) { this.isList = list; },
+    setTab(tab) { this.activeTab = tab; }
+  };
+
+  // --- 5. DOM ELEMENTS (cached) ---
+  const D = {
+    librarySection: document.getElementById('librarySection'),
+    favSection: document.getElementById('favoritesSection'),
+    tabLibrary: document.getElementById('tabLibrary'),
+    tabFavorites: document.getElementById('tabFavorites'),
+    bnLibrary: document.getElementById('bnLibrary'),
+    bnFavorites: document.getElementById('bnFavorites'),
+    emptyFav: document.getElementById('emptyFav'),
+    favGrid: document.getElementById('favGrid'),
+    bGrid: document.getElementById('bGrid'),
+    emptyState: document.getElementById('emptyState'),
+    metaCount: document.getElementById('metaCount'),
+    statCount: document.getElementById('statCount'),
+    favCount: document.getElementById('favCount'),
+    srchD: document.getElementById('srchD'),
+    srchM: document.getElementById('srchM'),
+    mSrchBar: document.getElementById('mSrchBar'),
+    mSrchToggle: document.getElementById('mSrchToggle'),
+    bnSearch: document.getElementById('bnSearch'),
+    sortSheet: document.getElementById('sortSheet'),
+    sortOpts: document.getElementById('sortOpts'),
+    bnSort: document.getElementById('bnSort'),
+    bookModal: document.getElementById('bookModal'),
+    mCoverMini: document.getElementById('mCoverMini'),
+    mCat: document.getElementById('mCat'),
+    mTitle: document.getElementById('mTitle'),
+    mAuthor: document.getElementById('mAuthor'),
+    mLoading: document.getElementById('mLoading'),
+    pdfFrame: document.getElementById('pdfFrame'),
+    closeModalBtn: document.getElementById('closeModal')
+  };
+
+  // --- 6. RENDER FUNCTIONS (defensive) ---
+
+  // Create HTML for a single book card (used by both grids)
+  function createBookCard(book, isFav, delay) {
+    const favClass = isFav ? 'active' : '';
+    const heartIcon = isFav ? 'fas' : 'far';
+    return `<article class="bk" data-id="${book.id}" tabindex="0" role="listitem" style="animation-delay:${delay}s">
+      <div class="bk-fav ${favClass}" data-fav-id="${book.id}"><i class="${heartIcon} fa-heart"></i></div>
+      <div class="bk-inner">
+        <div class="bk-cover">
+          <div class="bk-cover-bg" style="background:${book.bg}"></div>
+          <div class="bk-cover-grain"></div>
+          <div class="bk-cover-stripe" style="background:${book.stripe}"></div>
+          <div class="bk-badge"><i class="fas ${DISC[book.cat] || 'fa-book'}"></i>${book.tag}</div>
+          <span class="bk-year">${book.yr}</span>
+          <div class="bk-icon"><i class="fas ${book.icon}"></i></div>
+          <div class="bk-foot">
+            <div class="bk-title">${book.title}</div>
+            <div class="bk-author">${book.author}</div>
+          </div>
+          <div class="bk-overlay"><div class="bk-cta"><i class="fas fa-book-open" style="font-size:.64rem"></i> Lire</div></div>
+        </div>
+        <div class="bk-meta">
+          <div class="bk-meta-title">${book.title}</div>
+          <div class="bk-meta-row">
+            <div class="bk-meta-author">${book.author}</div>
+            <div class="bk-meta-pp"><i class="fas fa-file-lines"></i>${book.pages}p</div>
+          </div>
+        </div>
+        <div class="bk-open-row"><button class="bk-open-btn"><i class="fas fa-arrow-right"></i> Ouvrir</button></div>
+      </div>
+    </article>`;
+  }
+
+  // Render main grid (library)
+  function renderMainGrid() {
+    const books = BookStore.filterAndSort({ query: UIState.query, sort: UIState.sort });
+    D.statCount.textContent = books.length;
+    D.metaCount.textContent = books.length + ' VOLUME' + (books.length !== 1 ? 'S' : '');
+
+    if (books.length === 0) {
+      D.bGrid.innerHTML = '';
+      D.emptyState.classList.add('show');
+    } else {
+      D.emptyState.classList.remove('show');
+      D.bGrid.innerHTML = books.map((b, i) => {
+        const delay = (i * 0.044).toFixed(3);
+        return createBookCard(b, Favorites.has(b.id), delay);
+      }).join('');
+    }
+
+    attachGridEvents(D.bGrid);
+    applyListView(D.bGrid);
+  }
+
+  // Render favorites grid
+  function renderFavGrid() {
+    const favBooks = Favorites.getAll();
+    D.favCount.textContent = favBooks.length + ' FAVORI' + (favBooks.length !== 1 ? 'S' : '');
+
+    if (favBooks.length === 0) {
+      D.favGrid.innerHTML = '';
+      D.emptyFav.style.display = 'flex';
+    } else {
+      D.emptyFav.style.display = 'none';
+      D.favGrid.innerHTML = favBooks.map((b, i) => {
+        const delay = (i * 0.044).toFixed(3);
+        return createBookCard(b, true, delay);
+      }).join('');
+    }
+
+    attachGridEvents(D.favGrid);
+    applyListView(D.favGrid);
+  }
+
+  // Attach click listeners to heart and book cards
+  function attachGridEvents(gridElement) {
+    if (!gridElement) return;
+    // Heart toggles
+    gridElement.querySelectorAll('.bk-fav').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = parseInt(btn.dataset.favId, 10);
+        if (Favorites.toggle(id)) {
+          // re-render both grids (simple, keeps UI consistent)
+          renderMainGrid();
+          renderFavGrid();
+        }
+      });
+    });
+
+    // Open book
+    gridElement.querySelectorAll('.bk').forEach(el => {
+      const go = () => {
+        const id = parseInt(el.dataset.id, 10);
+        const book = BookStore.getById(id);
+        if (book) openBookModal(book);
+      };
+      el.addEventListener('click', go);
+      el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+    });
+  }
+
+  // Apply list view class if needed
+  function applyListView(grid) {
+    if (!grid) return;
+    if (UIState.isList) {
+      grid.classList.add('list-view');
+      grid.querySelectorAll('.bk-open-row').forEach(el => el.style.display = 'flex');
+    } else {
+      grid.classList.remove('list-view');
+      grid.querySelectorAll('.bk-open-row').forEach(el => el.style.display = 'none');
+    }
+  }
+
+  // --- 7. MODAL (safe: checks existence) ---
+  function openBookModal(book) {
+    if (!book) return;
+
+    D.mCoverMini.style.background = book.bg;
+    D.mCoverMini.innerHTML = `<i class="fas ${book.icon}" style="position:relative;z-index:2;font-size:1.1rem;color:rgba(255,255,255,.88)"></i>`;
+    D.mCat.textContent = book.tag;
+    D.mTitle.textContent = book.title;
+    D.mAuthor.textContent = book.author;
+
+    D.bookModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    D.mLoading.classList.remove('gone');
+    D.pdfFrame.src = 'about:blank';
+
+    setTimeout(() => {
+      D.pdfFrame.src = book.pdf;
+      const done = () => D.mLoading.classList.add('gone');
+      D.pdfFrame.onload = done;
+      setTimeout(done, 5500); // fallback
+    }, 500);
+  }
+
+  function closeBookModal() {
+    D.bookModal.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => D.pdfFrame.src = 'about:blank', 440);
+  }
+
+  // --- 8. SORT SHEET ---
+  function openSortSheet() { D.sortSheet?.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeSortSheet() { D.sortSheet?.classList.remove('open'); document.body.style.overflow = ''; }
+
+  // --- 9. TAB SWITCHING ---
+  function showLibrary() {
+    UIState.setTab('library');
+    D.librarySection.style.display = 'block';
+    D.favSection.style.display = 'none';
+    D.tabLibrary.classList.add('on');
+    D.tabFavorites.classList.remove('on');
+    D.bnLibrary.classList.add('on');
+    D.bnFavorites.classList.remove('on');
+    renderMainGrid(); // ensure fresh
+  }
+
+  function showFavorites() {
+    UIState.setTab('favorites');
+    D.librarySection.style.display = 'none';
+    D.favSection.style.display = 'block';
+    D.tabLibrary.classList.remove('on');
+    D.tabFavorites.classList.add('on');
+    D.bnLibrary.classList.remove('on');
+    D.bnFavorites.classList.add('on');
+    renderFavGrid();
+  }
+
+  // --- 10. INIT & EVENT LISTENERS ---
+  function init() {
+    // 1. init favorites (auto clean)
+    Favorites.init();
+
+    // 2. preview build (exactly as before)
+    (function buildPreviews() { 
+      [[0,3,7], 'prevL', [1,5,9], 'prevR'].forEach((item,i,arr) => { 
+        if(i%2!==0)return; 
+        const indices = item; 
+        const el = document.getElementById(arr[i+1]); 
+        indices.forEach((idx,j) => { 
+          const b = BookStore.getById(idx+1); // because id starts from 1
+          if(!b) return;
+          const d = document.createElement('div'); 
+          d.className = 'mp'; 
+          d.style.background = b.bg; 
+          d.style.animationDelay = (-j*2.2)+'s'; 
+          d.innerHTML = '<div class="mp-icon"><i class="fas '+b.icon+'"></i></div>'; 
+          el.appendChild(d); 
+        }); 
+      }); 
+    })();
+
+    // 3. attach listeners
+    D.tabLibrary.addEventListener('click', showLibrary);
+    D.tabFavorites.addEventListener('click', showFavorites);
+    D.bnLibrary.addEventListener('click', showLibrary);
+    D.bnFavorites.addEventListener('click', showFavorites);
+
+    // search
+    const doSearch = (val) => { UIState.setQuery(val); renderMainGrid(); };
+    D.srchD?.addEventListener('input', e => doSearch(e.target.value));
+    D.srchM?.addEventListener('input', e => doSearch(e.target.value));
+
+    D.mSrchToggle?.addEventListener('click', () => {
+      D.mSrchBar.classList.toggle('hidden');
+      if (!D.mSrchBar.classList.contains('hidden')) D.srchM?.focus();
+    });
+    D.bnSearch?.addEventListener('click', () => {
+      D.mSrchBar.classList.remove('hidden');
+      D.srchM?.focus();
+    });
+
+    // sort
+    const applySort = (s) => {
+      UIState.setSort(s);
+      document.querySelectorAll('.sort-opt').forEach(b => b.classList.toggle('on', b.dataset.s === s));
+      renderMainGrid();
+    };
+    D.sortOpts?.addEventListener('click', e => {
+      const btn = e.target.closest('.sort-opt');
+      if (!btn) return;
+      applySort(btn.dataset.s);
+      setTimeout(closeSortSheet, 160);
+    });
+    D.bnSort?.addEventListener('click', openSortSheet);
+    D.sortSheet?.addEventListener('click', e => { if (e.target === e.currentTarget) closeSortSheet(); });
+
+    // view (buttons not in original but we keep original code for gridViewBtn/listViewBtn if existed, but we have isList default false)
+    // Since view buttons are not present, keep isList false as original.
+
+    // modal
+    D.closeModalBtn?.addEventListener('click', closeBookModal);
+    D.bookModal?.addEventListener('click', e => { if (e.target === e.currentTarget) closeBookModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeBookModal(); closeSortSheet(); } });
+
+    // landing
+    document.getElementById('openLibBtn').addEventListener('click', () => {
+      document.getElementById('landing').classList.add('exit');
+      document.getElementById('library').classList.add('show');
+      setTimeout(() => document.getElementById('landing').style.display = 'none', 1050);
+    });
+
+    // nav tabs highlight
+    document.querySelectorAll('.nav-tab').forEach(t => {
+      t.addEventListener('click', function() {
+        document.querySelectorAll('.nav-tab').forEach(x => x.classList.remove('on'));
+        this.classList.add('on');
+      });
+    });
+
+    // bottom nav active
+    document.querySelectorAll('.bn').forEach(btn => {
+      btn.addEventListener('click', function() { 
+        document.querySelectorAll('.bn').forEach(b => b.classList.remove('on'));
+        this.classList.add('on');
+      });
+    });
+
+    // initial renders
+    renderMainGrid();
+    renderFavGrid();
+    // ensure correct tab shows (library first)
+    showLibrary();
+  }
+
+  // start everything
+  init();
+})();
+</script>
+</body>
+</html>

@@ -94,7 +94,7 @@
         if (headerLoginBtn) {
             headerLoginBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                window.location.href = 'inscrire.html';
+                window.location.href = './profile/index.html';
             });
         }
         

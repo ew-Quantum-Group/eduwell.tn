@@ -18,7 +18,7 @@
                     id: 'bio-card-1',
                     title: 'Exercices RÉO : Types Bac',
                     description: 'Comprendre les types de questions et identifier les pièges pour mieux réussir',
-                    link: 'https://drive.google.com/drive/folders/1je-WStaNG1dblcSwIN7Cqo1VXin5_rTG?usp=drive_link',
+                    link: '../sahl haven/index.html',
                     linkText: 'Voir les exercices'
                 },
                 
@@ -26,7 +26,7 @@
                     id: 'bio-card-3',
                     title: 'Sahl AI à vos côtés',
                     description: 'Résolvez les exercices facilement grâce à Sahl AI',
-                    link: 'error.html',
+                    link: '../sahlai/index.html',
                     linkText: 'Essayer Sahl AI'
                 },
                 {
@@ -777,10 +777,7 @@
             // Navigation
             setupNavigation();
 
-            // Start button scroll to quiz section
-            startButton.addEventListener('click', function() {
-                quizSection.scrollIntoView({ behavior: 'smooth' });
-            });
+          
 
             // NEW: Biology QCM button
             qcmBiologyBtn.addEventListener('click', scrollToQCM);

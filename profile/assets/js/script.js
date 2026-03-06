@@ -109,11 +109,11 @@ const apps = [
 </svg>` },
   { name:'ChatPhilo',    desc:'Cours et exercices ',        color:'linear-gradient(135deg,#0891B2,#0066CC)', tag:'Bac',   tagC:'#0891B2', url:'../chatphi/index.html',
     icon:`<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>` },
-  { name:'Sahl Academy', desc:'votre bibliothèque ', color:'linear-gradient(135deg,#F57C00,#E53935)', tag:'Academy',  tagC:'#F57C00', url:'../sahlacademy/index.html',
+  { name:'Sahl Academy', desc:'Espace Vidéo ', color:'linear-gradient(135deg,#F57C00,#E53935)', tag:'Academy',  tagC:'#F57C00', url:'../sahlacademy/index.html',
     icon:`<svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>` },
-  { name:'E-Books',      desc:'Tout le contenu Bac en ',               color:'linear-gradient(135deg,#059669,#10b981)', tag:'DOC',  tagC:'#059669', url:'../sahl haven/index.html',
+  { name:'E-Books',      desc:'Espace Bac',               color:'linear-gradient(135deg,#059669,#10b981)', tag:'DOC',  tagC:'#059669', url:'../sahl haven/index.html',
     icon:`<svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>` },
-  { name:'Sahl AI',      desc:'Votre assistant ',         color:'linear-gradient(135deg,#4338CA,#0066CC)', tag:'AI',       tagC:'#4338CA', url:'../sahlai/index.html',
+  { name:'Sahl AI',      desc:'Mon assistant ',         color:'linear-gradient(135deg,#4338CA,#0066CC)', tag:'AI',       tagC:'#4338CA', url:'../sahlai/index.html',
    icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
 <circle cx="12" cy="8" r="3"/>
 <circle cx="6" cy="14" r="2"/>

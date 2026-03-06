@@ -16,9 +16,9 @@
                 name: 'Bac2026' 
             },
             { 
-                username: 'saidi.nada706@gmail.com',
-                password: 'Nada2006@', 
-                name: 'Nada' 
+                username: 'slimeniamine14@gmail.com',
+                password: 'amine2007_A', 
+                name: 'Mohamed' 
             },
 { 
                 username: 'bensaidasma09@gmail.com',
@@ -43,6 +43,7 @@
                 name: 'Rawen' 
             }
         ];
+
 
 
 

@@ -1,1989 +1,1328 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="light">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNTBT1VQN7"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-FNTBT1VQN7');
-    </script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Lumière — Academic Excellence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<style>
+/* ─────────────────────────────────────────────
+   TOKENS
+───────────────────────────────────────────── */
+:root {
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Inter',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sahl App</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="./assets/css/styleapp.css">
-     <link rel="stylesheet" href="./assets/css/styleapp2.css">
-      <link rel="stylesheet" href="./assets/css/popup.css">
-      <link rel="stylesheet" href="./assets/css/explorer.css">
-        <link rel="stylesheet" href="./assets/css/stylehomesection.css">
-    <link rel="shortcut icon" href="./assets/images/app-store.png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,300;1,9..144,500&family=Cabinet+Grotesk:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;0,6..96,700;1,6..96,400;1,6..96,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  /* light palette */
+  --bg:#f4f3f6; --bg2:#eeecf1; --bg3:#e8e6ec;
+  --card:#ffffff; --card2:#f9f8fc;
+  --line:rgba(0,0,0,.07); --line2:rgba(0,0,0,.11);
+  --t0:#09090b; --t1:#18181b; --t2:#52525b; --t3:#a1a1aa; --t4:#d4d4d8;
 
-   
+  --blue:#1a56d6;
+  --blue-d:#1a56d6;
+  --blue-g: linear-gradient(135deg,#1a56d6,#4f86f7);
+  --blue-a:rgba(26,86,214,.1); --blue-b:rgba(26,86,214,.05);
+
+  --indigo:#4f46e5; --indigo-a:rgba(79,70,229,.1);
+
+  --emerald:#059669; --emerald-a:rgba(5,150,105,.1);
+
+  --amber:#d97706; --amber-a:rgba(217,119,6,.1);
+
+  --rose:#e11d48; --rose-a:rgba(225,29,72,.1);
+
+  --r1:6px; --r2:10px; --r3:16px; --r4:22px; --r5:32px;
+
+  --ease-spring: cubic-bezier(.34,1.56,.64,1);
+  --ease-out:    cubic-bezier(.16,1,.3,1);
+
+  /* subject colours */
+  --math-c:#1a56d6;  --math-a:rgba(26,86,214,.09);  --math-b:#dde8ff;
+  --phys-c:#4f46e5;  --phys-a:rgba(79,70,229,.09);  --phys-b:#ede9fe;
+  --eng-c:#059669;   --eng-a:rgba(5,150,105,.09);   --eng-b:#d1fae5;
+}
+
+/* ─────────────────────────────────────────────
+   RESET & BASE
+───────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--t1);
+  min-height:100vh;
+  overflow-x:hidden;
+  line-height:1.6;
+  transition:background .35s,color .35s;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--blue-a);color:var(--t0)}
+
+/* noise grain */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  opacity:.018;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")
+}
+
+/* ─────────────────────────────────────────────
+   SCROLLBAR
+───────────────────────────────────────────── */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--t4);border-radius:10px}
+
+/* ─────────────────────────────────────────────
+   PROGRESS BAR
+───────────────────────────────────────────── */
+#spb{
+  position:fixed;top:0;left:0;height:1.5px;width:0;z-index:999;
+  background:linear-gradient(90deg,var(--blue),var(--indigo),var(--emerald));
+  transition:width .08s linear;
+}
+
+/* ─────────────────────────────────────────────
+   LAYOUT — sidebar + main
+───────────────────────────────────────────── */
+.layout{display:flex;min-height:100vh}
+
+/* ─────────────────────────────────────────────
+   SIDEBAR
+───────────────────────────────────────────── */
+.sidebar{
+  width:260px;flex-shrink:0;
+  background:var(--bg2);
+  border-right:1px solid var(--line);
+  display:flex;flex-direction:column;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+  transition:background .35s,border-color .35s;
+}
+@media(max-width:900px){.sidebar{display:none}}
+
+.sb-logo{
+  display:flex;align-items:center;gap:12px;
+  padding:28px 24px 22px;
+  border-bottom:1px solid var(--line);
+}
+.sb-icon{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--blue-g);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:.8rem;
+  box-shadow:0 0 20px rgba(79,134,247,.4);
+  flex-shrink:0;
+}
+.sb-wordmark{
+  font-family:var(--serif);font-size:1.3rem;font-weight:500;
+  color:var(--t0);letter-spacing:-.01em;font-style:italic;
+}
+.sb-tagline{font-size:.62rem;font-weight:600;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;margin-top:1px}
+
+/* Sidebar profile */
+.sb-profile{
+  margin:16px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--r3);
+  overflow:hidden;
+}
+.sb-pf-banner{
+  height:52px;
+  background:linear-gradient(135deg,var(--blue-d) 0%,#5b21b6 60%,#0f766e 100%);
+  position:relative;
+}
+.sb-pf-banner::after{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.04) 10px,rgba(255,255,255,.04) 11px);
+}
+.sb-pf-av{
+  width:46px;height:46px;border-radius:50%;
+  border:2.5px solid var(--card);
+  background:linear-gradient(135deg,#4f63d2,#8b5cf6);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:1.2rem;font-style:italic;color:#fff;
+  position:absolute;bottom:-23px;left:18px;
+  box-shadow:0 4px 14px rgba(0,0,0,.4);
+  cursor:pointer;transition:transform .35s var(--ease-spring);
+}
+.sb-pf-av:hover{transform:scale(1.08) rotate(-5deg)}
+.sb-pf-av-dot{
+  position:absolute;bottom:1px;right:1px;width:10px;height:10px;
+  background:#22c55e;border:2px solid var(--card);border-radius:50%;
+}
+.sb-pf-body{padding:30px 18px 16px}
+.sb-pf-name{font-family:var(--serif);font-size:1rem;font-weight:500;color:var(--t0);margin-bottom:3px;font-style:italic}
+.sb-pf-sub{font-size:.68rem;font-weight:600;color:var(--t3);letter-spacing:.04em;text-transform:uppercase;margin-bottom:12px}
+.sb-pf-chips{display:flex;flex-wrap:wrap;gap:5px}
+.sb-chip{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:.62rem;font-weight:600;
+  padding:2px 8px;border-radius:20px;
+  background:var(--bg3);border:1px solid var(--line);
+  color:var(--t2);letter-spacing:.02em;
+}
+.sb-chip.fire{background:var(--amber-a);border-color:rgba(251,191,36,.2);color:var(--amber)}
+.sb-chip i{font-size:.5rem}
+
+/* Sidebar stats */
+.sb-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border-top:1px solid var(--line)}
+.sb-stat{background:var(--card);padding:12px 14px;text-align:center}
+.sb-sv{font-family:var(--serif);font-size:1.3rem;font-weight:500;color:var(--t0);line-height:1;letter-spacing:-.03em}
+.sb-sl{font-size:.58rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-top:3px}
+
+/* Sidebar nav */
+.sb-nav{padding:16px 12px;flex:1}
+.sb-sec-label{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);padding:0 12px;margin-bottom:6px;margin-top:14px}
+.sb-sec-label:first-child{margin-top:0}
+.sb-link{
+  display:flex;align-items:center;gap:10px;
+  font-size:.8rem;font-weight:500;
+  color:var(--t2);
+  padding:9px 12px;border-radius:var(--r2);cursor:pointer;
+  transition:background .18s,color .18s;border:none;background:none;
+  width:100%;text-align:left;letter-spacing:.01em;
+}
+.sb-link i{font-size:.75rem;width:16px;text-align:center;flex-shrink:0}
+.sb-link:hover{background:var(--card2);color:var(--t1)}
+.sb-link.active{background:var(--blue-a);color:var(--blue);}
+[data-theme="light"] .sb-link.active{background:rgba(79,134,247,.12);color:var(--blue)}
+
+.sb-subj-btn{
+  display:flex;align-items:center;gap:10px;
+  font-size:.78rem;font-weight:600;
+  color:var(--t2);
+  padding:9px 12px;border-radius:var(--r2);cursor:pointer;
+  transition:background .18s,color .18s;border:none;background:none;
+  width:100%;text-align:left;
+}
+.sb-subj-btn:hover,.sb-subj-btn.active{background:var(--card2);color:var(--t1)}
+.sb-subj-btn.active{color:var(--sb-c)}
+.sb-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;background:var(--sb-c)}
+.sb-cnt-badge{
+  margin-left:auto;font-size:.6rem;font-weight:700;
+  padding:1px 7px;border-radius:10px;
+  background:var(--card);border:1px solid var(--line);color:var(--t3);
+}
+
+/* Sidebar theme */
+.sb-bottom{padding:12px;border-top:1px solid var(--line)}
+.theme-toggle{
+  display:flex;background:var(--card);border:1px solid var(--line);
+  border-radius:10px;padding:3px;overflow:hidden;gap:2px;
+}
+.th-btn{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
+  font-size:.72rem;font-weight:600;color:var(--t3);
+  padding:7px;border-radius:7px;border:none;background:none;
+  cursor:pointer;transition:background .2s,color .2s,box-shadow .2s;
+}
+.th-btn.on{background:var(--bg);color:var(--t1);box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.th-btn i{font-size:.65rem}
+
+/* ─────────────────────────────────────────────
+   MAIN CONTENT
+───────────────────────────────────────────── */
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+
+/* ─────────────────────────────────────────────
+   TOPBAR  (mobile)
+───────────────────────────────────────────── */
+.topbar{
+  display:none;
+  position:sticky;top:0;z-index:200;
+  background:var(--bg2);border-bottom:1px solid var(--line);
+  padding:0 20px;height:56px;
+  align-items:center;justify-content:space-between;
+  backdrop-filter:blur(20px);
+}
+@media(max-width:900px){.topbar{display:flex}}
+.tb-brand{display:flex;align-items:center;gap:10px}
+.tb-icon{width:30px;height:30px;border-radius:9px;background:var(--blue-g);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.7rem}
+.tb-name{font-family:var(--serif);font-size:1.1rem;font-style:italic;color:var(--t0)}
+.tb-right{display:flex;align-items:center;gap:8px}
+.tb-theme{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--card);display:flex;align-items:center;justify-content:center;color:var(--t2);font-size:.7rem;cursor:pointer}
+
+/* ─────────────────────────────────────────────
+   CONTENT AREA
+───────────────────────────────────────────── */
+.content{padding:40px 44px 80px;flex:1}
+@media(max-width:900px){.content{padding:28px 20px 60px}}
+
+/* ─────────────────────────────────────────────
+   HERO
+───────────────────────────────────────────── */
+.hero{margin-bottom:44px}
+
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--blue);background:var(--blue-a);
+  border:1px solid rgba(79,134,247,.2);
+  border-radius:20px;padding:5px 14px;margin-bottom:20px;
+}
+[data-theme="light"] .hero-eyebrow{color:var(--blue-d);background:var(--blue-b);border-color:rgba(26,86,214,.15)}
+.hero-eyebrow i{font-size:.6rem}
+
+.hero-h{
+  font-family:var(--serif);
+  font-size:clamp(2.6rem,4.5vw,3.8rem);
+  font-weight:400;line-height:1.08;
+  letter-spacing:-.04em;color:var(--t0);
+  margin-bottom:16px;
+}
+.hero-h em{font-style:italic;color:var(--blue);font-weight:400}
+[data-theme="light"] .hero-h em{color:var(--blue-d)}
+.hero-h .dim{color:var(--t2);display:block}
+
+.hero-p{
+  font-size:.9rem;color:var(--t2);
+  line-height:1.8;max-width:520px;margin-bottom:28px;font-weight:300;
+}
+
+/* KPI row */
+.kpi-row{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+  margin-bottom:0;
+}
+@media(max-width:700px){.kpi-row{grid-template-columns:repeat(2,1fr)}}
+
+.kpi{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--r3);
+  padding:18px 20px;
+  position:relative;overflow:hidden;
+  transition:transform .4s var(--ease-spring),border-color .25s,box-shadow .3s;
+  cursor:default;
+}
+.kpi::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 10% 50%,var(--kpi-c,var(--blue-a)) 0%,transparent 60%);
+  opacity:0;transition:opacity .35s;
+}
+.kpi:hover{transform:translateY(-4px);border-color:var(--line2);box-shadow:0 12px 40px rgba(0,0,0,.25)}
+.kpi:hover::before{opacity:1}
+.kpi[data-c="blue"]{--kpi-c:var(--blue-a)}
+.kpi[data-c="indigo"]{--kpi-c:var(--indigo-a)}
+.kpi[data-c="emerald"]{--kpi-c:var(--emerald-a)}
+.kpi[data-c="amber"]{--kpi-c:var(--amber-a)}
+
+.kpi-val{font-family:var(--serif);font-size:2rem;font-weight:500;color:var(--t0);letter-spacing:-.05em;line-height:1;margin-bottom:5px}
+.kpi-lbl{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--t3)}
+.kpi-trend{position:absolute;top:14px;right:14px;font-size:.65rem;font-weight:700;color:var(--emerald);background:var(--emerald-a);padding:2px 7px;border-radius:8px}
+
+/* ─────────────────────────────────────────────
+   SECTION HEADER
+───────────────────────────────────────────── */
+.sec-hd{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:20px;padding-top:48px;flex-wrap:wrap;gap:12px;
+}
+.sec-hd-l{}
+.sec-label{font-size:.64rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--t3);margin-bottom:7px;display:flex;align-items:center;gap:6px}
+.sec-label i{font-size:.55rem;color:var(--blue)}
+[data-theme="light"] .sec-label i{color:var(--blue-d)}
+.sec-title{font-family:var(--serif);font-size:clamp(1.5rem,2.5vw,2rem);font-weight:400;color:var(--t0);letter-spacing:-.035em;line-height:1.1}
+.sec-title em{font-style:italic;color:var(--blue)}
+[data-theme="light"] .sec-title em{color:var(--blue-d)}
+.sec-badge{font-size:.68rem;font-weight:600;color:var(--t3);background:var(--card);border:1px solid var(--line);border-radius:20px;padding:4px 12px;white-space:nowrap}
+
+/* ─────────────────────────────────────────────
+   SUBJECT CARDS  — horizontal stack
+───────────────────────────────────────────── */
+.subj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:740px){.subj-grid{grid-template-columns:1fr}}
+
+.scard{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--r4);
+  overflow:hidden;cursor:pointer;
+  position:relative;
+  transition:transform .4s var(--ease-spring),box-shadow .35s,border-color .25s;
+}
+.scard:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.scard.sel{border-color:var(--_c);box-shadow:0 0 0 3px var(--_ca),0 20px 50px rgba(0,0,0,.3)}
+
+.scard[data-s="math"]   {--_c:var(--math-c);--_ca:var(--math-a);--_bg:var(--math-b)}
+.scard[data-s="physics"]{--_c:var(--phys-c);--_ca:var(--phys-a);--_bg:var(--phys-b)}
+.scard[data-s="english"]{--_c:var(--eng-c); --_ca:var(--eng-a); --_bg:var(--eng-b)}
+
+/* gradient top */
+.sc-gradient{
+  height:80px;position:relative;overflow:visible;
+  background:linear-gradient(135deg,color-mix(in srgb,var(--_c) 30%,transparent),color-mix(in srgb,var(--_c) 8%,transparent));
+}
+.sc-gradient::after{
+  content:'';position:absolute;
+  top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;
+  border:1px solid color-mix(in srgb,var(--_c) 25%,transparent);
+}
+.sc-gradient::before{
+  content:'';position:absolute;
+  bottom:-20px;left:20px;width:80px;height:80px;border-radius:50%;
+  border:1px solid color-mix(in srgb,var(--_c) 15%,transparent);
+}
+.sc-ico-wrap{
+  position:absolute;bottom:-22px;left:20px;z-index:2;
+  width:44px;height:44px;border-radius:13px;
+  background:var(--card);border:1px solid var(--line2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;color:var(--_c);
+  box-shadow:0 4px 16px rgba(0,0,0,.15);
+  transition:transform .4s var(--ease-spring);
+}
+.scard:hover .sc-ico-wrap{transform:rotate(-8deg) scale(1.12)}
+
+.sc-body{padding:32px 20px 18px}
+.sc-name{font-size:.95rem;font-weight:700;color:var(--t0);letter-spacing:-.015em;margin-bottom:5px}
+.sc-desc{font-size:.73rem;color:var(--t3);line-height:1.65;margin-bottom:16px;font-weight:400}
+.sc-foot{display:flex;align-items:center;justify-content:space-between}
+.sc-meta{font-size:.67rem;font-weight:600;color:var(--t3);display:flex;align-items:center;gap:5px}
+.sc-meta i{font-size:.58rem;color:var(--_c)}
+.sc-go{
+  width:30px;height:30px;border-radius:50%;
+  background:var(--_ca);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.65rem;color:var(--_c);
+  transition:background .25s,transform .35s var(--ease-spring);
+}
+.scard:hover .sc-go{background:var(--_c);color:#fff;transform:translate(2px,-2px)}
+
+/* ─────────────────────────────────────────────
+   COURSE TAB BAR
+───────────────────────────────────────────── */
+.tab-bar{
+  display:flex;gap:2px;
+  background:var(--card);border:1px solid var(--line);
+  border-radius:12px;padding:4px;
+  width:fit-content;margin-bottom:22px;
+}
+.ctab{
+  display:flex;align-items:center;gap:8px;
+  font-size:.76rem;font-weight:600;letter-spacing:.01em;
+  padding:8px 18px;border-radius:9px;border:none;background:none;
+  color:var(--t3);cursor:pointer;white-space:nowrap;
+  transition:background .2s,color .2s,box-shadow .2s;
+}
+.ctab i{font-size:.68rem}
+.ctab.on{background:var(--card2);color:var(--t1);box-shadow:0 1px 6px rgba(0,0,0,.2)}
+.ctab[data-t="math"].on    {color:var(--math-c)}
+.ctab[data-t="physics"].on {color:var(--phys-c)}
+.ctab[data-t="english"].on {color:var(--eng-c)}
+
+/* ─────────────────────────────────────────────
+   COURSE CARDS
+───────────────────────────────────────────── */
+.panel{display:none}
+.panel.on{display:block;animation:fadeSlideUp .32s var(--ease-out) both}
+@keyframes fadeSlideUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+.course-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(max-width:700px){.course-grid{grid-template-columns:1fr}}
+
+.ccard{
+  background:var(--card);border:1px solid var(--line);
+  border-radius:var(--r4);overflow:hidden;
+  display:flex;flex-direction:column;
+  position:relative;
+  transition:transform .4s var(--ease-spring),border-color .25s,box-shadow .35s;
+}
+.ccard:hover{transform:translateY(-5px);border-color:var(--line2);box-shadow:0 20px 50px rgba(0,0,0,.3)}
+
+.ccard[data-a="math"]   {--ca:var(--math-c);--caa:var(--math-a)}
+.ccard[data-a="physics"]{--ca:var(--phys-c);--caa:var(--phys-a)}
+.ccard[data-a="english"]{--ca:var(--eng-c); --caa:var(--eng-a)}
+
+/* decorative top stripe */
+.ccard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--ca);opacity:0;transition:opacity .3s}
+.ccard:hover::before{opacity:1}
+
+.cc-inner{padding:20px 20px 0;flex:1;display:flex;flex-direction:column}
+
+.cc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.cc-num{
+  font-family:var(--mono);font-size:.65rem;font-weight:500;
+  color:var(--ca);background:var(--caa);
+  border:1px solid color-mix(in srgb,var(--ca) 25%,transparent);
+  border-radius:6px;padding:3px 9px;letter-spacing:.06em;
+}
+.cc-dur{font-size:.68rem;font-weight:500;color:var(--t3);display:flex;align-items:center;gap:4px}
+.cc-dur i{font-size:.56rem;color:var(--ca)}
+
+.cc-title-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.cc-ico{
+  width:42px;height:42px;border-radius:12px;flex-shrink:0;
+  background:var(--caa);color:var(--ca);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.95rem;
+  transition:transform .4s var(--ease-spring);
+}
+.ccard:hover .cc-ico{transform:scale(1.1) rotate(-6deg)}
+.cc-name{font-size:.92rem;font-weight:700;color:var(--t0);letter-spacing:-.02em;line-height:1.3}
+
+.cc-desc{font-size:.73rem;color:var(--t3);line-height:1.7;flex:1;font-weight:300;margin-bottom:14px}
+
+/* progress */
+.cc-prog{padding:0 20px 14px}
+.cc-prog-top{display:flex;justify-content:space-between;margin-bottom:7px}
+.cc-prog-lbl{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t4);display:flex;align-items:center;gap:4px}
+.cc-prog-lbl i{font-size:.5rem;color:var(--ca)}
+.cc-prog-pct{font-size:.7rem;font-weight:700;color:var(--ca)}
+.cc-track{height:4px;background:var(--bg3);border-radius:4px;overflow:hidden}
+.cc-fill{height:100%;border-radius:4px;background:var(--ca);width:0%;transition:width 1.2s var(--ease-spring)}
+
+/* footer */
+.cc-foot{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 20px 16px;
+  border-top:1px solid var(--line);
+  flex-wrap:wrap;gap:10px;
+}
+.cc-meta-items{display:flex;gap:14px}
+.cc-mi{display:flex;align-items:center;gap:4px;font-size:.67rem;font-weight:500;color:var(--t3)}
+.cc-mi i{font-size:.55rem;color:var(--ca)}
+
+.watch-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:.74rem;font-weight:700;letter-spacing:.03em;
+  padding:9px 20px;border-radius:10px;border:none;
+  background:var(--ca);color:#fff;cursor:pointer;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--ease-spring),box-shadow .3s,filter .2s;
+  box-shadow:0 4px 16px color-mix(in srgb,var(--ca) 35%,transparent);
+}
+.watch-btn i{font-size:.62rem}
+.watch-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.22) 55%,transparent 75%);
+  transform:translateX(-150%);transition:transform .5s ease;
+}
+.watch-btn:hover::before{transform:translateX(150%)}
+.watch-btn:hover{transform:scale(1.04);filter:brightness(1.1);box-shadow:0 8px 26px color-mix(in srgb,var(--ca) 45%,transparent)}
+.watch-btn:active{transform:scale(.97)}
+
+/* ─────────────────────────────────────────────
+   ANIMATIONS
+───────────────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .55s var(--ease-out),transform .55s var(--ease-out)}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+.scard.reveal:nth-child(1){transition-delay:.03s}
+.scard.reveal:nth-child(2){transition-delay:.08s}
+.scard.reveal:nth-child(3){transition-delay:.13s}
+.kpi.reveal:nth-child(1){transition-delay:.04s}
+.kpi.reveal:nth-child(2){transition-delay:.08s}
+.kpi.reveal:nth-child(3){transition-delay:.12s}
+.kpi.reveal:nth-child(4){transition-delay:.16s}
+.ccard.reveal:nth-child(1){transition-delay:.04s}
+.ccard.reveal:nth-child(2){transition-delay:.09s}
+.ccard.reveal:nth-child(3){transition-delay:.14s}
+.ccard.reveal:nth-child(4){transition-delay:.19s}
+
+/* page fade in */
+.hero .hero-eyebrow{animation:up .5s var(--ease-out) .05s both}
+.hero .hero-h{animation:up .55s var(--ease-out) .1s both}
+.hero .hero-p{animation:up .55s var(--ease-out) .15s both}
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─────────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────────── */
+.footer{
+  border-top:1px solid var(--line);
+  padding:20px 44px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+}
+@media(max-width:900px){.footer{padding:20px}}
+.ft-brand{display:flex;align-items:center;gap:10px}
+.ft-icon{width:28px;height:28px;border-radius:8px;background:var(--blue-g);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.62rem}
+.ft-name{font-family:var(--serif);font-size:.95rem;color:var(--t2);font-style:italic}
+.ft-links{display:flex;gap:20px}
+.ft-a{font-size:.7rem;font-weight:500;color:var(--t3);text-decoration:none;display:flex;align-items:center;gap:4px;transition:color .2s}
+.ft-a:hover{color:var(--t1)}
+.ft-copy{font-size:.67rem;color:var(--t4)}
+
+/* ─────────────────────────────────────────────
+   PLAYLIST MODAL
+───────────────────────────────────────────── */
+.overlay{
+  position:fixed;inset:0;z-index:800;
+  background:rgba(0,0,0,.75);
+  backdrop-filter:blur(24px) saturate(140%);
+  -webkit-backdrop-filter:blur(24px) saturate(140%);
+  display:none;align-items:center;justify-content:center;padding:16px;
+}
+.overlay.open{display:flex;animation:fadeIn .2s ease both}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+.modal{
+  width:100%;max-width:500px;max-height:94vh;
+  background:var(--card);
+  border:1px solid var(--line2);
+  border-radius:var(--r5);
+  display:flex;flex-direction:column;overflow:hidden;
+  box-shadow:0 40px 120px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.04);
+  animation:mUp .36s var(--ease-spring) both;
+}
+@keyframes mUp{from{opacity:0;transform:scale(.9) translateY(24px)}to{opacity:1;transform:scale(1) translateY(0)}}
+
+/* Modal header */
+.mhd{
+  display:flex;align-items:center;gap:12px;
+  padding:16px 18px;
+  border-bottom:1px solid var(--line);
+  background:var(--card2);flex-shrink:0;
+}
+.mhd-ico{
+  width:36px;height:36px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.88rem;flex-shrink:0;
+}
+.mhd-info{flex:1;min-width:0}
+.mhd-subject{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:2px}
+.mhd-title{font-family:var(--serif);font-size:1.05rem;font-weight:500;font-style:italic;color:var(--t0);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:-.01em}
+.mhd-close{
+  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  background:var(--bg3);border:1px solid var(--line);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  color:var(--t2);font-size:.72rem;
+  transition:background .2s,transform .35s var(--ease-spring),color .2s;
+}
+.mhd-close:hover{background:var(--line2);transform:rotate(90deg);color:var(--t0)}
+
+/* Video */
+.mv{position:relative;background:#000;flex-shrink:0}
+.mv iframe{display:block;width:100%;height:235px;border:none}
+.mv-bar{height:2px;background:var(--bg3)}
+.mv-fill{height:100%;background:var(--mod-a,var(--blue));transition:width .4s var(--ease-out);border-radius:0 2px 2px 0}
+
+/* Now playing */
+.mnow{padding:14px 18px 12px;border-bottom:1px solid var(--line);flex-shrink:0;background:var(--card2)}
+.mnow-t{font-size:.88rem;font-weight:700;color:var(--t0);line-height:1.4;margin-bottom:6px;letter-spacing:-.01em}
+.mnow-m{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.mnow-m i{font-size:.58rem;color:var(--mod-a,var(--blue))}
+.mnow-m span{font-size:.68rem;color:var(--t3);font-weight:500}
+.mnow-lvl{
+  font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;
+  padding:2px 7px;border-radius:5px;
+  background:var(--mod-ab,var(--blue-a));color:var(--mod-a,var(--blue));
+  border:1px solid color-mix(in srgb,var(--mod-a,var(--blue)) 22%,transparent);
+}
+
+/* Playlist head */
+.mpl-hd{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 18px 8px;flex-shrink:0;
+  border-bottom:1px solid var(--line);
+}
+.mpl-lbl{font-size:.72rem;font-weight:700;color:var(--t2);display:flex;align-items:center;gap:6px}
+.mpl-lbl i{font-size:.62rem;color:var(--mod-a,var(--blue))}
+.mpl-cnt{font-size:.65rem;font-weight:600;color:var(--t3);background:var(--bg3);border:1px solid var(--line);border-radius:10px;padding:2px 8px}
+
+/* Playlist scroll */
+.mpl{overflow-y:auto;flex:1;padding:8px 10px 10px;scrollbar-width:thin;scrollbar-color:var(--t4) transparent}
+
+/* Video row */
+.vrow{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 10px;border-radius:var(--r2);cursor:pointer;
+  border:1px solid transparent;margin-bottom:2px;
+  transition:background .18s,border-color .18s,transform .3s var(--ease-spring);
+}
+.vrow:hover{background:var(--card2);transform:translateX(3px)}
+.vrow.on{
+  background:color-mix(in srgb,var(--mod-a,var(--blue)) 8%,var(--card));
+  border-color:color-mix(in srgb,var(--mod-a,var(--blue)) 22%,transparent);
+}
+.vrow-n{
+  width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:.65rem;font-weight:500;
+  background:var(--bg3);color:var(--t3);
+  transition:background .2s,color .2s;
+}
+.vrow.on .vrow-n{background:var(--mod-a,var(--blue));color:#fff}
+
+.vrow-body{flex:1;min-width:0}
+.vrow-t{font-size:.77rem;font-weight:600;color:var(--t1);line-height:1.35;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.vrow.on .vrow-t{color:var(--mod-a,var(--blue))}
+.vrow-s{font-size:.63rem;color:var(--t3);margin-top:3px;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.vrow-s i{font-size:.5rem}
+
+.vsahl{font-size:.56rem;font-weight:800;letter-spacing:.04em;padding:2px 6px;border-radius:4px;background:#0f766e;color:#fff;flex-shrink:0;text-transform:uppercase}
+
+.vrow-play{
+  width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.6rem;background:var(--bg3);color:var(--t3);
+  border:1px solid var(--line);
+  transition:background .2s,color .2s,transform .3s var(--ease-spring);
+}
+.vrow.on .vrow-play{background:var(--mod-a,var(--blue));color:#fff;border-color:transparent}
+.vrow:hover .vrow-play{transform:scale(1.1)}
+</style>
 </head>
 <body>
-    <!-- Home Section Header (Only in Home) - Fixed at top -->
-    <div class="home-header" id="homeHeader">
-        <a href="#" class="home-logo">sahl</a>
-        <button class="header-login-btn" id="headerLoginBtn">
-            <span class="btn-text">S’inscrire</span>
-        </button>
-    </div>
 
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav" aria-label="Main navigation">
-        <div class="nav-item active" data-target="home" role="button" tabindex="0">
-            <i class="fas fa-home nav-icon"></i>
-            <span class="nav-label">Accueil</span>
-        </div>
- <div class="nav-item" data-target="about" role="button" tabindex="0">
-            <i class="fas fa-users-rectangle nav-icon"></i>
-            <span class="nav-label">Explorer</span>
-        </div>
-        <div class="nav-item" data-target="speakwell" role="button" tabindex="0">
-            <i class="fas fa-language nav-icon"></i>
-            <span class="nav-label">SpeakWell</span>
-        </div>
-        <div class="nav-item" data-target="search" role="button" tabindex="0">
-            <i class="fas fa-book-open nav-icon"></i>
-            <span class="nav-label">E-Books</span>
-        </div>
-       
-    </nav> 
+<div id="spb"></div>
 
-    <!-- Home Content - Completely Replaced with New Design -->
-    <div id="home" class="content-section active animate-on-load">
-        <!-- Hero Section -->
-        <div class="hero-texture"></div>
-        <div class="hero-grid"></div>
-<br><br>
-        <div class="hero-body">
-            <!-- Left -->
-            <div class="hero-left">
-                <div class="hero-label">
-                    <div class="live-pill">
-                        <span class="live-dot"></span>
-                        Powered by Sahl Mind AI
-                    </div>
+<div class="layout">
 
-                </div>
-
-              <h1 class="hero-headline">
-    Réussissez
-    votre Bac avec
-    une <em>expérience<span class="uline"></span></em><br>
-    d’apprentissage<br>
-    intelligente.
-</h1>
-
-
-
-                <div class="hero-ctas">
-                    <a href="./freeebook.html" class="btn-primary">
-                        <i class="fa-solid fa-graduation-cap"></i>
-                          Révision gratuite + eBooks
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </a>
-                    <a href="./inscrire.html" class="btn-secondary">
-                        <i class="fa-regular fa-id-card"></i>
-                        Créez votre Sahl ID
-                    </a>
-                </div>
-
-                <div class="hero-proof">
-    <div class="proof-chip"><i class="fa-solid fa-layer-group ic-b"></i> 6 applications d’apprentissage</div>
-    <div class="proof-chip"><i class="fa-solid fa-brain ic-b"></i> Outils IA pour le Bac</div>
-    <div class="proof-chip"><i class="fa-solid fa-graduation-cap ic-g"></i> Grande bibliothèque éducative</div>
-</div>
-            </div>
-
-
-        </div>
-
-        <div style="height:1px;background:var(--rule);position:relative;z-index:1;"></div>
-
-        <!-- MARQUEE -->
-        <div class="strip">
-           <div class="strip-inner">
-    <div class="sitem"><i class="fa-solid fa-circle"></i>Tuteur IA Sahl</div>
-    <div class="sitem"><i class="fa-solid fa-circle"></i>SpeakWell – Anglais Bac</div>
-    <div class="sitem"><i class="fa-solid fa-circle"></i>Application SVT</div>
-    <div class="sitem"><i class="fa-solid fa-circle"></i>Chat Philosophie</div>
-    <div class="sitem"><i class="fa-solid fa-circle"></i>Bibliothèque numérique</div>
-    <div class="sitem"><i class="fa-solid fa-circle"></i>Outils académiques</div>
-    <div class="sitem"><i class="fa-solid fa-circle"></i>Programme conforme au Bac</div>
-    <div class="sitem"><i class="fa-solid fa-circle"></i>Technologie IA avancée</div>
-    <div class="sitem"><i class="fa-solid fa-circle"></i>Apprentissage personnalisé</div>
-    <div class="sitem"><i class="fa-solid fa-circle"></i>Pilote Devoirs</div>
-    <div class="sitem"><i class="fa-solid fa-circle"></i>Cours de Physique</div>
-    <div class="sitem"><i class="fa-solid fa-circle"></i>Tutoriels & Ressources</div>
-    <div class="sitem"><i class="fa-solid fa-circle"></i>Tuteur IA Sahl</div>
-    <div class="sitem"><i class="fa-solid fa-circle"></i>SpeakWell – Anglais Bac</div>
-    <div class="sitem"><i class="fa-solid fa-circle"></i>Application SVT</div>
-    <div class="sitem"><i class="fa-solid fa-circle"></i>Chat Philosophie</div>
-    <div class="sitem"><i class="fa-solid fa-circle"></i>Bibliothèque numérique</div>
-    <div class="sitem"><i class="fa-solid fa-circle"></i>Outils académiques</div>
-    <div class="sitem"><i class="fa-solid fa-circle"></i>Programme conforme au Bac</div>
-    <div class="sitem"><i class="fa-solid fa-circle"></i>Technologie IA avancée</div>
-    <div class="sitem"><i class="fa-solid fa-circle"></i>Apprentissage personnalisé</div>
-</div>
-        </div>
-
-        <!-- APPS CAROUSEL -->
-        <div class="apps-section">
-            <div class="apps-header">
-              <div>
-    <div class="apps-eyebrow">L’écosystème Sahl</div>
-    <h2 class="apps-title">Collection d'Applications</h2>  
-</div>
-<p class="apps-lead">6 applications puissantes dédiées à la réussite au Bac.</p>
-</div>
-
-            <div class="track-wrap">
-                <div class="track" id="topTrack">
-
-
-                    <div class="card-lg">
-                        <img class="card-canvas" src="./assets/images/1.png" alt="Sahl AI" loading="lazy">
-                        <div class="card-scrim"></div>
-                        <div class="card-body">
-                            <div class="card-badge-row">
-                                <div class="shl-badge">
-                                    <svg width="14" height="14" viewBox="0 0 16 16" fill="white"><path d="M8 1C4.1 1 1 4.1 1 8s3.1 7 7 7 7-3.1 7-7-3.1-7-7-7zm3 9.5c0 .8-.7 1.5-1.5 1.5S8 11.3 8 10.5V6.8L5.5 7.6v3c0 .8-.7 1.5-1.5 1.5S2.5 11.4 2.5 10.5V7c0-.7.5-1.3 1.2-1.5L9 3.4c.8-.2 1 .2 1 .8v6.3z"/></svg>
-                                    Sahl AI
-                                </div>
-                            </div>
-                            <div class="card-info">
-                                <div class="card-genre">AI Tutor · Toujours disponible</div>
-                                <div class="card-name">Sahl AI</div>
-                                <div class="card-desc">"Ton assistant personnel pour réussir le Bac"</div>
-                                <a href="./Sahlai/Espace-sahl.html" class="card-btn">
-                                    <svg width="9" height="11" viewBox="0 0 10 12" fill="currentColor"><path d="M1 1l8 5-8 5V1z"/></svg>
-                                    Essayer maintenant
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-lg">
-                        <img class="card-canvas" src="./assets/images/2.png" alt="SVT App" loading="lazy">
-                        <div class="card-scrim"></div>
-                        <div class="card-body">
-                            <div class="card-badge-row">
-                                <div class="shl-badge">
-                                    <svg width="14" height="14" viewBox="0 0 16 16" fill="white"><path d="M8 1C4.1 1 1 4.1 1 8s3.1 7 7 7 7-3.1 7-7-3.1-7-7-7zm3 9.5c0 .8-.7 1.5-1.5 1.5S8 11.3 8 10.5V6.8L5.5 7.6v3c0 .8-.7 1.5-1.5 1.5S2.5 11.4 2.5 10.5V7c0-.7.5-1.3 1.2-1.5L9 3.4c.8-.2 1 .2 1 .8v6.3z"/></svg>
-                                    SVT App
-                                </div>
-                            </div>
-                            <div class="card-info">
-                                <div class="card-genre">SVT · Révision Bac</div>
-                                <div class="card-name">SVT App</div>
-                                <div class="card-desc">"Apprends la SVT facilement avec des cours interactifs"</div>
-                                <a href="/svtapp/Espace-sahl.html" class="card-btn">
-                                    <svg width="9" height="11" viewBox="0 0 10 12" fill="currentColor"><path d="M1 1l8 5-8 5V1z"/></svg>
-                                    Découvrir l'application
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-lg">
-                        <img class="card-canvas" src="./assets/images/3.png" alt="SVT App" loading="lazy">
-                        <div class="card-scrim"></div>
-                        <div class="card-body">
-                            <div class="card-badge-row">
-                                <div class="shl-badge">
-                                    <svg width="14" height="14" viewBox="0 0 16 16" fill="white"><path d="M8 1C4.1 1 1 4.1 1 8s3.1 7 7 7 7-3.1 7-7-3.1-7-7-7zm3 9.5c0 .8-.7 1.5-1.5 1.5S8 11.3 8 10.5V6.8L5.5 7.6v3c0 .8-.7 1.5-1.5 1.5S2.5 11.4 2.5 10.5V7c0-.7.5-1.3 1.2-1.5L9 3.4c.8-.2 1 .2 1 .8v6.3z"/></svg>
-                                    E-Books
-                                </div>
-                            </div>
-                            <div class="card-info">
-                                <div class="card-genre">Bibliothèque </div>
-                                <div class="card-name">E-books</div>
-                                <div class="card-desc">"Accède à une collection complète de séries, cours et devoirs pour réviser efficacement."</div>
-                                <a href="./Sahl%20Haven/Espace-sahl.html" class="card-btn">
-                                    <svg width="9" height="11" viewBox="0 0 10 12" fill="currentColor"><path d="M1 1l8 5-8 5V1z"/></svg>
-                                     Explorer la bibliothèque
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                     <div class="card-lg">
-                        <img class="card-canvas" src="./assets/images/4.png" alt="SVT App" loading="lazy">
-                        <div class="card-scrim"></div>
-                        <div class="card-body">
-                            <div class="card-badge-row">
-                                <div class="shl-badge">
-                                    <svg width="14" height="14" viewBox="0 0 16 16" fill="white"><path d="M8 1C4.1 1 1 4.1 1 8s3.1 7 7 7 7-3.1 7-7-3.1-7-7-7zm3 9.5c0 .8-.7 1.5-1.5 1.5S8 11.3 8 10.5V6.8L5.5 7.6v3c0 .8-.7 1.5-1.5 1.5S2.5 11.4 2.5 10.5V7c0-.7.5-1.3 1.2-1.5L9 3.4c.8-.2 1 .2 1 .8v6.3z"/></svg>
-                                     SVT App
-                                </div>
-                            </div>
-                            <div class="card-info">
-                                <div class="card-genre">SVT · Révision Bac</div>
-                                <div class="card-name">SVT App</div>
-                                <div class="card-desc">"Apprends la SVT facilement avec des cours interactifs et des exercices corrigés."</div>
-                                <a href="./Sahl%20Haven/Espace-sahl.html" class="card-btn">
-                                    <svg width="9" height="11" viewBox="0 0 10 12" fill="currentColor"><path d="M1 1l8 5-8 5V1z"/></svg>
-                                   Découvrir l’application
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div style="padding:0 clamp(20px,5vw,80px)">
-                <div class="sahl-id-strip">
-                    <div class="strip-icon-box"><i class="fa-solid fa-id-card"></i></div>
-                    <div class="strip-body">
-                        <div class="strip-eyebrow">Sahl ID</div>
-                        <div class="strip-title-text">Accès à Sahl</div>
-                        <div class="strip-sub-text">Ton assistant complet pour réussir le Bac</div>
-                    </div>
-                    <a href="./inscrire.html" class="strip-btn">S'inscrire</a>
-                </div>
-            </div>
-            <div style="height:40px"></div>
-        </div>
-
-        <!-- AI FEATURED -->
-        <section class="section" style="background: var(--paper-2);">
-            <div class="container">
-                <div class="eyebrow r"><i class="fa-solid fa-sparkles"></i> L’écosystème Sahl</div>
-
-                <div class="feat-grid">
-                    <div class="ai-card r d1">
-                       <div>
-    <div class="ai-tag"><i class="fa-solid fa-microchip"></i> Propulsé par l’IA · Disponible 24h/24</div>
-    <h3>Découvrez <em>Sahl AI</em> —<br>votre tuteur personnel pour le Bac.</h3>
-    <p class="ai-desc">
-        Posez n’importe quelle question de votre programme. Obtenez des explications détaillées étape par étape,
-        générez des quiz personnalisés, créez des plans de révision et apprenez avec une IA qui comprend parfaitement
-        le programme du Bac.
-    </p>
-</div>
-
-<div class="chat-box">
-    <div class="chat-hd">
-        <div class="chat-ava"><i class="fa-solid fa-robot"></i></div>
-        <div><div class="chat-name-lbl">Sahl AI</div></div>
-        <div class="chat-online"></div>
-    </div>
-    <div class="chat-msgs">
-        <div class="msg u">"Calcule l’intégrale ∫(2x + 3) dx."</div>
-        <div class="msg b">
-            <strong>Sahl AI :</strong><br>
-            Pour calculer l’intégrale de 2x + 3, on intègre chaque terme séparément.<br><br>
-
-            ∫2x dx = 2 × (x² / 2) = x²<br>
-            ∫3 dx = 3x<br><br>
-
-            Donc :<br>
-            ∫(2x + 3) dx = x² + 3x + C<br><br>
-
-            Où C est la constante d’intégration.
-        </div>
-        <div class="typing"><span></span><span></span><span></span></div>
-    </div>
-</div>
-
-                        <div class="ai-footer">
-                            <a href="./Sahlai/Espace-sahl.html" class="btn-sm-b"><i class="fa-solid fa-robot"></i> Lancer Sahl AI <i class="fa-solid fa-arrow-right"></i></a>
-
-                        </div>
-                    </div>
-
-                    <div class="feat-sides r d2">
-                       <a href="./speakwell/Espace-sahl.html" class="fsc">
-    <div class="fsc-top">
-        <div class="fsc-ic b"><i class="fa-solid fa-comments"></i></div>
-        <i class="fa-solid fa-arrow-up-right fsc-arr"></i>
-    </div>
-    <h4>SpeakWell – English App</h4>
-    <p>Application dédiée à l’anglais : cours complets, leçons structurées et quiz interactifs de grammaire spécialement conçus pour le Bac.</p>
-</a>
-
-<a href="./Sahl Haven/Espace-sahl.html" class="fsc">
-    <div class="fsc-top">
-        <div class="fsc-ic g"><i class="fa-solid fa-book-open"></i></div>
-        <i class="fa-solid fa-arrow-up-right fsc-arr"></i>
-    </div>
-    <h4>E-Books Bac</h4>
-    <p>Grande bibliothèque numérique en Tunisie : exercices, séries pilotes et ressources complètes pour une préparation efficace au Bac.</p>
-</a>
-                        <a href="/svtapp/Espace-sahl.html" class="fsc">
-    <div class="fsc-top">
-        <div class="fsc-ic n"><i class="fa-solid fa-dna"></i></div>
-        <i class="fa-solid fa-arrow-up-right fsc-arr"></i>
-    </div>
-    <h4>SVT App</h4>
-    <p>Quiz et QCM en Sciences de la Vie et de la Terre pour réviser efficacement, avec flashcards et schémas interactifs qui expliquent les exercices de façon claire.</p>
-</a>
-
-<a href="./chatphi/Espace-sahl.html" class="fsc">
-    <div class="fsc-top">
-        <div class="fsc-ic o"><i class="fa-solid fa-brain"></i></div>
-        <i class="fa-solid fa-arrow-up-right fsc-arr"></i>
-    </div>
-    <h4>Chat Philo</h4>
-    <p>Préparez tous vos cours de philosophie, accédez à des leçons complètes et entraînez-vous avec des devoirs Bac corrigés pour réussir votre dissertation.</p>
-</a>
-<a href="./sahl-academy/Espace-sahl.html" class="fsc">
-    <div class="fsc-top">
-        <div class="fsc-ic p"><i class="fa-solid fa-graduation-cap"></i></div>
-        <i class="fa-solid fa-arrow-up-right fsc-arr"></i>
-    </div>
-    <h4>Sahl Academy</h4>
-    <p>Accédez à tous vos cours, exercices, et ressources Bac dans une plateforme complète et intelligente conçue pour réussir votre année.</p>
-</a>
-                    </div>
-                </div>
-            </section>
-
-        <!-- APPS TABLE -->
-        <section class="section">
-            <div class="container">
-                <div class="apps-hrow" style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: end; margin-bottom: 48px;">
-                    <div>
-                       <div class="eyebrow r"><i class="fa-solid fa-grid-2"></i> L’écosystème Sahl</div>
-<h2 class="section-title r d1">Six outils.<br><em>Une seule plateforme.</em></h2>
-</div>
-<p class="section-lead r d2">Chaque application est conçue spécialement pour le Bac — intégrée, ciblée et encore plus puissante ensemble.</p>
-</div>
-
-               <div class="apps-table r d1">
-    <div class="apps-th">
-        <div class="ath">#</div>
-        <div class="ath">Application</div>
-        <div class="ath">Description</div>
-        <div class="ath">Statut</div>
-    </div>
+<!-- ══════════ SIDEBAR ══════════ -->
+<aside class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-icon"><i class="fas fa-graduation-cap"></i></div>
     <div>
-        <div class="app-row">
-            <span class="app-num">01</span>
-            <div class="app-main">
-                <div class="app-ic b"><i class="fa-solid fa-comments"></i></div>
-                <div><div class="app-title">SpeakWell</div><div class="app-sub">Apprentissage de l’anglais</div></div>
-            </div>
-            <div class="app-desc">Cours d’anglais, leçons structurées et quiz interactifs de grammaire pour progresser efficacement au Bac.</div>
-            <span class="app-badge b"><i class="fa-solid fa-circle"></i> Disponible</span>
+      <div class="sb-wordmark">Lumière</div>
+      <div class="sb-tagline">Academic Platform</div>
+    </div>
+  </div>
+
+  <!-- Profile -->
+  <div class="sb-profile">
+    <div class="sb-pf-banner">
+      <div class="sb-pf-av">
+        A
+        <div class="sb-pf-av-dot"></div>
+      </div>
+    </div>
+    <div class="sb-pf-body">
+      <div class="sb-pf-name">Amine Bensalem</div>
+      <div class="sb-pf-sub">Terminale S · Algiers</div>
+      <div class="sb-pf-chips">
+        <span class="sb-chip fire"><i class="fas fa-fire"></i> 7-day streak</span>
+        <span class="sb-chip"><i class="fas fa-trophy"></i> Top 12%</span>
+        <span class="sb-chip"><i class="fas fa-star"></i> 4.8 avg</span>
+      </div>
+    </div>
+    <div class="sb-stats">
+      <div class="sb-stat"><div class="sb-sv">47h</div><div class="sb-sl">Studied</div></div>
+      <div class="sb-stat"><div class="sb-sv">38</div><div class="sb-sl">Lessons</div></div>
+      <div class="sb-stat"><div class="sb-sv">84%</div><div class="sb-sl">Progress</div></div>
+      <div class="sb-stat"><div class="sb-sv">9</div><div class="sb-sl">Badges</div></div>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <nav class="sb-nav">
+    <div class="sb-sec-label">Menu</div>
+    <button class="sb-link active" onclick="goTo('top')"><i class="fas fa-house"></i> Dashboard</button>
+    <button class="sb-link" onclick="goTo('subjects')"><i class="fas fa-layer-group"></i> Subjects</button>
+    <button class="sb-link" onclick="goTo('courses')"><i class="fas fa-play-circle"></i> Courses</button>
+    <button class="sb-link"><i class="fas fa-chart-line"></i> Progress</button>
+    <button class="sb-link"><i class="fas fa-medal"></i> Achievements</button>
+
+    <div class="sb-sec-label">Subjects</div>
+    <button class="sb-subj-btn" style="--sb-c:var(--math-c)" onclick="openSubj('math',this);goTo('courses')">
+      <span class="sb-dot" style="--sb-c:var(--math-c)"></span>Mathematics
+      <span class="sb-cnt-badge">4</span>
+    </button>
+    <button class="sb-subj-btn" style="--sb-c:var(--phys-c)" onclick="openSubj('physics',this);goTo('courses')">
+      <span class="sb-dot" style="--sb-c:var(--phys-c)"></span>Physics
+      <span class="sb-cnt-badge">4</span>
+    </button>
+    <button class="sb-subj-btn" style="--sb-c:var(--eng-c)" onclick="openSubj('english',this);goTo('courses')">
+      <span class="sb-dot" style="--sb-c:var(--eng-c)"></span>English
+      <span class="sb-cnt-badge">4</span>
+    </button>
+  </nav>
+
+  <div class="sb-bottom">
+    <div class="theme-toggle">
+      <button class="th-btn" id="lBtn" onclick="setTheme('light')"><i class="fas fa-sun"></i> Light</button>
+      <button class="th-btn on" id="dBtn" onclick="setTheme('dark')"><i class="fas fa-moon"></i> Dark</button>
+    </div>
+  </div>
+</aside>
+
+<!-- ══════════ MAIN ══════════ -->
+<div class="main">
+
+  <!-- Mobile topbar -->
+  <div class="topbar">
+    <div class="tb-brand">
+      <div class="tb-icon"><i class="fas fa-graduation-cap"></i></div>
+      <div class="tb-name">Lumière</div>
+    </div>
+    <div class="tb-right">
+      <button class="tb-theme" id="tbThemeBtn" onclick="toggleTheme()"><i class="fas fa-sun" id="tbThemeIco"></i></button>
+    </div>
+  </div>
+
+  <div class="content" id="top">
+
+    <!-- ── HERO ── -->
+    <section class="hero">
+      <div class="hero-eyebrow"><i class="fas fa-star"></i> Academic Platform · Terminale S</div>
+      <h1 class="hero-h">Master every <em>subject.</em><span class="dim">Excel with confidence.</span></h1>
+      <p class="hero-p">Expert-led video courses built for high school & baccalaureate students. Structured playlists, clear explanations, real results.</p>
+
+      <div class="kpi-row">
+        <div class="kpi reveal" data-c="blue">
+          <div class="kpi-val">12</div>
+          <div class="kpi-lbl">Active Courses</div>
+          <div class="kpi-trend">+2 new</div>
         </div>
-        <div class="app-row">
-            <span class="app-num">02</span>
-            <div class="app-main">
-                <div class="app-ic b"><i class="fa-solid fa-robot"></i></div>
-                <div><div class="app-title">Sahl AI</div><div class="app-sub">Tuteur IA personnel</div></div>
-            </div>
-            <div class="app-desc">Posez vos questions, obtenez des explications étape par étape, générez des quiz et des plans de révision instantanément.</div>
-            <span class="app-badge b"><i class="fa-solid fa-circle"></i> Disponible</span>
+        <div class="kpi reveal" data-c="indigo">
+          <div class="kpi-val">47h</div>
+          <div class="kpi-lbl">Hours Studied</div>
         </div>
-        <div class="app-row">
-            <span class="app-num">03</span>
-            <div class="app-main">
-                <div class="app-ic g"><i class="fa-solid fa-dna"></i></div>
-                <div><div class="app-title">SVT App</div><div class="app-sub">Sciences de la Vie et de la Terre</div></div>
-            </div>
-            <div class="app-desc">Quiz, QCM, flashcards et schémas interactifs pour comprendre les exercices et réviser efficacement.</div>
-            <span class="app-badge g"><i class="fa-solid fa-circle"></i> Disponible</span>
+        <div class="kpi reveal" data-c="emerald">
+          <div class="kpi-val">38</div>
+          <div class="kpi-lbl">Lessons Done</div>
         </div>
-        <div class="app-row">
-            <span class="app-num">04</span>
-            <div class="app-main">
-                <div class="app-ic n"><i class="fa-solid fa-brain"></i></div>
-                <div><div class="app-title">Chat Philo</div><div class="app-sub">Préparation dissertation</div></div>
-            </div>
-            <div class="app-desc">Cours complets, devoirs Bac corrigés et accompagnement pour structurer vos dissertations de philosophie.</div>
-            <span class="app-badge n"><i class="fa-solid fa-circle"></i> Disponible</span>
+        <div class="kpi reveal" data-c="amber">
+          <div class="kpi-val">84%</div>
+          <div class="kpi-lbl">Overall Progress</div>
         </div>
-        <div class="app-row">
-            <span class="app-num">05</span>
-            <div class="app-main">
-                <div class="app-ic b"><i class="fa-solid fa-book-open"></i></div>
-                <div><div class="app-title">E-Books</div><div class="app-sub">Bibliothèque numérique</div></div>
-            </div>
-            <div class="app-desc">Grande bibliothèque en Tunisie : exercices, séries pilotes et ressources complètes pour toutes les sections du Bac.</div>
-            <span class="app-badge b"><i class="fa-solid fa-circle"></i> Disponible</span>
+      </div>
+    </section>
+
+    <!-- ── SUBJECTS ── -->
+    <section id="subjects">
+      <div class="sec-hd">
+        <div class="sec-hd-l">
+          <div class="sec-label"><i class="fas fa-layer-group"></i> Explore</div>
+          <h2 class="sec-title">Choose your <em>Subject</em></h2>
         </div>
-
-    </div>
-</div>
-            </div>
-        </section>
-
-
-      <!-- CTA -->
-<section class="section" style="background: var(--paper-2);">
-    <div class="container">
-        <div class="cta-box r">
-            <div class="cta-text">
-                <p class="cta-ey"><i class="fa-solid fa-sparkles"></i> Commencez aujourd’hui — c’est gratuit</p>
-                <h2 class="cta-h">Prêt à transformer<br>votre façon <em>d’apprendre&nbsp;?</em></h2>
-                <p class="cta-p">Rejoignez Sahl et faites le premier pas vers la réussite au Bac. Tous les outils dont vous avez besoin — réunis dans une plateforme intelligente, moderne et conçue pour vous.</p>
-            </div>
-            <div class="cta-act">
-                <a href="./inscrire.html" class="btn-cta">
-                    <i class="fa-regular fa-id-card"></i>
-                    Créer mon identifiant Sahl
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-        <!-- Footer -->
-       <footer>
-    <div class="footer-inner">
-        <div class="footer-top">
-            <div class="ft-brand">
-                <a href="#" class="ft-logo logo">
-                    <span class="logo-name">Sahl App</span>
-                </a>
-                <p class="ft-desc">Apprentissage intelligent pour le Bac</p>
-                <div class="ft-socials">
-                    <a href="#" class="ft-soc" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="ft-soc" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                    <a href="#" class="ft-soc" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-                </div>
-            </div>
-            <div class="ft-col">
-                <h5>Plateforme</h5>
-                <a href="./Sahlai/Espace-sahl.html"><i class="fa-solid fa-robot"></i> Sahl AI</a>
-                <a href="./speakwell/Espace-sahl.html"><i class="fa-solid fa-comments"></i> SpeakWell</a>
-                <a href="/svtapp/Espace-sahl.html"><i class="fa-solid fa-dna"></i> SVT App</a>
-                <a href="./Sahl Haven/Espace-sahl.html"><i class="fa-solid fa-book-open"></i> E-books</a>
-                <a href="./chatphi/Espace-sahl.html"><i class="fa-solid fa-brain"></i> Chat Philo</a>
-            </div>
-            <div class="ft-col">
-                <h5>Entreprise</h5>
-                <a href="./foot pages/Entreprise.html"><i class="fa-solid fa-circle-info"></i> À propos de Sahl</a>
-                <a href="./foot pages/Entreprise.html"><i class="fa-solid fa-pen-nib"></i> Blog</a>
-                <a href="./foot pages/Entreprise.html"><i class="fa-solid fa-briefcase"></i> Carrières</a>
-                <a href="./foot pages/Entreprise.html"><i class="fa-solid fa-envelope"></i> Contact</a>
-            </div>
-            <div class="ft-col">
-                <h5>Légal</h5>
-                <a href="./foot pages/Legal.html"><i class="fa-solid fa-shield-halved"></i> Politique de confidentialité</a>
-                <a href="./foot pages/Legal.html"><i class="fa-solid fa-file-lines"></i> Conditions d’utilisation</a>
-                <a href="./foot pages/Legal.html"><i class="fa-solid fa-cookie-bite"></i> Politique des cookies</a>
-            </div>
-        </div>
-
-    </div>
-</footer>
-    </div>
-
-    <!-- Search Content - EduFlow Design -->
-    <div id="search" class="content-section">
-        <!-- NAV -->
-
-
-        <!-- HERO — SPLIT LAYOUT -->
-        <section class="hero">
-            <div class="hero-bg-circle c1"></div>
-            <div class="hero-bg-circle c2"></div>
-            <div class="hero-bg-circle c3"></div>
-            <div class="hero-bg-dots"></div>
-
-            <!-- LEFT -->
-            <div class="hero-left">
-                <div class="hero-badge">
-    <div class="badge-pip"><i class="fas fa-book-open"></i></div>
-    <span class="hero-badge-text">Ressources Bac centralisées</span>
-    <span class="hero-badge-new">Nouveau</span>
-</div>
-
-              <h1>
-    La plus grande bibliothèque<br>
-    <em class="underline-wave">du Bac réunie</em>
-</h1>
-
-              <p class="hero-desc">
-    Accède à <em>toutes les ressources</em> du Bac — cours, exercices corrigés, fiches méthodologiques et devoirs pour exceller dans chaque matière.
-</p>
-
-               <div class="hero-actions">
-    <a href="./Sahl Haven/Espace-sahl.html" class="btn-hero-primary">
-        Explorer les e-Books
-        <i class="fas fa-arrow-right"></i>
-    </a>
-    <a href="./SahlAcademy/Espace-sahl.html" class="btn-hero-secondary">
-        Rejoindre Sahl Academy
-        <i class="fas fa-user-graduate"></i>
-    </a>
-</div>
-                <div class="hero-proof">
-    <div class="proof-avatars">
-        <div class="proof-av"><i class="fas fa-book"></i></div>
-        <div class="proof-av"><i class="fas fa-book"></i></div>
-        <div class="proof-av"><i class="fas fa-book"></i></div>
-        <div class="proof-av"><i class="fas fa-book"></i></div>
-        <div class="proof-av"><i class="fas fa-book"></i></div>
-    </div>
-    <div class="proof-text">
-        <strong>12,000+ documents</strong><br>
-        disponibles pour réviser
-    </div>
-    <div class="proof-divider"></div>
-    <div class="proof-rating">
-        <div class="proof-stars">★★★★★</div>
-        <div class="proof-rating-text">5 / 5 rating</div>
-    </div>
-</div>
-            </div>
-
-            <!-- RIGHT — visual -->
-           <div class="hero-right">
-    <div class="hero-visual">
-        <!-- Floating cards adapted for Bac -->
-        <div class="hero-float f1">
-            <div class="float-icon fi-amber"><i class="fas fa-book"></i></div>
-            <div class="float-text">
-                <div class="float-title">12,000+ documents</div>
-                <div class="float-sub">Cours & exercices</div>
-            </div>
-        </div>
-
-        <div class="hero-float f2">
-            <div class="float-icon fi-emerald"><i class="fas fa-star"></i></div>
-            <div class="float-text">
-                <div class="float-title">5 / 5 rating</div>
-                <div class="float-sub">Évalué par les étudiants</div>
-            </div>
-        </div>
-
-        <div class="hero-float f3">
-            <div class="float-icon fi-violet"><i class="fas fa-graduation-cap"></i></div>
-            <div class="float-text">
-                <div class="float-title">120k élèves actifs</div>
-                <div class="float-sub">Révisent chaque jour</div>
-            </div>
-        </div>
-
-        <!-- Main dashboard card adapted for Bac -->
-        <div class="hero-card-main">
-            <div class="hc-header">
-                <div class="hc-course-thumb"><i class="fas fa-book-open"></i></div>
-                <div class="hc-course-info">
-                    <div class="hc-course-tag">Physique</div>
-                    <div class="hc-course-title">Oscillations mécaniques</div>
-                </div>
-            </div>
-            <div class="hc-progress-label">
-                <span>Progression</span>
-                <span>72%</span>
-            </div>
-            <div class="hc-progress-bar">
-                <div class="hc-progress-fill"></div>
-            </div>
-            <div class="hc-lessons">
-                <div class="hc-lesson">
-                    <div class="hc-lesson-icon done"><i class="fas fa-check"></i></div>
-                    <div class="hc-lesson-text">
-                        <div class="hc-lesson-name">Forces et Newton</div>
-                        <div class="hc-lesson-dur">Terminé</div>
-                    </div>
-                </div>
-                <div class="hc-lesson">
-                    <div class="hc-lesson-icon done"><i class="fas fa-check"></i></div>
-                    <div class="hc-lesson-text">
-                        <div class="hc-lesson-name">Oscillation libre</div>
-                        <div class="hc-lesson-dur">Terminé</div>
-                    </div>
-                </div>
-                <div class="hc-lesson">
-                    <div class="hc-lesson-icon active"><i class="fas fa-play"></i></div>
-                    <div class="hc-lesson-text">
-                        <div class="hc-lesson-name">Oscillation amortie</div>
-                        <div class="hc-lesson-dur">En cours · 24 min</div>
-                    </div>
-                </div>
-                <div class="hc-lesson">
-                    <div class="hc-lesson-icon locked"><i class="fas fa-lock"></i></div>
-                    <div class="hc-lesson-text">
-                        <div class="hc-lesson-name">Exercices corrigés</div>
-                        <div class="hc-lesson-dur">Bloqué</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-        </section>
-
-        <!-- BRAND STRIP -->
-       <div class="brand-strip" data-reveal>
-    <span class="brand-strip-label">Sources</span>
-    <div class="brand-track-wrap">
-        <div class="brand-track">
-            <span class="brand-item"><i class="fas fa-school"></i> Pilote Sfax</span>
-            <span class="brand-item"><i class="fas fa-school"></i> Pilote Mahdia</span>
-            <span class="brand-item"><i class="fas fa-school"></i> Pilote Médenine</span>
-            <span class="brand-item"><i class="fas fa-school"></i> Pilote Tunis</span>
-            <span class="brand-item"><i class="fas fa-people-arrows"></i> Réos mixtes</span>
-            <span class="brand-item"><i class="fas fa-university"></i> Université de la Manar</span>
-            <span class="brand-item"><i class="fas fa-calendar-alt"></i> Bac 2007 – 2025</span>
-
-            <!-- duplicate for continuous scrolling -->
-            <span class="brand-item"><i class="fas fa-school"></i> Pilote Sfax</span>
-            <span class="brand-item"><i class="fas fa-school"></i> Pilote Mahdia</span>
-            <span class="brand-item"><i class="fas fa-school"></i> Pilote Médenine</span>
-            <span class="brand-item"><i class="fas fa-school"></i> Pilote Tunis</span>
-            <span class="brand-item"><i class="fas fa-people-arrows"></i> Réos mixtes</span>
-            <span class="brand-item"><i class="fas fa-university"></i> Université de la Manar</span>
-            <span class="brand-item"><i class="fas fa-calendar-alt"></i> Bac 2007 – 2025</span>
-        </div>
-    </div>
-</div>
-
-        <!-- STATS -->
-       <div class="stats-band" data-reveal>
-    <div class="stats-inner">
-        <div class="stat-item">
-            <div class="stat-icon"><i class="fas fa-book-open"></i></div>
-            <div class="stat-num">12<span>k</span></div>
-            <div class="stat-label">Documents dans la bibliothèque E-Books</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-icon"><i class="fas fa-users"></i></div>
-            <div class="stat-num">120<span></span></div>
-            <div class="stat-label">Élèves actifs utilisant les ressources</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-icon"><i class="fas fa-layer-group"></i></div>
-            <div class="stat-num">7</div>
-            <div class="stat-label">Matières couvertes</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-icon"><i class="fas fa-lightbulb"></i></div>
-            <div class="stat-num">100<span>%</span></div>
-            <div class="stat-label">Contenu optimisé pour réussir</div>
-        </div>
-    </div>
-</div>
-
-        <!-- SECTION 1 — FEATURE CARDS -->
-        <section id="s1" class="section-wrap">
-           <div class="section-head-row" data-reveal>
-    <div class="section-head-left">
-        <div class="s-eyebrow"><i class="fas fa-video"></i> Sahl Academy</div>
-        <h2 class="s-title-serif">Révisez & <em>apprenez</em> en vidéo</h2>
-    </div>
-    <a href="./SahlAcademy/Espace-sahl.html" class="s-view-all">Voir toutes les vidéos <i class="fas fa-arrow-right"></i></a>
-</div>
-
-            <div class="feat-grid">
-                <a href="./SahlAcademy/Espace-sahl.html" class="fc" data-reveal data-delay="1">
-    <div class="fc-accent-line acc-indigo"></div>
-    <i class="fas fa-atom fc-bg-icon"></i>
-    <div class="fc-top">
-        <div class="fc-icon-row">
-            <div class="fc-icon-wrap ic-indigo"><i class="fas fa-atom"></i></div>
-            <span class="fc-badge new"><i class="fas fa-bolt"></i> Updated</span>
-        </div>
-        <div class="fc-category">Physique</div>
-        <h3 class="fc-title">Oscillation Mécanique – Force</h3>
-        <p class="fc-desc">
-            Découvrez les questions fréquentes, leurs réponses détaillées et des astuces pratiques pour maîtriser ce chapitre d’oscillation mécanique et force. Idéal pour réviser efficacement et progresser.
-        </p>
-    </div>
-    <div class="fc-bottom">
-        <span class="fc-cta-btn">Voir le playlist <i class="fas fa-arrow-right"></i></span>
-        <span class="fc-meta"><i class="fas fa-sync-alt"></i> Mis à jour régulièrement</span>
-    </div>
-</a>
-
-              <a href="./SahlAcademy/Espace-sahl.html" class="fc" data-reveal data-delay="2">
-    <div class="fc-accent-line acc-violet"></div>
-    <i class="fas fa-wave-square fc-bg-icon"></i>
-    <div class="fc-top">
-        <div class="fc-icon-row">
-            <div class="fc-icon-wrap ic-violet"><i class="fas fa-wave-square"></i></div>
-            <span class="fc-badge beta"><i class="fas fa-flask"></i> Astuces</span>
-        </div>
-        <div class="fc-category">Physique</div>
-        <h3 class="fc-title">Onde Mécanique – QS & Astuces</h3>
-        <p class="fc-desc">
-            Découvrez les questions fréquentes, leurs réponses détaillées et des astuces pratiques pour mieux comprendre le chapitre des ondes mécaniques. Idéal pour réviser efficacement et réussir les exercices récurrents.
-        </p>
-    </div>
-    <div class="fc-bottom">
-        <span class="fc-cta-btn">Voir les questions <i class="fas fa-arrow-right"></i></span>
-        <span class="fc-meta"><i class="fas fa-lightbulb"></i> Méthodes & astuces incluses</span>
-    </div>
-</a>
-
-               <a href="./SahlAcademy/Espace-sahl.html" class="fc" data-reveal data-delay="3">
-    <div class="fc-accent-line acc-amber"></div>
-    <i class="fas fa-pencil-alt fc-bg-icon"></i>
-    <div class="fc-top">
-        <div class="fc-icon-row">
-            <div class="fc-icon-wrap ic-amber"><i class="fas fa-pencil-alt"></i></div>
-            <span class="fc-badge pop"><i class="fas fa-fire"></i> Popular</span>
-        </div>
-        <div class="fc-category">Bac English</div>
-        <h3 class="fc-title">Grammar & Exercises Revision</h3>
-        <p class="fc-desc">
-            Révisez la grammaire anglaise avec des exercices corrigés spécialement conçus pour le Bac. Pratique, clair et efficace pour réussir vos examens.
-        </p>
-    </div>
-    <div class="fc-bottom">
-        <span class="fc-cta-btn">Voir les exercices <i class="fas fa-arrow-right"></i></span>
-        <span class="fc-meta"><i class="fas fa-book"></i> +100 exercices</span>
-    </div>
-</a>
-
-               <a href="./SahlAcademy/Espace-sahl.html" class="fc" data-reveal data-delay="2">
-    <div class="fc-accent-line acc-blue"></div>
-    <i class="fas fa-wave-square fc-bg-icon"></i>
-    <div class="fc-top">
-        <div class="fc-icon-row">
-            <div class="fc-icon-wrap ic-blue"><i class="fas fa-wave-square"></i></div>
-            <span class="fc-badge beta"><i class="fas fa-lightbulb"></i> Astuces</span>
-        </div>
-        <div class="fc-category">Physique</div>
-        <h3 class="fc-title">Oscillation Mécanique Libre – Amorti & Non Amorti</h3>
-        <p class="fc-desc">
-            Maîtrisez les oscillations libres, amorties et non amorties avec les questions qui reviennent souvent, leurs réponses détaillées et des astuces pratiques pour mieux comprendre le cours et résoudre les exercices efficacement.
-        </p>
-    </div>
-    <div class="fc-bottom">
-        <span class="fc-cta-btn">Voir les questions <i class="fas fa-arrow-right"></i></span>
-        <span class="fc-meta"><i class="fas fa-brain"></i> Méthodes & astuces </span>
-    </div>
-</a>
-
-
-            </div>
-        </section>
-
-        <div class="divider"></div>
-
-        <!-- SECTION 2 — HORIZONTAL SCROLL -->
-        <section id="s2">
-           <div class="section-head-row" data-reveal>
-    <div class="section-head-left">
-        <div class="s-eyebrow"><i class="fas fa-compass"></i> Matières</div>
-        <h2 class="s-title-clean">Explorez chaque <span>domaine d’apprentissage</span></h2>
-    </div>
-    <a href="./Sahl Haven/Espace-sahl.html" class="s-view-all">Voir tous <i class="fas fa-arrow-right"></i></a>
-</div>
-
-            <div class="hscroll-outer">
-                <div class="htrack" id="htrack">
-                    <a href="/subjects/physique" class="sq ac-indigo">
-    <div class="sq-top">
-        <div class="sq-icon ic-indigo"><i class="fas fa-atom"></i></div>
-        <i class="fas fa-arrow-up-right-from-square sq-arrow"></i>
-    </div>
-    <div class="sq-bottom">
-        <div class="sq-count">320+ Exercices & Fiches Méthode</div>
-        <div class="sq-label">Sciences</div>
-        <div class="sq-name">Physique</div>
-    </div>
-</a>
-
-<a href="/subjects/math" class="sq ac-violet">
-    <div class="sq-top">
-        <div class="sq-icon ic-violet"><i class="fas fa-square-root-alt"></i></div>
-        <i class="fas fa-arrow-up-right-from-square sq-arrow"></i>
-    </div>
-    <div class="sq-bottom">
-        <div class="sq-count">650+ Exercices & Fiches Méthode</div>
-        <div class="sq-label">Analyse</div>
-        <div class="sq-name">Mathématiques</div>
-    </div>
-</a>
-
-<a href="/subjects/svt" class="sq ac-emerald">
-    <div class="sq-top">
-        <div class="sq-icon ic-emerald"><i class="fas fa-dna"></i></div>
-        <i class="fas fa-arrow-up-right-from-square sq-arrow"></i>
-    </div>
-    <div class="sq-bottom">
-        <div class="sq-count">390+ sujets</div>
-        <div class="sq-label">Biologie</div>
-        <div class="sq-name">Sciences (SVT)</div>
-    </div>
-</a>
-
-<a href="/subjects/philo" class="sq ac-amber">
-    <div class="sq-top">
-        <div class="sq-icon ic-amber"><i class="fas fa-feather"></i></div>
-        <i class="fas fa-arrow-up-right-from-square sq-arrow"></i>
-    </div>
-    <div class="sq-bottom">
-        <div class="sq-count">+70 موضوع</div>
-        <div class="sq-label">الدروس</div>
-        <div class="sq-name">الفلسفة</div>
-    </div>
-</a>
-
-<a href="/subjects/english" class="sq ac-sky">
-    <div class="sq-top">
-        <div class="sq-icon ic-sky"><i class="fas fa-language"></i></div>
-        <i class="fas fa-arrow-up-right-from-square sq-arrow"></i>
-    </div>
-    <div class="sq-bottom">
-        <div class="sq-count">85+ lessons</div>
-        <div class="sq-label">Languages</div>
-        <div class="sq-name">English</div>
-    </div>
-</a>
-
-<a href="/subjects/info" class="sq ac-teal">
-    <div class="sq-top">
-        <div class="sq-icon ic-teal"><i class="fas fa-laptop-code"></i></div>
-        <i class="fas fa-arrow-up-right-from-square sq-arrow"></i>
-    </div>
-    <div class="sq-bottom">
-        <div class="sq-count">60+ exercices</div>
-        <div class="sq-label">Technologie</div>
-        <div class="sq-name">Informatique</div>
-    </div>
-</a>
-
-<a href="/subjects/chimie" class="sq ac-rose">
-    <div class="sq-top">
-        <div class="sq-icon ic-rose"><i class="fas fa-flask"></i></div>
-        <i class="fas fa-arrow-up-right-from-square sq-arrow"></i>
-    </div>
-    <div class="sq-bottom">
-        <div class="sq-count">175+ Exercices & Fiches Méthode</div>
-        <div class="sq-label">Sciences</div>
-        <div class="sq-name">Chimie</div>
-    </div>
-</a>
-                </div>
-            </div>
-        </section>
-
-
-
-        <div class="divider"></div>
-
-        <!-- SECTION 3 — VERTICAL GRID -->
-        <section id="s3" class="section-wrap">
-           <div class="section-head-row" data-reveal>
-    <div class="section-head-left">
-        <div class="s-eyebrow"><i class="fas fa-box-open"></i> Packs Bac</div>
-        <h2 class="s-title-clean">Révisez avec <span>le pack idéal</span></h2>
-    </div>
-    <a href="./Sahl Haven/Espace-sahl.html" class="s-view-all">Voir tous <i class="fas fa-arrow-right"></i></a>
-</div>
-
-            <div class="vgrid">
-               <a href="./Sahl Haven/Espace-sahl.html" class="vc" data-reveal data-delay="1">
-    <i class="fas fa-book-open vc-bg-icon"></i>
-    <div class="vc-top">
-        <div class="vc-top-row">
-            <div class="vc-num">01</div>
-            <div class="vc-level-dot" style="background:#10b981"></div>
-        </div>
-        <div class="vc-cat">Bac Pack</div>
-        <h3 class="vc-title">Devoirs Bac 2007 - 2025</h3>
-        <p class="vc-desc">
-            Collection complète de devoirs avec corrections détaillées pour toutes les matières principales.
-        </p>
-    </div>
-    <div class="vc-bottom">
-        <span class="vc-pill">Explore <i class="fas fa-arrow-right"></i></span>
-        <span class="vc-students"><i class="fas fa-users"></i> Bac 2026</span>
-    </div>
-</a>
-
-                <a href="./Sahl Haven/Espace-sahl.html" class="vc" data-reveal data-delay="2">
-                    <i class="fas fa-hammer vc-bg-icon"></i>
-                    <div class="vc-top">
-                        <div class="vc-top-row">
-                            <div class="vc-num">02</div>
-                            <div class="vc-level-dot" style="background:#f59e0b"></div>
-                        </div>
-                        <div class="vc-cat">Bac Pack</div>
-         <h3 class="vc-title">Préparation Synthèse 2</h3>
-        <p class="vc-desc">
-            Collection complète d’exercices de synthèse, devoirs pilotes et Bac réels pour Math, Physique et Sciences. Corrigés détaillés pour préparer efficacement les épreuves principales.
-        </p>
-    </div>
-    <div class="vc-bottom">
-        <span class="vc-pill">Explore <i class="fas fa-arrow-right"></i></span>
-        <span class="vc-students"><i class="fas fa-users"></i> Bac 2026</span>
-    </div>
-                </a>
-
-                <a href="./Sahl Haven/Espace-sahl.html" class="vc" data-reveal data-delay="3">
-                    <i class="fas fa-star vc-bg-icon"></i>
-                    <div class="vc-top">
-                        <div class="vc-top-row">
-                            <div class="vc-num">03</div>
-                            <div class="vc-level-dot" style="background:#f43f5e"></div>
-                        </div>
-                       <div class="vc-cat">Bac Pack</div>
-        <h3 class="vc-title">Préparation Bac Pratique Info</h3>
-        <p class="vc-desc">
-            Cours pratiques, devoirs corrigés et méthodologie complète pour réussir le Bac pratique en Informatique. Plus de 112 devoirs analysés et expliqués pour maîtriser chaque étape.
-        </p>
-    </div>
-    <div class="vc-bottom">
-        <span class="vc-pill">Explore <i class="fas fa-arrow-right"></i></span>
-                        <span class="vc-students"><i class="fas fa-users"></i> Bac 2026</span>
-                    </div>
-                </a>
-
-                <a href="./Sahl Haven/Espace-sahl.html" class="vc" data-reveal data-delay="1">
-                    <i class="fas fa-people-group vc-bg-icon"></i>
-                    <div class="vc-top">
-                        <div class="vc-top-row">
-                            <div class="vc-num">04</div>
-                            <div class="vc-level-dot" style="background:#8b5cf6"></div>
-                        </div>
-                       <div class="vc-cat">Bac Pack</div>
-        <h3 class="vc-title">Bac Success Kit</h3>
-        <p class="vc-desc">
-            Fiches méthodologiques et questions fréquentes du Bac en Mathématiques, Physique et Sciences, avec méthodes détaillées pour résoudre chaque problème correctement.
-        </p>
-    </div>
-    <div class="vc-bottom">
-        <span class="vc-pill">Explore <i class="fas fa-arrow-right"></i></span>
-                        <span class="vc-students"><i class="fas fa-users"></i> Bac 2026</span>
-                    </div>
-                </a>
-
-              <a href="./Sahl Haven/Espace-sahl.html" class="vc" data-reveal data-delay="3">
-    <i class="fas fa-language vc-bg-icon"></i>
-    <div class="vc-top">
-        <div class="vc-top-row">
-            <div class="vc-num">06</div>
-            <div class="vc-level-dot" style="background:#10b981"></div>
-        </div>
-        <div class="vc-cat">Bac Pack</div>
-        <h3 class="vc-title">Regional Bac Pilots</h3>
-        <p class="vc-desc">
-            Collection complète de devoirs pilotes de Sfax, Tunis, Nabeul et Médenine, avec corrections détaillées et méthodologie pas-à-pas pour chaque exercice.
-      </p>
-    </div>
-    <div class="vc-bottom">
-        <span class="vc-pill">Explore <i class="fas fa-arrow-right"></i></span>
-        <span class="vc-students"><i class="fas fa-users"></i>Bac 2026</span>
-    </div>
-</a>
-               <a href="./Sahl Haven/Espace-sahl.html" class="vc" data-reveal data-delay="3">
-    <i class="fas fa-language vc-bg-icon"></i>
-    <div class="vc-top">
-        <div class="vc-top-row">
-            <div class="vc-num">06</div>
-            <div class="vc-level-dot" style="background:#10b981"></div>
-        </div>
-        <div class="vc-cat">Bac Pack</div>
-        <h3 class="vc-title">English Mastery Pack</h3>
-        <p class="vc-desc">
-            Grammar exercises, chapter-by-chapter revision, and writing practice to prepare effectively for the Bac English exam.
-        </p>
-    </div>
-    <div class="vc-bottom">
-        <span class="vc-pill">Explore <i class="fas fa-arrow-right"></i></span>
-        <span class="vc-students"><i class="fas fa-users"></i> Bac 2026</span>
-    </div>
-</a>
-            </div>
-        </section>
-
-       <!-- CTA BAND - Free Pack -->
-<div class="cta-band" data-reveal>
-    <div class="cta-left">
-        <div class="cta-tag"><i class="fas fa-gift"></i> &nbsp;Pack Gratuit</div>
-        <h2 class="cta-title">Commencez vos révisions<br>avec notre pack gratuit !</h2>
-        <p class="cta-sub">
-            Accédez gratuitement à des exercices, cours et fiches méthodologiques pour tester nos packs et booster votre préparation au Bac.
-        </p>
-    </div>
-    <div class="cta-right">
-        <a href="https://drive.google.com/drive/folders/1gFL60k8bLul26Vj3fU6ng_F1wRcB1xqD" class="btn-cta-primary"><i class="fas fa-box-open"></i> Découvrir le pack</a>
-        <a href="./Sahl Haven/Espace-sahl.html" class="btn-cta-ghost"><i class="fas fa-id-badge"></i> Créer un Sahl ID</a>
-    </div>
-</div><br><br>
-<script src="./assets/js/ebookhome.js"></script>
-    </div>
-
-    <!-- SpeakWell Section - Arc Design with Links -->
-    <div id="speakwell" class="content-section">
-        <!-- Custom Cursor -->
-        <div id="cursor"></div>
-
-
-        <nav>
-            <div class="nav-logo">
-                <a href="./speakwell/">
-                    SpeakWell <span class="nav-logo-dot"></span>
-                </a>
-            </div>
-            <div class="nav-center">
-                <a href="./speakwell/home" class="active">Home</a>
-                <a href="./speakwell/features">Grammar</a>
-                <a href="./speakwell/solutions">Writing</a>
-                <a href="./speakwell/pricing">Speaking</a>
-            </div>
-            <div class="nav-right">
-                <div class="nav-avatar">
-                    <a href="./speakwell/Espace-sahl.html"></a>
-                </div>
-                <a href="./speakwell/Espace-sahl.html" class="btn-primary">Sahl ID</a>
-            </div>
-        </nav>
-
-       <!-- HERO for Sahl Academy -->
-<section class="hero">
-    <div class="hero-left">
-        <a href="./speakwell/Espace-sahl.html" class="hero-badge">
-            <span class="badge-pill">NEW</span>
-               Explore Sahl Academy Courses
-        </a>
-        <h1>
-            <a href="./speakwell/Espace-sahl.html">Master English</a><br>
-            <em><a href="./speakwell/Espace-sahl.html">Grammar & Writing</a></em><br>
-            <a href="./speakwell/Espace-sahl.html">for BAC Success.</a>
-        </h1>
-        <p class="hero-desc">Learn grammar, writing, vocabulary, and speaking with interactive lessons and practice exercises designed for BAC students.</p>
-        <div class="hero-actions">
-            <a href="./speakwell/Espace-sahl.html" class="btn-primary">Start Learning →</a>
-            <a href="./inscrire.html" class="btn-ghost">Get Your Sahl ID</a>
-        </div>
-    </div>
-    <div class="hero-right">
-        <div class="hero-stats">
-            <a href="./speakwell/stats/users" class="stat-card">
-                <div>
-                    <div class="stat-num">100+</div>
-                    <div class="stat-label">Active Students</div>
-                </div>
-                <span class="stat-tag">↑ 25% this month</span>
-            </a>
-            <a href="./speakwell/stats/uptime" class="stat-card">
-                <div class="stat-num">99.9%</div>
-                <div class="stat-label">Course Availability</div>
-                <div class="stat-chart">
-                    <div class="bar" style="height:60%"></div>
-                    <div class="bar" style="height:80%"></div>
-                    <div class="bar active" style="height:100%"></div>
-                    <div class="bar" style="height:70%"></div>
-                    <div class="bar active" style="height:90%"></div>
-                    <div class="bar" style="height:55%"></div>
-                    <div class="bar active" style="height:100%"></div>
-                </div>
-            </a>
-            <a href="./speakwell/stats/integrations" class="stat-card">
-                <div class="stat-num">50+</div>
-                <div class="stat-label">Interactive Lessons</div>
-                <div class="stat-chart">
-                    <div class="bar" style="height:40%"></div>
-                    <div class="bar active" style="height:75%"></div>
-                    <div class="bar" style="height:55%"></div>
-                    <div class="bar active" style="height:100%"></div>
-                    <div class="bar" style="height:65%"></div>
-                    <div class="bar active" style="height:85%"></div>
-                    <div class="bar" style="height:50%"></div>
-                </div>
-            </a>
-        </div>
-    </div>
-</section>
-
-
-        <!-- SECTION 1 — HORIZONTAL CARDS with Links -->
-        <section class="sec1">
-            <div class="section-header">
-                <div>
-                    <div class="section-kicker">Core Features</div>
-                    <div class="section-title">Everything you need,<br>nothing you don't.</div>
-                </div>
-                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
-                    <a href="./speakwell/Espace-sahl.html" class="link-arrow">View all features →</a>
-                    <div class="section-scroll-hint"><div class="scroll-hint-line"></div>Drag to explore</div>
-                </div>
-            </div>
-
-            <div class="h-track-wrapper">
-                <div class="h-track" id="hTrack">
-                   <a href="./speakwell/Espace-sahl.html" class="h-card tint-green">
-    <div class="h-card-icon-wrap"><i class="fas fa-graduation-cap"></i></div>
-    <div class="h-card-bottom">
-        <div class="h-card-tag">Bac Essential</div>
-        <div class="h-card-title">Present Perfect vs Past Simple</div>
-    </div>
-    <span class="h-card-pill new">Bac</span>
-</a>
-
-<a href="./speakwell/Espace-sahl.html" class="h-card">
-    <div class="h-card-icon-wrap"><i class="fas fa-clock"></i></div>
-    <div class="h-card-bottom">
-        <div class="h-card-tag">Narration</div>
-        <div class="h-card-title">Past Simple vs Past Perfect</div>
-    </div>
-</a>
-
-<a href="./speakwell/Espace-sahl.html" class="h-card tint-blue">
-    <div class="h-card-icon-wrap"><i class="fas fa-hourglass-half"></i></div>
-    <div class="h-card-bottom">
-        <div class="h-card-tag">Daily Use</div>
-        <div class="h-card-title">Present Simple vs Present Continuous</div>
-    </div>
-</a>
-
-<a href="./speakwell/Espace-sahl.html" class="h-card">
-    <div class="h-card-icon-wrap"><i class="fas fa-forward"></i></div>
-    <div class="h-card-bottom">
-        <div class="h-card-tag">Future</div>
-        <div class="h-card-title">Will vs Going To vs Present Continuous</div>
-    </div>
-    <span class="h-card-pill">Exam</span>
-</a>
-
-<a href="./speakwell/Espace-sahl.html" class="h-card tint-peach">
-    <div class="h-card-icon-wrap"><i class="fas fa-code-branch"></i></div>
-    <div class="h-card-bottom">
-        <div class="h-card-tag">Conditionals</div>
-        <div class="h-card-title">Zero, First, Second & Third Conditionals</div>
-    </div>
-    <span class="h-card-pill new">Important</span>
-</a>
-
-<a href="./speakwell/Espace-sahl.html" class="h-card">
-    <div class="h-card-icon-wrap"><i class="fas fa-exchange-alt"></i></div>
-    <div class="h-card-bottom">
-        <div class="h-card-tag">Transformation</div>
-        <div class="h-card-title">Active Voice vs Passive Voice</div>
-    </div>
-</a>
-
-<a href="./speakwell/Espace-sahl.html" class="h-card tint-green">
-    <div class="h-card-icon-wrap"><i class="fas fa-comments"></i></div>
-    <div class="h-card-bottom">
-        <div class="h-card-tag">Reported Speech</div>
-        <div class="h-card-title">Direct vs Indirect Speech</div>
-    </div>
-</a>
-
-<a href="./speakwell/Espace-sahl.html" class="h-card">
-    <div class="h-card-icon-wrap"><i class="fas fa-gavel"></i></div>
-    <div class="h-card-bottom">
-        <div class="h-card-tag">Modals</div>
-        <div class="h-card-title">Must, Have To, Should</div>
-    </div>
-</a>
-
-<a href="./speakwell/Espace-sahl.html" class="h-card tint-blue">
-    <div class="h-card-icon-wrap"><i class="fas fa-lightbulb"></i></div>
-    <div class="h-card-bottom">
-        <div class="h-card-tag">Modals</div>
-        <div class="h-card-title">May, Might, Could</div>
-    </div>
-</a>
-
-<a href="./speakwell/Espace-sahl.html" class="h-card">
-    <div class="h-card-icon-wrap"><i class="fas fa-link"></i></div>
-    <div class="h-card-bottom">
-        <div class="h-card-tag">Writing</div>
-        <div class="h-card-title">Linking Words & Connectors</div>
-    </div>
-</a>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- DIVIDER -->
-        <div class="sep">
-            <div class="sep-line"></div>
-            <div class="sep-text">Lessons</div>
-            <div class="sep-line"></div>
-        </div>
-
-        <!-- SECTION 2 — PASTEL GRID with Links -->
-        <section class="sec2">
-            <div class="section-header" style="padding:0;margin-bottom:32px;">
-                <div>
-                    <div class="section-kicker">Explore solutions</div>
-                    <div class="section-title">For every team,<br>at every stage.</div>
-                </div>
-                <a href="./speakwell/Espace-sahl.html" class="link-arrow">Browse all solutions →</a>
-            </div>
-
-            <div class="v-grid">
-                <!-- Featured dark card -->
-                <a href="./speakwell/Espace-sahl.html" class="v-card c-featured featured">
-                    <div class="v-card-content">
-                       <div class="v-card-kicker" style="color:rgba(200,240,96,0.5)">Flagship</div>
-<div class="v-card-title">SpeakWell Bac English Mastery</div>
-<div class="v-card-desc">An all-in-one Bac English guide with grammar, spelling, writing, and exam exercises to help students achieve top results.</div>
-<div class="v-card-footer">
-    <div class="v-meta">
-        <div class="v-meta-val">1500+</div>
-        <div class="v-meta-label">Lessons & Practice Exercises</div>
-
-
-                            </div>
-                            <div class="v-btn">→</div>
-                        </div>
-                    </div>
-                    <div class="v-card-visual">
-                        <div class="visual-ring">
-                            <div class="visual-ring-inner">🏢</div>
-                        </div>
-                    </div>
-                </a>
-
- <!-- Chapter 1: Travelling & Holidays -->
-<a href="./speakwell/Espace-sahl.html" class="v-card c-sage">
-    <div class="v-card-content">
-        <div class="v-card-kicker">Travelling & Holidays</div>
-        <div class="v-card-title">Explore Destinations & Experiences</div>
-        <div class="v-card-desc">Discuss the advantages and disadvantages of travelling, holiday planning, tourism spots, and the impact of travel on cultural understanding.</div>
-    </div>
-    <div class="v-card-footer">
-        <div class="v-meta">
-            <div class="v-meta-val">Key Theme</div>
-            <div class="v-meta-label">Useful for Essays & Speaking</div>
-        </div>
-        <div class="v-btn">→</div>
-    </div>
-    <div class="v-bg-icon">🌍</div>
-</a>
-
-<!-- Chapter 2: Education -->
-<a href="./speakwell/Espace-sahl.html" class="v-card c-sky">
-    <div class="v-card-content">
-        <div class="v-card-kicker">Education</div>
-        <div class="v-card-title">School Life & Online Learning</div>
-        <div class="v-card-desc">Talk about the positives and negatives of education, online learning benefits, drawbacks of school systems, and exam stress management.</div>
-    </div>
-    <div class="v-card-footer">
-        <div class="v-meta">
-            <div class="v-meta-val">High Priority</div>
-            <div class="v-meta-label">Important for Essays & Reading</div>
-        </div>
-        <div class="v-btn">→</div>
-    </div>
-    <div class="v-bg-icon">🎓</div>
-</a>
-
-<!-- Chapter 3: Life Issues -->
-<a href="./speakwell/Espace-sahl.html" class="v-card c-peach">
-    <div class="v-card-content">
-        <div class="v-card-kicker">Life Issues</div>
-        <div class="v-card-title">Modern Social Challenges</div>
-        <div class="v-card-desc">Cover youth problems like smoking, excessive gaming, pollution, wars, and other social issues affecting society today.</div>
-    </div>
-    <div class="v-card-footer">
-        <div class="v-meta">
-            <div class="v-meta-val">Core Theme</div>
-            <div class="v-meta-label">Highly Relevant for BAC</div>
-        </div>
-        <div class="v-btn">→</div>
-    </div>
-    <div class="v-bg-icon">⚡</div>
-</a>
-
-<!-- Chapter 4: Technology -->
-<a href="./speakwell/Espace-sahl.html" class="v-card c-lav">
-    <div class="v-card-content">
-        <div class="v-card-kicker">Technology & Innovation</div>
-        <div class="v-card-title">AI, Robotics & Digital Advances</div>
-        <div class="v-card-desc">Discuss the pros and cons of technology, AI, robotics, digital tools, and how tech transforms work, learning, and daily life.</div>
-    </div>
-    <div class="v-card-footer">
-        <div class="v-meta">
-            <div class="v-meta-val">Trending</div>
-            <div class="v-meta-label">Important for Writing & Speaking</div>
-        </div>
-        <div class="v-btn">→</div>
-    </div>
-    <div class="v-bg-icon">🤖</div>
-</a>
-
-            </div>
-        </section>
-
-        <!-- FOOTER BAND with Links -->
-      <div class="footer-band">
-    <div class="footer-band-text">
-        <h2>Boost Your English with Sahl Academy</h2>
-        <p>Join thousands of students improving their grammar, writing, and speaking skills. Learn efficiently and get ready for your BAC exams!</p>
-    </div>
-    <div class="footer-band-actions">
-        <a href="./speakwell/Espace-sahl.html" class="btn-accent">Start Learning Now →</a>
-    </div>
-</div><br><br>
-
-        <script src="./assets/js/speakwellhome.js"></script>
-    </div>
-
-    <!-- About Content (Sahl Academy - Veritas University Design) -->
-    <div id="about" class="content-section">
-        <div class="v-university-container">
-            <!-- SECTION 1 — VERTICAL EXPANDING PANELS -->
-            <section id="section-vertical">
-                <div class="vert-topbar">
-                  
-                    <div class="vert-num">01 — Comment les apps &amp; Prennent vie </div>
-                </div>
-
-                <div class="v-panel" data-video="https://www.youtube.com/embed/XSP2LBKky5c" data-title="Réviser la SVT en jouant">
-                    <img src="./assets/images/l2.png" alt="Sciences"/>
-                    <div class="vp-overlay"></div><div class="vp-side">Quiz Cart</div>
-                    <div class="vp-content">
-                        <div class="vp-idx">01 · SVT App</div>
-                        <span class="vp-chip sc">SVT • Bac</span>
-                        <h3 class="vp-title">Réviser la SVT en jouant</h3>
-                        <p class="vp-desc">Apprenez en jouant et révisez les sciences du Bac de façon simple et interactive.</p>
-                        <div class="vp-cta"><span class="vp-cta-lbl"><div class="vp-play-circle"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>Voir la démo</span><span class="vp-prog">Outils & Exercices</span></div>
-                    </div>
-                </div>
-
-               <div class="v-panel" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ" data-title="Sahl AI Learning Hub">
-    <img src="./assets/images/img_1772681913459.png" alt="Sahl AI"/>
-    <div class="vp-overlay"></div>
-    <div class="vp-side">Sahl AI Tools</div>
-    <div class="vp-content">
-        <div class="vp-idx">02 · Bac</div>
-        <span class="vp-chip te">Sahl AI • Bac</span>
-        <h3 class="vp-title">Sahl AI pour réviser le Bac</h3>
-        <p class="vp-desc">Des outils intelligents pour t’aider dans tes exercices, comprendre tes cours et faciliter la révision du Bac.</p>
-        <div class="vp-cta">
-            <span class="vp-cta-lbl">
-                <div class="vp-play-circle">
-                    <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-                </div>
-                Voir la démo
-            </span>
-            <span class="vp-prog">Outils & Exercices</span>
-        </div>
-    </div>
-</div>
-
-               <div class="v-panel" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ" data-title="Bac SVT Quiz App">
-    <img src="./assets/images/2.png" alt="SVT"/>
-    <div class="vp-overlay"></div>
-    <div class="vp-side">SVT & Quiz</div>
-    <div class="vp-content">
-        <div class="vp-idx">03 · Bac</div>
-        <span class="vp-chip la">SVT • QCM</span>
-        <h3 class="vp-title">Apprends la SVT en jouant</h3>
-        <p class="vp-desc">Une application interactive avec des QCM pour chaque cours, pour réviser et tester tes connaissances en sciences tout en t’amusant.</p>
-        <div class="vp-cta">
-            <span class="vp-cta-lbl">
-                <div class="vp-play-circle">
-                    <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-                </div>
-                Voir la démo
-            </span>
-            <span class="vp-prog">Exercices & QCM</span>
-        </div>
-    </div>
-</div>
-
-               <div class="v-panel" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ" data-title="Chat-Philo Bac">
-    <img src="./assets/images/img_1772682164551.png" alt="Philo"/>
-    <div class="vp-overlay"></div>
-    <div class="vp-side">Philo & Révision</div>
-    <div class="vp-content">
-        <div class="vp-idx">04 · Bac</div>
-        <span class="vp-chip ar">Chat-Philo • Bac</span>
-        <h3 class="vp-title">Révise la Philosophie facilement</h3>
-        <p class="vp-desc">Un espace interactif pour réviser tes cours de philosophie avec exercices, tout en utilisant des outils qui t’expliquent les notions de manière simple et compréhensible.</p>
-        <div class="vp-cta">
-            <span class="vp-cta-lbl">
-                <div class="vp-play-circle">
-                    <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-                </div>
-                Voir la démo
-            </span>
-            <span class="vp-prog">Cours & Exercices</span>
-        </div>
-    </div>
-</div>
-
-               <div class="v-panel" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ" data-title="E-Books Bac">
-    <img src="./assets/images/img_1772682079623.png" alt="E-Books"/>
-    <div class="vp-overlay"></div>
-    <div class="vp-side">E-Books Bac</div>
-    <div class="vp-content">
-        <div class="vp-idx">05 · Bac</div>
-        <span class="vp-chip me">E-Books • Bac</span>
-        <h3 class="vp-title">La plus grande bibliothèque Bac</h3>
-        <p class="vp-desc">Une collection complète de cours, exercices et devoirs corrigés pour réviser efficacement toutes les matières du Bac.</p>
-        <div class="vp-cta">
-            <span class="vp-cta-lbl">
-                <div class="vp-play-circle">
-                    <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-                </div>
-                Voir la démo
-            </span>
-            <span class="vp-prog">Cours & Exercices</span>
-        </div>
-    </div>
-</div>
-
-               <div class="v-panel" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ" data-title="E-Books Packs Bac">
-    <img src="./assets/images/3.png" alt="E-Books Packs"/>
-    <div class="vp-overlay"></div>
-    <div class="vp-side">E-Books • Packs</div>
-    <div class="vp-content">
-        <div class="vp-idx">06 · Bac</div>
-        <span class="vp-chip bs">E-Books • Bac</span>
-        <h3 class="vp-title">Packs de révision pour le Bac</h3>
-        <p class="vp-desc">Des packs exclusifs de cours, exercices et fiches de révision spécialement conçus pour t’aider à réussir toutes les matières du Bac.</p>
-        <div class="vp-cta">
-            <span class="vp-cta-lbl">
-                <div class="vp-play-circle">
-                    <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-                </div>
-                Voir la démo
-            </span>
-            <span class="vp-prog">Cours & Révisions</span>
-        </div>
-    </div>
-</div>
-
-                <div class="vert-hint"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>Cliquez pour regarder</div>
-            </section>
-
-            <!-- MARQUEE -->
-            <div class="mq-bar">
-                <div class="mq-inner">
-                    <span class="mq-it"><span class="mq-dot"></span>SpeakWell  &amp; Anglais Bac</span>
-                    
-                    <span class="mq-it"><span class="mq-dot"></span>Application  &amp; SVT</span>
-                    <span class="mq-it"><span class="mq-dot"></span>Chat  &amp; Philosophie</span>
-                    <span class="mq-it"><span class="mq-dot"></span>Apprentissage &amp;  personnalisé </span>
-                    <span class="mq-it"><span class="mq-dot"></span>Pilote  &amp; Devoirs</span>
-                    <span class="mq-it"><span class="mq-dot"></span>Apprentissage  &amp; personnalisé</span>
-                    <span class="mq-it"><span class="mq-dot"></span>Sciences &amp; Engineering</span>
-                    
-                    <span class="mq-it"><span class="mq-dot"></span>pprentissage  &amp; personnalisé</span>
-                    <span class="mq-it"><span class="mq-dot"></span>Outils  &amp; académiques</span>
-                    <span class="mq-it"><span class="mq-dot"></span>Technologie  &amp; IA avancée</span>
-                    <span class="mq-it"><span class="mq-dot"></span>Technology &amp; AI</span>
-                    <span class="mq-it"><span class="mq-dot"></span>SVT &amp; App</span>
-                </div>
-            </div>
-
-            <!-- SECTION 2 — FEATURED COURSES -->
-            <section id="section-grid">
-                <div class="sg-atm">
-                    <div class="sg-orb o1"></div>
-                    <div class="sg-orb o2"></div>
-                    <div class="sg-orb o3"></div>
-                </div>
-
-                <div class="sg-topbar">
-    <div class="sg-topbar-left">
-        <div class="sg-topbar-line"></div>
-        02 — Cours en Vedette
-    </div>
-    <div class="sg-topbar-right">Sahl Academy · Catalogue 2026</div>
-</div>
-
-<div class="sg-hdr">
-    <div class="sg-hdr-l">
-        <div class="eyebrow">Sélectionnés pour l’excellence</div>
-        <h2>Que voulez-vous<br/><i>apprendre aujourd'hui ?</i></h2>
-    </div>
-    <div class="sg-hdr-r">
-        <p>Nos cours les plus populaires et les mieux notés. Cliquez sur une carte pour découvrir le programme complet et progresser facilement.</p>
-    </div>
-</div>
-
-                <div class="sg-controls">
-                    <div class="sg-filters">
-                        <button class="sg-filter-btn active" data-filter="all">Sahl Academy</button>
-                        
-                    </div>
-                   
-                </div>
-
-                <div class="sg-grid" id="sgGrid">
-
-                    <!-- Card 1: AI -->
-                    <div class="sg-card"         
-    data-filter="Bac English" data-tag="English Grammar" data-level="Bac"
-    data-title="English Grammar Mastery & Practical Exercises"
-    data-desc="Understand English grammar step by step and practice with Bac-level exercises designed to strengthen your writing and accuracy."
-    data-chips="Tenses · Grammar Rules · Bac Exercises · Writing · Practice"
-    data-hours="12" data-enrolled="3,200" data-rating="4.9" data-reviews="420"
-    data-price="Free on Sahl Academy" data-pct="92"
-    data-inst="Sahl Academy Team" data-inst-role="English Education"
-    data-img="./assets/images/b1.png"
-    data-href="./SahlAcademy/Espace-sahl.html">
-    
-    <div class="sg-img">
-        <img src="./assets/images/b1.png" alt="English Grammar"/>
-        <div class="sg-img-ov"></div>
-        <span class="sg-idx">01 · Lesson</span>
-        <span class="sg-badge">Popular</span>
-        <span class="sg-level">Bac Level</span>
-    </div>
-
-    <div class="sg-body">
-        <div class="sg-tag">English Grammar</div>
-        <h3 class="sg-title">English Grammar Mastery & Practical Exercises</h3>
-        <p class="sg-desc">Learn essential grammar rules for the Bac exam and practice with structured exercises that improve your accuracy and confidence in English.</p>
-
-        <div class="sg-rating">
-            <div class="sg-stars">
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-            </div>
-            <span class="sg-rating-val">4.9</span>
-            <span class="sg-rating-ct">(420 reviews)</span>
-        </div>
-
-        <div class="sg-sep"></div>
-
-        <div class="sg-foot">
-            <span class="sg-meta">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
-                12 lessons · 3,200 students
-            </span>
-            <span class="sg-price">Free · Sahl Academy</span>
-        </div>
-
-        <div class="sg-cta">
-            <span class="sg-cta-lbl">Start learning</span>
-            <div class="sg-arrow">
-                <svg viewBox="0 0 24 24"><polyline points="9,5 17,12 9,19"/></svg>
-            </div>
-        </div>
-    </div>
-</div>
-
-                    <!-- Card 2: Philosophy -->
-                  <div class="sg-card"
-    data-filter="Bac Physique" data-tag="Physique" data-level="Bac"
-    data-title="Les Ondes Progressives — Cours Complet en 13 Vidéos"
-    data-desc="Comprenez le phénomène des ondes progressives à travers 13 vidéos pédagogiques claires, avec explications, exemples et exercices adaptés au Bac."
-    data-chips="Physique · Bac · Ondes · Vidéos · Exercices"
-    data-hours="13 vidéos" data-enrolled="1,950" data-rating="4.8" data-reviews="210"
-    data-price="Accès via Sahl Academy" data-pct="74"
-    data-inst="Sahl Academy" data-inst-role="Cours de Physique"
-    data-img="./assets/images/b4.png"
-    data-href="./SahlAcademy/Espace-sahl.html">
-    
-    <div class="sg-img">
-        <img src="./assets/images/b4.png" alt="Physique"/>
-        <div class="sg-img-ov"></div>
-        <span class="sg-idx">02 · Cours</span>
-        <span class="sg-badge">Bac Physique</span>
-        <span class="sg-level">Niveau Bac</span>
-    </div>
-
-    <div class="sg-body">
-        <div class="sg-tag">Physique</div>
-        <h3 class="sg-title">Les Ondes Progressives — Cours Complet en 13 Vidéos</h3>
-        <p class="sg-desc">Étudiez les ondes progressives avec des explications simples, des démonstrations et des exercices corrigés pour maîtriser ce chapitre essentiel du Bac.</p>
-
-        <div class="sg-rating">
-            <div class="sg-stars">
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                <svg viewBox="0 0 24 24" style="opacity:.28"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-            </div>
-            <span class="sg-rating-val">4.8</span>
-            <span class="sg-rating-ct">(210)</span>
-        </div>
-
-        <div class="sg-sep"></div>
-
-        <div class="sg-foot">
-            <span class="sg-meta">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
-                13 vidéos
-            </span>
-            <span class="sg-price">Sahl Academy</span>
-        </div>
-
-        <div class="sg-cta">
-            <span class="sg-cta-lbl">Voir le cours</span>
-            <div class="sg-arrow">
-                <svg viewBox="0 0 24 24"><polyline points="9,5 17,12 9,19"/></svg>
-            </div>
-        </div>
-    </div>
-</div>
-
-                    <!-- Card 3: Finance -->
-                   <div class="sg-card"
-    data-filter="Bac Mathématiques" data-tag="Analyse" data-level="Bac"
-    data-title="Les Questions d’Analyse au Bac — Méthodes et Stratégies"
-    data-desc="Apprenez à comprendre et résoudre les questions classiques d’analyse au Bac : limites, dérivées, variations et interprétation graphique."
-    data-chips="Analyse · Bac · Méthodes · Exercices · Raisonnement"
-    data-hours="18" data-enrolled="1,540" data-rating="4.8" data-reviews="176"
-    data-price="Accès via Sahl Academy" data-pct="68"
-    data-inst="Sahl Academy" data-inst-role="Mathématiques"
-    data-img="./assets/images/b3.png"
-    data-href="./SahlAcademy/Espace-sahl.html">
-    
-    <div class="sg-img">
-        <img src="./assets/images/b3.png" alt="Mathématiques"/>
-        <div class="sg-img-ov"></div>
-        <span class="sg-idx">03 · Cours</span>
-        <span class="sg-badge">Bac Maths</span>
-        <span class="sg-level">Niveau Bac</span>
-    </div>
-
-    <div class="sg-body">
-        <div class="sg-tag">Analyse</div>
-        <h3 class="sg-title">Les Questions d’Analyse au Bac — Méthodes et Stratégies</h3>
-        <p class="sg-desc">Découvrez les techniques essentielles pour répondre correctement aux questions d’analyse et améliorer votre raisonnement mathématique.</p>
-
-        <div class="sg-rating">
-            <div class="sg-stars">
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-            </div>
-            <span class="sg-rating-val">4.8</span>
-            <span class="sg-rating-ct">(176)</span>
-        </div>
-
-        <div class="sg-sep"></div>
-
-        <div class="sg-foot">
-            <span class="sg-meta">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
-                18 leçons
-            </span>
-            <span class="sg-price">Sahl Academy</span>
-        </div>
-
-        <div class="sg-cta">
-            <span class="sg-cta-lbl">Voir le cours</span>
-            <div class="sg-arrow">
-                <svg viewBox="0 0 24 24"><polyline points="9,5 17,12 9,19"/></svg>
-            </div>
-        </div>
-    </div>
-</div>
-
-           
-                    <!-- Card 4: Physique -->
-<div class="sg-card"
-    data-filter="Bac Physique" data-tag="Mécanique" data-level="Bac"
-    data-title="Questions de Mécanique — Oscillations Libres et Forces"
-    data-desc="Apprenez à résoudre les questions classiques du Bac en mécanique : oscillations libres amorties ou non amorties, étude des forces et interprétation des équations du mouvement."
-    data-chips="Physique · Bac · Oscillations · Forces · Exercices"
-    data-hours="20" data-enrolled="1,180" data-rating="4.8" data-reviews="132"
-    data-price="Accès via Sahl Academy" data-pct="71"
-    data-inst="Sahl Academy" data-inst-role="Cours de Physique"
-    data-img="./assets/images/b5.png"
-    data-href="./SahlAcademy/Espace-sahl.html">
-    
-    <div class="sg-img">
-        <img src="./assets/images/b5.png" alt="Physique"/>
-        <div class="sg-img-ov"></div>
-        <span class="sg-idx">04 · Cours</span>
-        <span class="sg-badge">Bac Physique</span>
-        <span class="sg-level">Niveau Bac</span>
-    </div>
-
-    <div class="sg-body">
-        <div class="sg-tag">Mécanique</div>
-        <h3 class="sg-title">Questions de Mécanique — Oscillations Libres et Forces</h3>
-        <p class="sg-desc">Maîtrisez les méthodes pour analyser les forces, écrire les équations du mouvement et répondre aux questions sur les oscillations libres amorties ou non amorties.</p>
-
-        <div class="sg-rating">
-            <div class="sg-stars">
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-            </div>
-            <span class="sg-rating-val">4.8</span>
-            <span class="sg-rating-ct">(132)</span>
-        </div>
-
-        <div class="sg-sep"></div>
-
-        <div class="sg-foot">
-            <span class="sg-meta">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
-                20 leçons
-            </span>
-            <span class="sg-price">Sahl Academy</span>
-        </div>
-
-        <div class="sg-cta">
-            <span class="sg-cta-lbl">Voir le cours</span>
-            <div class="sg-arrow">
-                <svg viewBox="0 0 24 24"><polyline points="9,5 17,12 9,19"/></svg>
-            </div>
-        </div>
-    </div>
-</div>
-
-                    <!-- Card 5: Architecture -->
-                   <div class="sg-card"
-    data-filter="Bac English" data-tag="English Grammar" data-level="Bac"
-    data-title="Pack d’Exercices de Grammar — Sujets Bac Corrigés"
-    data-desc="Travaillez les exercices de grammaire des anciens examens du Bac et apprenez la méthode correcte pour analyser la phrase et choisir la bonne réponse."
-    data-chips="Bac · Grammar · Sujets Corrigés · Méthode · Practice"
-    data-hours="18" data-enrolled="2,150" data-rating="4.8" data-reviews="210"
-    data-price="Accès via Sahl Academy" data-pct="74"
-    data-inst="Sahl Academy" data-inst-role="Cours d’Anglais Bac"
-    data-img="./assets/images/b2.png"
-    data-href="./SahlAcademy/Espace-sahl.html">
-    
-    <div class="sg-img">
-        <img src="./assets/images/b2.png" alt="English Grammar"/>
-        <div class="sg-img-ov"></div>
-        <span class="sg-idx">05 · Pack</span>
-        <span class="sg-badge">Bac Training</span>
-        <span class="sg-level">Niveau Bac</span>
-    </div>
-
-    <div class="sg-body">
-        <div class="sg-tag">English Grammar</div>
-        <h3 class="sg-title">Pack d’Exercices de Grammar — Sujets Bac Corrigés</h3>
-        <p class="sg-desc">Maîtrisez les exercices de grammaire du Bac grâce à des sujets réels accompagnés d’explications claires et de méthodes efficaces.</p>
-
-        <div class="sg-rating">
-            <div class="sg-stars">
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                <svg viewBox="0 0 24 24" style="opacity:.28"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-            </div>
-            <span class="sg-rating-val">4.8</span>
-            <span class="sg-rating-ct">(210)</span>
-        </div>
-
-        <div class="sg-sep"></div>
-
-        <div class="sg-foot">
-            <span class="sg-meta">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
-                18 leçons
-            </span>
-            <span class="sg-price">Sahl Academy</span>
-        </div>
-
-        <div class="sg-cta">
-            <span class="sg-cta-lbl">Commencer</span>
-            <div class="sg-arrow">
-                <svg viewBox="0 0 24 24"><polyline points="9,5 17,12 9,19"/></svg>
-            </div>
-        </div>
-    </div>
-</div>
-
-                </div>
-
-                <div class="sg-hint">
-                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3" stroke-width="1.5"/><path d="M9 12h6M12 9v6" stroke-width="1.5"/></svg>
-                    Click any card to explore
-                </div>
-<br><br>
-            </section>
-        </div>
-
-        <!-- VIDEO MODAL -->
-        <div id="vpModal">
-            <div id="vpScrim"></div>
-            <div id="vpBox">
-                <div class="vp-modal-bar">
-                    <div class="vp-modal-bar-l"><span class="vp-modal-dot"></span><span id="vpTitle">Faculty Overview</span></div>
-                    <button class="vp-close-btn" id="vpCloseBtn" aria-label="Close modal"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button>
-                </div>
-                <div id="vpFrame"></div>
-            </div>
-        </div>
-
-        <!-- COURSE DETAIL MODAL -->
-        <div id="sgModal">
-            <div id="sgScrim"></div>
-            <div id="sgBox">
-                <div class="sgm-chrome">
-                    <div class="sgm-chrome-l">
-                        <div class="sgm-chrome-dots"><span></span><span></span><span></span></div>
-                        <span id="sgModalLabel">Course Detail</span>
-                    </div>
-                    <button class="sgm-close" id="sgCloseBtn" aria-label="Close">
-                        <svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg>
-                    </button>
-                </div>
-                <div class="sgm-scroll">
-                    <div class="sgm-hero-wrap">
-                        <img id="sgModalImg" class="sgm-hero" src="" alt=""/>
-                        <div class="sgm-hero-grad"></div>
-                        <div class="sgm-hero-foot">
-                            <div class="sgm-hero-tag" id="sgHeroTag"></div>
-                            <div class="sgm-hero-lvl" id="sgHeroLvl"></div>
-                        </div>
-                    </div>
-                    <div class="sgm-body">
-                        <div class="sgm-title-block">
-                            <h2 class="sgm-title" id="sgModalTitle"></h2>
-                            <p class="sgm-sub" id="sgModalDesc"></p>
-                        </div>
-                        <div class="sgm-chips" id="sgModalChips"></div>
-                        <div class="sgm-stats" id="sgModalStats"></div>
-                        <div class="sgm-prog-wrap">
-                            <div class="sgm-prog-head">
-                                <span>Cours achevé</span>
-                                <span id="sgProgPct"></span>
-                            </div>
-                            <div class="sgm-prog-track">
-                                <div class="sgm-prog-fill" id="sgProgFill"></div>
-                            </div>
-                        </div>
-                        <div class="sgm-instructor" id="sgInstructor">
-                            <div class="sgm-inst-avatar" id="sgInstAvatar"></div>
-                            <div class="sgm-inst-info">
-                                <span class="sgm-inst-name" id="sgInstName"></span>
-                                <span class="sgm-inst-role" id="sgInstRole"></span>
-                            </div>
-                        </div>
-                        <div class="sgm-cta-row">
-                            <a class="sgm-btn-pri" id="sgModalLink" href="./SahlAcademy/Espace-sahl.html"  rel="noopener">
-                                <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                                Rejoindre Sahl Academy
-                            </a>
-                           
-                        </div>
-                    </div><br><br>
-                </div>
-            </div>
-        </div>
-
-        <script src="./assets/js/explorer.js"></script>
-    </div>
-
-    <!-- JavaScript Files -->
-    <script src="./assets/js/scriptplus.js"></script>
-    <script src="./assets/js/rsewdata1.js"></script>
-    <script src="./assets/js/edustreamdata.js"></script>
-    <script src="./edustream/data/js/data.js"></script>
-    <script src="./assets/js/image slide.js"></script> 
-    <script src="./assets/js/homepage.js"></script>
-    <script src="./assets/js/heder serche sechtion.js"></script>
-    <script src="./assets/js/speakwellimageslide.js"></script>
-
-    <!-- Main Popup -->
-    <div class="sahl-popup-overlay" id="sahlPopupOverlay">
-      <div class="sahl-popup-container">
-        <button class="sahl-popup-close" id="sahlPopupCloseBtn" aria-label="Close">×</button>
-
-        <!-- Progress Indicator -->
-        <div class="sahl-popup-progress">
-          <span class="sahl-progress-dot active" id="sahlProgressDot1"></span>
-          <span class="sahl-progress-dot" id="sahlProgressDot2"></span>
-          <span class="sahl-progress-dot" id="sahlProgressDot3"></span>
-        </div>
-
-        <!-- Step Container -->
-        <div class="sahl-popup-step-container">
-          <!-- Step 1: Welcome / Updates -->
-          <div class="sahl-popup-step active" id="sahlStep1">
-            <div class="sahl-popup-content">
-              <div class="sahl-popup-left">
-                <div class="sahl-popup-icon-wrapper">
-                  <div class="sahl-popup-icon">✨</div>
-                </div>
-              </div>
-              <div class="sahl-popup-right">
-                <h2 class="sahl-popup-title">Nouvelles Mises à Jour Disponibles</h2>
-<p class="sahl-popup-subtitle">Documents ajoutés à la bibliothèque E-Books du 17/02 au 19/02.</p>
-
-<ul class="sahl-popup-features">
-  <li> <strong>Révision : Oscillations de la Force Mécanique</strong> — Fiches méthodiques & exercices</li>
-  <li><strong>Exercices Ondes Progressives</strong> — Exercices avec correction</li>
-  <li> <strong>Révision Bac Pratique</strong> — 62 exercices corrigés</li>
-  <li> <strong>Révision Grammaire</strong> — Synthèse 2</li>
-</ul>
-
-                <div class="sahl-popup-footer">
-
-                  <button class="sahl-popup-button" id="sahlStep1NextBtn">Suivant →</button>
-                </div>
-              </div>
+        <span class="sec-badge">3 subjects · 12 courses</span>
+      </div>
+
+      <div class="subj-grid">
+        <div class="scard reveal" data-s="math" onclick="openSubj('math',this);goTo('courses')">
+          <div class="sc-gradient">
+            <div class="sc-ico-wrap"><i class="fas fa-square-root-variable"></i></div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-name">Mathematics</div>
+            <div class="sc-desc">Analysis, calculus, algebra and sequences — the full Terminale S curriculum with solved exercises.</div>
+            <div class="sc-foot">
+              <span class="sc-meta"><i class="fas fa-play-circle"></i> 80 lessons · 14h</span>
+              <div class="sc-go"><i class="fas fa-arrow-up-right"></i></div>
             </div>
           </div>
+        </div>
 
-          <!-- Step 2: Features & Improvements -->
-          <div class="sahl-popup-step" id="sahlStep2">
-            <div class="sahl-popup-content">
-              <div class="sahl-popup-left">
-                <div class="sahl-popup-icon-wrapper">
-                  <div class="sahl-popup-icon">🚀</div>
-                </div>
-              </div>
-              <div class="sahl-popup-right">
-               <h2 class="sahl-popup-title">Fonctionnalités Améliorées</h2>
-<p class="sahl-popup-subtitle">Les outils disponibles dans l'application Sahl.</p>
-
-<ul class="sahl-popup-features">
-  <li> <strong>Nouveaux QCM & Quiz</strong> — Disponible dans l'application SVT</li>
-  <li> <strong>Cours supplémentaires</strong> — Ajouts dans Chaphilo, exemple de leçon incluse</li>
-  <li><strong>Améliorations générales</strong> — Meilleure expérience utilisateur</li>
-  <li><strong>Optimisation mobile</strong> — Apprenez partout</li>
-</ul>
-
-                <div class="sahl-popup-footer">
-                  <button class="sahl-popup-button secondary" id="sahlStep2BackBtn">← Retour</button>
-                  <button class="sahl-popup-button" id="sahlStep2NextBtn">Suivant →</button>
-                </div>
-              </div>
+        <div class="scard reveal" data-s="physics" onclick="openSubj('physics',this);goTo('courses')">
+          <div class="sc-gradient">
+            <div class="sc-ico-wrap"><i class="fas fa-atom"></i></div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-name">Physics</div>
+            <div class="sc-desc">Mechanics, electricity, waves & nuclear physics — visual explanations with exam-focused methodology.</div>
+            <div class="sc-foot">
+              <span class="sc-meta"><i class="fas fa-play-circle"></i> 58 lessons · 12h</span>
+              <div class="sc-go"><i class="fas fa-arrow-up-right"></i></div>
             </div>
           </div>
+        </div>
 
-          <!-- Step 3: Coming Soon / Final -->
-          <div class="sahl-popup-step" id="sahlStep3">
-            <div class="sahl-popup-content">
-              <div class="sahl-popup-left">
-                <div class="sahl-popup-icon-wrapper">
-                  <div class="sahl-popup-icon">🌟</div>
-                </div>
-              </div>
-              <div class="sahl-popup-right">
-                <h2 class="sahl-popup-title">Bientôt Disponible</h2>
-<p class="sahl-popup-subtitle">Nous préparons des nouveautés passionnantes pour vous.</p>
-
-<ul class="sahl-popup-features">
-  <li><strong>Vidéos & Playlists</strong> — Pour tous les cours de Sahl Academy</li>
-  <li> <strong>Cours Ondes Mécaniques</strong> — Avec exercices intégrés</li>
-  <li><strong>Exercices en Anglais</strong> — Pratique et corrections incluses</li>
-  <li><strong>Mécanique : Force</strong> — Nouvelles leçons et exercices à venir</li>
-</ul>
-
-                <div class="sahl-popup-footer" style="justify-content: flex-end;">
-                  <button class="sahl-popup-button secondary" id="sahlStep3BackBtn">← Retour</button>
-                  <button class="sahl-popup-button" id="sahlStep3FinishBtn">Allons-y</button>
-                </div>
-              </div>
+        <div class="scard reveal" data-s="english" onclick="openSubj('english',this);goTo('courses')">
+          <div class="sc-gradient">
+            <div class="sc-ico-wrap"><i class="fas fa-book"></i></div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-name">English</div>
+            <div class="sc-desc">Grammar, academic writing, vocabulary & exam prep — designed to reach B2–C1 and ace the baccalaureate.</div>
+            <div class="sc-foot">
+              <span class="sc-meta"><i class="fas fa-play-circle"></i> 64 lessons · 11h</span>
+              <div class="sc-go"><i class="fas fa-arrow-up-right"></i></div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-   <script src="./assets/js/popup.js"></script>
-   <script src="./assets/js/scripthomesection.js"></script>
+    <!-- ── COURSES ── -->
+    <section id="courses">
+      <div class="sec-hd">
+        <div class="sec-hd-l">
+          <div class="sec-label"><i class="fas fa-play"></i> Library</div>
+          <h2 class="sec-title">Course <em>Programs</em></h2>
+        </div>
+        <span class="sec-badge">202 lessons total</span>
+      </div>
+
+      <div class="tab-bar">
+        <button class="ctab on" data-t="math" onclick="switchTab('math',this)"><i class="fas fa-square-root-variable"></i> Mathematics</button>
+        <button class="ctab" data-t="physics" onclick="switchTab('physics',this)"><i class="fas fa-atom"></i> Physics</button>
+        <button class="ctab" data-t="english" onclick="switchTab('english',this)"><i class="fas fa-book"></i> English</button>
+      </div>
+
+      <!-- MATH -->
+      <div class="panel on" id="pm">
+        <div class="course-grid">
+          <div class="ccard reveal" data-a="math">
+            <div class="cc-inner">
+              <div class="cc-head"><span class="cc-num">MATH·01</span><span class="cc-dur"><i class="fas fa-clock"></i>3h 20m</span></div>
+              <div class="cc-title-row"><div class="cc-ico"><i class="fas fa-infinity"></i></div><div class="cc-name">Limits &amp; Continuity</div></div>
+              <div class="cc-desc">Foundations of analysis — one-sided limits, L'Hôpital's rule, squeeze theorem and the Intermediate Value Theorem.</div>
+            </div>
+            <div class="cc-prog">
+              <div class="cc-prog-top"><span class="cc-prog-lbl"><i class="fas fa-chart-line"></i>Progress</span><span class="cc-prog-pct">72%</span></div>
+              <div class="cc-track"><div class="cc-fill" data-w="72"></div></div>
+            </div>
+            <div class="cc-foot">
+              <div class="cc-meta-items"><span class="cc-mi"><i class="fas fa-video"></i>18 lessons</span><span class="cc-mi"><i class="fas fa-star"></i>4.9</span></div>
+              <button class="watch-btn" onclick="openMod('Limits & Continuity')"><i class="fas fa-play"></i>Watch</button>
+            </div>
+          </div>
+          <div class="ccard reveal" data-a="math">
+            <div class="cc-inner">
+              <div class="cc-head"><span class="cc-num">MATH·02</span><span class="cc-dur"><i class="fas fa-clock"></i>4h 10m</span></div>
+              <div class="cc-title-row"><div class="cc-ico"><i class="fas fa-chart-area"></i></div><div class="cc-name">Derivatives &amp; Applications</div></div>
+              <div class="cc-desc">Differentiation rules, chain rule and applications in curve analysis and real-world optimisation problems.</div>
+            </div>
+            <div class="cc-prog">
+              <div class="cc-prog-top"><span class="cc-prog-lbl"><i class="fas fa-chart-line"></i>Progress</span><span class="cc-prog-pct">45%</span></div>
+              <div class="cc-track"><div class="cc-fill" data-w="45"></div></div>
+            </div>
+            <div class="cc-foot">
+              <div class="cc-meta-items"><span class="cc-mi"><i class="fas fa-video"></i>22 lessons</span><span class="cc-mi"><i class="fas fa-star"></i>4.8</span></div>
+              <button class="watch-btn" onclick="openMod('Derivatives & Applications')"><i class="fas fa-play"></i>Watch</button>
+            </div>
+          </div>
+          <div class="ccard reveal" data-a="math">
+            <div class="cc-inner">
+              <div class="cc-head"><span class="cc-num">MATH·03</span><span class="cc-dur"><i class="fas fa-clock"></i>5h 00m</span></div>
+              <div class="cc-title-row"><div class="cc-ico"><i class="fas fa-superscript"></i></div><div class="cc-name">Integration</div></div>
+              <div class="cc-desc">Antiderivatives to definite integrals — substitution, integration by parts, partial fractions and area calculations.</div>
+            </div>
+            <div class="cc-prog">
+              <div class="cc-prog-top"><span class="cc-prog-lbl"><i class="fas fa-chart-line"></i>Progress</span><span class="cc-prog-pct">20%</span></div>
+              <div class="cc-track"><div class="cc-fill" data-w="20"></div></div>
+            </div>
+            <div class="cc-foot">
+              <div class="cc-meta-items"><span class="cc-mi"><i class="fas fa-video"></i>26 lessons</span><span class="cc-mi"><i class="fas fa-star"></i>4.9</span></div>
+              <button class="watch-btn" onclick="openMod('Integration')"><i class="fas fa-play"></i>Watch</button>
+            </div>
+          </div>
+          <div class="ccard reveal" data-a="math">
+            <div class="cc-inner">
+              <div class="cc-head"><span class="cc-num">MATH·04</span><span class="cc-dur"><i class="fas fa-clock"></i>2h 45m</span></div>
+              <div class="cc-title-row"><div class="cc-ico"><i class="fas fa-arrow-trend-up"></i></div><div class="cc-name">Sequences &amp; Series</div></div>
+              <div class="cc-desc">Arithmetic, geometric and recursive sequences — convergence, limits at infinity and financial modelling.</div>
+            </div>
+            <div class="cc-prog">
+              <div class="cc-prog-top"><span class="cc-prog-lbl"><i class="fas fa-chart-line"></i>Progress</span><span class="cc-prog-pct">0%</span></div>
+              <div class="cc-track"><div class="cc-fill" data-w="0"></div></div>
+            </div>
+            <div class="cc-foot">
+              <div class="cc-meta-items"><span class="cc-mi"><i class="fas fa-video"></i>14 lessons</span><span class="cc-mi"><i class="fas fa-star"></i>4.7</span></div>
+              <button class="watch-btn" onclick="openMod('Sequences & Series')"><i class="fas fa-play"></i>Watch</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHYSICS -->
+      <div class="panel" id="pp">
+        <div class="course-grid">
+          <div class="ccard reveal" data-a="physics">
+            <div class="cc-inner">
+              <div class="cc-head"><span class="cc-num">PHY·01</span><span class="cc-dur"><i class="fas fa-clock"></i>4h 30m</span></div>
+              <div class="cc-title-row"><div class="cc-ico"><i class="fas fa-weight-hanging"></i></div><div class="cc-name">Newtonian Mechanics</div></div>
+              <div class="cc-desc">Forces, Newton's laws, kinematics, projectile motion and energy conservation — structured problem sets.</div>
+            </div>
+            <div class="cc-prog">
+              <div class="cc-prog-top"><span class="cc-prog-lbl"><i class="fas fa-chart-line"></i>Progress</span><span class="cc-prog-pct">60%</span></div>
+              <div class="cc-track"><div class="cc-fill" data-w="60"></div></div>
+            </div>
+            <div class="cc-foot">
+              <div class="cc-meta-items"><span class="cc-mi"><i class="fas fa-video"></i>20 lessons</span><span class="cc-mi"><i class="fas fa-star"></i>4.8</span></div>
+              <button class="watch-btn" onclick="openMod('Newtonian Mechanics')"><i class="fas fa-play"></i>Watch</button>
+            </div>
+          </div>
+          <div class="ccard reveal" data-a="physics">
+            <div class="cc-inner">
+              <div class="cc-head"><span class="cc-num">PHY·02</span><span class="cc-dur"><i class="fas fa-clock"></i>3h 50m</span></div>
+              <div class="cc-title-row"><div class="cc-ico"><i class="fas fa-bolt"></i></div><div class="cc-name">Electricity &amp; Circuits</div></div>
+              <div class="cc-desc">Ohm's law, Kirchhoff's rules, RC and RLC circuit analysis from basics to advanced exam-level problems.</div>
+            </div>
+            <div class="cc-prog">
+              <div class="cc-prog-top"><span class="cc-prog-lbl"><i class="fas fa-chart-line"></i>Progress</span><span class="cc-prog-pct">35%</span></div>
+              <div class="cc-track"><div class="cc-fill" data-w="35"></div></div>
+            </div>
+            <div class="cc-foot">
+              <div class="cc-meta-items"><span class="cc-mi"><i class="fas fa-video"></i>17 lessons</span><span class="cc-mi"><i class="fas fa-star"></i>4.9</span></div>
+              <button class="watch-btn" onclick="openMod('Electricity & Circuits')"><i class="fas fa-play"></i>Watch</button>
+            </div>
+          </div>
+          <div class="ccard reveal" data-a="physics">
+            <div class="cc-inner">
+              <div class="cc-head"><span class="cc-num">PHY·03</span><span class="cc-dur"><i class="fas fa-clock"></i>2h 20m</span></div>
+              <div class="cc-title-row"><div class="cc-ico"><i class="fas fa-wave-square"></i></div><div class="cc-name">Waves &amp; Optics</div></div>
+              <div class="cc-desc">Mechanical and electromagnetic waves, interference, diffraction and geometric optics with ray diagrams.</div>
+            </div>
+            <div class="cc-prog">
+              <div class="cc-prog-top"><span class="cc-prog-lbl"><i class="fas fa-chart-line"></i>Progress</span><span class="cc-prog-pct">10%</span></div>
+              <div class="cc-track"><div class="cc-fill" data-w="10"></div></div>
+            </div>
+            <div class="cc-foot">
+              <div class="cc-meta-items"><span class="cc-mi"><i class="fas fa-video"></i>12 lessons</span><span class="cc-mi"><i class="fas fa-star"></i>4.7</span></div>
+              <button class="watch-btn" onclick="openMod('Waves & Optics')"><i class="fas fa-play"></i>Watch</button>
+            </div>
+          </div>
+          <div class="ccard reveal" data-a="physics">
+            <div class="cc-inner">
+              <div class="cc-head"><span class="cc-num">PHY·04</span><span class="cc-dur"><i class="fas fa-clock"></i>1h 55m</span></div>
+              <div class="cc-title-row"><div class="cc-ico"><i class="fas fa-radiation"></i></div><div class="cc-name">Nuclear Physics</div></div>
+              <div class="cc-desc">Radioactive decay, nuclear binding energy, fission and fusion reactions and their energy outputs.</div>
+            </div>
+            <div class="cc-prog">
+              <div class="cc-prog-top"><span class="cc-prog-lbl"><i class="fas fa-chart-line"></i>Progress</span><span class="cc-prog-pct">0%</span></div>
+              <div class="cc-track"><div class="cc-fill" data-w="0"></div></div>
+            </div>
+            <div class="cc-foot">
+              <div class="cc-meta-items"><span class="cc-mi"><i class="fas fa-video"></i>9 lessons</span><span class="cc-mi"><i class="fas fa-star"></i>4.6</span></div>
+              <button class="watch-btn" onclick="openMod('Nuclear Physics')"><i class="fas fa-play"></i>Watch</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ENGLISH -->
+      <div class="panel" id="pe">
+        <div class="course-grid">
+          <div class="ccard reveal" data-a="english">
+            <div class="cc-inner">
+              <div class="cc-head"><span class="cc-num">ENG·01</span><span class="cc-dur"><i class="fas fa-clock"></i>2h 30m</span></div>
+              <div class="cc-title-row"><div class="cc-ico"><i class="fas fa-spell-check"></i></div><div class="cc-name">Advanced Grammar</div></div>
+              <div class="cc-desc">Conditionals, passive voice, reported speech and complex clauses to reach B2–C1 for the baccalaureate.</div>
+            </div>
+            <div class="cc-prog">
+              <div class="cc-prog-top"><span class="cc-prog-lbl"><i class="fas fa-chart-line"></i>Progress</span><span class="cc-prog-pct">88%</span></div>
+              <div class="cc-track"><div class="cc-fill" data-w="88"></div></div>
+            </div>
+            <div class="cc-foot">
+              <div class="cc-meta-items"><span class="cc-mi"><i class="fas fa-video"></i>15 lessons</span><span class="cc-mi"><i class="fas fa-star"></i>4.8</span></div>
+              <button class="watch-btn" onclick="openMod('Advanced Grammar')"><i class="fas fa-play"></i>Watch</button>
+            </div>
+          </div>
+          <div class="ccard reveal" data-a="english">
+            <div class="cc-inner">
+              <div class="cc-head"><span class="cc-num">ENG·02</span><span class="cc-dur"><i class="fas fa-clock"></i>3h 15m</span></div>
+              <div class="cc-title-row"><div class="cc-ico"><i class="fas fa-pen-nib"></i></div><div class="cc-name">Academic Writing</div></div>
+              <div class="cc-desc">Essay structure, argument development, cohesion and formal register for high-scoring written expression.</div>
+            </div>
+            <div class="cc-prog">
+              <div class="cc-prog-top"><span class="cc-prog-lbl"><i class="fas fa-chart-line"></i>Progress</span><span class="cc-prog-pct">50%</span></div>
+              <div class="cc-track"><div class="cc-fill" data-w="50"></div></div>
+            </div>
+            <div class="cc-foot">
+              <div class="cc-meta-items"><span class="cc-mi"><i class="fas fa-video"></i>18 lessons</span><span class="cc-mi"><i class="fas fa-star"></i>4.9</span></div>
+              <button class="watch-btn" onclick="openMod('Academic Writing')"><i class="fas fa-play"></i>Watch</button>
+            </div>
+          </div>
+          <div class="ccard reveal" data-a="english">
+            <div class="cc-inner">
+              <div class="cc-head"><span class="cc-num">ENG·03</span><span class="cc-dur"><i class="fas fa-clock"></i>1h 45m</span></div>
+              <div class="cc-title-row"><div class="cc-ico"><i class="fas fa-language"></i></div><div class="cc-name">Vocabulary Mastery</div></div>
+              <div class="cc-desc">Thematic word sets, collocations, idiomatic expressions and word-formation strategies for academic English.</div>
+            </div>
+            <div class="cc-prog">
+              <div class="cc-prog-top"><span class="cc-prog-lbl"><i class="fas fa-chart-line"></i>Progress</span><span class="cc-prog-pct">30%</span></div>
+              <div class="cc-track"><div class="cc-fill" data-w="30"></div></div>
+            </div>
+            <div class="cc-foot">
+              <div class="cc-meta-items"><span class="cc-mi"><i class="fas fa-video"></i>11 lessons</span><span class="cc-mi"><i class="fas fa-star"></i>4.7</span></div>
+              <button class="watch-btn" onclick="openMod('Vocabulary Mastery')"><i class="fas fa-play"></i>Watch</button>
+            </div>
+          </div>
+          <div class="ccard reveal" data-a="english">
+            <div class="cc-inner">
+              <div class="cc-head"><span class="cc-num">ENG·04</span><span class="cc-dur"><i class="fas fa-clock"></i>4h 00m</span></div>
+              <div class="cc-title-row"><div class="cc-ico"><i class="fas fa-file-pen"></i></div><div class="cc-name">Exam Preparation</div></div>
+              <div class="cc-desc">Full mock exams, time management, comprehension strategies and exam techniques to maximise final marks.</div>
+            </div>
+            <div class="cc-prog">
+              <div class="cc-prog-top"><span class="cc-prog-lbl"><i class="fas fa-chart-line"></i>Progress</span><span class="cc-prog-pct">0%</span></div>
+              <div class="cc-track"><div class="cc-fill" data-w="0"></div></div>
+            </div>
+            <div class="cc-foot">
+              <div class="cc-meta-items"><span class="cc-mi"><i class="fas fa-video"></i>20 lessons</span><span class="cc-mi"><i class="fas fa-star"></i>5.0</span></div>
+              <button class="watch-btn" onclick="openMod('Exam Preparation')"><i class="fas fa-play"></i>Watch</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /content -->
+
+  <footer class="footer">
+    <div class="ft-brand"><div class="ft-icon"><i class="fas fa-graduation-cap"></i></div><span class="ft-name">Lumière</span></div>
+    <div class="ft-links">
+      <a class="ft-a" href="#"><i class="fas fa-circle-info"></i>About</a>
+      <a class="ft-a" href="#"><i class="fas fa-envelope"></i>Contact</a>
+      <a class="ft-a" href="#"><i class="fas fa-shield-halved"></i>Privacy</a>
+    </div>
+    <span class="ft-copy">© 2025 Lumière · Built for academic excellence.</span>
+  </footer>
+
+</div><!-- /main -->
+</div><!-- /layout -->
+
+<!-- ══════════ PLAYLIST MODAL ══════════ -->
+<div class="overlay" id="ov" onclick="closeOut(event)">
+  <div class="modal" id="modal">
+    <div class="mhd">
+      <div class="mhd-ico" id="mIco"></div>
+      <div class="mhd-info">
+        <div class="mhd-subject" id="mSubj">—</div>
+        <div class="mhd-title" id="mTitle">Course</div>
+      </div>
+      <button class="mhd-close" onclick="closeMod()"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="mv">
+      <iframe id="mFrame" src="about:blank" allow="autoplay;fullscreen" allowfullscreen></iframe>
+      <div class="mv-bar"><div class="mv-fill" id="mFill" style="width:0%"></div></div>
+    </div>
+    <div class="mnow">
+      <div class="mnow-t" id="mNowT">—</div>
+      <div class="mnow-m">
+        <i class="fas fa-chart-line"></i><span id="mNowLvl">—</span>
+        <span style="color:var(--t4)">·</span>
+        <i class="fas fa-clock"></i><span id="mNowDur">—</span>
+        <span class="mnow-lvl" id="mNowBadge">—</span>
+      </div>
+    </div>
+    <div class="mpl-hd">
+      <span class="mpl-lbl"><i class="fas fa-list-ul"></i>Liste de lecture</span>
+      <span class="mpl-cnt" id="mPlC">0 vidéos</span>
+    </div>
+    <div class="mpl" id="mPl"></div>
+  </div>
+</div>
+
+<script>
+/* ── THEME ── */
+const R=document.documentElement;
+function setTheme(t){
+  R.setAttribute('data-theme',t);
+  localStorage.setItem('lm_theme',t);
+  document.getElementById('lBtn').classList.toggle('on',t==='light');
+  document.getElementById('dBtn').classList.toggle('on',t==='dark');
+  const ico=document.getElementById('tbThemeIco');
+  if(ico)ico.className=t==='dark'?'fas fa-sun':'fas fa-moon';
+}
+function toggleTheme(){setTheme(R.getAttribute('data-theme')==='dark'?'light':'dark')}
+setTheme(localStorage.getItem('lm_theme')||'dark');
+
+/* ── SCROLL PROGRESS ── */
+window.addEventListener('scroll',()=>{
+  const p=(scrollY/(document.body.scrollHeight-innerHeight))*100;
+  document.getElementById('spb').style.width=p+'%';
+},{passive:true});
+
+/* ── SCROLL TO ── */
+function goTo(id){
+  const el=document.getElementById(id)||document.querySelector(`[id="${id}"]`);
+  if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ── REVEAL OBSERVER ── */
+const ro=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)}})
+},{threshold:.06});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+/* ── PROGRESS BARS ── */
+function animBars(pan){
+  pan.querySelectorAll('.cc-fill').forEach(b=>{
+    b.style.width='0%';
+    requestAnimationFrame(()=>setTimeout(()=>b.style.width=b.dataset.w+'%',80));
+  });
+}
+
+/* ── TABS ── */
+const PMAP={math:'pm',physics:'pp',english:'pe'};
+function switchTab(s,btn){
+  document.querySelectorAll('.ctab').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  const pan=document.getElementById(PMAP[s]);
+  pan.classList.add('on');
+  pan.querySelectorAll('.reveal').forEach(el=>{el.classList.remove('in');setTimeout(()=>ro.observe(el),10)});
+  animBars(pan);
+}
+
+/* ── OPEN SUBJECT ── */
+function openSubj(s,card){
+  document.querySelectorAll('.scard').forEach(c=>c.classList.remove('sel'));
+  if(card.classList.contains('scard'))card.classList.add('sel');
+  const TIDX={math:0,physics:1,english:2};
+  document.querySelectorAll('.ctab').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.ctab')[TIDX[s]].classList.add('on');
+  const pan=document.getElementById(PMAP[s]);
+  pan.classList.add('on');
+  pan.querySelectorAll('.reveal').forEach(el=>{el.classList.remove('in');setTimeout(()=>ro.observe(el),10)});
+  animBars(pan);
+}
+
+/* ── INIT BARS ── */
+window.addEventListener('load',()=>{
+  const ap=document.querySelector('.panel.on');
+  if(ap)animBars(ap);
+});
+
+/* ══════════════════════════════════════
+   PLAYLIST DATA
+   Replace `id` values with real Google Drive file IDs.
+   Embed URL format: https://drive.google.com/file/d/FILE_ID/preview
+══════════════════════════════════════ */
+const PL={
+  'Limits & Continuity':{subj:'Mathematics',accent:'#4f86f7',bg:'rgba(79,134,247,.12)',icon:'fa-infinity',videos:[
+    {title:'1) Introduction aux limites',level:'Débutant',dur:'8 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'2) Limites à gauche et à droite',level:'Débutant',dur:'11 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'3) Limite infinie et forme indéterminée',level:'Intermédiaire',dur:'14 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'4) Théorème des gendarmes',level:'Intermédiaire',dur:'10 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'5) Règle de L\'Hôpital',level:'Avancé',dur:'13 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'6) Continuité d\'une fonction',level:'Intermédiaire',dur:'9 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'7) Théorème des valeurs intermédiaires',level:'Avancé',dur:'12 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+  ]},
+  'Derivatives & Applications':{subj:'Mathematics',accent:'#4f86f7',bg:'rgba(79,134,247,.12)',icon:'fa-chart-area',videos:[
+    {title:'1) Définition de la dérivée',level:'Débutant',dur:'9 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'2) Règles de dérivation',level:'Débutant',dur:'12 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'3) Dérivée de fonctions composées',level:'Intermédiaire',dur:'14 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'4) Dérivée implicite',level:'Avancé',dur:'11 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'5) Extremums et tableau de variation',level:'Intermédiaire',dur:'16 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'6) Optimisation — problèmes appliqués',level:'Avancé',dur:'18 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+  ]},
+  'Integration':{subj:'Mathematics',accent:'#4f86f7',bg:'rgba(79,134,247,.12)',icon:'fa-superscript',videos:[
+    {title:'1) Primitives et intégrale indéfinie',level:'Débutant',dur:'10 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'2) Intégrale définie — Riemann',level:'Intermédiaire',dur:'13 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'3) Intégration par substitution',level:'Intermédiaire',dur:'15 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'4) Intégration par parties',level:'Avancé',dur:'17 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'5) Fractions partielles',level:'Avancé',dur:'14 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'6) Calcul d\'aires entre courbes',level:'Intermédiaire',dur:'12 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+  ]},
+  'Sequences & Series':{subj:'Mathematics',accent:'#4f86f7',bg:'rgba(79,134,247,.12)',icon:'fa-arrow-trend-up',videos:[
+    {title:'1) Suites arithmétiques',level:'Débutant',dur:'8 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'2) Suites géométriques',level:'Débutant',dur:'9 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'3) Suites récurrentes',level:'Intermédiaire',dur:'13 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'4) Convergence et divergence',level:'Avancé',dur:'14 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+  ]},
+  'Newtonian Mechanics':{subj:'Physics',accent:'#818cf8',bg:'rgba(129,140,248,.12)',icon:'fa-weight-hanging',videos:[
+    {title:'1) Les lois de Newton',level:'Débutant',dur:'10 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'2) Bilan des forces — schéma',level:'Débutant',dur:'12 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'3) Cinématique — MRUA',level:'Intermédiaire',dur:'14 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'4) Mouvement parabolique',level:'Intermédiaire',dur:'15 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'5) Travail et énergie cinétique',level:'Intermédiaire',dur:'11 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'6) Conservation de l\'énergie',level:'Avancé',dur:'13 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+  ]},
+  'Electricity & Circuits':{subj:'Physics',accent:'#818cf8',bg:'rgba(129,140,248,.12)',icon:'fa-bolt',videos:[
+    {title:'1) Loi d\'Ohm — rappels',level:'Débutant',dur:'8 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'2) Circuits série et parallèle',level:'Débutant',dur:'11 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'3) Lois de Kirchhoff',level:'Intermédiaire',dur:'14 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'4) Condensateurs — charge et décharge',level:'Intermédiaire',dur:'16 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'5) Circuit RLC — régime transitoire',level:'Avancé',dur:'18 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+  ]},
+  'Waves & Optics':{subj:'Physics',accent:'#818cf8',bg:'rgba(129,140,248,.12)',icon:'fa-wave-square',videos:[
+    {title:'1) Différence onde transversale / longitudinale',level:'Intermédiaire',dur:'12 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'2) Allure de la courbe — lecture graphique',level:'Intermédiaire',dur:'10 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'3) Célérité et longueur d\'onde',level:'Débutant',dur:'9 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'4) Interférences et diffraction',level:'Avancé',dur:'15 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'5) Optique géométrique — réflexion',level:'Intermédiaire',dur:'11 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+  ]},
+  'Nuclear Physics':{subj:'Physics',accent:'#818cf8',bg:'rgba(129,140,248,.12)',icon:'fa-radiation',videos:[
+    {title:'1) Radioactivité — types de rayonnements',level:'Débutant',dur:'10 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'2) Loi de décroissance radioactive',level:'Intermédiaire',dur:'13 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'3) Énergie de liaison nucléaire',level:'Avancé',dur:'14 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'4) Fission et fusion nucléaires',level:'Avancé',dur:'16 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+  ]},
+  'Advanced Grammar':{subj:'English',accent:'#34d399',bg:'rgba(52,211,153,.12)',icon:'fa-spell-check',videos:[
+    {title:'1) Conditional sentences — types 0, 1, 2, 3',level:'Intermédiaire',dur:'11 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'2) Passive voice — all tenses',level:'Intermédiaire',dur:'13 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'3) Reported speech — statements & questions',level:'Intermédiaire',dur:'12 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'4) Relative clauses — defining vs non-defining',level:'Avancé',dur:'10 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'5) Modal verbs — advanced usage',level:'Avancé',dur:'14 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+  ]},
+  'Academic Writing':{subj:'English',accent:'#34d399',bg:'rgba(52,211,153,.12)',icon:'fa-pen-nib',videos:[
+    {title:'1) Essay structure — introduction & thesis',level:'Débutant',dur:'9 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'2) Body paragraphs — PEEL method',level:'Intermédiaire',dur:'12 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'3) Linking words and cohesion',level:'Intermédiaire',dur:'10 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'4) Formal register and tone',level:'Avancé',dur:'11 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'5) Writing a strong conclusion',level:'Intermédiaire',dur:'8 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+  ]},
+  'Vocabulary Mastery':{subj:'English',accent:'#34d399',bg:'rgba(52,211,153,.12)',icon:'fa-language',videos:[
+    {title:'1) Academic word list — set 1',level:'Débutant',dur:'8 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'2) Collocations in context',level:'Intermédiaire',dur:'10 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'3) Idioms and expressions',level:'Intermédiaire',dur:'12 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'4) Word formation — prefixes & suffixes',level:'Avancé',dur:'9 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+  ]},
+  'Exam Preparation':{subj:'English',accent:'#34d399',bg:'rgba(52,211,153,.12)',icon:'fa-file-pen',videos:[
+    {title:'1) Exam format — overview and strategy',level:'Débutant',dur:'10 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'2) Reading comprehension techniques',level:'Intermédiaire',dur:'14 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'3) Multiple choice — elimination strategy',level:'Intermédiaire',dur:'11 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'4) Timed writing — full mock essay',level:'Avancé',dur:'20 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'5) Review and corrections',level:'Avancé',dur:'16 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+  ]},
+};
+
+let CPL=[],CIdx=0;
+
+function openMod(title){
+  const d=PL[title];if(!d)return;
+  CPL=d.videos;CIdx=0;
+  const m=document.getElementById('modal');
+  m.style.setProperty('--mod-a',d.accent);
+  m.style.setProperty('--mod-ab',d.bg);
+  const ico=document.getElementById('mIco');
+  ico.innerHTML=`<i class="fas ${d.icon}" style="font-size:.9rem;color:${d.accent}"></i>`;
+  ico.style.background=d.bg;
+  document.getElementById('mSubj').textContent=d.subj.toUpperCase();
+  document.getElementById('mTitle').textContent=title;
+  document.getElementById('mPlC').textContent=CPL.length+' vidéos';
+  renderPL();loadVid(0);
+  document.getElementById('ov').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function renderPL(){
+  const c=document.getElementById('mPl');c.innerHTML='';
+  CPL.forEach((v,i)=>{
+    const r=document.createElement('div');
+    r.className='vrow'+(i===CIdx?' on':'');
+    r.onclick=()=>loadVid(i);
+    r.innerHTML=`
+      <div class="vrow-n">${i===CIdx?'<i class="fas fa-play" style="font-size:.48rem"></i>':i+1}</div>
+      <div class="vrow-body">
+        <div class="vrow-t">${v.title}</div>
+        <div class="vrow-s"><i class="fas fa-clock"></i>${v.dur}&nbsp;&middot;&nbsp;<span class="mnow-lvl" style="font-size:.57rem;padding:1px 5px">${v.level}</span></div>
+      </div>
+      <span class="vsahl">SAHL</span>
+      <div class="vrow-play"><i class="fas fa-play" style="font-size:.52rem"></i></div>`;
+    c.appendChild(r);
+  });
+}
+
+function loadVid(i){
+  CIdx=i;const v=CPL[i];
+  document.getElementById('mFrame').src=`https://drive.google.com/file/d/${v.id}/preview`;
+  document.getElementById('mNowT').textContent=v.title;
+  document.getElementById('mNowLvl').textContent=v.level;
+  document.getElementById('mNowDur').textContent=v.dur;
+  document.getElementById('mNowBadge').textContent=v.level;
+  document.getElementById('mFill').style.width=((i+1)/CPL.length*100)+'%';
+  renderPL();
+  setTimeout(()=>{const a=document.querySelector('.vrow.on');if(a)a.scrollIntoView({behavior:'smooth',block:'nearest'})},80);
+}
+
+function closeMod(){
+  document.getElementById('ov').classList.remove('open');
+  document.getElementById('mFrame').src='about:blank';
+  document.body.style.overflow='';
+}
+function closeOut(e){if(e.target===document.getElementById('ov'))closeMod()}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMod()});
+</script>
 </body>
 </html>

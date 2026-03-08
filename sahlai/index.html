@@ -1,435 +1,146 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sahl AI | Solutions d'Intelligence Artificielle</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <style>
-        /* Apple-style Back Button in Header */
-        .nav-back-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background-color: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            border-radius: 100px;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
-            font-size: 15px;
-            font-weight: 500;
-            color: #1d1d1f;
-            text-decoration: none;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-            transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
-            letter-spacing: -0.01em;
-            line-height: 1;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            white-space: nowrap;
-            margin-right: 0;
-        }
+      <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNTBT1VQN7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-FNTBT1VQN7');
+    </script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>Sahl AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<link rel="stylesheet" href="./assets/css/style.css">
 
-        .nav-back-button i {
-            font-size: 14px;
-            color: #1d1d1f;
-            transition: transform 0.25s ease;
-        }
-
-        .nav-back-button:hover {
-            background-color: rgba(255, 255, 255, 0.98);
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-            transform: translateY(-1px);
-        }
-
-        .nav-back-button:hover i {
-            transform: translateX(-4px); /* LTR direction */
-        }
-
-        .nav-back-button:active {
-            transform: translateY(1px);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-            transition: all 0.1s ease;
-        }
-
-        /* For when the header has a background */
-        .nav-container.scrolled .nav-back-button {
-            background-color: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-
-        /* Dark mode version if needed */
-        .nav-back-button.dark {
-            background-color: rgba(40, 40, 40, 0.9);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-back-button.dark i {
-            color: #fff;
-        }
-
-        .nav-back-button.dark:hover {
-            background-color: rgba(50, 50, 50, 0.95);
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .nav-back-button {
-                padding: 6px 14px;
-                font-size: 14px;
-                gap: 6px;
-            }
-            
-            .nav-back-button i {
-                font-size: 13px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .nav-back-button {
-                padding: 6px 12px;
-                font-size: 13px;
-            }
-        }
-
-        /* For very small screens, hide text and keep only icon */
-        @media (max-width: 360px) {
-            .nav-back-button span {
-                display: none;
-            }
-            
-            .nav-back-button {
-                padding: 8px 12px;
-                border-radius: 50%;
-            }
-            
-            .nav-back-button i {
-                font-size: 16px;
-                margin: 0;
-            }
-        }
-
-        /* Navigation container styles */
-        #navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            padding: 12px 0;
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 24px;
-            width: 100%;
-        }
-
-        .nav-actions-sahl {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        /* Keep existing nav-logo style but we're not using it anymore */
-        .nav-logo {
-            display: none; /* Hide the old logo */
-        }
-
-        /* Logout button styling to match */
-        .nav-logout-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background-color: transparent;
-            border: none;
-            border-radius: 100px;
-            font-family: 'Inter', -apple-system, sans-serif;
-            font-size: 15px;
-            font-weight: 500;
-            color: #1d1d1f;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .nav-logout-btn:hover {
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-
-        .nav-logout-btn i {
-            font-size: 16px;
-        }
-
-        @media (max-width: 768px) {
-            .nav-logout-btn {
-                padding: 6px 14px;
-                font-size: 14px;
-            }
-            
-            .nav-logout-btn span {
-                display: none; /* Hide text on mobile, keep only icon */
-            }
-            
-            .nav-logout-btn i {
-                font-size: 18px;
-            }
-        }
-
-        /* User info styling */
-        .nav-user-info {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 4px 12px 4px 4px;
-            background-color: rgba(0, 0, 0, 0.03);
-            border-radius: 100px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .nav-user-info i {
-            font-size: 16px;
-            color: #1d1d1f;
-            background-color: #fff;
-            padding: 6px;
-            border-radius: 50%;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        @media (max-width: 768px) {
-            .nav-user-info span {
-                display: none;
-            }
-        }
-    </style>
+ 
 </head>
 <body>
-    <script>
-        // Run IMMEDIATELY when page loads (before anything else)
-        (function() {
-            // Check if user is authenticated
-            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
-            
-            // If NOT logged in, redirect to login page
-            if (!isLoggedIn) {
-                // Store current page for redirect back
-                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
-                // Redirect immediately
-                window.location.href = './login.html';
-                // Stop all further execution
-                throw new Error('Authentication required');
-            }
-        })();
-    </script>
+
+<!-- ── CINEMATIC INTRO ─────────── -->
+<div id="intro">
+  <div class="intro-logo" id="introLogo"></div>
+  <p class="intro-sub">Votre assistant intelligent</p>
+  <div class="intro-line"></div>
+</div>
+<div class="curtain curtain-top" id="cTop"></div>
+<div class="curtain curtain-bot" id="cBot"></div>
+
+<!-- PROTECTED OVERLAY (shown if not logged in) -->
+<div id="protectedOverlay" class="protected-overlay" style="display:none;">
+  <h2>🔐 Accès sécurisé</h2>
+  <p>Vous devez être connecté(e) pour accéder à Sahl AI. Connectez-vous pour continuer.</p>
+  <a href="login.html" class="login-btn" onclick="redirectToLogin()">
+    <i class="fas fa-sign-in-alt"></i> Se connecter
+  </a>
+</div>
+
+<!-- ── APP ─────────────────────── -->
+<div id="app">
+
+  <nav>
+    <!-- Back button (replaces logo) -->
+    <a href="../profile/index.html" class="back-btn" id="backBtn">
+      <i class="fa-solid fa-arrow-left"></i>
+      <span>Retour</span>
+    </a>
     
+    <div class="nav-right" id="navRight">
+      <div class="step-pips">
+        <div class="pip on" id="p1"></div>
+        <div class="pip" id="p2pip"></div>
+        <div class="pip" id="p3pip"></div>
+      </div>
+      <!-- Login button -->
+      <a href="login.html" class="login-btn" id="loginBtn" onclick="redirectToLogin()">
+        <i class="fa-regular fa-circle-user"></i>
+        <span>Connexion</span>
+      </a>
+    </div>
+  </nav>
 
-    <!-- ========== NAVIGATION AVEC BACK BUTTON ========== -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <!-- Back Button (replaces the logo) - REPLACE YOUR-LINK-HERE with actual URL -->
-            <a href="../profile/index.html" class="nav-back-button">
-                <i class="fas fa-arrow-left"></i>
-                <span>Retour</span>
-            </a>
-            
-            <!-- Container pour le bouton logout + username (rempli par JS) -->
-            <div class="nav-actions-sahl" id="authNavContainer"></div>
-        </div>
-    </nav>
-
-    <!-- ========== HERO SECTION ========== -->
-    <section class="hero">
-        <div class="hero-bg">
-            <div class="gradient-mesh"></div>
-            <div class="floating-shapes">
-                <div class="shape shape-1"></div>
-                <div class="shape shape-2"></div>
-                <div class="shape shape-3"></div>
-            </div>
-            <div class="grid-pattern"></div>
-        </div>
-        <div class="hero-content">
-            <div class="hero-badge">
-                <div class="badge-dot"></div>
-                <span>Nouvelle génération</span>
-            </div>
-            <h1 class="hero-title">Sahl AI</h1>
-            <p class="hero-subtitle">Prenez une photo. Obtenez la correction.</p>
-            <p class="hero-description">
-                Une IA intelligente qui analyse vos exercices et fournit une correction claire et instantanée.
-            </p>
-
-            <div class="hero-cta">
-                <button class="btn btn-primary" id="openVideoBtn">
-                    <span>Regarder la vidéo</span>
-                    <i class="fas fa-play btn-icon"></i>
-                </button>
-                <a href="https://opal.google/app/1F_86EHR6cJa08lP1WzytSb5R_VpJgMPM" class="btn btn-secondary"  rel="noopener">
-                    <span>En savoir plus</span>
-                </a>
-            </div>
-            <div class="stats">
-                <div class="stat-item"><div class="stat-value">99.9%</div><div class="stat-label">Précision</div></div>
-                <div class="stat-item"><div class="stat-value">10x</div><div class="stat-label">Plus rapide</div></div>
-                <div class="stat-item"><div class="stat-value">24/7</div><div class="stat-label">Support</div></div>
-                <div class="stat-item"><div class="stat-value">100+</div><div class="stat-label">Utilisateurs</div></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== FEATURES ========== -->
-    <section class="features">
-        <div class="section-header">
-            <div class="section-eyebrow">Pourquoi Sahl AI</div>
-            <h2 class="section-title">Puissant. Simple. Intelligent.</h2>
-            <p class="section-description">Une technologie qui s'adapte à vos besoins avec une précision inégalée.</p>
-        </div>
-        <div class="features-grid">
-    
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-camera"></i></div>
-                <h3 class="feature-title">Scan par photo</h3>
-                <p class="feature-description">
-                    Prenez une photo de votre exercice et laissez Sahl AI l’analyser instantanément.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-brain"></i></div>
-                <h3 class="feature-title">Analyse intelligente</h3>
-                <p class="feature-description">
-                    Comprend l’exercice, identifie la méthode et détecte les erreurs avec précision.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-list-ol"></i></div>
-                <h3 class="feature-title">Correction détaillée</h3>
-                <p class="feature-description">
-                    Explication claire, structurée étape par étape pour mieux comprendre.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-bolt"></i></div>
-                <h3 class="feature-title">Résultat instantané</h3>
-                <p class="feature-description">
-                    Obtenez votre correction en quelques secondes, sans attente.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-book"></i></div>
-                <h3 class="feature-title">Multi-matières</h3>
-                <p class="feature-description">
-                    Math, Physique, Sciences, Anglais et plus encore.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-graduation-cap"></i></div>
-                <h3 class="feature-title">Conçu pour étudiants</h3>
-                <p class="feature-description">
-                    Une IA pensée pour améliorer vos résultats scolaires efficacement.
-                </p>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- ========== CTA ========== -->
-    <section class="cta-section">
-        <div class="cta-container">
-            <div class="cta-content">
-                <h2 class="cta-title">Prêt à corriger vos exercices en quelques secondes ?</h2>
-                <p class="cta-description">
-                    Rejoignez des milliers d'étudiants qui utilisent déjà Sahl AI pour apprendre plus efficacement.
-                </p>
-
-                <div class="hero-cta">
-                    <a href="https://opal.google/app/1F_86EHR6cJa08lP1WzytSb5R_VpJgMPM" class="btn btn-primary" >
-                        <span>Commencer directement</span>
-                        <i class="fas fa-arrow-right btn-icon"></i>    
-                    </a>
-
-                    <button class="btn btn-secondary" id="openVideoBtn2">
-                        <span>Voir la démo</span>
-                    </button>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== MODAL VIDÉO (CORRIGÉE) ========== -->
-    <div class="modal" id="videoModal">
-        <div class="modal-content">
-            <button class="modal-close" id="closeVideoBtn">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="video-wrapper">
-                <iframe 
-                    id="youtubeIframe"
-                    src="https://www.youtube.com/embed/KFPtI4wKB8o?rel=0&modestbranding=1&enablejsapi=1"
-                    title="Sahl AI - Démo"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                    loading="lazy">
-                </iframe>
-            </div>
-            <div class="modal-footer">
-                <p>Découvrez comment Sahl AI transforme les workflows avec une automatisation intelligente.</p>
-                <a href="https://opal.google/app/1F_86EHR6cJa08lP1WzytSb5R_VpJgMPM" class="btn btn-primary" target="_blank">
-                    <span>Essayer maintenant</span>
-                    <i class="fas fa-arrow-right btn-icon"></i>
-                </a>
-            </div>
-        </div>
+  <main>
+    <!-- Icon unit -->
+    <div class="icon-unit" id="iconUnit">
+      <div class="icon-ring"></div>
+      <div class="icon-ring icon-ring-2"></div>
+      <div class="icon-shadow"></div>
+      <div class="icon-box" id="iconBox">
+        <i class="fa-solid fa-brain" id="iconFa"></i>
+      </div>
     </div>
 
-    <!-- ========== FOOTER ========== -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Sahl App</h3>
-                <div class="footer-links">
-                    <a href="https://sahleducation.netlify.app/svtapp/espace-sahl" class="footer-link">SVT App</a>
-                    <a href="https://sahleducation.netlify.app/chatphi/espace-sahl" class="footer-link">Chat - Philo</a>
-                    <a href="https://sahleducation.netlify.app/speakwell/espace-sahl" class="footer-link">SpeakWell</a>
-                    <a href="https://sahleducation.netlify.app/sti.html" class="footer-link">Sti App</a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Ressources</h3>
-                <div class="footer-links">
-                    <a href="https://sahleducation.netlify.app/e-book/ebook" class="footer-link">E-Book</a>
-                </div>
-            </div>
-        </div>
-           
-        <div class="footer-bottom">
-            <p class="footer-copyright">Eduwell Quantum Group</p>
-        </div>
-    </footer>
+    <!-- Panels -->
+    <div class="text-block">
+
+      <div id="panel-1" class="text-block">
+        <p class="kicker">Sahl AI</p>
+        <h1 class="headline">Répond à toutes <br>vos <em>questions</em></h1>
+        <p class="body-copy"> Demandez n'importe quel exercice, leçon ou document — Sahl AI vous répond instantanément, intelligemment, et vous aide à apprendre plus facilement et rapidement.</p>
+      </div>
+
+      <div id="panel-2" class="text-block">
+  <p class="kicker">Ce qu'il fait</p>
+  <h2 class="headline" style="font-size:clamp(1.8rem,7vw,2.8rem);margin-bottom:4px;">Conçu pour <em>vous guider</em>.</h2>
+  <div class="cap-list" id="capList">
     
-    <script src="./assets/js/script.js"></script>
+    <div class="cap-row">
+      <div class="cap-icon-wrap cw-green"><i class="fa-solid fa-square-root-alt"></i></div>
+      <div>
+        <div class="cap-text-title">Maths</div>
+        <div class="cap-text-desc">Fournit des explications détaillées et la méthode de résolution pour chaque exercice.</div>
+      </div>
+    </div>
+
+    <div class="cap-row">
+      <div class="cap-icon-wrap cw-blue"><i class="fa-solid fa-atom"></i></div>
+      <div>
+        <div class="cap-text-title">Physique</div>
+        <div class="cap-text-desc">Répond à vos questions et explique clairement les phénomènes physiques.</div>
+      </div>
+    </div>
+
+    <div class="cap-row">
+      <div class="cap-icon-wrap cw-amber"><i class="fa-solid fa-flask"></i></div>
+      <div>
+        <div class="cap-text-title">Science</div>
+        <div class="cap-text-desc">Vous montre l’analyse et explique pas à pas les exercices scientifiques.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+     <div id="panel-3" class="text-block">
+  <h2 class="p3-headline" id="p3h">Prêt quand<br><em>vous l'êtes</em>.</h2>
+  
+  
+</div>
+
+    </div>
+  </main>
+
+  <footer id="footer">
+    <div class="progress" id="prog" style="width:33.33%"></div>
+    <div class="footer-inner">
+      <span class="step-label" id="stepLbl">1 of 3</span>
+      <button class="cta ghost" id="ctaBtn" onclick="advance()">
+        <span id="ctaTxt">Suivant</span>
+        <i class="fa-solid fa-arrow-right" id="ctaIcon"></i>
+      </button>
+    </div>
+  </footer>
+
+</div>
+
+<!-- TOAST NOTIFICATION -->
+<div class="toast" id="toast"></div>
+
+<script src="./assets/js/script.js"></script>
 </body>
 </html>

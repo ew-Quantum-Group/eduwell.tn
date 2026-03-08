@@ -1,431 +1,83 @@
-  // ============================
-        // DATA MODELS WITH SUBJECT-COURSE-VIDEO HIERARCHY
-        // ============================
-        
-        // Subject data
-        const subjects = [
-            { 
-                id: 1, 
-                name: "Physique", 
-                icon: "fas fa-atom", 
-                color: "#FFFFFF",
-                bgColor: "var(--gradient-blue)",
-                progress: 72,
-                videos: 0
-            },
-            
-            { 
-                id: 3, 
-                name: "science", 
-                icon: "fas fa-dna", 
-                color: "#FFFFFF",
-                bgColor: "var(--gradient-purple)",
-                progress: 79,
-                videos: 0
-            },
-            { 
-                id: 4, 
-                name: "Anglais", 
-                icon: "fas fa-language", 
-                color: "#FFFFFF",
-                bgColor: "var(--gradient-orange)",
-                progress: 88,
-                videos: 12
-            }
-        ];
 
-        // Course/Lesson data organized by subject
-        const coursesBySubject = {
-            "Physique": [
-                { 
-                    id: "forceq50", 
-                    name: "RLC force Q50", 
-                    icon: "fas fa-book",
-                    videoCount: 50,
-                    subject: "Physique"
-                },
-                { 
-    id: "ondes", 
-    name: "Ondes", 
-    icon: "fas fa-wave-square",
-    videoCount: 40,
-    subject: "Physique"
-},
-                { 
-                    id: "forcecours", 
-                    name: "RLC force Cours", 
-                    icon: "fas fa-bolt",
-                    videoCount: 0,
-                    subject: "Physique"
-                }
-                
-            ],
-           
-            "science": [
-                { 
-                    id: "sc_analyse", 
-                    name: "Révision", 
-                    icon: "fas fa-microscope",
-                    videoCount: 0,
-                    subject: "science"
-                },
-                { 
-                    id: "genetique", 
-                    name: "Génétique", 
-                    icon: "fas fa-dna",
-                    videoCount: 0,
-                    subject: "science"
-                },
-                { 
-                    id: "ecologie", 
-                    name: "Neurophysiologie", 
-                    icon: "fas fa-leaf",
-                    videoCount: 0,
-                    subject: "science"
-                },
-                { 
-                    id: "biologie_physiologie", 
-                    name: "Préparation Bac", 
-                    icon: "fas fa-heartbeat",
-                    videoCount: 0,
-                    subject: "science"
-                }
-            ],
-            "Anglais": [
-                { 
-                    id: "anglais_grammaire", 
-                    name: "Old version", 
-                    icon: "fas fa-book",
-                    videoCount: 10,
-                    subject: "Anglais"
-                },
-                 { 
-                    id: "anglais_tenses", 
-                    name: "Tenses", 
-                    icon: "fas fa-clock-rotate-left",
-                    videoCount: 0,
-                    subject: "Anglais"
-                },
-                { 
-                    id: "anglais_vocabulaire", 
-                    name: "Vocabulaire", 
-                    icon: "fas fa-language",
-                    videoCount: 0,
-                    subject: "Anglais"
-                },
-                { 
-                    id: "anglais_comprehension", 
-                    name: "Compréhension", 
-                    icon: "fas fa-headphones",
-                    videoCount: 0,
-                    subject: "Anglais"
-                },
-                { 
-                    id: "anglais_expression", 
-                    name: "Writing", 
-                    icon: "fas fa-pen",
-                    videoCount: 0,
-                    subject: "Anglais"
-                }
-            ]
-        };
-
-        // Videos data - Each video is linked to both subject and course
-        // Added level field to each video
-        const videos = [
-          
-       
-         
-
-            // english - Cinétique Chimique videos
-            {
-                id: 1,
-                title: "Active And Passive Voice (1)",
-               
-                instructor: "Eduwell",
-               
-                subject: "Anglais",
-                course: "Old version",
-                source: "drive",
-                sourceId: "1ekhuLnJl5hHDxJlnzNdY2WbI98PgKiAN",
-                isNew: true,
-                isFeatured: true,
-                level: "Ancienne version"
-            },
-             {
-                id: 2,
-                title: "Active And Passive Voice (2)",
-               
-                instructor: "Eduwell",
-               
-                subject: "Anglais",
-                course: "Old version",
-                source: "drive",
-                sourceId: "1WSXgnnoHJkxzyCFukRgGeQ0ff_TmHVNr",
-                isNew: true,
-                isFeatured: true,
-                level: "Ancienne version"
-            },
-             {
-                id: 3,
-                title: "Correction of the 2025 Baccalaureate Exam – Part 1",
-               
-                instructor: "Eduwell",
-               
-                subject: "Anglais",
-                course: "Old version",
-                source: "drive",
-                sourceId: "15mxWDTICcmEZz7HhIif84MXSNo3cgN4w",
-                isNew: false,
-                isFeatured: false,
-                level: "Ancienne version"
-            },
-             {
-                id: 4,
-                title: "Correction of the 2025 Baccalaureate Exam – Part 2",
-               
-                instructor: "Eduwell",
-               
-                subject: "Anglais",
-                course: "Old version",
-                source: "drive",
-                sourceId: "1M9DgB6Id1V1r5yjt1QwqJkoqZDEGh1vU",
-                 isNew: false,
-                isFeatured: false,
-                level: "Ancienne version"
-            },
-             {
-                id: 5,
-                title: "Revision: Grammar Correction Exercises (Part 1)",
-               
-                instructor: "Eduwell",
-               
-                subject: "Anglais",
-                course: "Old version",
-                source: "drive",
-                sourceId: "1JtOD1EorV6ZGGx91UpO2bvdwqaq2IKtD",
-                isNew: false,
-                isFeatured: false,
-                level: "Ancienne version"
-            },
-             {
-                id: 6,
-                title: "Revision: Grammar Correction Exercises (Part 2)",
-               
-                instructor: "Eduwell",
-               
-                subject: "Anglais",
-                course: "Old version",
-                source: "drive",
-                sourceId: "1ghkCIi9V6HRvhHJ1EcVC70HyID31ciPX",
-                 isNew: false,
-                isFeatured: false,
-                level: "Ancienne version"
-            },
-             {
-                id: 7,
-                title: "Revision: Grammar Correction Exercises (Part 3)",
-               
-                instructor: "Eduwell",
-               
-                subject: "Anglais",
-                course: "Old version",
-                source: "drive",
-                sourceId: "1TtJnXpOQKUc3YqHZGPl5Ou0YXf9v-i8j",
-                isNew: false,
-                isFeatured: false,
-                level: "Ancienne version"
-            },
-             {
-                id: 8,
-                title: "Adjectives & Adverbs – Lesson (Part 1)",
-               
-                instructor: "Eduwell",
-               
-                subject: "Anglais",
-                course: "Old version",
-                source: "drive",
-                sourceId: "173h5_PtCky6NEIQsWJuE0lVapfvxVx2u",
-                isNew: true,
-                isFeatured: true,
-                level: "Ancienne version"
-            },
-             {
-                id: 9,
-                title: "Adjectives & Adverbs – Lesson (Part 2)",
-               
-                instructor: "Eduwell",
-               
-                subject: "Anglais",
-                course: "Old version",
-                source: "drive",
-                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
-                isNew: true,
-                isFeatured: true,
-                level: "Ancienne version"
-            },
-             {
-                id: 10,
-                title: "Advanced Grammar Exercises – Revision ",
-               
-                instructor: "Eduwell",
-               
-                subject: "Anglais",
-                course: "Old version",
-                source: "drive",
-                sourceId: "1WctGTWbFVyyy4FH-R79JpbDMjlZC_kkl",
-                isNew: false,
-                isFeatured: false,
-                level: "Ancienne version"
-            },
-             {
-                id: 11,
-                title: "Past Simple Tense | خاص بالبكالوريا",
-                instructor: "Eduwell",
-                subject: "Anglais",
-                course: "Tenses",
-                source: "youtube",
-                sourceId: "yRfKg-HL67s",
-                isNew: false,
-                isFeatured: true,
-                level: "intermediate"
-            },
-             {
-                id: 12,
-                title: "Past Perfect Tense Explained | English Grammar",
-                instructor: "Eduwell",
-                subject: "Anglais",
-                course: "Tenses",
-                source: "youtube",
-                sourceId: "o-rPnn8mU7s",
-                isNew: false,
-                isFeatured: true,
-                level: "intermediate"
-            },
-             {
-                id: 13,
-                title: "1) Différence entre une onde transversale et une onde longitudinale",
-                instructor: "Sahl",
-                subject: "Physique",
-                course: "Ondes",
-                source: "drive",
-                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
-                isNew: false,
-                isFeatured: true,
-                level: "intermediate"
-            },
-             {
-                id: 14,
-                title: "2) Allure de la courbe (lecture graphique)",
-                instructor: "Sahl",
-                subject: "Physique",
-                course: "Ondes",
-                 source: "drive",
-                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
-                isNew: false,
-                isFeatured: true,
-                level: "intermediate"
-            },
-             {
-                id: 15,
-                title: "3) Comment déterminer l’équation horaire (partie 1)",
-                instructor: "Sahl",
-                subject: "Physique",
-                course: "Ondes",
-                source: "drive",
-                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
-                isNew: false,
-                isFeatured: true,
-                level: "intermediate"
-            },
-             {
-                id: 16,
-                title: "4) Comment déterminer l’équation horaire (partie 2)",
-                instructor: "Sahl",
-                subject: "Physique",
-                course: "Ondes",
-                source: "drive",
-                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
-                isNew: false,
-                isFeatured: true,
-                level: "intermediate"
-            },
-             {
-                id: 17,
-                title: "5) Le stroboscope",
-                instructor: "Sahl",
-                subject: "Physique",
-                course: "Ondes",
-                source: "drive",
-                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
-                isNew: false,
-                isFeatured: true,
-                level: "intermediate"
-            },
-              {
-                id: 18,
-                title: "4) Le stroboscope",
-                instructor: "Sahl",
-                subject: "Physique",
-                course: "Ondes",
-                source: "drive",
-                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
-                isNew: false,
-                isFeatured: true,
-                level: "intermediate"
-            },
-              {
-                id: 19,
-                title: "4) Le stroboscope",
-                instructor: "Sahl",
-                subject: "Physique",
-                course: "Ondes",
-                source: "drive",
-                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
-                isNew: false,
-                isFeatured: true,
-                level: "intermediate"
-            },
-              {
-                id: 20,
-                title: "4) Le stroboscope",
-                instructor: "Sahl",
-                subject: "Physique",
-                course: "Ondes",
-                source: "drive",
-                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
-                isNew: false,
-                isFeatured: true,
-                level: "intermediate"
-            },
-              {
-                id: 21,
-                title: "4) Le stroboscope",
-                instructor: "Sahl",
-                subject: "Physique",
-                course: "Ondes",
-                source: "drive",
-                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
-                isNew: false,
-                isFeatured: true,
-                level: "intermediate"
-            },
-              {
-                id: 22,
-                title: "4) Le stroboscope",
-                instructor: "Sahl",
-                subject: "Physique",
-                course: "Ondes",
-                source: "drive",
-                sourceId: "1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo",
-                isNew: false,
-                isFeatured: true,
-                level: "intermediate"
-            }
+const PL={
+  'Old Grammar Lessons':{subj:'Anglais',accent:'#34d399',bg:'rgba(52,211,153,.12)',icon:'fa-spell-check',videos:[
+    {title: 'Active And Passive Voice (1)', level: 'Ancienne version', dur: 'N/A', id: '1ekhuLnJl5hHDxJlnzNdY2WbI98PgKiAN'},
+    {title: 'Active And Passive Voice (2)', level: 'Ancienne version', dur: 'N/A', id: '1WSXgnnoHJkxzyCFukRgGeQ0ff_TmHVNr'},
+    {title: 'Correction of the 2025 Baccalaureate Exam – Part 1', level: 'Ancienne version', dur: 'N/A', id: '15mxWDTICcmEZz7HhIif84MXSNo3cgN4w'},
+    {title: 'Correction of the 2025 Baccalaureate Exam – Part 2', level: 'Ancienne version', dur: 'N/A', id: '1M9DgB6Id1V1r5yjt1QwqJkoqZDEGh1vU'},
+    {title: 'Revision: Grammar Correction Exercises (Part 1)', level: 'Ancienne version', dur: 'N/A', id: '1JtOD1EorV6ZGGx91UpO2bvdwqaq2IKtD'},
+    {title: 'Revision: Grammar Correction Exercises (Part 2)', level: 'Ancienne version', dur: 'N/A', id: '1ghkCIi9V6HRvhHJ1EcVC70HyID31ciPX'},
+    {title: 'Revision: Grammar Correction Exercises (Part 3)', level: 'Ancienne version', dur: 'N/A', id: '1TtJnXpOQKUc3YqHZGPl5Ou0YXf9v-i8j'},
+    {title: 'Adjectives & Adverbs – Lesson (Part 1)', level: 'Ancienne version', dur: 'N/A', id: '173h5_PtCky6NEIQsWJuE0lVapfvxVx2u'},
+{title: 'Adjectives & Adverbs – Lesson (Part 2)', level: 'Ancienne version', dur: 'N/A', id: '1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo'},
+    {title: 'Advanced Grammar Exercises – Revision', level: 'Ancienne version', dur: 'N/A', id: '1WctGTWbFVyyy4FH-R79JpbDMjlZC_kkl'},
+]},
+  'Academic Writing':{subj:'Anglais',accent:'#34d399',bg:'rgba(52,211,153,.12)',icon:'fa-pen-nib',videos:[
+    {title:'1) Essay structure — introduction & thesis',level:'Débutant',dur:'9 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'2) Body paragraphs — PEEL method',level:'Intermédiaire',dur:'12 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'3) Linking words and cohesion',level:'Intermédiaire',dur:'10 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'4) Formal register and tone',level:'Avancé',dur:'11 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'5) Writing a strong conclusion',level:'Intermédiaire',dur:'8 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+  ]},
+  'Vocabulary Mastery':{subj:'Anglais',accent:'#34d399',bg:'rgba(52,211,153,.12)',icon:'fa-language',videos:[
+    {title:'1) Academic word list — set 1',level:'Débutant',dur:'8 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'2) Collocations in context',level:'Intermédiaire',dur:'10 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'3) Idioms and expressions',level:'Intermédiaire',dur:'12 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'4) Word formation — prefixes & suffixes',level:'Avancé',dur:'9 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+  ]},
 
 
 
 
-            // Biologie - Biologie Cellulaire videos
-            
-        ];
+
+
+
+
+  'Exam Preparation':{subj:'Anglais',accent:'#34d399',bg:'rgba(52,211,153,.12)',icon:'fa-file-pen',videos:[
+    {title:'1) Exam format — overview and strategy',level:'Débutant',dur:'10 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'2) Reading comprehension techniques',level:'Intermédiaire',dur:'14 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'3) Multiple choice — elimination strategy',level:'Intermédiaire',dur:'11 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'4) Timed writing — full mock essay',level:'Avancé',dur:'20 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'5) Review and corrections',level:'Avancé',dur:'16 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+  ]},
+
+
+
+  'Newtonian Mechanics':{subj:'Physique',accent:'#818cf8',bg:'rgba(129,140,248,.12)',icon:'fa-weight-hanging',videos:[
+    {title:'1) Les lois de Newton',level:'Débutant',dur:'10 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'2) Bilan des forces — schéma',level:'Débutant',dur:'12 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'3) Cinématique — MRUA',level:'Intermédiaire',dur:'14 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'4) Mouvement parabolique',level:'Intermédiaire',dur:'15 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'5) Travail et énergie cinétique',level:'Intermédiaire',dur:'11 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'6) Conservation de l\'énergie',level:'Avancé',dur:'13 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+  ]},
+  'Electricity & Circuits':{subj:'Physique',accent:'#818cf8',bg:'rgba(129,140,248,.12)',icon:'fa-bolt',videos:[
+    {title:'1) Loi d\'Ohm — rappels',level:'Débutant',dur:'8 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'2) Circuits série et parallèle',level:'Débutant',dur:'11 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'3) Lois de Kirchhoff',level:'Intermédiaire',dur:'14 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'4) Condensateurs — charge et décharge',level:'Intermédiaire',dur:'16 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'5) Circuit RLC — régime transitoire',level:'Avancé',dur:'18 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+  ]},
+
+
+
+
+
+  'ondes':{subj:'Physique',accent:'#818cf8',bg:'rgba(129,140,248,.12)',icon:'fa-wave-square',videos:[
+    {title:'1) Différence entre une onde transversale et une onde longitudinale',level:'Débutant',dur:'2 min',id:'1al1EGp1rcd8EZbk1fv65p4RK4uuPlrrO'},
+    {title:'2) Allure de la courbe (lecture graphique)',level:'Débutant',dur:'7:25 min',id:'1BvgtDVEtAmaCe5JwBBuNy3APCS6E6x8z'},
+    {title:'3) Comment déterminer l’équation horaire (partie 1)',level:'Débutant',dur:'4:41 min',id:'1cgFSa5LpVMTLxZKrQym3bXzs4oSw3tIX'},
+   
+  ]},
+
+
+
+
+
+  'Nuclear Physics':{subj:'Physique',accent:'#818cf8',bg:'rgba(129,140,248,.12)',icon:'fa-radiation',videos:[
+    {title:'1) Radioactivité — types de rayonnements',level:'Débutant',dur:'10 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'2) Loi de décroissance radioactive',level:'Intermédiaire',dur:'13 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'3) Énergie de liaison nucléaire',level:'Avancé',dur:'14 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+    {title:'4) Fission et fusion nucléaires',level:'Avancé',dur:'16 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+  ]},
+};

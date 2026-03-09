@@ -1,5 +1,4 @@
-
-        // Disable right-click
+  // Disable right-click
         document.addEventListener('contextmenu', e => { e.preventDefault(); return false; });
 
         // Disable save/print/F12

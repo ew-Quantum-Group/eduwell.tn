@@ -150,7 +150,7 @@
                 successMessage.classList.remove('show');
             }
 
-            usernameInput.focus();
+
 
             // Remove splash from DOM after animation (3s delay + 0.5s exit = 3.5s)
             const splash = document.getElementById('splash');

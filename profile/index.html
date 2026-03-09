@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="fr">
 <head>
-  <!-- Google tag (gtag.js) -->
+     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNTBT1VQN7"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -9,455 +9,133 @@
         gtag('js', new Date());
         gtag('config', 'G-FNTBT1VQN7');
     </script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Sahl · Student Platform</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./assets/css/style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | Sahl</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+    <link rel="stylesheet" href="../login/css/style.css">
 </head>
 <body>
 
-<script>
-// ═══════════════════════════════════════════════════
-// AUTHENTICATION (MUST RUN IMMEDIATELY)
-// ═══════════════════════════════════════════════════
-(function() {
-    // Authentication configuration
-    const AUTH_CONFIG = {
-        isLoggedInKey: 'eduwell_svt_isLoggedIn',
-        usernameKey: 'eduwell_svt_username',
-        lastActivityKey: 'eduwell_svt_lastActivity'
-    };
-    
-    // Check if user is authenticated
-    function isAuthenticated() {
-        const isLoggedIn = localStorage.getItem(AUTH_CONFIG.isLoggedInKey) === 'true';
-        if (!isLoggedIn) return false;
-        
-        const lastActivity = localStorage.getItem(AUTH_CONFIG.lastActivityKey);
-        if (lastActivity) {
-            const lastActivityTime = parseInt(lastActivity);
-            const minutesDiff = (Date.now() - lastActivityTime) / (1000 * 60);
-            if (minutesDiff >= 30) {
-                // Session expired due to inactivity
-                localStorage.removeItem(AUTH_CONFIG.isLoggedInKey);
-                localStorage.removeItem(AUTH_CONFIG.usernameKey);
-                localStorage.removeItem(AUTH_CONFIG.lastActivityKey);
-                return false;
-            }
-        }
-        return true;
-    }
-    
-    // If NOT logged in, redirect to login page
-    if (!isAuthenticated()) {
-        // Store current page for redirect back
-        sessionStorage.setItem('eduwell_redirect_url', window.location.href);
-        // Redirect to login page
-        window.location.href = 'login.html';
-        // Stop execution
-        throw new Error('Authentication required');
-    }
-})();
-</script>
-
-<div class="shell">
-
-<!-- ══════════════ SIDEBAR ══════════════ -->
-<aside class="sidebar">
-  <div class="sb-logo clickable-card" data-url="/">
-    <div class="sb-logo-mark">
-      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-    </div>
-    <div>
-      <div class="sb-logo-wordmark">Sahl</div>
-      <div class="sb-logo-sub">Plateforme Étudiant(e)</div>
-    </div>
-    <a href="/" class="card-link" aria-label="Home"></a>
-  </div>
-
-  <div class="sb-sec-lbl">Navigation</div>
-  <div class="sb-nav">
-    <div class="sb-item active" data-page="home">
-      <div class="sb-ico"><svg viewBox="0 0 24 24"><path d="M3 10.5L12 4l9 6.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1V10.5z"/><path d="M9 21V13h6v8"/></svg></div>
-      tableau de bord
-      <a href="#" class="nav-link" onclick="switchPage('home'); return false;"></a>
-    </div>
-    <div class="sb-item" data-page="notifications">
-      <div class="sb-ico"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 106 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></div>
-      Notification
-      <span class="sb-badge" id="sb-badge">3</span>
-      <a href="#" class="nav-link" onclick="switchPage('notifications'); return false;"></a>
-    </div>
-    <div class="sb-item" data-page="explore">
-      <div class="sb-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div>
-      Explorer
-      <a href="#" class="nav-link" onclick="switchPage('explore'); return false;"></a>
-    </div>
-    <div class="sb-item" data-page="schedule">
-      <div class="sb-ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-      Planning
-      <a href="#" class="nav-link" onclick="switchPage('schedule'); return false;"></a>
-    </div>
-  </div>
-
-  <div class="sb-sec-lbl">Accès rapide</div>
-  <div class="sb-nav">
-    <div class="sb-item clickable-card" data-app="SVT App">
-      <div class="sb-ico" style="background:linear-gradient(135deg,#ff453a,#ff6b35)">
-        <svg viewBox="0 0 24 24" style="stroke:#fff"><rect x="2" y="2" width="20" height="20" rx="5"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-      </div>SVT App
-      <a href="#" class="card-link" onclick="openApp('SVT App'); return false;"></a>
-    </div>
-    <div class="sb-item clickable-card" data-app="Sahl AI">
-      <div class="sb-ico" style="background:linear-gradient(135deg,#4338CA,#0066CC)">
-        <svg viewBox="0 0 24 24" style="stroke:#fff"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-      </div>Sahl AI
-      <a href="#" class="card-link" onclick="openApp('Sahl AI'); return false;"></a>
-    </div>
-    <div class="sb-item clickable-card" data-app="E-Books">
-      <div class="sb-ico" style="background:linear-gradient(135deg,#059669,#10b981)">
-        <svg viewBox="0 0 24 24" style="stroke:#fff"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-      </div>E-Books
-      <a href="#" class="card-link" onclick="openApp('E-Books'); return false;"></a>
-    </div>
-  </div>
-
-  <div class="sb-bottom">
-    <div class="sb-item-theme" onclick="toggleDark()">
-      <div class="sb-ico"><svg viewBox="0 0 24 24" id="sb-theme-ico"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></div>
-      <span id="sb-theme-lbl">Mode sombre</span>
-    </div>
-    
-    <!-- User info section (will be populated by JS) -->
-    <div class="sb-user clickable-card" id="sidebar-user" data-url="/profile">
-      <div class="sb-avt" id="user-avatar">AJ</div>
-      <div>
-        <div class="sb-uname" id="user-name">Loading...</div>
-        <div class="sb-urole" id="user-email">Student</div>
-      </div>
-      <div class="sb-umore"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></div>
-     
-    </div>
-    
-    <!-- Logout button -->
-    <button class="sb-logout-btn" onclick="logout()">
-      <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-      Déconnexion
-    </button>
-  </div>
-</aside>
-
-<!-- ══════════════ MAIN ══════════════ -->
-<div class="main">
-
-  <!-- Desktop topbar -->
-  <div class="topbar">
-    <div class="topbar-info">
-      <div class="topbar-title" id="topbar-title">Tableau de bord</div>
-      <div class="topbar-sub" id="topbar-sub"></div>
-    </div>
-   
-    <div class="tb-actions">
-      <div class="tb-btn clickable-card" data-url="#" onclick="switchPage('notifications')">
-        <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 106 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-        <span class="tb-pip" id="tb-pip"></span>
-        <a href="#" class="card-link" aria-label="Notifications"></a>
-      </div>
-      <div class="tb-btn" onclick="toggleDark()">
-        <svg viewBox="0 0 24 24" id="tb-theme-ico"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-      </div>
-      <button class="logout-btn" onclick="logout()">
-        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        Déconnexion
-      </button>
-    </div>
-  </div>
-
-  <!-- Mobile topbar with logout button (MODIFIED) -->
-  <div class="mob-topbar">
-    <div class="mob-brand clickable-card" data-url="/">Sahl
-      <a href="/" class="card-link" aria-label="Home"></a>
-    </div>
-    <div class="mob-actions">
-      <div class="mob-tb-btn clickable-card" data-url="#" onclick="switchPage('notifications')">
-        <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 106 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-        <span class="mob-pip" id="mob-pip"></span>
-        <a href="#" class="card-link" aria-label="Notifications"></a>
-      </div>
-      <div class="mob-tb-btn" onclick="toggleDark()">
-        <svg viewBox="0 0 24 24" id="mob-theme-ico"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-      </div>
-      <button class="mob-logout-btn" onclick="logout()" aria-label="Déconnexion">
-        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-      </button>
-    </div>
-  </div>
-
-  <!-- Pages -->
-  <div class="pages">
-
-    <!-- ── HOME ── -->
-    <section id="page-home" class="page active">
-      <div class="page-inner">
-        <div class="home-grid">
-
-          <!-- LEFT COLUMN -->
-          <div class="home-left">
-
-            <!-- Welcome banner -->
-            <div class="wb clickable-card" data-url="/welcome">
-              <div class="wb-orb wb-orb1"></div>
-              <div class="wb-orb wb-orb2"></div>
-              <div class="wb-orb wb-orb3"></div>
-              <div class="wb-c">
-                <div class="wb-toprow">
-  <div>
-    <div class="wb-greet" id="wb-greet">Bienvenue</div>
-    <div class="wb-name" id="welcome-name">Chargement...</div>
-  </div>
-  <div class="wb-avt-circle" id="welcome-avatar">AJ</div>
-</div>
-
-<div class="wb-info">
-  <div class="wb-badge">
-    <svg viewBox="0 0 24 24">
-      <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-      <polyline points="22 4 12 14.01 9 11.01"/>
-    </svg>
-    Étudiant(e) actif(ve)
-  </div>
-  <span class="wb-dept" id="welcome-email">Étudiant(e)</span>
-</div>
-
-<div class="wb-stats">
-  <div class="wb-stat">
-    <div class="wb-stat-val">84%</div>
-    <div class="wb-stat-lbl">Progression</div>
-  </div>
-  <div class="wb-stat">
-    <div class="wb-stat-val">6</div>
-    <div class="wb-stat-lbl">Applications</div>
-  </div>
-  <div class="wb-stat">
-    <div class="wb-stat-val">3</div>
-    <div class="wb-stat-lbl">Alertes</div>
-  </div>
-</div>
-              </div>
-              <a href="/welcome" class="card-link" aria-label="Welcome"></a>
+    <!-- ── Splash Screen ── -->
+    <div id="splash">
+        <div class="splash-icon-wrap">
+            <div class="splash-ring-outer"></div>
+            <div class="splash-ring"></div>
+            <div class="splash-icon">
+                <img src="../assets/images/app-store.png" alt="Sahl">
             </div>
-
-            <!-- Stats strip -->
-            <div class="stats-3">
-              <div class="stat-c clickable-card" data-url="/attendance">
-                <div class="stat-ico" style="background:linear-gradient(135deg,#0066CC,#4338CA)">
-                  <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                </div>
-                <div class="stat-val">41%</div>
-                <div class="stat-lbl">développement web</div>
-                <a href="#" class="card-link" aria-label="Attendance"></a>
-              </div>
-              <div class="stat-c clickable-card" data-url="/study-time">
-                <div class="stat-ico" style="background:linear-gradient(135deg,#1DB954,#059669)">
-                  <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-                </div>
-                <div class="stat-val">5</div>
-                <div class="stat-lbl">5 matières</div>
-                <a href="#" class="card-link" aria-label="Study Time"></a>
-              </div>
-              <div class="stat-c clickable-card" data-url="/gpa">
-                <div class="stat-ico" style="background:linear-gradient(135deg,#F57C00,#EF4444)">
-                  <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                </div>
-                <div class="stat-val">5</div>
-                <div class="stat-lbl">de confiance</div>
-                <a href="#" class="card-link" aria-label="GPA"></a>
-              </div>
-            </div>
-
-            <!-- Profile card -->
-            <div class="card">
-              <div class="pc-top clickable-card" data-url="/profile">
-                <div class="pc-avt" id="profile-avatar">AJ</div>
-                <div class="pc-txt">
-                  <div class="pc-name" id="profile-name">Loading...</div>
-                  <div class="pc-id" id="profile-id">SHL-2026-00842</div>
-                </div>
-                <div class="pc-status">
-                  <div class="pc-dot"></div>
-                  <div class="pc-stxt">Active</div>
-                </div>
-                <a href="#" class="card-link" aria-label="Profile"></a>
-              </div>
-              <div class="pc-row clickable-card" data-url="/email">
-                <div class="pc-ico" style="background:linear-gradient(135deg,#0066CC,#4338CA)">
-                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-  <!-- رأس الشخص -->
-  <circle cx="12" cy="8" r="4"/>
-  <!-- الجسم / الكتفين -->
-  <path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
-</svg>
-                </div>
-                <div class="pc-txt"><div class="pc-lbl">Étudiant(e)</div><div class="pc-val" id="profile-email">Loading...</div></div>
-                <a href="#" class="card-link" aria-label="Email Settings"></a>
-              </div>
-            </div>
-
-            <!-- My Apps -->
-            <div class="card">
-              <div class="card-hd">
-                <div class="card-title">Mes apps</div>
-                <div class="card-action clickable-card" data-url="#">Tout voir
-                  <a href="#" class="card-link" aria-label="All Apps"></a>
-                </div>
-              </div>
-              <div class="apps-stack" id="apps-list"></div>
-            </div>
-
-          </div><!-- /home-left -->
-
-          <!-- RIGHT COLUMN (desktop) -->
-          <div class="home-right">
-
-            <!-- Calendar widget -->
-            <div class="widget">
-              <div class="cal-hd clickable-card" data-url="/calendar">
-                <div class="cal-month-txt" id="cal-month">March</div>
-                <div class="cal-year-txt" id="cal-year">2026</div>
-                <a href="/calendar" class="card-link" aria-label="Calendar"></a>
-              </div>
-              <div class="cal-grid">
-                <div class="cal-dlabels" id="cal-head"></div>
-                <div class="cal-days" id="cal-days"></div>
-              </div>
-              <div class="cal-evs" id="cal-evs"></div>
-            </div>
-
-            <!-- Quick actions -->
-            <div class="widget">
-              <div class="widget-hd">
-                <div class="widget-title">Actions rapides</div>
-              </div>
-              <div class="qa-grid">
-                <div class="qa-btn clickable-card" data-app="Sahl AI">
-                  <div class="qa-ico" style="background:linear-gradient(135deg,#4338CA,#0066CC)">
-                    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-                  </div>
-                  <div class="qa-lbl">Sahl AI</div>
-                  <a href="#" class="card-link" onclick="openApp('Sahl AI'); return false;"></a>
-                </div>
-                <div class="qa-btn clickable-card" data-app="E-Books">
-                  <div class="qa-ico" style="background:linear-gradient(135deg,#059669,#10b981)">
-                    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-                  </div>
-                  <div class="qa-lbl">E-Books</div>
-                  <a href="#" class="card-link" onclick="openApp('E-Books'); return false;"></a>
-                </div>
-                <div class="qa-btn clickable-card" data-url="/schedule">
-                  <div class="qa-ico" style="background:linear-gradient(135deg,#F57C00,#EF4444)">
-                    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                  </div>
-                  <div class="qa-lbl">Planning</div>
-                  <a href="/schedule" class="card-link" onclick="switchPage('schedule'); return false;"></a>
-                </div>
-                <div class="qa-btn clickable-card" data-app="SpeakWell">
-                  <div class="qa-ico" style="background:linear-gradient(135deg,#7C3AED,#4338CA)">
-                    <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-                  </div>
-                  <div class="qa-lbl">SpeakWell</div>
-                  <a href="#" class="card-link" onclick="openApp('SpeakWell'); return false;"></a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Progress -->
-            <div class="widget">
-              <div class="widget-hd">
-                <div class="widget-title">Progression</div>
-                <div class="widget-action clickable-card" data-url="/courses">Tous les cours
-                  <a href="#" class="card-link" aria-label="All Courses"></a>
-                </div>
-              </div>
-              <div class="prog-list" id="prog-list"></div>
-            </div>
-
-          </div><!-- /home-right -->
         </div>
-      </div>
-    </section>
-
-    <!-- ── NOTIFICATIONS ── -->
-    <section id="page-notifications" class="page">
-      <div class="page-inner">
-        <div class="pg-hd">
-          <div class="pg-title">Notifications</div>
-<div class="pg-sub"> mises à jour non lues</div>
+        <div class="splash-wordmark">Sahl <em>App</em></div>
+        <div class="splash-tagline">Plateforme Éducative · Quantum Group</div>
+        <div class="splash-progress-track">
+            <div class="splash-progress-fill"></div>
         </div>
-        <div class="nf-chips">
-          <div class="nf-chip active" onclick="filterNotifs('all',this)" data-filter="all">Tout</div>
-          <div class="nf-chip" onclick="filterNotifs('unread',this)" data-filter="unread">Non lus</div>
-          <div class="nf-chip" onclick="filterNotifs('academic',this)" data-filter="academic">Sahl Academy</div>
-          <div class="nf-chip" onclick="filterNotifs('platform',this)" data-filter="platform">E-Books</div>
+        <div class="splash-dots">
+            <span></span><span></span><span></span>
         </div>
-        <div class="notif-stack" id="notif-list"></div>
-      </div>
-    </section>
+    </div>
 
-    <!-- ── EXPLORE ── -->
-    <section id="page-explore" class="page">
-      <div class="page-inner">
-        <div class="pg-hd">
-          <div class="pg-title">Explorer</div>
-          <div class="pg-sub">Actualités & mises à jour</div>
+    <!-- Atmospheric background -->
+    <div class="bg">
+        <div class="bg-blob bg-blob-1"></div>
+        <div class="bg-blob bg-blob-2"></div>
+        <div class="bg-blob bg-blob-3"></div>
+    </div>
+
+    <div class="page">
+
+        <!-- Header -->
+        <div class="header">
+            <div class="icon-ring">
+                <img src="../assets/images/app-store.png" alt="Sahl">
+            </div>
+            <div class="header-eyebrow">Quantum Group</div>
+            <h1 class="header-title">Bienvenue sur<br><em>Sahl App</em></h1>
+            <p class="header-sub">Connectez-vous pour accéder à votre espace</p>
         </div>
-        <div class="explore-grid" id="news-list"></div>
-      </div>
-    </section>
 
-    <!-- ── SCHEDULE ── -->
-    <section id="page-schedule" class="page">
-      <div class="page-inner">
-        <div class="pg-hd">
-          <div class="pg-title">Mon planning</div>
-          <div class="pg-sub">Votre semaine à venir</div>
+        <!-- Card -->
+        <div class="card">
+
+            <!-- Alerts -->
+            <div class="alert alert-error" id="errorMessage">
+                <i class="fas fa-circle-exclamation"></i>
+                <span id="errorText"></span>
+            </div>
+            <div class="alert alert-success" id="successMessage">
+                <i class="fas fa-circle-check"></i>
+                <span id="successText"></span>
+            </div>
+
+            <!-- Form -->
+            <form id="loginForm">
+
+                <div class="form-section-label">Vos identifiants</div>
+
+                <div class="field-group">
+                    <!-- Username -->
+                    <div class="field-row">
+                        <span class="field-icon"><i class="fas fa-at"></i></span>
+                        <input
+                            type="text"
+                            id="username"
+                            class="field-input"
+                            placeholder="Adresse e-mail"
+                            required
+                            autocomplete="username"
+                        >
+                    </div>
+                    <!-- Password -->
+                    <div class="field-row">
+                        <span class="field-icon"><i class="fas fa-lock"></i></span>
+                        <input
+                            type="password"
+                            id="password"
+                            class="field-input"
+                            placeholder="Mot de passe"
+                            required
+                            autocomplete="current-password"
+                        >
+                        <button type="button" class="toggle-eye" id="togglePassword" aria-label="Afficher le mot de passe">
+                            <i class="fas fa-eye" id="eyeIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary" id="loginButton">
+                    <span>Se connecter</span>
+                    <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
+                </button>
+
+            </form>
+
+            <div class="divider">
+                <div class="divider-line"></div>
+                <span class="divider-text">ou</span>
+                <div class="divider-line"></div>
+            </div>
+
         </div>
-        <div id="schedule-list"></div>
-      </div>
-    </section>
 
-  </div><!-- /pages -->
-</div><!-- /main -->
-</div><!-- /shell -->
+        <!-- Create account -->
+        <a href="../inscrire.html" class="btn-secondary" id="freeVersionBtn">
+            <span class="icon-dot"><i class="fas fa-user-plus"></i></span>
+            Créer un compte
+        </a>
 
-<!-- Mobile bottom nav -->
-<nav class="mob-nav">
-  <div class="mob-nav-inner">
-    <button class="mob-nav-btn active" data-page="home" onclick="switchPage('home')">
-      <div class="mob-nav-ico"><svg viewBox="0 0 24 24"><path d="M3 10.5L12 4l9 6.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1V10.5z"/><path d="M9 21V13h6v8"/></svg></div>
-      <span class="mob-nav-lbl">Accueil</span>
-    </button>
-    <button class="mob-nav-btn" data-page="notifications" onclick="switchPage('notifications')" style="position:relative">
-      <div class="mob-nav-ico"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 106 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></div>
-      <span class="mob-nav-lbl">Alertes</span>
-      <span class="mob-nav-dot" id="mob-nav-dot"></span>
-    </button>
-    <button class="mob-nav-btn" data-page="explore" onclick="switchPage('explore')">
-      <div class="mob-nav-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div>
-      <span class="mob-nav-lbl">Découvrir</span>
-    </button>
-    <button class="mob-nav-btn" data-page="schedule" onclick="switchPage('schedule')">
-      <div class="mob-nav-ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-      <span class="mob-nav-lbl">Planning</span>
-    </button>
-  </div>
-</nav>
+        <!-- Footer -->
+        <div class="footer">
+            <span>Sahl App</span>
+            <div class="footer-dot"></div>
+            <span>© 2026 Quantum Group</span>
+        </div>
 
-<div class="toast" id="toast"></div>
+    </div>
 
-<script src="./assets/js/script.js"></script>
+<script src="../login/js/ACC.js"></script>
+    <script src="../login/js/script.js"></script>
 </body>
 </html>

@@ -10,6 +10,11 @@
                 password: 'Islem12!!', 
                 name: 'Kamerji' 
             },
+              { 
+                username: 'hajerletaiefmarzouki@gmail.com',
+                password: 'Ayouta12345+', 
+                name: 'Eya' 
+            },
             { 
                 username: 'stu67@edu.com',
                 password: 'Studi2026', 
@@ -43,6 +48,7 @@
                 name: 'Rawen' 
             }
         ];
+
 
 
 

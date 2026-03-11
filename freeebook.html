@@ -1,212 +1,1367 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-      <script>
+     <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNTBT1VQN7"></script>
+    <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-FNTBT1VQN7');
     </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SVT App | EduWell</title>
-    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
-    <link rel="stylesheet" href="./svtapp/assets/css/styleseek.css">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="theme-color" content="#c2e0ff"/>
+<title>Sahl App | Mars Pack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+/* ══════════════════════════════════════════════════════
+   TOKENS
+══════════════════════════════════════════════════════ */
+:root{
+  --bg:#f2f4f8; --bg2:#f8f9fc; --surface:#ffffff;
+  --border:rgba(0,0,0,0.07); --border-md:rgba(0,0,0,0.11);
+  --text:#111827; --muted:#6b7280; --faint:#9ca3af;
+  --accent:#16a34a; --accent-lt:#f0fdf4; --accent-glow:rgba(22,163,74,0.16);
+  --green:#16a34a; --green-lt:#f0fdf4; --green-bd:rgba(22,163,74,0.22);
+  --red:#dc2626;   --red-lt:#fef2f2;   --red-bd:rgba(220,38,38,0.22);
+  --gold:#d97706;
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-xl:24px; --r-2xl:32px; --r-full:9999px;
+  --s-xs:0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.03);
+  --s-sm:0 2px 8px rgba(0,0,0,0.06),0 1px 3px rgba(0,0,0,0.04);
+  --s-md:0 4px 16px rgba(0,0,0,0.08),0 1px 4px rgba(0,0,0,0.04);
+  --s-lg:0 12px 36px rgba(0,0,0,0.09),0 3px 10px rgba(0,0,0,0.05);
+  --s-xl:0 20px 56px rgba(0,0,0,0.10),0 4px 14px rgba(0,0,0,0.05);
+  --ease:cubic-bezier(0.4,0,0.2,1);
+  --spring:cubic-bezier(0.34,1.56,0.64,1);
+  --swift:cubic-bezier(0.55,0,0.1,1);
+  --fd:'Newsreader',Georgia,serif;
+  --fb:'Figtree',system-ui,sans-serif;
+  --sat:env(safe-area-inset-top,0px);
+  --sab:env(safe-area-inset-bottom,0px);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;height:100%}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100%;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
+button{font-family:inherit;cursor:pointer;border:none;background:none;-webkit-tap-highlight-color:transparent}
+a{text-decoration:none;color:inherit;-webkit-tap-highlight-color:transparent}
+img{display:block;max-width:100%}
+
+/* ══════════════════════════════════════════════════════
+   WELCOME PAGE
+══════════════════════════════════════════════════════ */
+#welcome{
+  position:fixed;inset:0;z-index:500;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  overflow:hidden;padding:0;
+  transition:opacity .7s var(--ease),transform .7s var(--ease),filter .7s var(--ease);
+  animation:wOpen .8s var(--ease) both;
+}
+@keyframes wOpen{
+  from{opacity:0;filter:blur(12px);transform:scale(.97)}
+  to  {opacity:1;filter:blur(0);transform:scale(1)}
+}
+#welcome.hide{opacity:0;transform:scale(1.03);filter:blur(4px);pointer-events:none}
+
+#welcome::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(148deg,#e0efff 0%,#cce3ff 22%,#ddf0ff 46%,#c5dbf7 72%,#b8d5f5 100%);
+  animation:bgPulse 14s ease-in-out infinite alternate;
+}
+@keyframes bgPulse{
+  0%  {filter:brightness(1) hue-rotate(0deg)}
+  50% {filter:brightness(1.03) hue-rotate(5deg)}
+  100%{filter:brightness(.97) hue-rotate(-4deg)}
+}
+
+.orb{position:absolute;border-radius:50%;pointer-events:none;mix-blend-mode:multiply}
+.orb1{width:min(650px,110vw);height:min(650px,110vw);top:-20%;left:-15%;
+  background:radial-gradient(circle at 40% 40%,rgba(96,165,250,.52),transparent 68%);
+  animation:o1 20s ease-in-out infinite alternate}
+.orb2{width:min(540px,90vw);height:min(540px,90vw);bottom:-18%;right:-14%;
+  background:radial-gradient(circle at 55% 55%,rgba(56,189,248,.44),transparent 66%);
+  animation:o2 16s ease-in-out infinite alternate}
+.orb3{width:min(360px,70vw);height:min(360px,70vw);top:-5%;right:-8%;
+  background:radial-gradient(circle at 50% 50%,rgba(129,140,248,.35),transparent 65%);
+  animation:o3 22s ease-in-out infinite alternate}
+.orb4{width:min(280px,60vw);height:min(280px,60vw);top:42%;left:3%;
+  background:radial-gradient(circle at 50% 50%,rgba(103,232,249,.32),transparent 65%);
+  animation:o4 18s ease-in-out infinite alternate}
+.orb5{width:min(220px,50vw);height:min(220px,50vw);bottom:3%;left:35%;
+  background:radial-gradient(circle at 50% 50%,rgba(165,180,252,.28),transparent 65%);
+  animation:o5 12s ease-in-out infinite alternate}
+@keyframes o1{0%{transform:translate(0,0)}100%{transform:translate(-28px,38px)}}
+@keyframes o2{0%{transform:translate(0,0)}100%{transform:translate(32px,-26px)}}
+@keyframes o3{0%{transform:translate(0,0)}100%{transform:translate(-22px,28px)}}
+@keyframes o4{0%{transform:translate(0,0)}100%{transform:translate(28px,-22px)}}
+@keyframes o5{0%{transform:translate(0,0)}100%{transform:translate(-18px,16px)}}
+
+.grid-layer{position:absolute;inset:0;pointer-events:none;z-index:1;
+  background-image:linear-gradient(rgba(255,255,255,.28) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.28) 1px,transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse 75% 75% at 50% 50%,black 25%,transparent 78%);
+  -webkit-mask-image:radial-gradient(ellipse 75% 75% at 50% 50%,black 25%,transparent 78%)}
+
+.shimmer-bar{position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:linear-gradient(108deg,transparent 32%,rgba(255,255,255,.20) 48%,rgba(255,255,255,.26) 50%,rgba(255,255,255,.20) 52%,transparent 68%);
+  animation:shimmer 8s ease-in-out infinite}
+@keyframes shimmer{0%{transform:translateX(-130%) skewX(-14deg)}65%{transform:translateX(130%) skewX(-14deg)}100%{transform:translateX(130%) skewX(-14deg)}}
+
+.glass-panel{
+  position:absolute;inset:clamp(20px,5vw,60px);z-index:2;pointer-events:none;border-radius:clamp(20px,3vw,32px);
+  background:rgba(255,255,255,.28);backdrop-filter:blur(32px) saturate(180%);-webkit-backdrop-filter:blur(32px) saturate(180%);
+  border:1px solid rgba(255,255,255,.65);
+  box-shadow:0 8px 40px rgba(96,165,250,.16),inset 0 1px 0 rgba(255,255,255,.85);
+  animation:glIn .9s var(--ease) .1s both}
+@keyframes glIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:none}}
+
+.fi{
+  position:absolute;z-index:4;pointer-events:none;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  animation:fiFade .8s var(--spring) var(--fid,.3s) both,
+            fiFloat var(--fit,10s) ease-in-out infinite alternate var(--fid,.3s)}
+@keyframes fiFade{from{opacity:0;transform:translateY(18px) scale(.8)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes fiFloat{0%{transform:translateY(0) rotate(-2deg)}100%{transform:translateY(-15px) rotate(2deg)}}
+.fi-box{
+  width:clamp(44px,6vw,56px);height:clamp(44px,6vw,56px);border-radius:clamp(12px,2vw,18px);
+  background:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.92);
+  backdrop-filter:blur(14px) saturate(180%);-webkit-backdrop-filter:blur(14px) saturate(180%);
+  box-shadow:0 5px 20px rgba(96,165,250,.22),inset 0 1px 0 rgba(255,255,255,1);
+  display:flex;align-items:center;justify-content:center}
+.fi-box i{font-size:clamp(16px,2.5vw,22px);color:#1d6bf3}
+.fi-lbl{font-size:clamp(8px,1.2vw,10px);font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:rgba(15,48,96,.48);background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.80);
+  backdrop-filter:blur(8px);border-radius:20px;padding:3px 9px;white-space:nowrap}
+.fi.fi1{top:10%;left:4%;--fit:10s;--fid:.28s}
+.fi.fi2{top:9%;right:4%;--fit:8s;--fid:.55s}
+.fi.fi3{bottom:14%;left:5%;--fit:13s;--fid:.40s}
+.fi.fi4{bottom:11%;right:4%;--fit:7s;--fid:.82s}
+.fi.fi5{top:44%;left:1.8%;--fit:11s;--fid:.15s}
+.fi.fi6{top:42%;right:1.8%;--fit:9s;--fid:.68s}
+
+.w-content{
+  position:relative;z-index:10;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:clamp(16px,4vw,32px) clamp(20px,5vw,48px);
+  max-width:min(560px,90vw);width:100%}
+
+.w-chip{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(255,255,255,.68);border:1px solid rgba(255,255,255,.88);
+  border-radius:var(--r-full);padding:7px 18px 7px 14px;
+  font-size:clamp(10px,1.5vw,12px);font-weight:700;color:#1e60c8;
+  letter-spacing:.07em;text-transform:uppercase;
+  backdrop-filter:blur(12px);
+  box-shadow:0 2px 12px rgba(96,165,250,.18),inset 0 1px 0 rgba(255,255,255,.9);
+  margin-bottom:clamp(18px,3vw,28px);
+  animation:el1 .9s var(--spring) .2s both}
+.w-chip i{font-size:11px;color:#3b82f6}
+
+.w-title{
+  font-family:var(--fd);font-size:clamp(36px,8vw,72px);
+  font-weight:300;line-height:1.05;letter-spacing:-.04em;
+  color:#0c2d6b;margin-bottom:clamp(12px,2vw,18px);
+  text-shadow:0 2px 24px rgba(96,165,250,.18);
+  animation:el2 1s var(--ease) .35s both}
+.w-title em{font-style:italic;color:#1d6bf3}
+
+.w-sub{
+  font-size:clamp(14px,2vw,17px);font-weight:400;color:rgba(12,45,107,.56);
+  line-height:1.7;margin-bottom:clamp(24px,4vw,38px);max-width:400px;
+  animation:el3 1s var(--ease) .5s both}
+
+.w-stats{
+  display:flex;align-items:center;justify-content:center;
+  gap:clamp(6px,1.5vw,10px);margin-bottom:clamp(28px,4.5vw,42px);
+  flex-wrap:wrap;animation:el4 1s var(--ease) .65s both}
+.wst{
+  display:flex;align-items:center;gap:7px;
+  background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.84);
+  border-radius:var(--r-full);padding:clamp(7px,1.5vw,10px) clamp(14px,2.5vw,20px);
+  font-size:clamp(11px,1.8vw,13px);font-weight:500;color:#1e60c8;
+  backdrop-filter:blur(12px);
+  box-shadow:0 2px 10px rgba(96,165,250,.13),inset 0 1px 0 rgba(255,255,255,.9);
+  transition:transform .18s var(--ease),box-shadow .18s}
+.wst:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(96,165,250,.22)}
+.wst i{font-size:clamp(10px,1.5vw,12px);color:#3b82f6}
+.wst strong{color:#0c2d6b;font-weight:700}
+
+.btn-start{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:clamp(14px,2.5vw,18px) clamp(32px,6vw,50px);border-radius:var(--r-full);
+  font-size:clamp(15px,2.2vw,17px);font-weight:600;letter-spacing:.01em;
+  color:#fff;
+  background:linear-gradient(135deg,#1d6bf3 0%,#0ea5e9 100%);
+  box-shadow:0 4px 22px rgba(29,107,243,.42),0 1px 6px rgba(29,107,243,.20),inset 0 1px 0 rgba(255,255,255,.20);
+  transition:all .22s var(--ease);
+  animation:el5 1s var(--spring) .82s both;
+  min-height:52px}
+@keyframes el5{from{opacity:0;transform:translateY(22px) scale(.93)}to{opacity:1;transform:none}}
+.btn-start:hover{transform:translateY(-2px) scale(1.025);box-shadow:0 8px 32px rgba(29,107,243,.50)}
+.btn-start:active{transform:scale(.98)}
+.btn-start i{font-size:14px}
+
+.scroll-hint{
+  position:absolute;bottom:max(24px,var(--sab));left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  color:rgba(12,45,107,.32);font-size:10px;font-weight:700;letter-spacing:.1em;
+  animation:el3 1s var(--ease) 1.6s both;pointer-events:none}
+.sd{width:18px;height:30px;border-radius:9px;border:1.5px solid rgba(29,107,243,.26);
+  background:rgba(255,255,255,.42);display:flex;align-items:flex-start;justify-content:center;padding-top:4px}
+.sd::before{content:'';width:2.5px;height:6px;border-radius:2px;
+  background:rgba(29,107,243,.48);animation:sdot 1.9s ease-in-out infinite}
+@keyframes sdot{0%{opacity:1;transform:translateY(0)}75%{opacity:0;transform:translateY(9px)}100%{opacity:0;transform:translateY(0)}}
+
+@keyframes el1{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
+@keyframes el2{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes el3{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes el4{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* ══════════════════════════════════════════════════════
+   APP BODY
+══════════════════════════════════════════════════════ */
+.app-body{
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  padding:calc(60px + var(--sat)) 16px calc(32px + var(--sab));
+  position:relative}
+.app-body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 55% 40% at 88% 8%,rgba(29,107,243,.05) 0%,transparent 62%),
+    radial-gradient(ellipse 40% 45% at 4% 92%,rgba(22,163,74,.035) 0%,transparent 62%)}
+
+/* ══════════════════════════════════════════════════════
+   NAV
+══════════════════════════════════════════════════════ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:90;
+  height:calc(52px + var(--sat));padding-top:var(--sat);
+  background:rgba(255,255,255,.82);
+  backdrop-filter:saturate(200%) blur(24px);-webkit-backdrop-filter:saturate(200%) blur(24px);
+  border-bottom:1px solid rgba(0,0,0,.055);
+  display:flex;align-items:center;justify-content:space-between;padding-left:20px;padding-right:20px}
+.nav-brand{display:flex;align-items:center;gap:8px}
+.nav-icon{
+  width:30px;height:30px;background:var(--accent);border-radius:9px;
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;
+  box-shadow:0 2px 8px rgba(29,107,243,.32)}
+.nav-name{font-family:var(--fd);font-size:17px;font-weight:400;letter-spacing:-.02em}
+.nav-name em{font-style:italic;color:var(--accent)}
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-tag{display:flex;align-items:center;gap:5px;font-size:11.5px;font-weight:500;color:var(--muted);
+  padding:5px 12px;background:var(--bg);border-radius:var(--r-full);border:1px solid var(--border)}
+.nav-tag i{font-size:10px;color:var(--accent)}
+.nav-pill{display:flex;align-items:center;gap:5px;
+  background:var(--surface);border:1px solid var(--border-md);border-radius:var(--r-full);
+  padding:5px 13px 5px 10px;font-size:12.5px;font-weight:500;color:var(--muted);box-shadow:var(--s-xs)}
+.nav-pill i{font-size:10px;color:var(--gold)}
+.nav-score{color:var(--text);font-weight:700;font-size:14px}
+
+/* ══════════════════════════════════════════════════════
+   PROGRESS
+══════════════════════════════════════════════════════ */
+.prog-track{
+  position:fixed;top:calc(52px + var(--sat));left:0;right:0;height:2.5px;
+  background:rgba(0,0,0,.06);z-index:90}
+.prog-fill{
+  height:100%;background:linear-gradient(90deg,#1d6bf3,#38bdf8 60%,#34d399);
+  transition:width .55s var(--ease);width:0%;position:relative}
+.prog-fill::after{
+  content:'';position:absolute;right:-4px;top:-2.5px;
+  width:7.5px;height:7.5px;border-radius:50%;
+  background:#1d6bf3;box-shadow:0 0 0 3px rgba(29,107,243,.18)}
+
+/* ══════════════════════════════════════════════════════
+   SCENE
+══════════════════════════════════════════════════════ */
+.scene{position:relative;z-index:1;width:100%;max-width:600px;padding-bottom:8px}
+
+/* ══════════════════════════════════════════════════════
+   QUIZ CARD
+══════════════════════════════════════════════════════ */
+.quiz-card{
+  background:var(--surface);border-radius:var(--r-xl);
+  border:1px solid var(--border);box-shadow:var(--s-xl);
+  overflow:hidden;animation:cardUp .5s var(--ease) both}
+@keyframes cardUp{from{opacity:0;transform:translateY(22px) scale(.97)}to{opacity:1;transform:none}}
+
+.card-strip{height:3.5px;background:linear-gradient(90deg,#1d6bf3 0%,#38bdf8 40%,#34d399 100%)}
+
+.card-head{
+  padding:22px 28px 0;
+  display:flex;align-items:center;justify-content:space-between;gap:10px}
+.q-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--accent-lt);border:1px solid rgba(29,107,243,.15);
+  border-radius:var(--r-full);padding:4px 12px 4px 9px;
+  font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.025em}
+.q-badge i{font-size:9px}
+.q-frac{font-size:11.5px;font-weight:500;color:var(--faint);letter-spacing:.04em;flex-shrink:0}
+
+.seg-track{display:flex;gap:3px;padding:14px 28px 0;align-items:center}
+.seg{height:3px;flex:1;min-width:6px;border-radius:3px;
+  background:#e5e7eb;transition:background .35s var(--ease),transform .2s var(--spring)}
+.seg.s-done{background:var(--green)}
+.seg.s-active{background:var(--accent);transform:scaleY(1.4)}
+.seg.s-wrong{background:var(--red)}
+
+.timer-wrap{padding:12px 28px 0}
+.timer-row{display:flex;align-items:center;gap:8px}
+.timer-track{flex:1;height:3px;background:rgba(0,0,0,.06);border-radius:3px;overflow:hidden}
+.timer-fill{height:100%;border-radius:3px;
+  background:linear-gradient(90deg,#16a34a 0%,#d97706 50%,#dc2626 100%);
+  background-size:200% 100%;
+  transition:width 1s linear,background-position 1s linear}
+.timer-val{font-size:11px;font-weight:700;color:var(--faint);min-width:20px;text-align:right;
+  font-variant-numeric:tabular-nums;transition:color .3s}
+.timer-val.low{color:var(--red)}
+
+.card-body{padding:20px 28px 0}
+.q-text{
+  font-family:var(--fd);font-size:clamp(18px,3vw,21px);
+  font-weight:400;line-height:1.52;color:var(--text);
+  margin-bottom:20px;min-height:44px}
+
+/* ══════════════════════════════════════════════════════
+   OPTIONS
+══════════════════════════════════════════════════════ */
+.opts{display:flex;flex-direction:column;gap:8px}
+
+.opt{
+  display:grid;
+  grid-template-columns:40px 1fr 24px;
+  align-items:center;gap:0;
+  width:100%;min-height:56px;
+  padding:0 14px 0 0;
+  border:1.5px solid var(--border-md);border-radius:var(--r-md);
+  background:var(--bg2);color:var(--text);
+  font-size:14px;font-weight:400;text-align:left;
+  transition:border-color .16s,background .16s,transform .16s var(--ease),box-shadow .16s;
+  position:relative;overflow:hidden;
+  -webkit-tap-highlight-color:transparent}
+
+.opt::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);
+  transform:translateX(-110%);pointer-events:none}
+.opt:hover:not(:disabled)::after{transform:translateX(110%);transition:transform .45s var(--ease)}
+
+.opt-icon-wrap{
+  width:40px;height:56px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.opt-icon{
+  width:32px;height:32px;border-radius:9px;
+  background:rgba(0,0,0,.05);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .16s,border-color .16s,transform .2s var(--spring)}
+.opt-icon i{font-size:13px;color:var(--muted);transition:color .16s;width:14px;text-align:center}
+
+.opt-inner{display:flex;flex-direction:column;justify-content:center;padding:12px 10px;min-height:56px}
+.opt-ltr{font-size:9px;font-weight:700;color:var(--faint);letter-spacing:.08em;transition:color .16s;line-height:1;margin-bottom:3px}
+.opt-text{font-size:clamp(13px,2.2vw,14.5px);line-height:1.42;font-weight:400}
+
+.opt-cb{
+  width:20px;height:20px;border-radius:6px;border:1.5px solid var(--border-md);
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  background:var(--surface);transition:all .16s var(--ease)}
+.opt-cb i{font-size:9px;color:transparent;transition:color .12s}
+
+.opt:hover:not(:disabled){
+  border-color:var(--accent);background:var(--accent-lt);transform:translateX(3px);
+  box-shadow:0 3px 14px var(--accent-glow)}
+.opt:hover:not(:disabled) .opt-icon{background:var(--accent);border-color:var(--accent);transform:scale(1.06)}
+.opt:hover:not(:disabled) .opt-icon i{color:#fff}
+.opt:hover:not(:disabled) .opt-cb{border-color:var(--accent)}
+.opt:hover:not(:disabled) .opt-ltr{color:var(--accent)}
+
+.opt.sel{border-color:var(--accent);background:var(--accent-lt);transform:translateX(3px);box-shadow:0 3px 14px var(--accent-glow)}
+.opt.sel .opt-icon{background:var(--accent);border-color:var(--accent)}
+.opt.sel .opt-icon i,.opt.sel .opt-cb i{color:#fff}
+.opt.sel .opt-cb{border-color:var(--accent);background:var(--accent)}
+.opt.sel .opt-ltr{color:var(--accent)}
+
+.opt.is-ok{border-color:var(--green);background:var(--green-lt);transform:none;
+  box-shadow:0 3px 16px rgba(22,163,74,.14);animation:okPop .36s var(--spring)}
+.opt.is-ok .opt-icon{background:var(--green);border-color:var(--green)}
+.opt.is-ok .opt-icon i,.opt.is-ok .opt-cb i{color:#fff}
+.opt.is-ok .opt-cb{border-color:var(--green);background:var(--green)}
+.opt.is-ok .opt-ltr{color:var(--green)}
+
+.opt.is-bad{border-color:var(--red);background:var(--red-lt);transform:none;
+  box-shadow:0 3px 16px rgba(220,38,38,.12);animation:badShake .4s var(--ease)}
+.opt.is-bad .opt-icon{background:var(--red);border-color:var(--red)}
+.opt.is-bad .opt-icon i,.opt.is-bad .opt-cb i{color:#fff}
+.opt.is-bad .opt-cb{border-color:var(--red);background:var(--red)}
+.opt.is-bad .opt-ltr{color:var(--red)}
+
+.opt.show-ok{border-color:var(--green);background:var(--green-lt);transform:none}
+.opt.show-ok .opt-icon{background:var(--green);border-color:var(--green)}
+.opt.show-ok .opt-icon i,.opt.show-ok .opt-cb i{color:#fff}
+.opt.show-ok .opt-cb{border-color:var(--green);background:var(--green)}
+.opt.show-ok .opt-ltr{color:var(--green)}
+.opt:disabled{cursor:default}
+
+@keyframes okPop{0%{transform:scale(1)}40%{transform:scale(1.018)}100%{transform:scale(1)}}
+@keyframes badShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}45%{transform:translateX(6px)}65%{transform:translateX(-4px)}82%{transform:translateX(3px)}}
+
+/* ══════════════════════════════════════════════════════
+   FEEDBACK BANNER
+══════════════════════════════════════════════════════ */
+.feedback{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:12px 14px;border-radius:var(--r-sm);
+  margin-top:12px;border:1px solid transparent;
+  animation:fbIn .24s var(--ease) both}
+.fb-ico{width:28px;height:28px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:11px;margin-top:1px}
+.fb-t{font-weight:700;font-size:12.5px;margin-bottom:2px}
+.fb-s{font-size:12px;opacity:.78;line-height:1.45}
+.feedback.fb-ok{background:var(--green-lt);border-color:var(--green-bd);color:var(--green)}
+.feedback.fb-ok .fb-ico{background:var(--green);color:#fff}
+.feedback.fb-err{background:var(--red-lt);border-color:var(--red-bd);color:var(--red)}
+.feedback.fb-err .fb-ico{background:var(--red);color:#fff}
+@keyframes fbIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ══════════════════════════════════════════════════════
+   CARD FOOTER
+══════════════════════════════════════════════════════ */
+.card-foot{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 28px calc(20px + var(--sab,0px));
+  margin-top:16px;border-top:1px solid var(--border);
+  background:var(--bg2);gap:12px}
+.foot-meta{display:flex;flex-direction:column;gap:4px;min-width:0}
+.foot-hint{font-size:12px;color:var(--faint);display:flex;align-items:center;gap:5px}
+.foot-hint i{font-size:9px;flex-shrink:0}
+.foot-stat{font-size:11px;color:var(--faint);display:flex;align-items:center;gap:5px}
+.foot-stat i{font-size:9px;color:var(--green)}
+.acc{color:var(--green);font-weight:700}
+
+/* ══════════════════════════════════════════════════════
+   BUTTONS
+══════════════════════════════════════════════════════ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  padding:11px 22px;border-radius:var(--r-sm);
+  font-family:var(--fb);font-size:13.5px;font-weight:600;letter-spacing:.01em;
+  transition:all .17s var(--ease);white-space:nowrap;flex-shrink:0;
+  min-height:44px;-webkit-tap-highlight-color:transparent}
+.btn-primary{
+  background:var(--accent);color:#fff;
+  box-shadow:0 2px 10px rgba(29,107,243,.28),0 1px 3px rgba(0,0,0,.07)}
+.btn-primary:hover{background:#1a62e0;box-shadow:0 4px 18px rgba(29,107,243,.38);transform:translateY(-1px)}
+.btn-primary:active{transform:scale(.98);box-shadow:0 1px 4px rgba(29,107,243,.2)}
+.btn-primary:disabled{background:#9ca3af;box-shadow:none;cursor:not-allowed;transform:none}
+.btn-ghost{background:transparent;color:var(--muted);border:1.5px solid var(--border-md)}
+.btn-ghost:hover{background:var(--surface);color:var(--text);border-color:#d1d5db;box-shadow:var(--s-sm)}
+.btn-lg{padding:13px 36px;font-size:15px;border-radius:var(--r-md)}
+.btn-xl{padding:15px 44px;font-size:16px;border-radius:var(--r-lg);letter-spacing:.015em}
+
+/* ══════════════════════════════════════════════════════
+   FINISH CARD
+══════════════════════════════════════════════════════ */
+.finish-card{
+  background:var(--surface);border-radius:var(--r-xl);
+  border:1px solid var(--border);box-shadow:var(--s-xl);overflow:hidden;
+  text-align:center;animation:cardUp .5s var(--spring) both}
+
+.finish-hero{
+  padding:clamp(36px,6vw,56px) clamp(24px,6vw,48px) clamp(28px,5vw,44px);
+  position:relative;overflow:hidden;
+  background:linear-gradient(148deg,#eff5ff 0%,#fff 50%,#f0fdf4 100%);
+  border-bottom:1px solid var(--border)}
+.finish-hero::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;
+  border:1px solid rgba(29,107,243,.07);top:-100px;right:-80px;pointer-events:none}
+.finish-hero::after{content:'';position:absolute;width:220px;height:220px;border-radius:50%;
+  border:1px solid rgba(22,163,74,.07);bottom:-70px;left:-55px;pointer-events:none}
+
+.finish-ring{
+  width:clamp(72px,12vw,90px);height:clamp(72px,12vw,90px);border-radius:50%;
+  background:linear-gradient(145deg,#fff,#eff5ff);
+  border:1px solid rgba(29,107,243,.11);
+  box-shadow:0 8px 28px rgba(29,107,243,.12),var(--s-sm);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto clamp(16px,3vw,22px);position:relative;z-index:1;
+  animation:floatRing 3s ease-in-out infinite}
+.finish-ring i{font-size:clamp(28px,5vw,36px);color:var(--accent)}
+@keyframes floatRing{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
+
+.finish-title{font-family:var(--fd);font-size:clamp(26px,5vw,34px);font-weight:400;
+  letter-spacing:-.02em;margin-bottom:8px;position:relative;z-index:1}
+.finish-sub{font-size:clamp(13px,2vw,15px);color:var(--muted);font-weight:300;
+  line-height:1.65;margin-bottom:clamp(20px,3.5vw,28px);position:relative;z-index:1}
+.score-stats{display:flex;align-items:center;justify-content:center;gap:8px;
+  flex-wrap:wrap;position:relative;z-index:1}
+.stat-chip{display:flex;align-items:center;gap:6px;background:#fff;
+  border:1px solid var(--border-md);border-radius:var(--r-full);
+  padding:6px 15px;font-size:clamp(11px,1.8vw,13px);font-weight:500;color:var(--muted);
+  box-shadow:var(--s-xs)}
+.stat-chip i{font-size:11px}
+.stat-chip strong{font-size:clamp(13px,2vw,15px);font-weight:700;color:var(--text)}
+.chip-score i{color:var(--accent)}.chip-acc i{color:var(--green)}.chip-time i{color:var(--gold)}
+.finish-actions{padding:clamp(22px,4vw,32px) clamp(24px,6vw,48px) clamp(26px,5vw,38px);
+  display:flex;flex-direction:column;align-items:center;gap:10px}
+
+/* ══════════════════════════════════════════════════════
+   MODAL
+══════════════════════════════════════════════════════ */
+.overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.38);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  display:flex;align-items:flex-end;justify-content:center;
+  z-index:200;padding:0;
+  animation:fadeOv .22s var(--ease) both}
+@keyframes fadeOv{from{opacity:0}to{opacity:1}}
+
+.modal{
+  background:var(--surface);width:100%;max-width:680px;max-height:92vh;
+  overflow-y:auto;
+  border-radius:var(--r-2xl) var(--r-2xl) 0 0;
+  border:1px solid var(--border);border-bottom:none;
+  box-shadow:var(--s-xl);
+  animation:sheetUp .4s var(--spring) both;
+  scrollbar-width:thin;scrollbar-color:#d1d5db transparent;
+  padding-bottom:var(--sab)}
+.modal::-webkit-scrollbar{width:4px}
+.modal::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:2px}
+@keyframes sheetUp{from{opacity:0;transform:translateY(100%)}to{opacity:1;transform:none}}
+
+.modal-handle{width:36px;height:4px;border-radius:2px;
+  background:rgba(0,0,0,.14);margin:12px auto 0;flex-shrink:0}
+
+.modal-head{position:sticky;top:0;
+  background:rgba(255,255,255,.94);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);padding:20px 24px 16px;z-index:10}
+.modal-close{position:absolute;top:16px;right:18px;width:30px;height:30px;border-radius:50%;
+  background:rgba(0,0,0,.06);color:var(--muted);font-size:11px;
+  display:flex;align-items:center;justify-content:center;transition:all .16s}
+.modal-close:hover{background:rgba(0,0,0,.10);color:var(--text)}
+.modal-eye{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.modal-eye i{font-size:9px}
+.modal-title{font-family:var(--fd);font-size:clamp(20px,4vw,25px);font-weight:400;
+  letter-spacing:-.02em;margin-bottom:2px}
+.modal-sub{font-size:12.5px;color:var(--muted);font-weight:300}
+.modal-body{padding:20px 24px clamp(24px,6vw,36px)}
+.sec-label{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ══════════════════════════════════════════════════════
+   GIFT CARDS
+══════════════════════════════════════════════════════ */
+.gift-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.gift-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);
+  padding:18px 16px 16px;display:flex;flex-direction:column;
+  transition:all .2s var(--ease);position:relative;overflow:hidden}
+.gift-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;
+  border-radius:var(--r-lg) var(--r-lg) 0 0;opacity:0;transition:opacity .18s}
+.gift-card:hover::before{opacity:1}
+.gift-card:nth-child(1)::before{background:linear-gradient(90deg,#1d6bf3,#38bdf8)}
+.gift-card:nth-child(2)::before{background:linear-gradient(90deg,#16a34a,#34d399)}
+.gift-card:nth-child(3)::before{background:linear-gradient(90deg,#d97706,#fbbf24)}
+.gift-card:nth-child(4)::before{background:linear-gradient(90deg,#7c3aed,#a78bfa)}
+.gift-card:nth-child(5)::before{background:linear-gradient(90deg,#dc2626,#f87171)}
+.gift-card:nth-child(6)::before{background:linear-gradient(90deg,#0891b2,#38bdf8)}
+.gift-card:hover{border-color:rgba(29,107,243,.16);box-shadow:0 8px 24px rgba(29,107,243,.09);transform:translateY(-3px)}
+.gift-icon-bg{width:42px;height:42px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;margin-bottom:12px;
+  box-shadow:var(--s-sm);border:1px solid rgba(255,255,255,.55);
+  transition:transform .22s var(--spring)}
+.gift-card:hover .gift-icon-bg{transform:scale(1.1) rotate(-4deg)}
+.gift-icon-bg i{font-size:17px;color:#fff}
+.gift-card:nth-child(1) .gift-icon-bg{background:linear-gradient(145deg,#1d6bf3,#38bdf8)}
+.gift-card:nth-child(2) .gift-icon-bg{background:linear-gradient(145deg,#16a34a,#34d399)}
+.gift-card:nth-child(3) .gift-icon-bg{background:linear-gradient(145deg,#d97706,#fbbf24)}
+.gift-card:nth-child(4) .gift-icon-bg{background:linear-gradient(145deg,#7c3aed,#a78bfa)}
+.gift-card:nth-child(5) .gift-icon-bg{background:linear-gradient(145deg,#dc2626,#f87171)}
+.gift-card:nth-child(6) .gift-icon-bg{background:linear-gradient(145deg,#0891b2,#38bdf8)}
+.gift-title{font-size:13px;font-weight:700;margin-bottom:4px}
+.gift-desc{font-size:11.5px;color:var(--muted);font-weight:300;line-height:1.56;flex:1;margin-bottom:11px}
+.gift-cta{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;
+  color:var(--accent);transition:gap .14s}
+.gift-card:hover .gift-cta{gap:8px}
+.gift-cta i{font-size:9px}
+
+/* ══════════════════════════════════════════════════════
+   CONFETTI
+══════════════════════════════════════════════════════ */
+.cp{position:fixed;pointer-events:none;z-index:400;border-radius:2px;opacity:0;
+  animation:cFall var(--d,1.8s) var(--ease) var(--dl,0s) forwards}
+@keyframes cFall{0%{opacity:1;transform:translate(0,0) rotate(0deg) scale(1)}85%{opacity:1}100%{opacity:0;transform:translate(var(--tx),var(--ty)) rotate(var(--r)) scale(.4)}}
+
+.hidden{display:none !important}
+
+/* ══════════════════════════════════════════════════════
+   REWARD TIER STYLES
+══════════════════════════════════════════════════════ */
+.reward-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  border-radius:var(--r-full);padding:5px 16px;
+  font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  margin-bottom:12px;position:relative;z-index:1}
+.reward-badge.tier-full{background:linear-gradient(135deg,#fef9c3,#fef08a);color:#92400e;border:1px solid #fcd34d}
+.reward-badge.tier-high{background:linear-gradient(135deg,#dcfce7,#bbf7d0);color:#14532d;border:1px solid #86efac}
+.reward-badge.tier-low {background:linear-gradient(135deg,#fff7ed,#fed7aa);color:#7c2d12;border:1px solid #fdba74}
+.reward-badge.tier-none{background:linear-gradient(135deg,#f1f5f9,#e2e8f0);color:#475569;border:1px solid #cbd5e1}
+
+/* locked / no-gift finish ring */
+.finish-ring.locked{background:linear-gradient(145deg,#f1f5f9,#e2e8f0);border-color:rgba(0,0,0,.08);box-shadow:var(--s-sm)}
+.finish-ring.locked i{color:#94a3b8}
+
+/* locked gift button */
+.btn-locked{background:#e2e8f0!important;color:#94a3b8!important;box-shadow:none!important;cursor:not-allowed!important}
+.btn-locked:hover{transform:none!important}
+
+/* ══════════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════════ */
+@media(min-width:640px){
+  .overlay{align-items:center;padding:20px}
+  .modal{border-radius:var(--r-2xl);border-bottom:1px solid var(--border);
+    animation:modalPop .4s var(--spring) both}
+  @keyframes modalPop{from{opacity:0;transform:scale(.88) translateY(30px)}to{opacity:1;transform:none}}
+  .modal-handle{display:none}
+  .app-body{padding-top:calc(72px + var(--sat))}
+}
+
+@media(max-width:479px){
+  .fi.fi5,.fi.fi6{display:none}
+  .fi.fi1,.fi.fi3{left:1%}
+  .fi.fi2,.fi.fi4{right:1%}
+  .nav{padding-left:16px;padding-right:16px}
+  .nav-tag{display:none}
+  .card-head,.card-body{padding-left:18px;padding-right:18px}
+  .seg-track,.timer-wrap{padding-left:18px;padding-right:18px}
+  .card-foot{padding:14px 18px calc(18px + var(--sab,0px));flex-direction:column;align-items:stretch;gap:10px}
+  .btn#actionBtn{width:100%;justify-content:center}
+  .q-text{font-size:17px;margin-bottom:16px}
+  .opt{min-height:60px}
+  .opt-text{font-size:13.5px}
+  .opt-cb{width:22px;height:22px}
+  .finish-hero{padding:32px 18px 26px}
+  .finish-actions{flex-direction:column;padding:22px 18px 28px}
+  .finish-actions .btn{width:100%;justify-content:center}
+  .score-stats{gap:6px}
+  .stat-chip{padding:5px 12px}
+  .modal-head{padding:16px 18px 14px}
+  .modal-body{padding:16px 18px clamp(20px,5vw,30px)}
+  .gift-grid{grid-template-columns:1fr;gap:8px}
+  .w-title{font-size:clamp(32px,9vw,48px)}
+  .w-stats{gap:7px}
+  .wst{font-size:11px;padding:8px 14px}
+  .fi-lbl{display:none}
+  .fi-box{width:40px;height:40px;border-radius:11px}
+  .fi-box i{font-size:15px}
+}
+
+@media(max-width:360px){
+  .fi.fi1,.fi.fi2,.fi.fi3,.fi.fi4{display:none}
+  .card-head,.card-body{padding-left:14px;padding-right:14px}
+  .seg-track,.timer-wrap{padding-left:14px;padding-right:14px}
+  .card-foot{padding-left:14px;padding-right:14px}
+  .q-text{font-size:16px}
+}
+</style>
 </head>
 <body>
-    <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
- 
-    <div class="floating-element floating-1"></div>
-    <div class="floating-element floating-2"></div>
-    <div class="floating-element floating-3"></div>
 
-    <a href="../index.html" class="back-btn" id="backBtn">
-        ← Retour
-    </a>
+<!-- ══════════════════════════════════════════════════════
+     WELCOME PAGE
+══════════════════════════════════════════════════════ -->
+<div id="welcome">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="orb orb4"></div>
+  <div class="orb orb5"></div>
+  <div class="grid-layer"></div>
+  <div class="shimmer-bar"></div>
+  <div class="glass-panel"></div>
 
-    <div class="app-container">
-        <div class="header">
-            <div class="logo">
-                <div class="logo-icon">
-                    SVT
-                </div>
-            </div>
-            <h1>SVT App</h1>
-            <p>Glissez vers la droite pour Vrai, vers la gauche pour Faux</p>
-        </div>
+  <div class="fi fi1"><div class="fi-box"><i class="fa-solid fa-dna"></i></div><span class="fi-lbl">Génétique</span></div>
+  <div class="fi fi2"><div class="fi-box"><i class="fa-solid fa-brain"></i></div><span class="fi-lbl">Neurophysio</span></div>
+  <div class="fi fi3"><div class="fi-box"><i class="fa-solid fa-microscope"></i></div><span class="fi-lbl">Biologie</span></div>
+  <div class="fi fi4"><div class="fi-box"><i class="fa-solid fa-trophy"></i></div><span class="fi-lbl">Récompenses</span></div>
+  <div class="fi fi5"><div class="fi-box"><i class="fa-solid fa-flask"></i></div><span class="fi-lbl">Sciences</span></div>
+  <div class="fi fi6"><div class="fi-box"><i class="fa-solid fa-atom"></i></div><span class="fi-lbl">Evolution</span></div>
 
-        <div class="card-container">
-            <div class="quiz-card" id="current-card">
-                <div class="card-pattern"></div>
-                <div class="question-number" id="question-number">Question 1/5</div>
-                <h2 id="question-text">Un exemple de question apparaîtra ici</h2>
-                <div class="swipe-hints">
-                    <div class="swipe-hint false">
-                        FAUX
-                    </div>
-                    <div class="swipe-hint true">
-                        VRAI
-                    </div>
-                </div>
-            </div>
-        </div>
-         <div class="progress-container">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill"></div>
-            </div>
-        </div>
-
-        <div class="overlay" id="overlay"></div>
-
-        <div class="feedback-popup" id="feedback-popup">
-            <div class="feedback-icon" id="feedback-icon">
-                ✓
-            </div>
-            <h3 id="feedback-title">Correct !</h3>
-            <p id="feedback-message">Vous avez trouvé la bonne réponse !</p>
-            <div class="correct-answer" id="correct-answer">La bonne réponse est : Vrai</div>
-            <div class="explanation" id="explanation">L'explication apparaîtra ici.</div>
-            <button id="continue-btn">
-                Continuer
-            </button>
-        </div>
-
-        <div class="results-screen" id="results-screen">
-            <div class="results-icon">
-                🏆
-            </div>
-            <h2>Quiz Terminé !</h2>
-            <p>Bravo pour avoir terminé le quiz !</p>
-            <div class="percentage" id="final-percentage" data-value="100%">100%</div>
-            <div class="score-container">
-                <div class="score-row">
-                    <span class="score-label">Réponses correctes :</span>
-                    <span class="score-value" id="correct-count">0</span>
-                </div>
-                <div class="score-row">
-                    <span class="score-label">Réponses incorrectes :</span>
-                    <span class="score-value" id="incorrect-count">0</span>
-                </div>
-                <div class="score-row">
-                    <span class="score-label">Score Total :</span>
-                    <span class="score-value" id="total-score">0/5</span>
-                </div>
-            </div>
-            <button class="retry-btn" id="retry-btn">
-                Recommencer
-            </button>
-        </div>
+  <div class="w-content">
+    <div class="w-chip"><i class="fa-solid fa-dna"></i>Génétique &amp; Neurophysiologie</div>
+    <h1 class="w-title">Révision<br><em>mars</em></h1>
+    <p class="w-sub">Un quiz interactif sur la génétique, l'évolution et la neurophysiologie.<br>Testez vos connaissances → <br>Gagnez votre pack BAC gratuit ! ⚡</p>
+    <div class="w-stats">
+      <div class="wst"><i class="fa-solid fa-list-check"></i><strong>15</strong>&nbsp;questions</div>
+      <div class="wst"><i class="fa-regular fa-clock"></i><strong>30 s</strong>&nbsp;/ question</div>
+      <div class="wst"><i class="fa-solid fa-layer-group"></i>Multi-réponses</div>
     </div>
+    <button class="btn-start" id="startBtn">
+      <i class="fa-solid fa-play"></i>Commencer le quiz
+    </button>
+  </div>
 
-    <!-- ORIGINAL QUIZ DATA - Only runs if authenticated -->
-    <script>
-        // Données des questions du quiz avec explications
-        const quizQuestions =  [
-  // t
+  <div class="scroll-hint"><div class="sd"></div>DÉFILER</div>
+</div>
 
- {
-    question: "1. L’expulsion du deuxième globule polaire se produit au cours de la nidation.",
-    answer: false,
-    explanation: "L’expulsion du 2ème globule polaire se fait lors de la fécondation, quand l’ovocyte II termine sa méiose II."
-  },
-  {
-    question: "2. L’ovogenèse diffère de la spermatogenèse par la durée de la méiose.",
-    answer: false,
-    explanation: "La vraie différence est le nombre de gamètes produits : 1 ovule fonctionnel contre 4 spermatozoïdes."
-  },
-  {
-    question: "3. Le taux de LH se maintient constant et élevé chez une femme ménopausée.",
-    answer: false,
-    explanation: "Chez la femme ménopausée, la LH et la FSH augmentent mais ne restent pas constantes et élevées comme dans l’ovariectomie."
-  },
-  {
-    question: "4. La structure représentée est observée au niveau de l’ovaire.",
-    answer: true,
-    explanation: "Les ovocytes (I ou II selon le stade) se trouvent dans l’ovaire, entourés de cellules folliculaires."
-  },
-  {
-    question: "5. L’ovulation est déclenchée par une diminution du taux d’œstradiol.",
-    answer: false,
-    explanation: "Au contraire, c’est l’augmentation du taux d’œstradiol qui stimule un pic de LH → déclenchement de l’ovulation."
-  },
-  {
-    question: "6. La pénétration du spermatozoïde provoque une réaction acrosomique.",
-    answer: false,
-    explanation: "La réaction acrosomique précède la pénétration. Après l’entrée du spermatozoïde, il y a une réaction corticale et reprise de la méiose II."
-  },
-  {
-    question: "7. Le corps jaune sécrète la progestérone.",
-    answer: true,
-    explanation: "Le corps jaune est une glande endocrine temporaire qui produit la progestérone, hormone essentielle pour préparer l’endomètre."
-  },
-  {
-    question: "8. La FSH est sécrétée par l’hypothalamus.",
-    answer: false,
-    explanation: "La FSH est sécrétée par l’hypophyse antérieure, sous le contrôle de la GnRH hypothalamique."
-  },
-  {
-    question: "9. Les œstrogènes présentent un seul pic de sécrétion.",
-    answer: false,
-    explanation: "Ils présentent deux pics : un avant l’ovulation (stimulation du pic LH) et un autre en phase lutéinique."
-  },
-  {
-    question: "10. La folliculogenèse est stimulée par la LH.",
-    answer: false,
-    explanation: "C’est la FSH qui stimule principalement la croissance folliculaire, la LH agit surtout sur l’ovulation et le corps jaune."
-  },
-  {
-    question: "11. L’ovulation correspond à l’expulsion d’un ovocyte II bloqué en métaphase II.",
-    answer: true,
-    explanation: "L’ovocyte expulsé est bloqué en métaphase II et ne termine sa division que si la fécondation a lieu."
-  },
-  {
-    question: "12. Le gamète femelle émis au moment de l’ovulation est un ovule.",
-    answer: false,
-    explanation: "Le gamète émis est un ovocyte II, l’ovule n’existe qu’après la fécondation (fin de la méiose II)."
-  },
-  {
-    question: "13. L’ovulation est déclenchée par un pic de LH.",
-    answer: true,
-    explanation: "Le pic de LH est l’élément clé qui déclenche l’ovulation vers le 14ème jour du cycle."
-  },
-  {
-    question: "14. Le cycle ovarien commence par la phase lutéinique.",
-    answer: false,
-    explanation: "Le cycle commence par la phase folliculaire, puis ovulation, ensuite phase lutéinique."
-  },
-  {
-    question: "15. L’utérus sécrète un mucus appelé glaire cervicale.",
-    answer: true,
-    explanation: "Le col de l’utérus sécrète une glaire cervicale dont la fluidité varie selon le cycle."
-  },
-  {
-    question: "16. La HCG est sécrétée par les cellules du trophoblaste.",
-    answer: true,
-    explanation: "Après la fécondation, le trophoblaste sécrète l’hormone HCG qui maintient le corps jaune actif."
-  },
-  {
-    question: "17. La FSH provoque directement l’ovulation.",
-    answer: false,
-    explanation: "La FSH stimule la croissance folliculaire et la sécrétion d’œstrogènes, mais c’est la LH qui déclenche l’ovulation."
-  },
-  {
-    question: "18. La phase lutéale dure 15 jours.",
-    answer: false,
-    explanation: "La phase lutéale dure environ 14 jours, c’est une durée stable quel que soit la longueur du cycle."
-  },
-  {
-    question: "19. Après ovariectomie bilatérale, on observe l’arrêt du cycle utérin.",
-    answer: true,
-    explanation: "Sans ovaires, plus de sécrétion d’œstrogènes ni progestérone → arrêt du cycle utérin."
-  }
+<!-- ══════════════════════════════════════════════════════
+     NAV
+══════════════════════════════════════════════════════ -->
+<div class="app-body">
+<nav class="nav">
+  <div class="nav-brand">
+    <div class="nav-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+    <span class="nav-name">Quiz<em>Kit</em></span>
+  </div>
+  <div class="nav-right">
+    <div class="nav-tag"><i class="fa-solid fa-dna"></i>&nbsp;Génétique &amp; Neuro</div>
+    <div class="nav-pill">
+      <i class="fa-solid fa-star"></i>Score&nbsp;:&nbsp;<span class="nav-score" id="navScore">0</span>
+    </div>
+  </div>
+</nav>
+<div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
+
+<main class="scene" id="scene">
+
+  <!-- QUIZ CARD -->
+  <div class="quiz-card" id="quizCard">
+    <div class="card-strip"></div>
+    <div class="card-head">
+      <span class="q-badge" id="qBadge"><i class="fa-solid fa-circle-question"></i>&nbsp;Question 1</span>
+      <span class="q-frac" id="qFrac">1 / 15</span>
+    </div>
+    <div class="seg-track" id="segTrack"></div>
+    <div class="timer-wrap">
+      <div class="timer-row">
+        <div class="timer-track"><div class="timer-fill" id="timerFill"></div></div>
+        <span class="timer-val" id="timerVal">30</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <p class="q-text" id="qText"></p>
+      <div class="opts" id="opts"></div>
+    </div>
+    <div class="card-foot">
+      <div class="foot-meta">
+        <div class="foot-hint" id="footHint"><i class="fa-regular fa-hand-pointer"></i>&nbsp;Sélectionnez votre réponse</div>
+        <div class="foot-stat hidden" id="footStat"><i class="fa-solid fa-circle-check"></i>&nbsp;Précision&nbsp;:&nbsp;<span class="acc" id="accVal">0 %</span></div>
+      </div>
+      <button class="btn btn-primary hidden" id="actionBtn" disabled>
+        <i id="aIcon" class="fa-solid fa-check"></i>&nbsp;<span id="aLabel">Vérifier</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- FINISH CARD -->
+  <div class="finish-card hidden" id="finishCard">
+    <div class="finish-hero">
+      <div class="finish-ring"><i id="finishIcon" class="fa-solid fa-gift"></i></div>
+      <h1 class="finish-title" id="finishTitle">Réclamez votre cadeau</h1>
+      <p class="finish-sub" id="finishSub">Quiz terminé ! Vos ressources exclusives<br>vous attendent ci-dessous.</p>
+      <div class="score-stats">
+        <div class="stat-chip chip-score"><i class="fa-solid fa-trophy"></i>Score&nbsp;:&nbsp;<strong id="fScore">0</strong>&nbsp;/ 15</div>
+        <div class="stat-chip chip-acc"><i class="fa-solid fa-bullseye"></i>Précision&nbsp;:&nbsp;<strong id="fAcc">0 %</strong></div>
+        <div class="stat-chip chip-time"><i class="fa-regular fa-clock"></i>Temps&nbsp;:&nbsp;<strong id="fTime">0 s</strong></div>
+      </div>
+    </div>
+    <div class="finish-actions">
+      <button class="btn btn-primary btn-xl" id="openGiftBtn"><i class="fa-solid fa-gift"></i>&nbsp;Ouvrir le cadeau</button>
+      <button class="btn btn-ghost btn-lg" id="retryBtn"><i class="fa-solid fa-rotate-right"></i>&nbsp;Recommencer</button>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     MODAL
+══════════════════════════════════════════════════════ -->
+<div class="overlay hidden" id="overlay">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-handle"></div>
+    <div class="modal-head">
+      <button class="modal-close" id="modalClose" aria-label="Fermer"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-eye"><i class="fa-solid fa-gift"></i>&nbsp;Votre récompense</div>
+      <h2 class="modal-title">Ressources exclusives</h2>
+      <p class="modal-sub">Sélectionnées pour accélérer votre apprentissage.</p>
+    </div>
+    <div class="modal-body">
+      <div class="sec-label">Ressources pédagogiques</div>
+      <div class="gift-grid" id="giftGrid"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// DATA
+// All HTML tag strings use a helper to escape angle brackets
+// so the browser doesn't swallow them as real HTML elements.
+// ══════════════════════════════════════════════════════
+
+// Helper: safely escape HTML for display inside innerHTML
+function esc(str){ return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;") }
+
+const QUESTIONS=[
+  // Q1 — Arbre phylogénétique
+  {text:"Un arbre phylogénétique est une représentation :",
+   options:[
+     "des relations de parenté entre des individus d'une espèce",
+     "des relations de parenté entre des espèces supposées avoir un ancêtre commun",
+     "qui est toujours établie à partir de données de la biologie moléculaire",
+     "qui peut être établie à partir de données paléontologiques"
+   ],
+   answers:[1,3],icons:["fa-person","fa-sitemap","fa-vial","fa-bone"]},
+
+  // Q2 — Sélection naturelle
+  {text:"La sélection naturelle :",
+   options:[
+     "est un mécanisme de l'évolution",
+     "est un phénomène par lequel une population évolue en fonction de son environnement",
+     "élimine toujours les nouveaux allèles apparus par mutation",
+     "favorise la propagation de certains caractères héréditaires plutôt que d'autres"
+   ],
+   answers:[0,1,3],icons:["fa-arrow-up-right-dots","fa-earth-americas","fa-ban","fa-seedling"]},
+
+  // Q3 — Polyploïdie
+  {text:"Deux organismes morphologiquement semblables O1 et O2 présentant respectivement 2n = 8 et 4n = 16 chromosomes. On peut penser que :",
+   options:[
+     "O1 est la forme ancestrale de O2",
+     "O1 et O2 appartiennent à deux espèces différentes",
+     "il s'agit d'un cas de fusion chromosomique",
+     "il s'agit d'un cas de polyploïdie"
+   ],
+   answers:[0,1,3],icons:["fa-clock-rotate-left","fa-circle-xmark","fa-compress","fa-layer-group"]},
+
+  // Q4 — Électrophorèse diagnostic prénatal
+  {text:"La technique d'électrophorèse est utilisée en diagnostic prénatal pour :",
+   options:[
+     "prélever des cellules fœtales",
+     "établir le caryotype fœtal",
+     "analyser les protéines du fœtus",
+     "analyser l'ADN du fœtus"
+   ],
+   answers:[2,3],icons:["fa-syringe","fa-table-cells","fa-droplet","fa-dna"]},
+
+  // Q5 — Analyse ADN fœtal (ordre des étapes)
+  {text:"L'analyse de l'ADN fœtal fait intervenir, dans l'ordre, les étapes suivantes :",
+   options:[
+     "Electrophorèse → fragmentation de l'ADN → autoradiographie → sonde radioactive",
+     "Fragmentation de l'ADN → électrophorèse → sonde radioactive → autoradiographie",
+     "Autoradiographie → sonde radioactive → fragmentation de l'ADN → électrophorèse",
+     "Sonde radioactive → fragmentation de l'ADN → autoradiographie → électrophorèse"
+   ],
+   answers:[1],icons:["fa-1","fa-2","fa-3","fa-4"]},
+
+  // Q6 — Maladie dominante liée à X chez la femme
+  {text:"Une femme atteinte d'une maladie dominante liée au chromosome X :",
+   options:[
+     "doit être issue obligatoirement d'une mère atteinte",
+     "doit être issue obligatoirement d'un père atteint",
+     "donne des fils tous atteints de cette maladie",
+     "peut être hétérozygote"
+   ],
+   answers:[3],icons:["fa-female","fa-male","fa-child","fa-dna"]},
+
+  // Q7 — Maladie autosomale dominante
+  {text:"On peut conclure qu'une maladie est autosomale dominante quand :",
+   options:[
+     "tout individu atteint a au moins un parent atteint",
+     "les deux sexes ont deux allèles du gène",
+     "un sujet masculin atteint présente dans son ADN les deux formes alléliques du gène correspondant",
+     "deux parents atteints ont eu un enfant sain"
+   ],
+   answers:[2],icons:["fa-family","fa-venus-mars","fa-mars","fa-baby"]},
+
+  // Q8 — Cerveau et moelle épinière
+  {text:"Le cerveau et la moelle épinière ont en commun le (ou les) points suivant(s) :",
+   options:[
+     "ils font partie des centres nerveux",
+     "ils comportent une substance blanche",
+     "ils comportent des corps cellulaires",
+     "ils appartiennent à l'encéphale"
+   ],
+   answers:[0,1,2],icons:["fa-brain","fa-circle","fa-circle-dot","fa-skull"]},
+
+  // Q9 — Drosophile gènes liés
+  {text:"Le croisement d'une drosophile femelle [AB] avec un mâle [ab] donne 50% [Ab] et 50% [aB]. Dans ce cas :",
+   options:[
+     "les gènes considérés sont liés",
+     "les gènes considérés sont indépendants",
+     "la femelle a produit deux types équiprobables de gamètes",
+     "il y a eu brassage intrachromosomique lors de la gamétogenèse chez la femelle"
+   ],
+   answers:[0,2],icons:["fa-link","fa-shuffle","fa-equals","fa-arrows-rotate"]},
+
+  // Q10 — Tester indépendance ou liaison
+  {text:"Pour savoir si deux couples d'allèles sont indépendants ou liés, on peut réaliser :",
+   options:[
+     "un test cross",
+     "une analyse de l'ADN",
+     "un croisement entre deux individus de races pures",
+     "un croisement entre deux hybrides pour les deux couples d'allèles"
+   ],
+   answers:[0,3],icons:["fa-vial-circle-check","fa-microscope","fa-star","fa-code-merge"]},
+
+  // Q11 — Caryotype et variations
+  {text:"A partir d'un caryotype à 2n chromosomes :",
+   options:[
+     "l'amplification génique peut être à l'origine d'un caryotype à 4n chromosomes",
+     "la fusion chromosomique peut être à l'origine d'un caryotype à 4n chromosomes",
+     "l'amplification génique peut être à l'origine d'un caryotype à 2n+1 chromosomes",
+     "la fusion chromosomique peut être à l'origine d'un autre caryotype à 2n chromosomes"
+   ],
+   answers:[3],icons:["fa-up-right-and-down-left-from-center","fa-compress-arrows-alt","fa-plus","fa-arrows-left-right"]},
+
+  // Q12 — Garniture chromosomique mère hétérozygote
+  {text:"A partir du document 1 on peut déduire que :",
+   options:[
+     "la mère de cet enfant est homozygote pour les deux gènes considérés",
+     "la mère de cet enfant est hétérozygote uniquement pour l'un des deux gènes considérés",
+     "la mère de cet enfant est hétérozygote pour les deux gènes considérés",
+     "l'enfant est un garçon trisomique"
+   ],
+   answers:[2],icons:["fa-circle","fa-circle-half-stroke","fa-dna","fa-mars"]},
+
+  // Q13 — Gamètes et fécondation trisomie
+  {text:"Les garnitures chromosomiques du document 1 permettent d'affirmer que cet enfant est issu de la fécondation :",
+   options:[
+     "de deux gamètes à n=23",
+     "d'un gamète paternel à n+1=24 avec un gamète maternel à n=23",
+     "d'un gamète paternel à n=23 avec un gamète maternel à n+1=24",
+     "de deux gamètes à n+1=24"
+   ],
+   answers:[2],icons:["fa-mars","fa-mars-double","fa-venus","fa-venus-double"]},
+
+  // Q14 — Anomalie méiose ovogenèse
+  {text:"Les garnitures chromosomiques du document 1 permettent d'affirmer qu'il y a eu un déroulement anormal de la méiose lors de :",
+   options:[
+     "la spermatogenèse à l'anaphase I",
+     "la spermatogenèse à l'anaphase II",
+     "l'ovogenèse à l'anaphase I",
+     "l'ovogenèse à l'anaphase II"
+   ],
+   answers:[2],icons:["fa-mars","fa-mars","fa-venus","fa-venus"]},
+
+  // Q15 — Croisement drosophiles phénotypes
+  {text:"Le croisement des deux drosophiles l'une [A1] l'autre [A2] peut produire une descendance homogène ayant le phénotype :",
+   options:[
+     "[A1A2] en cas de codominance",
+     "[A1] en cas de dominance absolue si ces drosophiles sont hétérozygotes",
+     "[A2] en cas de dominance absolue si ces drosophiles sont hétérozygotes",
+     "[A2] en cas de dominance absolue si ces drosophiles sont homozygotes"
+   ],
+   answers:[0,3],icons:["fa-circle-half-stroke","fa-a","fa-a","fa-check"]}
 ];
 
-    </script>
+const GIFTS=[
+  {fa:"fa-solid fa-dna",title:"Fiches Génétique",desc:"Résumés complets sur la transmission héréditaire, les mutations et la génétique mendélienne.",link:"https://drive.google.com/file/d/1hze7Bz3wn3mDRyn1qYQNU92QOLoDTCMf/view?usp=drivesdk"},
+  {fa:"fa-solid fa-brain",title:"Cours Neurophysiologie",desc:"Leçons interactives sur le système nerveux, l'influx nerveux et les réflexes.",link:"https://drive.google.com/file/d/1-MfQN24ogZHwOGgNVqAQ7OwNGl1T46-I/view?usp=drivesdk"},
+  {fa:"fa-solid fa-microscope",title:"Ondes mécaniques progressives – Pack d’exercices BAC",desc:"Pack d’exercices pour s’entraîner et maîtriser les ondes mécaniques progressives au niveau BAC.",link:"https://drive.google.com/file/d/1fwy3-Ak58eF3WMJ6WXxxgZnozWKwAZPM/view?usp=drivesdk"},
+  {fa:"fa-solid fa-seedling",title:"Évolution & Phylogénie",desc:"Supports pédagogiques sur la sélection naturelle, la dérive génétique et les arbres phylogénétiques.",link:"https://drive.google.com/file/d/15IWz9XARnuB8NB3es7DJj1W2WR3YOebg/view?usp=drivesdk"},
+  {fa:"fa-solid fa-flask",title:"namthaja ",desc:"درس في الفلسفة – مستوى البكالوريا.",link:"https://drive.google.com/file/d/1FM5WvkoMu6SlISqnt-sPoiPWy8tOLQ01/view?usp=drivesdk"},
+  {fa:"fa-solid fa-graduation-cap",title:"Pack Devoirs Synthèse 2 – Physique",desc:"Exercices types avec corrigés pour s’entraîner et réviser la synthèse 2 en physique.",link:"https://drive.google.com/drive/folders/1q4WxRlLi5QDCKEenkp_jw814daL5R-Hj"}
+];
 
-    <script src="./svtapp/assets/js/arcseek.js"></script>
+const LTR=["A","B","C","D"];
+const TOTAL=QUESTIONS.length;
 
-    <footer class="footer">
-        Sahl LLM
-    </footer>
+let idx=0,selSet=new Set(),checked=false,score=0,correct=0,startTime=Date.now(),timerInt=null,timeLeft=30;
+
+const $welcome=document.getElementById("welcome");
+const $prog=document.getElementById("progFill");
+const $navScore=document.getElementById("navScore");
+const $segs=document.getElementById("segTrack");
+const $badge=document.getElementById("qBadge");
+const $frac=document.getElementById("qFrac");
+const $timerF=document.getElementById("timerFill");
+const $timerV=document.getElementById("timerVal");
+const $qtext=document.getElementById("qText");
+const $opts=document.getElementById("opts");
+const $hint=document.getElementById("footHint");
+const $stat=document.getElementById("footStat");
+const $accv=document.getElementById("accVal");
+const $actBtn=document.getElementById("actionBtn");
+const $aIcon=document.getElementById("aIcon");
+const $aLbl=document.getElementById("aLabel");
+const $qcard=document.getElementById("quizCard");
+const $fcard=document.getElementById("finishCard");
+const $fScore=document.getElementById("fScore");
+const $fAcc=document.getElementById("fAcc");
+const $fTime=document.getElementById("fTime");
+const $overlay=document.getElementById("overlay");
+const $ggrid=document.getElementById("giftGrid");
+
+/* welcome → quiz */
+document.getElementById("startBtn").addEventListener("click",()=>{
+  $welcome.classList.add("hide");
+  setTimeout(()=>{ $welcome.remove(); startTime=Date.now(); }, 750);
+});
+
+function init(){
+  buildSegs(); buildGifts(); render();
+  $actBtn.addEventListener("click", onAction);
+  document.getElementById("openGiftBtn").addEventListener("click", openModal);
+  document.getElementById("retryBtn").addEventListener("click", retry);
+  document.getElementById("modalClose").addEventListener("click", closeModal);
+  $overlay.addEventListener("click", e=>{ if(e.target===$overlay) closeModal(); });
+  document.addEventListener("keydown", e=>{
+    if(e.key==="Escape") closeModal();
+    if(!checked){
+      if(e.key==="1") toggleSel(0);
+      if(e.key==="2") toggleSel(1);
+      if(e.key==="3") toggleSel(2);
+      if(e.key==="4") toggleSel(3);
+      if(e.key==="Enter" && selSet.size>0) onAction();
+    } else if(e.key==="Enter") onAction();
+  });
+}
+
+function buildSegs(){
+  $segs.innerHTML="";
+  QUESTIONS.forEach(()=>{
+    const s=document.createElement("div");
+    s.className="seg";
+    $segs.appendChild(s);
+  });
+}
+
+function updSegs(){
+  [...$segs.children].forEach((s,i)=>{
+    s.className="seg";
+    if(i<idx) s.classList.add("s-done");
+    if(i===idx) s.classList.add("s-active");
+  });
+}
+
+function startTimer(){
+  clearInterval(timerInt); timeLeft=30;
+  $timerF.style.transition="none";
+  $timerF.style.width="100%";
+  $timerF.style.backgroundPosition="0% 50%";
+  $timerV.textContent="30";
+  $timerV.classList.remove("low");
+  setTimeout(()=>{
+    $timerF.style.transition="width 1s linear,background-position 1s linear";
+    timerInt=setInterval(()=>{
+      timeLeft--;
+      const pct=Math.max(0,(timeLeft/30)*100);
+      $timerF.style.width=pct+"%";
+      $timerF.style.backgroundPosition=(100-pct)+"% 50%";
+      $timerV.textContent=timeLeft;
+      if(timeLeft<=8) $timerV.classList.add("low");
+      if(timeLeft<=0 && !checked){ clearInterval(timerInt); autoFail(); }
+    },1000);
+  },60);
+}
+function stopTimer(){ clearInterval(timerInt); }
+
+function autoFail(){
+  const q=QUESTIONS[idx];
+  const btns=[...$opts.querySelectorAll(".opt")];
+  btns.forEach(b=>b.disabled=true);
+  q.answers.forEach(ai=>{
+    btns[ai].classList.add("show-ok");
+    const ico=btns[ai].querySelector(".opt-cb i");
+    ico.className="fa-solid fa-check";
+    ico.style.color="";
+  });
+  insertFeedback(false,"Temps écoulé !","La ou les bonne(s) réponse(s) sont surlignées ci-dessus.");
+  checked=true; setActionNext(); updateAcc();
+}
+
+function render(){
+  const q=QUESTIONS[idx];
+  selSet.clear(); checked=false;
+  const old=$qcard.querySelector(".feedback");
+  if(old) old.remove();
+  $actBtn.classList.add("hidden"); $actBtn.disabled=true; setActionCheck();
+  $hint.style.display="flex";
+  $hint.innerHTML='<i class="fa-regular fa-hand-pointer"></i>&nbsp;Sélectionnez votre réponse';
+  if(idx>0){ $stat.classList.remove("hidden"); updateAcc(); }
+  $badge.innerHTML=`<i class="fa-solid fa-circle-question"></i>&nbsp;Question ${idx+1}`;
+  $frac.textContent=`${idx+1} / ${TOTAL}`;
+  $qtext.textContent=q.text;
+  updSegs();
+  $prog.style.width=((idx/TOTAL)*100)+"%";
+  $opts.innerHTML="";
+  q.options.forEach((optHTML,i)=>{
+    const b=document.createElement("button");
+    b.className="opt";
+    // Options are already HTML-safe strings (escaped entities where needed)
+    b.innerHTML=`
+      <div class="opt-icon-wrap">
+        <div class="opt-icon"><i class="fa-solid ${q.icons[i]}"></i></div>
+      </div>
+      <div class="opt-inner">
+        <div class="opt-ltr">${LTR[i]}</div>
+        <div class="opt-text">${optHTML}</div>
+      </div>
+      <div class="opt-cb"><i class="fa-solid fa-check"></i></div>`;
+    b.addEventListener("click", ()=>toggleSel(i));
+    $opts.appendChild(b);
+  });
+  startTimer();
+}
+
+function toggleSel(i){
+  if(checked) return;
+  const btns=[...$opts.querySelectorAll(".opt")];
+  if(btns.length<=i) return;
+  const q=QUESTIONS[idx];
+  const isMulti=q.answers.length>1;
+  if(!isMulti){
+    selSet.clear();
+    btns.forEach(b=>{
+      b.classList.remove("sel");
+      b.querySelector(".opt-cb i").style.color="transparent";
+    });
+  }
+  if(selSet.has(i)){
+    selSet.delete(i);
+    btns[i].classList.remove("sel");
+    btns[i].querySelector(".opt-cb i").style.color="transparent";
+  } else {
+    selSet.add(i);
+    btns[i].classList.add("sel");
+    btns[i].querySelector(".opt-cb i").style.color="";
+  }
+  if(selSet.size>0){
+    $actBtn.classList.remove("hidden"); $actBtn.disabled=false; $hint.style.display="none";
+  } else {
+    $actBtn.classList.add("hidden"); $actBtn.disabled=true; $hint.style.display="flex";
+  }
+}
+
+function onAction(){ if(!checked) doCheck(); else doNext(); }
+
+function doCheck(){
+  if(selSet.size===0) return;
+  stopTimer(); checked=true;
+  const q=QUESTIONS[idx];
+  const btns=[...$opts.querySelectorAll(".opt")];
+  btns.forEach(b=>b.disabled=true);
+  const cs=new Set(q.answers);
+  const ok=selSet.size===cs.size && [...selSet].every(i=>cs.has(i));
+  selSet.forEach(i=>{
+    btns[i].classList.remove("sel");
+    const isOk=cs.has(i);
+    btns[i].classList.add(isOk?"is-ok":"is-bad");
+    const ico=btns[i].querySelector(".opt-cb i");
+    ico.className=isOk?"fa-solid fa-check":"fa-solid fa-xmark";
+    ico.style.color="";
+  });
+  cs.forEach(i=>{
+    if(!selSet.has(i)){
+      btns[i].classList.add("show-ok");
+      const ico=btns[i].querySelector(".opt-cb i");
+      ico.className="fa-solid fa-check";
+      ico.style.color="";
+    }
+  });
+  if(ok){
+    score++; correct++;
+    $navScore.textContent=score;
+    insertFeedback(true,"Correct !","Bravo, vous avez trouvé la bonne réponse.");
+  } else {
+    const missed=q.answers.filter(i=>!selSet.has(i)).length;
+    const wrong=[...selSet].filter(i=>!cs.has(i)).length;
+    let msg="La bonne réponse est surlignée ci-dessus.";
+    if(wrong>0 && missed>0) msg=`${wrong} mauvaise(s) sélection(s) et ${missed} réponse(s) manquée(s).`;
+    else if(wrong>0) msg=`${wrong} mauvaise(s) sélection(s). Voyez les réponses surlignées.`;
+    else if(missed>0) msg=`Vous avez manqué ${missed} réponse(s) correcte(s).`;
+    insertFeedback(false,"Pas tout à fait…",msg);
+  }
+  setActionNext(); updateAcc();
+}
+
+function doNext(){
+  idx++;
+  if(idx>=TOTAL){ showFinish(); return; }
+  const body=$qcard.querySelector(".card-body");
+  body.style.transition="opacity .13s,transform .13s";
+  body.style.opacity="0";
+  body.style.transform="translateY(-5px)";
+  setTimeout(()=>{
+    render();
+    body.style.transition="none";
+    body.style.opacity="";
+    body.style.transform="";
+  },135);
+}
+
+function insertFeedback(ok,t,s){
+  const fb=document.createElement("div");
+  fb.className=`feedback ${ok?"fb-ok":"fb-err"}`;
+  fb.innerHTML=`<div class="fb-ico"><i class="fa-solid ${ok?"fa-check":"fa-xmark"}"></i></div><div><div class="fb-t">${t}</div><div class="fb-s">${s}</div></div>`;
+  $opts.insertAdjacentElement("afterend",fb);
+}
+
+function setActionCheck(){ $aIcon.className="fa-solid fa-check"; $aLbl.textContent="Vérifier"; }
+function setActionNext(){
+  const last=idx===TOTAL-1;
+  $aIcon.className=last?"fa-solid fa-flag-checkered":"fa-solid fa-arrow-right";
+  $aLbl.textContent=last?"Voir les résultats":"Question suivante";
+  $actBtn.disabled=false;
+}
+
+function updateAcc(){
+  const done=idx+(checked?1:0);
+  const pct=done>0?Math.round((correct/done)*100):0;
+  $accv.textContent=pct+" %";
+  $stat.classList.remove("hidden");
+}
+
+function showFinish(){
+  stopTimer(); $prog.style.width="100%";
+  $qcard.classList.add("hidden"); $fcard.classList.remove("hidden");
+  const elapsed=Math.round((Date.now()-startTime)/1000);
+  const pct=Math.round((correct/TOTAL)*100);
+  $fScore.textContent=correct;
+  $fAcc.textContent=pct+" %";
+  $fTime.textContent=elapsed+" s";
+
+  // ── Determine reward tier ──────────────────────────────
+  // 100%        → 6 gifts  (full reward)
+  // 75% – 99%   → 4 gifts
+  // 50% – 74%   → 2 gifts
+  // 40% – 49%   → 2 gifts  (same as above per spec "less than 50%")
+  // < 40%       → 0 gifts  (nothing)
+  let giftCount, tierClass, tierLabel, tierIcon, finTitle, finSub, btnLocked;
+
+  if(pct===100){
+    giftCount=6; tierClass="tier-full"; tierLabel="🏆 Score parfait !"; tierIcon="fa-trophy";
+    finTitle="Félicitations, score parfait !";
+    finSub="Incroyable ! Vous avez tout bon. Vos 6 ressources exclusives vous attendent.";
+    btnLocked=false;
+  } else if(pct>=75){
+    giftCount=4; tierClass="tier-high"; tierLabel="⭐ Très bon score"; tierIcon="fa-gift";
+    finTitle="Très bon score !";
+    finSub="Bravo ! Voici vos 4 ressources débloquées. Encore un effort pour le score parfait.";
+    btnLocked=false;
+  } else if(pct>=50){
+    giftCount=2; tierClass="tier-low"; tierLabel="📚 Score passable"; tierIcon="fa-gift";
+    finTitle="Pas mal, continuez !";
+    finSub="Vous débloquez 2 ressources. Atteignez 75% pour en obtenir davantage.";
+    btnLocked=false;
+  } else if(pct>=40){
+    giftCount=2; tierClass="tier-low"; tierLabel="📚 Score limite"; tierIcon="fa-gift";
+    finTitle="Presque insuffisant…";
+    finSub="Vous débloquez 2 ressources. Faites mieux pour en obtenir plus !";
+    btnLocked=false;
+  } else {
+    giftCount=0; tierClass="tier-none"; tierLabel="❌ Score insuffisant"; tierIcon="fa-lock";
+    finTitle="Score insuffisant";
+    finSub="Vous n'avez pas atteint le minimum de 40%. Recommencez pour débloquer vos ressources !";
+    btnLocked=true;
+  }
+
+  // Update finish card UI
+  const ring=document.querySelector(".finish-ring");
+  document.getElementById("finishIcon").className=`fa-solid ${tierIcon}`;
+  document.getElementById("finishTitle").textContent=finTitle;
+  document.getElementById("finishSub").innerHTML=finSub;
+
+  // Insert reward tier badge before the title if not already there
+  let badge=document.getElementById("rewardBadge");
+  if(!badge){
+    badge=document.createElement("div");
+    badge.id="rewardBadge";
+    badge.className="reward-badge";
+    document.querySelector(".finish-hero").insertBefore(badge,document.getElementById("finishTitle"));
+  }
+  badge.className=`reward-badge ${tierClass}`;
+  badge.textContent=tierLabel;
+
+  // Ring style
+  if(btnLocked){ ring.classList.add("locked"); } else { ring.classList.remove("locked"); }
+
+  // Open Gift button
+  const gBtn=document.getElementById("openGiftBtn");
+  if(btnLocked){
+    gBtn.innerHTML='<i class="fa-solid fa-lock"></i>&nbsp;Aucun cadeau disponible';
+    gBtn.classList.add("btn-locked");
+    gBtn.disabled=true;
+  } else {
+    gBtn.innerHTML=`<i class="fa-solid fa-gift"></i>&nbsp;Ouvrir ${giftCount} cadeau${giftCount>1?"x":""}`;
+    gBtn.classList.remove("btn-locked");
+    gBtn.disabled=false;
+  }
+
+  // Store giftCount globally so openModal knows how many to show
+  window._giftCount=giftCount;
+
+  if(!btnLocked) confetti();
+}
+
+function buildGifts(){
+  // Build all 6 gift cards, hiding extras based on score at open time
+  $ggrid.innerHTML="";
+  GIFTS.forEach((g,i)=>{
+    const c=document.createElement("a");
+    c.className="gift-card"; c.href=g.link; c.target="_blank"; c.rel="noopener";
+    c.dataset.giftIndex=i;
+    c.innerHTML=`<div class="gift-icon-bg"><i class="${g.fa}"></i></div><div class="gift-title">${g.title}</div><div class="gift-desc">${g.desc}</div><span class="gift-cta">Explorer&nbsp;<i class="fa-solid fa-arrow-right"></i></span>`;
+    $ggrid.appendChild(c);
+  });
+}
+
+function openModal(){
+  // Show only the gifts the user earned
+  const count=window._giftCount||0;
+  const cards=[...$ggrid.querySelectorAll(".gift-card")];
+  cards.forEach((c,i)=>{ c.style.display = i<count ? "" : "none"; });
+
+  // Update modal subtitle
+  document.querySelector(".modal-sub").textContent=
+    count===6 ? "Toutes vos ressources exclusives — score parfait !" :
+    `${count} ressource${count>1?"s":""} débloquée${count>1?"s":""} selon votre score.`;
+
+  $overlay.classList.remove("hidden");
+  document.body.style.overflow="hidden";
+}
+function closeModal(){ $overlay.classList.add("hidden"); document.body.style.overflow=""; }
+
+function retry(){
+  idx=0; score=0; correct=0; startTime=Date.now();
+  $navScore.textContent=0;
+  $stat.classList.add("hidden");
+  // Reset finish card dynamic elements
+  const badge=document.getElementById("rewardBadge");
+  if(badge) badge.remove();
+  document.querySelector(".finish-ring").classList.remove("locked");
+  const gBtn=document.getElementById("openGiftBtn");
+  gBtn.innerHTML='<i class="fa-solid fa-gift"></i>&nbsp;Ouvrir le cadeau';
+  gBtn.classList.remove("btn-locked"); gBtn.disabled=false;
+  window._giftCount=0;
+  $fcard.classList.add("hidden"); $qcard.classList.remove("hidden");
+  $qcard.style.animation="none"; void $qcard.offsetWidth; $qcard.style.animation="";
+  buildSegs(); render();
+}
+
+function confetti(){
+  const colors=["#1d6bf3","#16a34a","#d97706","#dc2626","#38bdf8","#7c3aed","#fbbf24"];
+  const cx=window.innerWidth/2, cy=window.innerHeight/2;
+  for(let i=0;i<110;i++){
+    const el=document.createElement("div"); el.className="cp";
+    const angle=Math.random()*Math.PI*2, dist=100+Math.random()*240;
+    const tx=(Math.cos(angle)*dist).toFixed(1), ty=(Math.sin(angle)*dist+260).toFixed(1);
+    const d=(1.2+Math.random()*1.5).toFixed(2), dl=(Math.random()*.45).toFixed(2);
+    const rot=((Math.random()-.5)*900).toFixed(0), sz=(5+Math.random()*8).toFixed(1);
+    el.style.cssText=`left:${cx}px;top:${cy}px;width:${sz}px;height:${sz}px;background:${colors[~~(Math.random()*colors.length)]};border-radius:${Math.random()>.45?"50%":"3px"};--tx:${tx}px;--ty:${ty}px;--r:${rot}deg;--d:${d}s;--dl:${dl}s`;
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),(+d+ +dl+.6)*1000);
+  }
+}
+
+init();
+</script>
 </body>
 </html>

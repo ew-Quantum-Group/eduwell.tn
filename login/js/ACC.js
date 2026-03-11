@@ -10,6 +10,11 @@
                 password: 'Islem12!!', 
                 name: 'Kamerji' 
             },
+            { 
+                username: 'alqinaa2@gmail.com',
+                password: 'Usaid65#', 
+                name: 'Nour' 
+            },
               { 
                 username: 'hajerletaiefmarzouki@gmail.com',
                 password: 'Ayouta12345+', 
@@ -48,6 +53,7 @@
                 name: 'Rawen' 
             }
         ];
+
 
 
 

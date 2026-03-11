@@ -767,7 +767,7 @@ img{display:block;max-width:100%}
       <h1 class="finish-title" id="finishTitle">Réclamez votre cadeau</h1>
       <p class="finish-sub" id="finishSub">Quiz terminé ! Vos ressources exclusives<br>vous attendent ci-dessous.</p>
       <div class="score-stats">
-        <div class="stat-chip chip-score"><i class="fa-solid fa-trophy"></i>Score&nbsp;:&nbsp;<strong id="fScore">0</strong>&nbsp;/ 15</div>
+        <div class="stat-chip chip-score"><i class="fa-solid fa-trophy"></i>Score&nbsp;:&nbsp;<strong id="fScore">0</strong>&nbsp;/ 35</div>
         <div class="stat-chip chip-acc"><i class="fa-solid fa-bullseye"></i>Précision&nbsp;:&nbsp;<strong id="fAcc">0 %</strong></div>
         <div class="stat-chip chip-time"><i class="fa-regular fa-clock"></i>Temps&nbsp;:&nbsp;<strong id="fTime">0 s</strong></div>
       </div>
@@ -811,147 +811,216 @@ img{display:block;max-width:100%}
 function esc(str){ return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;") }
 
 const QUESTIONS=[
-  // Q1 — Arbre phylogénétique
-  {text:"Un arbre phylogénétique est une représentation :",
-   options:[
-     "des relations de parenté entre des individus d'une espèce",
-     "des relations de parenté entre des espèces supposées avoir un ancêtre commun",
-     "qui est toujours établie à partir de données de la biologie moléculaire",
-     "qui peut être établie à partir de données paléontologiques"
-   ],
-   answers:[1,3],icons:["fa-person","fa-sitemap","fa-vial","fa-bone"]},
-
-  // Q2 — Sélection naturelle
-  {text:"La sélection naturelle :",
-   options:[
-     "est un mécanisme de l'évolution",
-     "est un phénomène par lequel une population évolue en fonction de son environnement",
-     "élimine toujours les nouveaux allèles apparus par mutation",
-     "favorise la propagation de certains caractères héréditaires plutôt que d'autres"
-   ],
-   answers:[0,1,3],icons:["fa-arrow-up-right-dots","fa-earth-americas","fa-ban","fa-seedling"]},
-
-  // Q3 — Polyploïdie
-  {text:"Deux organismes morphologiquement semblables O1 et O2 présentant respectivement 2n = 8 et 4n = 16 chromosomes. On peut penser que :",
-   options:[
-     "O1 est la forme ancestrale de O2",
-     "O1 et O2 appartiennent à deux espèces différentes",
-     "il s'agit d'un cas de fusion chromosomique",
-     "il s'agit d'un cas de polyploïdie"
-   ],
-   answers:[0,1,3],icons:["fa-clock-rotate-left","fa-circle-xmark","fa-compress","fa-layer-group"]},
-
-  // Q4 — Électrophorèse diagnostic prénatal
-  {text:"La technique d'électrophorèse est utilisée en diagnostic prénatal pour :",
-   options:[
-     "prélever des cellules fœtales",
-     "établir le caryotype fœtal",
-     "analyser les protéines du fœtus",
-     "analyser l'ADN du fœtus"
-   ],
-   answers:[2,3],icons:["fa-syringe","fa-table-cells","fa-droplet","fa-dna"]},
-
-  // Q5 — Analyse ADN fœtal (ordre des étapes)
-  {text:"L'analyse de l'ADN fœtal fait intervenir, dans l'ordre, les étapes suivantes :",
-   options:[
-     "Electrophorèse → fragmentation de l'ADN → autoradiographie → sonde radioactive",
-     "Fragmentation de l'ADN → électrophorèse → sonde radioactive → autoradiographie",
-     "Autoradiographie → sonde radioactive → fragmentation de l'ADN → électrophorèse",
-     "Sonde radioactive → fragmentation de l'ADN → autoradiographie → électrophorèse"
-   ],
-   answers:[1],icons:["fa-1","fa-2","fa-3","fa-4"]},
-
-  // Q6 — Maladie dominante liée à X chez la femme
-  {text:"Une femme atteinte d'une maladie dominante liée au chromosome X :",
-   options:[
-     "doit être issue obligatoirement d'une mère atteinte",
-     "doit être issue obligatoirement d'un père atteint",
-     "donne des fils tous atteints de cette maladie",
-     "peut être hétérozygote"
-   ],
-   answers:[3],icons:["fa-female","fa-male","fa-child","fa-dna"]},
-
-  // Q7 — Maladie autosomale dominante
-  {text:"On peut conclure qu'une maladie est autosomale dominante quand :",
-   options:[
-     "tout individu atteint a au moins un parent atteint",
-     "les deux sexes ont deux allèles du gène",
-     "un sujet masculin atteint présente dans son ADN les deux formes alléliques du gène correspondant",
-     "deux parents atteints ont eu un enfant sain"
-   ],
-   answers:[2],icons:["fa-family","fa-venus-mars","fa-mars","fa-baby"]},
-
-  // Q8 — Cerveau et moelle épinière
-  {text:"Le cerveau et la moelle épinière ont en commun le (ou les) points suivant(s) :",
-   options:[
-     "ils font partie des centres nerveux",
-     "ils comportent une substance blanche",
-     "ils comportent des corps cellulaires",
-     "ils appartiennent à l'encéphale"
-   ],
-   answers:[0,1,2],icons:["fa-brain","fa-circle","fa-circle-dot","fa-skull"]},
-
-  // Q9 — Drosophile gènes liés
-  {text:"Le croisement d'une drosophile femelle [AB] avec un mâle [ab] donne 50% [Ab] et 50% [aB]. Dans ce cas :",
-   options:[
-     "les gènes considérés sont liés",
-     "les gènes considérés sont indépendants",
-     "la femelle a produit deux types équiprobables de gamètes",
-     "il y a eu brassage intrachromosomique lors de la gamétogenèse chez la femelle"
-   ],
-   answers:[0,2],icons:["fa-link","fa-shuffle","fa-equals","fa-arrows-rotate"]},
-
-  // Q10 — Tester indépendance ou liaison
-  {text:"Pour savoir si deux couples d'allèles sont indépendants ou liés, on peut réaliser :",
-   options:[
-     "un test cross",
-     "une analyse de l'ADN",
-     "un croisement entre deux individus de races pures",
-     "un croisement entre deux hybrides pour les deux couples d'allèles"
-   ],
-   answers:[0,3],icons:["fa-vial-circle-check","fa-microscope","fa-star","fa-code-merge"]},
-
-  // Q11 — Caryotype et variations
-  {text:"A partir d'un caryotype à 2n chromosomes :",
-   options:[
-     "l'amplification génique peut être à l'origine d'un caryotype à 4n chromosomes",
-     "la fusion chromosomique peut être à l'origine d'un caryotype à 4n chromosomes",
-     "l'amplification génique peut être à l'origine d'un caryotype à 2n+1 chromosomes",
-     "la fusion chromosomique peut être à l'origine d'un autre caryotype à 2n chromosomes"
-   ],
-   answers:[3],icons:["fa-up-right-and-down-left-from-center","fa-compress-arrows-alt","fa-plus","fa-arrows-left-right"]},
-
-  
-
-  // Q13 — Gamètes et fécondation trisomie
-  {text:"Les garnitures chromosomiques du document 1 permettent d'affirmer que cet enfant est issu de la fécondation :",
-   options:[
-     "de deux gamètes à n=23",
-     "d'un gamète paternel à n+1=24 avec un gamète maternel à n=23",
-     "d'un gamète paternel à n=23 avec un gamète maternel à n+1=24",
-     "de deux gamètes à n+1=24"
-   ],
-   answers:[2],icons:["fa-mars","fa-mars-double","fa-venus","fa-venus-double"]},
-
-  // Q14 — Anomalie méiose ovogenèse
-  {text:"Les garnitures chromosomiques du document 1 permettent d'affirmer qu'il y a eu un déroulement anormal de la méiose lors de :",
-   options:[
-     "la spermatogenèse à l'anaphase I",
-     "la spermatogenèse à l'anaphase II",
-     "l'ovogenèse à l'anaphase I",
-     "l'ovogenèse à l'anaphase II"
-   ],
-   answers:[2],icons:["fa-mars","fa-mars","fa-venus","fa-venus"]},
-
-  // Q15 — Croisement drosophiles phénotypes
-  {text:"Le croisement des deux drosophiles l'une [A1] l'autre [A2] peut produire une descendance homogène ayant le phénotype :",
-   options:[
-     "[A1A2] en cas de codominance",
-     "[A1] en cas de dominance absolue si ces drosophiles sont hétérozygotes",
-     "[A2] en cas de dominance absolue si ces drosophiles sont hétérozygotes",
-     "[A2] en cas de dominance absolue si ces drosophiles sont homozygotes"
-   ],
-   answers:[0,3],icons:["fa-circle-half-stroke","fa-a","fa-a","fa-check"]}
+  {text:"L’ovulation chez la femme dépend directement : ?",
+   options:["des hormones ovariennes",
+     "des hormones hypophysaires",
+     "des hormones hypothalamiques",
+     "de la qualité de la glaire cervicale"],
+   answers:[1],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Sélectionnez les organes qui font partie du système reproducteur masculin :",
+   options:["Testicules",
+     "Utérus",
+     "Prostate",
+     "Trompes de Fallope"],
+   answers:[0, 2],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Quelle hormone est responsable du développement des caractères sexuels secondaires chez l'homme ?",
+   options:["La FSH",
+     "La LH",
+     "La testostérone",
+     "L'œstrogène"],
+   answers:[2],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Sélectionnez les structures qui transportent les spermatozoïdes :",
+   options:["Le canal déférent",
+     "L'épididyme",
+     "Le canal éjaculateur",
+     "Les vésicules séminales"],
+   answers:[0, 2],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Quelle est la température optimale pour la production de spermatozoïdes ?",
+   options:["37°C (température corporelle)",
+     "35°C (inférieure à la température corporelle)",
+     "39°C (supérieure à la température corporelle)",
+     "La température n'a pas d'importance"],
+   answers:[1],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"L’ovulation chez la femme dépend directement :",
+   options:["des hormones ovariennes",
+     "des hormones hypophysaires",
+     "des hormones hypothalamiques",
+     "de la qualité de la glaire cervicale"],
+   answers:[1],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"La phase de maturation de la spermatogenèse :",
+   options:["se produit entièrement dans le testicule",
+     "s'achève dans les voies génitales de la femme",
+     "produit des spermatocytes II",
+     "produit des spermatides"],
+   answers:[0, 3],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Les cellules cibles de la LH chez les humains sont les cellules:",
+   options:["de Sertoli",
+     "de Leydig",
+     "les cellules du follicule mûr",
+     "les cellules du placenta"],
+   answers:[1, 2],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"L'apparition des caractères sexuels secondaires chez l'homme dépend de la:",
+   options:["fonction exocrine du testicule",
+     "position (intra ou extra-abdominale) des testicules",
+     "sécrétion de la LH",
+     "sécrétion de FSH"],
+   answers:[2],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"La baisse de la sécrétion de FSH peut être observée après une :",
+   options:["ovariectomie",
+     "diminution du taux de testostérone",
+     "injection de GnRH",
+     "ligature de la tige pituitaire"],
+   answers:[3],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Les cellules de Sertoli sont des cellules:",
+   options:["endocrines",
+     "germinales",
+     "somatique",
+     "de soutien"],
+   answers:[0, 2],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Le trophoblaste est un ensemble de cellules :",
+   options:["sécrétant des enzymes",
+     "sécrétant des hormones",
+     "de soutien",
+     "d'origine maternelle"],
+   answers:[0, 1],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Le maintien de la muqueuse utérine en début de grossesse dépend :",
+   options:["de l'ovaire",
+     "du complexe hypothalamo-hypophysaire",
+     "de l'hypophyse",
+     "de cellules embryonnaires"],
+   answers:[0, 3],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Durant la grossesse, la progestérone assure indirectement:",
+   options:["l'inhibition de la croissance folliculaire",
+     "le blocage du cycle ovarien",
+     "l'inhibition de la sécrétion des gonadostimulines",
+     "la régression de la muqueuse utérine"],
+   answers:[0, 1],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Chez la femme, la division réductionnelle de la méiose:",
+   options:["se déroule entièrement dans l'ovaire",
+     "se déroule en partie dans la trompe",
+     "s'achève dans la trompe en cas de fécondation",
+     "s'achève au niveau de la cavité utérine"],
+   answers:[0],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Chez la femme, le développement maximal de la muqueuse utérine :",
+   options:["est observé au cours de la phase prémenstruelle",
+     "est observé au cours de la phase postmenstruelle",
+     "nécessite une sensibilisation des cellules par les œstrogènes",
+     "se fait exclusivement grâce à la progestérone"],
+   answers:[0, 2],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Chez la femme, Le taux de progestérone se maintient constant et nul (ou presque) pendant:",
+   options:["la menstruation",
+     "la grossesse",
+     "la phase folliculaire d'un cycle non fécond",
+     "la phase lutéale d'un cycle fécond"],
+   answers:[0, 1],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"L'œstradiol peut être sécrété par:",
+   options:["le placenta",
+     "le corps jaune",
+     "les cellules de la thèque interne d'un follicule cavitaire",
+     "les cellules de la thèque externe d'un follicule mûr"],
+   answers:[2],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Une femme ménopausée présente :",
+   options:["un taux faible de LH avec un pic vers le 13eme jour",
+     "un taux élevé et constant de progestérone",
+     "un taux élevé et constant de LH avec absence de pic",
+     "une sécrétion cyclique des hormones ovariennes"],
+   answers:[1, 3],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"La capacitation des spermatozoïdes se fait dans :",
+   options:["les tubes séminifères",
+     "les voies génitales femelles",
+     "les canaux déférents",
+     "l'épididyme"],
+   answers:[0, 1],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Le blastocyste:",
+   options:["secrète des enzymes",
+     "secrète des hormones",
+     "se transforme en morula",
+     "se forme dans le pavillon"],
+   answers:[0, 1],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Chez l'homme, la spermatogenèse est directement stimulée par:",
+   options:["la GnRH",
+     "la LH",
+     "la FSH",
+     "la testostérone"],
+   answers:[3],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Parmi les points communs entre les cellules de Sertoli et les cellules de Leydig on peut citer le fait que :",
+   options:["elles sont des cellules germinales",
+     "elles sont des cellules endocrines",
+     "elles exercent un freinage sur les neurones hypothalamiques",
+     "elles contrôlent les caractères sexuels secondaires"],
+   answers:[1],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Parmi les points communs entre le 1er et le 2ème globule polaire on peut citer le fait que:",
+   options:["ils sont haploïdes",
+     "ils sont produits par la division réductionnelle de méiose",
+     "ils contiennent des réserves cytoplasmiques",
+     "ils sont des cellules non fonctionnelles"],
+   answers:[0, 3],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Chez l'espèce humaine, les cibles de la LH sont:",
+   options:["le tissu interstitiel du testicule",
+     "les tubes séminifères du testicule",
+     "l'endomètre, le myomètre et le col de l'utérus",
+     "le follicule mûr, le follicule rompu et le corps jaune des ovaires"],
+   answers:[0, 3],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Chez un rat mâle adulte hypophysectomisé, on peut corriger la stérilité par des injections de:",
+   options:["LH",
+     "LH et FSH",
+     "testostérone et FSH",
+     "testostérone et LH"],
+   answers:[1, 2],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Parmi les effets physiologiques suivants, ceux qui peuvent être attribués aux œstrogènes sont:",
+   options:["le silence utérin",
+     "la sensibilisation des cellules de l'endomètre à l'action de la progestérone",
+     "la sécrétion d'une glaire cervicale dense à maillage serré",
+     "l'apparition et le maintien des caractères sexuels secondaires"],
+   answers:[1, 3],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"La glaire cervicale est une production :",
+   options:["du col utérin",
+     "du vagin",
+     "de l'ovaire",
+     "de l'endomètre utérin"],
+   answers:[0],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Au cours de la spermiogenèse subie par une spermatide, il y a:",
+   options:["formation d'un acrosome",
+     "élimination de tout le cytoplasme",
+     "acquisition d'une forme allongée",
+     "réduction du nombre de chromosomes"],
+   answers:[0, 2],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Chez un mâle pubère dont les testicules ont subi une destruction du tissu interstitiel, mais non des tubes séminifères, on observe:",
+   options:["une stérilité",
+     "une fertilité",
+     "une régression des caractères sexuels secondaires",
+     "un maintien de l'état développé du tractus génital"],
+   answers:[0, 2],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Si l'ovocyte I contient une quantité d'ADN égale à '2Q', alors le 2ème globule polaire contient:",
+   options:["'Q' ADN",
+     "'2Q' ADN",
+     "'Q/2' ADN",
+     "'Q/4' ADN"],
+   answers:[2],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Parmi les évènements qui se produisent dans le follicule mûr, au cours des 24 heures qui précèdent l'ovulation, on cite:",
+   options:["la naissance d'un 2ème globule polaire",
+     "le détachement de l'ovocyte I de la granulosa",
+     "l'achèvement de la division équationnelle de méiose de la cellule germinale",
+     "l'achèvement de la division réductionnelle de méiose de la cellule germinale"],
+   answers:[1, 3],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Chez toutes les femmes à cycle normal, l'ovulation se produit :",
+   options:["1 jour avant le pic de LH",
+     "14 jours avant la fin du cycle",
+     "14 jours après le début du cycle",
+     "2 jours environ après le grand pic d'œstrogènes"],
+   answers:[1, 3],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Parmi les points communs entre la régulation de la fonction reproductrice masculine et la régulation du cycle sexuel féminin, on cite:",
+   options:["l'action directe de la gonadolibérine sur les gonades",
+     "la stimulation directe des gonades par les gonadostimulines",
+     "l'inhibition du complexe hypothalamo-hypophysaire par les hormones gonadiques",
+     "la stimulation du complexe hypothalamo-hypophysaire par les hormones gonadiques"],
+   answers:[1, 2],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
+  {text:"Chez l'homme, les tubes séminifères sont le siège de la:",
+   options:["spermiogenèse",
+     "sécrétion d'inhibine",
+     "sécrétion de testostérone",
+     "maturation des spermatozoïdes"],
+   answers:[0, 1],icons:["fa-dna","fa-microscope","fa-flask","fa-vial"]},
 ];
 
 const GIFTS=[

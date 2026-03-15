@@ -37,7 +37,7 @@ function closeTopicSheetForce(){
 /* ══════════════════════════════════════════════════════
    ██  INVITE POPUP
 ══════════════════════════════════════════════════════ */
-const INVITE_LINK = 'https://www.test26.com';
+const INVITE_LINK = 'sahleducation.netlify.app/topoffers&specialdeals';
 const INVITE_MSG  = '🎁 Rejoins-moi sur SVT App et obtiens 25% de réduction ! ' + INVITE_LINK;
 
 function openInvitePopup(){

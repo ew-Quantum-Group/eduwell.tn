@@ -764,6 +764,1214 @@ a{text-decoration:none;color:inherit}
   .score-stats{gap:6px} .stat-chip{padding:5px 12px}
   .q-nav-tag{display:none}
 }
+
+/* ══════════════════════════════════════════════════════
+   ██  CHAT SCREEN  (Social feed — Duolingo style)
+══════════════════════════════════════════════════════ */
+#chat{
+  background:#131f24;
+  color:#fff;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── STICKY HEADER ── */
+.chat-header{
+  position:sticky;top:0;z-index:90;
+  background:rgba(19,31,36,.97);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  padding:calc(14px + var(--sat)) 20px 0;
+  
+}
+.chat-header-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-bottom:14px;
+  border-bottom:1.5px solid rgba(255,255,255,.07);
+}
+.chat-header h1{
+  font-size:26px;font-weight:900;color:#fff;letter-spacing:-.4px;
+  font-family:var(--fb);
+}
+.chat-header-actions{display:flex;align-items:center;gap:10px}
+.chat-hdr-btn{
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.7);font-size:15px;cursor:pointer;
+  transition:background .15s,transform .15s var(--spring);
+  -webkit-tap-highlight-color:transparent;
+}
+.chat-hdr-btn:active{transform:scale(.9);background:rgba(255,255,255,.15)}
+
+/* ── TABS ── */
+.chat-tabs{
+  display:flex;
+  background:rgba(19,31,36,.97);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1.5px solid rgba(255,255,255,.07);
+  position:sticky;top:calc(58px + var(--sat));z-index:89;
+}
+.chat-tab{
+  flex:1;padding:12px 0 10px;text-align:center;
+  font-size:13px;font-weight:700;color:rgba(255,255,255,.4);
+  cursor:pointer;position:relative;letter-spacing:.2px;
+  transition:color .18s;-webkit-tap-highlight-color:transparent;
+}
+.chat-tab.active{color:#fff}
+.chat-tab.active::after{
+  content:'';position:absolute;bottom:0;left:16px;right:16px;height:2.5px;
+  background:#58cc02;border-radius:3px 3px 0 0;
+}
+
+/* ── SCROLL BODY ── */
+.chat-body{overflow-y:auto;-webkit-overflow-scrolling:touch}
+
+/* ── FRIEND CTA BANNER ── */
+.chat-cta-card{
+  margin:16px 16px 0;
+  background:linear-gradient(135deg,rgba(255,255,255,.05) 0%,rgba(255,255,255,.03) 100%);
+  border:1.5px solid rgba(255,255,255,.09);
+  border-radius:20px;
+  padding:20px 18px 18px;
+  
+  position:relative;overflow:hidden;
+}
+.chat-cta-card::before{
+  content:'';position:absolute;inset:0;border-radius:20px;
+  background:linear-gradient(135deg,rgba(88,204,2,.07),transparent 60%);
+  pointer-events:none;
+}
+.chat-cta-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(88,204,2,.14);border:1px solid rgba(88,204,2,.25);
+  border-radius:99px;padding:4px 12px;
+  font-size:12px;font-weight:700;color:#58cc02;margin-bottom:12px;
+}
+.chat-cta-badge i{font-size:10px}
+.chat-cta-text{
+  font-size:17px;font-weight:700;color:rgba(255,255,255,.9);
+  line-height:1.55;margin-bottom:16px;
+}
+.chat-cta-text strong{color:#fff;font-weight:900}
+.chat-cta-row{display:flex;justify-content:flex-end}
+.chat-cta-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#58cc02;
+  border:none;border-radius:14px;padding:13px 22px;
+  font-size:15px;font-weight:800;color:#fff;cursor:pointer;
+  box-shadow:0 4px 0 #3a8a00,0 6px 16px rgba(88,204,2,.25);
+  transition:transform .13s var(--spring),box-shadow .13s;
+  -webkit-tap-highlight-color:transparent;
+  font-family:var(--fb);
+}
+.chat-cta-btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 #3a8a00,0 10px 22px rgba(88,204,2,.3)}
+.chat-cta-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #3a8a00}
+.chat-cta-btn i{font-size:14px}
+
+/* ── SECTION LABEL ── */
+.chat-section-lbl{
+  padding:20px 20px 10px;
+  
+  display:flex;align-items:center;gap:10px;
+}
+.chat-section-lbl span{
+  font-size:11px;font-weight:800;text-transform:uppercase;
+  letter-spacing:.8px;color:rgba(255,255,255,.35);
+}
+.chat-section-lbl::before,.chat-section-lbl::after{
+  content:'';flex:1;height:1px;background:rgba(255,255,255,.07);
+}
+
+/* ── FEED CARD ── */
+.chat-feed{padding:0 16px;display:flex;flex-direction:column;gap:12px;padding-bottom:8px}
+.chat-feed-item{
+  background:rgba(255,255,255,.04);
+  border:1.5px solid rgba(255,255,255,.08);
+  border-radius:20px;
+  overflow:hidden;
+  
+  transition:border-color .18s,background .18s;
+  -webkit-tap-highlight-color:transparent;
+  position:relative;
+}
+.chat-feed-item:active{background:rgba(255,255,255,.07)}
+
+/* top accent line */
+.cfi-accent{height:3px;width:100%}
+.cfi-accent.orange{background:linear-gradient(90deg,#ff9600,#ffc800)}
+.cfi-accent.blue{background:linear-gradient(90deg,#1cb0f6,#7b61ff)}
+.cfi-accent.green{background:linear-gradient(90deg,#58cc02,#89e219)}
+.cfi-accent.red{background:linear-gradient(90deg,#ff4b4b,#ff9600)}
+
+/* card body */
+.cfi-body{padding:16px 16px 0;display:flex;gap:14px;align-items:flex-start}
+
+/* illustration block */
+.cfi-illus-wrap{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:10px}
+.cfi-illus{
+  width:80px;height:80px;border-radius:18px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:42px;position:relative;
+  overflow:visible;
+}
+.cfi-illus.orange{background:linear-gradient(145deg,#ff9f00,#ff6b00)}
+.cfi-illus.blue{background:linear-gradient(145deg,#1cb0f6,#4b44d4)}
+.cfi-illus.green{background:linear-gradient(145deg,#58cc02,#2d8800)}
+.cfi-illus.red{background:linear-gradient(145deg,#ff4b4b,#c20000)}
+.cfi-illus.purple{background:linear-gradient(145deg,#9254de,#5a1fa1)}
+
+/* avatar row pinned to bottom of illustration */
+.cfi-avs{
+  position:absolute;bottom:-11px;left:50%;transform:translateX(-50%);
+  display:flex;white-space:nowrap;
+}
+.cfi-av{
+  width:28px;height:28px;border-radius:50%;
+  border:2.5px solid #131f24;
+  background:#2a3540;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;flex-shrink:0;overflow:hidden;
+}
+.cfi-av:not(:first-child){margin-right:-9px}
+.cfi-av img,.cff-av img{display:block;width:100%;height:100%;object-fit:contain}
+.wuiz-illus-av img{display:block;width:100%;height:100%;object-fit:contain}
+.wuiz-av-node img{display:block}
+.wuiz-illus-box img{display:block}
+.wuiz-react-circle img{display:block;pointer-events:none}
+.cfi-react-icon img{display:inline-block;vertical-align:middle}
+
+/* text content */
+.cfi-content{flex:1;min-width:0;padding-top:2px}
+.cfi-meta{display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap}
+.cfi-names{font-size:16px;font-weight:800;color:#fff;line-height:1.3}
+.cfi-time{font-size:12px;color:rgba(255,255,255,.35);font-weight:600;white-space:nowrap}
+.cfi-msg{
+  font-size:16px;font-weight:700;color:rgba(255,255,255,.85);
+  line-height:1.5;margin-top:4px;
+}
+.cfi-msg strong{color:#fff}
+
+/* card footer */
+.cfi-footer{
+  margin-top:14px;padding:12px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid rgba(255,255,255,.06);
+}
+.cfi-reactions{display:flex;align-items:center;gap:5px}
+.cfi-react-count{font-size:13px;font-weight:700;color:rgba(255,255,255,.35);margin-left:6px}
+.cfi-react-btn{
+  height:34px;padding:0 10px;border-radius:99px;
+  background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.1);
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:14px;color:rgba(255,255,255,.7);cursor:pointer;
+  font-family:var(--fb);font-weight:600;font-size:13px;
+  transition:background .14s,transform .14s var(--spring),border-color .14s;
+  -webkit-tap-highlight-color:transparent;
+}
+.cfi-react-btn.active{
+  background:rgba(88,204,2,.15);border-color:rgba(88,204,2,.3);color:#58cc02;
+}
+.cfi-react-btn:active{transform:scale(.9)}
+.cfi-react-icon{font-size:16px;line-height:1}
+
+.cfi-action-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.14);
+  border-radius:12px;padding:9px 16px;
+  font-size:14px;font-weight:700;color:#fff;cursor:pointer;
+  transition:background .15s,transform .14s var(--spring),border-color .15s;
+  -webkit-tap-highlight-color:transparent;
+  font-family:var(--fb);
+}
+.cfi-action-btn:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.22)}
+.cfi-action-btn:active{transform:scale(.93)}
+
+/* ── EMPTY STATE ── */
+.chat-empty{
+  padding:48px 32px;text-align:center;
+}
+.chat-empty-icon{font-size:56px;margin-bottom:16px;display:block}
+.chat-empty-title{font-size:20px;font-weight:800;color:#fff;margin-bottom:8px}
+.chat-empty-sub{font-size:14px;color:rgba(255,255,255,.4);line-height:1.6}
+
+/* ── ONLINE FRIENDS ROW ── */
+.chat-friends-row{
+  padding:16px 16px 4px;
+  
+}
+.chat-friends-scroll{
+  display:flex;gap:14px;overflow-x:auto;padding-bottom:8px;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+}
+.chat-friends-scroll::-webkit-scrollbar{display:none}
+.cff-item{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  flex-shrink:0;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.cff-av-wrap{position:relative}
+.cff-av{
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,#2a3f4a,#1a2f38);
+  border:2.5px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;font-size:24px;
+  transition:transform .15s var(--spring);
+}
+.cff-item:active .cff-av{transform:scale(.9)}
+.cff-online{
+  position:absolute;bottom:1px;right:1px;
+  width:12px;height:12px;border-radius:50%;
+  background:#58cc02;border:2px solid #131f24;
+}
+.cff-name{font-size:11px;font-weight:700;color:rgba(255,255,255,.55);max-width:56px;text-align:center;line-height:1.2;word-break:break-word}
+
+/* ══════════════════════════════════════════════════════
+   ██  EXERCICES SCREEN
+══════════════════════════════════════════════════════ */
+#exercices{
+  background:var(--bg);
+  min-height:100vh;
+  padding-bottom:calc(80px + var(--sab));
+}
+.ex-nav{
+  position:sticky;top:0;z-index:90;
+  height:calc(58px + var(--sat));padding-top:var(--sat);
+  background:rgba(255,255,255,.92);
+  backdrop-filter:saturate(200%) blur(24px);-webkit-backdrop-filter:saturate(200%) blur(24px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding-left:20px;padding-right:20px;
+}
+.ex-nav-brand{display:flex;align-items:center;gap:10px}
+.ex-nav-icon{
+  width:34px;height:34px;background:linear-gradient(135deg,#6366f1,#4f46e5);
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:15px;box-shadow:0 3px 10px rgba(99,102,241,.35);
+}
+.ex-nav-title{font-family:var(--fd);font-size:18px;font-weight:400;letter-spacing:-.02em;color:var(--text)}
+.ex-nav-title em{font-style:italic;color:#6366f1}
+.ex-search-btn{
+  width:36px;height:36px;border-radius:10px;background:var(--bg);
+  border:1px solid var(--border-md);display:flex;align-items:center;
+  justify-content:center;color:var(--muted);font-size:14px;
+  transition:background .15s;
+}
+.ex-search-btn:active{background:#fff;box-shadow:var(--s-sm)}
+/* ── SEGMENT SWITCH ── */
+.ex-switch-wrap{
+  padding:14px 16px 0;
+}
+.ex-switch{
+  display:flex;
+  background:rgba(0,0,0,.06);
+  border-radius:14px;
+  padding:4px;
+  gap:4px;
+}
+.ex-switch-btn{
+  flex:1;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  padding:10px 0;
+  border-radius:10px;
+  font-family:var(--fb);font-size:13px;font-weight:700;
+  color:var(--muted);
+  background:transparent;border:none;cursor:pointer;
+  transition:background .2s,color .2s,box-shadow .2s;
+  -webkit-tap-highlight-color:transparent;
+}
+.ex-switch-btn i{font-size:13px}
+.ex-switch-btn.active{
+  background:#fff;
+  color:#4338ca;
+  box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+.ex-hero{
+  margin:16px 16px 0;
+  background:linear-gradient(128deg,#312e81 0%,#4338ca 55%,#6366f1 100%);
+  border-radius:20px;padding:20px;position:relative;overflow:hidden;
+  box-shadow:0 12px 36px rgba(99,102,241,.25),0 4px 12px rgba(0,0,0,.08);
+}
+.ex-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(100deg,rgba(255,255,255,.08) 0%,transparent 55%);pointer-events:none}
+.ex-hero::after{content:'';position:absolute;right:-40px;top:-40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.05);pointer-events:none}
+.ex-hero-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.6);margin-bottom:5px;position:relative;z-index:1}
+.ex-hero-title{font-size:20px;font-weight:900;color:#fff;letter-spacing:-.3px;margin-bottom:4px;position:relative;z-index:1}
+.ex-hero-sub{font-size:12px;color:rgba(255,255,255,.65);font-weight:500;position:relative;z-index:1;margin-bottom:14px}
+.ex-hero-stats{display:flex;gap:12px;position:relative;z-index:1;flex-wrap:wrap}
+.ex-hero-stat{background:rgba(255,255,255,.12);border-radius:10px;padding:8px 14px;display:flex;align-items:center;gap:7px}
+.ex-hero-stat i{font-size:12px;color:rgba(255,255,255,.8)}
+.ex-hero-stat span{font-size:12px;font-weight:700;color:#fff}
+.ex-sec{margin:22px 16px 0;display:flex;align-items:center;gap:10px}
+.ex-sec-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--faint);white-space:nowrap;display:flex;align-items:center;gap:6px}
+.ex-sec-label i{font-size:9px}
+.ex-sec-line{flex:1;height:1px;background:rgba(0,0,0,.08)}
+.ex-sec-count{font-size:11px;font-weight:700;color:#6366f1;background:#eef2ff;border:1px solid rgba(99,102,241,.2);border-radius:99px;padding:2px 10px}
+.ex-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 16px 0}
+.ex-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:18px;
+  padding:16px 14px 14px;display:flex;flex-direction:column;gap:8px;
+  box-shadow:var(--s-xs);cursor:pointer;position:relative;overflow:hidden;
+  transition:transform .18s var(--spring),box-shadow .18s,border-color .18s;
+  -webkit-tap-highlight-color:transparent;
+}
+.ex-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:18px 18px 0 0}
+.ex-card.indigo::before{background:linear-gradient(90deg,#6366f1,#818cf8)}
+.ex-card.purple::before{background:linear-gradient(90deg,#8b5cf6,#c084fc)}
+.ex-card.blue::before{background:linear-gradient(90deg,#3b82f6,#38bdf8)}
+.ex-card.teal::before{background:linear-gradient(90deg,#14b8a6,#34d399)}
+.ex-card.orange::before{background:linear-gradient(90deg,#f97316,#fbbf24)}
+.ex-card.red::before{background:linear-gradient(90deg,#ef4444,#f97316)}
+.ex-card:hover{transform:translateY(-3px);box-shadow:var(--s-md);border-color:rgba(0,0,0,.13)}
+.ex-card:active{transform:scale(.97)}
+.ex-card-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ex-card.indigo .ex-card-icon{background:#eef2ff;color:#6366f1}
+.ex-card.purple .ex-card-icon{background:#faf5ff;color:#8b5cf6}
+.ex-card.blue .ex-card-icon{background:#eff6ff;color:#3b82f6}
+.ex-card.teal .ex-card-icon{background:#f0fdfa;color:#14b8a6}
+.ex-card.orange .ex-card-icon{background:#fff7ed;color:#f97316}
+.ex-card.red .ex-card-icon{background:#fef2f2;color:#ef4444}
+.ex-card-name{font-size:13px;font-weight:800;color:var(--text);line-height:1.3;letter-spacing:-.1px}
+.ex-card-sub{font-size:11px;color:var(--faint);font-weight:500}
+.ex-card-count{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--muted);margin-top:2px}
+.ex-card-count i{font-size:9px}
+.ex-card-prog{margin-top:auto}
+.ex-card-prog-track{height:4px;background:rgba(0,0,0,.06);border-radius:99px;overflow:hidden;margin-bottom:4px}
+.ex-card-prog-fill{height:100%;border-radius:99px}
+.ex-card.indigo .ex-card-prog-fill{background:linear-gradient(90deg,#6366f1,#818cf8)}
+.ex-card.purple .ex-card-prog-fill{background:linear-gradient(90deg,#8b5cf6,#c084fc)}
+.ex-card.blue .ex-card-prog-fill{background:linear-gradient(90deg,#3b82f6,#38bdf8)}
+.ex-card.teal .ex-card-prog-fill{background:linear-gradient(90deg,#14b8a6,#34d399)}
+.ex-card.orange .ex-card-prog-fill{background:linear-gradient(90deg,#f97316,#fbbf24)}
+.ex-card.red .ex-card-prog-fill{background:linear-gradient(90deg,#ef4444,#f97316)}
+.ex-card-prog-label{font-size:10px;font-weight:600;color:var(--faint)}
+
+/* ── MODAL SHEET (layer 1) ── */
+.ex-modal-overlay{
+  position:fixed;inset:0;z-index:400;
+  background:rgba(0,0,0,.48);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .28s var(--ease);
+}
+.ex-modal-overlay.open{opacity:1;pointer-events:all}
+.ex-sheet{
+  width:100%;max-width:520px;background:#fff;
+  border-radius:28px 28px 0 0;border-top:1.5px solid var(--border);
+  max-height:88vh;display:flex;flex-direction:column;
+  transform:translateY(100%);transition:transform .38s cubic-bezier(.34,1.2,.64,1);
+  overflow:hidden;
+}
+.ex-modal-overlay.open .ex-sheet{transform:translateY(0)}
+.ex-sheet-handle{width:36px;height:4px;background:rgba(0,0,0,.1);border-radius:4px;margin:12px auto 0;flex-shrink:0}
+.ex-sheet-head{padding:16px 20px 14px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-shrink:0}
+.ex-sheet-head-text{flex:1}
+.ex-sheet-head-title{font-size:20px;font-weight:900;color:var(--text);letter-spacing:-.3px;margin-bottom:4px}
+.ex-sheet-head-desc{font-size:13px;color:var(--muted);line-height:1.5}
+.ex-sheet-close{width:36px;height:36px;border-radius:10px;flex-shrink:0;background:var(--bg);border:1px solid var(--border-md);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px;cursor:pointer;transition:background .14s}
+.ex-sheet-close:active{background:#e5e7eb}
+.ex-sheet-sub-label{padding:14px 20px 8px;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;color:var(--text);flex-shrink:0}
+.ex-sheet-sub-label i{width:28px;height:28px;border-radius:8px;background:#eef2ff;color:#6366f1;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.ex-sheet-list{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 16px calc(24px + var(--sab));flex:1}
+.ex-sheet-item{
+  display:flex;align-items:center;gap:14px;
+  background:var(--bg);border:1px solid var(--border);border-radius:14px;
+  padding:14px 16px;margin-bottom:10px;cursor:pointer;
+  transition:background .15s,border-color .15s,transform .15s var(--spring),box-shadow .15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.ex-sheet-item:active{transform:scale(.97)}
+.ex-sheet-item:hover{background:#fff;border-color:rgba(99,102,241,.25);box-shadow:var(--s-sm)}
+.ex-sheet-item-icon{width:44px;height:44px;border-radius:12px;flex-shrink:0;background:linear-gradient(135deg,#c7d2fe,#a5b4fc);display:flex;align-items:center;justify-content:center;font-size:19px;color:#4338ca}
+.ex-sheet-item.correction .ex-sheet-item-icon{background:linear-gradient(135deg,#bbf7d0,#86efac);color:#15803d}
+.ex-sheet-item-info{flex:1;min-width:0}
+.ex-sheet-item-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px}
+.ex-sheet-item-meta{font-size:11px;color:var(--faint);font-weight:500;display:flex;align-items:center;gap:5px}
+.ex-sheet-item-meta i{font-size:9px}
+.ex-sheet-item-arrow{color:var(--faint);font-size:12px;flex-shrink:0}
+
+/* ── PDF VIEWER (layer 2) ── */
+.ex-pdf-overlay{
+  position:fixed;inset:0;z-index:500;background:#111827;
+  display:flex;flex-direction:column;
+  opacity:0;pointer-events:none;transition:opacity .25s var(--ease);
+}
+.ex-pdf-overlay.open{opacity:1;pointer-events:all}
+.ex-pdf-nav{
+  height:calc(56px + var(--sat));padding-top:var(--sat);
+  background:rgba(17,24,39,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  display:flex;align-items:center;justify-content:space-between;
+  padding-left:16px;padding-right:16px;flex-shrink:0;
+}
+.ex-pdf-nav-title{font-size:15px;font-weight:700;color:#fff;flex:1;text-align:center;padding:0 12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ex-pdf-close,.ex-pdf-expand{
+  width:36px;height:36px;border-radius:10px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.8);font-size:14px;cursor:pointer;flex-shrink:0;
+  transition:background .14s,transform .14s var(--spring);
+}
+.ex-pdf-close:active,.ex-pdf-expand:active{background:rgba(255,255,255,.15);transform:scale(.9)}
+.ex-pdf-body{flex:1;overflow:hidden;position:relative;background:#1f2937}
+.ex-pdf-iframe{width:100%;height:100%;border:none;background:#fff}
+.ex-pdf-loading{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:#1f2937;transition:opacity .3s;
+}
+.ex-pdf-loading.hide{opacity:0;pointer-events:none}
+.ex-pdf-spinner{width:44px;height:44px;border-radius:50%;border:3px solid rgba(255,255,255,.1);border-top-color:#6366f1;animation:spin 0.9s linear infinite}
+.ex-pdf-loading-title{font-size:14px;font-weight:600;color:rgba(255,255,255,.7)}
+.ex-pdf-footer{
+  height:calc(44px + var(--sab));padding-bottom:var(--sab);
+  background:rgba(17,24,39,.95);border-top:1px solid rgba(255,255,255,.08);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.ex-pdf-page-info{font-size:13px;font-weight:700;color:rgba(255,255,255,.7);background:rgba(255,255,255,.08);border-radius:99px;padding:5px 16px}
+
+/* ══════════════════════════════════════════════════════
+   ██  WUIZ SCREEN  (Social feed — Duolingo photo style)
+══════════════════════════════════════════════════════ */
+#wuiz{
+  background:#131f24;color:#fff;
+  min-height:100vh;
+  padding-bottom:calc(80px + var(--sab));
+  overflow-x:hidden;
+}
+
+/* sticky header */
+.wuiz-header{
+  position:sticky;top:0;z-index:90;
+  background:rgba(19,31,36,.97);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  padding:calc(14px + var(--sat)) 22px 14px;
+  
+  border-bottom:1.5px solid rgba(255,255,255,.07);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.wuiz-header h1{font-size:26px;font-weight:900;color:#fff;letter-spacing:-.4px;font-family:var(--fb)}
+.wuiz-header-actions{display:flex;align-items:center;gap:10px}
+.wuiz-hdr-btn{
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.7);font-size:15px;cursor:pointer;
+  transition:background .15s,transform .15s var(--spring);
+  -webkit-tap-highlight-color:transparent;
+}
+.wuiz-hdr-btn:active{transform:scale(.9);background:rgba(255,255,255,.15)}
+
+/* ── BIG HERO BANNER (green with avatars) ── */
+.wuiz-hero-banner{
+  margin:16px 16px 0;
+  background:linear-gradient(135deg,#58cc02 0%,#89e219 100%);
+  border-radius:22px;
+  padding:0;
+  position:relative;overflow:hidden;
+  min-height:180px;
+  display:flex;align-items:center;justify-content:center;
+}
+.wuiz-hero-banner::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(255,255,255,.18),transparent 70%);
+  pointer-events:none;
+}
+/* network lines svg background */
+.wuiz-hero-network{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.wuiz-hero-network svg{width:100%;height:100%;position:absolute;inset:0}
+/* avatar nodes */
+.wuiz-hero-avatars{
+  position:relative;z-index:2;
+  width:100%;height:180px;
+  display:flex;align-items:center;justify-content:center;
+}
+.wuiz-av-node{
+  position:absolute;
+  width:70px;height:70px;border-radius:50%;
+  background:#fff;border:4px solid rgba(255,255,255,.5);
+  display:flex;align-items:center;justify-content:center;
+  font-size:34px;
+  box-shadow:0 6px 20px rgba(0,0,0,.18);
+  overflow:hidden;
+}
+.wuiz-av-node.center{
+  width:84px;height:84px;
+  border:5px solid rgba(255,255,255,.7);
+  font-size:40px;
+  box-shadow:0 8px 28px rgba(0,0,0,.22);
+}
+.wuiz-av-node.tl{top:20px;left:40px}
+.wuiz-av-node.tr{top:18px;right:40px}
+.wuiz-av-node.center{top:50%;left:50%;transform:translate(-50%,-50%)}
+
+/* ── CTA SECTION ── */
+.wuiz-cta{padding:22px 22px 18px;border-bottom:1.5px solid rgba(255,255,255,.07)}
+.wuiz-cta-days{font-size:14px;color:rgba(255,255,255,.4);font-weight:600;margin-bottom:10px}
+.wuiz-cta-text{font-size:20px;font-weight:800;color:#fff;line-height:1.5;margin-bottom:20px}
+.wuiz-cta-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.2);
+  border-radius:16px;padding:14px 26px;
+  font-size:17px;font-weight:800;color:#fff;cursor:pointer;
+  font-family:var(--fb);
+  transition:background .16s,transform .14s var(--spring),border-color .16s;
+  -webkit-tap-highlight-color:transparent;
+  
+}
+.wuiz-cta-btn:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.35)}
+.wuiz-cta-btn:active{transform:scale(.95)}
+.wuiz-cta::after{content:'';display:table;clear:both}
+
+/* ── FEED ITEMS (exact Duolingo layout) ── */
+.wuiz-feed-item{
+  padding:22px 22px 0;
+  border-bottom:1.5px solid rgba(255,255,255,.07);
+  
+}
+
+/* top row: illustration LEFT + text RIGHT */
+.wuiz-item-row{display:flex;align-items:flex-start;gap:18px}
+
+/* illustration block (left in RTL = right visually) */
+.wuiz-item-illus{
+  flex-shrink:0;
+  width:96px;
+  display:flex;flex-direction:column;align-items:flex-start;gap:0;
+}
+.wuiz-illus-box{
+  width:96px;height:96px;border-radius:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:54px;position:relative;overflow:visible;
+}
+/* overlapping circular avatars pinned at bottom of illus */
+.wuiz-illus-avs{
+  display:flex;margin-top:4px;
+}
+.wuiz-illus-av{
+  width:32px;height:32px;border-radius:50%;
+  background:#2a3540;border:3px solid #131f24;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex-shrink:0;overflow:hidden;
+  position:relative;
+}
+.wuiz-illus-av:not(:first-child){margin-right:-10px}
+
+/* text block */
+.wuiz-item-text{flex:1;min-width:0;padding-top:4px}
+.wuiz-item-names{font-size:18px;font-weight:800;color:#fff;margin-bottom:2px;line-height:1.3}
+.wuiz-item-days{font-size:14px;color:rgba(255,255,255,.38);font-weight:600;margin-bottom:10px}
+.wuiz-item-msg{font-size:19px;font-weight:800;color:#fff;line-height:1.45;margin-bottom:16px}
+.wuiz-item-action{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.09);border:2px solid rgba(255,255,255,.16);
+  border-radius:14px;padding:12px 20px;
+  font-size:16px;font-weight:800;color:#fff;cursor:pointer;
+  font-family:var(--fb);
+  transition:background .15s,transform .14s var(--spring),border-color .15s;
+  -webkit-tap-highlight-color:transparent;
+  text-decoration:none;display:inline-flex;
+}
+.wuiz-item-action:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.28)}
+.wuiz-item-action:active{transform:scale(.95)}
+
+/* reaction footer */
+.wuiz-item-foot{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 0 18px;
+  margin-top:12px;
+}
+.wuiz-react-row{display:flex;align-items:center;gap:0}
+.wuiz-react-count{font-size:15px;font-weight:700;color:rgba(255,255,255,.35);margin-left:10px}
+.wuiz-react-circle{
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:17px;cursor:pointer;margin-right:-8px;
+  transition:background .13s,transform .13s var(--spring);
+  -webkit-tap-highlight-color:transparent;
+  position:relative;z-index:1;
+}
+.wuiz-react-circle:first-child{z-index:3}
+.wuiz-react-circle:nth-child(2){z-index:2}
+.wuiz-react-circle:last-child{z-index:1}
+.wuiz-react-circle:active{transform:scale(.82);background:rgba(255,255,255,.18)}
+.wuiz-react-circle.lit{background:rgba(88,204,2,.18);border-color:rgba(88,204,2,.3)}
+
+/* ══════════════════════════════════════════════════════
+   ██  DESKTOP BLOCKER
+══════════════════════════════════════════════════════ */
+#desktop-block{
+  display:none;
+  position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);
+  flex-direction:column;align-items:center;justify-content:center;
+  gap:0;text-align:center;padding:40px;
+}
+#desktop-block .db-phone{
+  font-size:80px;margin-bottom:8px;
+  animation:dbBounce 2s ease-in-out infinite;
+}
+@keyframes dbBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+#desktop-block .db-title{
+  font-family:'Figtree',sans-serif;font-size:28px;font-weight:900;
+  color:#fff;letter-spacing:-.5px;margin-bottom:10px;
+}
+#desktop-block .db-sub{
+  font-size:16px;color:rgba(255,255,255,.55);font-weight:500;
+  max-width:380px;line-height:1.6;margin-bottom:32px;
+}
+#desktop-block .db-badge{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(22,163,74,.15);border:1.5px solid rgba(22,163,74,.35);
+  border-radius:99px;padding:12px 24px;
+  font-size:14px;font-weight:700;color:#4ade80;
+}
+#desktop-block .db-badge i{font-size:16px}
+#desktop-block .db-screens{
+  display:flex;gap:16px;margin-top:40px;
+}
+#desktop-block .db-scr{
+  width:60px;height:108px;border-radius:12px;
+  border:2px solid rgba(255,255,255,.12);
+  background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;color:rgba(255,255,255,.3);
+  position:relative;overflow:hidden;
+}
+#desktop-block .db-scr.active{
+  border-color:rgba(22,163,74,.6);
+  background:linear-gradient(160deg,rgba(22,163,74,.15),rgba(22,163,74,.05));
+  color:#4ade80;
+}
+#desktop-block .db-scr.active::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#22c55e,#4ade80);
+}
+@media(min-width:768px){
+  #desktop-block{display:flex}
+  body > *:not(#desktop-block){display:none !important}
+}
+
+/* ══════════════════════════════════════════════════════
+   ██  BOTTOM NAV BAR (Duolingo-style)
+══════════════════════════════════════════════════════ */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:200;
+  height:calc(62px + var(--sab));
+  padding-bottom:var(--sab);
+  background:#1c1c1e;
+  border-top:1px solid rgba(255,255,255,.07);
+  display:flex;align-items:stretch;justify-content:space-around;
+}
+.bn-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:4px;cursor:pointer;border:none;background:none;
+  padding:0;position:relative;
+  -webkit-tap-highlight-color:transparent;
+  transition:transform .15s var(--spring);
+}
+.bn-item:active{transform:scale(.88)}
+.bn-icon-wrap{
+  width:46px;height:34px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:12px;
+  position:relative;
+  transition:background .18s;
+}
+.bn-item.active .bn-icon-wrap{
+  background:rgba(88,204,2,.15);
+}
+.bn-icon-wrap i{
+  font-size:21px;
+  color:rgba(255,255,255,.28);
+  transition:color .2s, transform .2s var(--spring);
+}
+.bn-item.active .bn-icon-wrap i{
+  color:#58cc02;
+  transform:scale(1.15) translateY(-1px);
+}
+.bn-label{
+  font-size:10px;font-weight:700;letter-spacing:.3px;
+  color:rgba(255,255,255,.3);
+  text-transform:uppercase;transition:color .18s;
+}
+.bn-item.active .bn-label{color:#58cc02}
+
+/* notif dot */
+.bn-dot{
+  position:absolute;top:2px;right:4px;
+  width:7px;height:7px;border-radius:50%;
+  background:#ff4b4b;border:2px solid #1c1c1e;
+  display:none;
+}
+.bn-dot.show{display:block}
+
+/* home screen bottom padding so content doesn't hide behind navbar */
+#home,#chat{padding-bottom:calc(80px + var(--sab))}
+
+/* ══════════════════════════════════════════════════════
+   ██  CARTES SCREEN
+══════════════════════════════════════════════════════ */
+#cartes{
+  background:var(--bg);
+  padding-bottom:calc(80px + var(--sab));
+}
+
+/* sticky nav */
+.cartes-nav{
+  position:sticky;top:0;z-index:90;
+  height:calc(58px + var(--sat));padding-top:var(--sat);
+  background:rgba(255,255,255,.92);
+  backdrop-filter:saturate(200%) blur(24px);-webkit-backdrop-filter:saturate(200%) blur(24px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding-left:20px;padding-right:20px;
+}
+.cartes-nav-brand{display:flex;align-items:center;gap:10px}
+.cartes-nav-icon{
+  width:34px;height:34px;
+  background:linear-gradient(135deg,#818cf8,#6366f1);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:15px;
+  box-shadow:0 3px 10px rgba(99,102,241,.35);
+}
+.cartes-nav-name{font-family:var(--fd);font-size:19px;font-weight:400;letter-spacing:-.02em}
+.cartes-nav-name em{font-style:italic;color:#6366f1}
+
+/* hero */
+.cartes-hero{
+  margin:16px 16px 0;
+  background:linear-gradient(135deg,#7c3aed 0%,#6d28d9 40%,#5b21b6 100%);
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.12);
+  height:130px;
+  position:relative;overflow:hidden;
+  box-shadow:0 14px 40px rgba(109,40,217,.3),0 4px 12px rgba(0,0,0,.12);
+  display:flex;align-items:center;
+}
+/* subtle radial glow top-right */
+.cartes-hero::before{
+  content:'';position:absolute;top:-40px;right:-40px;
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.13) 0%,transparent 70%);
+  pointer-events:none;
+}
+/* bottom shimmer */
+.cartes-hero::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(255,255,255,.06) 0%,transparent 60%);
+  pointer-events:none;
+}
+/* mascot / illustration on the left */
+.cartes-hero-mascot{
+  position:absolute;left:0;bottom:0;
+  width:130px;height:130px;
+  display:flex;align-items:flex-end;justify-content:center;
+  z-index:2;pointer-events:none;
+  font-size:86px;line-height:1;
+  filter:drop-shadow(-4px 4px 12px rgba(0,0,0,.22));
+}
+/* text block on the right */
+.cartes-hero-text{
+  position:absolute;right:20px;top:50%;transform:translateY(-50%);
+  z-index:2;text-align:right;
+  max-width:58%;
+}
+.cartes-hero-title{
+  font-size:22px;font-weight:900;color:#fff;
+  letter-spacing:-.3px;line-height:1.2;margin-bottom:6px;
+}
+.cartes-hero-sub{
+  font-size:13px;color:rgba(255,255,255,.75);
+  font-weight:500;line-height:1.45;
+}
+
+/* section header */
+.cartes-sec{
+  margin:22px 16px 0;
+  display:flex;align-items:center;gap:10px;
+}
+.cartes-sec-label{
+  font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;
+  color:var(--faint);white-space:nowrap;
+  display:flex;align-items:center;gap:6px;
+}
+.cartes-sec-line{flex:1;height:1px;background:rgba(0,0,0,.08)}
+.cartes-sec-count{
+  font-size:11px;font-weight:700;color:#6366f1;
+  background:#eef2ff;border:1px solid rgba(99,102,241,.2);
+  border-radius:99px;padding:2px 10px;white-space:nowrap;
+}
+
+/* grid of category cards — single column, tall cards */
+.cartes-grid{
+  display:flex;flex-direction:column;
+  gap:14px;padding:14px 16px 0;
+}
+/* ── NEW full-width cartes card (matches Exercices screenshot style) ── */
+.carte-cat-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:18px 18px 16px;
+  display:flex;flex-direction:column;gap:0;
+  box-shadow:var(--s-xs);
+  cursor:pointer;
+  transition:transform .18s var(--spring),box-shadow .18s,border-color .18s;
+  position:relative;overflow:hidden;
+  animation:nodeIn .45s var(--ease) both;
+  -webkit-tap-highlight-color:transparent;
+}
+.carte-cat-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:20px 20px 0 0;
+}
+.carte-cat-card.indigo::before{background:linear-gradient(90deg,#6366f1,#818cf8)}
+.carte-cat-card.purple::before{background:linear-gradient(90deg,#8b5cf6,#c084fc)}
+.carte-cat-card.blue::before{background:linear-gradient(90deg,#3b82f6,#38bdf8)}
+.carte-cat-card.teal::before{background:linear-gradient(90deg,#14b8a6,#34d399)}
+.carte-cat-card.orange::before{background:linear-gradient(90deg,#f97316,#fbbf24)}
+.carte-cat-card.green::before{background:linear-gradient(90deg,#22c55e,#6ee007)}
+.carte-cat-card.red::before{background:linear-gradient(90deg,#ef4444,#f97316)}
+.carte-cat-card.pink::before{background:linear-gradient(90deg,#ec4899,#f472b6)}
+.carte-cat-card:hover{transform:translateY(-3px);box-shadow:var(--s-md);border-color:rgba(0,0,0,.13)}
+.carte-cat-card:active{transform:scale(.97)}
+
+/* top row: icon + title/sub */
+.cccard-top{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.cccard-icon{
+  width:52px;height:52px;flex-shrink:0;
+  border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+}
+.cccard-icon img{display:block;flex-shrink:0}
+.carte-cat-card.indigo .cccard-icon{background:#eef2ff}
+.carte-cat-card.purple .cccard-icon{background:#faf5ff}
+.carte-cat-card.blue   .cccard-icon{background:#eff6ff}
+.carte-cat-card.teal   .cccard-icon{background:#f0fdfa}
+.carte-cat-card.orange .cccard-icon{background:#fff7ed}
+.carte-cat-card.green  .cccard-icon{background:#f0fdf4}
+.carte-cat-card.red    .cccard-icon{background:#fef2f2}
+.carte-cat-card.pink   .cccard-icon{background:#fdf2f8}
+.cccard-titles{flex:1;min-width:0}
+.cccard-name{
+  font-size:15px;font-weight:800;
+  color:var(--text);line-height:1.3;letter-spacing:-.15px;margin-bottom:2px;
+}
+.cccard-subtitle{font-size:11px;font-weight:600;color:var(--faint)}
+/* desc */
+.cccard-desc{
+  font-size:12.5px;font-weight:400;
+  color:var(--muted);line-height:1.55;
+  margin-bottom:12px;
+}
+/* meta row */
+.cccard-meta{
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:10px;
+}
+.cccard-meta-item{
+  display:flex;align-items:center;gap:5px;
+  font-size:11.5px;font-weight:600;color:var(--muted);
+}
+.cccard-meta-item i{font-size:10px;color:var(--faint)}
+/* progress */
+.cccard-prog-track{
+  height:4px;background:rgba(0,0,0,.07);border-radius:99px;overflow:hidden;margin-bottom:5px;
+}
+.cccard-prog-fill{height:100%;border-radius:99px;width:0%}
+.carte-cat-card.indigo .cccard-prog-fill{background:linear-gradient(90deg,#6366f1,#818cf8)}
+.carte-cat-card.purple .cccard-prog-fill{background:linear-gradient(90deg,#8b5cf6,#c084fc)}
+.carte-cat-card.blue .cccard-prog-fill{background:linear-gradient(90deg,#3b82f6,#38bdf8)}
+.carte-cat-card.teal .cccard-prog-fill{background:linear-gradient(90deg,#14b8a6,#34d399)}
+.carte-cat-card.orange .cccard-prog-fill{background:linear-gradient(90deg,#f97316,#fbbf24)}
+.carte-cat-card.green .cccard-prog-fill{background:linear-gradient(90deg,#22c55e,#6ee007)}
+.carte-cat-card.red .cccard-prog-fill{background:linear-gradient(90deg,#ef4444,#f97316)}
+.carte-cat-card.pink .cccard-prog-fill{background:linear-gradient(90deg,#ec4899,#f472b6)}
+.cccard-prog-label{font-size:10px;font-weight:600;color:var(--faint)}
+
+/* ── CARTES MODAL OVERLAY (category → images) ── */
+.cartes-modal-overlay{
+  position:fixed;inset:0;z-index:300;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  display:flex;align-items:flex-end;
+  opacity:0;pointer-events:none;
+  transition:opacity .25s var(--ease);
+}
+.cartes-modal-overlay.open{opacity:1;pointer-events:all}
+
+.cartes-sheet{
+  width:100%;background:var(--surface);
+  border-radius:24px 24px 0 0;
+  max-height:92vh;display:flex;flex-direction:column;
+  transform:translateY(100%);
+  transition:transform .32s cubic-bezier(.32,1,.6,1);
+  overflow:hidden;
+}
+.cartes-modal-overlay.open .cartes-sheet{transform:translateY(0)}
+.cartes-sheet-handle{width:36px;height:4px;border-radius:99px;background:#d1d5db;margin:14px auto 0;flex-shrink:0}
+.cartes-sheet-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 22px 16px;border-bottom:1px solid #f0f0f0;flex-shrink:0;
+  gap:14px;
+}
+.cartes-sheet-head-left{display:flex;align-items:center;gap:14px;flex:1;min-width:0}
+.cartes-sheet-icon{
+  width:52px;height:52px;flex-shrink:0;
+  border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+}
+.cartes-sheet-icon img{width:28px;height:28px;display:block}
+.cartes-sheet-head-text{flex:1;min-width:0}
+.cartes-sheet-head-text .cartes-sheet-title{
+  font-size:20px;font-weight:900;color:#111827;
+  margin-bottom:3px;line-height:1.2;letter-spacing:-.4px;
+}
+.cartes-sheet-head-text .cartes-sheet-desc{
+  font-size:12px;color:#6b7280;line-height:1.5;font-weight:500;
+  display:flex;align-items:center;gap:5px;
+}
+.cartes-sheet-head-text .cartes-sheet-desc i{font-size:10px}
+.cartes-sheet-close{
+  width:46px;height:46px;border-radius:14px;
+  background:#f1f5f9;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;color:#374151;flex-shrink:0;
+  font-weight:800;
+  transition:background .15s;
+  border:none;
+}
+.cartes-sheet-close:active{background:#e2e8f0}
+
+/* images grid inside sheet */
+.cartes-sheet-body{overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;padding:16px 16px 28px}
+.cartes-images-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;
+}
+.cartes-img-card{
+  background:#fff;border:1px solid #e8eaed;
+  border-radius:16px;overflow:hidden;cursor:pointer;
+  transition:box-shadow .18s,transform .18s;
+  -webkit-tap-highlight-color:transparent;
+  animation:nodeIn .35s var(--ease) both;
+  box-shadow:0 1px 3px rgba(0,0,0,.06);
+}
+.cartes-img-card:active{transform:scale(.96);box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.cartes-img-thumb{
+  width:100%;aspect-ratio:4/3;object-fit:cover;
+  display:block;background:#f1f5f9;
+}
+.cartes-img-thumb-placeholder{
+  width:100%;aspect-ratio:4/3;
+  background:linear-gradient(135deg,#f8fafc,#f1f5f9);
+  display:flex;align-items:center;justify-content:center;
+  font-size:32px;color:#94a3b8;
+}
+.cartes-img-label{
+  padding:8px 10px 10px;font-size:12px;font-weight:600;color:#374151;
+  line-height:1.35;
+}
+
+/* ── LIGHTBOX (full image viewer) ── */
+.cartes-lightbox{
+  position:fixed;inset:0;z-index:400;
+  background:rgba(0,0,0,.92);
+  display:flex;flex-direction:column;
+  opacity:0;pointer-events:none;
+  transition:opacity .22s var(--ease);
+}
+.cartes-lightbox.open{opacity:1;pointer-events:all}
+.cartes-lightbox-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:calc(16px + var(--sat)) 16px 12px;flex-shrink:0;
+}
+.cartes-lightbox-back{
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.18);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:16px;cursor:pointer;
+  transition:background .15s;
+}
+.cartes-lightbox-back:active{background:rgba(255,255,255,.25)}
+.cartes-lightbox-title{
+  font-size:14px;font-weight:700;color:rgba(255,255,255,.85);
+  text-align:center;flex:1;padding:0 12px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.cartes-lightbox-spacer{width:38px;flex-shrink:0}
+.cartes-lightbox-body{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;padding:12px;
+}
+.cartes-lightbox-img{
+  max-width:100%;max-height:100%;object-fit:contain;
+  border-radius:12px;
+  animation:lbIn .25s var(--ease) both;
+}
+@keyframes lbIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+.cartes-lightbox-footer{
+  padding:14px 20px calc(20px + var(--sab));flex-shrink:0;
+  display:flex;justify-content:center;
+}
+.cartes-lightbox-counter{
+  font-size:13px;font-weight:700;color:rgba(255,255,255,.5);
+  background:rgba(255,255,255,.08);border-radius:99px;padding:6px 18px;
+}
+
+/* ══════════════════════════════════════════════════════
+   ██  QCM QUIZ BOTTOM SHEET
+══════════════════════════════════════════════════════ */
+.qcm-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s var(--ease);
+}
+.qcm-overlay.open{opacity:1;pointer-events:all}
+.qcm-sheet{
+  width:100%;max-width:520px;
+  background:#fff;
+  border-radius:28px 28px 0 0;
+  border-top:1.5px solid var(--border);
+  padding-bottom:calc(20px + var(--sab));
+  transform:translateY(100%);
+  transition:transform .42s cubic-bezier(.34,1.2,.64,1);
+  max-height:88vh;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+}
+.qcm-overlay.open .qcm-sheet{transform:translateY(0)}
+
+/* handle */
+.qcm-sheet-handle{
+  width:40px;height:4px;background:rgba(0,0,0,.1);
+  border-radius:4px;margin:14px auto 0;flex-shrink:0;
+}
+
+/* ── HEADER ── */
+.qcm-sheet-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 20px 0;gap:14px;flex-shrink:0;
+}
+.qcm-sheet-head-left{display:flex;align-items:center;gap:14px;flex:1;min-width:0}
+.qcm-sheet-head-icon{
+  width:52px;height:52px;flex-shrink:0;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;
+}
+.qcm-sheet-head-icon.flamme{background:linear-gradient(135deg,#fff7ed,#ffedd5)}
+.qcm-sheet-head-icon.etoiles{background:linear-gradient(135deg,#fefce8,#fef9c3)}
+.qcm-sheet-head-icon.diamant{background:linear-gradient(135deg,#f0f9ff,#e0f2fe)}
+.qcm-sheet-head-text{flex:1;min-width:0}
+.qcm-sheet-title{font-size:19px;font-weight:900;color:var(--text);letter-spacing:-.35px;margin-bottom:3px;line-height:1.15}
+.qcm-sheet-sub{font-size:12px;color:var(--muted);font-weight:500;display:flex;align-items:center;gap:5px}
+.qcm-sheet-sub i{font-size:9px}
+.qcm-sheet-close{
+  width:36px;height:36px;border-radius:12px;flex-shrink:0;
+  background:var(--bg);border:1px solid var(--border-md);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);font-size:13px;cursor:pointer;
+  transition:background .14s,color .14s;
+}
+.qcm-sheet-close:hover{background:#f1f5f9;color:var(--text)}
+.qcm-sheet-close:active{background:#e5e7eb}
+
+/* divider */
+.qcm-sheet-divider{height:1px;background:var(--border);margin:16px 20px 0;flex-shrink:0}
+
+/* ── QUIZ LIST (vertical stacked) ── */
+.qcm-list-wrap{
+  overflow-y:auto;-webkit-overflow-scrolling:touch;
+  flex:1;
+  padding:14px 16px 4px;
+  scrollbar-width:none;
+  display:flex;flex-direction:column;gap:10px;
+}
+.qcm-list-wrap::-webkit-scrollbar{display:none}
+
+/* individual quiz row card */
+.qcm-card{
+  width:100%;flex-shrink:0;
+  background:var(--bg2);
+  border:1.5px solid var(--border);
+  border-radius:18px;
+  padding:14px 14px 14px 14px;
+  display:flex;align-items:center;gap:13px;
+  cursor:pointer;
+  text-decoration:none;
+  transition:transform .18s var(--spring),box-shadow .18s,border-color .18s,background .15s;
+  -webkit-tap-highlight-color:transparent;
+  position:relative;overflow:hidden;
+}
+.qcm-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3.5px;border-radius:18px 0 0 18px;
+}
+.qcm-card.indigo::before{background:linear-gradient(180deg,#6366f1,#818cf8)}
+.qcm-card.green::before {background:linear-gradient(180deg,#22c55e,#6ee007)}
+.qcm-card.orange::before{background:linear-gradient(180deg,#f97316,#fbbf24)}
+.qcm-card.blue::before  {background:linear-gradient(180deg,#3b82f6,#38bdf8)}
+.qcm-card.purple::before{background:linear-gradient(180deg,#8b5cf6,#c084fc)}
+.qcm-card.red::before   {background:linear-gradient(180deg,#ef4444,#f97316)}
+.qcm-card.teal::before  {background:linear-gradient(180deg,#14b8a6,#34d399)}
+.qcm-card:hover{transform:translateX(3px);box-shadow:var(--s-sm);border-color:rgba(0,0,0,.12);background:#fff}
+.qcm-card:active{transform:scale(.98)}
+
+/* icon box */
+.qcm-card-icon{
+  width:48px;height:48px;flex-shrink:0;border-radius:13px;
+  display:flex;align-items:center;justify-content:center;
+}
+.qcm-card.indigo .qcm-card-icon{background:#eef2ff}
+.qcm-card.green  .qcm-card-icon{background:#f0fdf4}
+.qcm-card.orange .qcm-card-icon{background:#fff7ed}
+.qcm-card.blue   .qcm-card-icon{background:#eff6ff}
+.qcm-card.purple .qcm-card-icon{background:#faf5ff}
+.qcm-card.red    .qcm-card-icon{background:#fef2f2}
+.qcm-card.teal   .qcm-card-icon{background:#f0fdfa}
+
+/* text block */
+.qcm-card-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+.qcm-card-name{font-size:14px;font-weight:800;color:var(--text);line-height:1.3;letter-spacing:-.1px}
+.qcm-card-chips{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.qcm-card-meta{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:11px;font-weight:600;color:var(--muted);
+  background:var(--bg);border:1px solid var(--border-md);
+  border-radius:99px;padding:2px 8px;
+}
+.qcm-card-meta i{font-size:9px;color:var(--faint)}
+.qcm-card-diff{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:11px;font-weight:700;border-radius:99px;padding:2px 9px;
+}
+.qcm-card-diff::before{
+  content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0;
+}
+.qcm-card-diff.easy  {background:#f0fdf4;color:#16a34a} .qcm-card-diff.easy::before{background:#16a34a}
+.qcm-card-diff.medium{background:#fff7ed;color:#ea580c} .qcm-card-diff.medium::before{background:#ea580c}
+.qcm-card-diff.hard  {background:#fef2f2;color:#dc2626} .qcm-card-diff.hard::before{background:#dc2626}
+
+/* arrow chevron */
+.qcm-card-arrow{
+  width:28px;height:28px;flex-shrink:0;border-radius:8px;
+  background:var(--bg);border:1px solid var(--border-md);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--faint);font-size:11px;
+  transition:background .15s,color .15s,transform .15s;
+}
+.qcm-card:hover .qcm-card-arrow{background:var(--accent);border-color:var(--accent);color:#fff;transform:translateX(2px)}
+
+/* footer count */
+.qcm-sheet-footer{
+  flex-shrink:0;padding:12px 20px 0;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  font-size:11px;font-weight:600;color:var(--faint);
+}
+.qcm-sheet-footer i{font-size:9px}
 </style>
 </head>
 <body>
@@ -923,6 +2131,528 @@ a{text-decoration:none;color:inherit}
   </div>
 </div><!-- #quiz -->
 
+<!-- ══════════════════════════════════════════════════════
+     CHAT SCREEN  (Social Feed — Duolingo Style)
+══════════════════════════════════════════════════════ -->
+<div id="chat" class="screen">
+
+  <!-- STICKY HEADER -->
+  <div class="chat-header">
+    <div class="chat-header-inner">
+      <h1><img src="https://api.iconify.design/fluent-emoji/question-mark.svg" width="22px" height="22px" style="vertical-align:middle;display:inline-block" loading="lazy"/> QCM</h1>
+      <div class="chat-header-actions">
+        <button class="chat-hdr-btn" onclick="window.open('#','_blank')" title="Ajouter un ami">
+          <i class="fa-solid fa-user-plus"></i>
+        </button>
+        <button class="chat-hdr-btn" onclick="window.open('#','_blank')" title="Rechercher">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="chat-tabs">
+    <div class="chat-tab active" onclick="chatTab(this,'following')">Abonnements</div>
+    <div class="chat-tab" onclick="chatTab(this,'friends')">Amis</div>
+    <div class="chat-tab" onclick="chatTab(this,'global')">Mondial</div>
+  </div>
+
+  <!-- SCROLLABLE BODY -->
+  <div class="chat-body">
+
+    <!-- ONLINE FRIENDS ROW -->
+    <div class="chat-friends-row">
+      <div class="chat-friends-scroll">
+        <div class="cff-item">
+          <div class="cff-av-wrap">
+            <div class="cff-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+            <div class="cff-online"></div>
+          </div>
+          <span class="cff-name">Maysa</span>
+        </div>
+        <div class="cff-item">
+          <div class="cff-av-wrap">
+            <div class="cff-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+            <div class="cff-online"></div>
+          </div>
+          <span class="cff-name">Niko</span>
+        </div>
+        <div class="cff-item">
+          <div class="cff-av-wrap">
+            <div class="cff-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+          </div>
+          <span class="cff-name">Bilal</span>
+        </div>
+        <div class="cff-item">
+          <div class="cff-av-wrap">
+            <div class="cff-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+            <div class="cff-online"></div>
+          </div>
+          <span class="cff-name">Ahmed</span>
+        </div>
+        <div class="cff-item">
+          <div class="cff-av-wrap">
+            <div class="cff-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+          </div>
+          <span class="cff-name">Sara</span>
+        </div>
+        <div class="cff-item">
+          <div class="cff-av-wrap">
+            <div class="cff-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+            <div class="cff-online"></div>
+          </div>
+          <span class="cff-name">Khalid</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FRIEND CTA BANNER -->
+    <div class="chat-cta-card">
+      <div class="chat-cta-badge"><i class="fa-solid fa-users"></i> 3 jours consécutifs</div>
+      <div class="chat-cta-text">Vous avez <strong>5,6 fois</strong> plus de chances de terminer le programme en suivant des amis.</div>
+      <div class="chat-cta-row">
+        <button class="chat-cta-btn" onclick="window.open('#','_blank')">
+          <i class="fa-solid fa-user-plus"></i> Ajouter des amis
+        </button>
+      </div>
+    </div>
+
+    <!-- SECTION LABEL -->
+    <div class="chat-section-lbl"><span>Activités récentes</span></div>
+
+    <!-- FEED -->
+    <div class="chat-feed" id="chatFeed">
+
+      <!-- Card 1 — Dual streak -->
+      <div class="chat-feed-item">
+        <div class="cfi-accent orange"></div>
+        <div class="cfi-body">
+          <div class="cfi-illus-wrap">
+            <div class="cfi-illus orange">
+              <img src="https://api.iconify.design/fluent-emoji/fire.svg" width="48px" height="48px" style="vertical-align:middle;display:inline-block" loading="lazy"/>
+              <div class="cfi-avs">
+                <div class="cfi-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="14px" height="14px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+                <div class="cfi-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="14px" height="14px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+              </div>
+            </div>
+          </div>
+          <div class="cfi-content">
+            <div class="cfi-meta">
+              <span class="cfi-names">Niko et Maysa</span>
+            </div>
+            <div class="cfi-time">il y a 6 jours</div>
+            <div class="cfi-msg">Ils ont atteint <strong>550 jours</strong> de flamme d'amis ! 🔥</div>
+          </div>
+        </div>
+        <div class="cfi-footer">
+          <div class="cfi-reactions">
+            <button class="cfi-react-btn" onclick="toggleReact(this)">
+              <span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/hundred-points.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span>
+              <span>128</span>
+            </button>
+            <button class="cfi-react-btn" onclick="toggleReact(this)">
+              <span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span>
+              <span>94</span>
+            </button>
+            <button class="cfi-react-btn" onclick="toggleReact(this)">
+              <span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/party-popper.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span>
+              <span>4597</span>
+            </button>
+          </div>
+          <button class="cfi-action-btn" onclick="openQuizSheet('flamme')">
+            🎉 Félicitez-les
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 2 — 365 days -->
+      <div class="chat-feed-item">
+        <div class="cfi-accent blue"></div>
+        <div class="cfi-body">
+          <div class="cfi-illus-wrap">
+            <div class="cfi-illus blue">
+              <img src="https://api.iconify.design/fluent-emoji/graduation-cap.svg" width="48px" height="48px" style="vertical-align:middle;display:inline-block" loading="lazy"/>
+              <div class="cfi-avs">
+                <div class="cfi-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="14px" height="14px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+              </div>
+            </div>
+          </div>
+          <div class="cfi-content">
+            <div class="cfi-meta">
+              <span class="cfi-names">Bilal Madridista</span>
+            </div>
+            <div class="cfi-time">il y a 6 jours</div>
+            <div class="cfi-msg">A complété <strong>365 jours</strong> de flamme ! 🏅</div>
+          </div>
+        </div>
+        <div class="cfi-footer">
+          <div class="cfi-reactions">
+            <button class="cfi-react-btn" onclick="toggleReact(this)">
+              <span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/hundred-points.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span>
+              <span>87</span>
+            </button>
+            <button class="cfi-react-btn" onclick="toggleReact(this)">
+              <span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span>
+              <span>61</span>
+            </button>
+            <button class="cfi-react-btn" onclick="toggleReact(this)">
+              <span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/party-popper.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span>
+              <span>4090</span>
+            </button>
+          </div>
+          <button class="cfi-action-btn" onclick="openQuizSheet('flamme')">
+            🎉 Félicitez-le
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 3 — Perfect score -->
+      <div class="chat-feed-item">
+        <div class="cfi-accent green"></div>
+        <div class="cfi-body">
+          <div class="cfi-illus-wrap">
+            <div class="cfi-illus green">
+              <img src="https://api.iconify.design/fluent-emoji/trophy.svg" width="48px" height="48px" style="vertical-align:middle;display:inline-block" loading="lazy"/>
+              <div class="cfi-avs">
+                <div class="cfi-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="14px" height="14px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+              </div>
+            </div>
+          </div>
+          <div class="cfi-content">
+            <div class="cfi-meta">
+              <span class="cfi-names">Ahmed Star</span>
+            </div>
+            <div class="cfi-time">il y a 2 jours</div>
+            <div class="cfi-msg">A terminé une unité complète avec <strong>3 étoiles</strong> sans fautes ! ⭐</div>
+          </div>
+        </div>
+        <div class="cfi-footer">
+          <div class="cfi-reactions">
+            <button class="cfi-react-btn active" onclick="toggleReact(this)">
+              <span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/hundred-points.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span>
+              <span>43</span>
+            </button>
+            <button class="cfi-react-btn" onclick="toggleReact(this)">
+              <span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span>
+              <span>29</span>
+            </button>
+            <button class="cfi-react-btn" onclick="toggleReact(this)">
+              <span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/party-popper.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span>
+              <span>2061</span>
+            </button>
+          </div>
+          <button class="cfi-action-btn" onclick="openQuizSheet('etoiles')">
+            🎉 Félicitez-le
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 4 — XP league -->
+      <div class="chat-feed-item">
+        <div class="cfi-accent red"></div>
+        <div class="cfi-body">
+          <div class="cfi-illus-wrap">
+            <div class="cfi-illus purple">
+              <img src="https://api.iconify.design/fluent-emoji/gem-stone.svg" width="48px" height="48px" style="vertical-align:middle;display:inline-block" loading="lazy"/>
+              <div class="cfi-avs">
+                <div class="cfi-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="14px" height="14px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+              </div>
+            </div>
+          </div>
+          <div class="cfi-content">
+            <div class="cfi-meta">
+              <span class="cfi-names">Sara</span>
+            </div>
+            <div class="cfi-time">il y a 3 jours</div>
+            <div class="cfi-msg">A rejoint la ligue <strong>Diamant</strong> et atteint 2 400 XP ! 💎</div>
+          </div>
+        </div>
+        <div class="cfi-footer">
+          <div class="cfi-reactions">
+            <button class="cfi-react-btn" onclick="toggleReact(this)">
+              <span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/hundred-points.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span>
+              <span>56</span>
+            </button>
+            <button class="cfi-react-btn" onclick="toggleReact(this)">
+              <span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span>
+              <span>38</span>
+            </button>
+            <button class="cfi-react-btn" onclick="toggleReact(this)">
+              <span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/party-popper.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span>
+              <span>1743</span>
+            </button>
+          </div>
+          <button class="cfi-action-btn" onclick="openQuizSheet('diamant')">
+            🎉 Félicitez-la
+          </button>
+        </div>
+      </div>
+
+    </div><!-- .chat-feed -->
+  </div><!-- .chat-body -->
+
+<!-- QCM QUIZ SHEET -->
+<div class="qcm-overlay" id="qcmOverlay" onclick="closeQuizSheet(event)">
+  <div class="qcm-sheet" id="qcmSheet">
+    <div class="qcm-sheet-handle"></div>
+    <div class="qcm-sheet-head">
+      <div class="qcm-sheet-head-left">
+        <div class="qcm-sheet-head-icon" id="qcmSheetIcon">🔥</div>
+        <div class="qcm-sheet-head-text">
+          <div class="qcm-sheet-title" id="qcmSheetTitle">Quiz disponibles</div>
+          <div class="qcm-sheet-sub" id="qcmSheetSub"><i class="fa-solid fa-circle-question"></i> Choisissez un quiz</div>
+        </div>
+      </div>
+      <button class="qcm-sheet-close" onclick="closeQuizSheetForce()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="qcm-sheet-divider"></div>
+    <div class="qcm-list-wrap" id="qcmScroll"></div>
+    <div class="qcm-sheet-footer" id="qcmSheetFooter">
+      <i class="fa-solid fa-layer-group"></i><span>Sélectionnez un quiz pour commencer</span>
+    </div>
+  </div>
+</div>
+</div><!-- #chat -->
+
+<!-- ══════════════════════════════════════════════════════
+     EXERCICES SCREEN
+══════════════════════════════════════════════════════ -->
+<div id="exercices" class="screen">
+
+  <!-- NAV -->
+  <nav class="ex-nav">
+    <div class="ex-nav-brand">
+      <div class="ex-nav-icon"><i class="fa-solid fa-file-pdf"></i></div>
+      <span class="ex-nav-title">SVT<em>Docs</em></span>
+    </div>
+    <button class="ex-search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+  </nav>
+
+  <!-- SEGMENT SWITCH -->
+  <div class="ex-switch-wrap">
+    <div class="ex-switch">
+      <button class="ex-switch-btn active" id="exSwitchCours" onclick="exSwitchTo('cours')">
+        <i class="fa-solid fa-book-open"></i> Cours
+      </button>
+      <button class="ex-switch-btn" id="exSwitchExercices" onclick="exSwitchTo('exercices')">
+        <i class="fa-solid fa-file-lines"></i> Exercices
+      </button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="ex-hero">
+    <div class="ex-hero-label" id="exHeroLabel"><i class="fa-solid fa-book-open"></i>&nbsp;BAC SVT · Maroc</div>
+    <div class="ex-hero-title" id="exHeroTitle">Cours &amp; Résumés</div>
+    <div class="ex-hero-sub" id="exHeroSub">Fiches de cours complètes pour maîtriser le programme</div>
+    <div class="ex-hero-stats">
+      <div class="ex-hero-stat"><i class="fa-solid fa-folder-open"></i><span id="exHeroChapCount">0 chapitres</span></div>
+      <div class="ex-hero-stat"><i class="fa-solid fa-file-pdf"></i><span id="exTotalDocs">0 documents</span></div>
+    </div>
+  </div>
+
+  <!-- SECTION LABEL -->
+  <div class="ex-sec">
+    <div class="ex-sec-label" id="exSecLabel"><i class="fa-solid fa-book-open"></i>&nbsp;Chapitres</div>
+    <div class="ex-sec-line"></div>
+    <div class="ex-sec-count" id="exSecCount">0</div>
+  </div>
+
+  <!-- GRID -->
+  <div class="ex-grid" id="exGrid"></div>
+
+</div><!-- #exercices -->
+
+<!-- MODAL LAYER 1 — Container Sheet -->
+<div class="ex-modal-overlay" id="exModalOverlay" onclick="exCloseSheet(event)">
+  <div class="ex-sheet" id="exSheet">
+    <div class="ex-sheet-handle"></div>
+    <div class="ex-sheet-head">
+      <div class="ex-sheet-head-text">
+        <div class="ex-sheet-head-title" id="exSheetTitle">—</div>
+        <div class="ex-sheet-head-desc" id="exSheetDesc">—</div>
+      </div>
+      <button class="ex-sheet-close" onclick="exCloseSheetForce()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="ex-sheet-sub-label">
+      <i class="fa-solid fa-file-pdf"></i>Documents PDF
+    </div>
+    <div class="ex-sheet-list" id="exSheetList"></div>
+  </div>
+</div>
+
+<!-- MODAL LAYER 2 — PDF Viewer -->
+<div class="ex-pdf-overlay" id="exPdfOverlay">
+  <div class="ex-pdf-nav">
+    <button class="ex-pdf-close" onclick="exClosePdf()"><i class="fa-solid fa-arrow-left"></i></button>
+    <div class="ex-pdf-nav-title" id="exPdfTitle">—</div>
+    <button class="ex-pdf-expand" id="exPdfExpandBtn"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></button>
+  </div>
+  <div class="ex-pdf-body">
+    <div class="ex-pdf-loading" id="exPdfLoading">
+      <div class="ex-pdf-spinner"></div>
+      <div class="ex-pdf-loading-title">Chargement du document…</div>
+    </div>
+    <iframe class="ex-pdf-iframe" id="exPdfFrame" src="" onload="exPdfLoaded()"></iframe>
+  </div>
+  <div class="ex-pdf-footer">
+    <div class="ex-pdf-page-info" id="exPdfPageInfo">Document PDF</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     WUIZ SCREEN  (Social Feed — Duolingo style)
+══════════════════════════════════════════════════════ -->
+<div id="wuiz" class="screen">
+
+  <!-- STICKY HEADER -->
+  <div class="wuiz-header">
+    <h1><img src="https://api.iconify.design/fluent-emoji/clapper-board.svg" width="22px" height="22px" style="display:inline-block;vertical-align:middle" loading="lazy"/>EduStream</h1>
+    <div class="wuiz-header-actions">
+      <button class="wuiz-hdr-btn" onclick="window.open('#','_blank')">
+        <i class="fa-solid fa-user-plus"></i>
+      </button>
+      <button class="wuiz-hdr-btn" onclick="window.open('#','_blank')">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- BIG GREEN HERO BANNER -->
+  <div class="wuiz-hero-banner">
+    <!-- SVG network lines -->
+    <div class="wuiz-hero-network">
+      <svg viewBox="0 0 375 180" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <line x1="80" y1="55" x2="187" y2="90" stroke="rgba(0,0,0,.12)" stroke-width="2.5"/>
+        <line x1="295" y1="53" x2="187" y2="90" stroke="rgba(0,0,0,.12)" stroke-width="2.5"/>
+        <circle cx="80" cy="55" r="5" fill="rgba(0,0,0,.1)"/>
+        <circle cx="295" cy="53" r="5" fill="rgba(0,0,0,.1)"/>
+        <circle cx="187" cy="90" r="7" fill="rgba(0,0,0,.1)"/>
+      </svg>
+    </div>
+    <!-- avatar nodes -->
+    <div class="wuiz-hero-avatars">
+      <div class="wuiz-av-node tl"><img src="https://api.iconify.design/fluent-emoji/graduation-cap.svg" width="32px" height="32px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+      <div class="wuiz-av-node center"><img src="https://api.iconify.design/fluent-emoji/woman-student.svg" width="36px" height="36px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+      <div class="wuiz-av-node tr"><img src="https://api.iconify.design/fluent-emoji/boy.svg" width="32px" height="32px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="wuiz-cta">
+    <div class="wuiz-cta-days">3 jours</div>
+    <div class="wuiz-cta-text">Vous avez <strong style="color:#58cc02">5,6 fois</strong> plus de chances de terminer le programme en suivant des amis.</div>
+    <a href="#" onclick="return false;" class="wuiz-cta-btn">Ajouter des amis</a>
+  </div>
+
+  <!-- FEED ITEM 1 -->
+  <div class="wuiz-feed-item">
+    <div class="wuiz-item-row">
+      <div class="wuiz-item-illus">
+        <div class="wuiz-illus-box"><img src="https://api.iconify.design/fluent-emoji/fire.svg" width="64px" height="64px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-illus-avs">
+          <div class="wuiz-illus-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="18px" height="18px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+          <div class="wuiz-illus-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="18px" height="18px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        </div>
+      </div>
+      <div class="wuiz-item-text">
+        <div class="wuiz-item-names">Niko et Maysa</div>
+        <div class="wuiz-item-days">6 jours</div>
+        <div class="wuiz-item-msg">Ont atteint 550 jours de flamme d'amis !</div>
+        <a href="#" onclick="return false;" class="wuiz-item-action"><img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="18px" height="18px" style="vertical-align:middle;display:inline-block" loading="lazy"/>&nbsp; Félicitez-les</a>
+      </div>
+    </div>
+    <div class="wuiz-item-foot">
+      <div class="wuiz-react-row">
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/hundred-points.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/party-popper.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+      </div>
+      <span class="wuiz-react-count" id="wrc1">4843</span>
+    </div>
+  </div>
+
+  <!-- FEED ITEM 2 -->
+  <div class="wuiz-feed-item">
+    <div class="wuiz-item-row">
+      <div class="wuiz-item-illus">
+        <div class="wuiz-illus-box"><img src="https://api.iconify.design/fluent-emoji/graduation-cap.svg" width="64px" height="64px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-illus-avs">
+          <div class="wuiz-illus-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="18px" height="18px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        </div>
+      </div>
+      <div class="wuiz-item-text">
+        <div class="wuiz-item-names">Bilal Madridista</div>
+        <div class="wuiz-item-days">6 jours</div>
+        <div class="wuiz-item-msg">A complété 365 jours de flamme !</div>
+        <a href="#" onclick="return false;" class="wuiz-item-action"><img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="18px" height="18px" style="vertical-align:middle;display:inline-block" loading="lazy"/>&nbsp; Félicitez-le</a>
+      </div>
+    </div>
+    <div class="wuiz-item-foot">
+      <div class="wuiz-react-row">
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/hundred-points.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/party-popper.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+      </div>
+      <span class="wuiz-react-count" id="wrc2">4238</span>
+    </div>
+  </div>
+
+  <!-- FEED ITEM 3 -->
+  <div class="wuiz-feed-item">
+    <div class="wuiz-item-row">
+      <div class="wuiz-item-illus">
+        <div class="wuiz-illus-box"><img src="https://api.iconify.design/fluent-emoji/trophy.svg" width="64px" height="64px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-illus-avs">
+          <div class="wuiz-illus-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="18px" height="18px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        </div>
+      </div>
+      <div class="wuiz-item-text">
+        <div class="wuiz-item-names">Ahmed Star</div>
+        <div class="wuiz-item-days">2 jours</div>
+        <div class="wuiz-item-msg">A terminé une unité complète avec 3 étoiles sans fautes !</div>
+        <a href="#" onclick="return false;" class="wuiz-item-action"><img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="18px" height="18px" style="vertical-align:middle;display:inline-block" loading="lazy"/>&nbsp; Félicitez-le</a>
+      </div>
+    </div>
+    <div class="wuiz-item-foot">
+      <div class="wuiz-react-row">
+        <div class="wuiz-react-circle lit" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/hundred-points.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/party-popper.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+      </div>
+      <span class="wuiz-react-count" id="wrc3">2104</span>
+    </div>
+  </div>
+
+  <!-- FEED ITEM 4 -->
+  <div class="wuiz-feed-item">
+    <div class="wuiz-item-row">
+      <div class="wuiz-item-illus">
+        <div class="wuiz-illus-box"><img src="https://api.iconify.design/fluent-emoji/gem-stone.svg" width="64px" height="64px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-illus-avs">
+          <div class="wuiz-illus-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="18px" height="18px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        </div>
+      </div>
+      <div class="wuiz-item-text">
+        <div class="wuiz-item-names">Sara</div>
+        <div class="wuiz-item-days">3 jours</div>
+        <div class="wuiz-item-msg">A rejoint la ligue Diamant et atteint 2 400 XP !</div>
+        <a href="#" onclick="return false;" class="wuiz-item-action"><img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="18px" height="18px" style="vertical-align:middle;display:inline-block" loading="lazy"/>&nbsp; Félicitez-la</a>
+      </div>
+    </div>
+    <div class="wuiz-item-foot">
+      <div class="wuiz-react-row">
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/hundred-points.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/party-popper.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+      </div>
+      <span class="wuiz-react-count" id="wrc4">1743</span>
+    </div>
+  </div>
+
+</div><!-- #wuiz -->
+
 <!-- HOME OVERLAY / SHEET -->
 <div class="h-overlay" id="hOverlay" onclick="closeSheet(event)">
   <div class="h-sheet">
@@ -968,6 +2698,123 @@ a{text-decoration:none;color:inherit}
 
 <!-- TOAST -->
 <div class="toast" id="toast"><i id="tIco" class="fas fa-check"></i><span id="tMsg"></span></div>
+
+<!-- DESKTOP BLOCKER -->
+<div id="desktop-block">
+  <div class="db-phone">📱</div>
+  <div class="db-title">Mobile Uniquement</div>
+  <div class="db-sub">SVTApp est conçu exclusivement pour les appareils mobiles. Veuillez l'ouvrir sur votre téléphone pour la meilleure expérience.</div>
+  <div class="db-badge"><i class="fa-solid fa-mobile-screen-button"></i>Ouvrez sur votre téléphone</div>
+  <div class="db-screens">
+    <div class="db-scr active"><i class="fa-solid fa-mobile-screen-button"></i></div>
+    <div class="db-scr"><i class="fa-solid fa-tablet-screen-button"></i></div>
+    <div class="db-scr"><i class="fa-solid fa-display"></i></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     CARTES SCREEN
+══════════════════════════════════════════════════════ -->
+<div id="cartes" class="screen">
+
+  <!-- NAV -->
+  <nav class="cartes-nav">
+    <div class="cartes-nav-brand">
+      <div class="cartes-nav-icon"><i class="fa-solid fa-layer-group"></i></div>
+      <span class="cartes-nav-name">SVT<em>Cartes</em></span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="cartes-hero">
+    <div class="cartes-hero-mascot"><img src="https://api.iconify.design/fluent-emoji/owl.svg" width="96px" height="96px" loading="lazy"/></div>
+    <div class="cartes-hero-text">
+      <div class="cartes-hero-title">Schémas SVT</div>
+      <div class="cartes-hero-sub">Explorez les schémas<br>pour maîtriser le Bac !</div>
+    </div>
+  </div>
+
+  <!-- SECTION -->
+  <div class="cartes-sec">
+    <div class="cartes-sec-label"><i class="fa-solid fa-grid-2"></i>Catégories</div>
+    <div class="cartes-sec-line"></div>
+    <div class="cartes-sec-count" id="cartesCatCount">8 catégories</div>
+  </div>
+
+  <!-- GRID -->
+  <div class="cartes-grid" id="cartesGrid"></div>
+
+</div><!-- #cartes -->
+
+<!-- CARTES MODAL OVERLAY -->
+<div class="cartes-modal-overlay" id="cartesModalOverlay" onclick="cartesCloseSheet(event)">
+  <div class="cartes-sheet" id="cartesSheet">
+    <div class="cartes-sheet-handle"></div>
+    <div class="cartes-sheet-head">
+      <div class="cartes-sheet-head-left">
+        <div class="cartes-sheet-icon" id="cartesSheetIcon"></div>
+        <div class="cartes-sheet-head-text">
+          <div class="cartes-sheet-title" id="cartesSheetTitle">—</div>
+          <div class="cartes-sheet-desc" id="cartesSheetDesc"><i class="fa-solid fa-images"></i> Cliquez sur une image pour l'agrandir</div>
+        </div>
+      </div>
+      <button class="cartes-sheet-close" onclick="cartesCloseSheetForce()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="cartes-sheet-body">
+      <div class="cartes-images-grid" id="cartesImagesGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CARTES LIGHTBOX -->
+<div class="cartes-lightbox" id="cartesLightbox">
+  <div class="cartes-lightbox-nav">
+    <button class="cartes-lightbox-back" onclick="cartesCloseLightbox()"><i class="fa-solid fa-arrow-left"></i></button>
+    <div class="cartes-lightbox-title" id="cartesLightboxTitle">—</div>
+    <div class="cartes-lightbox-spacer"></div>
+  </div>
+  <div class="cartes-lightbox-body">
+    <img class="cartes-lightbox-img" id="cartesLightboxImg" src="" alt=""/>
+  </div>
+  <div class="cartes-lightbox-footer">
+    <div class="cartes-lightbox-counter" id="cartesLightboxCounter"></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV BAR -->
+<nav class="bottom-nav" id="bottomNav">
+  <button class="bn-item" id="bn-home" onclick="bnClick('home')">
+    <div class="bn-icon-wrap">
+      <i class="fa-solid fa-house"></i>
+    </div>
+    <span class="bn-label">Accueil</span>
+  </button>
+  <button class="bn-item" id="bn-learn" onclick="bnClick('learn')">
+    <div class="bn-icon-wrap">
+      <i class="fa-solid fa-layer-group"></i>
+    </div>
+    <span class="bn-label">Cartes</span>
+  </button>
+  <button class="bn-item" id="bn-quiz" onclick="bnClick('quiz')">
+    <div class="bn-icon-wrap">
+      <i class="fa-solid fa-file-lines"></i>
+      <span class="bn-dot show" id="bn-dot-quiz"></span>
+    </div>
+    <span class="bn-label">Exercices</span>
+  </button>
+  <button class="bn-item" id="bn-hearts" onclick="bnClick('hearts')">
+    <div class="bn-icon-wrap">
+      <i class="fa-solid fa-circle-question"></i>
+    </div>
+    <span class="bn-label">QCM</span>
+  </button>
+  <button class="bn-item" id="bn-profile" onclick="bnClick('profile')">
+    <div class="bn-icon-wrap">
+      <i class="fa-solid fa-film"></i>
+    </div>
+    <span class="bn-label">EduStream</span>
+  </button>
+</nav>
 
 <!-- ══════════════════════════════════════════════════════
      JAVASCRIPT
@@ -1217,6 +3064,9 @@ function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
+  // Hide bottom nav during quiz, show it on all other screens
+  const nav = document.getElementById('bottomNav');
+  if(nav) nav.style.display = (id === 'quiz') ? 'none' : '';
 }
 
 /* ══════════════════════════════════════════════════════
@@ -1796,9 +3646,732 @@ function confetti(){
 }
 
 /* ══════════════════════════════════════════════════════
+   ██  WUIZ INTERACTIONS
+══════════════════════════════════════════════════════ */
+function wuizReact(el){
+  const wasLit = el.classList.contains('lit');
+  // toggle all circles in this row off
+  el.closest('.wuiz-react-row').querySelectorAll('.wuiz-react-circle').forEach(c=>c.classList.remove('lit'));
+  const countEl = el.closest('.wuiz-item-foot').querySelector('.wuiz-react-count');
+  let n = parseInt(countEl.textContent.replace(/,/g,''));
+  if(!wasLit){
+    el.classList.add('lit');
+    countEl.textContent = (n+1).toLocaleString();
+  } else {
+    countEl.textContent = Math.max(0,n-1).toLocaleString();
+  }
+}
+
+/* ══════════════════════════════════════════════════════
+   ██  CHAT INTERACTIONS
+══════════════════════════════════════════════════════ */
+function toggleReact(btn){
+  const wasActive = btn.classList.contains('active');
+  btn.closest('.cfi-reactions').querySelectorAll('.cfi-react-btn').forEach(b=>b.classList.remove('active'));
+  if(!wasActive){
+    btn.classList.add('active');
+    const numEl = btn.querySelector('span:last-child');
+    numEl.textContent = (parseInt(numEl.textContent.replace(/,/g,''))+1).toLocaleString();
+  }
+}
+function chatTab(el, tab){
+  document.querySelectorAll('.chat-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ══════════════════════════════════════════════════════
+   ██  BOTTOM NAV
+══════════════════════════════════════════════════════ */
+function bnClick(tab){
+  document.querySelectorAll('.bn-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById('bn-'+tab)?.classList.add('active');
+
+  if(tab==='home'){
+    if(document.getElementById('quiz').classList.contains('active')){
+      if(confirm('Quitter le quiz ? Votre progression sera perdue.')){
+        stopTimer();
+        document.onkeydown=null;
+        showScreen('home');
+        renderHome();
+      } else {
+        document.getElementById('bn-home').classList.add('active');
+      }
+    } else {
+      showScreen('home');
+      renderHome();
+    }
+  } else if(tab==='hearts'){
+    if(document.getElementById('quiz').classList.contains('active')){
+      if(confirm('Quitter le quiz ? Votre progression sera perdue.')){
+        stopTimer();
+        document.onkeydown=null;
+        showScreen('chat');
+      } else {
+        document.getElementById('bn-home').classList.add('active');
+      }
+    } else {
+      showScreen('chat');
+    }
+  } else if(tab==='quiz'){
+    if(document.getElementById('quiz').classList.contains('active')){
+      if(confirm('Quitter le quiz ? Votre progression sera perdue.')){
+        stopTimer();
+        document.onkeydown=null;
+        showScreen('exercices');
+      } else {
+        document.getElementById('bn-home').classList.add('active');
+      }
+    } else {
+      showScreen('exercices');
+    }
+  } else if(tab==='profile'){
+    if(document.getElementById('quiz').classList.contains('active')){
+      if(confirm('Quitter le quiz ? Votre progression sera perdue.')){
+        stopTimer();
+        document.onkeydown=null;
+        showScreen('wuiz');
+      } else {
+        document.getElementById('bn-home').classList.add('active');
+      }
+    } else {
+      showScreen('wuiz');
+    }
+  }
+  // other tabs: no-op for now (could add screens later)
+  if(tab==='learn'){
+    if(document.getElementById('quiz').classList.contains('active')){
+      if(confirm('Quitter le quiz ? Votre progression sera perdue.')){
+        stopTimer();
+        document.onkeydown=null;
+        showScreen('cartes');
+      } else {
+        document.getElementById('bn-home').classList.add('active');
+      }
+    } else {
+      showScreen('cartes');
+    }
+  }
+}
+// Patch showScreen to sync bottom nav
+const _orig_showScreen = showScreen;
+showScreen = function(id){
+  _orig_showScreen(id);
+  document.querySelectorAll('.bn-item').forEach(el=>el.classList.remove('active'));
+  if(id==='exercices')   document.getElementById('bn-quiz')?.classList.add('active');
+  else if(id==='wuiz')   document.getElementById('bn-profile')?.classList.add('active');
+  else if(id==='cartes') document.getElementById('bn-learn')?.classList.add('active');
+  else if(id==='chat')   document.getElementById('bn-hearts')?.classList.add('active');
+  else                   document.getElementById('bn-home')?.classList.add('active');
+};
+// Set home active on load
+document.getElementById('bn-home')?.classList.add('active');
+
+/* ══════════════════════════════════════════════════════
+   ██  COURS — DATA
+══════════════════════════════════════════════════════ */
+const COURS_DATA = [
+  {
+    id: "cours-repro-h",
+    name: "Reproduction – Partie Homme",
+    short: "Repro H",
+    desc: "Découvrir, de manière simple et claire, les étapes et les organes impliqués dans la reproduction masculine.",
+    color: "indigo",
+    icon: "fa-person",
+    lessons: 2,
+    url: "https://drive.google.com/file/d/REPLACE_COURS_REPRO_H/preview"
+  },
+  {
+    id: "cours-repro-f",
+    name: "Reproduction – Partie Femme",
+    short: "Repro F",
+    desc: "Comprendre facilement le rôle des organes reproducteurs féminins et les différentes étapes du cycle reproductif.",
+    color: "pink",
+    icon: "fa-person-dress",
+    lessons: 7,
+    url: "https://drive.google.com/file/d/REPLACE_COURS_REPRO_F/preview"
+  },
+  {
+    id: "cours-genetique",
+    name: "Génétique Moléculaire",
+    short: "Génétique",
+    desc: "Les mécanismes de l'hérédité, la structure de l'ADN et les mutations génétiques expliqués clairement.",
+    color: "purple",
+    icon: "fa-dna",
+    lessons: 5,
+    url: "https://drive.google.com/file/d/REPLACE_COURS_GENETIQUE/preview"
+  },
+  {
+    id: "cours-immuno",
+    name: "Immunologie",
+    short: "Immuno",
+    desc: "Comprendre les défenses immunitaires de l'organisme et les mécanismes de protection contre les agents pathogènes.",
+    color: "teal",
+    icon: "fa-shield-virus",
+    lessons: 4,
+    url: "https://drive.google.com/file/d/REPLACE_COURS_IMMUNO/preview"
+  },
+  {
+    id: "cours-nerveux",
+    name: "Système Nerveux",
+    short: "Nerveux",
+    desc: "Fonctionnement du système nerveux central et périphérique, transmission de l'influx nerveux.",
+    color: "blue",
+    icon: "fa-brain",
+    lessons: 6,
+    url: "https://drive.google.com/file/d/REPLACE_COURS_NERVEUX/preview"
+  },
+  {
+    id: "cours-evolution",
+    name: "Évolution des Espèces",
+    short: "Évolution",
+    desc: "Les grandes théories de l'évolution, la sélection naturelle et la phylogénèse des espèces.",
+    color: "green",
+    icon: "fa-frog",
+    lessons: 3,
+    url: "https://drive.google.com/file/d/REPLACE_COURS_EVOLUTION/preview"
+  }
+];
+
+/* ══════════════════════════════════════════════════════
+   ██  EXERCICES — DATA (JSON)
+══════════════════════════════════════════════════════ */
+const EXERCICES_DATA = [
+  {
+    id: "dc1",
+    name: "Devoir Contrôle 1",
+    short: "DC 1",
+    desc: "Toutes les copies types du Devoir de Contrôle 1 en SVT, analysées et expliquées pour préparer le Bac efficacement.",
+    color: "indigo",
+    icon: "fa-file-contract",
+    docs: [
+      { id:"dc1-1", name:"Devoir de contrôle n°1 - 1", type:"devoir", pages:3, url:"https://drive.google.com/file/d/REPLACE_DC1_1/preview" },
+      { id:"dc1-c1", name:"Correction n°1 - 1", type:"correction", pages:4, url:"https://drive.google.com/file/d/REPLACE_DC1_C1/preview" },
+      { id:"dc1-2", name:"Devoir de contrôle n°1 - 2", type:"devoir", pages:3, url:"https://drive.google.com/file/d/REPLACE_DC1_2/preview" },
+      { id:"dc1-c2", name:"Correction n°1 - 2", type:"correction", pages:4, url:"https://drive.google.com/file/d/REPLACE_DC1_C2/preview" },
+      { id:"dc1-3", name:"Devoir de contrôle n°1 - 3", type:"devoir", pages:2, url:"https://drive.google.com/file/d/REPLACE_DC1_3/preview" },
+      { id:"dc1-c3", name:"Correction n°1 - 3", type:"correction", pages:3, url:"https://drive.google.com/file/d/REPLACE_DC1_C3/preview" }
+    ]
+  },
+  {
+    id: "dc2",
+    name: "Devoir Contrôle 2",
+    short: "DC 2",
+    desc: "Copies types du Devoir de Contrôle 2, avec corrections détaillées pour réviser efficacement avant le Bac.",
+    color: "purple",
+    icon: "fa-file-lines",
+    docs: [
+      { id:"dc2-1", name:"Devoir de contrôle n°2 - 1", type:"devoir", pages:3, url:"https://drive.google.com/file/d/REPLACE_DC2_1/preview" },
+      { id:"dc2-c1", name:"Correction n°2 - 1", type:"correction", pages:4, url:"https://drive.google.com/file/d/REPLACE_DC2_C1/preview" },
+      { id:"dc2-2", name:"Devoir de contrôle n°2 - 2", type:"devoir", pages:3, url:"https://drive.google.com/file/d/REPLACE_DC2_2/preview" },
+      { id:"dc2-c2", name:"Correction n°2 - 2", type:"correction", pages:5, url:"https://drive.google.com/file/d/REPLACE_DC2_C2/preview" },
+      { id:"dc2-3", name:"Devoir de contrôle n°2 - 3", type:"devoir", pages:2, url:"https://drive.google.com/file/d/REPLACE_DC2_3/preview" },
+      { id:"dc2-c3", name:"Correction n°2 - 3", type:"correction", pages:3, url:"https://drive.google.com/file/d/REPLACE_DC2_C3/preview" }
+    ]
+  },
+  {
+    id: "ds1",
+    name: "Devoir Synthèse 1",
+    short: "DS 1",
+    desc: "Analyse complète des devoirs SVT — Copies modèles et corrections pour le Devoir de Synthèse 1.",
+    color: "blue",
+    icon: "fa-file-magnifying-glass",
+    docs: [
+      { id:"ds1-1", name:"Devoir de synthèse n°1 - 1", type:"devoir", pages:4, url:"https://drive.google.com/file/d/REPLACE_DS1_1/preview" },
+      { id:"ds1-c1", name:"Correction synthèse n°1 - 1", type:"correction", pages:5, url:"https://drive.google.com/file/d/REPLACE_DS1_C1/preview" },
+      { id:"ds1-2", name:"Devoir de synthèse n°1 - 2", type:"devoir", pages:4, url:"https://drive.google.com/file/d/REPLACE_DS1_2/preview" },
+      { id:"ds1-c2", name:"Correction synthèse n°1 - 2", type:"correction", pages:6, url:"https://drive.google.com/file/d/REPLACE_DS1_C2/preview" },
+      { id:"ds1-3", name:"Devoir de synthèse n°1 - 3", type:"devoir", pages:3, url:"https://drive.google.com/file/d/REPLACE_DS1_3/preview" },
+      { id:"ds1-c3", name:"Correction synthèse n°1 - 3", type:"correction", pages:4, url:"https://drive.google.com/file/d/REPLACE_DS1_C3/preview" }
+    ]
+  },
+  {
+    id: "ds2",
+    name: "Devoir Synthèse 2",
+    short: "DS 2",
+    desc: "Tous les devoirs de synthèse 2 avec corrections complètes et explications détaillées pour le Bac SVT.",
+    color: "teal",
+    icon: "fa-file-chart-column",
+    docs: [
+      { id:"ds2-1", name:"Devoir de synthèse n°2 - 1", type:"devoir", pages:4, url:"https://drive.google.com/file/d/REPLACE_DS2_1/preview" },
+      { id:"ds2-c1", name:"Correction synthèse n°2 - 1", type:"correction", pages:5, url:"https://drive.google.com/file/d/REPLACE_DS2_C1/preview" },
+      { id:"ds2-2", name:"Devoir de synthèse n°2 - 2", type:"devoir", pages:4, url:"https://drive.google.com/file/d/REPLACE_DS2_2/preview" },
+      { id:"ds2-c2", name:"Correction synthèse n°2 - 2", type:"correction", pages:6, url:"https://drive.google.com/file/d/REPLACE_DS2_C2/preview" },
+      { id:"ds2-3", name:"Devoir de synthèse n°2 - 3", type:"devoir", pages:3, url:"https://drive.google.com/file/d/REPLACE_DS2_3/preview" },
+      { id:"ds2-c3", name:"Correction synthèse n°2 - 3", type:"correction", pages:4, url:"https://drive.google.com/file/d/REPLACE_DS2_C3/preview" }
+    ]
+  },
+  {
+    id: "bac-b",
+    name: "Bac Blanc",
+    short: "Bac B",
+    desc: "Sujets de Bac Blanc SVT avec corrigés types pour s'entraîner dans les conditions réelles de l'examen.",
+    color: "orange",
+    icon: "fa-scroll",
+    docs: [
+      { id:"bacb-1", name:"Bac Blanc n°1", type:"devoir", pages:5, url:"https://drive.google.com/file/d/REPLACE_BACB_1/preview" },
+      { id:"bacb-c1", name:"Correction Bac Blanc n°1", type:"correction", pages:7, url:"https://drive.google.com/file/d/REPLACE_BACB_C1/preview" },
+      { id:"bacb-2", name:"Bac Blanc n°2", type:"devoir", pages:5, url:"https://drive.google.com/file/d/REPLACE_BACB_2/preview" },
+      { id:"bacb-c2", name:"Correction Bac Blanc n°2", type:"correction", pages:8, url:"https://drive.google.com/file/d/REPLACE_BACB_C2/preview" },
+      { id:"bacb-3", name:"Bac Blanc n°3", type:"devoir", pages:4, url:"https://drive.google.com/file/d/REPLACE_BACB_3/preview" },
+      { id:"bacb-c3", name:"Correction Bac Blanc n°3", type:"correction", pages:6, url:"https://drive.google.com/file/d/REPLACE_BACB_C3/preview" }
+    ]
+  },
+  {
+    id: "annales",
+    name: "Annales BAC",
+    short: "BAC",
+    desc: "Archives des sujets officiels du Baccalauréat SVT avec corrections et analyses approfondies.",
+    color: "red",
+    icon: "fa-graduation-cap",
+    docs: [
+      { id:"ann-2024", name:"Bac National 2024", type:"devoir", pages:5, url:"https://drive.google.com/file/d/REPLACE_ANN_2024/preview" },
+      { id:"ann-c2024", name:"Correction Bac 2024", type:"correction", pages:8, url:"https://drive.google.com/file/d/REPLACE_ANN_C2024/preview" },
+      { id:"ann-2023", name:"Bac National 2023", type:"devoir", pages:5, url:"https://drive.google.com/file/d/REPLACE_ANN_2023/preview" },
+      { id:"ann-c2023", name:"Correction Bac 2023", type:"correction", pages:7, url:"https://drive.google.com/file/d/REPLACE_ANN_C2023/preview" },
+      { id:"ann-2022", name:"Bac National 2022", type:"devoir", pages:4, url:"https://drive.google.com/file/d/REPLACE_ANN_2022/preview" },
+      { id:"ann-c2022", name:"Correction Bac 2022", type:"correction", pages:7, url:"https://drive.google.com/file/d/REPLACE_ANN_C2022/preview" }
+    ]
+  }
+];
+
+/* ══════════════════════════════════════════════════════
+   ██  EXERCICES — RENDER
+══════════════════════════════════════════════════════ */
+/* current tab: 'cours' or 'exercices' */
+let _exTab = 'cours';
+
+function exSwitchTo(tab){
+  _exTab = tab;
+  document.getElementById('exSwitchCours').classList.toggle('active', tab==='cours');
+  document.getElementById('exSwitchExercices').classList.toggle('active', tab==='exercices');
+  renderExercices();
+}
+
+function renderExercices(){
+  const grid = document.getElementById('exGrid');
+  if(_exTab === 'cours'){
+    const total = COURS_DATA.length;
+    document.getElementById('exHeroTitle').innerHTML = 'Cours &amp; Résumés';
+    document.getElementById('exHeroSub').textContent = 'Fiches de cours complètes pour maîtriser le programme';
+    document.getElementById('exHeroLabel').innerHTML = '<i class="fa-solid fa-book-open"></i>&nbsp;BAC SVT · Maroc';
+    document.getElementById('exHeroChapCount').textContent = total + ' chapitres';
+    document.getElementById('exTotalDocs').textContent = total + ' cours';
+    document.getElementById('exSecLabel').innerHTML = '<i class="fa-solid fa-book-open"></i>&nbsp;Cours';
+    document.getElementById('exSecCount').textContent = total;
+    grid.innerHTML = COURS_DATA.map((c,i)=>`
+      <div class="ex-card ${c.color}" onclick="exOpenCoursePdf('${c.id}')"
+           style="animation:nodeIn .45s var(--ease) ${i*60}ms both">
+        <div class="ex-card-icon"><i class="fa-solid ${c.icon}"></i></div>
+        <div>
+          <div class="ex-card-name">${c.name}</div>
+          <div class="ex-card-sub">${c.short} · BAC SVT</div>
+        </div>
+        <div class="ex-card-count"><i class="fa-solid fa-book-open"></i>${c.lessons} leçons</div>
+        <div class="ex-card-prog">
+          <div class="ex-card-prog-track"><div class="ex-card-prog-fill" style="width:0%"></div></div>
+          <div class="ex-card-prog-label">0% Complete</div>
+        </div>
+      </div>
+    `).join('');
+  } else {
+    const total = EXERCICES_DATA.reduce((s,c)=>s+c.docs.length,0);
+    document.getElementById('exHeroTitle').innerHTML = 'Exercices &amp; Modèles';
+    document.getElementById('exHeroSub').textContent = 'Copies types, corrections et devoirs de synthèse';
+    document.getElementById('exHeroLabel').innerHTML = '<i class="fa-solid fa-file-lines"></i>&nbsp;BAC SVT · Maroc';
+    document.getElementById('exHeroChapCount').textContent = '6 chapitres';
+    document.getElementById('exTotalDocs').textContent = total + ' documents';
+    document.getElementById('exSecLabel').innerHTML = '<i class="fa-solid fa-grid-2"></i>&nbsp;Chapitres';
+    document.getElementById('exSecCount').textContent = EXERCICES_DATA.length;
+    grid.innerHTML = EXERCICES_DATA.map((cat,i)=>`
+      <div class="ex-card ${cat.color}" onclick="exOpenSheet('${cat.id}')"
+           style="animation:nodeIn .45s var(--ease) ${i*60}ms both">
+        <div class="ex-card-icon"><i class="fa-solid ${cat.icon}"></i></div>
+        <div>
+          <div class="ex-card-name">${cat.name}</div>
+          <div class="ex-card-sub">${cat.short} · BAC SVT</div>
+        </div>
+        <div class="ex-card-count"><i class="fa-solid fa-file-pdf"></i>${cat.docs.length} docs</div>
+        <div class="ex-card-prog">
+          <div class="ex-card-prog-track"><div class="ex-card-prog-fill" style="width:0%"></div></div>
+          <div class="ex-card-prog-label">0% consulté</div>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+/* Open a cours PDF directly */
+function exOpenCoursePdf(coursId){
+  const c = COURS_DATA.find(x=>x.id===coursId);
+  if(!c) return;
+  document.getElementById('exPdfTitle').textContent = c.name;
+  document.getElementById('exPdfPageInfo').textContent = c.lessons + ' leçons';
+  document.getElementById('exPdfLoading').classList.remove('hide');
+  document.getElementById('exPdfFrame').src = '';
+  document.getElementById('exPdfOverlay').classList.add('open');
+  setTimeout(()=>{ document.getElementById('exPdfFrame').src = c.url; }, 120);
+  document.getElementById('exPdfExpandBtn').onclick = ()=>{
+    window.open(c.url.replace('/preview',''), '_blank');
+  };
+}
+
+/* ── Sheet open / close ── */
+let _exCurrentCat = null;
+function exOpenSheet(catId){
+  const cat = EXERCICES_DATA.find(c=>c.id===catId);
+  if(!cat) return;
+  _exCurrentCat = cat;
+  document.getElementById('exSheetTitle').textContent = cat.name;
+  document.getElementById('exSheetDesc').textContent = cat.desc;
+  const list = document.getElementById('exSheetList');
+  list.innerHTML = cat.docs.map(doc=>`
+    <div class="ex-sheet-item ${doc.type==='correction'?'correction':''}" onclick="exOpenPdf('${doc.id}')">
+      <div class="ex-sheet-item-icon">
+        <i class="fa-solid fa-file-pdf"></i>
+      </div>
+      <div class="ex-sheet-item-info">
+        <div class="ex-sheet-item-name">${doc.name}</div>
+        <div class="ex-sheet-item-meta">
+          <i class="fa-regular fa-file-lines"></i>
+          ${doc.pages} pages &nbsp;·&nbsp;
+          <i class="fa-solid fa-tag"></i>
+          ${doc.type==='correction'?'Correction':'Devoir'}
+        </div>
+      </div>
+      <i class="fa-solid fa-chevron-right ex-sheet-item-arrow"></i>
+    </div>
+  `).join('');
+  document.getElementById('exModalOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function exCloseSheet(e){
+  if(e && e.target !== document.getElementById('exModalOverlay')) return;
+  exCloseSheetForce();
+}
+function exCloseSheetForce(){
+  document.getElementById('exModalOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+/* ── PDF open / close ── */
+let _exCurrentPdfUrl = '';
+function exOpenPdf(docId){
+  const doc = _exCurrentCat?.docs.find(d=>d.id===docId);
+  if(!doc) return;
+  _exCurrentPdfUrl = doc.url;
+  document.getElementById('exPdfTitle').textContent = doc.name;
+  document.getElementById('exPdfPageInfo').textContent = 'Page 1 / '+doc.pages;
+  document.getElementById('exPdfLoading').classList.remove('hide');
+  document.getElementById('exPdfFrame').src = '';
+  document.getElementById('exPdfOverlay').classList.add('open');
+  // slight delay for animation then load iframe
+  setTimeout(()=>{
+    document.getElementById('exPdfFrame').src = doc.url;
+  }, 120);
+  // expand button opens in new tab
+  document.getElementById('exPdfExpandBtn').onclick = ()=>{
+    window.open(doc.url.replace('/preview',''), '_blank');
+  };
+}
+function exClosePdf(){
+  document.getElementById('exPdfOverlay').classList.remove('open');
+  setTimeout(()=>{ document.getElementById('exPdfFrame').src = ''; }, 300);
+}
+function exPdfLoaded(){
+  document.getElementById('exPdfLoading').classList.add('hide');
+}
+
+/* ══════════════════════════════════════════════════════
    ██  BOOT
 ══════════════════════════════════════════════════════ */
 renderHome();
+renderExercices();
+
+/* ══════════════════════════════════════════════════════
+   ██  CARTES — DATA
+══════════════════════════════════════════════════════ */
+const CARTES_DATA = [
+  {
+    id: 'repro-m',
+    name: 'Système Reproducteur Masculin',
+    desc: 'Schémas anatomiques détaillés du système reproducteur masculin',
+    color: 'indigo',
+    icon: 'fluent-emoji/dna',
+    images: [
+      { label: 'Organisation de l\'appareil de l\'homme', emoji: '🔬', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Male_anatomy_en.svg/800px-Male_anatomy_en.svg.png' },
+      { label: 'Structure du testicule', emoji: '🔬', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Diagram_showing_a_cross_section_of_the_testicle_CRUK_358.svg/800px-Diagram_showing_a_cross_section_of_the_testicle_CRUK_358.svg.png' },
+      { label: 'Spermatogenèse', emoji: '🧬', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Spermatogenesis.svg/800px-Spermatogenesis.svg.png' },
+      { label: 'Structure du spermatozoïde', emoji: '🔬', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Sperm_anatomy.svg/800px-Sperm_anatomy.svg.png' },
+    ]
+  },
+  {
+    id: 'repro-f',
+    name: 'Système Reproducteur Féminin',
+    desc: 'Schémas anatomiques détaillés du système reproducteur féminin',
+    color: 'pink',
+    icon: 'fluent-emoji/cherry-blossom',
+    images: [
+      { label: 'Anatomie du système féminin', emoji: '🔬', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Female_anatomy_en.svg/800px-Female_anatomy_en.svg.png' },
+      { label: 'Cycle ovarien et hormones', emoji: '📊', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/MenstrualCycle2_en.svg/800px-MenstrualCycle2_en.svg.png' },
+      { label: 'Ovogenèse', emoji: '🧬', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Oogenesis.svg/800px-Oogenesis.svg.png' },
+    ]
+  },
+  {
+    id: 'evolution',
+    name: 'Évolution des Espèces',
+    desc: 'Illustrations et schémas montrant les principales étapes de l\'évolution biologique',
+    color: 'green',
+    icon: 'fluent-emoji/t-rex',
+    images: [
+      { label: 'Arbre phylogénétique', emoji: '🌳', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Phylogenetic_tree.svg/800px-Phylogenetic_tree.svg.png' },
+      { label: 'Sélection naturelle — Pinsons de Darwin', emoji: '🦋', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Darwin%27s_finches.jpeg/800px-Darwin%27s_finches.jpeg' },
+      { label: 'Dérive génétique', emoji: '🧬', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Genetic_drift_en.svg/800px-Genetic_drift_en.svg.png' },
+    ]
+  },
+  {
+    id: 'genetique',
+    name: 'Génétique Moléculaire',
+    desc: 'Schémas et illustrations des gènes, ADN et mécanismes héréditaires',
+    color: 'purple',
+    icon: 'fluent-emoji/microscope',
+    images: [
+      { label: 'Structure de l\'ADN', emoji: '🧬', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/DNA_Structure%2BKey%2BLabelled.pn_NoBB.png/800px-DNA_Structure%2BKey%2BLabelled.pn_NoBB.png' },
+      { label: 'Réplication de l\'ADN', emoji: '🔬', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/DNA_replication_en.svg/800px-DNA_replication_en.svg.png' },
+      { label: 'Transcription et traduction', emoji: '📜', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Central_Dogma_of_Molecular_Biochemistry_with_Enzymes.jpg/800px-Central_Dogma_of_Molecular_Biochemistry_with_Enzymes.jpg' },
+      { label: 'Cycle cellulaire — Mitose', emoji: '🔬', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Animal_cell_cycle-en.svg/800px-Animal_cell_cycle-en.svg.png' },
+      { label: 'Méiose', emoji: '🧬', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Meiosis_Overview_new.svg/800px-Meiosis_Overview_new.svg.png' },
+    ]
+  },
+  {
+    id: 'nerveux',
+    name: 'Système Nerveux',
+    desc: 'Schémas détaillés du cerveau, des nerfs et de leurs fonctions',
+    color: 'blue',
+    icon: 'fluent-emoji/brain',
+    images: [
+      { label: 'Anatomie du cerveau humain', emoji: '🧠', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/24701-brain.jpg/800px-24701-brain.jpg' },
+      { label: 'Structure du neurone', emoji: '⚡', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Blausen_0657_MultipolarNeuron.png/800px-Blausen_0657_MultipolarNeuron.png' },
+      { label: 'Synapse chimique', emoji: '🔬', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/SynapseSchematic_en.svg/800px-SynapseSchematic_en.svg.png' },
+      { label: 'Potentiel d\'action', emoji: '📊', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Action_potential.svg/800px-Action_potential.svg.png' },
+    ]
+  },
+  {
+    id: 'musculo',
+    name: 'Système Musculo-Squelettique',
+    desc: 'Schémas du squelette et des muscles expliquant le mouvement et le soutien du corps',
+    color: 'orange',
+    icon: 'fluent-emoji/bone',
+    images: [
+      { label: 'Squelette humain', emoji: '🦴', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Blausen_0556_MusculoskeletalSystem_Anterior.png/800px-Blausen_0556_MusculoskeletalSystem_Anterior.png' },
+      { label: 'Structure du muscle', emoji: '💪', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Illu_muscle_structure.jpg/800px-Illu_muscle_structure.jpg' },
+      { label: 'Contraction musculaire — Sarcomère', emoji: '🔬', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Sarcomere.svg/800px-Sarcomere.svg.png' },
+    ]
+  },
+  {
+    id: 'immunitaire',
+    name: 'Système Immunitaire',
+    desc: 'Schémas des cellules immunitaires et des mécanismes de défense de l\'organisme',
+    color: 'teal',
+    icon: 'fluent-emoji/shield',
+    images: [
+      { label: 'Lymphocyte au microscope électronique', emoji: '🦠', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/SEM_Lymphocyte.jpg/800px-SEM_Lymphocyte.jpg' },
+      { label: 'Structure d\'un anticorps IgG', emoji: '🛡️', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Antibody_IgG2.png/800px-Antibody_IgG2.png' },
+      { label: 'Anticorps et antigènes', emoji: '🔬', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Antibody_svg.svg/800px-Antibody_svg.svg.png' },
+    ]
+  },
+  {
+    id: 'cardio',
+    name: 'Pression Artérielle',
+    desc: 'Schémas expliquant la pression du sang et son rôle dans la circulation',
+    color: 'red',
+    icon: 'fluent-emoji/anatomical-heart',
+    images: [
+      { label: 'Anatomie du cœur humain', emoji: '❤️', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Diagram_of_the_human_heart_%28cropped%29.svg/800px-Diagram_of_the_human_heart_%28cropped%29.svg.png' },
+      { label: 'Système circulatoire', emoji: '🩸', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Circulatory_System_en.svg/800px-Circulatory_System_en.svg.png' },
+    ]
+  }
+];
+
+/* ══════════════════════════════════════════════════════
+   ██  CARTES — RENDER
+══════════════════════════════════════════════════════ */
+renderCartes();
+function renderCartes(){
+  const grid = document.getElementById('cartesGrid');
+  if(!grid) return;
+  document.getElementById('cartesCatCount').textContent = CARTES_DATA.length + ' catégories';
+  grid.innerHTML = CARTES_DATA.map((cat, i) => `
+    <div class="carte-cat-card ${cat.color}" onclick="cartesOpenSheet('${cat.id}')"
+         style="animation-delay:${i*55}ms">
+      <div class="cccard-top">
+        <div class="cccard-icon">
+          <img src="https://api.iconify.design/${cat.icon}.svg" width="30px" height="30px" loading="lazy"/>
+        </div>
+        <div class="cccard-titles">
+          <div class="cccard-name">${cat.name}</div>
+          <div class="cccard-subtitle">Schémas · BAC SVT</div>
+        </div>
+      </div>
+      <div class="cccard-desc">${cat.desc}</div>
+      <div class="cccard-meta">
+        <div class="cccard-meta-item"><i class="fa-solid fa-images"></i>${cat.images.length} schémas</div>
+      </div>
+      <div class="cccard-prog-track"><div class="cccard-prog-fill" style="width:0%"></div></div>
+      <div class="cccard-prog-label">0% consulté</div>
+    </div>
+  `).join('');
+}
+
+/* Sheet open/close */
+const CARTES_COLOR_BG = {
+  indigo:'#eef2ff', purple:'#faf5ff', blue:'#eff6ff', teal:'#f0fdfa',
+  orange:'#fff7ed', green:'#f0fdf4', red:'#fef2f2', pink:'#fdf2f8'
+};
+let _cartesCurrent = null;
+function cartesOpenSheet(catId){
+  const cat = CARTES_DATA.find(c=>c.id===catId);
+  if(!cat) return;
+  _cartesCurrent = cat;
+  document.getElementById('cartesSheetTitle').textContent = cat.name;
+
+  /* — icon — */
+  const iconEl = document.getElementById('cartesSheetIcon');
+  const bg = CARTES_COLOR_BG[cat.color] || '#f1f5f9';
+  iconEl.style.background = bg;
+  iconEl.innerHTML = `<img src="https://api.iconify.design/${cat.icon}.svg" width="30" height="30" loading="lazy" alt=""/>`;
+
+  /* — desc with count — */
+  document.getElementById('cartesSheetDesc').innerHTML = `<i class="fa-solid fa-images"></i> ${cat.images.length} schéma${cat.images.length>1?'s':''} · BAC SVT`;
+
+  const grid = document.getElementById('cartesImagesGrid');
+  grid.innerHTML = cat.images.map((img, i) => `
+    <div class="cartes-img-card" onclick="cartesOpenLightbox(${i})" style="animation-delay:${i*60}ms">
+      <img class="cartes-img-thumb" src="${img.url}" alt="${img.label}"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+           loading="lazy"/>
+      <div class="cartes-img-thumb-placeholder" style="display:none">${img.emoji}</div>
+      <div class="cartes-img-label">${img.label}</div>
+    </div>
+  `).join('');
+  document.getElementById('cartesModalOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function cartesCloseSheet(e){
+  if(e && e.target !== document.getElementById('cartesModalOverlay')) return;
+  cartesCloseSheetForce();
+}
+function cartesCloseSheetForce(){
+  document.getElementById('cartesModalOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+/* Lightbox */
+let _cartesLbIdx = 0;
+function cartesOpenLightbox(idx){
+  if(!_cartesCurrent) return;
+  _cartesLbIdx = idx;
+  const img = _cartesCurrent.images[idx];
+  const el = document.getElementById('cartesLightboxImg');
+  el.src = img.url;
+  el.alt = img.label;
+  document.getElementById('cartesLightboxTitle').textContent = img.label;
+  document.getElementById('cartesLightboxCounter').textContent =
+    (idx+1) + ' / ' + _cartesCurrent.images.length;
+  document.getElementById('cartesLightbox').classList.add('open');
+}
+function cartesCloseLightbox(){
+  document.getElementById('cartesLightbox').classList.remove('open');
+}
+
+/* ══════════════════════════════════════════════════════
+   ██  QCM SHEET — DATA & LOGIC
+══════════════════════════════════════════════════════ */
+const QCM_COLLECTIONS = {
+  flamme: {
+    title: 'Quiz Flamme 🔥',
+    sub: 'Défis pour les plus motivés',
+    quizzes: [
+      { id:'q1', name:'Reproduction Masculine', questions:15, diff:'medium', color:'indigo', icon:'fluent-emoji/dna', href:'#quiz-repro-h' },
+      { id:'q2', name:'Reproduction Féminine', questions:12, diff:'medium', color:'purple', icon:'fluent-emoji/dna', href:'#quiz-repro-f' },
+      { id:'q3', name:'Génétique & ADN', questions:20, diff:'hard', color:'blue', icon:'fluent-emoji/microscope', href:'#quiz-genetique' },
+      { id:'q4', name:'Cycle Cellulaire', questions:10, diff:'easy', color:'green', icon:'fluent-emoji/seedling', href:'#quiz-cycle' },
+      { id:'q5', name:'Évolution', questions:18, diff:'hard', color:'orange', icon:'fluent-emoji/t-rex', href:'#quiz-evolution' },
+    ]
+  },
+  etoiles: {
+    title: 'Quiz Étoiles ⭐',
+    sub: 'Perfection & maîtrise totale',
+    quizzes: [
+      { id:'q6', name:'Système Nerveux', questions:14, diff:'hard', color:'blue', icon:'fluent-emoji/brain', href:'#quiz-nerveux' },
+      { id:'q7', name:'Immunologie', questions:16, diff:'medium', color:'teal', icon:'fluent-emoji/shield', href:'#quiz-immuno' },
+      { id:'q8', name:'Pression Artérielle', questions:10, diff:'easy', color:'red', icon:'fluent-emoji/anatomical-heart', href:'#quiz-cardio' },
+      { id:'q9', name:'Muscles & Squelette', questions:12, diff:'medium', color:'orange', icon:'fluent-emoji/bone', href:'#quiz-musculo' },
+    ]
+  },
+  diamant: {
+    title: 'Quiz Diamant 💎',
+    sub: 'Niveau Bac — élite',
+    quizzes: [
+      { id:'q10', name:'Bac Blanc Complet', questions:30, diff:'hard', color:'purple', icon:'fluent-emoji/graduation-cap', href:'#quiz-bac-blanc' },
+      { id:'q11', name:'Annales 2024', questions:25, diff:'hard', color:'indigo', icon:'fluent-emoji/scroll', href:'#quiz-annales-2024' },
+      { id:'q12', name:'Annales 2023', questions:25, diff:'hard', color:'blue', icon:'fluent-emoji/scroll', href:'#quiz-annales-2023' },
+      { id:'q13', name:'Révision Générale', questions:40, diff:'hard', color:'red', icon:'fluent-emoji/books', href:'#quiz-revision' },
+    ]
+  }
+};
+
+const DIFF_LABEL = { easy:'Facile', medium:'Moyen', hard:'Difficile' };
+const COLLECTION_META = {
+  flamme:  { emoji:'🔥', iconClass:'flamme',  count: null },
+  etoiles: { emoji:'⭐', iconClass:'etoiles', count: null },
+  diamant: { emoji:'💎', iconClass:'diamant', count: null },
+};
+
+function openQuizSheet(collectionId){
+  const col = QCM_COLLECTIONS[collectionId];
+  if(!col) return;
+  const meta = COLLECTION_META[collectionId] || { emoji:'📚', iconClass:'', count:null };
+
+  /* header */
+  document.getElementById('qcmSheetTitle').textContent = col.title;
+  document.getElementById('qcmSheetSub').innerHTML = `<i class="fa-solid fa-circle-question"></i> ${col.sub}`;
+  const iconEl = document.getElementById('qcmSheetIcon');
+  iconEl.textContent = meta.emoji;
+  iconEl.className = 'qcm-sheet-head-icon ' + meta.iconClass;
+
+  /* footer */
+  document.getElementById('qcmSheetFooter').innerHTML =
+    `<i class="fa-solid fa-layer-group"></i><span>${col.quizzes.length} quiz disponibles</span>`;
+
+  /* cards */
+  const scroll = document.getElementById('qcmScroll');
+  scroll.innerHTML = col.quizzes.map((q, i) => `
+    <a class="qcm-card ${q.color}" href="${q.href}" style="animation:nodeIn .35s var(--ease) ${i*55}ms both">
+      <div class="qcm-card-icon">
+        <img src="https://api.iconify.design/${q.icon}.svg" width="28px" height="28px" loading="lazy"/>
+      </div>
+      <div class="qcm-card-body">
+        <div class="qcm-card-name">${q.name}</div>
+        <div class="qcm-card-chips">
+          <span class="qcm-card-meta"><i class="fa-solid fa-circle-question"></i>${q.questions} questions</span>
+          <span class="qcm-card-diff ${q.diff}">${DIFF_LABEL[q.diff]}</span>
+        </div>
+      </div>
+      <div class="qcm-card-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+    </a>
+  `).join('');
+  document.getElementById('qcmOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeQuizSheet(e){
+  if(e && e.target !== document.getElementById('qcmOverlay')) return;
+  closeQuizSheetForce();
+}
+function closeQuizSheetForce(){
+  document.getElementById('qcmOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 </script>
 </body>
 </html>

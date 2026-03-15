@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <!-- Google tag (gtag.js) -->
+     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNTBT1VQN7"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -9,816 +9,1184 @@
         gtag('js', new Date());
         gtag('config', 'G-FNTBT1VQN7');
     </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SVT App | Sahl</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./assets/css/stylesvtapp.css">
-    
-    <!-- Session Manager CSS -->
-    <style>
-        /* Disable right-click and image saving */
-        body {
-            user-select: none;
-        }
-        
-        img {
-            pointer-events: none;
-            -webkit-user-drag: none;
-            -khtml-user-drag: none;
-            -moz-user-drag: none;
-            -o-user-drag: none;
-            user-drag: none;
-        }
-        
-        .gallery-grid img,
-        .fullscreen-image {
-            pointer-events: auto; /* Allow clicking for gallery functionality */
-        }
-        
-        /* Prevent text selection except in inputs */
-        * {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-        
-        input, textarea {
-            -webkit-user-select: text;
-            -moz-user-select: text;
-            -ms-user-select: text;
-            user-select: text;
-        }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="theme-color" content="#f0f4f8"/>
+<title>SVT App — Sahl</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="./assets/css/style.css">
+<style>
+/* Toast notification */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #1e293b;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 40px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  z-index: 10000;
+  opacity: 0;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.1);
+  pointer-events: none;
+}
 
-        /* Apple-style Logout Confirmation Modal */
-        .logout-confirmation-content {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(30px) saturate(200%);
-            -webkit-backdrop-filter: blur(30px) saturate(200%);
-            border-radius: 20px;
-            padding: 32px;
-            width: 90%;
-            max-width: 340px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 
-                0 20px 60px rgba(0, 0, 0, 0.1),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.6),
-                inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
-            animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
 
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px) scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
+.toast i {
+  color: #10b981;
+  margin-right: 8px;
+}
 
-        .confirmation-icon {
-            font-size: 48px;
-            color: rgba(0, 0, 0, 0.9);
-            margin-bottom: 20px;
-            width: 72px;
-            height: 72px;
-            margin: 0 auto 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
+/* Protected overlay */
+.protected-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(24px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
 
-        .confirmation-title {
-            font-size: 20px;
-            color: rgba(0, 0, 0, 0.9);
-            margin-bottom: 8px;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
+.protected-overlay h2 {
+  font-family: 'Newsreader', serif;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
 
-        .confirmation-text {
-            color: rgba(0, 0, 0, 0.6);
-            font-size: 15px;
-            line-height: 1.4;
-            margin-bottom: 28px;
-            font-weight: 400;
-        }
+.protected-overlay p {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  opacity: 0.7;
+  max-width: 500px;
+}
 
-        .confirmation-buttons {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-        }
+.protected-overlay .login-btn {
+  background: #10b981;
+  color: white;
+  padding: 14px 32px;
+  border-radius: 40px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  cursor: pointer;
+}
 
-        .confirmation-btn {
-            padding: 14px 24px;
-            border-radius: 12px;
-            font-weight: 500;
-            font-size: 15px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            flex: 1;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            letter-spacing: -0.01em;
-        }
-
-        .cancel-btn {
-            background: rgba(0, 0, 0, 0.03);
-            color: rgba(0, 0, 0, 0.8);
-        }
-
-        .cancel-btn:hover {
-            background: rgba(0, 0, 0, 0.06);
-            transform: translateY(-1px);
-        }
-
-        .cancel-btn:active {
-            transform: translateY(0);
-        }
-
-        .confirm-btn {
-            background: rgba(0, 0, 0, 0.85);
-            color: white;
-            border: none;
-        }
-
-        .confirm-btn:hover {
-            background: rgba(0, 0, 0, 0.95);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .confirm-btn:active {
-            transform: translateY(0);
-            box-shadow: none;
-        }
-
-        /* Dark mode for modal */
-        @media (prefers-color-scheme: dark) {
-            .logout-confirmation-content {
-                background: rgba(40, 40, 40, 0.85);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                box-shadow: 
-                    0 20px 60px rgba(0, 0, 0, 0.25),
-                    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-            }
-            
-            .confirmation-icon {
-                color: rgba(255, 255, 255, 0.9);
-                background: rgba(255, 255, 255, 0.05);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-            }
-            
-            .confirmation-title {
-                color: rgba(255, 255, 255, 0.95);
-            }
-            
-            .confirmation-text {
-                color: rgba(255, 255, 255, 0.7);
-            }
-            
-            .cancel-btn {
-                background: rgba(255, 255, 255, 0.08);
-                color: rgba(255, 255, 255, 0.9);
-                border: 1px solid rgba(255, 255, 255, 0.15);
-            }
-            
-            .cancel-btn:hover {
-                background: rgba(255, 255, 255, 0.12);
-            }
-            
-            .confirm-btn {
-                background: rgba(255, 255, 255, 0.9);
-                color: rgba(0, 0, 0, 0.9);
-            }
-            
-            .confirm-btn:hover {
-                background: white;
-            }
-        }
-    </style>
+.protected-overlay .login-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-3px);
+}
+</style>
 </head>
 <body>
-      <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
-    <script>
-        // Run IMMEDIATELY when page loads (before anything else)
-        (function() {
-            // Check if user is authenticated
-            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
-            
-            // If NOT logged in, redirect to login page
-            if (!isLoggedIn) {
-                // Store current page for redirect back
-                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
-                // Redirect immediately
-                window.location.href = './login.html';
-                // Stop all further execution
-                throw new Error('Authentication required');
-            }
-        })();
-    </script>
-    
-    <!-- Apple-style Glass Effect Profile Section -->
-    <div class="minimal-profile" id="minimalProfileSection">
-        <div class="profile-content">
-            <i class="fas fa-user-circle profile-icon"></i>
-            <span class="profile-username" id="profileUsername">User</span>
-            <button class="profile-logout-btn" id="profileLogoutBtn" title="Logout">
-                <span class="profile-status"></span>
-                <i class="fas fa-sign-out-alt"></i>
-            </button>
-        </div>
+
+<!-- PROTECTED OVERLAY (shown if not logged in) -->
+<div id="protectedOverlay" class="protected-overlay" style="display: none;">
+  <h2>🔐 Accès sécurisé</h2>
+  <p>Vous devez être connecté(e) pour accéder à SVT App. Connectez-vous pour continuer votre parcours.</p>
+  <a href="login.html" class="login-btn" onclick="redirectToLogin()">
+    <i class="fas fa-sign-in-alt"></i> Se connecter
+  </a>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     HOME SCREEN
+══════════════════════════════════════════════════════ -->
+<div id="home" class="screen active">
+
+  <!-- NAV -->
+  <nav class="h-nav">
+    <div class="h-nav-brand">
+      <div class="h-nav-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+      <span class="h-nav-name">SVT<em>App</em></span>
+    </div>
+    <div class="h-nav-right">
+      <div class="streak-pill" id="streakPill">
+        <i class="fa-solid fa-fire-flame-curved"></i><span id="navStreak">0</span>
+      </div>
+      <div class="xp-pill"><i class="fa-solid fa-bolt-lightning"></i><span id="navXp">0</span>&nbsp;XP</div>
+      <div class="level-badge"><i class="fa-solid fa-star"></i>Niv.&nbsp;<span id="navLevel">1</span></div>
+    </div>
+  </nav>
+
+  <!-- HERO CARD -->
+  <div class="hero">
+    <div class="hero-top">
+      <div class="hero-icon"><i class="fa-solid fa-user"></i></div>
+      <div class="hero-text">
+        <div class="hero-label"><i class="fa-solid fa-layer-group"></i>Révision · BAC SVT</div>
+        <!-- User name will be inserted here -->
+        <div class="hero-title" id="userName">Génétique &amp; Neurophysiologie</div>
+        <div class="hero-sub">Complétez chaque étape pour progresser</div>
+      </div>
+    </div>
+    <div class="hero-xp">
+      <div class="hero-xp-row">
+        <span class="hero-xp-label">Progression globale</span>
+        <span class="hero-xp-val" id="heroXpVal">0 / 5 étapes</span>
+      </div>
+      <div class="hero-xp-track">
+        <div class="hero-xp-fill" id="heroXpFill" style="width:0%"></div>
+      </div>
+      <div class="hero-stages-row" id="heroDotsRow"></div>
+    </div>
+    <!-- White rounded button like image -->
+    <a href="../profile/index.html" class="hero-cta-btn">
+     <i class="fa-solid fa-arrow-left"></i> Retour à l’espace Sahl
+    </a>
+  </div>
+
+  <!-- STATS GRID -->
+  <div class="stats-grid">
+    <div class="stat-card g">
+      <div class="sc-icon g"><i class="fa-solid fa-flag-checkered"></i></div>
+      <div class="sc-val" id="stDone">0</div>
+      <div class="sc-lbl">Étapes<br>terminées</div>
+    </div>
+    <div class="stat-card o">
+      <div class="sc-icon o"><i class="fa-solid fa-star"></i></div>
+      <div class="sc-val" id="stStars">0</div>
+      <div class="sc-lbl">Étoiles<br>gagnées</div>
+    </div>
+    <div class="stat-card b">
+      <div class="sc-icon b"><i class="fa-solid fa-bullseye"></i></div>
+      <div class="sc-val" id="stAcc">—</div>
+      <div class="sc-lbl">Précision<br>moyenne</div>
+    </div>
+  </div>
+
+  <!-- PATH HEADER -->
+  <div class="path-sec">
+    <div class="path-sec-label"><i class="fa-solid fa-route"></i>Parcours</div>
+    <div class="path-sec-line"></div>
+    <div class="path-sec-count" id="pathCount">0 / 5</div>
+  </div>
+
+  <!-- PATH -->
+  <main class="path" id="path"></main>
+
+</div><!-- #home -->
+
+<!-- ══════════════════════════════════════════════════════
+     QUIZ SCREEN
+══════════════════════════════════════════════════════ -->
+<div id="quiz" class="screen">
+
+  <nav class="q-nav">
+    <div class="q-nav-brand">
+      <div class="q-nav-icon" id="qNavIcon"><i class="fa-solid fa-graduation-cap"></i></div>
+      <span class="q-nav-name">SVT<em>App</em></span>
+    </div>
+    <div class="q-nav-right">
+      <button class="btn-back" onclick="confirmBack()"><i class="fa-solid fa-arrow-left"></i>Parcours</button>
+      <div class="q-nav-tag" id="qNavTag"><i class="fa-solid fa-dna" id="qNavIco"></i>&nbsp;<span id="qNavTitle">Quiz</span></div>
+      <div class="q-nav-pill"><i class="fa-solid fa-star"></i>Score&nbsp;:&nbsp;<span class="nav-score" id="navScore">0</span></div>
+    </div>
+  </nav>
+  <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
+
+  <div class="q-body">
+    <div class="stage-strip" id="stageStrip">
+      <div class="ss-ico" id="ssIco" style="background:#dcfce7;color:#16a34a"><i class="fas fa-dna"></i></div>
+      <div><div class="ss-title" id="ssTitle">Étape</div><div class="ss-sub" id="ssSub">Chargement…</div></div>
     </div>
 
-    <!-- Bottom Navigation -->
-    <nav class="bottom-navigation">
-        <a href="#home" class="nav-item active" data-page="home">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </a>
-        <a href="#exercises" class="nav-item" data-page="exercises">
-            <i class="fas fa-file-alt"></i>
-            <span>Exercises</span>
-        </a>
-        <a href="#qcm" class="nav-item" data-page="qcm">
-            <i class="fas fa-question-circle"></i>
-            <span>QCM</span>
-        </a>
-        <a href="#ebooks" class="nav-item" data-page="ebooks">
-            <i class="fas fa-users-rectangle"></i>
-            <span>EduStream</span>
-        </a>
-    </nav>
+    <main class="scene" id="scene">
 
-    <!-- HOME PAGE -->
-    <div id="home-page" class="page-section active">
-        <div class="container">
-            <!-- Updated Trial Card with User's Name -->
-            <div class="trial-card">
-                <div class="trial-content">
-                    <h2 id="welcomeTitle">Eduwell SVT Elite</h2>
-                    <p>Un seul endroit pour progresser en sciences : cours, jeux et outils faciles à utiliser</p>
-                    <a href="../profile/index.html" class="trial-btn" >
-    <i class="fa-solid fa-arrow-left"></i>
-      Retour au panneau de profil
-</a>
-                </div>
-            </div>
-
-            <!-- Search Section -->
-            <div class="search-container">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" class="search-input" placeholder="Trouvez un cours et quiz..." id="searchInput">
-            </div>
-
-            <!-- Popular Courses Section with Horizontal Slider -->
-            <div class="section-header" id="quizSection">
-                <div class="section-title">
-                    <i class="fa-solid fa-fire"></i>
-                    <span>Quiz Cards</span>
-                </div>
-            </div>
-
-            <!-- Horizontal Slider -->
-            <div class="slider-container">
-                <div class="courses-slider" id="coursesSlider">
-                    <!-- Course cards will be populated by JavaScript -->
-                </div>
-            </div>
-
-            <!-- Your Courses Section with Grid Layout -->
-            <div class="section-header">
-                <div class="section-title">
-                    <i class="fa-solid fa-book"></i>
-                    <span>Ma révision</span>
-                </div>
-            </div>
-            <div class="courses-grid" id="yourCoursesGrid">
-                <!-- Course cards will be populated by JavaScript -->
-            </div>
-
-            <div class="footer">
-               
-            </div>
+      <!-- QUIZ CARD -->
+      <div class="quiz-card" id="quizCard">
+        <div class="card-strip"></div>
+        <div class="card-head">
+          <span class="q-badge" id="qBadge"><i class="fa-solid fa-circle-question"></i>&nbsp;Question 1</span>
+          <span class="q-frac" id="qFrac">1 / 10</span>
         </div>
-    </div>
-
-    <!-- EXERCISES PAGE -->
-    <div id="exercises-page" class="page-section">
-        <div class="container">
-            <!-- Biology-themed card for Exercises section -->
-            <div class="biology-card">
-                <div class="biology-content">
-                    <h2>Smart Cards </h2>
-                    <p> mini-cartes claires et rapides pour comprendre, mémoriser et réviser le Bac sans stress</p>
-                    <button class="biology-btn" id="viewSchemasButton">
-                        <i class="fa-solid fa-eye"></i>
-                      Lancer la révision
-                    </button>
-                </div>
-            </div>
-
-            <!-- Exercises Grid -->
-            <div class="section-header">
-                <div class="section-title">
-                    <i class="fas fa-file-alt"></i>
-                    <span>Exercices & Modèles</span>
-                </div>
-            </div>
-            <div class="exercises-grid" id="exercisesGrid">
-                <!-- Exercise cards will be populated by JavaScript -->
-            </div>
-
-            <!-- Footer -->
-            <div class="footer">
-               
-            </div>
+        <div class="seg-track" id="segTrack"></div>
+        <div class="timer-wrap">
+          <div class="timer-row">
+            <div class="timer-track"><div class="timer-fill" id="timerFill"></div></div>
+            <span class="timer-val" id="timerVal">30</span>
+          </div>
         </div>
-    </div>
-
-    <!-- QCM PAGE - ENHANCED DESIGN -->
-    <div id="qcm-page" class="page-section">
-        <div class="container">
-            <!-- Enhanced Biology Card -->
-            <div class="qcm-biology-card">
-                <div class="qcm-biology-content">
-                    <div class="qcm-biology-text">
-                        <h2>QCM Lab Science</h2>
-                        <p>Révise SVT avec des quiz fun + explications claires.
-Tout le cours intégré, pour mémoriser vite et réussir ton bac !</p>
-                    </div>
-                    <button class="qcm-biology-btn" id="qcmBiologyBtn">
-                        <i class="fas fa-play-circle"></i>
-                      Commencer le Quiz Bio
-                    </button>
-                </div>
-            </div>
-
-            <!-- QCM Models Container -->
-            <div class="qcm-models-container" id="qcmModelsContainer">
-                <!-- Models will be populated by JavaScript -->
-            </div>
-
-            <!-- QCM Footer -->
-            <div class="qcm-footer">
-                
-                <p class="qcm-footer-note">Tous les quiz sont mis à jour régulièrement avec le programme officiel</p>
-            </div>
+        <div class="card-body">
+          <p class="q-text" id="qText"></p>
+          <div class="opts" id="opts"></div>
         </div>
+        <div class="card-foot">
+          <div class="foot-meta">
+            <div class="foot-hint" id="footHint"><i class="fa-regular fa-hand-pointer"></i>&nbsp;Sélectionnez votre réponse</div>
+            <div class="foot-stat hidden" id="footStat"><i class="fa-solid fa-circle-check"></i>&nbsp;Précision&nbsp;:&nbsp;<span class="acc" id="accVal">0 %</span></div>
+          </div>
+          <button class="btn btn-primary hidden" id="actionBtn" disabled>
+            <i id="aIcon" class="fa-solid fa-check"></i>&nbsp;<span id="aLabel">Vérifier</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- FINISH CARD -->
+      <div class="finish-card hidden" id="finishCard">
+        <div class="finish-hero">
+          <div class="finish-ring"><i id="finishIcon" class="fa-solid fa-trophy"></i></div>
+          <div class="finish-stars" id="finishStars">
+            <i class="fas fa-star fstar" id="fstar1"></i>
+            <i class="fas fa-star fstar" id="fstar2"></i>
+            <i class="fas fa-star fstar" id="fstar3"></i>
+          </div>
+          <h1 class="finish-title" id="finishTitle">Quiz terminé !</h1>
+          <p class="finish-sub" id="finishSub">Voici vos résultats.</p>
+          <div class="score-stats">
+            <div class="stat-chip chip-score"><i class="fa-solid fa-trophy"></i>Score&nbsp;:&nbsp;<strong id="fScore">0</strong>&nbsp;/ <span id="fTotal">10</span></div>
+            <div class="stat-chip chip-acc"><i class="fa-solid fa-bullseye"></i>Précision&nbsp;:&nbsp;<strong id="fAcc">0 %</strong></div>
+            <div class="stat-chip chip-time"><i class="fa-regular fa-clock"></i>Temps&nbsp;:&nbsp;<strong id="fTime">0 s</strong></div>
+          </div>
+        </div>
+        <div class="finish-actions">
+          <button class="btn btn-primary btn-xl" id="continueBtn"><i class="fa-solid fa-arrow-right"></i>&nbsp;Continuer le parcours</button>
+          <button class="btn btn-ghost btn-lg" id="retryBtn"><i class="fa-solid fa-rotate-right"></i>&nbsp;Recommencer</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div><!-- #quiz -->
+
+<!-- ══════════════════════════════════════════════════════
+     CHAT SCREEN  (Social Feed — Duolingo Style)
+══════════════════════════════════════════════════════ -->
+<div id="chat" class="screen">
+
+  <!-- STICKY HEADER -->
+  <div class="chat-header">
+    <div class="chat-header-inner">
+      <h1><img src="https://api.iconify.design/fluent-emoji/card-index-dividers.svg"
+width="22px" height="22px"
+style="display:inline-block;vertical-align:middle"
+loading="lazy"/> QCM</h1>
     </div>
+  </div>
 
-    <!-- MODIFICATION FOR E-BOOK SECTION: NOW STRATEGIES SECTION -->
-    <div id="ebooks-page" class="page-section">
-        <div class="container">
-            <!-- EduStream Section -->
-            <div class="ebook-biology-card">
-                <div class="ebook-biology-content">
-                    <div class="ebook-biology-text">
-                        <h2>Sahl Academy</h2>
-                        <p>plateforme éducative avancée, proposant des vidéos pédagogiques et tirant parti de l'IA pour optimiser vos révisions du Bac efficacement.</p>
-                    </div>
-                    <!-- Button opens external website -->
-                    <button class="ebook-biology-btn" id="ebookBiologyBtn" onclick="window.open('../SahlAcademy/index.html', '_blank')">
-                        <i class="fas fa-external-link-alt"></i>
-                       Découvrir Sahl
-                    </button>
-                </div>
-            </div>
+  <!-- SCROLLABLE BODY -->
+  <div class="chat-body">
 
-            <!-- Stratégies Bac Section -->
-            <div class="section-header">
-                <div class="section-title">
-                    <i class="fas fa-graduation-cap"></i>
-                    <span>Stratégies Bac</span>
-                </div>
-            </div>
+    <!-- FRIENDS HERO BANNER -->
+    <div class="chat-hero-banner">
+      <div class="chat-hero-top">
+        <!-- Avatars cluster — left -->
+        <div class="chat-hero-avatars">
+          <!-- sticker: clapping hands -->
+          <div class="chat-hero-sticker hands">
+            <img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="34px" height="34px"/>
+          </div>
+          <!-- big avatar -->
+          <div class="chat-hero-av big">
+            <img src="https://api.iconify.design/fluent-emoji/man-student.svg" width="44px" height="44px"/>
+          </div>
+          <!-- mid avatar -->
+          <div class="chat-hero-av mid">
+            <img src="https://api.iconify.design/fluent-emoji/woman-student.svg" width="32px" height="32px"/>
+          </div>
+          <!-- sticker: confetti / party -->
+          <div class="chat-hero-sticker confetti">
+            <img src="https://api.iconify.design/fluent-emoji/party-popper.svg" width="28px" height="28px"/>
+          </div>
+        </div>
 
-            <!-- Biology Cards Grid for Stratégies Bac -->
-            <div class="biology-cards-grid" id="strategiesContent">
-                <!-- Biology cards will be populated by JavaScript -->
+        <!-- Text — right -->
+        <div class="chat-hero-text">
+          <div class="chat-hero-title">احتفل بإنجازاتك مع<br>أصدقائك!</div>
+          <div class="chat-hero-sub">شارك تقدّمك وتحدَّ أصدقاءك</div>
+        </div>
+      </div>
+
+      <!-- CTA button -->
+      <button class="chat-hero-btn" onclick="openFriendModePopup()">
+        <i class="fa-solid fa-user-plus"></i>
+        إضافة أصدقاء
+      </button>
+    </div>
+    <!-- SECTION LABEL -->
+    <div class="chat-section-lbl"><span>Chapitres</span></div>
+
+    <!-- FEED -->
+    <div class="chat-feed" id="chatFeed">
+
+      <!-- Card 1 — Reproduction Humaine -->
+      <div class="chat-feed-item" onclick="openTopicSheet('reproduction-humaine')" style="cursor:pointer">
+        <div class="cfi-accent green"></div>
+        <div class="cfi-body">
+          <div class="cfi-illus-wrap">
+            <div class="cfi-illus green">
+              <img src="https://api.iconify.design/fluent-emoji/baby.svg" width="48px" height="48px" style="vertical-align:middle;display:inline-block" loading="lazy"/>
             </div>
+          </div>
+          <div class="cfi-content">
+            <div class="cfi-meta"><span class="cfi-names">Reproduction Humaine</span></div>
+            <div class="cfi-time">6 packs disponibles</div>
+            <div class="cfi-msg">Homme, Femme & Procréation — <strong>Packs 1 &amp; 2</strong> pour chaque thème</div>
+          </div>
+        </div>
+        <div class="cfi-footer">
+          <div class="cfi-reactions">
+            <button class="cfi-react-btn" onclick="event.stopPropagation();toggleReact(this)"><span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/hundred-points.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span><span>128</span></button>
+            <button class="cfi-react-btn" onclick="event.stopPropagation();toggleReact(this)"><span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span><span>94</span></button>
            
+          </div>
+          <button class="cfi-action-btn" onclick="event.stopPropagation();openTopicSheet('reproduction-humaine')">
+            📖 Voir les packs
+          </button>
         </div>
-         <!-- Footer -->
-            <div class="footer">
-                <p></p>
-            </div>
-    </div>
+      </div>
 
-    <!-- QUIZ MODAL OVERLAY -->
-    <div class="qcm-quiz-overlay" id="qcmQuizOverlay">
-        <div class="qcm-quiz-container">
-            <div class="qcm-quiz-header">
-                <button class="qcm-quiz-close" id="qcmQuizClose">
-                    <i class="fas fa-times"></i>
-                </button>
-                <h3 class="qcm-quiz-title" id="qcmQuizTitle">Quiz Title</h3>
-                <div class="qcm-quiz-meta">
-                    <span id="qcmQuizQuestionCount">Question 1 of 10</span>
-                    <span id="qcmQuizInstruction"></span>
-                </div>
-                <div class="qcm-quiz-progress-bar">
-                    <div class="qcm-quiz-progress-fill" id="qcmQuizProgress"></div>
-                </div>
+      <!-- Card 2 — Évolution Biologique -->
+      <div class="chat-feed-item" onclick="openTopicSheet('evolution-biologique')" style="cursor:pointer">
+        <div class="cfi-accent green"></div>
+        <div class="cfi-body">
+          <div class="cfi-illus-wrap">
+            <div class="cfi-illus green">
+              <img src="https://api.iconify.design/fluent-emoji/frog.svg" width="48px" height="48px" style="vertical-align:middle;display:inline-block" loading="lazy"/>
             </div>
-            <div class="qcm-quiz-content" id="qcmQuizContent">
-                <!-- Quiz content will be populated by JavaScript -->
-            </div>
+          </div>
+          <div class="cfi-content">
+            <div class="cfi-meta"><span class="cfi-names">Évolution Biologique</span></div>
+            <div class="cfi-time">2 packs disponibles</div>
+            <div class="cfi-msg">Arguments & Mécanismes de l'évolution des espèces 🦎</div>
+          </div>
         </div>
-    </div>
-
-    <!-- POPUPS -->
-
-    <!-- Models Popup Overlay -->
-    <div class="popup-overlay" id="modelsPopup">
-        <div class="models-popup-content">
-            <button class="popup-close" id="modelsPopupClose">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="models-header">
-                <div>
-                    <h2 class="models-title">Schémas & Modèles SVT</h2>
-                    <p class="models-description">Sélectionnez un modèle pour voir tous les schémas associés</p>
-                </div>
-            </div>
-            <div class="models-grid" id="modelsGrid">
-                <!-- Model cards will be populated by JavaScript -->
-            </div>
+        <div class="cfi-footer">
+          <div class="cfi-reactions">
+            <button class="cfi-react-btn" onclick="event.stopPropagation();toggleReact(this)"><span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/hundred-points.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span><span>87</span></button>
+           
+            <button class="cfi-react-btn" onclick="event.stopPropagation();toggleReact(this)"><span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/fire.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span><span>4090</span></button>
+          </div>
+          <button class="cfi-action-btn" onclick="event.stopPropagation();openTopicSheet('evolution-biologique')">
+            📖 Voir les packs
+          </button>
         </div>
-    </div>
+      </div>
 
-    <!-- Gallery Popup Overlay -->
-    <div class="popup-overlay" id="galleryPopup">
-        <div class="gallery-popup-content">
-            <button class="popup-close" id="galleryPopupClose">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="gallery-header">
-                <div>
-                    <h2 class="gallery-title" id="galleryTitle">Gallery Title</h2>
-                    <p class="models-description">Cliquez sur une image pour l'agrandir</p>
-                </div>
+      <!-- Card 3 — Génétique Humaine -->
+      <div class="chat-feed-item" onclick="openTopicSheet('genetique-humaine')" style="cursor:pointer">
+        <div class="cfi-accent blue"></div>
+        <div class="cfi-body">
+          <div class="cfi-illus-wrap">
+            <div class="cfi-illus blue">
+              <img src="https://api.iconify.design/fluent-emoji/dna.svg" width="48px" height="48px" style="vertical-align:middle;display:inline-block" loading="lazy"/>
             </div>
-            <div class="gallery-grid" id="galleryGrid">
-                <!-- Gallery items will be populated by JavaScript -->
-            </div>
+          </div>
+          <div class="cfi-content">
+            <div class="cfi-meta"><span class="cfi-names">Génétique Humaine</span></div>
+            <div class="cfi-time">3 packs disponibles</div>
+            <div class="cfi-msg">Génétique des diploïdes & <strong>hérédité humaine</strong> — 2 packs 🧬</div>
+          </div>
         </div>
-    </div>
-
-    <!-- Fullscreen Image Viewer -->
-    <div class="fullscreen-viewer" id="fullscreenViewer">
-        <img class="fullscreen-image" id="fullscreenImage" src="" alt="Fullscreen Image">
-        <button class="back-button" id="backFromFullscreen">Retour</button>
-    </div>
-
-    <!-- Popular Courses Popup Overlay -->
-    <div class="popup-overlay" id="popularCoursesPopup">
-        <div class="popup-content">
-            <button class="popup-close" id="popularCoursesPopupClose">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="popup-header">
-                <h2 class="popup-title" id="popularCoursesPopupTitle">Course Title</h2>
-                <p class="popup-description" id="popularCoursesPopupDescription">Course description will appear here.</p>
-            </div>
-            <div class="options-section">
-                <h3 class="options-title">Sélectionnez une carte quiz</h3>
-                <div class="options-slider" id="popularCoursesOptions">
-                    <!-- Options will be populated by JavaScript -->
-                </div>
-            </div>
+        <div class="cfi-footer">
+          <div class="cfi-reactions">
+            <button class="cfi-react-btn active" onclick="event.stopPropagation();toggleReact(this)"><span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/hundred-points.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span><span>43</span></button>
+            <button class="cfi-react-btn" onclick="event.stopPropagation();toggleReact(this)"><span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span><span>29</span></button>
+           
+          </div>
+          <button class="cfi-action-btn" onclick="event.stopPropagation();openTopicSheet('genetique-humaine')">
+            📖 Voir les packs
+          </button>
         </div>
-    </div>
+      </div>
 
-    <!-- Exercise Modal Overlay -->
-    <div class="popup-overlay" id="exerciseModal">
-        <div class="exercise-modal-content">
-            <button class="popup-close" id="exerciseModalClose">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="exercise-header">
-                <div>
-                    <h2 class="exercise-title" id="exerciseModalTitle">Exercise Title</h2>
-                    <p class="exercise-description" id="exerciseModalDescription">Exercise description will appear here.</p>
-                </div>
+      <!-- Card 4 — Neurophysiologie -->
+      <div class="chat-feed-item" onclick="openTopicSheet('neurophysiologie')" style="cursor:pointer">
+        <div class="cfi-accent blue"></div>
+        <div class="cfi-body">
+          <div class="cfi-illus-wrap">
+            <div class="cfi-illus blue">
+              <img src="https://api.iconify.design/fluent-emoji/brain.svg" width="48px" height="48px" style="vertical-align:middle;display:inline-block" loading="lazy"/>
             </div>
-            <div class="pdfs-section">
-                <h3 class="pdfs-title">
-                    <i class="fas fa-file-pdf"></i>
-                    Documents PDF
-                </h3>
-                <div class="pdfs-list" id="exercisePdfsList">
-                    <!-- PDF items will be populated by JavaScript -->
-                </div>
-            </div>
+          </div>
+          <div class="cfi-content">
+            <div class="cfi-meta"><span class="cfi-names">Neurophysiologie</span></div>
+            <div class="cfi-time">6 packs disponibles</div>
+            <div class="cfi-msg">Tissu nerveux, réflexes, muscles, pression artérielle & hygiène 🧠</div>
+          </div>
         </div>
-    </div>
-
-    <!-- PDF Viewer Popup Overlay -->
-    <div class="popup-overlay" id="pdfViewerPopup">
-        <div class="pdf-popup-content">
-            <button class="popup-close" id="pdfViewerPopupClose">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="pdf-header">
-                <h2 class="pdf-title" id="pdfViewerPopupTitle">Course Title</h2>
-                <div class="pdf-controls">
-                    <button class="pdf-control-btn" id="pdfFullscreenBtn" title="Fullscreen">
-                        <i class="fas fa-expand"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="pdf-viewer-container" id="pdfViewerContainer">
-                <div class="loading-spinner"></div>
-                <iframe class="pdf-viewer" id="pdfViewer" frameborder="0"></iframe>
-            </div>
+        <div class="cfi-footer">
+          <div class="cfi-reactions">
+            
+            <button class="cfi-react-btn" onclick="event.stopPropagation();toggleReact(this)"><span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span><span>38</span></button>
+            <button class="cfi-react-btn" onclick="event.stopPropagation();toggleReact(this)"><span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/fire.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span><span>1743</span></button>
+          </div>
+          <button class="cfi-action-btn" onclick="event.stopPropagation();openTopicSheet('neurophysiologie')">
+            📖 Voir les packs
+          </button>
         </div>
-    </div>
+      </div>
 
-    <!-- Apple-style Logout Confirmation Modal -->
-    <div class="popup-overlay" id="logoutConfirmationPopup">
-        <div class="logout-confirmation-content">
-            <div class="confirmation-icon">
-                <i class="fas fa-sign-out-alt"></i>
+      <!-- Card 5 — Immunité -->
+      <div class="chat-feed-item" onclick="openTopicSheet('immunite')" style="cursor:pointer">
+        <div class="cfi-accent teal"></div>
+        <div class="cfi-body">
+          <div class="cfi-illus-wrap">
+            <div class="cfi-illus teal">
+              <img src="https://api.iconify.design/fluent-emoji/shield.svg" width="48px" height="48px" style="vertical-align:middle;display:inline-block" loading="lazy"/>
             </div>
-            <h3 class="confirmation-title">Se déconnecter ?</h3>
-            <p class="confirmation-text">Vous serez redirigé vers la page de connexion.</p>
-            <div class="confirmation-buttons">
-                <button class="confirmation-btn cancel-btn" id="logoutCancelBtn">
-                    Annuler
-                </button>
-                <button class="confirmation-btn confirm-btn" id="logoutConfirmBtn">
-                    Se déconnecter
-                </button>
-            </div>
+          </div>
+          <div class="cfi-content">
+            <div class="cfi-meta"><span class="cfi-names">Immunité</span></div>
+            <div class="cfi-time">4 packs disponibles</div>
+            <div class="cfi-msg">Réponse immunitaire spécifique, allergies & SIDA 🛡️</div>
+          </div>
         </div>
+        <div class="cfi-footer">
+          <div class="cfi-reactions">
+            <button class="cfi-react-btn" onclick="event.stopPropagation();toggleReact(this)"><span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/hundred-points.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span><span>72</span></button>
+            <button class="cfi-react-btn" onclick="event.stopPropagation();toggleReact(this)"><span class="cfi-react-icon"><img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></span><span>45</span></button>
+           
+          </div>
+          <button class="cfi-action-btn" onclick="event.stopPropagation();openTopicSheet('immunite')">
+            📖 Voir les packs
+          </button>
+        </div>
+      </div>
+
+        </div><!-- .chat-feed -->
+  </div><!-- .chat-body -->
+
+<!-- QCM QUIZ SHEET -->
+<div class="qcm-overlay" id="qcmOverlay" onclick="closeQuizSheet(event)">
+  <div class="qcm-sheet" id="qcmSheet">
+    <div class="qcm-sheet-handle"></div>
+    <div class="qcm-sheet-head">
+      <div class="qcm-sheet-head-left">
+        <div class="qcm-sheet-head-icon" id="qcmSheetIcon">🔥</div>
+        <div class="qcm-sheet-head-text">
+          <div class="qcm-sheet-title" id="qcmSheetTitle">Quiz disponibles</div>
+          <div class="qcm-sheet-sub" id="qcmSheetSub"><i class="fa-solid fa-circle-question"></i> Choisissez un quiz</div>
+        </div>
+      </div>
+      <button class="qcm-sheet-close" onclick="closeQuizSheetForce()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="qcm-sheet-divider"></div>
+    <div class="qcm-list-wrap" id="qcmScroll"></div>
+    <div class="qcm-sheet-footer" id="qcmSheetFooter">
+      <i class="fa-solid fa-layer-group"></i><span>Sélectionnez un quiz pour commencer</span>
+    </div>
+  </div>
+</div>
+
+<!-- TOPIC PACK SHEET OVERLAY -->
+<div class="qcm-overlay" id="topicOverlay" onclick="closeTopicSheet(event)">
+  <div class="qcm-sheet" id="topicSheet">
+    <div class="qcm-sheet-handle"></div>
+    <div class="qcm-sheet-head">
+      <div class="qcm-sheet-head-left">
+        <div class="qcm-sheet-head-icon" id="topicSheetIcon" style="font-size:22px">📚</div>
+        <div class="qcm-sheet-head-text">
+          <div class="qcm-sheet-title" id="topicSheetTitle">Packs disponibles</div>
+          <div class="qcm-sheet-sub" id="topicSheetSub"><i class="fa-solid fa-layer-group"></i> Choisissez un pack</div>
+        </div>
+      </div>
+      <button class="qcm-sheet-close" onclick="closeTopicSheetForce()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="qcm-sheet-divider"></div>
+    <div class="qcm-list-wrap" id="topicPackScroll"></div>
+    <div class="qcm-sheet-footer" id="topicSheetFooter">
+      <i class="fa-solid fa-layer-group"></i><span>Sélectionnez un pack</span>
+    </div>
+  </div>
+</div>
+
+</div><!-- #chat -->
+
+<!-- ══════════════════════════════════════════════════════
+     EXERCICES SCREEN
+══════════════════════════════════════════════════════ -->
+<div id="exercices" class="screen">
+
+  <!-- NAV -->
+  <nav class="ex-nav">
+    <div class="ex-nav-brand">
+      <div class="ex-nav-icon"><i class="fa-solid fa-file-pdf"></i></div>
+      <span class="ex-nav-title">SVT<em>Docs</em></span>
+    </div>
+   
+  </nav>
+
+  <!-- SEGMENT SWITCH -->
+  <div class="ex-switch-wrap">
+    <div class="ex-switch">
+      <button class="ex-switch-btn active" id="exSwitchCours" onclick="exSwitchTo('cours')">
+        <i class="fa-solid fa-book-open"></i> Cours
+      </button>
+      <button class="ex-switch-btn" id="exSwitchExercices" onclick="exSwitchTo('exercices')">
+        <i class="fa-solid fa-file-lines"></i> Exercices
+      </button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="ex-hero">
+    <div class="ex-hero-label" id="exHeroLabel"><i class="fa-solid fa-book-open"></i>BAC SVT · 2026</div>
+    <div class="ex-hero-title" id="exHeroTitle">Cours &amp; Résumés</div>
+    <div class="ex-hero-sub" id="exHeroSub">Fiches de cours complètes pour maîtriser le programme</div>
+    <div class="ex-hero-stats">
+      <div class="ex-hero-stat"><i class="fa-solid fa-folder-open"></i><span id="exHeroChapCount">0 chapitres</span></div>
+      <div class="ex-hero-stat"><i class="fa-solid fa-file-pdf"></i><span id="exTotalDocs">0 documents</span></div>
+    </div>
+  </div>
+
+  <!-- SECTION LABEL -->
+  <div class="ex-sec">
+    <div class="ex-sec-label" id="exSecLabel"><i class="fa-solid fa-book-open"></i>&nbsp;Chapitres</div>
+    <div class="ex-sec-line"></div>
+    <div class="ex-sec-count" id="exSecCount">0</div>
+  </div>
+
+  <!-- GRID -->
+  <div class="ex-grid" id="exGrid"></div>
+
+</div><!-- #exercices -->
+
+<!-- MODAL LAYER 1 — Container Sheet -->
+<div class="ex-modal-overlay" id="exModalOverlay" onclick="exCloseSheet(event)">
+  <div class="ex-sheet" id="exSheet">
+    <div class="ex-sheet-handle"></div>
+    <div class="ex-sheet-head">
+      <div class="ex-sheet-head-text">
+        <div class="ex-sheet-head-title" id="exSheetTitle">—</div>
+        <div class="ex-sheet-head-desc" id="exSheetDesc">—</div>
+      </div>
+      <button class="ex-sheet-close" onclick="exCloseSheetForce()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="ex-sheet-sub-label">
+      <i class="fa-solid fa-file-pdf"></i>Documents PDF
+    </div>
+    <div class="ex-sheet-list" id="exSheetList"></div>
+  </div>
+</div>
+
+<!-- MODAL LAYER 2 — PDF Viewer -->
+<div class="ex-pdf-overlay" id="exPdfOverlay">
+  <div class="ex-pdf-nav">
+    <button class="ex-pdf-close" onclick="exClosePdf()"><i class="fa-solid fa-arrow-left"></i></button>
+    <div class="ex-pdf-nav-title" id="exPdfTitle">—</div>
+    <button class="ex-pdf-expand" id="exPdfExpandBtn"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></button>
+  </div>
+  <div class="ex-pdf-body">
+    <div class="ex-pdf-loading" id="exPdfLoading">
+      <div class="ex-pdf-spinner"></div>
+      <div class="ex-pdf-loading-title">Chargement du document…</div>
+    </div>
+    <iframe class="ex-pdf-iframe" id="exPdfFrame" src="" onload="exPdfLoaded()"></iframe>
+  </div>
+  <div class="ex-pdf-footer">
+    <div class="ex-pdf-page-info" id="exPdfPageInfo">Document PDF</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     WUIZ SCREEN  (Social Feed — Duolingo style)
+══════════════════════════════════════════════════════ -->
+<div id="wuiz" class="screen">
+
+  <!-- STICKY HEADER -->
+  <div class="wuiz-header">
+    <h1><img src="https://api.iconify.design/fluent-emoji/toolbox.svg" width="22px" height="22px" style="display:inline-block;vertical-align:middle" loading="lazy"/> Outils Sahl</h1>
+    <div class="wuiz-header-actions">
+     
+    </div>
+  </div>
+
+  <!-- BIG GREEN HERO BANNER -->
+  <div class="wuiz-hero-banner">
+    <!-- SVG network lines -->
+    <div class="wuiz-hero-network">
+      <svg viewBox="0 0 375 180" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <line x1="80" y1="55" x2="187" y2="90" stroke="rgba(0,0,0,.12)" stroke-width="2.5"/>
+        <line x1="295" y1="53" x2="187" y2="90" stroke="rgba(0,0,0,.12)" stroke-width="2.5"/>
+        <circle cx="80" cy="55" r="5" fill="rgba(0,0,0,.1)"/>
+        <circle cx="295" cy="53" r="5" fill="rgba(0,0,0,.1)"/>
+        <circle cx="187" cy="90" r="7" fill="rgba(0,0,0,.1)"/>
+      </svg>
+    </div>
+    <!-- avatar nodes -->
+    <div class="wuiz-hero-avatars">
+      <div class="wuiz-av-node tl"><img src="https://api.iconify.design/fluent-emoji/graduation-cap.svg" width="32px" height="32px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+      <div class="wuiz-av-node center"><img src="https://api.iconify.design/fluent-emoji/woman-student.svg" width="36px" height="36px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+      <div class="wuiz-av-node tr"><img src="https://api.iconify.design/fluent-emoji/boy.svg" width="32px" height="32px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="wuiz-cta">
+    <div class="wuiz-cta-days">3 jours</div>
+    <div class="wuiz-cta-text">Invitez vos amis et offrez-leur les meilleures offres, <strong style="color:#58cc02">jusqu’à -25 %.</strong> Faites-leur découvrir le monde Sahl </div>
+    <a href="#" onclick="openInvitePopup();return false;" class="wuiz-cta-btn"><i class="fa-solid fa-user-plus"></i>Ajouter des amis</a>
+  </div>
+
+  <!-- FEED ITEM 1 -->
+  <div class="wuiz-feed-item">
+    <div class="wuiz-item-row">
+      <div class="wuiz-item-illus">
+        <div class="wuiz-illus-box"><img src="https://api.iconify.design/fluent-emoji/fire.svg" width="64px" height="64px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-illus-avs">
+          <div class="wuiz-illus-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="18px" height="18px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+          <div class="wuiz-illus-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="18px" height="18px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        </div>
+      </div>
+      <div class="wuiz-item-text">
+        <div class="wuiz-item-names">Flash Cards</div>
+        <div class="wuiz-item-days">3D</div>
+        <div class="wuiz-item-msg">Comprendre le Bac devient plus simple avec des schémas et des visuels 3D</div>
+        <a href="Flashcards.html" onclick="return false;" class="wuiz-item-action"><img src="https://api.iconify.design/fluent-emoji/package.svg" width="18px" height="18px" style="vertical-align:middle;display:inline-block" loading="lazy"/>&nbsp; Découvrir</a>
+      </div>
+    </div>
+    <div class="wuiz-item-foot">
+      <div class="wuiz-react-row">
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/hundred-points.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/party-popper.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+      </div>
+      <span class="wuiz-react-count" id="wrc1">4843</span>
+    </div>
+  </div>
+
+  <!-- FEED ITEM 2 -->
+  <div class="wuiz-feed-item">
+    <div class="wuiz-item-row">
+      <div class="wuiz-item-illus">
+        <div class="wuiz-illus-box"><img src="https://api.iconify.design/fluent-emoji/open-book.svg" width="64px" height="64px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-illus-avs">
+          <div class="wuiz-illus-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="18px" height="18px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        </div>
+      </div>
+      <div class="wuiz-item-text">
+        <div class="wuiz-item-names">Exercices RÉO : Types Bac</div>
+        <div class="wuiz-item-days">E-Books</div>
+        <div class="wuiz-item-msg">Comprendre les types de questions et identifier les pièges pour mieux réussir</div>
+        <a href="Voir les exercices" onclick="return false;" class="wuiz-item-action"><img src="https://api.iconify.design/fluent-emoji/books.svg" width="18px" height="18px" style="vertical-align:middle;display:inline-block" loading="lazy"/>&nbsp;Voir les exercices</a>
+      </div>
+    </div>
+    <div class="wuiz-item-foot">
+      <div class="wuiz-react-row">
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/hundred-points.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/party-popper.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+      </div>
+      <span class="wuiz-react-count" id="wrc2">4238</span>
+    </div>
+  </div>
+
+  <!-- FEED ITEM 3 -->
+  <div class="wuiz-feed-item">
+    <div class="wuiz-item-row">
+      <div class="wuiz-item-illus">
+        <div class="wuiz-illus-box"><img src="https://api.iconify.design/fluent-emoji/robot.svg" width="64px" height="64px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-illus-avs">
+          <div class="wuiz-illus-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="18px" height="18px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        </div>
+      </div>
+      <div class="wuiz-item-text">
+        <div class="wuiz-item-names">Sahl AI à vos côtés</div>
+        <div class="wuiz-item-days">Sahl Ai</div>
+        <div class="wuiz-item-msg">Résolvez les exercices facilement grâce à Sahl AI</div>
+        <a href="../sahlai/index" onclick="return false;" class="wuiz-item-action"><img src="https://api.iconify.design/fluent-emoji/brain.svg" width="18px" height="18px" style="vertical-align:middle;display:inline-block" loading="lazy"/>&nbsp; Essayer Sahl AI</a>
+      </div>
+    </div>
+    <div class="wuiz-item-foot">
+      <div class="wuiz-react-row">
+        <div class="wuiz-react-circle lit" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/hundred-points.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/party-popper.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+      </div>
+      <span class="wuiz-react-count" id="wrc3">104</span>
+    </div>
+  </div>
+<!--
+ 
+  <div class="wuiz-feed-item">
+    <div class="wuiz-item-row">
+      <div class="wuiz-item-illus">
+        <div class="wuiz-illus-box"><img src="https://api.iconify.design/fluent-emoji/gem-stone.svg" width="64px" height="64px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-illus-avs">
+          <div class="wuiz-illus-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="18px" height="18px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        </div>
+      </div>
+      <div class="wuiz-item-text">
+        <div class="wuiz-item-names">Sara</div>
+        <div class="wuiz-item-days">3 jours</div>
+        <div class="wuiz-item-msg">A rejoint la ligue Diamant et atteint 2 400 XP !</div>
+        <a href="#" onclick="return false;" class="wuiz-item-action"><img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="18px" height="18px" style="vertical-align:middle;display:inline-block" loading="lazy"/>&nbsp; Félicitez-la</a>
+      </div>
+    </div>
+    <div class="wuiz-item-foot">
+      <div class="wuiz-react-row">
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/hundred-points.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+        <div class="wuiz-react-circle" onclick="wuizReact(this)"><img src="https://api.iconify.design/fluent-emoji/party-popper.svg" width="20px" height="20px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
+      </div>
+      <span class="wuiz-react-count" id="wrc4">1743</span>
+    </div>
+  </div>
+-->
+</div><!-- #wuiz -->
+
+<!-- HOME OVERLAY / SHEET -->
+<div class="h-overlay" id="hOverlay" onclick="closeSheet(event)">
+  <div class="h-sheet">
+    <div class="sh-handle"></div>
+
+    <!-- header: icon + title -->
+    <div class="sh-header">
+      <div class="sh-ico" id="shIco"><i class="fas fa-dna"></i></div>
+      <div class="sh-htext">
+        <div class="sh-title" id="shTitle">Étape</div>
+        <div class="sh-meta" id="shMeta"><i class="fas fa-layer-group"></i>SVT</div>
+      </div>
     </div>
 
-    <!-- Session Manager Script -->
-    <script>
-        // SESSION MANAGEMENT - 30 MINUTE INACTIVITY TIMEOUT
-        const SESSION_CONFIG = {
-            inactivityTimeout: 30 * 60 * 1000, // 30 minutes in milliseconds
-            checkInterval: 60000, // Check every minute
-            isLoggedInKey: 'eduwell_svt_isLoggedIn',
-            usernameKey: 'eduwell_svt_username',
-            lastActivityKey: 'eduwell_svt_lastActivity'
-        };
+    <!-- NOT YET STARTED -->
+    <div id="shStartBlock">
+      <div class="sh-locked-tip" id="shLockedTip" style="display:none">
+        <i class="fas fa-lock"></i>
+        <span>Terminez l'étape précédente pour débloquer celle-ci.</span>
+      </div>
+      <div class="sh-pb-wrap"><div class="sh-pb-fill" id="shPb" style="width:0%"></div></div>
+      <div class="sh-pb-label"><span>Pas encore commencé</span><b>0%</b></div>
+      <div class="sh-chips" id="shChips"></div>
+      <button class="btn-cta" id="shStartBtn"><i class="fas fa-play"></i> Commencer</button>
+      <button class="btn-cta-ghost" onclick="closeSheet()"><i class="fas fa-xmark"></i> Fermer</button>
+    </div>
 
-        class SessionManager {
-            constructor() {
-                this.timer = null;
-                this.activityTimer = null;
-            }
+    <!-- COMPLETED -->
+    <div id="shDoneBlock" style="display:none">
+      <!-- stars -->
+      <div class="sh-stars" id="shStars">
+        <i class="fas fa-star sh-star" id="shStar1"></i>
+        <i class="fas fa-star sh-star" id="shStar2"></i>
+        <i class="fas fa-star sh-star" id="shStar3"></i>
+      </div>
+      <div class="sh-results" id="shResults"></div>
+      <div class="sh-chips" id="shDoneChips"></div>
+      <button class="btn-cta" id="shReplayBtn"><i class="fas fa-redo-alt"></i> Rejouer l'étape</button>
+      <button class="btn-cta-ghost" onclick="closeSheet()"><i class="fas fa-xmark"></i> Fermer</button>
+    </div>
+  </div>
+</div>
 
-            // Initialize session checking
-            init() {
-                console.log('Session manager initialized - 30 minute inactivity timeout');
-                
-                // Clear any existing timers
-                this.clearTimers();
-                
-                // Update last activity timestamp
-                this.updateActivity();
-                
-                // Start session check
-                this.startSessionCheck();
-                
-                // Set up activity detection
-                this.setupActivityDetection();
-                
-                // Check session immediately
-                this.checkSession();
-            }
+<!-- TOAST -->
+<div class="toast" id="toast"><i id="tIco" class="fas fa-check"></i><span id="tMsg"></span></div>
 
-            // Start the session check interval
-            startSessionCheck() {
-                this.timer = setInterval(() => {
-                    this.checkSession();
-                }, SESSION_CONFIG.checkInterval);
-            }
+<!-- DESKTOP BLOCKER -->
+<div id="desktop-block">
+  <div class="db-phone">📱</div>
+  <div class="db-title">Mobile Uniquement</div>
+  <div class="db-sub">SVTApp est conçu exclusivement pour les appareils mobiles. Veuillez l'ouvrir sur votre téléphone pour la meilleure expérience.</div>
+  <div class="db-badge"><i class="fa-solid fa-mobile-screen-button"></i>Ouvrez sur votre téléphone</div>
+  <div class="db-screens">
+    <div class="db-scr active"><i class="fa-solid fa-mobile-screen-button"></i></div>
+    <div class="db-scr"><i class="fa-solid fa-tablet-screen-button"></i></div>
+    <div class="db-scr"><i class="fa-solid fa-display"></i></div>
+  </div>
+</div>
 
-            // Set up activity detection
-            setupActivityDetection() {
-                // Update activity on user interaction
-                const activityEvents = ['click', 'mousemove', 'keydown', 'scroll', 'touchstart'];
-                activityEvents.forEach(event => {
-                    document.addEventListener(event, () => {
-                        this.updateActivity();
-                    }, { passive: true });
-                });
-            }
+<!-- ══════════════════════════════════════════════════════
+     CARTES SCREEN
+══════════════════════════════════════════════════════ -->
+<div id="cartes" class="screen">
 
-            // Update last activity timestamp
-            updateActivity() {
-                localStorage.setItem(SESSION_CONFIG.lastActivityKey, Date.now().toString());
-            }
+  <!-- NAV -->
+  <nav class="cartes-nav">
+    <div class="cartes-nav-brand">
+      <div class="cartes-nav-icon"><i class="fa-solid fa-layer-group"></i></div>
+      <span class="cartes-nav-name">SVT<em>Cartes</em></span>
+    </div>
+  </nav>
 
-            // Check if session is still valid based on inactivity
-            checkSession() {
-                if (!this.isAuthenticated()) {
-                    return;
-                }
+  <!-- HERO -->
+  <div class="cartes-hero">
+    <div class="cartes-hero-mascot"><img src="https://api.iconify.design/fluent-emoji/owl.svg" width="96px" height="96px" loading="lazy"/></div>
+    <div class="cartes-hero-text">
+      <div class="cartes-hero-title">Schémas SVT</div>
+      <div class="cartes-hero-sub">Explorez les schémas<br>pour maîtriser le Bac !</div>
+    </div>
+  </div>
 
-                const lastActivity = localStorage.getItem(SESSION_CONFIG.lastActivityKey);
-                if (!lastActivity) {
-                    // If no activity recorded, set current time
-                    this.updateActivity();
-                    return;
-                }
+  <!-- SECTION -->
+  <div class="cartes-sec">
+    <div class="cartes-sec-label"><i class="fa-solid fa-grid-2"></i>Catégories</div>
+    <div class="cartes-sec-line"></div>
+    <div class="cartes-sec-count" id="cartesCatCount">8 catégories</div>
+  </div>
 
+  <!-- GRID -->
+  <div class="cartes-grid" id="cartesGrid"></div>
+
+</div><!-- #cartes -->
+
+<!-- CARTES MODAL OVERLAY -->
+<div class="cartes-modal-overlay" id="cartesModalOverlay" onclick="cartesCloseSheet(event)">
+  <div class="cartes-sheet" id="cartesSheet">
+    <div class="cartes-sheet-handle"></div>
+    <div class="cartes-sheet-head">
+      <div class="cartes-sheet-head-left">
+        <div class="cartes-sheet-icon" id="cartesSheetIcon"></div>
+        <div class="cartes-sheet-head-text">
+          <div class="cartes-sheet-title" id="cartesSheetTitle">—</div>
+          <div class="cartes-sheet-desc" id="cartesSheetDesc"><i class="fa-solid fa-images"></i> Cliquez sur une image pour l'agrandir</div>
+        </div>
+      </div>
+      <button class="cartes-sheet-close" onclick="cartesCloseSheetForce()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="cartes-sheet-body">
+      <div class="cartes-images-grid" id="cartesImagesGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CARTES LIGHTBOX -->
+<div class="cartes-lightbox" id="cartesLightbox">
+  <div class="cartes-lightbox-nav">
+    <button class="cartes-lightbox-back" onclick="cartesCloseLightbox()"><i class="fa-solid fa-arrow-left"></i></button>
+    <div class="cartes-lightbox-title" id="cartesLightboxTitle">—</div>
+    <div class="cartes-lightbox-spacer"></div>
+  </div>
+  <div class="cartes-lightbox-body">
+    <img class="cartes-lightbox-img" id="cartesLightboxImg" src="" alt=""/>
+  </div>
+  <div class="cartes-lightbox-footer">
+    <div class="cartes-lightbox-counter" id="cartesLightboxCounter"></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV BAR -->
+<nav class="bottom-nav" id="bottomNav">
+  <button class="bn-item" id="bn-home" onclick="bnClick('home')">
+    <div class="bn-icon-wrap">
+      <i class="fa-solid fa-house"></i>
+    </div>
+    <span class="bn-label">Accueil</span>
+  </button>
+  <button class="bn-item" id="bn-learn" onclick="bnClick('learn')">
+    <div class="bn-icon-wrap">
+      <i class="fa-solid fa-layer-group"></i>
+    </div>
+    <span class="bn-label">Cartes</span>
+  </button>
+  <button class="bn-item" id="bn-quiz" onclick="bnClick('quiz')">
+    <div class="bn-icon-wrap">
+      <i class="fa-solid fa-file-lines"></i>
+      <span class="bn-dot show" id="bn-dot-quiz"></span>
+    </div>
+    <span class="bn-label">Docs</span>
+  </button>
+  <button class="bn-item" id="bn-hearts" onclick="bnClick('hearts')">
+    <div class="bn-icon-wrap">
+      <i class="fa-solid  fa-puzzle-piece"></i>
+    </div>
+    <span class="bn-label">Quiz</span>
+  </button>
+  <button class="bn-item" id="bn-profile" onclick="bnClick('profile')">
+    <div class="bn-icon-wrap">
+      <i class="fa-solid fa-trophy"></i>
+    </div>
+    <span class="bn-label">Premium</span>
+  </button>
+</nav>
+
+<!-- ══ INVITE POPUP OVERLAY ══ -->
+<div class="invite-overlay" id="inviteOverlay" onclick="closeInviteOverlay(event)">
+  <div class="invite-modal" id="inviteModal">
+
+    <!-- Handle bar -->
+    <div class="invite-handle"></div>
+
+    <!-- Header -->
+    <div class="invite-header">
+      <div class="invite-header-icon">
+        <i class="fa-solid fa-gift"></i>
+      </div>
+      <button class="invite-close-btn" onclick="closeInvitePopup()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="invite-body">
+      <div class="invite-badge">🎁 Offre exclusive</div>
+      <h2 class="invite-title">Invite tes amis &amp; gagne ensemble !</h2>
+     <p class="invite-desc">
+  Invitez vos amis et offrez-leur les meilleures offres,
+  <strong class="invite-highlight">jusqu’à -25 %</strong>
+  sur Sahl. Faites-leur découvrir le monde <strong>Sahl</strong> !
+</p>
+
+      <!-- Link box -->
+      <div class="invite-link-box">
+        <span class="invite-link-text" id="inviteLinkText">sahleducation.netlify.app/topoffers&specialdeals</span>
+        <button class="invite-copy-btn" id="inviteCopyBtn" onclick="copyInviteLink()">
+          <i class="fa-regular fa-copy" id="inviteCopyIcon"></i>
+        </button>
+      </div>
+
+      <!-- Share label -->
+      <div class="invite-share-label">Partager via</div>
+
+      <!-- Share buttons -->
+      <div class="invite-share-row">
+
+        <button class="invite-share-btn whatsapp" onclick="shareVia('whatsapp')">
+          <div class="invite-share-icon">
+            <i class="fa-brands fa-whatsapp"></i>
+          </div>
+          <span>WhatsApp</span>
+        </button>
+
+        <button class="invite-share-btn instagram" onclick="shareVia('instagram')">
+          <div class="invite-share-icon">
+            <i class="fa-brands fa-instagram"></i>
+          </div>
+          <span>Instagram</span>
+        </button>
+
+        <button class="invite-share-btn facebook" onclick="shareVia('facebook')">
+          <div class="invite-share-icon">
+            <i class="fa-brands fa-facebook-f"></i>
+          </div>
+          <span>Facebook</span>
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ FRIEND MODE POPUP ══ -->
+<div class="fmode-overlay" id="fmodeOverlay" onclick="closeFmodeOverlay(event)">
+  <div class="fmode-modal">
+    <div class="fmode-handle"></div>
+
+    <div class="fmode-header">
+      <div class="fmode-header-icon"><i class="fa-solid fa-users"></i></div>
+      <button class="fmode-close" onclick="closeFmodePopup()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div class="fmode-body">
+      <p class="fmode-label">🕹️ Mode multijoueur</p>
+      <h2 class="fmode-title">Choisis ton mode</h2>
+      <p class="fmode-sub">Défie tes amis et mesure-toi à eux en temps réel !</p>
+
+      <div class="fmode-cards">
+
+        <!-- Duo -->
+        <a href="error" class="fmode-card duo">
+          <div class="fmode-card-left">
+            <div class="fmode-card-icons">
+              <div class="fmode-av"><i class="fa-solid fa-user"></i></div>
+              <div class="fmode-av"><i class="fa-solid fa-user"></i></div>
+            </div>
+            <div class="fmode-card-text">
+              <div class="fmode-card-title">Duo</div>
+              <div class="fmode-card-desc">2 joueurs · Défi 1 contre 1</div>
+            </div>
+          </div>
+          <div class="fmode-card-badge">2</div>
+          <i class="fa-solid fa-chevron-right fmode-card-arrow"></i>
+        </a>
+
+        <!-- Groupe -->
+        <a href="error" class="fmode-card group">
+          <div class="fmode-card-left">
+            <div class="fmode-card-icons">
+              <div class="fmode-av"><i class="fa-solid fa-user"></i></div>
+              <div class="fmode-av"><i class="fa-solid fa-user"></i></div>
+              <div class="fmode-av"><i class="fa-solid fa-user"></i></div>
+              <div class="fmode-av"><i class="fa-solid fa-user"></i></div>
+            </div>
+            <div class="fmode-card-text">
+              <div class="fmode-card-title">Groupe</div>
+              <div class="fmode-card-desc">4 joueurs · Tournoi en équipe</div>
+            </div>
+          </div>
+          <div class="fmode-card-badge">4</div>
+          <i class="fa-solid fa-chevron-right fmode-card-arrow"></i>
+        </a>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="./assets/js/exercice.js"></script>
+    
+<script>
+/* ══════════════════════════════════════════════════════
+   AUTHENTICATION FUNCTIONS
+══════════════════════════════════════════════════════ */
+const AUTH_CONFIG = {
+    isLoggedInKey: 'eduwell_svt_isLoggedIn',
+    usernameKey: 'eduwell_svt_username',
+    lastActivityKey: 'eduwell_svt_lastActivity'
+};
+
+// Get current user info
+function getCurrentUser() {
+    return {
+        username: localStorage.getItem(AUTH_CONFIG.usernameKey) || 'Étudiant',
+        email: localStorage.getItem(AUTH_CONFIG.usernameKey) || 'etudiant@svtapp.com'
+    };
+}
+
+// Check if user is authenticated
+function isAuthenticated() {
+    const isLoggedIn = localStorage.getItem(AUTH_CONFIG.isLoggedInKey) === 'true';
+    if (!isLoggedIn) return false;
+    
+    const lastActivity = localStorage.getItem(AUTH_CONFIG.lastActivityKey);
+    if (lastActivity) {
+        const lastActivityTime = parseInt(lastActivity);
+        const minutesDiff = (Date.now() - lastActivityTime) / (1000 * 60);
+        if (minutesDiff >= 30) {
+            // Session expired due to inactivity
+            localStorage.removeItem(AUTH_CONFIG.isLoggedInKey);
+            localStorage.removeItem(AUTH_CONFIG.usernameKey);
+            localStorage.removeItem(AUTH_CONFIG.lastActivityKey);
+            return false;
+        }
+    }
+    return true;
+}
+
+// Update user activity timestamp
+function updateUserActivity() {
+    if (localStorage.getItem(AUTH_CONFIG.isLoggedInKey) === 'true') {
+        localStorage.setItem(AUTH_CONFIG.lastActivityKey, Date.now().toString());
+    }
+}
+
+// Initialize activity tracking
+function initActivityTracking() {
+    ['click', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(event => {
+        document.addEventListener(event, updateUserActivity);
+    });
+    
+    // Check session every minute
+    window.activityTimer = setInterval(() => {
+        if (isAuthenticated()) {
+            const lastActivity = localStorage.getItem(AUTH_CONFIG.lastActivityKey);
+            if (lastActivity) {
                 const lastActivityTime = parseInt(lastActivity);
-                const currentTime = Date.now();
-                const timeSinceLastActivity = currentTime - lastActivityTime;
-
-                // Check if session has expired due to inactivity
-                if (timeSinceLastActivity >= SESSION_CONFIG.inactivityTimeout) {
-                    console.log('Session expired due to inactivity');
-                    this.forceLogout();
-                    return;
+                const minutesDiff = (Date.now() - lastActivityTime) / (1000 * 60);
+                if (minutesDiff >= 30) {
+                    toast('Session expirée - veuillez vous reconnecter');
+                    showLoginOverlay();
                 }
-            }
-
-            // Force logout when session expires
-            forceLogout() {
-                console.log('Session expired - forcing logout');
-                
-                // Clear all session data
-                this.clearSession();
-                
-                // Clear timers
-                this.clearTimers();
-                
-                // Redirect to login page with message
-                const redirectUrl = 'login.html?message=session_expired';
-                window.location.href = redirectUrl;
-            }
-
-            // Clear session data
-            clearSession() {
-                localStorage.removeItem(SESSION_CONFIG.isLoggedInKey);
-                localStorage.removeItem(SESSION_CONFIG.usernameKey);
-                localStorage.removeItem(SESSION_CONFIG.lastActivityKey);
-            }
-
-            // Clear all timers
-            clearTimers() {
-                if (this.timer) {
-                    clearInterval(this.timer);
-                    this.timer = null;
-                }
-                if (this.activityTimer) {
-                    clearTimeout(this.activityTimer);
-                    this.activityTimer = null;
-                }
-            }
-
-            // Check if user is authenticated
-            isAuthenticated() {
-                return localStorage.getItem(SESSION_CONFIG.isLoggedInKey) === 'true';
             }
         }
+    }, 60000);
+}
 
-        // Main initialization
-        document.addEventListener('DOMContentLoaded', function() {
-            // Disable right-click context menu
-            document.addEventListener('contextmenu', function(e) {
-                e.preventDefault();
-                return false;
-            });
+// Toast notification
+let toastTimer;
+function toast(message) {
+    const el = document.getElementById('toast');
+    if (el) {
+        el.innerHTML = `<i class="fas fa-info-circle"></i> ${message}`;
+        el.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+    }
+}
 
-            // Disable keyboard shortcuts for saving
-            document.addEventListener('keydown', function(e) {
-                // Disable Ctrl+S, Ctrl+Shift+S, Ctrl+P
-                if ((e.ctrlKey && e.key === 's') || 
-                    (e.ctrlKey && e.shiftKey && e.key === 'S') || 
-                    (e.ctrlKey && e.key === 'p')) {
-                    e.preventDefault();
-                    return false;
-                }
-                
-                // Disable F12 (DevTools)
-                if (e.key === 'F12') {
-                    e.preventDefault();
-                    return false;
-                }
-                
-                // Disable Ctrl+Shift+I (DevTools)
-                if (e.ctrlKey && e.shiftKey && e.key === 'I') {
-                    e.preventDefault();
-                    return false;
-                }
-                
-                // Disable Ctrl+U (View Source)
-                if (e.ctrlKey && e.key === 'u') {
-                    e.preventDefault();
-                    return false;
-                }
-            });
+// Show login overlay
+function showLoginOverlay() {
+    document.getElementById('protectedOverlay').style.display = 'flex';
+}
 
-            // CHECK SESSION EXPIRATION IMMEDIATELY
-            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
-            const lastActivity = localStorage.getItem('eduwell_svt_lastActivity');
-            
-            if (isLoggedIn && lastActivity) {
-                const lastActivityTime = parseInt(lastActivity);
-                const currentTime = Date.now();
-                const minutesDiff = (currentTime - lastActivityTime) / (1000 * 60);
-                
-                // If session expired due to 30 minutes of inactivity, redirect to login
-                if (minutesDiff >= 30) {
-                    localStorage.clear();
-                    window.location.href = 'login.html?message=session_expired';
-                    return;
-                }
-            } else if (!isLoggedIn) {
-                // Not logged in, redirect to login
-                window.location.href = 'login.html';
-                return;
-            }
-            
-            // Only initialize session manager if user is logged in
-            if (isLoggedIn) {
-                // Initialize session manager
-                window.sessionManager = new SessionManager();
-                sessionManager.init();
-                
-                // Update username in profile
-                const username = localStorage.getItem('eduwell_svt_username') || 'User';
-                const profileUsername = document.getElementById('profileUsername');
-                const welcomeTitle = document.getElementById('welcomeTitle');
-                
-                if (profileUsername) {
-                    profileUsername.textContent = username;
-                }
-                if (welcomeTitle) {
-                    welcomeTitle.textContent = `Bienvenue, ${username}`;
-                }
-            }
+// Redirect to login
+function redirectToLogin() {
+    sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+    window.location.href = 'login.html';
+}
 
-            // Setup logout functionality
-            const logoutBtn = document.getElementById('profileLogoutBtn');
-            const logoutConfirmationPopup = document.getElementById('logoutConfirmationPopup');
-            const logoutCancelBtn = document.getElementById('logoutCancelBtn');
-            const logoutConfirmBtn = document.getElementById('logoutConfirmBtn');
+// Update UI with user info
+function updateUserUI() {
+    if (isAuthenticated()) {
+        const user = getCurrentUser();
+        const userName = user.username;
+        
+        // Update the hero title with user's name
+        const userNameElement = document.getElementById('userName');
+        if (userNameElement) {
+            userNameElement.textContent = `Bienvenue, ${userName}`;
+        }
+        
+        // You can also update other elements with user info if needed
+        // For example, you might want to display the user's name in the nav
+    }
+}
 
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', function() {
-                    logoutConfirmationPopup.style.display = 'flex';
-                });
-            }
+// Check authentication on page load
+function checkAuth() {
+    if (!isAuthenticated()) {
+        // Store current page for redirect back
+        sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+        showLoginOverlay();
+    } else {
+        // Initialize activity tracking
+        initActivityTracking();
+        updateUserActivity();
+        updateUserUI();
+    }
+}
 
-            if (logoutCancelBtn) {
-                logoutCancelBtn.addEventListener('click', function() {
-                    logoutConfirmationPopup.style.display = 'none';
-                });
-            }
+/* ══════════════════════════════════════════════════════
+   ██  BOOT
+══════════════════════════════════════════════════════ */
+// Call checkAuth when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    checkAuth();
+    renderHome();
+    renderExercices();
+});
 
-            if (logoutConfirmBtn) {
-                logoutConfirmBtn.addEventListener('click', function() {
-                    // Clear session manager
-                    if (window.sessionManager) {
-                        window.sessionManager.clearTimers();
-                        window.sessionManager.clearSession();
-                    }
-                    
-                    // Clear all auth data
-                    localStorage.removeItem('eduwell_svt_isLoggedIn');
-                    localStorage.removeItem('eduwell_svt_username');
-                    localStorage.removeItem('eduwell_svt_lastActivity');
-                    
-                    // Redirect to login page
-                    window.location.href = 'login.html';
-                });
-            }
+// Handle page show event (for back/forward cache)
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+        // Page was restored from cache, re-check authentication
+        if (!isAuthenticated()) {
+            showLoginOverlay();
+        } else {
+            updateUserUI();
+            updateUserActivity();
+        }
+    }
+});
 
-            // Close modal when clicking outside
-            logoutConfirmationPopup.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.style.display = 'none';
-                }
-            });
-        });
-    </script>
+</script>
 
-    <!-- Your existing scripts -->
-    <script src="./assets/js/qcm.js"></script>
-    <script src="./assets/js/login.js"></script>
-    <script src="./assets/js/exercice.js"></script>
-    <script src="./assets/js/flashcarts.js"></script>
-    <script src="./assets/js/quizcart.js"></script>
-    <script src="./assets/js/cours.js"></script>
-    <script src="./assets/js/script.js"></script>
+<script src="./assets/js/flashcarts.js"></script>
+<script src="./assets/js/qcm.js"></script>
+<script src="./assets/js/script.js"></script>
+
 </body>
 </html>

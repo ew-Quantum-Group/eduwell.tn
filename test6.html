@@ -827,46 +827,90 @@ a{text-decoration:none;color:inherit}
 .chat-body{overflow-y:auto;-webkit-overflow-scrolling:touch}
 
 /* ── FRIEND CTA BANNER ── */
-.chat-cta-card{
+/* ── FRIENDS HERO BANNER (Duolingo style) ── */
+.chat-hero-banner{
   margin:16px 16px 0;
-  background:linear-gradient(135deg,rgba(255,255,255,.05) 0%,rgba(255,255,255,.03) 100%);
-  border:1.5px solid rgba(255,255,255,.09);
-  border-radius:20px;
-  padding:20px 18px 18px;
-  
+  background:linear-gradient(135deg,#1cb0f6 0%,#0d9de0 60%,#0a8bc7 100%);
+  border-radius:22px;
+  padding:22px 20px 18px;
   position:relative;overflow:hidden;
+  min-height:148px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  box-shadow:0 8px 28px rgba(28,176,246,.35),0 3px 10px rgba(0,0,0,.12);
 }
-.chat-cta-card::before{
-  content:'';position:absolute;inset:0;border-radius:20px;
-  background:linear-gradient(135deg,rgba(88,204,2,.07),transparent 60%);
+/* subtle inner glow */
+.chat-hero-banner::before{
+  content:'';position:absolute;inset:0;border-radius:22px;
+  background:linear-gradient(160deg,rgba(255,255,255,.18) 0%,transparent 55%);
   pointer-events:none;
 }
-.chat-cta-badge{
-  display:inline-flex;align-items:center;gap:6px;
-  background:rgba(88,204,2,.14);border:1px solid rgba(88,204,2,.25);
-  border-radius:99px;padding:4px 12px;
-  font-size:12px;font-weight:700;color:#58cc02;margin-bottom:12px;
+/* floating decorative dots */
+.chat-hero-banner::after{
+  content:'';position:absolute;right:16px;bottom:52px;
+  width:10px;height:10px;border-radius:3px;
+  background:rgba(255,255,255,.3);
+  box-shadow:22px -12px 0 rgba(255,255,255,.2),-10px 18px 0 rgba(255,255,255,.18);
+  pointer-events:none;
 }
-.chat-cta-badge i{font-size:10px}
-.chat-cta-text{
-  font-size:17px;font-weight:700;color:rgba(255,255,255,.9);
-  line-height:1.55;margin-bottom:16px;
+
+.chat-hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex:1;margin-bottom:16px}
+
+/* text block — right side (RTL feel) */
+.chat-hero-text{
+  flex:1;text-align:right;
+  display:flex;flex-direction:column;gap:4px;
+  justify-content:center;padding-top:4px;
 }
-.chat-cta-text strong{color:#fff;font-weight:900}
-.chat-cta-row{display:flex;justify-content:flex-end}
-.chat-cta-btn{
-  display:inline-flex;align-items:center;gap:8px;
-  background:#58cc02;
-  border:none;border-radius:14px;padding:13px 22px;
-  font-size:15px;font-weight:800;color:#fff;cursor:pointer;
-  box-shadow:0 4px 0 #3a8a00,0 6px 16px rgba(88,204,2,.25);
+.chat-hero-title{
+  font-size:20px;font-weight:900;color:#fff;
+  line-height:1.3;letter-spacing:-.2px;
+  text-shadow:0 1px 4px rgba(0,0,0,.15);
+}
+.chat-hero-sub{
+  font-size:12.5px;color:rgba(255,255,255,.82);
+  font-weight:600;line-height:1.4;
+}
+
+/* avatars cluster — left side */
+.chat-hero-avatars{
+  position:relative;
+  width:108px;height:90px;flex-shrink:0;
+}
+.chat-hero-av{
+  position:absolute;
+  border-radius:50%;overflow:hidden;
+  background:rgba(255,255,255,.18);
+  border:2.5px solid rgba(255,255,255,.6);
+  display:flex;align-items:center;justify-content:center;
+}
+.chat-hero-av.big{width:60px;height:60px;top:0;right:0}
+.chat-hero-av.mid{width:46px;height:46px;bottom:0;left:0;border-color:rgba(255,255,255,.55)}
+.chat-hero-sticker{
+  position:absolute;
+  filter:drop-shadow(0 3px 6px rgba(0,0,0,.2));
+  line-height:1;
+}
+.chat-hero-sticker.hands{top:-2px;left:2px;font-size:28px;transform:rotate(-12deg)}
+.chat-hero-sticker.confetti{bottom:2px;right:4px;font-size:22px;transform:rotate(8deg)}
+
+/* CTA button */
+.chat-hero-btn{
+  width:100%;background:#fff;
+  border:none;border-radius:14px;
+  padding:14px 20px;
+  font-family:var(--fb);font-size:15px;font-weight:800;
+  color:#1cb0f6;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  box-shadow:0 4px 0 rgba(0,0,0,.12),0 6px 18px rgba(0,0,0,.1);
   transition:transform .13s var(--spring),box-shadow .13s;
   -webkit-tap-highlight-color:transparent;
-  font-family:var(--fb);
+  letter-spacing:-.1px;
+  position:relative;z-index:1;
 }
-.chat-cta-btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 #3a8a00,0 10px 22px rgba(88,204,2,.3)}
-.chat-cta-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #3a8a00}
-.chat-cta-btn i{font-size:14px}
+.chat-hero-btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(0,0,0,.14),0 10px 24px rgba(0,0,0,.12)}
+.chat-hero-btn:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(0,0,0,.1)}
+.chat-hero-btn i{font-size:15px}
 
 /* ── SECTION LABEL ── */
 .chat-section-lbl{
@@ -883,7 +927,7 @@ a{text-decoration:none;color:inherit}
 }
 
 /* ── FEED CARD ── */
-.chat-feed{padding:0 16px;display:flex;flex-direction:column;gap:12px;padding-bottom:8px}
+.chat-feed{padding:0 16px;display:flex;flex-direction:column;gap:12px;padding-bottom:8px;margin-top:14px}
 .chat-feed-item{
   background:rgba(255,255,255,.04);
   border:1.5px solid rgba(255,255,255,.08);
@@ -2140,84 +2184,48 @@ a{text-decoration:none;color:inherit}
   <div class="chat-header">
     <div class="chat-header-inner">
       <h1><img src="https://api.iconify.design/fluent-emoji/question-mark.svg" width="22px" height="22px" style="vertical-align:middle;display:inline-block" loading="lazy"/> QCM</h1>
-      <div class="chat-header-actions">
-        <button class="chat-hdr-btn" onclick="window.open('#','_blank')" title="Ajouter un ami">
-          <i class="fa-solid fa-user-plus"></i>
-        </button>
-        <button class="chat-hdr-btn" onclick="window.open('#','_blank')" title="Rechercher">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
-      </div>
     </div>
-  </div>
-
-  <!-- TABS -->
-  <div class="chat-tabs">
-    <div class="chat-tab active" onclick="chatTab(this,'following')">Abonnements</div>
-    <div class="chat-tab" onclick="chatTab(this,'friends')">Amis</div>
-    <div class="chat-tab" onclick="chatTab(this,'global')">Mondial</div>
   </div>
 
   <!-- SCROLLABLE BODY -->
   <div class="chat-body">
 
-    <!-- ONLINE FRIENDS ROW -->
-    <div class="chat-friends-row">
-      <div class="chat-friends-scroll">
-        <div class="cff-item">
-          <div class="cff-av-wrap">
-            <div class="cff-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
-            <div class="cff-online"></div>
+    <!-- FRIENDS HERO BANNER -->
+    <div class="chat-hero-banner">
+      <div class="chat-hero-top">
+        <!-- Avatars cluster — left -->
+        <div class="chat-hero-avatars">
+          <!-- sticker: clapping hands -->
+          <div class="chat-hero-sticker hands">
+            <img src="https://api.iconify.design/fluent-emoji/clapping-hands.svg" width="34px" height="34px"/>
           </div>
-          <span class="cff-name">Maysa</span>
+          <!-- big avatar -->
+          <div class="chat-hero-av big">
+            <img src="https://api.iconify.design/fluent-emoji/man-student.svg" width="44px" height="44px"/>
+          </div>
+          <!-- mid avatar -->
+          <div class="chat-hero-av mid">
+            <img src="https://api.iconify.design/fluent-emoji/woman-student.svg" width="32px" height="32px"/>
+          </div>
+          <!-- sticker: confetti / party -->
+          <div class="chat-hero-sticker confetti">
+            <img src="https://api.iconify.design/fluent-emoji/party-popper.svg" width="28px" height="28px"/>
+          </div>
         </div>
-        <div class="cff-item">
-          <div class="cff-av-wrap">
-            <div class="cff-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
-            <div class="cff-online"></div>
-          </div>
-          <span class="cff-name">Niko</span>
-        </div>
-        <div class="cff-item">
-          <div class="cff-av-wrap">
-            <div class="cff-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
-          </div>
-          <span class="cff-name">Bilal</span>
-        </div>
-        <div class="cff-item">
-          <div class="cff-av-wrap">
-            <div class="cff-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
-            <div class="cff-online"></div>
-          </div>
-          <span class="cff-name">Ahmed</span>
-        </div>
-        <div class="cff-item">
-          <div class="cff-av-wrap">
-            <div class="cff-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
-          </div>
-          <span class="cff-name">Sara</span>
-        </div>
-        <div class="cff-item">
-          <div class="cff-av-wrap">
-            <div class="cff-av"><img src="https://api.iconify.design/fluent-emoji/bust-in-silhouette.svg" width="16px" height="16px" style="vertical-align:middle;display:inline-block" loading="lazy"/></div>
-            <div class="cff-online"></div>
-          </div>
-          <span class="cff-name">Khalid</span>
+
+        <!-- Text — right -->
+        <div class="chat-hero-text">
+          <div class="chat-hero-title">احتفل بإنجازاتك مع<br>أصدقائك!</div>
+          <div class="chat-hero-sub">شارك تقدّمك وتحدَّ أصدقاءك</div>
         </div>
       </div>
-    </div>
 
-    <!-- FRIEND CTA BANNER -->
-    <div class="chat-cta-card">
-      <div class="chat-cta-badge"><i class="fa-solid fa-users"></i> 3 jours consécutifs</div>
-      <div class="chat-cta-text">Vous avez <strong>5,6 fois</strong> plus de chances de terminer le programme en suivant des amis.</div>
-      <div class="chat-cta-row">
-        <button class="chat-cta-btn" onclick="window.open('#','_blank')">
-          <i class="fa-solid fa-user-plus"></i> Ajouter des amis
-        </button>
-      </div>
+      <!-- CTA button -->
+      <button class="chat-hero-btn" onclick="window.open('#','_blank')">
+        <i class="fa-solid fa-user-plus"></i>
+        إضافة أصدقاء
+      </button>
     </div>
-
     <!-- SECTION LABEL -->
     <div class="chat-section-lbl"><span>Activités récentes</span></div>
 

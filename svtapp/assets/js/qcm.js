@@ -1,3 +1,8 @@
+
+/* ══════════════════════════════════════════════════════
+   ██  QCM SHEET — DATA & LOGIC
+══════════════════════════════════════════════════════ */
+
 // QCM Data Structure with multi-select questions
 const qcmData = {
     "models": [
@@ -2014,4 +2019,150 @@ const qcmData = {
 }
 
     ]
+};
+
+
+const QCM_COLLECTIONS = {
+  flamme: {
+    title: 'Quiz Flamme 🔥',
+    sub: 'Défis pour les plus motivés',
+    quizzes: [
+      { id:'q1', name:'Reproduction Masculine', questions:15, diff:'medium', color:'indigo', icon:'fluent-emoji/dna', href:'#' },
+      { id:'q2', name:'Reproduction Féminine', questions:12, diff:'medium', color:'purple', icon:'fluent-emoji/dna', href:'#' },
+      { id:'q3', name:'Génétique & ADN', questions:20, diff:'hard', color:'blue', icon:'fluent-emoji/microscope', href:'#' },
+      { id:'q4', name:'Cycle Cellulaire', questions:10, diff:'easy', color:'green', icon:'fluent-emoji/seedling', href:'#' },
+      { id:'q5', name:'Évolution', questions:18, diff:'hard', color:'orange', icon:'fluent-emoji/t-rex', href:'#' },
+    ]
+  },
+  etoiles: {
+    title: 'Quiz Étoiles ⭐',
+    sub: 'Perfection & maîtrise totale',
+    quizzes: [
+      { id:'q6', name:'Système Nerveux', questions:14, diff:'hard', color:'blue', icon:'fluent-emoji/brain', href:'#' },
+      { id:'q7', name:'Immunologie', questions:16, diff:'medium', color:'teal', icon:'fluent-emoji/shield', href:'#' },
+      { id:'q8', name:'Pression Artérielle', questions:10, diff:'easy', color:'red', icon:'fluent-emoji/anatomical-heart', href:'#' },
+      { id:'q9', name:'Muscles & Squelette', questions:12, diff:'medium', color:'orange', icon:'fluent-emoji/bone', href:'#' },
+    ]
+  },
+  diamant: {
+    title: 'Quiz Diamant 💎',
+    sub: 'Niveau Bac — élite',
+    quizzes: [
+      { id:'q10', name:'Bac Blanc Complet', questions:30, diff:'hard', color:'purple', icon:'fluent-emoji/graduation-cap', href:'#' },
+      { id:'q11', name:'Annales 2024', questions:25, diff:'hard', color:'indigo', icon:'fluent-emoji/scroll', href:'#' },
+      { id:'q12', name:'Annales 2023', questions:25, diff:'hard', color:'blue', icon:'fluent-emoji/scroll', href:'#' },
+      { id:'q13', name:'Révision Générale', questions:40, diff:'hard', color:'red', icon:'fluent-emoji/books', href:'#' },
+    ]
+  }
+};
+
+const DIFF_LABEL = { easy:'Facile', medium:'Moyen', hard:'Difficile' };
+const COLLECTION_META = {
+  flamme:  { emoji:'🔥', iconClass:'flamme',  count: null },
+  etoiles: { emoji:'⭐', iconClass:'etoiles', count: null },
+  diamant: { emoji:'💎', iconClass:'diamant', count: null },
+};
+
+function openQuizSheet(collectionId){
+  const col = QCM_COLLECTIONS[collectionId];
+  if(!col) return;
+  const meta = COLLECTION_META[collectionId] || { emoji:'📚', iconClass:'', count:null };
+
+  /* header */
+  document.getElementById('qcmSheetTitle').textContent = col.title;
+  document.getElementById('qcmSheetSub').innerHTML = `<i class="fa-solid fa-circle-question"></i> ${col.sub}`;
+  const iconEl = document.getElementById('qcmSheetIcon');
+  iconEl.textContent = meta.emoji;
+  iconEl.className = 'qcm-sheet-head-icon ' + meta.iconClass;
+
+  /* footer */
+  document.getElementById('qcmSheetFooter').innerHTML =
+    `<i class="fa-solid fa-layer-group"></i><span>${col.quizzes.length} quiz disponibles</span>`;
+
+  /* cards */
+  const scroll = document.getElementById('qcmScroll');
+  scroll.innerHTML = col.quizzes.map((q, i) => `
+    <a class="qcm-card ${q.color}" href="${q.href}" style="animation:nodeIn .35s var(--ease) ${i*55}ms both">
+      <div class="qcm-card-icon">
+        <img src="https://api.iconify.design/${q.icon}.svg" width="28px" height="28px" loading="lazy"/>
+      </div>
+      <div class="qcm-card-body">
+        <div class="qcm-card-name">${q.name}</div>
+        <div class="qcm-card-chips">
+          <span class="qcm-card-meta"><i class="fa-solid fa-circle-question"></i>${q.questions} questions</span>
+          <span class="qcm-card-diff ${q.diff}">${DIFF_LABEL[q.diff]}</span>
+        </div>
+      </div>
+      <div class="qcm-card-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+    </a>
+  `).join('');
+  document.getElementById('qcmOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeQuizSheet(e){
+  if(e && e.target !== document.getElementById('qcmOverlay')) return;
+  closeQuizSheetForce();
+}
+function closeQuizSheetForce(){
+  document.getElementById('qcmOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+
+
+/* ══════════════════════════════════════════════════════
+   ██  TOPIC PACKS — DATA & LOGIC
+══════════════════════════════════════════════════════ */
+const TOPIC_PACKS = {
+  "reproduction-humaine": {
+    title: "Reproduction Humaine",
+    emoji: "🌱",
+    options: [
+      { title: "Chez l'Homme Pack (1)",  icon: "fa-person",       color: "blue",   link: "./pages/seek1.html" },
+      { title: "Chez la Femme Pack (1)", icon: "fa-person-dress", color: "green",  link: "./pages/seek3.html" },
+      { title: "Chez l'Homme Pack (2)",  icon: "fa-person",       color: "blue",   link: "./pages/seek2.html" },
+      { title: "Chez la Femme Pack (2)", icon: "fa-person-dress", color: "green",  link: "./pages/seek4.html" },
+      { title: "Procréation Pack (1)",   icon: "fa-baby",         color: "purple", link: "./pages/seek5.html" },
+      { title: "Procréation Pack (2)",   icon: "fa-baby",         color: "purple", link: "./pages/seek6.html" }
+    ]
+  },
+  "evolution-biologique": {
+    title: "Évolution Biologique",
+    emoji: "🐸",
+    options: [
+      { title: "Arguments",   icon: "fa-magnifying-glass", color: "blue",   link: "./pages/seek7.html" },
+      { title: "Mécanismes",  icon: "fa-gear",             color: "purple", link: "./pages/seek8.html" }
+    ]
+  },
+  "genetique-humaine": {
+    title: "Génétique Humaine",
+    emoji: "🧬",
+    options: [
+      { title: "Génétique des Diploïdes (P1)", icon: "fa-dna",      color: "green",  link: "./pages/seek11.html" },
+      { title: "Génétique Humaine (1)",        icon: "fa-user",     color: "green",  link: "./pages/seek12.html" },
+      { title: "Génétique Humaine (2)",        icon: "fa-user",     color: "purple", link: "./pages/seek13.html" }
+    ]
+  },
+  "neurophysiologie": {
+    title: "Neurophysiologie",
+    emoji: "🧠",
+    options: [
+      { title: "Tissu Nerveux",                        icon: "fa-brain",        color: "green",  link: "./pages/seek14.html" },
+      { title: "Réflexe myotatique (1)",               icon: "fa-person-running", color: "blue", link: "./pages/seek15.html" },
+      { title: "Réflexe myotatique (2)",               icon: "fa-person-running", color: "green",link: "./pages/seek16.html" },
+      { title: "Fonctionnement du muscle squelettique",icon: "fa-dumbbell",     color: "blue",   link: "./pages/seek17.html" },
+      { title: "Régulation de la pression artérielle", icon: "fa-heart-pulse",  color: "green",  link: "./pages/seek18.html" },
+      { title: "Hygiène du système nerveux",           icon: "fa-shield-halved",color: "purple", link: "./pages/seek19.html" }
+    ]
+  },
+  "immunite": {
+    title: "Immunité",
+    emoji: "🛡️",
+    options: [
+      { title: "Réponse immunitaire spécifique (1)", icon: "fa-shield-virus", color: "green", link: "./pages/seek20.html" },
+      { title: "Réponse immunitaire spécifique (2)", icon: "fa-shield-virus", color: "blue",  link: "./pages/seek21.html" },
+      { title: "Allergies",                          icon: "fa-wind",         color: "green", link: "./pages/seek22.html" },
+      { title: "SIDA",                               icon: "fa-virus",        color: "blue",  link: "./pages/seek23.html" }
+    ]
+  }
 };

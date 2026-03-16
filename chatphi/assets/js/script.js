@@ -1,946 +1,1156 @@
-   // Authentication Configuration - MUST MATCH login.html
-    const AUTH_CONFIG = {
-        isLoggedInKey: 'eduwell_svt_isLoggedIn',
-        usernameKey: 'eduwell_svt_username',
-        lastActivityKey: 'eduwell_svt_lastActivity'
+
+/* ══════════════════════════════════════════
+   STATE
+══════════════════════════════════════════ */
+const state = {
+  completed: [],      // which stages are fully done
+  chatStage: null,    // which stage is open
+  chatLevel: 0,
+  chatDone: false,
+  typing: false
+};
+
+const state2 = {
+  completed: [],
+  chatStage: null,
+  chatLevel: 0,
+  chatDone: false,
+  typing: false
+};
+
+const state3 = {
+  completed: [],
+  chatStage: null,
+  chatLevel: 0,
+  chatDone: false,
+  typing: false
+};
+
+/* ══════════════════════════════════════════
+   DOM REFS
+══════════════════════════════════════════ */
+const overlay   = document.getElementById('modalOverlay');
+const chatBody  = document.getElementById('chatBody');
+const btnReply  = document.getElementById('btnReply');
+const btnClose  = document.getElementById('btnCloseChat');
+const stagePill = document.getElementById('stagePill');
+const stagePillText = document.getElementById('stagePillText');
+
+/* ══════════════════════════════════════════
+   OPEN / CLOSE MODAL
+══════════════════════════════════════════ */
+function openStage(stageIdx, btn) {
+  // Ripple
+  doRipple(btn);
+
+  // Check locked (only unlocked = completed prev or stage 0)
+  if (stageIdx > 0 && !state.completed.includes(stageIdx - 1)) {
+    // Shake + locked message
+    btn.classList.add('shake');
+    setTimeout(() => btn.classList.remove('shake'), 500);
+    showToast('أكمل المرحلة السابقة أوّل! 🔒');
+    return;
+  }
+
+  // If no levels (stage 3 is placeholder)
+  const stageData = STAGES[stageIdx];
+  if (!stageData || Object.keys(stageData.levels).length === 0) {
+    showToast('هذه المرحلة مقفلة 🔒');
+    return;
+  }
+
+  state.chatStage = stageIdx;
+  state.chatLevel = 0;
+  state.chatDone  = false;
+
+  // Update pill label
+  stagePillText.textContent = stageData.stageLabel;
+
+  // Clear chat
+  chatBody.innerHTML = '';
+  btnReply.classList.add('hidden');
+  btnClose.classList.add('hidden');
+
+  // Open overlay
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  // Start conversation
+  setTimeout(() => startChat(stageIdx), 300);
+}
+
+function closeModal() {
+  overlay.classList.remove('open');
+  overlay.dataset.section = '';
+  document.body.style.overflow = '';
+}
+
+/* Close on backdrop tap */
+overlay.addEventListener('click', (e) => {
+  if (e.target === overlay) {
+    const sec = overlay.dataset.section;
+    const done = sec === '3' ? state3.chatDone : sec === '2' ? state2.chatDone : state.chatDone;
+    if (done) closeModal();
+    else showToast('أكمل الدردشة أوّل! 💬');
+  }
+});
+
+btnClose.addEventListener('click', () => {
+  closeModal();
+});
+
+/* ══════════════════════════════════════════
+   CHAT LOGIC
+══════════════════════════════════════════ */
+function startChat(stageIdx) {
+  const stageData = STAGES[stageIdx];
+  state.chatLevel = 1;
+
+  // Add progress dots
+  addProgressDots(stageIdx);
+
+  // Send first message
+  showTyping(() => {
+    addPhiloMsg(stageData.levels[1].message);
+    updateProgressDots(stageIdx, 1);
+    showReplyIfMore(stageIdx, 1);
+  });
+}
+
+function showReplyIfMore(stageIdx, level) {
+  const stageData = STAGES[stageIdx];
+  const totalLevels = Object.keys(stageData.levels).length;
+  const levelData = stageData.levels[level];
+
+  if (level < totalLevels && levelData && levelData.forwardOption) {
+    // Show reply button
+    btnReply.textContent = '';
+    btnReply.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="flex-shrink:0">
+        <circle cx="12" cy="12" r="10" fill="rgba(255,255,255,.2)" stroke="rgba(255,255,255,.3)" stroke-width=".8"/>
+        <polyline points="14 17 8 12 14 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg> ${levelData.forwardOption.label}`;
+    btnReply.classList.remove('hidden');
+    btnClose.classList.add('hidden');
+  } else {
+    // Last level – show finish + close button
+    btnReply.classList.add('hidden');
+    showFinishBanner(stageIdx);
+  }
+}
+
+btnReply.addEventListener('click', () => {
+  const sec = overlay.dataset.section;
+  const activeState = sec === '3' ? state3 : sec === '2' ? state2 : state;
+  const activeStages = sec === '3' ? STAGES3 : sec === '2' ? STAGES2 : STAGES;
+  if (activeState.typing) return;
+
+  const stageData = activeStages[activeState.chatStage];
+  const totalLevels = Object.keys(stageData.levels).length;
+  const prevLevel = activeState.chatLevel;
+  const nextLevel = prevLevel + 1;
+
+  if (nextLevel > totalLevels) return;
+
+  const prevLevelData = stageData.levels[prevLevel];
+  if (prevLevelData && prevLevelData.forwardOption) {
+    addUserMsg(prevLevelData.forwardOption.label);
+  }
+
+  btnReply.classList.add('hidden');
+  activeState.chatLevel = nextLevel;
+
+  showTyping(() => {
+    addPhiloMsg(stageData.levels[nextLevel].message);
+    if (sec === '3') {
+      updateProgressDots3(activeState.chatStage, nextLevel);
+      showReplyIfMore3(activeState.chatStage, nextLevel);
+    } else if (sec === '2') {
+      updateProgressDots2(activeState.chatStage, nextLevel);
+      showReplyIfMore2(activeState.chatStage, nextLevel);
+    } else {
+      updateProgressDots(activeState.chatStage, nextLevel);
+      showReplyIfMore(activeState.chatStage, nextLevel);
+    }
+  });
+});
+
+function showFinishBanner(stageIdx) {
+  state.chatDone = true;
+
+  // Mark stage as complete
+  if (!state.completed.includes(stageIdx)) {
+    state.completed.push(stageIdx);
+    unlockNextStage(stageIdx);
+  }
+
+  // Finish banner
+  setTimeout(() => {
+    const banner = document.createElement('div');
+    banner.className = 'finish-banner';
+    banner.innerHTML = `
+      <div class="fi-icon">🎉</div>
+      <div class="fi-title">أحسنت! أكملت المرحلة</div>
+      <div class="fi-sub">يمكنك الرجوع للمسار والمتابعة</div>
+    `;
+    chatBody.appendChild(banner);
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    btnClose.classList.remove('hidden');
+  }, 400);
+}
+
+/* ══════════════════════════════════════════
+   UNLOCK NEXT NODE
+══════════════════════════════════════════ */
+function unlockNextStage(completedIdx) {
+  const completedBtn = document.getElementById(`node${completedIdx}`);
+  if (completedBtn) {
+    completedBtn.classList.remove('current');
+    completedBtn.classList.add('done', 'done-full');
+    // Add check badge
+    if (!completedBtn.querySelector('.done-badge')) {
+      const badge = document.createElement('div');
+      badge.className = 'done-badge';
+      badge.textContent = '✓';
+      completedBtn.appendChild(badge);
+    }
+    // Fix icon color
+    const ico = completedBtn.querySelector('.ic-dim');
+    if (ico) ico.setAttribute('class', 'ic-white');
+    // Remove spinning rings
+    const wrap = completedBtn.closest('.node');
+    if (wrap) wrap.classList.remove('is-cur');
+    // Stop float override
+    completedBtn.style.animation = 'floatNode 3.2s ease-in-out infinite';
+  }
+
+  // Unlock next
+  const nextIdx = completedIdx + 1;
+  const nextBtn = document.getElementById(`node${nextIdx}`);
+  if (nextBtn) {
+    nextBtn.classList.remove('locked');
+    nextBtn.classList.add('current');
+    nextBtn.style.cursor = 'pointer';
+
+    const wrap = nextBtn.closest('.node');
+    if (wrap) wrap.classList.add('is-cur');
+
+    // Update icon to white
+    const ico = nextBtn.querySelector('.ic-dim');
+    if (ico) ico.setAttribute('class', 'ic-white');
+
+    // Update trail
+    setTimeout(remapTrail, 100);
+
+    // Update label
+    const lbl = nextBtn.closest('.node')?.querySelector('.nlabel');
+    if (lbl) lbl.textContent = STAGES[nextIdx]?.title || '';
+  }
+
+  // Update XP bar
+  const totalStages = STAGES.filter(s => Object.keys(s.levels).length > 0).length;
+  const doneCount = state.completed.length;
+  const pct = Math.round((doneCount / totalStages) * 100);
+  document.getElementById('xpBar').style.width = pct + '%';
+
+  // If all section 1 stages complete, reveal section 2
+  if (doneCount >= totalStages) {
+    revealSection2();
+  }
+}
+
+function revealSection2() {
+  const divider = document.getElementById('challengeDivider');
+  const section = document.getElementById('section2');
+  if (!divider || !section) return;
+
+  // Unlock first node of section 2
+  const s2node0 = document.getElementById('s2node0');
+  if (s2node0) {
+    s2node0.classList.remove('locked');
+    s2node0.classList.add('current');
+    s2node0.style.cursor = 'pointer';
+    const wrap = s2node0.closest('.node');
+    if (wrap) wrap.classList.add('is-cur');
+  }
+
+  // Animate in
+  divider.style.opacity = '1';
+  divider.style.filter = 'none';
+  divider.style.transform = 'translateY(0)';
+  divider.style.pointerEvents = 'auto';
+  section.style.opacity = '1';
+  section.style.filter = 'none';
+  section.style.transform = 'translateY(0)';
+  section.style.pointerEvents = 'auto';
+
+  showToast('🎉 تحدي جديد فُتح: الخصوصية والكونية!');
+
+  setTimeout(() => remapTrail2(), 400);
+}
+
+/* ══════════════════════════════════════════
+   SECTION 2: OPEN / CLOSE / LOGIC
+══════════════════════════════════════════ */
+function openStage2(stageIdx, btn) {
+  doRipple(btn);
+
+  if (stageIdx > 0 && !state2.completed.includes(stageIdx - 1)) {
+    btn.classList.add('shake');
+    setTimeout(() => btn.classList.remove('shake'), 500);
+    showToast('أكمل المرحلة السابقة أوّل! 🔒');
+    return;
+  }
+
+  const stageData = STAGES2[stageIdx];
+  if (!stageData || Object.keys(stageData.levels).length === 0) {
+    showToast('هذه المرحلة مقفلة 🔒');
+    return;
+  }
+
+  state2.chatStage = stageIdx;
+  state2.chatLevel = 0;
+  state2.chatDone  = false;
+
+  stagePillText.textContent = stageData.stageLabel;
+  chatBody.innerHTML = '';
+  btnReply.classList.add('hidden');
+  btnClose.classList.add('hidden');
+
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  // Flag: we're in section 2
+  overlay.dataset.section = '2';
+
+  setTimeout(() => startChat2(stageIdx), 300);
+}
+
+function startChat2(stageIdx) {
+  const stageData = STAGES2[stageIdx];
+  state2.chatLevel = 1;
+  addProgressDots2(stageIdx);
+  showTyping(() => {
+    addPhiloMsg(stageData.levels[1].message);
+    updateProgressDots2(stageIdx, 1);
+    showReplyIfMore2(stageIdx, 1);
+  });
+}
+
+function showReplyIfMore2(stageIdx, level) {
+  const stageData = STAGES2[stageIdx];
+  const totalLevels = Object.keys(stageData.levels).length;
+  const levelData = stageData.levels[level];
+
+  if (level < totalLevels && levelData && levelData.forwardOption) {
+    btnReply.textContent = '';
+    btnReply.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="flex-shrink:0">
+        <circle cx="12" cy="12" r="10" fill="rgba(255,255,255,.2)" stroke="rgba(255,255,255,.3)" stroke-width=".8"/>
+        <polyline points="14 17 8 12 14 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg> ${levelData.forwardOption.label}`;
+    btnReply.classList.remove('hidden');
+    btnClose.classList.add('hidden');
+  } else {
+    btnReply.classList.add('hidden');
+    showFinishBanner2(stageIdx);
+  }
+}
+
+function showFinishBanner2(stageIdx) {
+  state2.chatDone = true;
+
+  if (!state2.completed.includes(stageIdx)) {
+    state2.completed.push(stageIdx);
+    unlockNextStage2(stageIdx);
+  }
+
+  setTimeout(() => {
+    const banner = document.createElement('div');
+    banner.className = 'finish-banner';
+    banner.innerHTML = `
+      <div class="fi-icon">🎉</div>
+      <div class="fi-title">أحسنت! أكملت المرحلة</div>
+      <div class="fi-sub">يمكنك الرجوع للمسار والمتابعة</div>
+    `;
+    chatBody.appendChild(banner);
+    chatBody.scrollTop = chatBody.scrollHeight;
+    btnClose.classList.remove('hidden');
+  }, 400);
+}
+
+function unlockNextStage2(completedIdx) {
+  const completedBtn = document.getElementById(`s2node${completedIdx}`);
+  if (completedBtn) {
+    completedBtn.classList.remove('current');
+    completedBtn.classList.add('done', 'done-full');
+    if (!completedBtn.querySelector('.done-badge')) {
+      const badge = document.createElement('div');
+      badge.className = 'done-badge';
+      badge.textContent = '✓';
+      completedBtn.appendChild(badge);
+    }
+    const wrap = completedBtn.closest('.node');
+    if (wrap) wrap.classList.remove('is-cur');
+    completedBtn.style.animation = 'floatNode 3.2s ease-in-out infinite';
+  }
+
+  const nextIdx = completedIdx + 1;
+  const nextBtn = document.getElementById(`s2node${nextIdx}`);
+  if (nextBtn) {
+    nextBtn.classList.remove('locked');
+    nextBtn.classList.add('current');
+    nextBtn.style.cursor = 'pointer';
+    const wrap = nextBtn.closest('.node');
+    if (wrap) wrap.classList.add('is-cur');
+    setTimeout(remapTrail2, 100);
+    const lbl = nextBtn.closest('.node')?.querySelector('.nlabel');
+    if (lbl) lbl.textContent = STAGES2[nextIdx]?.title || '';
+  }
+
+  // Update XP bar 2
+  const totalStages2 = STAGES2.length;
+  const pct2 = Math.round((state2.completed.length / totalStages2) * 100);
+  const xpBar2 = document.getElementById('xpBar2');
+  if (xpBar2) xpBar2.style.width = pct2 + '%';
+
+  setTimeout(remapTrail2, 100);
+
+  // If all section 2 stages complete, reveal section 3
+  if (state2.completed.length >= totalStages2) {
+    revealSection3();
+  }
+}
+
+function revealSection3() {
+  const divider = document.getElementById('challengeDivider3');
+  const section = document.getElementById('section3');
+  if (!divider || !section) return;
+
+  const s3node0 = document.getElementById('s3node0');
+  if (s3node0) {
+    s3node0.classList.remove('locked');
+    s3node0.classList.add('current');
+    s3node0.style.cursor = 'pointer';
+    const wrap = s3node0.closest('.node');
+    if (wrap) wrap.classList.add('is-cur');
+  }
+
+  divider.style.opacity = '1';
+  divider.style.filter = 'none';
+  divider.style.transform = 'translateY(0)';
+  divider.style.pointerEvents = 'auto';
+  section.style.opacity = '1';
+  section.style.filter = 'none';
+  section.style.transform = 'translateY(0)';
+  section.style.pointerEvents = 'auto';
+
+  showToast('🔬 تحدي جديد فُتح: النمذجة العلمية!');
+  setTimeout(() => remapTrail3(), 400);
+}
+
+/* ══════════════════════════════════════════
+   SECTION 3: OPEN / CLOSE / LOGIC
+══════════════════════════════════════════ */
+function openStage3(stageIdx, btn) {
+  doRipple(btn);
+
+  if (stageIdx > 0 && !state3.completed.includes(stageIdx - 1)) {
+    btn.classList.add('shake');
+    setTimeout(() => btn.classList.remove('shake'), 500);
+    showToast('أكمل المرحلة السابقة أوّل! 🔒');
+    return;
+  }
+
+  const stageData = STAGES3[stageIdx];
+  if (!stageData || Object.keys(stageData.levels).length === 0) {
+    showToast('هذه المرحلة مقفلة 🔒');
+    return;
+  }
+
+  state3.chatStage = stageIdx;
+  state3.chatLevel = 0;
+  state3.chatDone  = false;
+
+  stagePillText.textContent = stageData.stageLabel;
+  chatBody.innerHTML = '';
+  btnReply.classList.add('hidden');
+  btnClose.classList.add('hidden');
+
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  overlay.dataset.section = '3';
+
+  setTimeout(() => startChat3(stageIdx), 300);
+}
+
+function startChat3(stageIdx) {
+  const stageData = STAGES3[stageIdx];
+  state3.chatLevel = 1;
+  addProgressDots3(stageIdx);
+  showTyping(() => {
+    addPhiloMsg(stageData.levels[1].message);
+    updateProgressDots3(stageIdx, 1);
+    showReplyIfMore3(stageIdx, 1);
+  });
+}
+
+function showReplyIfMore3(stageIdx, level) {
+  const stageData = STAGES3[stageIdx];
+  const totalLevels = Object.keys(stageData.levels).length;
+  const levelData = stageData.levels[level];
+
+  if (level < totalLevels && levelData && levelData.forwardOption) {
+    btnReply.textContent = '';
+    btnReply.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="flex-shrink:0">
+        <circle cx="12" cy="12" r="10" fill="rgba(255,255,255,.2)" stroke="rgba(255,255,255,.3)" stroke-width=".8"/>
+        <polyline points="14 17 8 12 14 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg> ${levelData.forwardOption.label}`;
+    btnReply.classList.remove('hidden');
+    btnClose.classList.add('hidden');
+  } else {
+    btnReply.classList.add('hidden');
+    showFinishBanner3(stageIdx);
+  }
+}
+
+function showFinishBanner3(stageIdx) {
+  state3.chatDone = true;
+
+  if (!state3.completed.includes(stageIdx)) {
+    state3.completed.push(stageIdx);
+    unlockNextStage3(stageIdx);
+  }
+
+  setTimeout(() => {
+    const banner = document.createElement('div');
+    banner.className = 'finish-banner';
+    banner.innerHTML = `
+      <div class="fi-icon">🎉</div>
+      <div class="fi-title">أحسنت! أكملت المرحلة</div>
+      <div class="fi-sub">يمكنك الرجوع للمسار والمتابعة</div>
+    `;
+    chatBody.appendChild(banner);
+    chatBody.scrollTop = chatBody.scrollHeight;
+    btnClose.classList.remove('hidden');
+  }, 400);
+}
+
+function unlockNextStage3(completedIdx) {
+  const completedBtn = document.getElementById(`s3node${completedIdx}`);
+  if (completedBtn) {
+    completedBtn.classList.remove('current');
+    completedBtn.classList.add('done', 'done-full');
+    if (!completedBtn.querySelector('.done-badge')) {
+      const badge = document.createElement('div');
+      badge.className = 'done-badge';
+      badge.textContent = '✓';
+      completedBtn.appendChild(badge);
+    }
+    const wrap = completedBtn.closest('.node');
+    if (wrap) wrap.classList.remove('is-cur');
+    completedBtn.style.animation = 'floatNode 3.2s ease-in-out infinite';
+  }
+
+  const nextIdx = completedIdx + 1;
+  const nextBtn = document.getElementById(`s3node${nextIdx}`);
+  if (nextBtn) {
+    nextBtn.classList.remove('locked');
+    nextBtn.classList.add('current');
+    nextBtn.style.cursor = 'pointer';
+    const wrap = nextBtn.closest('.node');
+    if (wrap) wrap.classList.add('is-cur');
+    const lbl = nextBtn.closest('.node')?.querySelector('.nlabel');
+    if (lbl) lbl.textContent = STAGES3[nextIdx]?.title || '';
+  }
+
+  const totalStages3 = STAGES3.length;
+  const pct3 = Math.round((state3.completed.length / totalStages3) * 100);
+  const xpBar3 = document.getElementById('xpBar3');
+  if (xpBar3) xpBar3.style.width = pct3 + '%';
+
+  setTimeout(remapTrail3, 100);
+}
+
+function addProgressDots3(stageIdx) {
+  const total = Object.keys(STAGES3[stageIdx].levels).length;
+  const row = document.createElement('div');
+  row.className = 'progress-bar-row'; row.id = 'progRow';
+  for (let i=1; i<=total; i++) {
+    const d = document.createElement('div');
+    d.className = 'prog-dot'; d.id = `prog-${i}`;
+    row.appendChild(d);
+  }
+  chatBody.appendChild(row);
+}
+
+function updateProgressDots3(stageIdx, currentLevel) {
+  const total = Object.keys(STAGES3[stageIdx].levels).length;
+  for (let i=1; i<=total; i++) {
+    const d = document.getElementById(`prog-${i}`);
+    if (d) d.classList.toggle('active', i <= currentLevel);
+  }
+}
+
+/* ══════════════════════════════════════════
+   TRAIL SVG REMAP 3
+══════════════════════════════════════════ */
+function remapTrail3() {
+  const rows = document.querySelectorAll('#pathCol3 .row');
+  if (rows.length < 2) return;
+  const area = document.querySelector('#section3 .path-area');
+  if (!area) return;
+  const aRect = area.getBoundingClientRect();
+  const vw = 390, scale = aRect.width / vw;
+
+  function cx(row, side) {
+    const r = row.getBoundingClientRect();
+    const x = (r.left - aRect.left + (side==='l'?r.width*.32:side==='r'?r.width*.68:r.width*.5));
+    return x / scale;
+  }
+  function cy(row) {
+    const r = row.getBoundingClientRect();
+    return (r.top - aRect.top + r.height*.5) / scale;
+  }
+
+  const r = rows;
+  const segments = [
+    `M ${cx(r[0],'l')} ${cy(r[0])} C ${cx(r[0],'l')} ${cy(r[0])+48} ${cx(r[1],'r')} ${cy(r[1])-48} ${cx(r[1],'r')} ${cy(r[1])}`,
+    `M ${cx(r[1],'r')} ${cy(r[1])} C ${cx(r[1],'r')} ${cy(r[1])+50} ${cx(r[2],'c')} ${cy(r[2])-50} ${cx(r[2],'c')} ${cy(r[2])}`,
+    `M ${cx(r[2],'c')} ${cy(r[2])} C ${cx(r[2],'c')} ${cy(r[2])+50} ${cx(r[3],'c')} ${cy(r[3])-50} ${cx(r[3],'c')} ${cy(r[3])}`,
+  ];
+
+  segments.forEach((d, i) => {
+    const seg = document.getElementById(`pSeg3-${i+1}`);
+    if (seg) {
+      seg.setAttribute('d', d);
+      if (state3.completed.includes(i)) {
+        seg.setAttribute('stroke', 'url(#gDone3)');
+        seg.setAttribute('stroke-dasharray', '1 0');
+        seg.setAttribute('filter', 'url(#glow3)');
+      }
+    }
+  });
+}
+
+function addProgressDots2(stageIdx) {
+  const total = Object.keys(STAGES2[stageIdx].levels).length;
+  const row = document.createElement('div');
+  row.className = 'progress-bar-row'; row.id = 'progRow';
+  for (let i=1; i<=total; i++) {
+    const d = document.createElement('div');
+    d.className = 'prog-dot'; d.id = `prog-${i}`;
+    row.appendChild(d);
+  }
+  chatBody.appendChild(row);
+}
+
+function updateProgressDots2(stageIdx, currentLevel) {
+  const total = Object.keys(STAGES2[stageIdx].levels).length;
+  for (let i=1; i<=total; i++) {
+    const d = document.getElementById(`prog-${i}`);
+    if (d) d.classList.toggle('active', i <= currentLevel);
+  }
+}
+
+/* ══════════════════════════════════════════
+   TRAIL SVG REMAP 2
+══════════════════════════════════════════ */
+function remapTrail2() {
+  const rows = document.querySelectorAll('#pathCol2 .row');
+  if (rows.length < 2) return;
+  const area = document.querySelector('#section2 .path-area');
+  if (!area) return;
+  const aRect = area.getBoundingClientRect();
+  const vw = 390, scale = aRect.width / vw;
+
+  function cx(row, side) {
+    const r = row.getBoundingClientRect();
+    const x = (r.left - aRect.left + (side==='l'?r.width*.32:side==='r'?r.width*.68:r.width*.5));
+    return x / scale;
+  }
+  function cy(row) {
+    const r = row.getBoundingClientRect();
+    return (r.top - aRect.top + r.height*.5) / scale;
+  }
+
+  const r = rows;
+  const segments = [
+    `M ${cx(r[0],'l')} ${cy(r[0])} C ${cx(r[0],'l')} ${cy(r[0])+48} ${cx(r[1],'r')} ${cy(r[1])-48} ${cx(r[1],'r')} ${cy(r[1])}`,
+    `M ${cx(r[1],'r')} ${cy(r[1])} C ${cx(r[1],'r')} ${cy(r[1])+50} ${cx(r[2],'c')} ${cy(r[2])-50} ${cx(r[2],'c')} ${cy(r[2])}`,
+  ];
+
+  segments.forEach((d, i) => {
+    const seg = document.getElementById(`pSeg2-${i+1}`);
+    if (seg) {
+      seg.setAttribute('d', d);
+      if (state2.completed.includes(i)) {
+        seg.setAttribute('stroke', 'url(#gDone2)');
+        seg.setAttribute('stroke-dasharray', '1 0');
+        seg.setAttribute('filter', 'url(#glow2)');
+      }
+    }
+  });
+}
+
+/* ══════════════════════════════════════════
+   MESSAGE HELPERS
+══════════════════════════════════════════ */
+function formatText(txt) {
+  return txt.split('\n')
+    .filter(l => l.trim())
+    .map(l => `<p>${l.trim()}</p>`)
+    .join('');
+}
+
+function addPhiloMsg(text) {
+  const d = document.createElement('div');
+  d.className = 'msg philo';
+  d.innerHTML = `<div class="msg-bubble">${formatText(text)}</div><div class="msg-time">${timeNow()}</div>`;
+  chatBody.appendChild(d);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function addUserMsg(text) {
+  const d = document.createElement('div');
+  d.className = 'msg user';
+  d.innerHTML = `<div class="msg-bubble"><p>${text}</p></div><div class="msg-time">${timeNow()}</div>`;
+  chatBody.appendChild(d);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function showTyping(callback) {
+  state.typing = true;
+  const t = document.createElement('div');
+  t.className = 'typing-ind'; t.id = 'typer';
+  for (let i=0;i<3;i++) { const d=document.createElement('div'); d.className='t-dot'; t.appendChild(d); }
+  chatBody.appendChild(t);
+  chatBody.scrollTop = chatBody.scrollHeight;
+
+  setTimeout(() => {
+    t.remove();
+    state.typing = false;
+    callback();
+  }, 1400);
+}
+
+function timeNow() {
+  return new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:false});
+}
+
+/* ══════════════════════════════════════════
+   PROGRESS DOTS
+══════════════════════════════════════════ */
+function addProgressDots(stageIdx) {
+  const total = Object.keys(STAGES[stageIdx].levels).length;
+  const row = document.createElement('div');
+  row.className = 'progress-bar-row'; row.id = 'progRow';
+  for (let i=1; i<=total; i++) {
+    const d = document.createElement('div');
+    d.className = 'prog-dot'; d.id = `prog-${i}`;
+    row.appendChild(d);
+  }
+  chatBody.appendChild(row);
+}
+
+function updateProgressDots(stageIdx, currentLevel) {
+  const total = Object.keys(STAGES[stageIdx].levels).length;
+  for (let i=1; i<=total; i++) {
+    const d = document.getElementById(`prog-${i}`);
+    if (d) d.classList.toggle('active', i <= currentLevel);
+  }
+}
+
+/* ══════════════════════════════════════════
+   RIPPLE
+══════════════════════════════════════════ */
+function doRipple(btn) {
+  const r = document.createElement('span');
+  r.className = 'ripple-el';
+  btn.appendChild(r);
+  setTimeout(() => r.remove(), 460);
+}
+
+/* ══════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════ */
+function showToast(msg) {
+  let t = document.getElementById('toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'toast';
+    t.style.cssText = `
+      position:fixed; bottom:90px; left:50%; transform:translateX(-50%) translateY(10px);
+      background:rgba(30,30,30,.92); color:#fff; border-radius:99px;
+      padding:10px 20px; font-size:13px; font-family:'Cairo',sans-serif; font-weight:600;
+      z-index:99999; opacity:0; transition:all .3s ease; white-space:nowrap;
+      backdrop-filter:blur(10px);
+    `;
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1'; t.style.transform = 'translateX(-50%) translateY(0)';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => {
+    t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(10px)';
+  }, 2200);
+}
+
+/* ══════════════════════════════════════════
+   TRAIL SVG REMAP
+══════════════════════════════════════════ */
+function remapTrail() {
+  const rows = document.querySelectorAll('.path-col .row');
+  if (rows.length < 2) return;
+  const area = document.querySelector('.path-area');
+  const aRect = area.getBoundingClientRect();
+  const vw = 390, scale = aRect.width / vw;
+
+  function cx(row, side) {
+    const r = row.getBoundingClientRect();
+    const x = (r.left - aRect.left + (side==='l'?r.width*.32:side==='r'?r.width*.68:r.width*.5));
+    return x / scale;
+  }
+  function cy(row) {
+    const r = row.getBoundingClientRect();
+    return (r.top - aRect.top + r.height*.5) / scale;
+  }
+
+  const r = rows;
+  const segments = [
+    `M ${cx(r[0],'l')} ${cy(r[0])} C ${cx(r[0],'l')} ${cy(r[0])+48} ${cx(r[1],'r')} ${cy(r[1])-48} ${cx(r[1],'r')} ${cy(r[1])}`,
+    `M ${cx(r[1],'r')} ${cy(r[1])} C ${cx(r[1],'r')} ${cy(r[1])+50} ${cx(r[2],'c')} ${cy(r[2])-50} ${cx(r[2],'c')} ${cy(r[2])}`,
+    `M ${cx(r[2],'c')} ${cy(r[2])} C ${cx(r[2],'c')} ${cy(r[2])+50} ${cx(r[3],'c')} ${cy(r[3])-50} ${cx(r[3],'c')} ${cy(r[3])}`,
+  ];
+
+  segments.forEach((d, i) => {
+    const seg = document.getElementById(`pSeg${i+1}`);
+    if (seg) seg.setAttribute('d', d);
+
+    // Color done segments green
+    if (state.completed.includes(i)) {
+      seg.setAttribute('stroke', 'url(#gDone)');
+      seg.setAttribute('stroke-dasharray', '1 0');
+      seg.setAttribute('filter', 'url(#glow)');
+    }
+  });
+}
+
+setTimeout(remapTrail, 100);
+window.addEventListener('resize', () => { remapTrail(); remapTrail2(); remapTrail3(); });
+
+// Init: first node is open (current)
+document.getElementById('node0').classList.remove('locked');
+document.getElementById('node0').classList.add('current');
+document.getElementById('nodeWrap0').classList.add('is-cur');
+
+/* ══════════════════════════════════════════
+   DOCS PAGE DATA
+══════════════════════════════════════════ */
+const DT_COURS = [
+ 
+   {
+    title: "الأنية والغيرية",
+    sub: "درس فلسفي يعرّف بمفهوم الأنية وعلاقتها بالغير، ودور الآخر في بناء الوعي بالذات وتشكّل الهوية",
+    meta: "درس كامل", pct: 0,
+    ico: "🌍", faIcon: "fa-solid fa-globe-africa",
+    strip: "#8b5cf6", icoBg: "#f5f3ff",
+    pdfUrl: "https://drive.google.com/file/d/1lgQtrt8w5feiJ4pV9lhP0laKfLq5OX8j/preview",
+    docs: []
+  },
+    {
+    title: "الخصوصية والكونية",
+    sub:  "درس فلسفي يدرس العلاقة بين الخصوصية الثقافية والكونية الإنسانية، وكيف يمكن التوفيق بين الاختلاف والمشترك.",
+    meta: "درس كامل", pct: 0,
+    ico: "🌍", faIcon: "fa-solid fa-globe-africa",
+    strip: "#8b5cf6", icoBg: "#f5f3ff",
+    pdfUrl: "https://drive.google.com/file/d/1yMiRH-usumvip9CsYp_FLq5fJzBa_Byt/preview",
+    docs: []
+  },
+  {
+    title: "النمذجة",
+    sub: "درس فلسفي يوضّح مفهوم النمذجة باعتبارها أداة معرفية لفهم الواقع وتبسيطه وبناء التفكير العلمي.",
+    meta: "درس كامل", pct: 0,
+    ico: "🔬", faIcon: "fa-solid fa-diagram-project",
+    strip: "#0ea5e9", icoBg: "#e0f2fe",
+    pdfUrl: "https://drive.google.com/file/d/1i03yMC4njP9235OBnL3v28M2saaN31BD/preview",
+    docs: []
+  },
+];
+const DT_EXERCICES = [
+{
+  title: "الخصوصية والكونية",
+  sub: "درس فلسفة",
+  meta: "6 وثائق",
+  pct: 0,
+  ico: "🌍",
+  faIcon: "fa-solid fa-globe",
+  strip: "#3b82f6",
+  icoBg: "#eff6ff",
+  docs: [
+    { name: "فقرة: الخصوصية والكونية", type: "pdf", driveId: "1TLK9pZ36ZhYl2BFgI3wRwOdskWZqMR--" },
+    { name: "تمارين باك (1)", type: "pdf", driveId: "1znKznhFSEeh41qTHwqU_8wCb1bKlI0Kr" },
+    { name: "تمارين باك (2)", type: "pdf", driveId: "1Mi1itwHIIB_6rE62zxuBTQ0j8SPxE2Xw" },
+    { name: "تمارين باك (3)", type: "pdf", driveId: "1ktNiRLagWXGjLw3nfE5be7qsbQu6rtk8" },
+    { name: "تمارين باك (4)", type: "pdf", driveId: "1-Cmsfw1imogld59n4ls0L7HxTeJrEncc" },
+    { name: "تمارين باك (5)", type: "pdf", driveId: "1n5itg2okXfN73x-MQJ-z6eniFS1F1Bt_" }
+  ]
+},
+
+{
+  title: "النمذجة",
+  sub: "درس فلسفة",
+  meta: "5 وثائق",
+  pct: 0,
+  ico: "🧩",
+  faIcon: "fa-solid fa-diagram-project",
+  strip: "#8b5cf6",
+  icoBg: "#f5f3ff",
+  docs: [
+    { name: "فقرة: النمذجة", type: "pdf", driveId: "1FM5WvkoMu6SlISqnt-sPoiPWy8tOLQ01" },
+    { name: "تمارين باك (1)", type: "pdf", driveId: "1rdhkWsmFNUhcv7UeUR9o7_nF2-XnofGW" },
+    { name: "تمارين باك (2)", type: "pdf", driveId: "1IN9b7RuCbjOJtfJ3JH77Xq1LCVf-Bi_X" },
+    { name: "تمارين باك (3)", type: "pdf", driveId: "1a0y4ge6FH4g85UvNsABM9i65Y9xosPLy" },
+    { name: "تمارين باك (4)", type: "pdf", driveId: "1J22_4pdNnp7urZ_6r084PMei8CX3tTQ-" }
+  ]
+},
+
+{
+  title: "منهجية الإجابة",
+  sub: "منهجية الفلسفة",
+  meta: "وثيقة واحدة",
+  pct: 0,
+  ico: "✍️",
+  faIcon: "fa-solid fa-pen",
+  strip: "#f59e0b",
+  icoBg: "#fffbeb",
+  docs: [
+    { name: "منهجية الإجابة في فرض الفلسفة", type: "pdf", driveId: "1wkw2Cq5xZ49JZkCPGH7yWoslr5oqNTSL" }
+  ]
+}
+];
+
+/* ── render cards ── */
+function renderDtGrid(data, gridId) {
+  const isCours = gridId === 'dtCoursGrid';
+  const g = document.getElementById(gridId);
+  g.innerHTML = data.map((item, i) => {
+    const clickAction = isCours && item.pdfUrl
+      ? `openCoursDirectPdf('${item.pdfUrl}','${item.title}','${item.sub}')`
+      : `openDsSheet(${i},'${gridId}')`;
+    const iconContent = item.faIcon
+      ? `<i class="${item.faIcon}"></i>`
+      : item.ico;
+    return `
+    <div class="dt-card" style="--dt-strip:${item.strip};--dt-ico-bg:${item.icoBg}" onclick="${clickAction}">
+      <div class="dt-card-ico">${iconContent}</div>
+      <div class="dt-card-body">
+        <div class="dt-card-title">${item.title}</div>
+        <div class="dt-card-sub"><i class="fa-solid fa-tag"></i>${item.sub}</div>
+        <div class="dt-card-meta"><i class="fa-solid fa-file-lines"></i>${item.meta}</div>
+        <div class="dt-prog-wrap"><div class="dt-prog-bar" style="width:${item.pct}%"></div></div>
+        <div class="dt-prog-lbl">${item.pct}% مكتمل</div>
+      </div>
+      <div class="dt-card-arrow"><i class="fa-solid fa-chevron-left"></i></div>
+    </div>`;
+  }).join('');
+}
+renderDtGrid(DT_COURS,     'dtCoursGrid');
+renderDtGrid(DT_EXERCICES, 'dtExoGrid');
+
+/* ── tab switch ── */
+function dtSwitchTab(tab) {
+  document.querySelectorAll('.dt-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('dtPageCours').style.display     = tab==='cours'     ? '' : 'none';
+  document.getElementById('dtPageExercices').style.display = tab==='exercices' ? '' : 'none';
+  document.getElementById(tab==='cours' ? 'dtTabCours' : 'dtTabExercices').classList.add('active');
+  document.getElementById('dtScroll').scrollTop = 0;
+}
+
+const SVG_FOLDER = `<svg id="fabIcon" width="19" height="19" viewBox="0 0 24 24" fill="none">
+  <defs>
+    <linearGradient id="fld" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(255,255,255,.9)"/><stop offset="100%" stop-color="rgba(255,255,255,.6)"/></linearGradient>
+  </defs>
+  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" fill="url(#fld)" stroke="rgba(255,255,255,.3)" stroke-width=".6"/>
+  <path d="M2 9h20" stroke="rgba(255,255,255,.25)" stroke-width=".8"/>
+  <rect x="4" y="5" width="7" height="4" rx="1" fill="rgba(255,255,255,.2)"/>
+</svg>`;
+const SVG_CLOSE  = `<svg id="fabIcon" width="18" height="18" viewBox="0 0 24 24" fill="none">
+  <circle cx="12" cy="12" r="10" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.2)" stroke-width=".8"/>
+  <line x1="15" y1="9" x2="9" y2="15" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <line x1="9" y1="9" x2="15" y2="15" stroke="white" stroke-width="2" stroke-linecap="round"/>
+</svg>`;
+
+let docsPageOpen = false;
+
+function toggleDocsPage() {
+  docsPageOpen = !docsPageOpen;
+  const btn = document.getElementById('docsFabBtn');
+  const lbl = btn.querySelector('.fab-label');
+  const iconSlot = btn.querySelector('svg');
+  if (docsPageOpen) {
+    document.getElementById('docsPage').classList.add('open');
+    btn.classList.add('docs-open');
+    iconSlot.outerHTML = SVG_CLOSE;
+    lbl.textContent = 'المسار';
+  } else {
+    document.getElementById('docsPage').classList.remove('open');
+    btn.classList.remove('docs-open');
+    iconSlot.outerHTML = SVG_FOLDER;
+    lbl.textContent = 'الدروس';
+  }
+}
+
+function closeDocsPage() {
+  docsPageOpen = false;
+  document.getElementById('docsPage').classList.remove('open');
+  const btn = document.getElementById('docsFabBtn');
+  btn.classList.remove('docs-open');
+  const iconSlot = btn.querySelector('svg');
+  if (iconSlot) iconSlot.outerHTML = SVG_FOLDER;
+  btn.querySelector('.fab-label').textContent = 'الدروس';
+}
+
+/* ══════════════════════════════════════════
+   COURS: OPEN PDF DIRECTLY
+══════════════════════════════════════════ */
+function openCoursDirectPdf(previewUrl, title, sub) {
+  document.getElementById('pdfOvTitle').textContent = title;
+  document.getElementById('pdfOvSub').textContent   = sub;
+
+  // Build drive & download links from preview URL
+  const match = previewUrl.match(/\/d\/([^/]+)\//);
+  const driveId = match ? match[1] : '';
+  document.getElementById('pdfOvDriveLink').href = driveId
+    ? `https://drive.google.com/file/d/${driveId}/view` : '#';
+  document.getElementById('pdfOvDlLink').href = driveId
+    ? `https://drive.google.com/uc?export=download&id=${driveId}` : '#';
+
+  const frame   = document.getElementById('pdfFrame');
+  const loading = document.getElementById('pdfLoadEl');
+  frame.classList.remove('loaded');
+  loading.style.display = 'flex';
+  frame.src = '';
+
+  document.getElementById('pdfOv').classList.add('open');
+
+  setTimeout(() => {
+    frame.src = previewUrl;
+    frame.onload = () => {
+      loading.style.display = 'none';
+      frame.classList.add('loaded');
     };
+    setTimeout(() => {
+      loading.style.display = 'none';
+      frame.classList.add('loaded');
+    }, 5000);
+  }, 200);
+}
 
-    // Session Management - 30 minute inactivity timeout
-    const SESSION_CONFIG = {
-        inactivityTimeout: 30 * 60 * 1000, // 30 minutes
-        checkInterval: 60000, // Check every minute
-        isLoggedInKey: 'eduwell_svt_isLoggedIn',
-        usernameKey: 'eduwell_svt_username',
-        lastActivityKey: 'eduwell_svt_lastActivity'
+/* ══════════════════════════════════════════
+   DOCS SHEET OPEN / CLOSE
+══════════════════════════════════════════ */
+function openDsSheet(idx, gridId) {
+  const data = gridId === 'dtCoursGrid' ? DT_COURS : DT_EXERCICES;
+  const item = data[idx];
+
+  document.getElementById('dsHdrTitle').textContent = item.title;
+  document.getElementById('dsHdrCount').textContent = item.docs.length + ' وثائق';
+  document.getElementById('dsMiniIco').textContent  = item.ico;
+  document.getElementById('dsMiniTitle').textContent = item.title;
+  document.getElementById('dsMiniSub').textContent   = item.sub;
+
+  const list = document.getElementById('dsList');
+  const svgPdf = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+  <defs>
+    <linearGradient id="pdf-i" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fca5a5"/><stop offset="100%" stop-color="#ef4444"/>
+    </linearGradient>
+  </defs>
+  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" fill="url(#pdf-i)" opacity=".9"/>
+  <polyline points="14 2 14 8 20 8" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1"/>
+  <line x1="8" y1="13" x2="16" y2="13" stroke="rgba(255,255,255,.7)" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="8" y1="16" x2="14" y2="16" stroke="rgba(255,255,255,.5)" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M14 2H6a2 2 0 0 0-2 2v3h16V8L14 2z" fill="rgba(255,255,255,.2)"/>
+</svg>`;
+  const svgImg = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+  <defs>
+    <linearGradient id="img-i" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fdba74"/><stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+  </defs>
+  <rect x="3" y="3" width="18" height="18" rx="3" fill="url(#img-i)" opacity=".9"/>
+  <circle cx="8.5" cy="8.5" r="2" fill="rgba(255,255,255,.7)"/>
+  <polyline points="3 17 8 12 12 16 15 13 21 19" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="3" y="3" width="18" height="5" rx="3" fill="rgba(255,255,255,.15)"/>
+</svg>`;
+  const svgArrow = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+  <circle cx="12" cy="12" r="10" fill="rgba(91,82,240,.12)" stroke="rgba(91,82,240,.2)" stroke-width=".8"/>
+  <line x1="8" y1="16" x2="16" y2="8" stroke="#5b52f0" stroke-width="2" stroke-linecap="round"/>
+  <polyline points="9 8 16 8 16 15" stroke="#5b52f0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>`;
+  list.innerHTML = item.docs.map((doc) => {
+    const cls = doc.type === 'pdf' ? 'pdf' : 'img';
+    const ico = doc.type === 'pdf'
+      ? `<i class="fa-solid fa-file-pdf"></i>`
+      : `<i class="fa-solid fa-image"></i>`;
+    return `
+      <div class="ds-doc" onclick="openPdfOv('${doc.driveId}','${doc.name}','${item.sub}')">
+        <div class="ds-doc-ico ${cls}">${ico}</div>
+        <div class="ds-doc-info">
+          <div class="ds-doc-name">${doc.name}</div>
+          <div class="ds-doc-meta"><i class="fa-solid fa-cloud" style="margin-left:4px;font-size:10px;"></i>PDF · Google Drive</div>
+        </div>
+        <div class="ds-doc-open"><i class="fa-solid fa-arrow-up-right-from-square" style="font-size:11px;"></i></div>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('dsOverlay').classList.add('open');
+  document.getElementById('dsSheet').classList.add('open');
+}
+function closeDsSheet() {
+  document.getElementById('dsOverlay').classList.remove('open');
+  document.getElementById('dsSheet').classList.remove('open');
+}
+
+/* ══════════════════════════════════════════
+   PDF OVERLAY OPEN / CLOSE
+══════════════════════════════════════════ */
+function openPdfOv(driveId, name, sub) {
+  document.getElementById('pdfOvTitle').textContent = name;
+  document.getElementById('pdfOvSub').textContent   = sub;
+
+  const previewUrl  = `https://drive.google.com/file/d/${driveId}/preview`;
+  const driveUrl    = `https://drive.google.com/file/d/${driveId}/view`;
+  const downloadUrl = `https://drive.google.com/uc?export=download&id=${driveId}`;
+
+  document.getElementById('pdfOvDriveLink').href = driveUrl;
+  document.getElementById('pdfOvDlLink').href    = downloadUrl;
+
+  const frame   = document.getElementById('pdfFrame');
+  const loading = document.getElementById('pdfLoadEl');
+  frame.classList.remove('loaded');
+  loading.style.display = 'flex';
+  frame.src = '';
+
+  document.getElementById('pdfOv').classList.add('open');
+
+  setTimeout(() => {
+    frame.src = previewUrl;
+    frame.onload = () => {
+      loading.style.display = 'none';
+      frame.classList.add('loaded');
     };
-
-    // Security: Disable right-click and keyboard shortcuts
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        return false;
-    });
-
-    document.addEventListener('keydown', function(e) {
-        // Disable Ctrl+S, Ctrl+Shift+S, Ctrl+P
-        if ((e.ctrlKey && e.key === 's') || 
-            (e.ctrlKey && e.shiftKey && e.key === 'S') || 
-            (e.ctrlKey && e.key === 'p') ||
-            e.key === 'F12' ||
-            (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-            (e.ctrlKey && e.key === 'u')) {
-            e.preventDefault();
-            return false;
-        }
-    });
-
-    // Session Manager Class
-    class SessionManager {
-        constructor() {
-            this.timer = null;
-        }
-
-        init() {
-            console.log('Session manager initialized');
-            this.clearTimers();
-            this.updateActivity();
-            this.startSessionCheck();
-            this.setupActivityDetection();
-            this.checkSession();
-        }
-
-        startSessionCheck() {
-            this.timer = setInterval(() => {
-                this.checkSession();
-            }, SESSION_CONFIG.checkInterval);
-        }
-
-        setupActivityDetection() {
-            const activityEvents = ['click', 'mousemove', 'keydown', 'scroll', 'touchstart'];
-            activityEvents.forEach(event => {
-                document.addEventListener(event, () => {
-                    this.updateActivity();
-                }, { passive: true });
-            });
-        }
-
-        updateActivity() {
-            localStorage.setItem(SESSION_CONFIG.lastActivityKey, Date.now().toString());
-        }
-
-        checkSession() {
-            if (!this.isAuthenticated()) {
-                return;
-            }
-
-            const lastActivity = localStorage.getItem(SESSION_CONFIG.lastActivityKey);
-            if (!lastActivity) {
-                this.updateActivity();
-                return;
-            }
-
-            const lastActivityTime = parseInt(lastActivity);
-            const currentTime = Date.now();
-            const timeSinceLastActivity = currentTime - lastActivityTime;
-
-            if (timeSinceLastActivity >= SESSION_CONFIG.inactivityTimeout) {
-                console.log('Session expired due to inactivity');
-                this.forceLogout();
-                return;
-            }
-        }
-
-        forceLogout() {
-            console.log('Session expired - forcing logout');
-            this.clearSession();
-            this.clearTimers();
-            window.location.href = 'login.html?message=session_expired';
-        }
-
-        clearSession() {
-            localStorage.removeItem(SESSION_CONFIG.isLoggedInKey);
-            localStorage.removeItem(SESSION_CONFIG.usernameKey);
-            localStorage.removeItem(SESSION_CONFIG.lastActivityKey);
-        }
-
-        clearTimers() {
-            if (this.timer) {
-                clearInterval(this.timer);
-                this.timer = null;
-            }
-        }
-
-        isAuthenticated() {
-            return localStorage.getItem(SESSION_CONFIG.isLoggedInKey) === 'true';
-        }
-    }
-
-    // Authentication check function
-    function checkAuthentication() {
-        const isLoggedIn = localStorage.getItem(AUTH_CONFIG.isLoggedInKey) === 'true';
-        const lastActivity = localStorage.getItem(AUTH_CONFIG.lastActivityKey);
-        
-        // If not logged in, redirect to login page
-        if (!isLoggedIn) {
-            console.log('Not authenticated - redirecting to login page');
-            window.location.href = 'login.html';
-            return false;
-        }
-        
-        // Check for expired session (30 minutes of inactivity)
-        if (lastActivity) {
-            const lastActivityTime = parseInt(lastActivity);
-            const currentTime = Date.now();
-            const minutesDiff = (currentTime - lastActivityTime) / (1000 * 60);
-            
-            if (minutesDiff >= 30) {
-                localStorage.clear();
-                window.location.href = 'login.html?message=session_expired';
-                return false;
-            }
-        }
-        
-        return true;
-    }
-
-    // Display user welcome message
-    function displayUserWelcome() {
-        const username = localStorage.getItem(AUTH_CONFIG.usernameKey) || 'المستخدم';
-        const userWelcome = document.getElementById('userWelcome');
-        if (userWelcome) {
-            userWelcome.innerHTML = `
-                <i class="fas fa-user-circle"></i>
-                <span>مرحباً، ${username}!</span>
-            `;
-        }
-    }
-
-    // Setup logout functionality - WORKING VERSION
-    function setupLogout() {
-        const logoutBtn = document.getElementById('logoutBtn');
-        const logoutConfirmationPopup = document.getElementById('logoutConfirmationPopup');
-        const logoutCancelBtn = document.getElementById('logoutCancelBtn');
-        const logoutConfirmBtn = document.getElementById('logoutConfirmBtn');
-
-        // Show logout confirmation modal when logout button is clicked
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                logoutConfirmationPopup.style.display = 'flex';
-                setTimeout(() => {
-                    logoutConfirmationPopup.classList.add('active');
-                }, 10);
-                document.body.style.overflow = 'hidden';
-            });
-        }
-
-        // Cancel logout - hide modal
-        if (logoutCancelBtn) {
-            logoutCancelBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                logoutConfirmationPopup.classList.remove('active');
-                setTimeout(() => {
-                    logoutConfirmationPopup.style.display = 'none';
-                    document.body.style.overflow = '';
-                }, 300);
-            });
-        }
-
-        // Confirm logout - WORKING VERSION
-        if (logoutConfirmBtn) {
-            logoutConfirmBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Show loading state
-                logoutConfirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري تسجيل الخروج...';
-                logoutConfirmBtn.disabled = true;
-                
-                // Clear all session data
-                localStorage.removeItem(AUTH_CONFIG.isLoggedInKey);
-                localStorage.removeItem(AUTH_CONFIG.usernameKey);
-                localStorage.removeItem(AUTH_CONFIG.lastActivityKey);
-                
-                // Clear session manager
-                if (window.sessionManager) {
-                    window.sessionManager.clearTimers();
-                    window.sessionManager.clearSession();
-                }
-                
-                // Close modal
-                logoutConfirmationPopup.classList.remove('active');
-                
-                // Wait for modal animation to complete, then redirect
-                setTimeout(() => {
-                    logoutConfirmationPopup.style.display = 'none';
-                    document.body.style.overflow = '';
-                    
-                    // Redirect to login page
-                    window.location.href = 'login.html';
-                }, 300);
-            });
-        }
-
-        // Close modal when clicking outside
-        if (logoutConfirmationPopup) {
-            logoutConfirmationPopup.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.classList.remove('active');
-                    setTimeout(() => {
-                        this.style.display = 'none';
-                        document.body.style.overflow = '';
-                    }, 300);
-                }
-            });
-        }
-
-        // Close modal with Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && logoutConfirmationPopup.classList.contains('active')) {
-                logoutConfirmationPopup.classList.remove('active');
-                setTimeout(() => {
-                    logoutConfirmationPopup.style.display = 'none';
-                    document.body.style.overflow = '';
-                }, 300);
-            }
-        });
-    }
-
-    // Initialize page with authentication
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('DOM loaded - checking authentication');
-        
-        // First, check authentication
-        if (!checkAuthentication()) {
-            console.log('Authentication failed - redirecting to login');
-            return; // Stop if not authenticated
-        }
-        
-        // User is authenticated - continue initialization
-        console.log('User authenticated, initializing page...');
-        
-        // Initialize session manager
-        window.sessionManager = new SessionManager();
-        sessionManager.init();
-        
-        // Display welcome message
-        displayUserWelcome();
-        
-        // Setup logout functionality
-        setupLogout();
-        
-        // Now load your main JavaScript functionality
-        console.log('Loading main page functionality...');
-        loadMainScript();
-    });
-
-    // Load main JavaScript functionality
-    function loadMainScript() {
-        // Your JavaScript code will be initialized here
-        initializePage();
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    // Main initialization function
-    function initializePage() {
-        console.log('Initializing main page functionality...');
-        
-        // Initialize all components
-        try {
-            // Initialize carousel
-            if (document.getElementById('carouselTrack') && 
-                document.getElementById('topicsTabs')) {
-                console.log('Initializing carousel...');
-                window.carousel = new TopicsCarousel();
-            }
-            
-            // Initialize resources
-            if (document.getElementById('resourcesGrid')) {
-                console.log('Initializing resources...');
-                initResources();
-            }
-            
-            // Initialize modal
-            if (document.getElementById('modalOverlay')) {
-                console.log('Initializing modal...');
-                initModal();
-            }
-            
-            // Initialize navigation effects
-            if (document.getElementById('navContainer')) {
-                console.log('Initializing navigation effects...');
-                initNavigationEffects();
-            }
-            
-            // Initialize scroll to top
-            if (document.getElementById('scrollTop')) {
-                console.log('Initializing scroll to top...');
-                initScrollTop();
-            }
-            
-            // Initialize smooth scrolling
-            console.log('Initializing smooth scrolling...');
-            initSmoothScrolling();
-            
-            // Add loaded class for animations
-            setTimeout(() => {
-                document.body.classList.add('loaded');
-                console.log('Page fully loaded and initialized');
-            }, 300);
-            
-        } catch (error) {
-            console.error('Error initializing page:', error);
-        }
-    }
-
-
-    // Horizontal Topics Carousel
-    class TopicsCarousel {
-        constructor() {
-            this.track = document.getElementById('carouselTrack');
-            this.tabsContainer = document.getElementById('topicsTabs');
-            this.prevBtn = document.getElementById('prevBtn');
-            this.nextBtn = document.getElementById('nextBtn');
-            this.currentSlideEl = document.getElementById('currentSlide');
-            this.totalSlidesEl = document.getElementById('totalSlides');
-            this.dotsContainer = document.getElementById('carouselDots');
-            this.container = document.getElementById('carouselContainer');
-            
-            this.currentIndex = 0;
-            this.totalSlides = topics.length;
-            this.slideWidth = 0;
-            this.isAnimating = false;
-            this.autoSlideInterval = null;
-            this.isAutoSliding = true;
-            
-            this.init();
-        }
-        
-        init() {
-            this.createTabs();
-            this.createSlides();
-            this.createDots();
-            this.setupEventListeners();
-            this.updateUI();
-            this.startAutoSlide();
-            
-            setTimeout(() => {
-                this.updateSlideDimensions();
-                this.activateSlide(this.currentIndex);
-            }, 100);
-        }
-        
-        createTabs() {
-            topics.forEach((topic, index) => {
-                const tab = document.createElement('button');
-                tab.className = `topic-tab ${index === 0 ? 'active' : ''}`;
-                tab.dataset.index = index;
-                tab.innerHTML = `
-                    <i class="${topic.icon}"></i>
-                    <span>${topic.title}</span>
-                `;
-                
-                tab.addEventListener('click', () => {
-                    this.goToSlide(index);
-                    this.resetAutoSlide();
-                });
-                
-                this.tabsContainer.appendChild(tab);
-            });
-        }
-        
-        createSlides() {
-            topics.forEach((topic, index) => {
-                const slide = document.createElement('div');
-                slide.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
-                slide.dataset.index = index;
-                
-                slide.innerHTML = `
-                    <div class="slide-layout">
-                        <div class="slide-content">
-                            <div class="slide-badge">
-                                <i class="${topic.icon}"></i>
-                                <span class="label">${topic.badge}</span>
-                            </div>
-                            <h3 class="slide-title">${topic.title}</h3>
-                            <p class="slide-description">${topic.description}</p>
-                            
-                            <div class="slide-features">
-                                ${topic.features.map(feature => `
-                                    <div class="slide-feature">
-                                        <i class="fas fa-check"></i>
-                                        <span>${feature}</span>
-                                    </div>
-                                `).join('')}
-                            </div>
-                            
-                            <a href="${topic.externalLink}" 
-                               class="slide-link" 
-                               target="_blank"
-                               rel="noopener noreferrer"
-                               aria-label="استكشاف ${topic.title}">
-                                <span>استكشف المشاريع</span>
-                                <i class="fas fa-arrow-left"></i>
-                            </a>
-                        </div>
-                        
-                        <div class="slide-visual" style="--color1: ${topic.color1}; --color2: ${topic.color2};">
-                            <div class="visual-content">
-                                <h4 class="visual-title">${topic.title}</h4>
-                                <p class="visual-description">${topic.description}</p>
-                                
-                                <div class="visual-stats">
-                                    ${topic.stats.map(stat => `
-                                        <div class="stat-item">
-                                            <div class="stat-value">${stat.value}</div>
-                                            <div class="stat-label">${stat.label}</div>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                this.track.appendChild(slide);
-            });
-            
-            this.totalSlidesEl.textContent = this.totalSlides;
-        }
-        
-        createDots() {
-            for (let i = 0; i < this.totalSlides; i++) {
-                const dot = document.createElement('button');
-                dot.className = `carousel-dot ${i === 0 ? 'active' : ''}`;
-                dot.dataset.index = i;
-                dot.setAttribute('aria-label', `الانتقال للشريحة ${i + 1}`);
-                dot.addEventListener('click', () => {
-                    this.goToSlide(parseInt(dot.dataset.index));
-                    this.resetAutoSlide();
-                });
-                this.dotsContainer.appendChild(dot);
-            }
-        }
-        
-        updateSlideDimensions() {
-            if (this.track.children.length > 0) {
-                this.slideWidth = this.container.offsetWidth;
-                this.updatePosition();
-            }
-        }
-        
-        updatePosition() {
-            const position = this.currentIndex * this.slideWidth;
-            this.track.style.transform = `translateX(${position}px)`;
-        }
-        
-        activateSlide(index) {
-            const slides = this.track.querySelectorAll('.carousel-slide');
-            slides.forEach(slide => {
-                slide.classList.remove('active');
-                slide.setAttribute('aria-hidden', 'true');
-            });
-            if (slides[index]) {
-                slides[index].classList.add('active');
-                slides[index].setAttribute('aria-hidden', 'false');
-            }
-            
-            const tabs = this.tabsContainer.querySelectorAll('.topic-tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            if (tabs[index]) {
-                tabs[index].classList.add('active');
-                tabs[index].setAttribute('aria-selected', 'true');
-            } else {
-                tabs.forEach(tab => tab.setAttribute('aria-selected', 'false'));
-            }
-        }
-        
-        goToSlide(index, animate = true) {
-            if (this.isAnimating || index < 0 || index >= this.totalSlides) return;
-            
-            this.isAnimating = true;
-            this.currentIndex = index;
-            
-            if (animate) {
-                this.track.style.transition = 'transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)';
-                this.updatePosition();
-                this.activateSlide(index);
-                
-                setTimeout(() => {
-                    this.isAnimating = false;
-                }, 400);
-            } else {
-                this.track.style.transition = 'none';
-                this.updatePosition();
-                this.activateSlide(index);
-                
-                setTimeout(() => {
-                    this.track.style.transition = 'transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)';
-                    this.isAnimating = false;
-                }, 50);
-            }
-            
-            this.updateUI();
-        }
-        
-        nextSlide() {
-            const nextIndex = (this.currentIndex + 1) % this.totalSlides;
-            this.goToSlide(nextIndex);
-        }
-        
-        prevSlide() {
-            const prevIndex = (this.currentIndex - 1 + this.totalSlides) % this.totalSlides;
-            this.goToSlide(prevIndex);
-        }
-        
-        updateUI() {
-            this.currentSlideEl.textContent = this.currentIndex + 1;
-            
-            this.prevBtn.disabled = this.currentIndex === 0;
-            this.nextBtn.disabled = this.currentIndex === this.totalSlides - 1;
-            
-            const dots = this.dotsContainer.querySelectorAll('.carousel-dot');
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === this.currentIndex);
-                dot.setAttribute('aria-label', `الانتقال للشريحة ${index + 1} ${index === this.currentIndex ? '(الحالية)' : ''}`);
-            });
-        }
-        
-        setupEventListeners() {
-            this.prevBtn.addEventListener('click', () => {
-                this.prevSlide();
-                this.resetAutoSlide();
-            });
-            
-            this.nextBtn.addEventListener('click', () => {
-                this.nextSlide();
-                this.resetAutoSlide();
-            });
-            
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowRight') {
-                    e.preventDefault();
-                    this.prevSlide();
-                    this.resetAutoSlide();
-                } else if (e.key === 'ArrowLeft') {
-                    e.preventDefault();
-                    this.nextSlide();
-                    this.resetAutoSlide();
-                }
-            });
-            
-            let startX = 0;
-            let currentX = 0;
-            let isDragging = false;
-            
-            this.container.addEventListener('touchstart', (e) => {
-                startX = e.touches[0].clientX;
-                isDragging = true;
-                this.pauseAutoSlide();
-                this.track.style.transition = 'none';
-            }, { passive: true });
-            
-            this.container.addEventListener('touchmove', (e) => {
-                if (!isDragging) return;
-                currentX = e.touches[0].clientX;
-                const diff = startX - currentX;
-                
-                const position = (this.currentIndex * this.slideWidth) + diff;
-                this.track.style.transform = `translateX(${position}px)`;
-            }, { passive: true });
-            
-            this.container.addEventListener('touchend', (e) => {
-                if (!isDragging) return;
-                
-                const diff = startX - currentX;
-                const threshold = this.slideWidth / 4;
-                
-                if (Math.abs(diff) > threshold) {
-                    if (diff > 0) {
-                        this.nextSlide();
-                    } else {
-                        this.prevSlide();
-                    }
-                } else {
-                    this.goToSlide(this.currentIndex);
-                }
-                
-                isDragging = false;
-                this.track.style.transition = 'transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)';
-                
-                if (this.isAutoSliding) {
-                    this.startAutoSlide();
-                }
-            }, { passive: true });
-            
-            this.container.addEventListener('mousedown', (e) => {
-                startX = e.clientX;
-                isDragging = true;
-                this.pauseAutoSlide();
-                this.track.style.transition = 'none';
-                e.preventDefault();
-            });
-            
-            this.container.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-                const diff = startX - e.clientX;
-                
-                const position = (this.currentIndex * this.slideWidth) + diff;
-                this.track.style.transform = `translateX(${position}px)`;
-            });
-            
-            this.container.addEventListener('mouseup', (e) => {
-                if (!isDragging) return;
-                
-                const diff = startX - e.clientX;
-                const threshold = this.slideWidth / 4;
-                
-                if (Math.abs(diff) > threshold) {
-                    if (diff > 0) {
-                        this.nextSlide();
-                    } else {
-                        this.prevSlide();
-                    }
-                } else {
-                    this.goToSlide(this.currentIndex);
-                }
-                
-                isDragging = false;
-                this.track.style.transition = 'transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)';
-                
-                if (this.isAutoSliding) {
-                    this.startAutoSlide();
-                }
-            });
-            
-            this.container.addEventListener('mouseleave', () => {
-                if (isDragging) {
-                    isDragging = false;
-                    this.track.style.transition = 'transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)';
-                    this.goToSlide(this.currentIndex);
-                    
-                    if (this.isAutoSliding) {
-                        this.startAutoSlide();
-                    }
-                }
-            });
-            
-            this.container.addEventListener('mouseenter', () => {
-                this.pauseAutoSlide();
-            });
-            
-            this.container.addEventListener('mouseleave', () => {
-                if (this.isAutoSliding && !isDragging) {
-                    this.startAutoSlide();
-                }
-            });
-            
-            let resizeTimeout;
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(() => {
-                    this.updateSlideDimensions();
-                    this.goToSlide(this.currentIndex, false);
-                }, 150);
-            });
-        }
-        
-        startAutoSlide() {
-            this.isAutoSliding = true;
-            clearInterval(this.autoSlideInterval);
-            this.autoSlideInterval = setInterval(() => {
-                this.nextSlide();
-            }, 6000);
-        }
-        
-        pauseAutoSlide() {
-            this.isAutoSliding = false;
-            if (this.autoSlideInterval) {
-                clearInterval(this.autoSlideInterval);
-                this.autoSlideInterval = null;
-            }
-        }
-        
-        resetAutoSlide() {
-            this.pauseAutoSlide();
-            this.startAutoSlide();
-        }
-    }
-
-    // Initialize Resources
-    function initResources() {
-        const grid = document.getElementById('resourcesGrid');
-        
-        resources.forEach((resource, index) => {
-            const card = document.createElement('div');
-            card.className = 'resource-card';
-            card.tabIndex = 0;
-            card.dataset.index = index;
-            card.setAttribute('role', 'button');
-            card.setAttribute('aria-label', `فتح مستند ${resource.title}`);
-            
-            card.innerHTML = `
-                <div class="resource-icon-container">
-                    <i class="${resource.icon} resource-icon"></i>
-                </div>
-                <div class="resource-content">
-                    <h3 class="resource-title">${resource.title}</h3>
-                    <p class="resource-description">${resource.description}</p>
-                    <div class="resource-action">
-                        <span>عرض المستند</span>
-                        <i class="fas fa-arrow-left"></i>
-                    </div>
-                </div>
-            `;
-            
-            card.addEventListener('click', (e) => {
-                e.preventDefault();
-                openModal(resource);
-                card.style.transform = 'scale(0.98)';
-                setTimeout(() => {
-                    card.style.transform = '';
-                }, 150);
-            });
-            
-            card.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    openModal(resource);
-                }
-            });
-            
-            grid.appendChild(card);
-        });
-    }
-
-    // Initialize Modal
-    function initModal() {
-        const modal = document.getElementById('modalOverlay');
-        const modalClose = document.getElementById('modalClose');
-        const pdfViewer = document.getElementById('pdfViewer');
-        const pdfLoading = document.getElementById('pdfLoading');
-        const modalTitle = document.getElementById('modalTitle');
-        
-        let currentResource = null;
-        let isModalOpen = false;
-        
-        modalClose.addEventListener('click', closeModal);
-        
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-        
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && isModalOpen) {
-                closeModal();
-            }
-        });
-        
-        window.openModal = function(resource) {
-            currentResource = resource;
-            isModalOpen = true;
-            
-            modalTitle.innerHTML = `
-                <i class="fas fa-file-pdf"></i>
-                <span>${resource.title}</span>
-            `;
-            
-            modal.classList.add('active');
-            document.documentElement.style.overflow = 'hidden';
-            
-            pdfLoading.style.display = 'flex';
-            pdfViewer.style.display = 'none';
-            pdfViewer.classList.remove('loaded');
-            pdfViewer.src = '';
-            
-            setTimeout(() => {
-                pdfViewer.src = resource.pdfUrl + '?t=' + Date.now();
-            }, 400);
-        };
-        
-        function closeModal() {
-            if (!isModalOpen) return;
-            
-            modal.classList.remove('active');
-            isModalOpen = false;
-            
-            setTimeout(() => {
-                document.documentElement.style.overflow = '';
-                pdfViewer.src = '';
-                pdfLoading.style.display = 'flex';
-                pdfViewer.style.display = 'none';
-                pdfViewer.classList.remove('loaded');
-                currentResource = null;
-            }, 400);
-        }
-        
-        pdfViewer.addEventListener('load', () => {
-            setTimeout(() => {
-                pdfLoading.style.display = 'none';
-                pdfViewer.style.display = 'block';
-                pdfViewer.classList.add('loaded');
-            }, 300);
-        });
-        
-        pdfViewer.addEventListener('error', () => {
-            pdfLoading.innerHTML = `
-                <i class="fas fa-exclamation-triangle"></i>
-                <span>حدث خطأ في تحميل المستند</span>
-            `;
-        });
-    }
-
-    // Navigation Scroll Effect
-    function initNavigationEffects() {
-        const nav = document.getElementById('navContainer');
-        let lastScroll = 0;
-        
-        function updateNav() {
-            const currentScroll = window.scrollY;
-            
-            if (currentScroll <= 0) {
-                nav.classList.remove('scrolled');
-                return;
-            }
-            
-            if (currentScroll > lastScroll && currentScroll > 100) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-            
-            lastScroll = currentScroll;
-        }
-        
-        window.addEventListener('scroll', updateNav, { passive: true });
-        updateNav();
-    }
-
-    // Scroll to Top
-    function initScrollTop() {
-        const scrollTop = document.getElementById('scrollTop');
-        let scrollTimeout;
-        
-        function checkScroll() {
-            if (window.scrollY > 600) {
-                scrollTop.classList.add('visible');
-            } else {
-                scrollTop.classList.remove('visible');
-            }
-        }
-        
-        function handleScroll() {
-            if (!scrollTimeout) {
-                scrollTimeout = setTimeout(() => {
-                    checkScroll();
-                    scrollTimeout = null;
-                }, 50);
-            }
-        }
-        
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        checkScroll();
-        
-        scrollTop.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    }
-
-    // Smooth Scrolling
-    function initSmoothScrolling() {
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    const navHeight = document.getElementById('navContainer').offsetHeight;
-                    const targetPosition = targetElement.offsetTop - navHeight;
-                    
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    }
-
-    // Handle page visibility
-    document.addEventListener('visibilitychange', () => {
-        if (window.carousel) {
-            if (document.hidden) {
-                window.carousel.pauseAutoSlide();
-            } else {
-                if (window.carousel.isAutoSliding) {
-                    window.carousel.startAutoSlide();
-                }
-            }
-        }
-    });
+    setTimeout(() => {
+      loading.style.display = 'none';
+      frame.classList.add('loaded');
+    }, 5000);
+  }, 200);
+}
+function closePdfOv() {
+  document.getElementById('pdfOv').classList.remove('open');
+  setTimeout(() => { document.getElementById('pdfFrame').src = ''; }, 400);
+}
+document.getElementById('pdfOv').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('pdfOv')) closePdfOv();
+});

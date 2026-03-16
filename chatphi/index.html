@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <!-- Google tag (gtag.js) -->
+      <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNTBT1VQN7"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -9,171 +9,885 @@
         gtag('js', new Date());
         gtag('config', 'G-FNTBT1VQN7');
     </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Sahl App</title>
-    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-   <link rel="stylesheet" href="./assets/css/style.css">
-   
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>فيلو • Sahl</title>
+ <link rel="shortcut icon" href="./assets/images/app-store.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+ <link rel="stylesheet" href="./assets/css/style.css">
+
+<style>
+/* Toast notification */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #1e293b;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 40px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  z-index: 10000;
+  opacity: 0;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.1);
+  pointer-events: none;
+  font-family: 'Cairo', sans-serif;
+  direction: rtl;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast i {
+  color: #10b981;
+  margin-left: 8px;
+}
+
+/* Protected overlay */
+.protected-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(24px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+  color: white;
+  text-align: center;
+  direction: rtl;
+}
+
+.protected-overlay h2 {
+  font-family: 'Cairo', sans-serif;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.protected-overlay p {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  opacity: 0.7;
+  max-width: 500px;
+  font-family: 'Cairo', sans-serif;
+}
+
+.protected-overlay .login-btn {
+  background: #58cc02;
+  color: white;
+  padding: 14px 32px;
+  border-radius: 40px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Cairo', sans-serif;
+}
+
+.protected-overlay .login-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-3px);
+}
+</style>
 </head>
 <body>
-    <!-- Fixed Navigation Header with Back Button (replacing the logo) -->
-    <nav class="nav-container" id="navContainer">
-        <div class="nav-content">
-            <!-- Back Button on left (RTL layout) - REPLACE YOUR-LINK-HERE with actual URL -->
-            <a href="../profile/index.html" class="nav-back-button">
-                <i class="fas fa-arrow-right"></i>
-                <span>رجوع</span>
-            </a>
-            
-            <!-- Logout Button on right (RTL layout) -->
-            <button class="nav-logout-btn" id="logoutBtn">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>تسجيل الخروج</span>
+
+<!-- PROTECTED OVERLAY (shown if not logged in) -->
+<div id="protectedOverlay" class="protected-overlay" style="display: none;">
+  <h2>🔐 تسجيل الدخول مطلوب</h2>
+  <p>يجب تسجيل الدخول للوصول إلى منصة فيلو. سجل دخولك للمتابعة.</p>
+  <a href="../profile/login.html" class="login-btn" onclick="redirectToLogin()">
+    <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+  </a>
+</div>
+
+<!-- ════ PATH SCREEN ════ -->
+<div class="screen">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="pill" style="gap:clamp(6px,2vw,9px);">
+      <div style="width:clamp(26px,7vw,32px);height:clamp(26px,7vw,32px);border-radius:50%;background:linear-gradient(135deg,#4f8ef7,#0071e3);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 10px rgba(0,113,227,.45);">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="8" r="4" fill="rgba(255,255,255,.9)"/>
+          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="rgba(255,255,255,.75)"/>
+        </svg>
+      </div>
+      <!-- User name will be displayed here -->
+      <span class="pill-val" id="userName" style="font-family:'Cairo',sans-serif;font-weight:700;font-size:clamp(12px,3.5vw,15px);">جاري التحميل...</span>
+    </div>
+    <a href="../profile/index.html" class="pill" style="text-decoration:none;gap:clamp(5px,1.5vw,7px);">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+        <polyline points="15 18 9 12 15 6" stroke="rgba(255,255,255,.85)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="pill-val" style="font-family:'Cairo',sans-serif;font-weight:700;font-size:clamp(12px,3.5vw,15px);color:rgba(255,255,255,.85);">رجوع</span>
+    </a>
+  </div>
+
+  <!-- BANNER -->
+  <div class="banner">
+    <div class="banner-txt">
+      <div class="banner-sub">القسم 1 · الدرس 1</div>
+      <div class="banner-title">الإنيّة والغيرية</div>
+      <div class="xp-bar-wrap"><div class="xp-bar" id="xpBar"></div></div>
+    </div>
+    <div class="banner-ico">
+      <!-- 3D lightbulb / philosophy icon -->
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+        <defs>
+          <linearGradient id="bulb-g" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(255,255,255,.95)"/>
+            <stop offset="100%" stop-color="rgba(255,255,255,.6)"/>
+          </linearGradient>
+          <linearGradient id="bulb-shine" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="rgba(255,255,255,.7)"/>
+            <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+          </linearGradient>
+        </defs>
+        <path d="M9 21h6M10 17h4M12 3a7 7 0 0 1 5 11.9V17H7v-2.1A7 7 0 0 1 12 3z" fill="url(#bulb-g)" stroke="rgba(255,255,255,.3)" stroke-width=".5"/>
+        <ellipse cx="10" cy="7" rx="2" ry="3" fill="url(#bulb-shine)" transform="rotate(-20,10,7)"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- PATH -->
+  <div class="path-area">
+    <svg class="trail-svg" id="trailSvg" viewBox="0 0 390 540" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <linearGradient id="gDone" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#58cc02" stop-opacity=".8"/>
+          <stop offset="100%" stop-color="#58cc02" stop-opacity=".3"/>
+        </linearGradient>
+        <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <path id="pSeg1" fill="none" stroke="#1e3340" stroke-width="9" stroke-linecap="round" stroke-dasharray="18 12" opacity=".55"/>
+      <path id="pSeg2" fill="none" stroke="#1e3340" stroke-width="9" stroke-linecap="round" stroke-dasharray="18 12" opacity=".4"/>
+      <path id="pSeg3" fill="none" stroke="#1e3340" stroke-width="9" stroke-linecap="round" stroke-dasharray="18 12" opacity=".35"/>
+      <path id="pSeg4" fill="none" stroke="#1e3340" stroke-width="9" stroke-linecap="round" stroke-dasharray="18 12" opacity=".3"/>
+    </svg>
+
+    <div class="path-col">
+
+      <!-- STAGE 1 -->
+      <div class="row zig-l">
+        <div class="node" id="nodeWrap0">
+          <button class="nbtn current" id="node0" data-stage="0" onclick="openStage(0, this)">
+            <svg class="nicon" viewBox="0 0 24 24" fill="none">
+  <defs>
+    <linearGradient id="sw" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#d4f0a0"/></linearGradient>
+    <linearGradient id="sw-sh" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(255,255,255,.7)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/></linearGradient>
+  </defs>
+  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="url(#sw)" stroke="rgba(255,255,255,.2)" stroke-width=".5"/>
+  <path d="M12 2l2.5 5.06 5.58.81-4.04 3.94.95 5.56L12 14.71V2z" fill="url(#sw-sh)"/>
+</svg>
+          </button>
+          <span class="nlabel">شنوّة الإنيّة؟</span>
+        </div>
+      </div>
+
+      <!-- STAGE 2 -->
+      <div class="row zig-r">
+        <div class="node is-cur" id="nodeWrap1">
+          <button class="nbtn locked" id="node1" data-stage="1" onclick="openStage(1, this)">
+            <svg class="nicon" viewBox="0 0 24 24" fill="none">
+  <defs>
+    <linearGradient id="sd" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2e5068"/><stop offset="100%" stop-color="#1a3040"/></linearGradient>
+    <linearGradient id="sd-sh" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(100,160,200,.25)"/><stop offset="100%" stop-color="rgba(100,160,200,0)"/></linearGradient>
+  </defs>
+  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="url(#sd)" stroke="rgba(100,160,200,.1)" stroke-width=".5"/>
+  <path d="M12 2l2.5 5.06 5.58.81-4.04 3.94.95 5.56L12 14.71V2z" fill="url(#sd-sh)"/>
+</svg>
+          </button>
+          <span class="nlabel">ديكارت وميرلوبونتي</span>
+        </div>
+      </div>
+
+      <!-- STAGE 3 – owl + chest -->
+      <div class="row zig-c" style="position:relative;">
+        <div class="owl-wrap">
+          <div class="owl-svg-wrap">
+            <svg viewBox="0 0 100 100" width="100%" height="100%">
+              <ellipse cx="50" cy="64" rx="28" ry="28" fill="#5a7888"/>
+              <circle cx="50" cy="36" r="23" fill="#5a7888"/>
+              <polygon points="33,17 27,4 41,15" fill="#4a6878"/>
+              <polygon points="67,17 73,4 59,15" fill="#4a6878"/>
+              <circle cx="39" cy="34" r="11" fill="#2a4050"/><circle cx="61" cy="34" r="11" fill="#2a4050"/>
+              <circle cx="39" cy="34" r="8"  fill="#e8e8e8"/><circle cx="61" cy="34" r="8"  fill="#e8e8e8"/>
+              <circle cx="40" cy="33" r="5"  fill="#1a2e3a"/><circle cx="62" cy="33" r="5"  fill="#1a2e3a"/>
+              <circle cx="42" cy="31" r="2"  fill="white"/> <circle cx="64" cy="31" r="2"  fill="white"/>
+              <polygon points="50,40 43,47 57,47" fill="#cc7700"/>
+              <ellipse cx="50" cy="70" rx="19" ry="18" fill="#4a6878"/>
+              <ellipse cx="22" cy="68" rx="11" ry="16" fill="#4a6878" transform="rotate(-15 22 68)"/>
+              <ellipse cx="78" cy="68" rx="11" ry="16" fill="#4a6878" transform="rotate(15 78 68)"/>
+              <ellipse cx="38" cy="93" rx="10" ry="6" fill="#4a6878"/><ellipse cx="62" cy="93" rx="10" ry="6" fill="#4a6878"/>
+            </svg>
+          </div>
+          <div style="display:flex;gap:3px;">
+            <svg width="12" height="12" viewBox="0 0 24 24"><path fill="#1e3340" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24"><path fill="#1e3340" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24"><path fill="#1e3340" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+        </div>
+        <div class="node" id="nodeWrap2" style="margin-right:clamp(10px,4vw,24px);">
+          <button class="nbtn chest locked" id="node2" data-stage="2" onclick="openStage(2, this)">
+            <svg viewBox="0 0 72 56" width="82%" height="82%" fill="none">
+              <rect x="4" y="22" width="64" height="30" rx="7" fill="#1a3040"/><rect x="4" y="22" width="64" height="30" rx="7" stroke="#0d1e2a" stroke-width="2"/>
+              <rect x="4" y="6"  width="64" height="20" rx="7" fill="#243d50"/><rect x="4" y="6"  width="64" height="20" rx="7" stroke="#0d1e2a" stroke-width="2"/>
+              <rect x="4" y="23" width="64" height="4" fill="#0d1e2a"/>
+              <rect x="27" y="29" width="18" height="14" rx="4" fill="#0d1e2a"/>
+              <path d="M31 29 Q31 22 36 22 Q41 22 41 29" fill="none" stroke="#0d1e2a" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="12" cy="13" r="3.5" fill="#1a3040" stroke="#0d1e2a" stroke-width="1.5"/>
+              <circle cx="60" cy="13" r="3.5" fill="#1a3040" stroke="#0d1e2a" stroke-width="1.5"/>
+              <circle cx="12" cy="44" r="3.5" fill="#1a3040" stroke="#0d1e2a" stroke-width="1.5"/>
+              <circle cx="60" cy="44" r="3.5" fill="#1a3040" stroke="#0d1e2a" stroke-width="1.5"/>
+            </svg>
+          </button>
+          <span class="nlabel">اللاوعي عند فرويد</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ CHALLENGE UNLOCK DIVIDER ══ -->
+  <div class="divider" id="challengeDivider" style="opacity:.4;transition:opacity .5s ease,filter .5s ease;transform:translateY(0);pointer-events:none;filter:blur(2px);">
+    <div class="div-line"></div>
+    <div class="div-pill" style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;border-color:rgba(245,158,11,.4);box-shadow:0 0 16px rgba(245,158,11,.3);">🏆 لنبدأ درسًا جديدًا</div>
+    <div class="div-line"></div>
+  </div>
+
+  <!-- ══ SECTION 2: الخصوصية والكونية ══ -->
+  <div id="section2" style="opacity:.35;transition:opacity .5s ease,filter .5s ease;transform:translateY(0);pointer-events:none;filter:blur(3px);">
+
+    <!-- BANNER 2 -->
+    <div class="banner" id="banner2" style="background:linear-gradient(140deg,#7c3aed,#6d28d9 50%,#8b5cf6);box-shadow:0 clamp(4px,1.5vw,7px) 0 #4c1d95,0 clamp(8px,3vw,14px) clamp(24px,7vw,36px) rgba(139,92,246,.28),inset 0 1px 0 rgba(255,255,255,.22);">
+      <div class="banner-txt">
+        <div class="banner-sub">القسم 2 · الدرس 2</div>
+        <div class="banner-title">الخصوصية والكونية</div>
+        <div class="xp-bar-wrap"><div class="xp-bar" id="xpBar2"></div></div>
+      </div>
+      <div class="banner-ico">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+          <defs>
+            <linearGradient id="globe-g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="rgba(255,255,255,.95)"/>
+              <stop offset="100%" stop-color="rgba(255,255,255,.6)"/>
+            </linearGradient>
+          </defs>
+          <circle cx="12" cy="12" r="10" fill="url(#globe-g)" stroke="rgba(255,255,255,.3)" stroke-width=".5"/>
+          <path d="M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20M2 12h20" stroke="rgba(139,92,246,.5)" stroke-width="1"/>
+          <ellipse cx="12" cy="12" rx="5" ry="10" fill="none" stroke="rgba(255,255,255,.25)" stroke-width=".8"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- PATH 2 -->
+    <div class="path-area">
+      <svg class="trail-svg" id="trailSvg2" viewBox="0 0 390 540" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="gDone2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#8b5cf6" stop-opacity=".8"/>
+            <stop offset="100%" stop-color="#8b5cf6" stop-opacity=".3"/>
+          </linearGradient>
+          <filter id="glow2"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <path id="pSeg2-1" fill="none" stroke="#1e3340" stroke-width="9" stroke-linecap="round" stroke-dasharray="18 12" opacity=".55"/>
+        <path id="pSeg2-2" fill="none" stroke="#1e3340" stroke-width="9" stroke-linecap="round" stroke-dasharray="18 12" opacity=".4"/>
+        <path id="pSeg2-3" fill="none" stroke="#1e3340" stroke-width="9" stroke-linecap="round" stroke-dasharray="18 12" opacity=".35"/>
+      </svg>
+
+      <div class="path-col" id="pathCol2">
+
+        <!-- S2 STAGE 1 – الخصوصية والهوية -->
+        <div class="row zig-l">
+          <div class="node" id="s2nodeWrap0">
+            <button class="nbtn locked" id="s2node0" data-stage="0" onclick="openStage2(0, this)">
+              <svg class="nicon" viewBox="0 0 24 24" fill="none">
+                <defs>
+                  <linearGradient id="sw2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c4b5fd"/><stop offset="100%" stop-color="#8b5cf6"/></linearGradient>
+                  <linearGradient id="sw2-sh" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(255,255,255,.5)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/></linearGradient>
+                </defs>
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="url(#sw2)" stroke="rgba(255,255,255,.2)" stroke-width=".5"/>
+                <path d="M12 2l2.5 5.06 5.58.81-4.04 3.94.95 5.56L12 14.71V2z" fill="url(#sw2-sh)"/>
+              </svg>
             </button>
+            <span class="nlabel">الخصوصية والهوية</span>
+          </div>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero-section" id="hero">
-        <div class="hero-background"></div>
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <i class="fas fa-sparkles"></i>
-                    <span class="label"> Quantum Group</span>
-                </div>
-                <h1 class="hero-title display-large">Sahl</h1>
-                <p class="hero-description body-large">
-                    مشاريع مبتكرة تجمع الإبداع بالذكاء الاصطناعي من Eduwell Quantum Group.
-                </p>
-
-                <!-- User welcome message will appear here -->
-                <div class="user-welcome" id="userWelcome"></div>
-                
-            </div>
+        <!-- S2 STAGE 2 – الكونية والتعاون -->
+        <div class="row zig-r">
+          <div class="node" id="s2nodeWrap1">
+            <button class="nbtn locked" id="s2node1" data-stage="1" onclick="openStage2(1, this)">
+              <svg class="nicon" viewBox="0 0 24 24" fill="none">
+                <defs>
+                  <linearGradient id="sd2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2e5068"/><stop offset="100%" stop-color="#1a3040"/></linearGradient>
+                  <linearGradient id="sd2-sh" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(100,160,200,.25)"/><stop offset="100%" stop-color="rgba(100,160,200,0)"/></linearGradient>
+                </defs>
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="url(#sd2)" stroke="rgba(100,160,200,.1)" stroke-width=".5"/>
+                <path d="M12 2l2.5 5.06 5.58.81-4.04 3.94.95 5.56L12 14.71V2z" fill="url(#sd2-sh)"/>
+              </svg>
+            </button>
+            <span class="nlabel">الكونية وتعاون الخصوصيات</span>
+          </div>
         </div>
-    </section>
 
-    <!-- Horizontal Topics Carousel -->
-    <section class="topics-section" id="topics">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">أدوات التعلّم</span>
-                <h2 class="headline-large">أدوات لفهم الفلسفة</h2>
-                <p class="body-medium">
-                    اختر الأداة المناسبة لمساعدتك على تحليل المفاهيم الفلسفية وفهم الدروس بطريقة أبسط.
-                </p>
-            </div>
-
-            <!-- Topics Tabs -->
-            <div class="topics-tabs" id="topicsTabs">
-                <!-- Tabs will be generated by JavaScript -->
-            </div>
-
-            <!-- Carousel -->
-            <div class="carousel-container" id="carouselContainer">
-                <div class="carousel-track" id="carouselTrack">
-                    <!-- Slides will be generated by JavaScript -->
-                </div>
-            </div>
-
-            <!-- Carousel Controls -->
-            <div class="carousel-controls">
-                <button class="carousel-button" id="prevBtn" aria-label="السابق">
-                    <i class="fas fa-arrow-right"></i>
-                </button>
-                <div class="slide-counter">
-                    <span id="currentSlide">1</span> / <span id="totalSlides">4</span>
-                </div>
-                <div class="carousel-dots" id="carouselDots">
-                    <!-- Dots will be generated by JavaScript -->
-                </div>
-                <button class="carousel-button" id="nextBtn" aria-label="التالي">
-                    <i class="fas fa-arrow-left"></i>
-                </button>
-            </div>
+        <!-- S2 STAGE 3 – العولمة (chest) -->
+        <div class="row zig-c" style="position:relative;">
+          <div class="node" id="s2nodeWrap2" style="margin-right:clamp(10px,4vw,24px);">
+            <button class="nbtn chest locked" id="s2node2" data-stage="2" onclick="openStage2(2, this)">
+              <svg viewBox="0 0 72 56" width="82%" height="82%" fill="none">
+                <rect x="4" y="22" width="64" height="30" rx="7" fill="#2d1a50"/><rect x="4" y="22" width="64" height="30" rx="7" stroke="#1a0d38" stroke-width="2"/>
+                <rect x="4" y="6"  width="64" height="20" rx="7" fill="#3d2468"/><rect x="4" y="6"  width="64" height="20" rx="7" stroke="#1a0d38" stroke-width="2"/>
+                <rect x="4" y="23" width="64" height="4" fill="#1a0d38"/>
+                <rect x="27" y="29" width="18" height="14" rx="4" fill="#1a0d38"/>
+                <path d="M31 29 Q31 22 36 22 Q41 22 41 29" fill="none" stroke="#1a0d38" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="12" cy="13" r="3.5" fill="#2d1a50" stroke="#1a0d38" stroke-width="1.5"/>
+                <circle cx="60" cy="13" r="3.5" fill="#2d1a50" stroke="#1a0d38" stroke-width="1.5"/>
+                <circle cx="12" cy="44" r="3.5" fill="#2d1a50" stroke="#1a0d38" stroke-width="1.5"/>
+                <circle cx="60" cy="44" r="3.5" fill="#2d1a50" stroke="#1a0d38" stroke-width="1.5"/>
+              </svg>
+            </button>
+            <span class="nlabel">العولمة بين الخطر والحلّ</span>
+          </div>
         </div>
-    </section>
 
-    <!-- Resources Grid -->
-    <section class="resources-section" id="resources">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">Philosophy</span>
-                <h2 class="headline-large">دروس الفلسفة</h2>
-                <p class="body-medium">
-                    المفاهيم الأساسية، بشكل مبسّط ومنظّم.
-                </p>
-            </div>
+      </div>
+    </div>
 
-            <div class="resources-grid" id="resourcesGrid">
-                <!-- Cards will be generated by JavaScript -->
-            </div>
+  </div>
+
+  <!-- ══ CHALLENGE UNLOCK DIVIDER 3 ══ -->
+  <div class="divider" id="challengeDivider3" style="opacity:.4;transition:opacity .5s ease,filter .5s ease;transform:translateY(0);pointer-events:none;filter:blur(2px);">
+    <div class="div-line"></div>
+    <div class="div-pill" style="background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;border-color:rgba(14,165,233,.4);box-shadow:0 0 16px rgba(14,165,233,.3);">لنبدأ درسًا جديدًا</div>
+    <div class="div-line"></div>
+  </div>
+
+  <!-- ══ SECTION 3: النمذجة ══ -->
+  <div id="section3" style="opacity:.35;transition:opacity .5s ease,filter .5s ease;transform:translateY(0);pointer-events:none;filter:blur(3px);">
+
+    <!-- BANNER 3 -->
+    <div class="banner" style="background:linear-gradient(140deg,#0284c7,#0369a1 50%,#0ea5e9);box-shadow:0 clamp(4px,1.5vw,7px) 0 #075985,0 clamp(8px,3vw,14px) clamp(24px,7vw,36px) rgba(14,165,233,.28),inset 0 1px 0 rgba(255,255,255,.22);">
+      <div class="banner-txt">
+        <div class="banner-sub">القسم 3 · الدرس 3</div>
+        <div class="banner-title">النمذجة العلمية</div>
+        <div class="xp-bar-wrap"><div class="xp-bar" id="xpBar3"></div></div>
+      </div>
+      <div class="banner-ico">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+          <defs>
+            <linearGradient id="atom-g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="rgba(255,255,255,.95)"/>
+              <stop offset="100%" stop-color="rgba(255,255,255,.6)"/>
+            </linearGradient>
+          </defs>
+          <circle cx="12" cy="12" r="3" fill="url(#atom-g)"/>
+          <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.2"/>
+          <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.2" transform="rotate(60 12 12)"/>
+          <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.2" transform="rotate(120 12 12)"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- PATH 3 -->
+    <div class="path-area">
+      <svg class="trail-svg" id="trailSvg3" viewBox="0 0 390 540" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="gDone3" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0ea5e9" stop-opacity=".8"/>
+            <stop offset="100%" stop-color="#0ea5e9" stop-opacity=".3"/>
+          </linearGradient>
+          <filter id="glow3"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <path id="pSeg3-1" fill="none" stroke="#1e3340" stroke-width="9" stroke-linecap="round" stroke-dasharray="18 12" opacity=".55"/>
+        <path id="pSeg3-2" fill="none" stroke="#1e3340" stroke-width="9" stroke-linecap="round" stroke-dasharray="18 12" opacity=".4"/>
+        <path id="pSeg3-3" fill="none" stroke="#1e3340" stroke-width="9" stroke-linecap="round" stroke-dasharray="18 12" opacity=".35"/>
+        <path id="pSeg3-4" fill="none" stroke="#1e3340" stroke-width="9" stroke-linecap="round" stroke-dasharray="18 12" opacity=".3"/>
+      </svg>
+
+      <div class="path-col" id="pathCol3">
+
+        <!-- S3 STAGE 1 – في معنى العلم والنمذجة -->
+        <div class="row zig-l">
+          <div class="node" id="s3nodeWrap0">
+            <button class="nbtn locked" id="s3node0" data-stage="0" onclick="openStage3(0, this)">
+              <svg class="nicon" viewBox="0 0 24 24" fill="none">
+                <defs>
+                  <linearGradient id="sw3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7dd3fc"/><stop offset="100%" stop-color="#0ea5e9"/></linearGradient>
+                  <linearGradient id="sw3-sh" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(255,255,255,.5)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/></linearGradient>
+                </defs>
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="url(#sw3)" stroke="rgba(255,255,255,.2)" stroke-width=".5"/>
+                <path d="M12 2l2.5 5.06 5.58.81-4.04 3.94.95 5.56L12 14.71V2z" fill="url(#sw3-sh)"/>
+              </svg>
+            </button>
+            <span class="nlabel">معنى العلم والنمذجة</span>
+          </div>
         </div>
-    </section>
+
+        <!-- S3 STAGE 2 – الباراديغم -->
+        <div class="row zig-r">
+          <div class="node" id="s3nodeWrap1">
+            <button class="nbtn locked" id="s3node1" data-stage="1" onclick="openStage3(1, this)">
+              <svg class="nicon" viewBox="0 0 24 24" fill="none">
+                <defs>
+                  <linearGradient id="sd3a" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2e5068"/><stop offset="100%" stop-color="#1a3040"/></linearGradient>
+                  <linearGradient id="sd3a-sh" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(100,160,200,.25)"/><stop offset="100%" stop-color="rgba(100,160,200,0)"/></linearGradient>
+                </defs>
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="url(#sd3a)" stroke="rgba(100,160,200,.1)" stroke-width=".5"/>
+                <path d="M12 2l2.5 5.06 5.58.81-4.04 3.94.95 5.56L12 14.71V2z" fill="url(#sd3a-sh)"/>
+              </svg>
+            </button>
+            <span class="nlabel">الباراديغم وأبعاد النمذجة</span>
+          </div>
+        </div>
+
+        <!-- S3 STAGE 3 – حدود النمذجة -->
+        <div class="row zig-c" style="position:relative;">
+          <div class="node" id="s3nodeWrap2">
+            <button class="nbtn locked" id="s3node2" data-stage="2" onclick="openStage3(2, this)">
+              <svg class="nicon" viewBox="0 0 24 24" fill="none">
+                <defs>
+                  <linearGradient id="sd3b" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2e5068"/><stop offset="100%" stop-color="#1a3040"/></linearGradient>
+                  <linearGradient id="sd3b-sh" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(100,160,200,.25)"/><stop offset="100%" stop-color="rgba(100,160,200,0)"/></linearGradient>
+                </defs>
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="url(#sd3b)" stroke="rgba(100,160,200,.1)" stroke-width=".5"/>
+                <path d="M12 2l2.5 5.06 5.58.81-4.04 3.94.95 5.56L12 14.71V2z" fill="url(#sd3b-sh)"/>
+              </svg>
+            </button>
+            <span class="nlabel">حدود النمذجة ومخاطرها</span>
+          </div>
+        </div>
+
+        <!-- S3 STAGE 4 – الملخص (chest) -->
+        <div class="row zig-c" style="position:relative;">
+          <div class="node" id="s3nodeWrap3" style="margin-right:clamp(10px,4vw,24px);">
+            <button class="nbtn chest locked" id="s3node3" data-stage="3" onclick="openStage3(3, this)">
+              <svg viewBox="0 0 72 56" width="82%" height="82%" fill="none">
+                <rect x="4" y="22" width="64" height="30" rx="7" fill="#0c2a3a"/><rect x="4" y="22" width="64" height="30" rx="7" stroke="#061520" stroke-width="2"/>
+                <rect x="4" y="6"  width="64" height="20" rx="7" fill="#0e3a50"/><rect x="4" y="6"  width="64" height="20" rx="7" stroke="#061520" stroke-width="2"/>
+                <rect x="4" y="23" width="64" height="4" fill="#061520"/>
+                <rect x="27" y="29" width="18" height="14" rx="4" fill="#061520"/>
+                <path d="M31 29 Q31 22 36 22 Q41 22 41 29" fill="none" stroke="#061520" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="12" cy="13" r="3.5" fill="#0c2a3a" stroke="#061520" stroke-width="1.5"/>
+                <circle cx="60" cy="13" r="3.5" fill="#0c2a3a" stroke="#061520" stroke-width="1.5"/>
+                <circle cx="12" cy="44" r="3.5" fill="#0c2a3a" stroke="#061520" stroke-width="1.5"/>
+                <circle cx="60" cy="44" r="3.5" fill="#0c2a3a" stroke="#061520" stroke-width="1.5"/>
+              </svg>
+            </button>
+            <span class="nlabel">ملخص العلم والنمذجة</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="divider">
+    <div class="div-line"></div>
+    <div class="div-pill">حيّ وقدم نفسك</div>
+    <div class="div-line"></div>
+  </div>
+
+</div>
+
+
+<!-- ════ CHAT MODAL ════ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-sheet" id="modalSheet">
+
+    <div class="sheet-handle"></div>
+
+    <!-- Chat nav -->
+    <div class="chat-nav">
+      <div class="chat-nav-status">
+        <div class="status-dot"></div>
+        <span>متصل</span>
+      </div>
+      <div class="chat-nav-title">فيلو</div>
+    </div>
+
+    <!-- Stage info -->
+    <div style="display:flex;justify-content:center;padding:6px 0 0;flex-shrink:0;">
+      <div class="stage-pill" id="stagePill">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" fill="#c0c0cc" opacity=".8"/>
+        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" fill="#c0c0cc" opacity=".6"/>
+      </svg>
+        <span id="stagePillText">المرحلة 1</span>
+      </div>
+    </div>
+
+    <!-- Chat messages -->
+    <div class="chat-body" id="chatBody"></div>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">Sahl</div>
-                <p class="footer-tagline">
-                    منصة تعليمية متميزة توفر محتوى فريد وتجارب تعليمية مبتكرة للطلاب.
-                </p>
-                <p class="footer-copyright"> Eduwell Quantum Group </p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scroll to Top -->
-    <button class="scroll-top" id="scrollTop" aria-label="العودة للأعلى">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-
-    <!-- PDF Modal -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h3 class="modal-title" id="modalTitle">
-                    <i class="fas fa-file-pdf"></i>
-                    <span>مصدر التصميم</span>
-                </h3>
-                <button class="modal-close" id="modalClose" aria-label="إغلاق النافذة">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="pdf-loading" id="pdfLoading">
-                    <i class="fas fa-spinner"></i>
-                    <span>جاري تحميل المستند...</span>
-                </div>
-                <iframe class="pdf-viewer" id="pdfViewer" frameborder="0" allow="fullscreen"></iframe>
-            </div>
-        </div>
+    <div class="chat-footer">
+      <button class="btn-reply hidden" id="btnReply">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>
+        رد
+      </button>
+      <button class="btn-close-chat hidden" id="btnCloseChat">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="10" fill="#f0f0f5" stroke="#e0e0e8" stroke-width=".8"/>
+        <polyline points="14 17 8 12 14 7" stroke="#3b3b4f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+        العودة للمسار
+      </button>
     </div>
 
-    <!-- Apple-style Logout Confirmation Modal -->
-    <div class="logout-confirmation-overlay" id="logoutConfirmationPopup">
-        <div class="logout-confirmation-content">
-            <div class="confirmation-icon">
-                <i class="fas fa-sign-out-alt"></i>
-            </div>
-            <h3 class="confirmation-title">تسجيل الخروج؟</h3>
-            <p class="confirmation-text">سيتم تسجيل خروجك وإعادة توجيهك إلى صفحة تسجيل الدخول.</p>
-            <div class="confirmation-buttons">
-                <button class="confirmation-btn cancel-btn" id="logoutCancelBtn">
-                    إلغاء
-                </button>
-                <button class="confirmation-btn confirm-btn" id="logoutConfirmBtn">
-                    تسجيل الخروج
-                </button>
-            </div>
-        </div>
+  </div>
+</div>
+
+
+<!-- ════ SINGLE DOCS BUTTON ════ -->
+<div class="docs-fab">
+  <button class="docs-fab-btn" id="docsFabBtn" onclick="toggleDocsPage()">
+    <svg id="fabIcon" width="19" height="19" viewBox="0 0 24 24" fill="none">
+  <defs>
+    <linearGradient id="fld" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(255,255,255,.9)"/><stop offset="100%" stop-color="rgba(255,255,255,.6)"/></linearGradient>
+  </defs>
+  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" fill="url(#fld)" stroke="rgba(255,255,255,.3)" stroke-width=".6"/>
+  <path d="M2 9h20" stroke="rgba(255,255,255,.25)" stroke-width=".8"/>
+  <rect x="4" y="5" width="7" height="4" rx="1" fill="rgba(255,255,255,.2)"/>
+</svg>
+    <span class="fab-label">الدروس</span>
+  </button>
+</div>
+
+<!-- ════ DOCS PAGE ════ -->
+<div class="docs-page" id="docsPage">
+
+  <!-- topbar -->
+  <div class="dt-bar">
+    <div class="dt-back" onclick="toggleDocsPage()">
+      <i class="fa-solid fa-chevron-right"></i>
     </div>
-    <script src="./assets/js/data.js"></script>
-    <script src="./assets/js/script.js"></script>
+    <div class="dt-logo">
+      <i class="fa-solid fa-graduation-cap"></i>
+      فيلو<em>Docs</em>
+    </div>
+   
+  </div>
+
+  <!-- tabs -->
+  <div class="dt-tabs-wrap">
+    <div class="dt-tabs">
+      <button class="dt-tab active" id="dtTabCours" onclick="dtSwitchTab('cours')">
+        <i class="fa-solid fa-book-open"></i>
+        الدروس
+      </button>
+      <button class="dt-tab" id="dtTabExercices" onclick="dtSwitchTab('exercices')">
+        <i class="fa-solid fa-pen-to-square"></i>
+        التمارين
+      </button>
+    </div>
+  </div>
+
+  <!-- scroll area -->
+  <div class="dt-scroll" id="dtScroll">
+
+    <!-- PAGE COURS -->
+    <div id="dtPageCours">
+      <div class="dt-hero">
+        <div class="dt-hero-badge">
+          <i class="fa-solid fa-layer-group"></i>
+          الشُّعَب العِلمية – البكالوريا
+        </div>
+        <h2>الدروس والملخّصات</h2>
+        <p>جميع دروس الفلسفة الخاصة بالشُّعَب العِلمية</p>
+        <div class="dt-hero-stats">
+          <div class="dt-hero-stat">
+            <i class="fa-solid fa-folder-open"></i>
+            5 وحدات
+          </div>
+          <div class="dt-hero-stat">
+            <i class="fa-solid fa-file-lines"></i>
+            5 دروس
+          </div>
+        </div>
+      </div>
+      <div class="dt-sec-hdr">
+        <i class="fa-solid fa-book-bookmark"></i>
+        <span>الدروس</span>
+        <div class="dt-sec-badge">5</div>
+      </div>
+      <div class="dt-grid" id="dtCoursGrid"></div>
+    </div>
+
+    <!-- PAGE EXERCICES -->
+    <div id="dtPageExercices" style="display:none">
+      <div class="dt-hero">
+        <div class="dt-hero-badge">
+          <i class="fa-solid fa-layer-group"></i>
+         الشُّعَب العِلمية – البكالوريا
+        </div>
+        <h2>التمارين والنماذج</h2>
+        <p>تمارين وفروض مرفقة بالإصلاح والمنهجية</p>
+        <div class="dt-hero-stats">
+          <div class="dt-hero-stat">
+            <i class="fa-solid fa-folder-open"></i>
+            4 فروض
+          </div>
+          <div class="dt-hero-stat">
+            <i class="fa-solid fa-file-lines"></i>
+            28 وثيقة
+          </div>
+        </div>
+      </div>
+      <div class="dt-sec-hdr" style="animation-delay:.1s">
+        <i class="fa-solid fa-table-cells-large"></i>
+        <span>الفروض</span>
+        <div class="dt-sec-badge">4</div>
+      </div>
+      <div class="dt-grid" id="dtExoGrid"></div>
+    </div>
+
+  </div><!-- /dt-scroll -->
+</div><!-- /docs-page -->
+
+
+<!-- ════ DOCS SHEET ════ -->
+<div class="ds-overlay" id="dsOverlay" onclick="closeDsSheet()"></div>
+<div class="ds-sheet" id="dsSheet">
+  <div class="ds-handle"></div>
+  <div class="ds-hdr">
+    <div class="ds-hdr-back" onclick="closeDsSheet()">
+      <i class="fa-solid fa-chevron-right"></i>
+    </div>
+    <div class="ds-hdr-title" id="dsHdrTitle">الوثائق</div>
+    <div class="ds-hdr-count" id="dsHdrCount">0</div>
+  </div>
+  <div class="ds-mini-hero">
+    <div class="ds-mini-ico" id="dsMiniIco">📄</div>
+    <div class="ds-mini-txt">
+      <h4 id="dsMiniTitle">العنوان</h4>
+      <p id="dsMiniSub">الشُّعَب العِلمية – البكالوريا</p>
+    </div>
+  </div>
+  <div class="ds-list" id="dsList"></div>
+</div>
+
+<!-- ════ PDF PREVIEW ════ -->
+<div class="pdf-ov" id="pdfOv">
+  <div class="pdf-sh">
+    <div class="pdf-tb">
+      <button class="pdf-tb-back" onclick="closePdfOv()">
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="pdf-tb-txt">
+        <div class="pdf-tb-title" id="pdfOvTitle">Document</div>
+        <div class="pdf-tb-sub"  id="pdfOvSub">باك فلسفة</div>
+      </div>
+      <div class="pdf-tb-acts">
+        
+       
+      </div>
+    </div>
+    <div class="pdf-embed" id="pdfEmbed">
+      <div class="pdf-loading-el" id="pdfLoadEl">
+        <div class="pdf-spin"></div>
+        <p>جاري تحميل الوثيقة…</p>
+      </div>
+      <iframe class="pdf-frame" id="pdfFrame" src="" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST NOTIFICATION -->
+<div class="toast" id="toast"></div>
+
+
+<script src="./assets/js/data.js"></script>
+<script src="./assets/js/script.js"></script>
+<!-- ════ MOBILE ONLY MESSAGE (desktop) ════ -->
+<div id="mobileOnlyMsg">
+  <div class="mob-card">
+    <div class="mob-card-icon">📱</div>
+    <h2>متاح على الموبايل فقط</h2>
+    <p>هذا التطبيق مصمّم خصيصاً للهواتف الذكية. افتحه من هاتفك للحصول على أفضل تجربة.</p>
+    <div class="mob-card-phones">
+      <div class="mob-phone"><i class="fa-brands fa-apple"></i> iOS</div>
+      <div class="mob-phone"><i class="fa-brands fa-android"></i> Android</div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   AUTHENTICATION FUNCTIONS
+══════════════════════════════════════════════════════ */
+const AUTH_CONFIG = {
+    isLoggedInKey: 'eduwell_svt_isLoggedIn',
+    usernameKey: 'eduwell_svt_username',
+    lastActivityKey: 'eduwell_svt_lastActivity'
+};
+
+// Get current user info
+function getCurrentUser() {
+    return {
+        username: localStorage.getItem(AUTH_CONFIG.usernameKey) || 'طالب',
+        email: localStorage.getItem(AUTH_CONFIG.usernameKey) || 'student@faylo.com'
+    };
+}
+
+// Check if user is authenticated
+function isAuthenticated() {
+    const isLoggedIn = localStorage.getItem(AUTH_CONFIG.isLoggedInKey) === 'true';
+    if (!isLoggedIn) return false;
+    
+    const lastActivity = localStorage.getItem(AUTH_CONFIG.lastActivityKey);
+    if (lastActivity) {
+        const lastActivityTime = parseInt(lastActivity);
+        const minutesDiff = (Date.now() - lastActivityTime) / (1000 * 60);
+        if (minutesDiff >= 30) {
+            // Session expired due to inactivity
+            localStorage.removeItem(AUTH_CONFIG.isLoggedInKey);
+            localStorage.removeItem(AUTH_CONFIG.usernameKey);
+            localStorage.removeItem(AUTH_CONFIG.lastActivityKey);
+            return false;
+        }
+    }
+    return true;
+}
+
+// Update user activity timestamp
+function updateUserActivity() {
+    if (localStorage.getItem(AUTH_CONFIG.isLoggedInKey) === 'true') {
+        localStorage.setItem(AUTH_CONFIG.lastActivityKey, Date.now().toString());
+    }
+}
+
+// Initialize activity tracking
+function initActivityTracking() {
+    ['click', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(event => {
+        document.addEventListener(event, updateUserActivity);
+    });
+    
+    // Check session every minute
+    window.activityTimer = setInterval(() => {
+        if (isAuthenticated()) {
+            const lastActivity = localStorage.getItem(AUTH_CONFIG.lastActivityKey);
+            if (lastActivity) {
+                const lastActivityTime = parseInt(lastActivity);
+                const minutesDiff = (Date.now() - lastActivityTime) / (1000 * 60);
+                if (minutesDiff >= 30) {
+                    toast('انتهت الجلسة - يرجى تسجيل الدخول مرة أخرى');
+                    showLoginOverlay();
+                }
+            }
+        }
+    }, 60000);
+}
+
+// Toast notification
+let toastTimer;
+function toast(message) {
+    const el = document.getElementById('toast');
+    if (el) {
+        el.innerHTML = `<i class="fas fa-info-circle"></i> ${message}`;
+        el.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+    }
+}
+
+// Show login overlay
+function showLoginOverlay() {
+    document.getElementById('protectedOverlay').style.display = 'flex';
+}
+
+// Redirect to login
+function redirectToLogin() {
+    sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+    window.location.href = '../profile/login.html';
+}
+
+// Update UI with user info
+function updateUserUI() {
+    if (isAuthenticated()) {
+        const user = getCurrentUser();
+        const userName = user.username;
+        
+        // Update the top bar with user's name
+        const userNameElement = document.getElementById('userName');
+        if (userNameElement) {
+            userNameElement.textContent = userName;
+        }
+    }
+}
+
+// Check authentication on page load
+function checkAuth() {
+    if (!isAuthenticated()) {
+        // Store current page for redirect back
+        sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+        showLoginOverlay();
+    } else {
+        // Initialize activity tracking
+        initActivityTracking();
+        updateUserActivity();
+        updateUserUI();
+    }
+}
+
+/* ══════════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════════ */
+// Call checkAuth when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    checkAuth();
+});
+
+// Handle page show event (for back/forward cache)
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+        // Page was restored from cache, re-check authentication
+        if (!isAuthenticated()) {
+            showLoginOverlay();
+        } else {
+            updateUserUI();
+            updateUserActivity();
+        }
+    }
+});
+
+// Disable right-click and save shortcuts (optional)
+document.addEventListener('contextmenu', function(e) { 
+    if (!isAuthenticated()) return;
+    e.preventDefault(); 
+    return false; 
+});
+
+document.addEventListener('keydown', function(e) {
+    if (!isAuthenticated()) return;
+    if ((e.ctrlKey && e.key === 's') || 
+        (e.ctrlKey && e.shiftKey && e.key === 'S') || 
+        (e.ctrlKey && e.key === 'p') ||
+        e.key === 'F12') {
+        e.preventDefault();
+        return false;
+    }
+});
+</script>
+
 </body>
 </html>

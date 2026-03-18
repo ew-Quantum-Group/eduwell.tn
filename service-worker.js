@@ -4,7 +4,7 @@
  *  Strategy: Cache-First for assets, Network-First
  *  for navigation (HTML), with offline fallback.
  * ═══════════════════════════════════════════════
- */
+ */ 
 
 // ── Cache names ──────────────────────────────────
 // Bump CACHE_VERSION to force old caches to clear

@@ -253,3 +253,4 @@ function showNetworkToast(online) {
 
 window.addEventListener('online',  () => showNetworkToast(true));
 window.addEventListener('offline', () => showNetworkToast(false));
+ 

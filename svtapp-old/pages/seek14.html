@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SVT App | EduWell</title>
+    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/styleseek.css">
+</head>
+<body>
+    <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    
+    <div class="floating-element floating-1"></div>
+    <div class="floating-element floating-2"></div>
+    <div class="floating-element floating-3"></div>
+    
+    <a href="../index.html" class="back-btn" id="backBtn">
+        ← Retour
+    </a>
+    
+    <div class="app-container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    SVT
+                </div>
+            </div>
+            <h1>SVT App</h1>
+            <p>Glissez vers la droite pour Vrai, vers la gauche pour Faux</p>
+        </div>
+
+        <div class="card-container">
+            <div class="quiz-card" id="current-card">
+                <div class="card-pattern"></div>
+                <div class="question-number" id="question-number">Question 1/5</div>
+                <h2 id="question-text">Un exemple de question apparaîtra ici</h2>
+                <div class="swipe-hints">
+                    <div class="swipe-hint false">
+                        FAUX
+                    </div>
+                    <div class="swipe-hint true">
+                        VRAI
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="overlay" id="overlay"></div>
+
+        <div class="feedback-popup" id="feedback-popup">
+            <div class="feedback-icon" id="feedback-icon">
+                ✓
+            </div>
+            <h3 id="feedback-title">Correct !</h3>
+            <p id="feedback-message">Vous avez trouvé la bonne réponse !</p>
+            <div class="correct-answer" id="correct-answer">La bonne réponse est : Vrai</div>
+            <div class="explanation" id="explanation">L'explication apparaîtra ici.</div>
+            <button id="continue-btn">
+                Continuer
+            </button>
+        </div>
+
+        <div class="results-screen" id="results-screen">
+            <div class="results-icon">
+                🏆
+            </div>
+            <h2>Quiz Terminé !</h2>
+            <p>Bravo pour avoir terminé le quiz !</p>
+            <div class="percentage" id="final-percentage" data-value="100%">100%</div>
+            <div class="score-container">
+                <div class="score-row">
+                    <span class="score-label">Réponses correctes :</span>
+                    <span class="score-value" id="correct-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Réponses incorrectes :</span>
+                    <span class="score-value" id="incorrect-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Score Total :</span>
+                    <span class="score-value" id="total-score">0/5</span>
+                </div>
+            </div>
+            <button class="retry-btn" id="retry-btn">
+                Recommencer
+            </button>
+        </div>
+    </div>
+
+    <!-- ORIGINAL QUIZ DATA - Only runs if authenticated -->
+    <script>
+        // Données des questions du quiz avec explications
+        const quizQuestions =  [
+  // t
+
+
+  {
+    "question": "La substance blanche de la moelle épinière contient principalement des axones myélinisés.",
+    "answer": true,
+    "explanation": "Les axones myélinisés forment la majeure partie de la substance blanche."
+  },
+  {
+    "question": "Les dendrites se trouvent principalement dans la substance blanche de la moelle épinière.",
+    "answer": false,
+    "explanation": "Les dendrites et corps cellulaires sont dans la substance grise, pas blanche."
+  },
+  {
+    "question": "La vitesse de propagation du message nerveux dépend du diamètre de la fibre nerveuse.",
+    "answer": true,
+    "explanation": "Un plus grand diamètre favorise une conduction plus rapide."
+  },
+  {
+    "question": "Les fibres myélinisées conduisent le message nerveux plus rapidement que les fibres amyélinisées de même diamètre.",
+    "answer": true,
+    "explanation": "La myéline permet la conduction saltatoire, plus rapide que la conduction continue."
+  },
+  {
+    "question": "Une stimulation plus intense augmente la vitesse de propagation du message nerveux.",
+    "answer": false,
+    "explanation": "L’intensité de stimulation affecte la fréquence des potentiels d’action, pas leur vitesse."
+  },
+  {
+    "question": "Au niveau d’un récepteur sensoriel, la stimulation efficace provoque un potentiel de récepteur.",
+    "answer": true,
+    "explanation": "La stimulation modifie la DDP de manière graduée, appelée potentiel de récepteur."
+  },
+  {
+    "question": "La stimulation efficace provoque un potentiel d’action directement au site transducteur.",
+    "answer": false,
+    "explanation": "Le potentiel d’action se produit après intégration du potentiel de récepteur."
+  },
+  {
+    "question": "L’amplitude du potentiel de récepteur est plus grande pour une stimulation efficace que pour une stimulation inefficace.",
+    "answer": true,
+    "explanation": "Le potentiel de récepteur varie proportionnellement à l’intensité de la stimulation."
+  },
+  {
+    "question": "Les synapses neuro-neuronique et neuro-musculaire possèdent toutes deux un élément pré-synaptique nerveux.",
+    "answer": true,
+    "explanation": "Dans les deux cas, l’élément pré-synaptique est un neurone."
+  },
+  {
+    "question": "La membrane post-synaptique d’une synapse neuro-musculaire est fortement plissée.",
+    "answer": false,
+    "explanation": "Seule la plaque motrice possède une membrane post-synaptique très plissée."
+  },
+  {
+    "question": "La plaque motrice se distingue par le fait qu’un PA pré-synaptique déclenche toujours un PA post-synaptique.",
+    "answer": true,
+    "explanation": "À la plaque motrice, la transmission est toujours efficace et déclenche le PA musculaire."
+  },
+  {
+    "question": "La transmission à la plaque motrice est chimique et unidirectionnelle.",
+    "answer": true,
+    "explanation": "L’acétylcholine libérée déclenche le potentiel post-synaptique dans un seul sens."
+  },
+  {
+    "question": "L’acétylcholine provoque directement l’ouverture des canaux voltage-dépendants à Na+.",
+    "answer": false,
+    "explanation": "Elle ouvre les canaux ligand-dépendants, pas directement les canaux voltage-dépendants."
+  },
+  {
+    "question": "Dans une cellule nerveuse au repos, les ions Na+ entrent par diffusion dans la cellule.",
+    "answer": true,
+    "explanation": "Il existe une fuite passive de Na+ vers l’intérieur de la cellule."
+  },
+  {
+    "question": "La pompe Na+/K+ fonctionne en permanence dans une cellule nerveuse au repos.",
+    "answer": true,
+    "explanation": "Elle maintient les gradients ioniques même sans stimulation."
+  }
+
+
+
+
+  
+];
+
+
+    </script>
+    
+    <script src="../assets/js/arcseek.js"></script>
+    
+    <footer class="footer">
+        Eduwell Quantum Group
+    </footer>
+</body>
+</html>

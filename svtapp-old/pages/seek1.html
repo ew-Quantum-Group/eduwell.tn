@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SVT App | EduWell</title>
+    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/styleseek.css">
+</head>
+<body>
+    <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    
+    <div class="floating-element floating-1"></div>
+    <div class="floating-element floating-2"></div>
+    <div class="floating-element floating-3"></div>
+    
+    <a href="../index.html" class="back-btn" id="backBtn">
+        ← Retour
+    </a>
+    
+    <div class="app-container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    SVT
+                </div>
+            </div>
+            <h1>SVT App</h1>
+            <p>Glissez vers la droite pour Vrai, vers la gauche pour Faux</p>
+        </div>
+
+        <div class="card-container">
+            <div class="quiz-card" id="current-card">
+                <div class="card-pattern"></div>
+                <div class="question-number" id="question-number">Question 1/5</div>
+                <h2 id="question-text">Un exemple de question apparaîtra ici</h2>
+                <div class="swipe-hints">
+                    <div class="swipe-hint false">
+                        FAUX
+                    </div>
+                    <div class="swipe-hint true">
+                        VRAI
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="overlay" id="overlay"></div>
+
+        <div class="feedback-popup" id="feedback-popup">
+            <div class="feedback-icon" id="feedback-icon">
+                ✓
+            </div>
+            <h3 id="feedback-title">Correct !</h3>
+            <p id="feedback-message">Vous avez trouvé la bonne réponse !</p>
+            <div class="correct-answer" id="correct-answer">La bonne réponse est : Vrai</div>
+            <div class="explanation" id="explanation">L'explication apparaîtra ici.</div>
+            <button id="continue-btn">
+                Continuer
+            </button>
+        </div>
+
+        <div class="results-screen" id="results-screen">
+            <div class="results-icon">
+                🏆
+            </div>
+            <h2>Quiz Terminé !</h2>
+            <p>Bravo pour avoir terminé le quiz !</p>
+            <div class="percentage" id="final-percentage" data-value="100%">100%</div>
+            <div class="score-container">
+                <div class="score-row">
+                    <span class="score-label">Réponses correctes :</span>
+                    <span class="score-value" id="correct-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Réponses incorrectes :</span>
+                    <span class="score-value" id="incorrect-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Score Total :</span>
+                    <span class="score-value" id="total-score">0/5</span>
+                </div>
+            </div>
+            <button class="retry-btn" id="retry-btn">
+                Recommencer
+            </button>
+        </div>
+    </div>
+
+    <!-- ORIGINAL QUIZ DATA - Only runs if authenticated -->
+    <script>
+        // Données des questions du quiz avec explications
+        const quizQuestions =  [
+  // t
+  {
+    question: "Le spermatozoïde humain est une cellule caractérisée par la mobilité.",
+    answer: true,
+    explanation: "Le flagelle du spermatozoïde lui permet de se déplacer dans les voies génitales féminines, ce qui est essentiel pour atteindre l'ovule."
+  },
+  // t
+  {
+    question: "Le spermatozoïde humain est une cellule caractérisée par un nombre de chromosomes égal à 23.",
+    answer: true,
+    explanation: "Issu de la méiose, le spermatozoïde est haploïde et contient 23 chromosomes. Lors de la fécondation, ce nombre est rétabli à 46."
+  },
+  // f
+  {
+    question: "Le spermatozoïde humain est une cellule caractérisée par un noyau bloqué en métaphase II.",
+    answer: false,
+    explanation: "C'est l'ovocyte II qui reste bloqué en métaphase II jusqu'à la fécondation, et non le spermatozoïde."
+  },
+  // t
+  {
+    question: "L'inhibine est une hormone sécrétée par les cellules de Sertoli.",
+    answer: true,
+    explanation: "Les cellules de Sertoli produisent l'inhibine qui exerce un rétrocontrôle négatif sur la FSH pour réguler la spermatogenèse."
+  },
+  // f
+  {
+    question: "L'inhibine exerce un rétrocontrôle négatif sur la sécrétion de LH.",
+    answer: false,
+    explanation: "L'inhibine agit uniquement sur la FSH. La LH est régulée principalement par la testostérone."
+  },
+  // t
+  {
+    question: "Chez l'homme, les cellules hypothalamiques présentent des récepteurs à la testostérone.",
+    answer: true,
+    explanation: "La testostérone agit par rétrocontrôle négatif sur l'hypothalamus, réduisant la sécrétion de GnRH."
+  },
+  // f
+  {
+    question: "Chez l'homme, les cellules hypothalamiques présentent des récepteurs à la FSH.",
+    answer: false,
+    explanation: "La FSH cible les cellules de Sertoli dans les testicules et n'agit pas directement sur l'hypothalamus."
+  },
+  // f
+  {
+    question: "La testostérone est une hormone sécrétée par les cellules de Sertoli.",
+    answer: false,
+    explanation: "La production de testostérone est assurée par les cellules de Leydig, sous l'action de la LH."
+  },
+  // t
+  {
+    question: "La testostérone exerce un rétrocontrôle négatif sur la sécrétion de LH.",
+    answer: true,
+    explanation: "Un taux élevé de testostérone inhibe la sécrétion de GnRH et de LH pour maintenir l'équilibre hormonal."
+  },
+  // t
+  {
+    question: "La testostérone agit sur les cellules de Sertoli.",
+    answer: true,
+    explanation: "La testostérone se fixe sur les récepteurs des cellules de Sertoli et permet la poursuite de la spermatogenèse."
+  },
+  // f
+  {
+    question: "La testostérone agit sur le complexe hypothalamo-hypophysaire par rétrocontrôle positif.",
+    answer: false,
+    explanation: "Le rétrocontrôle exercé par la testostérone est toujours négatif et jamais positif."
+  },
+  // t
+  {
+    question: "Dans la spermatogenèse, la réduction du nombre de chromosomes se produit lors de la phase de maturation.",
+    answer: true,
+    explanation: "La phase de maturation correspond à la méiose qui réduit le nombre de chromosomes de 46 à 23."
+  },
+  // f
+  {
+    question: "La spermiogenèse se déroule dans l'épididyme.",
+    answer: false,
+    explanation: "La spermiogenèse, c'est-à-dire la transformation des spermatides en spermatozoïdes, se déroule dans les tubes séminifères."
+  },
+  // t
+  {
+    question: "La spermiogenèse est la différenciation des spermatides en spermatozoïdes.",
+    answer: true,
+    explanation: "Au cours de la spermiogenèse, les spermatides se transforment en spermatozoïdes allongés et dotés de mobilité."
+  },
+  // f
+  {
+    question: "La GnRH est sécrétée par les cellules de l'hypophyse antérieure.",
+    answer: false,
+    explanation: "La GnRH est synthétisée par l'hypothalamus et agit sur l'hypophyse antérieure pour stimuler la sécrétion de FSH et LH."
+  },
+  // t
+  {
+    question: "La GnRH est sécrétée de manière pulsatile.",
+    answer: true,
+    explanation: "La sécrétion pulsatile de GnRH est essentielle pour assurer une libération correcte et efficace de FSH et LH."
+  },
+  // f
+  {
+    question: "La phase de maturation de la spermatogenèse produit des spermatocytes I.",
+    answer: false,
+    explanation: "La phase de maturation aboutit à la formation de spermatides haploïdes, pas de spermatocytes I."
+  },
+  // f
+  {
+    question: "Les gonadostimulines sont sécrétées par les gonades.",
+    answer: false,
+    explanation: "Les gonadostimulines (FSH et LH) sont sécrétées par l'hypophyse antérieure, et non par les gonades."
+  },
+  // t
+  {
+    question: "Les gonadostimulines stimulent les gonades.",
+    answer: true,
+    explanation: "La FSH stimule les cellules de Sertoli et la LH agit sur les cellules de Leydig, jouant toutes deux un rôle clé dans la reproduction."
+  }
+
+        ];
+    </script>
+    
+    <script src="../assets/js/arcseek.js"></script>
+    
+    <footer class="footer">
+        Eduwell Quantum Group
+    </footer>
+</body>
+</html>

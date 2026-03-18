@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SVT App | EduWell</title>
+    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/styleseek.css">
+</head>
+<body>
+    <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    
+    <div class="floating-element floating-1"></div>
+    <div class="floating-element floating-2"></div>
+    <div class="floating-element floating-3"></div>
+    
+    <a href="../index.html" class="back-btn" id="backBtn">
+        ← Retour
+    </a>
+    
+    <div class="app-container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    SVT
+                </div>
+            </div>
+            <h1>SVT App</h1>
+            <p>Glissez vers la droite pour Vrai, vers la gauche pour Faux</p>
+        </div>
+
+        <div class="card-container">
+            <div class="quiz-card" id="current-card">
+                <div class="card-pattern"></div>
+                <div class="question-number" id="question-number">Question 1/5</div>
+                <h2 id="question-text">Un exemple de question apparaîtra ici</h2>
+                <div class="swipe-hints">
+                    <div class="swipe-hint false">
+                        FAUX
+                    </div>
+                    <div class="swipe-hint true">
+                        VRAI
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="overlay" id="overlay"></div>
+
+        <div class="feedback-popup" id="feedback-popup">
+            <div class="feedback-icon" id="feedback-icon">
+                ✓
+            </div>
+            <h3 id="feedback-title">Correct !</h3>
+            <p id="feedback-message">Vous avez trouvé la bonne réponse !</p>
+            <div class="correct-answer" id="correct-answer">La bonne réponse est : Vrai</div>
+            <div class="explanation" id="explanation">L'explication apparaîtra ici.</div>
+            <button id="continue-btn">
+                Continuer
+            </button>
+        </div>
+
+        <div class="results-screen" id="results-screen">
+            <div class="results-icon">
+                🏆
+            </div>
+            <h2>Quiz Terminé !</h2>
+            <p>Bravo pour avoir terminé le quiz !</p>
+            <div class="percentage" id="final-percentage" data-value="100%">100%</div>
+            <div class="score-container">
+                <div class="score-row">
+                    <span class="score-label">Réponses correctes :</span>
+                    <span class="score-value" id="correct-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Réponses incorrectes :</span>
+                    <span class="score-value" id="incorrect-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Score Total :</span>
+                    <span class="score-value" id="total-score">0/5</span>
+                </div>
+            </div>
+            <button class="retry-btn" id="retry-btn">
+                Recommencer
+            </button>
+        </div>
+    </div>
+
+    <!-- ORIGINAL QUIZ DATA - Only runs if authenticated -->
+    <script>
+        // Données des questions du quiz avec explications
+        const quizQuestions =  [
+  // t
+
+
+
+  
+
+
+  {
+    "question": "La conversion de l'énergie d'un stimulus en énergie électrique se fait au niveau d'un récepteur.",
+    "answer": true,
+    "explanation": "Les récepteurs transforment l’énergie du stimulus (mécanique, chimique...) en potentiel de récepteur électrique."
+  },
+  {
+    "question": "La conversion de l'énergie d'un stimulus en énergie électrique se fait au niveau d'un effecteur.",
+    "answer": false,
+    "explanation": "L’effecteur produit une réponse (musculaire/glandulaire), il ne convertit pas le stimulus en signal électrique."
+  },
+  {
+    "question": "La conversion se fait au niveau d'un site transducteur situé à l'extrémité dendritique d'une fibre nerveuse sensitive.",
+    "answer": true,
+    "explanation": "Le site transducteur dendritique reçoit le stimulus et génère le potentiel de récepteur."
+  },
+  {
+    "question": "Depuis le fuseau neuromusculaire excité jusqu'au cône axonique, la succession correcte est : transduction, conduction, transmission synaptique, integration.",
+    "answer": true,
+    "explanation": "Le signal est converti, conduit le long de l’axone, transmis à la synapse, puis intégré au motoneurone."
+  },
+  {
+    "question": "La transmission synaptique intervient avant la transduction dans le motoneurone.",
+    "answer": false,
+    "explanation": "La transduction se produit en premier dans le récepteur; la synapse intervient ensuite."
+  },
+  {
+    "question": "Au cours de la conversion de l'énergie chimique en énergie mécanique, la séquence correcte est : arrivée de Ca2+, attachement des myofilaments, hydrolyse d’ATP, pivotement des têtes de myosine.",
+    "answer": true,
+    "explanation": "Le calcium déclenche l’attachement actine-myosine, puis l’ATP est hydrolysée pour produire le pivotement."
+  },
+  {
+    "question": "Le pivotement des têtes de myosine est dû directement à l’attachement de la myosine sur l’actine.",
+    "answer": false,
+    "explanation": "Le pivotement est provoqué par l’hydrolyse de l’ATP, pas seulement l’attachement."
+  },
+  {
+    "question": "La transmission synaptique neuro-neuronique et neuromusculaire implique le phénomène d’exocytose.",
+    "answer": true,
+    "explanation": "Les neurotransmetteurs sont libérés par exocytose dans les deux types de synapses."
+  },
+  {
+    "question": "La noradrénaline est le neurotransmetteur principal dans toutes les synapses neuro-neuronique et neuromusculaire.",
+    "answer": false,
+    "explanation": "La noradrénaline est spécifique au système sympathique; la plupart des synapses utilisent l’acétylcholine ou d’autres neurotransmetteurs."
+  },
+  {
+    "question": "Le blocage de l’utilisation de phosphocréatine entraîne l’arrêt de la contraction musculaire.",
+    "answer": false,
+    "explanation": "La contraction peut continuer via ATP produit par respiration ou fermentation, mais la phase de récupération d’énergie rapide est affectée."
+  },
+  {
+    "question": "La myokinase catalyse la synthèse d’ATP à partir de deux molécules d’ADP.",
+    "answer": true,
+    "explanation": "Elle régénère l’ATP en transférant un phosphate d’ADP à un autre ADP."
+  },
+  {
+    "question": "La respiration cellulaire produit plus d’énergie que la fermentation lactique.",
+    "answer": true,
+    "explanation": "La respiration aérobie dans les mitochondries est beaucoup plus efficace que la fermentation anaérobie."
+  },
+  {
+    "question": "La formation d’acide lactique montre que la respiration satisfait les besoins énergétiques du travail musculaire.",
+    "answer": false,
+    "explanation": "L’acide lactique apparaît quand l’oxygène est insuffisant et la respiration anaérobie ne suffit pas."
+  },
+  {
+    "question": "L’oxygène dans la fibre musculaire sert à dégrader l’acide pyruvique dans les mitochondries.",
+    "answer": true,
+    "explanation": "La respiration aérobie utilise O2 pour oxyder le pyruvate et produire beaucoup d’ATP."
+  },
+  {
+    "question": "Le raccourcissement des myofibrilles est lié au raccourcissement des filaments d’actine et de myosine.",
+    "answer": false,
+    "explanation": "Les filaments eux-mêmes ne raccourcissent pas; ils glissent les uns sur les autres."
+  },
+  {
+    "question": "Le raccourcissement des myofibrilles se manifeste par un rétrécissement des disques clairs.",
+    "answer": true,
+    "explanation": "Les bandes I (claires) s’amincissent pendant la contraction, alors que les bandes A (sombres) restent constantes."
+  },
+  {
+    "question": "Le pivotement de la tête de myosine est directement causé par le retour de Ca2+ dans le réticulum endoplasmique.",
+    "answer": false,
+    "explanation": "Le pivotement est déclenché par l’ATP hydrolysée; le calcium contrôle l’attachement actine-myosine."
+  },
+  {
+    "question": "La sommation spatiale des potentiels postsynaptiques se produit au niveau du cône axonique.",
+    "answer": true,
+    "explanation": "Les signaux convergent au cône axonique pour décider si un PA sera généré."
+  },
+  {
+    "question": "La conversion d’énergie dans le récepteur implique le premier nœud de Ranvier.",
+    "answer": false,
+    "explanation": "Le nœud de Ranvier permet la conduction du PA, pas la conversion du stimulus."
+  },
+  {
+    "question": "Depuis le fuseau neuromusculaire jusqu’au motoneurone, le signal passe par l’intégration avant la conduction.",
+    "answer": false,
+    "explanation": "L’intégration se produit au motoneurone après la conduction."
+  },
+  {
+    "question": "La transmission neuromusculaire implique des canaux chimio-dépendants au niveau de la membrane postsynaptique.",
+    "answer": true,
+    "explanation": "L’acétylcholine ouvre ces canaux pour déclencher le PA musculaire."
+  },
+  {
+    "question": "La respiration cellulaire est occasionnelle et produit peu d’énergie.",
+    "answer": false,
+    "explanation": "Elle est permanente et produit beaucoup plus d’ATP que la fermentation."
+  },
+  {
+    "question": "Le blocage de phosphocréatine entraîne la disparition de la chaleur retardée.",
+    "answer": true,
+    "explanation": "La chaleur retardée est liée à la resynthèse rapide d’ATP via phosphocréatine."
+  }
+
+
+
+
+
+
+
+
+
+
+  
+];
+
+
+    </script>
+    
+    <script src="../assets/js/arcseek.js"></script>
+    
+    <footer class="footer">
+        Eduwell Quantum Group
+    </footer>
+</body>
+</html>

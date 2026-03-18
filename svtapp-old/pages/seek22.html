@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SVT App | EduWell</title>
+    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/styleseek.css">
+</head>
+<body>
+    <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    
+    <div class="floating-element floating-1"></div>
+    <div class="floating-element floating-2"></div>
+    <div class="floating-element floating-3"></div>
+    
+    <a href="../index.html" class="back-btn" id="backBtn">
+        ← Retour
+    </a>
+    
+    <div class="app-container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    SVT
+                </div>
+            </div>
+            <h1>SVT App</h1>
+            <p>Glissez vers la droite pour Vrai, vers la gauche pour Faux</p>
+        </div>
+
+        <div class="card-container">
+            <div class="quiz-card" id="current-card">
+                <div class="card-pattern"></div>
+                <div class="question-number" id="question-number">Question 1/5</div>
+                <h2 id="question-text">Un exemple de question apparaîtra ici</h2>
+                <div class="swipe-hints">
+                    <div class="swipe-hint false">
+                        FAUX
+                    </div>
+                    <div class="swipe-hint true">
+                        VRAI
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="overlay" id="overlay"></div>
+
+        <div class="feedback-popup" id="feedback-popup">
+            <div class="feedback-icon" id="feedback-icon">
+                ✓
+            </div>
+            <h3 id="feedback-title">Correct !</h3>
+            <p id="feedback-message">Vous avez trouvé la bonne réponse !</p>
+            <div class="correct-answer" id="correct-answer">La bonne réponse est : Vrai</div>
+            <div class="explanation" id="explanation">L'explication apparaîtra ici.</div>
+            <button id="continue-btn">
+                Continuer
+            </button>
+        </div>
+
+        <div class="results-screen" id="results-screen">
+            <div class="results-icon">
+                🏆
+            </div>
+            <h2>Quiz Terminé !</h2>
+            <p>Bravo pour avoir terminé le quiz !</p>
+            <div class="percentage" id="final-percentage" data-value="100%">100%</div>
+            <div class="score-container">
+                <div class="score-row">
+                    <span class="score-label">Réponses correctes :</span>
+                    <span class="score-value" id="correct-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Réponses incorrectes :</span>
+                    <span class="score-value" id="incorrect-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Score Total :</span>
+                    <span class="score-value" id="total-score">0/5</span>
+                </div>
+            </div>
+            <button class="retry-btn" id="retry-btn">
+                Recommencer
+            </button>
+        </div>
+    </div>
+
+    <!-- ORIGINAL QUIZ DATA - Only runs if authenticated -->
+    <script>
+        // Données des questions du quiz avec explications
+        const quizQuestions =  [
+  // t
+
+
+ 
+  
+ 
+  {
+    "question": "Le plasma sanguin d’un sujet S agglutine in-vitro des globules rouges portant à la fois les agglutinogènes A et B. On peut en déduire que le sujet S est de groupe AB.",
+    "answer": true,
+    "explanation": "Le plasma contient des anticorps anti-O, donc il ne réagit pas contre A et B; l’agglutination des globules A et B indique que le plasma ne contient pas d’anti-A ni anti-B, donc le sujet S est AB."
+  },
+  {
+    "question": "Le sujet S peut être de groupe O.",
+    "answer": false,
+    "explanation": "Le groupe O possède des anticorps anti-A et anti-B, donc le plasma agglutinerait toutes les hématies A et B, mais ici le plasma du sujet S n’a pas cette caractéristique."
+  },
+  {
+    "question": "Les anticorps circulants sont des molécules spécifiques.",
+    "answer": true,
+    "explanation": "Chaque anticorps reconnaît spécifiquement un antigène précis grâce à sa région variable."
+  },
+  {
+    "question": "Les anticorps circulants sont des glycoprotéines membranaires.",
+    "answer": false,
+    "explanation": "Les anticorps circulants sont solubles dans le plasma; ils ne sont pas fixés sur une membrane."
+  },
+  {
+    "question": "Les LB peuvent présenter l’antigène aux LT4 et sécréter des anticorps circulants.",
+    "answer": true,
+    "explanation": "Les LB ont une double fonction: présenter l’antigène aux LT4 (coactivation) et se différencier en plasmocytes pour produire des anticorps."
+  },
+  {
+    "question": "Les LB peuvent secréter l’IL2 ou phagocyter le complexe immun.",
+    "answer": false,
+    "explanation": "La sécrétion d’IL2 est typique des LT4 et la phagocytose est faite par les macrophages, pas par les LB."
+  },
+  {
+    "question": "Le complément est activé lors de la phase effectrice de la RIMH.",
+    "answer": true,
+    "explanation": "Le complément intervient après formation du complexe antigène-anticorps pour lyser les pathogènes, c’est la phase effectrice."
+  },
+  {
+    "question": "Le complément correspond à des cellules phagocytaires ou est activé lors de la phase d’induction de la RIMH.",
+    "answer": false,
+    "explanation": "Le complément n’est pas une cellule et n’agit pas pendant la phase d’induction, mais pendant la phase effectrice."
+  },
+  {
+    "question": "Le choc anaphylactique provoqué par une prise de pénicilline est dû à l’activation des mastocytes et leur sensibilisation.",
+    "answer": true,
+    "explanation": "Lors d’une allergie IgE-médiée, les mastocytes préalablement sensibilisés libèrent l’histamine, provoquant un choc."
+  },
+  {
+    "question": "Le choc anaphylactique est le résultat d’un premier contact avec l’allergène et est localisé.",
+    "answer": false,
+    "explanation": "Le premier contact sensibilise les mastocytes; le choc survient lors du second contact et est systémique, pas localisé."
+  },
+  {
+    "question": "Une cellule du foie infectée par un virus peut présenter le soi modifié et être lysée par LT8.",
+    "answer": true,
+    "explanation": "Les cellules infectées expriment des antigènes viraux à leur surface, ce qui permet aux LT8 de les reconnaître et de les tuer."
+  },
+  {
+    "question": "Dans la réponse immunitaire spécifique, les immunoglobulines peuvent jouer le rôle de récepteurs et d’effecteurs.",
+    "answer": true,
+    "explanation": "Les Ig membranaires servent de récepteurs sur les LB et les Ig sécrétées agissent comme effecteurs neutralisant les pathogènes."
+  }
+
+  
+
+
+  
+];
+
+
+    </script>
+    
+    <script src="../assets/js/arcseek.js"></script>
+    
+    <footer class="footer">
+        Eduwell Quantum Group
+    </footer>
+</body>
+</html>

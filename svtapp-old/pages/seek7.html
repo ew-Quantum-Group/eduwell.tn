@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SVT App | EduWell</title>
+    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/styleseek.css">
+</head>
+<body>
+    <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    
+    <div class="floating-element floating-1"></div>
+    <div class="floating-element floating-2"></div>
+    <div class="floating-element floating-3"></div>
+    
+    <a href="../index.html" class="back-btn" id="backBtn">
+        ← Retour
+    </a>
+    
+    <div class="app-container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    SVT
+                </div>
+            </div>
+            <h1>SVT App</h1>
+            <p>Glissez vers la droite pour Vrai, vers la gauche pour Faux</p>
+        </div>
+
+        <div class="card-container">
+            <div class="quiz-card" id="current-card">
+                <div class="card-pattern"></div>
+                <div class="question-number" id="question-number">Question 1/5</div>
+                <h2 id="question-text">Un exemple de question apparaîtra ici</h2>
+                <div class="swipe-hints">
+                    <div class="swipe-hint false">
+                        FAUX
+                    </div>
+                    <div class="swipe-hint true">
+                        VRAI
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="overlay" id="overlay"></div>
+
+        <div class="feedback-popup" id="feedback-popup">
+            <div class="feedback-icon" id="feedback-icon">
+                ✓
+            </div>
+            <h3 id="feedback-title">Correct !</h3>
+            <p id="feedback-message">Vous avez trouvé la bonne réponse !</p>
+            <div class="correct-answer" id="correct-answer">La bonne réponse est : Vrai</div>
+            <div class="explanation" id="explanation">L'explication apparaîtra ici.</div>
+            <button id="continue-btn">
+                Continuer
+            </button>
+        </div>
+
+        <div class="results-screen" id="results-screen">
+            <div class="results-icon">
+                🏆
+            </div>
+            <h2>Quiz Terminé !</h2>
+            <p>Bravo pour avoir terminé le quiz !</p>
+            <div class="percentage" id="final-percentage" data-value="100%">100%</div>
+            <div class="score-container">
+                <div class="score-row">
+                    <span class="score-label">Réponses correctes :</span>
+                    <span class="score-value" id="correct-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Réponses incorrectes :</span>
+                    <span class="score-value" id="incorrect-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Score Total :</span>
+                    <span class="score-value" id="total-score">0/5</span>
+                </div>
+            </div>
+            <button class="retry-btn" id="retry-btn">
+                Recommencer
+            </button>
+        </div>
+    </div>
+
+    <!-- ORIGINAL QUIZ DATA - Only runs if authenticated -->
+    <script>
+        // Données des questions du quiz avec explications
+        const quizQuestions =  [
+  // t
+
+ {
+    question: "La formule chromosomique d’un garçon atteint du syndrome de Down est : 44 autosomes + XXY.",
+    answer: false,
+    explanation: "XXY correspond au syndrome de Klinefelter, pas à la trisomie 21."
+  },
+  {
+    question: "La formule chromosomique d’un garçon atteint du syndrome de Down est : 45 autosomes + XY.",
+    answer: true,
+    explanation: "La trisomie 21 résulte de 47 chromosomes au total (45 autosomes + XY)."
+  },
+  {
+    question: "La formule chromosomique d’un garçon atteint du syndrome de Down est : 45 autosomes + XXY.",
+    answer: false,
+    explanation: "45 autosomes + XXY correspond à la trisomie 21 chez un garçon, mais avec chromosome sexuel supplémentaire (Klinefelter + Down) — ce n’est pas la formule classique."
+  },
+  {
+    question: "La formule chromosomique d’un garçon atteint du syndrome de Down est : 44 autosomes + XX.",
+    answer: false,
+    explanation: "C’est la formule d’une fille normale, sans anomalie."
+  },
+  {
+    question: "Les mutations géniques conduisent à de nouveaux gènes.",
+    answer: false,
+    explanation: "Elles modifient un gène existant mais ne créent pas un nouveau gène totalement distinct."
+  },
+  {
+    question: "Les mutations géniques conduisent à des nouvelles versions d’un même gène.",
+    answer: true,
+    explanation: "Cela produit différents allèles d’un même gène."
+  },
+  {
+    question: "Les mutations géniques conduisent à la diversité des caractères au sein d’une même espèce.",
+    answer: true,
+    explanation: "Les allèles différents expliquent la variabilité intra-spécifique."
+  },
+  {
+    question: "Les mutations géniques conduisent à la naissance de nouvelles espèces.",
+    answer: false,
+    explanation: "Les mutations seules ne suffisent pas, il faut isolement reproductif et sélection naturelle."
+  },
+  {
+    question: "Les mutations chromosomiques peuvent s’effectuer par fusion des chromosomes.",
+    answer: true,
+    explanation: "Exemple : fusion robertsonienne modifie le nombre de chromosomes."
+  },
+  {
+    question: "Les mutations chromosomiques peuvent être dues à des changements de bases azotées.",
+    answer: false,
+    explanation: "Ça c’est une mutation génique, pas chromosomique."
+  },
+  {
+    question: "Les mutations chromosomiques peuvent conduire à de nouveaux allèles.",
+    answer: false,
+    explanation: "Les allèles dépendent des mutations géniques, pas chromosomiques."
+  },
+  {
+    question: "Les mutations chromosomiques peuvent conduire à de nouveaux caryotypes.",
+    answer: true,
+    explanation: "Elles modifient la structure ou le nombre de chromosomes."
+  },
+  {
+    question: "Un homme sain épouse une femme conductrice du daltonisme : leur garçon a 50 % de chance d’être sain.",
+    answer: true,
+    explanation: "Avec une mère conductrice (XᴺXᵈ) et père sain (XᴺY), le garçon a 50% XᴺY (sain) et 50% XᵈY (malade)."
+  },
+  {
+    question: "Un homme sain épouse une femme conductrice du daltonisme : leur garçon a 25 % de chance d’être sain.",
+    answer: false,
+    explanation: "La probabilité est 50 %, pas 25 %."
+  },
+  {
+    question: "Un homme sain épouse une femme conductrice du daltonisme : leur garçon a 50 % de risque d’être malade.",
+    answer: true,
+    explanation: "Il y a une chance sur deux d’hériter du Xᵈ de la mère."
+  },
+  {
+    question: "Un homme sain épouse une femme conductrice du daltonisme : leur garçon a 25 % de risque d’être malade.",
+    answer: false,
+    explanation: "C’est 50 %, pas 25 %."
+  },
+  {
+    question: "La sélection naturelle s’exerce de façon aléatoire sur certains individus d’une population.",
+    answer: false,
+    explanation: "Elle dépend de l’adaptation au milieu, pas du hasard pur."
+  },
+  {
+    question: "La sélection naturelle dépend de l’environnement dans lequel vivent les individus.",
+    answer: true,
+    explanation: "Un caractère peut être favorable dans un milieu et défavorable dans un autre."
+  },
+  {
+    question: "La sélection naturelle dépend des génotypes des individus d’une même population.",
+    answer: true,
+    explanation: "Les individus porteurs de certains génotypes survivent et se reproduisent plus."
+  },
+  {
+    question: "La sélection naturelle entraîne une adaptation des populations à leur environnement.",
+    answer: true,
+    explanation: "C’est le mécanisme principal d’adaptation évolutive."
+  },
+  {
+    question: "La spéciation est la naissance d’espèces nouvelles à partir de deux espèces originelles.",
+    answer: false,
+    explanation: "La spéciation correspond à la formation d’une nouvelle espèce à partir d’une population d’une même espèce."
+  },
+  {
+    question: "La spéciation ne peut se faire qu’après un isolement géographique.",
+    answer: false,
+    explanation: "Il existe aussi la spéciation sympatrique, sans isolement géographique."
+  },
+  {
+    question: "La spéciation est une conséquence de mutations géniques et non chromosomiques.",
+    answer: false,
+    explanation: "Elle peut résulter des deux types de mutations (ex : polyploïdie chez les plantes)."
+  },
+  
+  {
+    question: "La sélection naturelle permet de modifier l’information génétique et tend à transformer l’espèce au cours du temps.",
+    answer: true,
+    explanation: "En favorisant certains allèles, elle modifie la fréquence des gènes dans la population."
+  }
+
+];
+
+
+    </script>
+    
+    <script src="../assets/js/arcseek.js"></script>
+    
+    <footer class="footer">
+        Eduwell Quantum Group
+    </footer>
+</body>
+</html>

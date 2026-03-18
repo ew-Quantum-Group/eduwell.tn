@@ -12,12 +12,12 @@ const PL={
 {title: 'Adjectives & Adverbs – Lesson (Part 2)', level: 'Ancienne version', dur: 'N/A', id: '1ew9usBL0TloY_0LTY3DByfJ41m5Dm2Mo'},
     {title: 'Advanced Grammar Exercises – Revision', level: 'Ancienne version', dur: 'N/A', id: '1WctGTWbFVyyy4FH-R79JpbDMjlZC_kkl'},
 ]},
-  'Academic Writing':{subj:'Anglais',accent:'#34d399',bg:'rgba(52,211,153,.12)',icon:'fa-pen-nib',videos:[
-    {title:'1) Essay structure — introduction & thesis',level:'Débutant',dur:'9 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
-    {title:'2) Body paragraphs — PEEL method',level:'Intermédiaire',dur:'12 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
-    {title:'3) Linking words and cohesion',level:'Intermédiaire',dur:'10 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
-    {title:'4) Formal register and tone',level:'Avancé',dur:'11 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
-    {title:'5) Writing a strong conclusion',level:'Intermédiaire',dur:'8 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+  'bac':{subj:'Anglais',accent:'#34d399',bg:'rgba(52,211,153,.12)',icon:'fa-pen-nib',videos:[
+    {title:'1) Grammar Correction – Tenses (BAC 2018)',level:'Bac2026',dur:'4 min',id:'1vDq3VdJXfdySWar4YQaLacnqBOgtWa7R'},
+    {title:'2) Grammar: Tense Correction (BAC 2019)',level:'Bac2026',dur:'3:40 min',id:'1ECxNcld3_gPcADnvk3E_VQfKEH0RLxJt'},
+    {title:'3) Grammar Correction – Tenses (BAC 2017)',level:'Bac2026',dur:'3:23 min',id:'1qOV30VzWk5JeUhDwdWhDc2arM8XJXJgB'},
+    {title:'4) Grammar: Tense Correction (BAC 2016)',level:'Bac2026',dur:'3 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},
+   
   ]},
   'Vocabulary Mastery':{subj:'Anglais',accent:'#34d399',bg:'rgba(52,211,153,.12)',icon:'fa-language',videos:[
     {title:'1) Academic word list — set 1',level:'Débutant',dur:'8 min',id:'1BxiMVs0XRA4nAmCsEIeVDoVPnfpBrQsn'},

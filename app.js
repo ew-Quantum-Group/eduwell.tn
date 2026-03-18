@@ -1,519 +1,255 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // === DOM Elements ===
-    const screens = { 
-        home: document.getElementById('home-screen'), 
-        config: document.getElementById('config-screen'), 
-        quiz: document.getElementById('quiz-screen'), 
-        results: document.getElementById('results-screen') 
-    };
-    const buttons = { 
-        startConfig: document.getElementById('start-config-btn'), 
-        startQuiz: document.getElementById('start-quiz-btn'), 
-        prev: document.getElementById('prev-btn'), 
-        next: document.getElementById('next-btn'), 
-        replay: document.getElementById('replay-btn'), 
-        quit: document.getElementById('quit-btn'), 
-        skip: document.getElementById('skip-btn'),
-        fabNext: document.getElementById('fab-next')
-    };
-    const containers = { 
-        themes: document.getElementById('themes-container'), 
-        levels: document.getElementById('level-container'), 
-        length: document.getElementById('length-container'), 
-        questionText: document.getElementById('question-text'), 
-        options: document.getElementById('options-container'), 
-        wrongAnswers: document.getElementById('wrong-answers-list'), 
-        themeScores: document.getElementById('theme-scores-container'), 
-        quizScreen: document.getElementById('quiz-screen') 
-    };
-    const indicators = { 
-        progress: document.getElementById('progress-indicator'), 
-        timer: document.getElementById('timer'), 
-        finalScore: document.getElementById('final-score'), 
-        totalTime: document.getElementById('total-time'), 
-        theme: document.getElementById('theme-text'),
-        progressFill: document.getElementById('progress-fill')
-    };
+/**
+ * ═══════════════════════════════════════════════
+ *  ROOMS PWA — app.js
+ *  Handles:
+ *   1. Service Worker registration
+ *   2. PWA install prompt (mobile only)
+ *   3. Mobile device detection
+ *   4. Intro animation
+ *   5. Sahl sheet popup
+ * ═══════════════════════════════════════════════
+ */
 
-    // === State ===
-    let allQuestions = [], currentQuizQuestions = [], currentQuestionIndex = 0, userAnswers = {}, timerInterval, secondsElapsed = 0, skippedCount = 0;
+'use strict';
 
-    const THEMES = ['Bases de données', 'HTML', 'CSS', 'JavaScript', 'PHP'];
-    const LEVELS = ['mixte', 'debutant', 'intermediaire', 'avance'];
-    const QUIZ_LENGTHS = { courte: 20, moyenne: 40, longue: 60 };
-    const THEME_COLORS = { 
-        'HTML': 'bg-red-500', 
-        'CSS': 'bg-blue-500', 
-        'JavaScript': 'bg-yellow-500', 
-        'PHP': 'bg-indigo-500', 
-        'Bases de données': 'bg-green-500' 
-    };
-    const THEME_FILES = { 
-        'Bases de données': 'bases_de_donnees.json', 
-        'HTML': 'html.json', 
-        'CSS': 'css.json', 
-        'JavaScript': 'javascript.json', 
-        'PHP': 'php.json' 
-    };
+/* ═══════════════════════════════════════════════
+   1. SERVICE WORKER REGISTRATION
+   We register the SW after the page loads so it
+   doesn't compete with initial page resources.
+═══════════════════════════════════════════════ */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', async () => {
+    try {
+      const registration = await navigator.serviceWorker.register(
+        './service-worker.js',
+        { scope: './' }           // SW controls this directory and below
+      );
 
-    // === Functions ===
-    const themeToPrismLanguage = (theme) => ({ 
-        'HTML': 'html', 
-        'CSS': 'css', 
-        'JavaScript': 'javascript', 
-        'PHP': 'php', 
-        'Bases de données': 'sql' 
-    })[theme] || '';
-    
-    const escapeHTML = (str) => { 
-        const p = document.createElement("p"); 
-        p.textContent = str; 
-        return p.innerHTML; 
-    };
+      console.log('[App] Service Worker registered ✓', registration.scope);
 
-    const formatTextForDisplay = (text, theme) => {
-        if (!text) return '';
-        const language = themeToPrismLanguage(theme);
-        const blockRegex = /```([\s\S]+?)```/g;
-        const inlineRegex = /`([^`]+?)`/g;
-        let formattedText = text;
-        
-        if (text.includes('```')) {
-            return formattedText.replace(blockRegex, (match, codeContent) => 
-                `<pre class="language-${language}"><code class="language-${language}">${escapeHTML(codeContent.trim())}</code></pre>`);
-        }
-        
-        formattedText = escapeHTML(text);
-        return formattedText.replace(inlineRegex, '<code>$1</code>');
-    };
+      // Check for SW updates periodically
+      registration.addEventListener('updatefound', () => {
+        const newWorker = registration.installing;
+        console.log('[App] New Service Worker installing...');
 
-    const showScreen = (screenName) => { 
-        Object.values(screens).forEach(screen => screen.classList.add('hidden')); 
-        screens[screenName].classList.remove('hidden'); 
-    };
-
-    const loadAllQuestions = async () => {
-        try {
-            const responses = await Promise.all(
-                Object.values(THEME_FILES).map(file => fetch(`./data/${file}`))
-            );
-            
-            for (const response of responses) {
-                if (!response.ok) {
-                    throw new Error(`HTTP Error: ${response.status} for ${response.url}`);
-                }
-            }
-            
-            const dataArrays = await Promise.all(responses.map(res => res.json()));
-            const flattenedQuestions = dataArrays.flat();
-            const uniqueQuestions = [];
-            const seenIds = new Set();
-            
-            for (const question of flattenedQuestions) {
-                if (!seenIds.has(question.id)) {
-                    uniqueQuestions.push(question);
-                    seenIds.add(question.id);
-                }
-            }
-            
-            allQuestions = uniqueQuestions;
-            populateConfigScreen();
-        } catch (error) { 
-            console.error("Error loading questions:", error); 
-            containers.themes.innerHTML = `<p class="text-red-500 col-span-full">Impossible de charger les questions. Vérifiez le dossier 'data' et la console (F12).</p>`; 
-        }
-    };
-    
-    const populateConfigScreen = () => {
-        containers.themes.innerHTML = THEMES.map(theme => 
-            `<div class="theme-chip" data-theme="${theme}">
-                <input type="checkbox" name="theme" value="${theme}" class="hidden">
-                <span>${theme}</span>
-            </div>`
-        ).join('');
-        
-        containers.levels.innerHTML = LEVELS.map((level, index) => 
-            `<div class="theme-chip ${index === 0 ? 'selected' : ''}" data-level="${level}">
-                <input type="radio" name="level" value="${level}" class="hidden" ${index === 0 ? 'checked' : ''}>
-                <span class="capitalize">${level}</span>
-            </div>`
-        ).join('');
-        
-        containers.length.innerHTML = Object.keys(QUIZ_LENGTHS).map((key, index) => 
-            `<div class="theme-chip ${index === 0 ? 'selected' : ''}" data-length="${key}">
-                <input type="radio" name="length" value="${key}" class="hidden" ${index === 0 ? 'checked' : ''}>
-                <span class="capitalize">${key} (${QUIZ_LENGTHS[key]} questions)</span>
-            </div>`
-        ).join('');
-        
-        // Add event listeners for theme chips
-        document.querySelectorAll('.theme-chip[data-theme]').forEach(chip => {
-            chip.addEventListener('click', function() {
-                const checkbox = this.querySelector('input');
-                checkbox.checked = !checkbox.checked;
-                this.classList.toggle('selected', checkbox.checked);
-                validateConfig();
-            });
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            // A new SW is ready — you could show an "Update available" toast here
+            console.log('[App] New SW ready — reload to update.');
+          }
         });
-        
-        // Add event listeners for level chips
-        document.querySelectorAll('.theme-chip[data-level]').forEach(chip => {
-            chip.addEventListener('click', function() {
-                document.querySelectorAll('.theme-chip[data-level]').forEach(c => c.classList.remove('selected'));
-                this.classList.add('selected');
-                this.querySelector('input').checked = true;
-                validateConfig();
-            });
-        });
-        
-        // Add event listeners for length chips
-        document.querySelectorAll('.theme-chip[data-length]').forEach(chip => {
-            chip.addEventListener('click', function() {
-                document.querySelectorAll('.theme-chip[data-length]').forEach(c => c.classList.remove('selected'));
-                this.classList.add('selected');
-                this.querySelector('input').checked = true;
-                validateConfig();
-            });
-        });
-        
-        validateConfig();
-    };
+      });
 
-    const validateConfig = () => { 
-        buttons.startQuiz.disabled = document.querySelectorAll('input[name="theme"]:checked').length === 0; 
-    };
-    
-    const shuffleArray = (array) => { 
-        for (let i = array.length - 1; i > 0; i--) { 
-            const j = Math.floor(Math.random() * (i + 1)); 
-            [array[i], array[j]] = [array[j], array[i]]; 
-        } 
-        return array; 
-    };
-    
-    const startQuiz = () => {
-        const selectedThemes = Array.from(document.querySelectorAll('input[name="theme"]:checked')).map(cb => cb.value);
-        const selectedLevel = document.querySelector('input[name="level"]:checked').value;
-        const desiredLength = QUIZ_LENGTHS[document.querySelector('input[name="length"]:checked').value];
-        let finalQuestions = [];
-
-        if (selectedLevel === 'mixte') {
-            const proportions = { debutant: 0.5, intermediaire: 0.3, avance: 0.2 };
-            const byLevel = { 
-                debutant: shuffleArray(allQuestions.filter(q => q.niveau === 'debutant' && selectedThemes.includes(q.theme))), 
-                intermediaire: shuffleArray(allQuestions.filter(q => q.niveau === 'intermediaire' && selectedThemes.includes(q.theme))), 
-                avance: shuffleArray(allQuestions.filter(q => q.niveau === 'avance' && selectedThemes.includes(q.theme))) 
-            };
-            
-            let dCount = Math.round(desiredLength * proportions.debutant);
-            let iCount = Math.round(desiredLength * proportions.intermediaire);
-            finalQuestions.push(
-                ...byLevel.debutant.slice(0, dCount), 
-                ...byLevel.intermediaire.slice(0, iCount), 
-                ...byLevel.avance.slice(0, desiredLength - dCount - iCount)
-            );
-        } else {
-            let pool = allQuestions.filter(q => q.niveau === selectedLevel && selectedThemes.includes(q.theme));
-            const byTheme = {};
-            selectedThemes.forEach(theme => { 
-                byTheme[theme] = shuffleArray(pool.filter(q => q.theme === theme)); 
-            });
-            
-            for (let i = 0; finalQuestions.length < desiredLength; i++) {
-                let added = false;
-                selectedThemes.forEach(theme => { 
-                    if (byTheme[theme][i] && finalQuestions.length < desiredLength) { 
-                        finalQuestions.push(byTheme[theme][i]); 
-                        added = true; 
-                    } 
-                });
-                if (!added) break;
-            }
-        }
-        
-        if (finalQuestions.length < desiredLength && finalQuestions.length > 0) { 
-            alert(`Attention : seulement ${finalQuestions.length} questions sont disponibles.`); 
-        }
-        
-        if (finalQuestions.length === 0) { 
-            alert("Aucune question trouvée."); 
-            return; 
-        }
-        
-        currentQuizQuestions = shuffleArray(finalQuestions);
-        currentQuestionIndex = 0; 
-        userAnswers = {}; 
-        secondsElapsed = 0; 
-        skippedCount = 0;
-        showScreen('quiz'); 
-        displayQuestion(); 
-        startTimer();
-    };
-
-    const displayQuestion = () => {
-        const question = currentQuizQuestions[currentQuestionIndex];
-        indicators.theme.textContent = question.theme;
-        
-        // Update progress bar
-        const progressPercentage = ((currentQuestionIndex + 1) / currentQuizQuestions.length) * 100;
-        indicators.progressFill.style.width = `${progressPercentage}%`;
-        
-        // Clear previous content
-        containers.questionText.innerHTML = '';
-        containers.options.innerHTML = '';
-        
-        // Set theme indicator
-        const themeIndicator = document.getElementById('question-theme');
-        themeIndicator.className = `theme-indicator`;
-        themeIndicator.innerHTML = `
-            <svg class="theme-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
-            </svg>
-            <span id="theme-text">${question.theme}</span>
-        `;
-        
-        // Display question text
-        containers.questionText.innerHTML = formatTextForDisplay(question.question, question.theme);
-        
-        // Get saved answer
-        const savedAnswer = userAnswers[question.id];
-        
-        // Generate options based on question type
-        let optionsHTML = '';
-        if (question.type === 'choix_simple' || question.type === 'choix_multiple') {
-            optionsHTML = question.options.map((option, index) => {
-                const isChecked = savedAnswer && (
-                    (question.type === 'choix_simple' && savedAnswer[0] === option) || 
-                    (question.type === 'choix_multiple' && savedAnswer.includes(option))
-                );
-                
-                return `<div class="option-item ${isChecked ? 'selected' : ''}" data-option="${escapeHTML(option)}">
-                            <input type="${question.type === 'choix_simple' ? 'radio' : 'checkbox'}" 
-                                   name="option" 
-                                   value="${escapeHTML(option)}" 
-                                   class="hidden" 
-                                   ${isChecked ? 'checked' : ''}>
-                            <span>${formatTextForDisplay(option, question.theme)}</span>
-                        </div>`;
-            }).join('');
-        } else if (question.type === 'zone_saisie' || question.type === 'saisie_libre') {
-            optionsHTML = `<input type="text" 
-                                  placeholder="Votre réponse..." 
-                                  value="${savedAnswer ? escapeHTML(savedAnswer[0]) : ''}" 
-                                  class="w-full p-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 font-mono">`;
-        }
-        
-        containers.options.innerHTML = optionsHTML;
-        
-        // Add event listeners to option items
-        if (question.type === 'choix_simple') {
-            document.querySelectorAll('.option-item').forEach(item => {
-                item.addEventListener('click', function() {
-                    document.querySelectorAll('.option-item').forEach(i => i.classList.remove('selected'));
-                    this.classList.add('selected');
-                    this.querySelector('input').checked = true;
-                });
-            });
-        } else if (question.type === 'choix_multiple') {
-            document.querySelectorAll('.option-item').forEach(item => {
-                item.addEventListener('click', function() {
-                    this.classList.toggle('selected');
-                    this.querySelector('input').checked = !this.querySelector('input').checked;
-                });
-            });
-        }
-        
-        updateNavigation();
-        
-        // Highlight code blocks
-        if (window.Prism) {
-            setTimeout(() => { Prism.highlightAll(); }, 0);
-        }
-    };
-    
-    const updateNavigation = () => {
-        buttons.prev.disabled = currentQuestionIndex === 0;
-        buttons.skip.style.display = (currentQuizQuestions.length - currentQuestionIndex <= skippedCount + 1) ? 'none' : 'inline-block';
-        buttons.next.textContent = (currentQuestionIndex === currentQuizQuestions.length - 1) ? 'Soumettre' : 'Suivant';
-        indicators.progress.textContent = `Question ${currentQuestionIndex + 1} / ${currentQuizQuestions.length}`;
-        
-        // Update FAB button for mobile
-        if (buttons.fabNext) {
-            buttons.fabNext.innerHTML = currentQuestionIndex === currentQuizQuestions.length - 1 ? 
-                '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>' : 
-                '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>';
-        }
-    };
-    
-    const saveAnswer = () => {
-        const question = currentQuizQuestions[currentQuestionIndex];
-        let answer;
-        
-        switch (question.type) {
-            case 'choix_simple': 
-                answer = document.querySelector('input[name="option"]:checked') ? 
-                    [document.querySelector('input[name="option"]:checked').value] : []; 
-                break;
-            case 'choix_multiple': 
-                answer = Array.from(document.querySelectorAll('input[name="option"]:checked')).map(cb => cb.value); 
-                break;
-            case 'zone_saisie': 
-            case 'saisie_libre': 
-                const input = document.querySelector('#options-container input[type="text"]'); 
-                answer = input && input.value.trim() !== '' ? [input.value.trim()] : []; 
-                break;
-        }
-        
-        if (answer && answer.length > 0) {
-            userAnswers[question.id] = answer;
-        } else {
-            delete userAnswers[question.id];
-        }
-    };
-
-    const nextQuestion = () => { 
-        saveAnswer(); 
-        if (currentQuestionIndex < currentQuizQuestions.length - 1) { 
-            currentQuestionIndex++; 
-            displayQuestion(); 
-        } else { 
-            showResults(); 
-        } 
-    };
-    
-    const prevQuestion = () => { 
-        saveAnswer(); 
-        if (currentQuestionIndex > 0) { 
-            currentQuestionIndex--; 
-            displayQuestion(); 
-        } 
-    };
-    
-    const skipQuestion = () => { 
-        saveAnswer(); 
-        currentQuizQuestions.push(currentQuizQuestions.splice(currentQuestionIndex, 1)[0]); 
-        skippedCount++; 
-        displayQuestion(); 
-    };
-    
-    const startTimer = () => { 
-        timerInterval = setInterval(() => { 
-            secondsElapsed++; 
-            const minutes = Math.floor(secondsElapsed / 60).toString().padStart(2, '0'); 
-            const seconds = (secondsElapsed % 60).toString().padStart(2, '0'); 
-            indicators.timer.textContent = `${minutes}:${seconds}`; 
-        }, 1000); 
-    };
-    
-    const stopTimer = () => clearInterval(timerInterval);
-
-    const showResults = () => {
-        stopTimer();
-        showScreen('results');
-        let score = 0;
-        const themeScores = {};
-        
-        // Initialize theme scores
-        currentQuizQuestions.forEach(q => { 
-            if (!themeScores[q.theme]) themeScores[q.theme] = { correct: 0, total: 0 }; 
-        });
-        
-        // Generate wrong answers HTML
-        let wrongAnswersHTML = '';
-        currentQuizQuestions.forEach(q => {
-            const userAnswer = userAnswers[q.id] || [];
-            const isCorrect = questionIsCorrect(q, userAnswer);
-            themeScores[q.theme].total++;
-            
-            if (isCorrect) {
-                score++;
-                themeScores[q.theme].correct++;
-            } else {
-                wrongAnswersHTML += `<div class="wrong-answer-card">
-                                        <div class="wrong-answer-question">${formatTextForDisplay(q.question, q.theme)}</div>
-                                        <p class="text-red-600"><strong>Votre réponse :</strong> ${formatTextForDisplay(userAnswer.join(', ') || 'Aucune', q.theme)}</p>
-                                        <p class="wrong-answer-correct"><strong>Bonne réponse :</strong> ${formatTextForDisplay(q.reponse.join(', '), q.theme)}</p>
-                                        <p class="mt-2 text-gray-600"><em>${formatTextForDisplay(q.explication, q.theme)}</em></p>
-                                    </div>`;
-            }
-        });
-
-        // Display wrong answers
-        if (wrongAnswersHTML) {
-            containers.wrongAnswers.innerHTML = wrongAnswersHTML;
-        } else {
-            containers.wrongAnswers.innerHTML = '<p class="text-green-600 font-medium">Félicitations ! Vous avez tout bon !</p>';
-        }
-        
-        // Display theme scores
-        containers.themeScores.innerHTML = Object.entries(themeScores).map(([theme, scores]) => 
-            scores.total > 0 ? 
-            `<div class="theme-score-card">
-                <div class="theme-name">${theme}</div>
-                <div class="theme-score">${scores.correct} / ${scores.total}</div>
-            </div>` : ''
-        ).join('');
-        
-        // Display final score
-        indicators.finalScore.textContent = `${score} / ${currentQuizQuestions.length}`;
-        indicators.totalTime.textContent = `Terminé en ${indicators.timer.textContent}`;
-        
-        // Highlight code blocks in results
-        if (window.Prism) {
-            setTimeout(() => { Prism.highlightAll(); }, 0);
-        }
-    };
-
-    /**
-     * CORRECTION : Ajout de .replace(/^`|`$/g, '') pour retirer les backticks
-     * des réponses correctes avant la comparaison.
-     */
-    const questionIsCorrect = (question, userAnswer) => {
-        const correctAnswer = question.reponse;
-        
-        if (question.type === 'zone_saisie' || question.type === 'saisie_libre') {
-            if (userAnswer.length === 0) return false;
-            
-            // Normalise une chaîne pour la comparaison :
-            // 1. Retire les backticks ` au début/fin
-            // 2. Retire tous les espaces
-            // 3. Retire le point-virgule final
-            // 4. Met en minuscules
-            const normalize = (str) => str.replace(/^`|`$/g, '').replace(/\s/g, '').replace(/;$/, '').toLowerCase();
-            
-            const userClean = normalize(userAnswer[0]);
-            
-            // Permet plusieurs réponses correctes possibles
-            return correctAnswer.some(correct => normalize(correct) === userClean);
-        }
-        
-        if (userAnswer.length !== correctAnswer.length) return false;
-        return [...userAnswer].sort().join(',') === [...correctAnswer].sort().join(',');
-    };
-
-    const resetAndShowConfig = () => { 
-        populateConfigScreen(); 
-        showScreen('config'); 
-    };
-
-    // === Event Listeners ===
-    buttons.startConfig.addEventListener('click', () => showScreen('config'));
-    buttons.startQuiz.addEventListener('click', startQuiz);
-    buttons.next.addEventListener('click', nextQuestion);
-    buttons.prev.addEventListener('click', prevQuestion);
-    buttons.skip.addEventListener('click', skipQuestion);
-    buttons.replay.addEventListener('click', resetAndShowConfig);
-    buttons.quit.addEventListener('click', () => { 
-        populateConfigScreen(); 
-        showScreen('home'); 
-    });
-    
-    // Add FAB button event listener for mobile
-    if (buttons.fabNext) {
-        buttons.fabNext.addEventListener('click', nextQuestion);
+    } catch (error) {
+      console.error('[App] Service Worker registration failed:', error);
     }
+  });
+} else {
+  console.warn('[App] Service Workers not supported in this browser.');
+}
 
-    // === Initialisation ===
-    loadAllQuestions();
-    showScreen('home');
+
+/* ═══════════════════════════════════════════════
+   2. MOBILE DETECTION
+   Uses both screen width and user-agent string
+   for maximum reliability across all browsers.
+   Returns true if device is likely mobile/tablet.
+═══════════════════════════════════════════════ */
+function isMobileDevice() {
+  // Method A — screen width (most reliable)
+  const narrowScreen = window.innerWidth <= 900;
+
+  // Method B — user-agent string (catches tablets in landscape)
+  const mobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|Tablet/i
+    .test(navigator.userAgent);
+
+  // Method C — touch capability
+  const hasTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+  // Consider mobile if at least 2 of 3 signals are true
+  const signals = [narrowScreen, mobileUA, hasTouch].filter(Boolean).length;
+  return signals >= 2;
+}
+
+
+/* ═══════════════════════════════════════════════
+   3. PWA INSTALL PROMPT
+   The browser fires 'beforeinstallprompt' when the
+   PWA is installable. We capture it, then show our
+   custom install button ONLY on mobile devices.
+═══════════════════════════════════════════════ */
+
+// Store the deferred install prompt event
+let deferredInstallPrompt = null;
+
+// Listen for the browser's install prompt event
+window.addEventListener('beforeinstallprompt', event => {
+  // Prevent the browser's default mini-infobar on mobile Chrome
+  event.preventDefault();
+
+  // Save the event so we can trigger it later
+  deferredInstallPrompt = event;
+  console.log('[App] Install prompt captured ✓');
+
+  // Only show our install button on mobile
+  if (isMobileDevice()) {
+    showInstallButton();
+  }
 });
+
+// Show the install button with a smooth slide-up animation
+function showInstallButton() {
+  const btn = document.getElementById('pwa-install-btn');
+  if (!btn) return;
+
+  btn.classList.add('visible');
+  console.log('[App] Install button shown (mobile) ✓');
+}
+
+// Hide the install button
+function hideInstallButton() {
+  const btn = document.getElementById('pwa-install-btn');
+  if (!btn) return;
+
+  btn.classList.remove('visible');
+  btn.classList.add('hiding');
+  setTimeout(() => btn.remove(), 400); // remove from DOM after animation
+}
+
+// Called when user taps the install button
+async function triggerInstall() {
+  if (!deferredInstallPrompt) {
+    console.warn('[App] No install prompt available.');
+    return;
+  }
+
+  // Show the native browser install dialog
+  deferredInstallPrompt.prompt();
+
+  // Wait for the user's choice
+  const { outcome } = await deferredInstallPrompt.userChoice;
+  console.log(`[App] Install prompt outcome: ${outcome}`);
+
+  if (outcome === 'accepted') {
+    console.log('[App] User accepted install ✓');
+    hideInstallButton();
+  } else {
+    console.log('[App] User dismissed install.');
+    // Keep the button visible — they might reconsider
+  }
+
+  // The prompt can only be used once — clear it
+  deferredInstallPrompt = null;
+}
+
+// Hide install button if app is already installed (standalone mode)
+window.addEventListener('appinstalled', () => {
+  console.log('[App] PWA installed successfully ✓');
+  deferredInstallPrompt = null;
+  hideInstallButton();
+});
+
+// Also check on load if already running as installed PWA
+window.addEventListener('DOMContentLoaded', () => {
+  if (window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone === true) {
+    // Already running as PWA — no need for install button
+    console.log('[App] Running as installed PWA.');
+    hideInstallButton();
+  }
+});
+
+
+/* ═══════════════════════════════════════════════
+   4. INTRO ANIMATION
+═══════════════════════════════════════════════ */
+window.addEventListener('DOMContentLoaded', () => {
+  const intro = document.getElementById('intro');
+  const app   = document.getElementById('app');
+
+  if (!intro || !app) return;
+
+  // After 1.65s show curtain-wipe exit
+  setTimeout(() => {
+    intro.classList.add('leaving');
+
+    // Reveal app content slightly before curtains fully open
+    setTimeout(() => app.classList.add('visible'), 280);
+
+    // Remove intro from DOM entirely
+    setTimeout(() => intro.classList.add('done'), 920);
+  }, 1650);
+});
+
+
+/* ═══════════════════════════════════════════════
+   5. SAHL SHEET POPUP
+═══════════════════════════════════════════════ */
+function openSheet() {
+  document.getElementById('sheetBackdrop').classList.add('open');
+  document.getElementById('sahlSheet').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSheet() {
+  document.getElementById('sheetBackdrop').classList.remove('open');
+  document.getElementById('sahlSheet').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Close Sahl sheet on Escape key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeSheet();
+});
+
+
+/* ═══════════════════════════════════════════════
+   6. ONLINE / OFFLINE STATUS INDICATOR
+   Shows a subtle toast when connectivity changes.
+═══════════════════════════════════════════════ */
+function showNetworkToast(online) {
+  // Remove any existing toast
+  const existing = document.getElementById('network-toast');
+  if (existing) existing.remove();
+
+  const toast = document.createElement('div');
+  toast.id = 'network-toast';
+  toast.textContent = online ? '✓ Back online' : '⚡ You\'re offline';
+  toast.style.cssText = `
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: ${online ? '#0c0c0c' : '#7c4dff'};
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 100px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    z-index: 9000;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(.22,1,.36,1);
+    pointer-events: none;
+    white-space: nowrap;
+  `;
+
+  document.body.appendChild(toast);
+
+  // Animate in
+  requestAnimationFrame(() => {
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+  });
+
+  // Animate out after 2.5s
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(-50%) translateY(10px)';
+    setTimeout(() => toast.remove(), 300);
+  }, 2500);
+}
+
+window.addEventListener('online',  () => showNetworkToast(true));
+window.addEventListener('offline', () => showNetworkToast(false));

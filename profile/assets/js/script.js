@@ -127,7 +127,165 @@ const apps = [
 </svg>` },
 ];
 
+
+
+
+
+
 const notifications = [
+
+{ 
+  title: 'Nouveau document d’étude',
+  desc: 'Pack de Révision Générale.',
+  time: '18/03',
+  color: 'linear-gradient(135deg,#059669,#10b981)',
+  unread: true,
+  cat: 'platform',
+  catLbl: 'MATH',
+  catC: '#059669',
+  url: 'https://drive.google.com/drive/folders/1rYIugQXxBXtZ_MCm9fGPBAA_7Sk1eXQT',
+  icon: `<svg viewBox="0 0 24 24">
+           <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+           <polyline points="14 2 14 8 20 8"/>
+           <line x1="16" y1="13" x2="8" y2="13"/>
+           <line x1="16" y1="17" x2="8" y2="17"/>
+         </svg>` 
+},
+
+{ 
+  title: 'Nouvelle vidéo ajoutée',
+  desc: 'Grammar Correction – Tenses (BAC 2017) (4 min) ',
+  time: '18/03',
+  color: 'linear-gradient(135deg,#ff453a,#ff6b35)',
+  unread: true,
+  cat: 'academic',
+  catLbl: 'Physique',
+  catC: '#ff453a',
+  url: '../sahlacademy/index.html',
+  icon: `<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><polygon points="10 8 16 12 10 16 10 8"/></svg>` 
+},
+{ 
+  title: 'Nouvelle vidéo ajoutée',
+  desc: 'Grammar Correction – Tenses (BAC 2016) (3:34 min) ',
+  time: '17/03',
+  color: 'linear-gradient(135deg,#ff453a,#ff6b35)',
+  unread: true,
+  cat: 'academic',
+  catLbl: 'Physique',
+  catC: '#ff453a',
+  url: '../sahlacademy/index.html',
+  icon: `<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><polygon points="10 8 16 12 10 16 10 8"/></svg>` 
+},
+  { 
+  title: 'Nouveau document d’étude',
+  desc: 'Suites – Cours & Exercices Corrigés.',
+  time: '16/03',
+  color: 'linear-gradient(135deg,#059669,#10b981)',
+  unread: true,
+  cat: 'platform',
+  catLbl: 'MATH',
+  catC: '#059669',
+  url: 'https://drive.google.com/drive/folders/1zjkf2HmaPGxcJ8PnxwBHS5NmapdBIeEq',
+  icon: `<svg viewBox="0 0 24 24">
+           <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+           <polyline points="14 2 14 8 20 8"/>
+           <line x1="16" y1="13" x2="8" y2="13"/>
+           <line x1="16" y1="17" x2="8" y2="17"/>
+         </svg>` 
+},
+ { 
+  title: 'Nouveau document d’étude',
+  desc: 'Logarithmes – Cours & Exercices Corrigés.',
+  time: '16/03',
+  color: 'linear-gradient(135deg,#059669,#10b981)',
+  unread: true,
+  cat: 'platform',
+  catLbl: 'MATH',
+  catC: '#059669',
+  url: 'https://drive.google.com/drive/folders/1F-3GHGYdI-tGbGk6jZ6FCoEGGwbAbLU4',
+  icon: `<svg viewBox="0 0 24 24">
+           <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+           <polyline points="14 2 14 8 20 8"/>
+           <line x1="16" y1="13" x2="8" y2="13"/>
+           <line x1="16" y1="17" x2="8" y2="17"/>
+         </svg>` 
+},
+  { 
+  title: 'Nouveau document d’étude',
+  desc: 'Pack Révision : Intégrales + Exercices Corrigés.',
+  time: '16/03',
+  color: 'linear-gradient(135deg,#059669,#10b981)',
+  unread: true,
+  cat: 'platform',
+  catLbl: 'MATH',
+  catC: '#059669',
+  url: 'https://drive.google.com/drive/folders/1h1QEgI2vPDvhdj9hkbsoMK9YSVzmywDA',
+  icon: `<svg viewBox="0 0 24 24">
+           <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+           <polyline points="14 2 14 8 20 8"/>
+           <line x1="16" y1="13" x2="8" y2="13"/>
+           <line x1="16" y1="17" x2="8" y2="17"/>
+         </svg>` 
+},
+{ 
+  title: 'Nouvelle vidéo ajoutée',
+  desc: 'Grammar Correction – Tenses (BAC 2018) (12 min) ',
+  time: '17/03',
+  color: 'linear-gradient(135deg,#ff453a,#ff6b35)',
+  unread: true,
+  cat: 'academic',
+  catLbl: 'Physique',
+  catC: '#ff453a',
+  url: '../sahlacademy/index.html',
+  icon: `<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><polygon points="10 8 16 12 10 16 10 8"/></svg>` 
+},
+{ 
+  title: 'Nouvelle vidéo ajoutée',
+  desc: 'Grammar Correction – Tenses (BAC 2019) (12 min) ',
+  time: '17/03',
+  color: 'linear-gradient(135deg,#ff453a,#ff6b35)',
+  unread: true,
+  cat: 'academic',
+  catLbl: 'Physique',
+  catC: '#ff453a',
+  url: '../sahlacademy/index.html',
+  icon: `<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><polygon points="10 8 16 12 10 16 10 8"/></svg>` 
+},
+{ 
+  title: 'Nouveau document d’étude',
+  desc: 'Révision de la Fonction Exponentielle (Pack Corrigé).',
+  time: '16/03',
+  color: 'linear-gradient(135deg,#059669,#10b981)',
+  unread: true,
+  cat: 'platform',
+  catLbl: 'MATH',
+  catC: '#059669',
+  url: 'https://drive.google.com/drive/folders/1QJUkDidijJXo9MG1eASMlBGwyD_OV-6I',
+  icon: `<svg viewBox="0 0 24 24">
+           <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+           <polyline points="14 2 14 8 20 8"/>
+           <line x1="16" y1="13" x2="8" y2="13"/>
+           <line x1="16" y1="17" x2="8" y2="17"/>
+         </svg>` 
+},
+
+  { 
+  title: 'Nouveau document d’étude',
+  desc: 'Pack de Révision Complexe & Analyse.',
+  time: '16/03',
+  color: 'linear-gradient(135deg,#059669,#10b981)',
+  unread: true,
+  cat: 'platform',
+  catLbl: 'MATH',
+  catC: '#059669',
+  url: 'https://drive.google.com/drive/folders/120uEIK4VflsWTLJ9rLcYiIFPGhkEDEDT',
+  icon: `<svg viewBox="0 0 24 24">
+           <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+           <polyline points="14 2 14 8 20 8"/>
+           <line x1="16" y1="13" x2="8" y2="13"/>
+           <line x1="16" y1="17" x2="8" y2="17"/>
+         </svg>` 
+},
 
   { 
   title: 'Nouvelle vidéo ajoutée',

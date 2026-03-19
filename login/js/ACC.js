@@ -6,6 +6,11 @@
                 name: 'ssuri' 
             },
             { 
+                username: 'gharsallah216@gmail.com',
+                password: 'Azer123:', 
+                name: 'Mohamed aziz' 
+            },
+            { 
                 username: 'islemkm607@gmail.com',
                 password: 'Islem12!!', 
                 name: 'Kamerji' 

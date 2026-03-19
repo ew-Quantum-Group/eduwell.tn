@@ -5,7 +5,7 @@
   const vSU    = document.getElementById('vSU');
   const modal  = document.getElementById('modal');
   const vidFr  = document.getElementById('vidFr');
-  const YT     = 'XSP2LBKky5c';
+  const YT     = '8LER2Gtkoac';
 
   /* Welcome → App */
   document.getElementById('btnWS').addEventListener('click', () => {

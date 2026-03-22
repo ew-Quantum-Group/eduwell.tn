@@ -134,12 +134,69 @@ const apps = [
 
 const notifications = [
 
+
+{ 
+  title: 'Nouveau document d’étude',
+  desc: 'تمارين فلسفية مع الإصلاح',
+  time: '22/03',
+  color: 'linear-gradient(135deg,#059669,#10b981)',
+  unread: true,
+  cat: 'platform',
+  catLbl: 'PHILO',
+  catC: '#059669',
+  url: 'https://drive.google.com/drive/u/1/folders/14H1J7gFpinJmWHbDoI9VG9R_lID4SVPA',
+  icon: `<svg viewBox="0 0 24 24">
+           <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+           <polyline points="14 2 14 8 20 8"/>
+           <line x1="16" y1="13" x2="8" y2="13"/>
+           <line x1="16" y1="17" x2="8" y2="17"/>
+         </svg>` 
+},
+{ 
+  title: 'Nouveau document d’étude',
+  desc: 'مراجعة مكثفة في الفلسفة مع إصلاح مواضيع الباك',
+  time: '22/03',
+  color: 'linear-gradient(135deg,#059669,#10b981)',
+  unread: true,
+  cat: 'platform',
+  catLbl: 'PHILO',
+  catC: '#059669',
+  url: 'https://drive.google.com/drive/u/1/folders/1C4GwaECN8eSsIR2owMuApMSAHI0ZiTB1',
+  icon: `<svg viewBox="0 0 24 24">
+           <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+           <polyline points="14 2 14 8 20 8"/>
+           <line x1="16" y1="13" x2="8" y2="13"/>
+           <line x1="16" y1="17" x2="8" y2="17"/>
+         </svg>` 
+},
+{ 
+  title: 'Nouveau document d’étude',
+  desc: 'Pack de révision BAC pratique 2026 : +40 sujets corrigés',
+  time: '22/03',
+  color: 'linear-gradient(135deg,#059669,#10b981)',
+  unread: true,
+  cat: 'platform',
+  catLbl: 'INFO',
+  catC: '#3a1bc5',
+  url: 'https://drive.google.com/drive/u/1/folders/1tFALZ8OWMILwE5e5SedBtlsfBkscttUg',
+  icon: `<svg viewBox="0 0 24 24">
+           <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+           <polyline points="14 2 14 8 20 8"/>
+           <line x1="16" y1="13" x2="8" y2="13"/>
+           <line x1="16" y1="17" x2="8" y2="17"/>
+         </svg>` 
+},
+
+
+
+
+
 { 
   title: 'Nouveau document d’étude',
   desc: 'Pack de Révision Générale.',
   time: '18/03',
   color: 'linear-gradient(135deg,#059669,#10b981)',
-  unread: true,
+  unread: false,
   cat: 'platform',
   catLbl: 'MATH',
   catC: '#059669',
@@ -157,9 +214,9 @@ const notifications = [
   desc: 'Grammar Correction – Tenses (BAC 2017) (4 min) ',
   time: '18/03',
   color: 'linear-gradient(135deg,#ff453a,#ff6b35)',
-  unread: true,
+  unread: false,
   cat: 'academic',
-  catLbl: 'Physique',
+  catLbl: 'English',
   catC: '#ff453a',
   url: '../sahlacademy/index.html',
   icon: `<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><polygon points="10 8 16 12 10 16 10 8"/></svg>` 
@@ -169,9 +226,9 @@ const notifications = [
   desc: 'Grammar Correction – Tenses (BAC 2016) (3:34 min) ',
   time: '17/03',
   color: 'linear-gradient(135deg,#ff453a,#ff6b35)',
-  unread: true,
+  unread: false,
   cat: 'academic',
-  catLbl: 'Physique',
+  catLbl: 'English',
   catC: '#ff453a',
   url: '../sahlacademy/index.html',
   icon: `<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><polygon points="10 8 16 12 10 16 10 8"/></svg>` 
@@ -181,7 +238,7 @@ const notifications = [
   desc: 'Suites – Cours & Exercices Corrigés.',
   time: '16/03',
   color: 'linear-gradient(135deg,#059669,#10b981)',
-  unread: true,
+  unread: false,
   cat: 'platform',
   catLbl: 'MATH',
   catC: '#059669',
@@ -198,7 +255,7 @@ const notifications = [
   desc: 'Logarithmes – Cours & Exercices Corrigés.',
   time: '16/03',
   color: 'linear-gradient(135deg,#059669,#10b981)',
-  unread: true,
+  unread: false,
   cat: 'platform',
   catLbl: 'MATH',
   catC: '#059669',
@@ -215,7 +272,7 @@ const notifications = [
   desc: 'Pack Révision : Intégrales + Exercices Corrigés.',
   time: '16/03',
   color: 'linear-gradient(135deg,#059669,#10b981)',
-  unread: true,
+  unread: false,
   cat: 'platform',
   catLbl: 'MATH',
   catC: '#059669',
@@ -232,9 +289,9 @@ const notifications = [
   desc: 'Grammar Correction – Tenses (BAC 2018) (12 min) ',
   time: '17/03',
   color: 'linear-gradient(135deg,#ff453a,#ff6b35)',
-  unread: true,
+  unread: false,
   cat: 'academic',
-  catLbl: 'Physique',
+  catLbl: 'English',
   catC: '#ff453a',
   url: '../sahlacademy/index.html',
   icon: `<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><polygon points="10 8 16 12 10 16 10 8"/></svg>` 
@@ -244,9 +301,9 @@ const notifications = [
   desc: 'Grammar Correction – Tenses (BAC 2019) (12 min) ',
   time: '17/03',
   color: 'linear-gradient(135deg,#ff453a,#ff6b35)',
-  unread: true,
+  unread: false,
   cat: 'academic',
-  catLbl: 'Physique',
+  catLbl: 'English',
   catC: '#ff453a',
   url: '../sahlacademy/index.html',
   icon: `<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><polygon points="10 8 16 12 10 16 10 8"/></svg>` 
@@ -256,7 +313,7 @@ const notifications = [
   desc: 'Révision de la Fonction Exponentielle (Pack Corrigé).',
   time: '16/03',
   color: 'linear-gradient(135deg,#059669,#10b981)',
-  unread: true,
+  unread: false,
   cat: 'platform',
   catLbl: 'MATH',
   catC: '#059669',
@@ -274,7 +331,7 @@ const notifications = [
   desc: 'Pack de Révision Complexe & Analyse.',
   time: '16/03',
   color: 'linear-gradient(135deg,#059669,#10b981)',
-  unread: true,
+  unread: false,
   cat: 'platform',
   catLbl: 'MATH',
   catC: '#059669',
@@ -292,7 +349,7 @@ const notifications = [
   desc: 'Cours avancé de Physique : Ondes mécaniques (12 min) ',
   time: '02/03',
   color: 'linear-gradient(135deg,#ff453a,#ff6b35)',
-  unread: true,
+  unread: false,
   cat: 'academic',
   catLbl: 'Physique',
   catC: '#ff453a',
@@ -305,7 +362,7 @@ const notifications = [
   desc: 'Cours avancé de Physique : Ondes mécaniques – Équation horaire (9 min) ',
   time: '02/03',
   color: 'linear-gradient(135deg,#ff453a,#ff6b35)',
-  unread: true,
+  unread: false,
   cat: 'academic',
   catLbl: 'Physique',
   catC: '#4a90e2',
@@ -318,7 +375,7 @@ const notifications = [
   desc: 'Le chapitre complet de révision en Informatique est désormais disponible dans votre bibliothèque E-Books.',
   time: '02/03',
   color: 'linear-gradient(135deg,#059669,#10b981)',
-  unread: true,
+  unread: false,
   cat: 'platform',
   catLbl: 'INFO',
   catC: '#059669',
@@ -336,7 +393,7 @@ const notifications = [
   desc: '25 Sujet de révision pratique pour le Bac.',
   time: '06/03',
   color: 'linear-gradient(135deg,#059669,#10b981)',
-  unread: true,
+  unread: false,
   cat: 'platform',
   catLbl: 'INFO',
   catC: '#059669',
@@ -353,7 +410,7 @@ const notifications = [
   desc: 'Revision Sciences Complètes (Exercices + Corrections) – Bac 2026.',
   time: '05/03',
   color: 'linear-gradient(135deg,#059669,#10b981)',
-  unread: true,
+  unread: false,
   cat: 'platform',
   catLbl: 'SVT',
   catC: '#059669',
@@ -371,7 +428,7 @@ const notifications = [
   desc: 'Un nouveau quiz interactif vient d’être ajouté à l’application SVT pour vous aider à réviser efficacement.',
   time: '02/03',
   color: 'linear-gradient(135deg,#F57C00,#E53935)',
-  unread: true,
+  unread: false,
   cat: 'unread',
   catLbl: 'SVT',
   catC: '#F57C00',

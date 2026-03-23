@@ -139,7 +139,7 @@ const notifications = [
 { 
   title: 'Nouveau document d’étude',
   desc: 'Pack de révision – Pression intérieure : 86 exercices avec correction',
-  time: '18/03',
+  time: '23/03',
   color: 'linear-gradient(135deg,#059669,#10b981)',
   unread: true,
   cat: 'platform',

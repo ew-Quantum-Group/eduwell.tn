@@ -135,6 +135,25 @@ const apps = [
 const notifications = [
 
 
+ 
+{ 
+  title: 'Nouveau document d’étude',
+  desc: 'Pack de révision – Pression intérieure : 86 exercices avec correction',
+  time: '18/03',
+  color: 'linear-gradient(135deg,#059669,#10b981)',
+  unread: false,
+  cat: 'platform',
+  catLbl: 'SVT',
+  catC: '#059669',
+  url: 'https://drive.google.com/drive/folders/1-oBs4iU3M6tIc0TVS-79-xUuGYFUf6uM?usp=drive_link',
+  icon: `<svg viewBox="0 0 24 24">
+           <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+           <polyline points="14 2 14 8 20 8"/>
+           <line x1="16" y1="13" x2="8" y2="13"/>
+           <line x1="16" y1="17" x2="8" y2="17"/>
+         </svg>` 
+}, 
+
 { 
   title: 'Nouveau document d’étude',
   desc: 'تمارين فلسفية مع الإصلاح',

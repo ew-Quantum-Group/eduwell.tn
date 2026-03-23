@@ -141,7 +141,7 @@ const notifications = [
   desc: 'Pack de révision – Pression intérieure : 86 exercices avec correction',
   time: '18/03',
   color: 'linear-gradient(135deg,#059669,#10b981)',
-  unread: false,
+  unread: true,
   cat: 'platform',
   catLbl: 'SVT',
   catC: '#059669',

@@ -1,25 +1,5 @@
      const resources = [
-                {
-                    id: 1,
-                    title: "Introduction to Machine Learning",
-                    description: "Comprehensive course covering fundamental ML concepts and algorithms",
-                    files: [
-                        {
-                            name: "Lecture 1: Fundamentals of ML",
-                            url: "https://drive.google.com/file/d/1d9z3x8P2m7b0c1v2f3g4h5j6k7l8m9n0/view"
-                        },
-                        {
-                            name: "Lecture 2: Supervised Learning",
-                            url: "https://drive.google.com/file/d/2e8y7x6P5m4b3c2v1f0g9h8j7k6l5m4n3/view"
-                        },
-                        {
-                            name: "Lecture 3: Neural Networks",
-                            url: "https://drive.google.com/file/d/3f7x6y5P4m3b2c1v0f9g8h7j6k5l4m3n2/view"
-                        }
-                    ]
-                }, 
-
-
+             
 {
   id: 2,
  title: "Série de devoirs de contrôle 1 – Sciences (SVT)",

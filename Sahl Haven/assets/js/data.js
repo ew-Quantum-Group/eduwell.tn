@@ -395,6 +395,117 @@ description: "Ensemble structuré de devoirs de controle 1 en Sciences de la Vie
 
 
 
+{
+    id: 17,
+    title: "Séries d’exercices – Pression intérieure",
+    description: "Série d’exercices sur la pression interieure (énoncés + corrections) pour préparation Bac avec amélioration du niveau.",
+    files: [
+        {
+            name: "Énoncé - 1",
+            url: "https://drive.google.com/file/d/1d1HuTg4dpr26cmlyGjl5pO_Wig47oUyj/preview"
+        },
+        {
+            name: "Correction - 1",
+            url: "https://drive.google.com/file/d/1fvO2wT5lGYwf3lK4sCNaR3dfIgAYLztm/preview"
+        },
+        {
+            name: "Énoncé - 2",
+            url: "https://drive.google.com/file/d/1z3guLBD25Seo-CL38L2c97HYqe5OZdM9/preview"
+        },
+        {
+            name: "Correction - 2",
+            url: "https://drive.google.com/file/d/1dLD590UVbtGApsrB85UOCAv-vzi99isu/preview"
+        },
+        {
+            name: "Énoncé - 3",
+            url: "https://drive.google.com/file/d/1KQutZfvgJ57a-PhjS6ieyavue42veI4b/preview"
+        },
+        {
+            name: "Correction - 3",
+            url: "https://drive.google.com/file/d/1FaerIfWgKuwBMIZWplilo5pQUBoIP8Gs/preview"
+        },
+        {
+            name: "Énoncé - 4",
+            url: "https://drive.google.com/file/d/19i45GY4zHopKR3_u8UExqN5OZJxmXCQ7/preview"
+        },
+        {
+            name: "Correction - 4",
+            url: "https://drive.google.com/file/d/19R1srnCNksuaTEAu22kkcXsksvSqcLRI/preview"
+        },
+          {
+            name: "Énoncé - 5",
+            url: "https://drive.google.com/file/d/1J2v5ZN1UNTcVxiWgWJ9XBW7j1Dkj5qJ-/preview"
+        },
+        {
+            name: "Correction - 5",
+            url: "https://drive.google.com/file/d/1N1RUAt0SZOwL8JmT3E0p0mcIhw5RSsEf/preview"
+        },
+        {
+            name: "Énoncé - 6",
+            url: "https://drive.google.com/file/d/1cwxF85Q1hJjY5Y_DC4M6SgJmy9EZ9m3-/preview"
+        },
+        {
+            name: "Correction - 6",
+            url: "https://drive.google.com/file/d/1HvfHLhY6zz8ZeVRVU81BwoQCkoX4mALZ/preview"
+        },
+        {
+            name: "Énoncé - 7",
+            url: "https://drive.google.com/file/d/1YQ-SUw6TY2NrzhePbJvho5SbQq1zTj-o/preview"
+        },
+        {
+            name: "Correction - 7",
+            url: "https://drive.google.com/file/d/1G8VRQghL8_0Xi8J5SYXKCedI7JUjo7kd/preview"
+        },
+        {
+            name: "Énoncé - 8",
+            url: "https://drive.google.com/file/d/1Y3QagTqATXLXW23jps58gQToHFMgPOsK/preview"
+        },
+        {
+            name: "Correction - 8",
+            url: "https://drive.google.com/file/d/1R6KElxabF9QYKwFxBaU4H9lOl28ksnMK/preview"
+        }
+    ]
+},
+{
+    id: 18,
+    title: "Cours – Pression intérieure",
+    description: "Cours complet sur la pression interieure pour bien comprendre les notions essentielles et préparer le Bac efficacement.",
+    files: [
+        {
+            name: "Cours - Pression intérieure",
+            url: "https://drive.google.com/file/d/1L1Gdp_Gv8AMS2te4F5qoHT2NZPnmGCej/preview"
+        }
+    ]
+},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -20,6 +20,11 @@
                 password: 'Islem12!!', 
                 name: 'Kamerji' 
             },
+             { 
+                username: 'mohamedaminesmida@outlook.com',
+                password: 'Mas67200@', 
+                name: 'Mohamed Amine' 
+            },
             { 
                 username: 'alqinaa2@gmail.com',
                 password: 'Usaid65#', 

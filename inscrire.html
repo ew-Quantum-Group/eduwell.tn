@@ -1,325 +1,378 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sahl — Connexion</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
- <link rel="stylesheet" href="./assets/css/Inscrivez-vous.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inscriptions fermées — Sahl Learn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white:   #ffffff;
+      --off:     #f9f9f7;
+      --border:  #e6e6e2;
+      --border2: #efefec;
+      --ink:     #0f0f0f;
+      --ink2:    #3a3a3a;
+      --muted:   #888882;
+      --faint:   #c8c8c4;
+      --gold:    #b5883a;
+      --gold-bg: #faf5eb;
+      --gold-br: #e8d9ad;
+      --shadow:  0 2px 6px rgba(0,0,0,0.04), 0 8px 32px rgba(0,0,0,0.07), 0 32px 64px rgba(0,0,0,0.05);
+    }
+
+    html { height: 100%; }
+
+    body {
+      min-height: 100vh;
+      background: var(--off);
+      background-image:
+        radial-gradient(ellipse 900px 600px at 30% 20%, rgba(240,234,220,0.55) 0%, transparent 70%),
+        radial-gradient(ellipse 700px 500px at 80% 85%, rgba(220,230,240,0.3) 0%, transparent 70%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      padding: 48px 20px;
+      position: relative;
+    }
+
+    /* subtle dot grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, #c8c8be 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.35;
+      pointer-events: none;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+    }
+
+    /* ── Logo / wordmark ── */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: up 0.6s ease 0s forwards;
+    }
+
+    .brand-mark {
+      width: 34px; height: 34px;
+      background: var(--ink);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .brand-mark svg { width: 18px; height: 18px; }
+
+    .brand-name {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 560px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: up 0.8s cubic-bezier(0.16,1,0.3,1) 0.15s forwards;
+    }
+
+    /* top accent bar */
+    .card-top-bar {
+      height: 3px;
+      background: linear-gradient(90deg, #d4b56a 0%, #e8cfa0 40%, #c8a84e 70%, #f0d890 100%);
+    }
+
+    .card-body {
+      padding: 52px 56px 56px;
+      text-align: center;
+    }
+
+    /* ── Status pill ── */
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold-bg);
+      border: 1px solid var(--gold-br);
+      border-radius: 100px;
+      padding: 6px 14px 6px 10px;
+      margin-bottom: 32px;
+    }
+
+    .status-dot-wrap {
+      position: relative;
+      width: 8px; height: 8px;
+    }
+
+    .status-dot {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .status-dot-ring {
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold);
+      opacity: 0;
+      animation: ripple 2.4s ease-out infinite;
+    }
+
+    @keyframes ripple {
+      0%   { opacity: 0.7; transform: scale(0.6); }
+      100% { opacity: 0;   transform: scale(1.8); }
+    }
+
+    .status-text {
+      font-size: 11.5px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ── Icon ── */
+    .icon-wrap {
+      width: 72px; height: 72px;
+      margin: 0 auto 28px;
+      background: var(--off);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    /* ── Heading ── */
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 500;
+      font-size: clamp(24px, 4.5vw, 36px);
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 auto 24px;
+      width: fit-content;
+    }
+
+    .divider-line {
+      width: 40px; height: 1px;
+      background: var(--border);
+    }
+
+    .divider-diamond {
+      width: 5px; height: 5px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    /* ── Body text ── */
+    p {
+      font-size: 15.5px;
+      line-height: 1.8;
+      color: var(--muted);
+      font-weight: 300;
+      max-width: 400px;
+      margin: 0 auto 40px;
+    }
+
+    /* ── CTA button ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: var(--ink);
+      color: var(--white);
+      text-decoration: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.005em;
+      padding: 14px 28px;
+      border-radius: 12px;
+      transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 60%);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px) scale(1.015);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08), 0 12px 28px rgba(0,0,0,0.18);
+      background: #1c1c1c;
+    }
+
+    .btn:active { transform: translateY(-1px) scale(1); }
+
+    .btn-arrow {
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+      font-size: 15px;
+      line-height: 1;
+    }
+
+    .btn:hover .btn-arrow { transform: translateX(4px); }
+
+    /* ── Card footer ── */
+    .card-footer {
+      border-top: 1px solid var(--border2);
+      padding: 18px 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--off);
+    }
+
+    .card-footer-icon {
+      font-size: 13px;
+      opacity: 0.5;
+    }
+
+    .card-footer-text {
+      font-size: 12.5px;
+      color: var(--faint);
+      font-weight: 400;
+    }
+
+    /* ── Page footer ── */
+    .page-footer {
+      margin-top: 36px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      opacity: 0;
+      animation: up 0.6s ease 0.7s forwards;
+    }
+
+    .page-footer a {
+      font-size: 12px;
+      color: var(--faint);
+      text-decoration: none;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+
+    .page-footer a:hover { color: var(--muted); }
+
+    .page-footer-sep {
+      width: 3px; height: 3px;
+      background: var(--faint);
+      border-radius: 50%;
+    }
+
+    /* ── Animation ── */
+    @keyframes up {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 520px) {
+      .card-body    { padding: 40px 28px 44px; }
+      .card-footer  { padding: 16px 28px; }
+      .page-footer  { flex-direction: column; gap: 10px; }
+      .page-footer-sep { display: none; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════════
-     WELCOME
-══════════════════════════════════════════════ -->
-<div class="ws" id="ws">
-  <div class="ws-bg">
-    <div class="ws-lines"></div>
-    <div class="ws-orb o1"></div>
-    <div class="ws-orb o2"></div>
-    <div class="ws-orb o3"></div>
-    <div class="ws-dots"></div>
-  </div>
-
-  <div class="ws-inner">
-    <!-- Emblem -->
-    <div class="ws-em">
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <circle class="em-r1" cx="50" cy="50" r="49.5"/>
-        <circle class="em-r2" cx="50" cy="50" r="36"/>
-        <path  class="em-arc" d="M50 14 A36 36 0 0 1 86 50" stroke-linecap="round"/>
-        <circle class="em-disk" cx="50" cy="50" r="19" fill="var(--blue)"/>
-        <path  class="em-ck" d="M41 50 l7 8 12-15"/>
+  <!-- Brand -->
+  <div class="brand" aria-label="Sahl Learn">
+    <div class="brand-mark">
+      <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 2L3 5.5V12.5L9 16L15 12.5V5.5L9 2Z" stroke="white" stroke-width="1.4" stroke-linejoin="round" fill="none"/>
+        <path d="M9 6.5L6 8.25V11.75L9 13.5L12 11.75V8.25L9 6.5Z" fill="white" opacity="0.6"/>
       </svg>
     </div>
-
-    <div class="ws-tag">
-      <span class="ws-tag-dot"></span>
-      Plateforme éducative tunisienne
-    </div>
-
-    <h1 class="ws-h">Bienvenue<em>chez Sahl</em></h1>
-
-    <p class="ws-p">Votre compagnon intelligent pour la réussite scolaire — partout, à tout moment.</p>
-
-    <div class="ws-cta">
-      <button class="btn-start" id="btnWS">
-        Commencer maintenant
-        <svg class="s-arr" viewBox="0 0 18 18" fill="none" width="16" height="16">
-          <path d="M3 9h12M10 4.5L14.5 9 10 13.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <span class="ws-micro">Accès sécurisé &nbsp;·&nbsp; Sans engagement</span>
-    </div>
+    <span class="brand-name">Sahl Learn</span>
   </div>
 
-  <div class="ws-caret">
-    <span class="caret-label">Défiler</span>
-    <div class="caret-icon">
-      <span></span><span></span><span></span>
-    </div>
-  </div>
-</div>
+  <!-- Card -->
+  <div class="card">
+    <div class="card-top-bar"></div>
 
+    <div class="card-body">
 
-<!-- ══════════════════════════════════════════════
-     VIDEO MODAL
-══════════════════════════════════════════════ -->
-<div class="modal" id="modal">
-  <div class="modal-box">
-    <button class="modal-x" id="closeVid" aria-label="Fermer"></button>
-    <div class="vid-wrap">
-      <iframe id="vidFr" src="" allow="autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-  </div>
-</div>
+      <div class="status">
+        <div class="status-dot-wrap">
+          <div class="status-dot"></div>
+          <div class="status-dot-ring"></div>
+        </div>
+        <span class="status-text">Maintenance en cours</span>
+      </div>
 
+      <div class="icon-wrap">🚧</div>
 
-<!-- ══════════════════════════════════════════════
-     APP
-══════════════════════════════════════════════ -->
-<div class="app" id="app">
+      <h1>Inscriptions temporairement&nbsp;fermées</h1>
 
-  <header class="hdr">
-    <div class="hdr-in">
-      <a href="#" class="logo">
-        <svg class="logo-gem" viewBox="0 0 26 26">
-          <circle class="lgr" cx="13" cy="13" r="11.5" stroke-width="1.3"/>
-          <circle class="lgd" cx="13" cy="13" r="5"/>
-        </svg>
-        <span class="logo-name">Sahl</span>
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-diamond"></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <p>Les inscriptions sont actuellement suspendues. Nous travaillons à améliorer votre expérience sur la plateforme. Elles seront bientôt réouvertes. Merci pour votre patience.</p>
+
+      <a class="btn" href="https://sahllearn.org" rel="noopener noreferrer">
+        Retourner à la plateforme
+        <span class="btn-arrow">→</span>
       </a>
-      <div class="hdr-right">
-        <div class="status-chip">
-          <span class="status-dot"></span>
-          Tous les services actifs
-        </div>
-      </div>
-    </div>
-  </header>
 
-  <div class="stage">
-
-    <!-- ─── SIGN IN ──────────────────────────────── -->
-    <div class="view on" id="vSI">
-      <div class="si">
-
-        <!-- Left -->
-        <div class="si-l">
-          <div class="si-l-grid"></div>
-          <div class="si-l-grain"></div>
-          <div class="si-l-orb"></div>
-          <div class="si-l-orb2"></div>
-
-          <div class="si-brand">
-            <div class="si-logo-row">
-              <div class="si-logo-box">
-                <svg viewBox="0 0 20 20" fill="none" width="20" height="20">
-                  <circle cx="10" cy="10" r="8.5" stroke="white" stroke-width="1.2" opacity="0.42"/>
-                  <circle cx="10" cy="10" r="4" fill="white"/>
-                </svg>
-              </div>
-              <span class="si-logo-name">Sahl</span>
-            </div>
-            <h2 class="si-headline">Votre succès<br><em>commence ici.</em></h2>
-            <p class="si-desc">Des milliers d'étudiants et d'enseignants font confiance à Sahl pour apprendre et réussir autrement.</p>
-          </div>
-
-          <div class="si-stats">
-            <div class="si-stat">
-              <div class="si-stat-ico">
-                <svg viewBox="0 0 16 16" fill="none">
-                  <path d="M8 2a6 6 0 100 12A6 6 0 008 2z" stroke="white" stroke-width="1.3" opacity="0.7"/>
-                  <path d="M8 5v3.5L10 10" stroke="white" stroke-width="1.3" stroke-linecap="round" opacity="0.7"/>
-                </svg>
-              </div>
-              <div>
-                <div class="si-stat-n">+1 000</div>
-                <div class="si-stat-l">Étudiants inscrits</div>
-              </div>
-            </div>
-            <div class="si-stat">
-              <div class="si-stat-ico">
-                <svg viewBox="0 0 16 16" fill="none">
-                  <path d="M3 8l3.5 3.5 6.5-7" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
-                </svg>
-              </div>
-              <div>
-                <div class="si-stat-n">100%</div>
-                <div class="si-stat-l">Taux de réussite au Baccalauréat</div>
-              </div>
-            </div>
-            <div class="si-stat">
-              <div class="si-stat-ico">
-                <svg viewBox="0 0 16 16" fill="none">
-                  <path d="M2 11l3-4.5 2.5 3 2.5-3 3 4.5" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
-                </svg>
-              </div>
-              <div>
-                <div class="si-stat-n">Sahl AI</div>
-                <div class="si-stat-l">Intelligence adaptative — modèle 4.0</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right -->
-        <div class="si-r">
-          <div class="si-mark">
-            <span class="si-mark-line"></span>
-            <span class="si-mark-txt">Espace sécurisé</span>
-          </div>
-          <h2 class="si-h"> Créer un compte</h2>
-          <p class="si-sub">Accédez à votre espace et reprenez là où vous vous êtes arrêté.</p>
-
-          <div style="display:flex;flex-direction:column;gap:11px;">
-            
-           
-            <button class="btn-B" id="btnHow">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.2" opacity="0.32"/>
-                <path d="M9 6.5v4.5M9 13v.3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-              </svg>
-              Comment créer un compte ?
-            </button>
-          </div>
-
-          <div class="si-foot">
-            <span class="si-foot-note">Nouveau ici ?</span>
-            <a href="#" class="si-foot-cta" id="toSU">
-              Voir les forfaits
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M2 7h10M7.5 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-          </div>
-
-          <div class="trust">
-            <div class="trust-cell">
-              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                <rect x="2" y="5.5" width="9" height="6.5" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
-                <path d="M4 5.5V4a2.5 2.5 0 015 0v1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-              </svg>
-              SSL
-            </div>
-            <div class="trust-cell">
-              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                <path d="M6.5 1.5C4 2 2 3.8 2 6c0 2.5 1 4 4.5 5.5C11 10 11 8.5 11 6c0-2.2-2-3.8-4.5-4.5z" stroke="currentColor" stroke-width="1.2"/>
-                <path d="M4.5 6.2l1.5 1.5 2.5-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              RGPD
-            </div>
-            <div class="trust-cell">
-              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                <path d="M6.5 1.5l1.5 3.1 3.4.5-2.5 2.4.6 3.4-3-1.6-3 1.6.6-3.4L1.6 5.1l3.4-.5z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
-              </svg>
-              Certifié
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
 
-    <!-- ─── SIGN UP ──────────────────────────────── -->
-    <div class="view" id="vSU">
-      <div class="su-hd">
-        <div class="su-eyebrow">
-          <span class="su-eyebrow-dot"></span>
-          Choisissez votre formule
-        </div>
-        <h2 class="su-h">Simple. <em>Puissant.</em><br>Pour vous.</h2>
-        <p class="su-p">Une formule pour chaque profil, des outils pour chaque ambition.</p>
-      </div>
-
-      <div class="plans-grid">
-
-        <!-- Standard -->
-        <div class="plan">
-          <div class="plan-glow"></div>
-          <div class="plan-band">
-            <div class="plan-chip chip-g">Étudiant(e)</div>
-            <div class="plan-tier">Standard</div>
-            <div class="plan-name">Sahl</div>
-          </div>
-          <div class="plan-body">
-            <div class="price-block">
-              <div class="price-row">
-                <span class="price-n">14</span>
-                <span class="price-c">Dt</span>
-                <span class="price-p">/ reste de l'année</span>
-              </div>
-              <div class="price-note">Les essentiels pour réviser efficacement et exceller au Baccalauréat.</div>
-            </div>
-            <div class="plan-div"></div>
-            <ul class="feats">
-              
-              <li><span class="f-pip"><svg viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3.5" stroke="#0057B8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>SVT App</li>
-              <li><span class="f-pip"><svg viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3.5" stroke="#0057B8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Bibliothèque E-Book</li>
-              <li><span class="f-pip"><svg viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3.5" stroke="#0057B8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Chat Philosophie</li>
-              <li><span class="f-pip"><svg viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3.5" stroke="#0057B8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>SpeakWell Plus</li>
-              <li><span class="f-pip"><svg viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3.5" stroke="#0057B8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Sahl AI — modèle 2.6.0</li>
-            </ul>
-            <a href="../login/Signup.html" class="plan-cta cta-outline">
-              S'inscrire
-              <svg class="cta-arr" width="13" height="13" viewBox="0 0 13 13" fill="none">
-                <path d="M2 6.5h9M7 3l3.5 3.5L7 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Premium -->
-        <div class="plan plan-hot">
-          <div class="plan-glow"></div>
-          <div class="plan-band">
-            <div class="plan-chip chip-b">Étudiant(e)</div>
-            <div class="plan-tier">Exclusif</div>
-            <div class="plan-name">Sahl Elite</div>
-          </div>
-          <div class="plan-body">
-            <div class="price-block">
-              <div class="price-row">
-                <span class="price-n">20</span>
-                <span class="price-c">Dt</span>
-                <span class="price-p">/ reste de l'année</span>
-              </div>
-              <div class="price-note">Maîtriser les clés de la réussite : révisions stratégiques pour exceller au Baccalauréat.</div>
-            </div>
-            <div class="plan-div"></div>
-            <ul class="feats">
-             <li><span class="f-pip"><svg viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3.5" stroke="#0057B8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Sahl Academy</li>
-              <li><span class="f-pip"><svg viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3.5" stroke="#0057B8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>SVT App</li>
-              <li><span class="f-pip"><svg viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3.5" stroke="#0057B8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Bibliothèque E-Book</li>
-              <li><span class="f-pip"><svg viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3.5" stroke="#0057B8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Chat Philosophie</li>
-              <li><span class="f-pip"><svg viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3.5" stroke="#0057B8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>SpeakWell Plus</li>
-              <li><span class="f-pip"><svg viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3.5" stroke="#0057B8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Sahl AI — modèle 4.0</li>
-           </ul>
-            <a href="../login/Signup.html" class="plan-cta cta-fill">
-              Obtenir l'offre
-              <svg class="cta-arr" width="13" height="13" viewBox="0 0 13 13" fill="none">
-                <path d="M2 6.5h9M7 3l3.5 3.5L7 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="su-foot">
-        Déjà membre ?&ensp;
-        <a href="#" id="toSI">
-          Se connecter
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-            <path d="M2 6.5h9M7 3l3.5 3.5L7 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-      </div>
+    <div class="card-footer">
+      <span class="card-footer-icon">🔒</span>
+      <span class="card-footer-text">Vos données sont en sécurité. Aucune action requise.</span>
     </div>
-
   </div>
-</div>
 
-<script src="./assets/js/Inscrivez-vous.js"></script>
+  <!-- Page footer -->
+  <div class="page-footer">
+    <a href="https://sahllearn.org">sahllearn.org</a>
+    <div class="page-footer-sep"></div>
+    <a href="mailto:contact@sahllearn.org">Nous contacter</a>
+    <div class="page-footer-sep"></div>
+    <a href="#">© 2025 Sahl Learn</a>
+  </div>
+
 </body>
 </html>

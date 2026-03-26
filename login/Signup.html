@@ -1,305 +1,378 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription • Portail Académique</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
-     <link rel="stylesheet" href="../assets/css/accup.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inscriptions fermées — Sahl Learn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white:   #ffffff;
+      --off:     #f9f9f7;
+      --border:  #e6e6e2;
+      --border2: #efefec;
+      --ink:     #0f0f0f;
+      --ink2:    #3a3a3a;
+      --muted:   #888882;
+      --faint:   #c8c8c4;
+      --gold:    #b5883a;
+      --gold-bg: #faf5eb;
+      --gold-br: #e8d9ad;
+      --shadow:  0 2px 6px rgba(0,0,0,0.04), 0 8px 32px rgba(0,0,0,0.07), 0 32px 64px rgba(0,0,0,0.05);
+    }
+
+    html { height: 100%; }
+
+    body {
+      min-height: 100vh;
+      background: var(--off);
+      background-image:
+        radial-gradient(ellipse 900px 600px at 30% 20%, rgba(240,234,220,0.55) 0%, transparent 70%),
+        radial-gradient(ellipse 700px 500px at 80% 85%, rgba(220,230,240,0.3) 0%, transparent 70%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      padding: 48px 20px;
+      position: relative;
+    }
+
+    /* subtle dot grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, #c8c8be 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.35;
+      pointer-events: none;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+    }
+
+    /* ── Logo / wordmark ── */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: up 0.6s ease 0s forwards;
+    }
+
+    .brand-mark {
+      width: 34px; height: 34px;
+      background: var(--ink);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .brand-mark svg { width: 18px; height: 18px; }
+
+    .brand-name {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 560px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: up 0.8s cubic-bezier(0.16,1,0.3,1) 0.15s forwards;
+    }
+
+    /* top accent bar */
+    .card-top-bar {
+      height: 3px;
+      background: linear-gradient(90deg, #d4b56a 0%, #e8cfa0 40%, #c8a84e 70%, #f0d890 100%);
+    }
+
+    .card-body {
+      padding: 52px 56px 56px;
+      text-align: center;
+    }
+
+    /* ── Status pill ── */
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold-bg);
+      border: 1px solid var(--gold-br);
+      border-radius: 100px;
+      padding: 6px 14px 6px 10px;
+      margin-bottom: 32px;
+    }
+
+    .status-dot-wrap {
+      position: relative;
+      width: 8px; height: 8px;
+    }
+
+    .status-dot {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .status-dot-ring {
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold);
+      opacity: 0;
+      animation: ripple 2.4s ease-out infinite;
+    }
+
+    @keyframes ripple {
+      0%   { opacity: 0.7; transform: scale(0.6); }
+      100% { opacity: 0;   transform: scale(1.8); }
+    }
+
+    .status-text {
+      font-size: 11.5px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ── Icon ── */
+    .icon-wrap {
+      width: 72px; height: 72px;
+      margin: 0 auto 28px;
+      background: var(--off);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    /* ── Heading ── */
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 500;
+      font-size: clamp(24px, 4.5vw, 36px);
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 auto 24px;
+      width: fit-content;
+    }
+
+    .divider-line {
+      width: 40px; height: 1px;
+      background: var(--border);
+    }
+
+    .divider-diamond {
+      width: 5px; height: 5px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    /* ── Body text ── */
+    p {
+      font-size: 15.5px;
+      line-height: 1.8;
+      color: var(--muted);
+      font-weight: 300;
+      max-width: 400px;
+      margin: 0 auto 40px;
+    }
+
+    /* ── CTA button ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: var(--ink);
+      color: var(--white);
+      text-decoration: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.005em;
+      padding: 14px 28px;
+      border-radius: 12px;
+      transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 60%);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px) scale(1.015);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08), 0 12px 28px rgba(0,0,0,0.18);
+      background: #1c1c1c;
+    }
+
+    .btn:active { transform: translateY(-1px) scale(1); }
+
+    .btn-arrow {
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+      font-size: 15px;
+      line-height: 1;
+    }
+
+    .btn:hover .btn-arrow { transform: translateX(4px); }
+
+    /* ── Card footer ── */
+    .card-footer {
+      border-top: 1px solid var(--border2);
+      padding: 18px 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--off);
+    }
+
+    .card-footer-icon {
+      font-size: 13px;
+      opacity: 0.5;
+    }
+
+    .card-footer-text {
+      font-size: 12.5px;
+      color: var(--faint);
+      font-weight: 400;
+    }
+
+    /* ── Page footer ── */
+    .page-footer {
+      margin-top: 36px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      opacity: 0;
+      animation: up 0.6s ease 0.7s forwards;
+    }
+
+    .page-footer a {
+      font-size: 12px;
+      color: var(--faint);
+      text-decoration: none;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+
+    .page-footer a:hover { color: var(--muted); }
+
+    .page-footer-sep {
+      width: 3px; height: 3px;
+      background: var(--faint);
+      border-radius: 50%;
+    }
+
+    /* ── Animation ── */
+    @keyframes up {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 520px) {
+      .card-body    { padding: 40px 28px 44px; }
+      .card-footer  { padding: 16px 28px; }
+      .page-footer  { flex-direction: column; gap: 10px; }
+      .page-footer-sep { display: none; }
+    }
+  </style>
 </head>
 <body>
-    <div class="signup-container">
-        <!-- En-tête -->
-        <div class="header">
-            <h1>Portail Académique</h1>
-            <p>Complétez votre inscription en quelques étapes simples</p>
+
+  <!-- Brand -->
+  <div class="brand" aria-label="Sahl Learn">
+    <div class="brand-mark">
+      <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 2L3 5.5V12.5L9 16L15 12.5V5.5L9 2Z" stroke="white" stroke-width="1.4" stroke-linejoin="round" fill="none"/>
+        <path d="M9 6.5L6 8.25V11.75L9 13.5L12 11.75V8.25L9 6.5Z" fill="white" opacity="0.6"/>
+      </svg>
+    </div>
+    <span class="brand-name">Sahl Learn</span>
+  </div>
+
+  <!-- Card -->
+  <div class="card">
+    <div class="card-top-bar"></div>
+
+    <div class="card-body">
+
+      <div class="status">
+        <div class="status-dot-wrap">
+          <div class="status-dot"></div>
+          <div class="status-dot-ring"></div>
         </div>
+        <span class="status-text">Maintenance en cours</span>
+      </div>
 
-        <!-- Indicateur d'étape -->
-        <div class="step-indicator">
-            <div class="step-dot active" id="stepDot1"></div>
-            <div class="step-dot" id="stepDot2"></div>
-            <div class="step-dot" id="stepDot3"></div>
-            <div class="step-dot" id="stepDot4"></div>
-        </div>
+      <div class="icon-wrap">🚧</div>
 
-        <!-- Étapes du formulaire -->
-        <div class="form-container">
-            <!-- Étape 1 : Informations personnelles -->
-            <div class="form-step active" id="formStep1">
-                <h2 class="step-title">Informations Personnelles</h2>
-                <p class="step-description">Entrez vos coordonnées pour créer votre compte.</p>
+      <h1>Inscriptions temporairement&nbsp;fermées</h1>
 
-                <div class="input-group">
-                    <label class="input-label" for="firstName">Prénom</label>
-                    <input type="text" id="firstName" class="input-field" placeholder="Entrez votre prénom">
-                    <div class="validation-message" id="firstNameValidation"></div>
-                </div>
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-diamond"></div>
+        <div class="divider-line"></div>
+      </div>
 
-                <div class="input-group">
-                    <label class="input-label" for="lastName">Nom</label>
-                    <input type="text" id="lastName" class="input-field" placeholder="Entrez votre nom">
-                    <div class="validation-message" id="lastNameValidation"></div>
-                </div>
+      <p>Les inscriptions sont actuellement suspendues. Nous travaillons à améliorer votre expérience sur la plateforme. Elles seront bientôt réouvertes. Merci pour votre patience.</p>
 
-                <div class="input-group">
-                    <label class="input-label" for="email">Adresse Email</label>
-                    <input type="email" id="email" class="input-field" placeholder="nom@exemple.com">
-                    <div class="validation-message" id="emailValidation"></div>
-                </div>
+      <a class="btn" href="https://sahllearn.org" rel="noopener noreferrer">
+        Retourner à la plateforme
+        <span class="btn-arrow">→</span>
+      </a>
 
-                <div class="input-group">
-                    <label class="input-label" for="phone">Numéro de Téléphone</label>
-                    <input type="tel" id="phone" class="input-field" placeholder="Entrez votre numéro">
-                    <div class="validation-message" id="phoneValidation"></div>
-                </div>
-
-                <div class="buttons-container">
-                    <button class="apple-button apple-button-primary" id="nextStep1" disabled>
-                        Continuer
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Étape 2 : Création du mot de passe -->
-            <div class="form-step" id="formStep2">
-                <h2 class="step-title">Création du Mot de Passe</h2>
-                <p class="step-description">Créez un mot de passe sécurisé pour votre compte.</p>
-
-                <div class="input-group">
-                    <label class="input-label" for="password">Mot de Passe</label>
-                    <input type="password" id="password" class="input-field" placeholder="Créez un mot de passe">
-                    <div class="validation-message" id="passwordValidation"></div>
-                </div>
-
-                <div class="input-group">
-                    <label class="input-label" for="confirmPassword">Confirmer le Mot de Passe</label>
-                    <input type="password" id="confirmPassword" class="input-field" placeholder="Retapez votre mot de passe">
-                    <div class="validation-message" id="confirmPasswordValidation"></div>
-                </div>
-
-                <!-- Règles du mot de passe -->
-                <div class="password-rules">
-                    <div class="password-rules-title">
-                        <i class="fas fa-shield-alt"></i>
-                        Exigences du Mot de Passe
-                    </div>
-                    <div class="rule-item" id="ruleLength">
-                        <i class="fas fa-circle" style="font-size: 6px;"></i>
-                        Minimum 8 caractères
-                    </div>
-                    <div class="rule-item" id="ruleUppercase">
-                        <i class="fas fa-circle" style="font-size: 6px;"></i>
-                        Au moins une majuscule
-                    </div>
-                    <div class="rule-item" id="ruleLowercase">
-                        <i class="fas fa-circle" style="font-size: 6px;"></i>
-                        Au moins une minuscule
-                    </div>
-                    <div class="rule-item" id="ruleNumber">
-                        <i class="fas fa-circle" style="font-size: 6px;"></i>
-                        Au moins un chiffre
-                    </div>
-                    <div class="rule-item" id="ruleSpecial">
-                        <i class="fas fa-circle" style="font-size: 6px;"></i>
-                        Au moins un caractère spécial
-                    </div>
-                </div>
-
-                <div class="buttons-container">
-                    <button class="apple-button apple-button-secondary" id="prevStep2">
-                        <i class="fas fa-arrow-left"></i>
-                        Retour
-                    </button>
-                    <button class="apple-button apple-button-primary" id="nextStep2" disabled>
-                        Continuer
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Étape 3 : Matières & Notes -->
-            <div class="form-step" id="formStep3">
-                <h2 class="step-title">Matières & Notes</h2>
-                <p class="step-description">Entrez vos notes pour chaque matière (0-20).</p>
-
-                <div class="subjects-container">
-                    <!-- Mathématiques -->
-                    <div class="subject-item">
-                        <div class="subject-header">
-                            <div class="subject-icon" style="background-color: #007aff;">
-                                <i class="fas fa-calculator"></i>
-                            </div>
-                            <div class="subject-name">Mathématiques</div>
-                        </div>
-                        <div class="grade-input-container">
-                            <input type="number" id="mathGrade" class="grade-input" min="0" max="20" step="0.5" placeholder="0-20" inputmode="decimal">
-                            <div class="grade-range">0 - 20</div>
-                        </div>
-                        <div class="validation-message" id="mathValidation"></div>
-                    </div>
-
-                    <!-- Physique -->
-                    <div class="subject-item">
-                        <div class="subject-header">
-                            <div class="subject-icon" style="background-color: #5856d6;">
-                                <i class="fas fa-atom"></i>
-                            </div>
-                            <div class="subject-name">Physique</div>
-                        </div>
-                        <div class="grade-input-container">
-                            <input type="number" id="physicsGrade" class="grade-input" min="0" max="20" step="0.5" placeholder="0-20" inputmode="decimal">
-                            <div class="grade-range">0 - 20</div>
-                        </div>
-                        <div class="validation-message" id="physicsValidation"></div>
-                    </div>
-
-                    <!-- Sciences -->
-                    <div class="subject-item">
-                        <div class="subject-header">
-                            <div class="subject-icon" style="background-color: #34c759;">
-                                <i class="fas fa-flask"></i>
-                            </div>
-                            <div class="subject-name">Sciences</div>
-                        </div>
-                        <div class="grade-input-container">
-                            <input type="number" id="scienceGrade" class="grade-input" min="0" max="20" step="0.5" placeholder="0-20" inputmode="decimal">
-                            <div class="grade-range">0 - 20</div>
-                        </div>
-                        <div class="validation-message" id="scienceValidation"></div>
-                    </div>
-
-                    <!-- Informatique -->
-                    <div class="subject-item">
-                        <div class="subject-header">
-                            <div class="subject-icon" style="background-color: #ff9500;">
-                                <i class="fas fa-laptop-code"></i>
-                            </div>
-                            <div class="subject-name">Informatique</div>
-                        </div>
-                        <div class="grade-input-container">
-                            <input type="number" id="csGrade" class="grade-input" min="0" max="20" step="0.5" placeholder="0-20" inputmode="decimal">
-                            <div class="grade-range">0 - 20</div>
-                        </div>
-                        <div class="validation-message" id="csValidation"></div>
-                    </div>
-
-                    <!-- Anglais -->
-                    <div class="subject-item">
-                        <div class="subject-header">
-                            <div class="subject-icon" style="background-color: #ff3b30;">
-                                <i class="fas fa-book-open"></i>
-                            </div>
-                            <div class="subject-name">Anglais</div>
-                        </div>
-                        <div class="grade-input-container">
-                            <input type="number" id="englishGrade" class="grade-input" min="0" max="20" step="0.5" placeholder="0-20" inputmode="decimal">
-                            <div class="grade-range">0 - 20</div>
-                        </div>
-                        <div class="validation-message" id="englishValidation"></div>
-                    </div>
-                </div>
-
-                <div class="buttons-container">
-                    <button class="apple-button apple-button-secondary" id="prevStep3">
-                        <i class="fas fa-arrow-left"></i>
-                        Retour
-                    </button>
-                    <button class="apple-button apple-button-primary" id="nextStep3" disabled>
-                        Continuer
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Étape 4 : Méthode de paiement -->
-            <div class="form-step" id="formStep4">
-                <h2 class="step-title">Paiement</h2>
-                <p class="step-description">Sélectionnez votre méthode de paiement préférée.</p>
-
-                <div class="subjects-container">
-                    <!-- Paiement D17 -->
-                    <div class="payment-option" data-method="d17">
-                        <div class="subject-header">
-                            <div class="subject-icon" style="background-color: #007aff;">
-                                <i class="fas fa-mobile-alt"></i>
-                            </div>
-                            <div>
-                                <div class="subject-name">Paiement D17</div>
-                                <div style="font-size: 13px; color: #86868b; margin-top: 2px;">Envoyer à : 21 127 731</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Carte postale -->
-                    <div class="payment-option" data-method="postal">
-                        <div class="subject-header">
-                            <div class="subject-icon" style="background-color: #34c759;">
-                                <i class="fas fa-credit-card"></i>
-                            </div>
-                            <div>
-                                <div class="subject-name">Carte Postale</div>
-                                <div style="font-size: 13px; color: #86868b; margin-top: 2px;">Carte : 5359 4017 4054 6870</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="important-notice">
-                    <div class="important-notice-header">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <div class="important-notice-title">Avis Important</div>
-                    </div>
-                    <div class="important-notice-text">
-                        Après paiement, envoyez une capture d'écran au <strong>47 050 644</strong>. Votre compte restera inactif jusqu'à vérification de votre paiement.
-                    </div>
-                </div>
-
-                <!-- Indicateur de chargement et message d'erreur -->
-                <div class="loading-spinner" id="loadingSpinner">
-                    <div class="spinner"></div>
-                    <p style="margin-top: 10px; font-size: 14px; color: #86868b;">Envoi des données en cours...</p>
-                </div>
-
-                <div id="errorMessage" style="display: none;"></div>
-
-                <div class="buttons-container">
-                    <button class="apple-button apple-button-secondary" id="prevStep4">
-                        <i class="fas fa-arrow-left"></i>
-                        Retour
-                    </button>
-                    <button class="apple-button apple-button-primary" id="finishBtn" disabled>
-                        Terminer l'Inscription
-                        <i class="fas fa-check"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
     </div>
 
-    <!-- Modal de confirmation -->
-    <div class="modal-overlay" id="confirmationModal">
-        <div class="modal-container">
-            <div class="modal-header">
-                <div class="modal-icon">
-                    <i class="fas fa-envelope"></i>
-                </div>
-                <h2 class="modal-title">Inscription Terminée</h2>
-            </div>
-            
-            <div class="modal-message">
-                Vos informations ont été envoyées avec succès à <strong>eduwelltn@gmail.com</strong>.
-                <br><br>
-                Vous recevrez un email de confirmation avec les détails de votre compte dans les prochaines minutes.
-            </div>
-            
-            <button class="modal-button" id="closeModal">
-                Compris
-            </button>
-        </div>
+    <div class="card-footer">
+      <span class="card-footer-icon">🔒</span>
+      <span class="card-footer-text">Vos données sont en sécurité. Aucune action requise.</span>
     </div>
-<script src="../assets/js/accup.js"></script>
+  </div>
+
+  <!-- Page footer -->
+  <div class="page-footer">
+    <a href="https://sahllearn.org">sahllearn.org</a>
+    <div class="page-footer-sep"></div>
+    <a href="mailto:contact@sahllearn.org">Nous contacter</a>
+    <div class="page-footer-sep"></div>
+    <a href="#">© 2025 Sahl Learn</a>
+  </div>
+
 </body>
 </html>

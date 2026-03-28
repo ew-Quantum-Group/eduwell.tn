@@ -876,6 +876,274 @@ description: "Ensemble structuré de devoirs de controle 1 en Sciences de la Vie
     ]
 },
 
+
+
+{
+  id: 16,
+  title: "Pack Révision BAC – Dipôle RC",
+  description: "Cours sur le dipôle RC avec fiche de méthode et séries corrigées pour le BAC.",
+
+  files: [
+    {
+      name: "Cours – Dipôle RC",
+      url: "https://drive.google.com/file/d/1LLVCH54WILXm5LMA-6X7oKgZSoVkptxs/preview"
+    },
+    {
+      name: "Fiche de méthode – Dipôle RC",
+      url: "https://drive.google.com/file/d/1pL6CybKv8RwsHZU5hRgerNoRB6hF7GL2/preview"
+    },
+    {
+      name: "Série 1",
+      url: "https://drive.google.com/file/d/1m8l3-xBjSdjcru2sIoN_Y7XpfguxKgJh/preview"
+    },
+    {
+      name: "Correction Série 1",
+      url: "https://drive.google.com/file/d/1FcbL4h7h4pXwEy52_g_0MnHeWjDMZTDz/preview"
+    },
+    {
+      name: "Série 2",
+      url: "https://drive.google.com/file/d/1MPaRzF50ZnbKu8ujvH3NpD439-_otkOP/preview"
+    },
+    {
+      name: "Correction Série 2",
+      url: "https://drive.google.com/file/d/1D2w_izgMdgMkKkSG_GfRMAhPv7tHctbs/preview"
+    },
+    {
+      name: "Série 3",
+      url: "https://drive.google.com/file/d/1jTsfza86Rhvh6qWmOe-N8GkKQaV7Bi5B/preview"
+    },
+    {
+      name: "Correction Série 3",
+      url: "https://drive.google.com/file/d/1D43dVaGx6uUJbi_P8ejswStXHkFuHbHb/preview"
+    }
+  ]
+},
+{
+  id: 17,
+  title: "Pack Révision BAC – Dipôle RL",
+  description: "Cours + méthode + séries corrigées (Dipôle RL).",
+
+  files: [
+    {
+      name: "Cours – Dipôle RL",
+      url: "https://drive.google.com/file/d/1BcrRsf1F4MB78bSXBOnp-ISZOL6ECPH4/preview"
+    },
+    {
+      name: "Fiche de méthode – Dipôle RL",
+      url: "https://drive.google.com/file/d/12DFxwJ03tpfo-mkUysRDSuaIG-KOeHDn/preview"
+    },
+    {
+      name: "Série 1",
+      url: "https://drive.google.com/file/d/1xys-CciliPMWUcyygKM-lubiXPdaesRS/preview"
+    },
+    {
+      name: "Correction Série 1",
+      url: "https://drive.google.com/file/d/1ov8cUoCJhB_pw426A7aLVtHm77Ysusqv/preview"
+    },
+    {
+      name: "Série 2",
+      url: "https://drive.google.com/file/d/11ZVXNJ51oehqE5-GHLvEq2_Vrt6QgyBu/preview"
+    },
+    {
+      name: "Correction Série 2",
+      url: "https://drive.google.com/file/d/1d1OIIg37ogH6TmHpCTJdgaIA0lnA9j5x/preview"
+    },
+    {
+      name: "Série 3",
+      url: "https://drive.google.com/file/d/19CgIwY7SddtfjTU2T3SCDEhAQ38oyoN_/preview"
+    },
+    {
+      name: "Correction Série 3",
+      url: "https://drive.google.com/file/d/1brORJl87YBTHNUnbitU01FQhpmUKmQeR/preview"
+    },
+    {
+      name: "Série 4",
+      url: "https://drive.google.com/file/d/1Q4R7meHuvFxXe8YGCS4uls02wfdLSkzJ/preview"
+    },
+    {
+      name: "Correction Série 4",
+      url: "https://drive.google.com/file/d/1aIzaOVkNBLl03ML2RMD0EARpzXZLotDo/preview"
+    }
+  ]
+},
+{
+  id: 18,
+  title: "Pack Révision BAC – RLC Libre",
+  description: "Cours + méthode + séries corrigées (RLC amorti et non amorti).",
+
+  files: [
+    {
+      name: "Cours 1 – RLC Libre",
+      url: "https://drive.google.com/file/d/1Kx1zVKDFiqr1Xu7o1WSkA6IyCnQVQ8lu/preview"
+    },
+    {
+      name: "Cours 2 – RLC Libre",
+      url: "https://drive.google.com/file/d/114cVVqt23C5q_seu8eqeHiHCyCU3wCdh/preview"
+    },
+    {
+      name: "Fiche de méthode – RLC",
+      url: "https://drive.google.com/file/d/1JkJH94xSaonh5CqWol4QbFwqt5ySxxuJ/preview"
+    },
+    {
+      name: "Série 1",
+      url: "https://drive.google.com/file/d/1xPDfIrDwYLs3wHL10OnDxDKjTldMzvJl/preview"
+    },
+    {
+      name: "Correction Série 1",
+      url: "https://drive.google.com/file/d/1aLleGYAACAAN36Om0mjzQ2iAzgFW_M6U/preview"
+    },
+    {
+      name: "Série 2",
+      url: "https://drive.google.com/file/d/1uZozW1x4KnsFQCefONiq3KrEwtzzs-6-/preview"
+    },
+    {
+      name: "Correction Série 2",
+      url: "https://drive.google.com/file/d/1rTs4HYb1tqpG4uNeniYAZhINO7p162Qi/preview"
+    },
+    {
+      name: "Série 3",
+      url: "https://drive.google.com/file/d/1E1e2-suyJXe5sBoiRzK0Cy_k_RZTF-4F/preview"
+    },
+    {
+      name: "Correction Série 3",
+      url: "https://drive.google.com/file/d/1wowd2FUFk9W_Sv94MI4W9q76ZCqw8WnW/preview"
+    },
+    {
+      name: "Série 4",
+      url: "https://drive.google.com/file/d/1cdOWi9EnB2MsUyaIoj2YAjk8A2RQ8ZTd/preview"
+    },
+    {
+      name: "Correction Série 4",
+      url: "https://drive.google.com/file/d/1A78L5EOhdpzyG_8hPpqt-qBxeYbH68cb/preview"
+    }
+  ]
+},
+
+
+
+{
+  id: 19,
+  title: "Pack Révision BAC – Oscillations",
+  description: "Cours + méthode + séries corrigées (Oscillations).",
+
+  files: [
+    {
+      name: "Cours – Oscillations",
+      url: "https://drive.google.com/file/d/1YY_Mve9f1izU23brgz2sToOa6-E_8unt/preview"
+    },
+    {
+      name: "Fiche de méthode – Oscillations",
+      url: "https://drive.google.com/file/d/1dOZYCtT_ffFnb9AAAuZCmiOPJgiVh36X/preview"
+    },
+    {
+      name: "Série 1",
+      url: "https://drive.google.com/file/d/1jlLWFWmJDxwyNx0sndCt7FaAhc149qOi/preview"
+    },
+    {
+      name: "Correction Série 1",
+      url: "https://drive.google.com/file/d/11m1l4nTrzbONtbJshJm-k27hRuyPZ3JZ/preview"
+    },
+    {
+      name: "Série 2",
+      url: "https://drive.google.com/file/d/1P-1YwGbQuNU8FZWWKbNu2ayadNJI7Lc9/preview"
+    },
+    {
+      name: "Correction Série 2",
+      url: "https://drive.google.com/file/d/1oBfQZqN7w760MGW2xwhRcj-ZQjJcaCAF/preview"
+    },
+    {
+      name: "Série 3",
+      url: "https://drive.google.com/file/d/15grugW6vHrPwv1EJQnAMVzl53ss38DP0/preview"
+    },
+    {
+      name: "Correction Série 3",
+      url: "https://drive.google.com/file/d/19xjui9q16zwDI4Mb53ycPWQXkD4Jozhf/preview"
+    },
+    {
+      name: "Série 4",
+      url: "https://drive.google.com/file/d/15RnjncyHJpocu1KnAAfgM0Q9EvVXoVVA/preview"
+    },
+    {
+      name: "Correction Série 4",
+      url: "https://drive.google.com/file/d/12jnYi0f3H93LgblD3D22bXK6lFsPALTy/preview"
+    },
+    {
+      name: "Série 5",
+      url: "https://drive.google.com/file/d/1pj9MRQKi3sT-QQ-PNvnY_CRTKgP3hfCK/preview"
+    },
+    {
+      name: "Correction Série 5",
+      url: "https://drive.google.com/file/d/1VSMYVaxKyaBPu5YhtztJz7IwiYHzmjCd/preview"
+    }
+  ]
+},
+
+
+{
+  id: 20,
+  title: "Pack Révision BAC – Bobine",
+  description: "Séries corrigées (Bobine).",
+
+  files: [
+    {
+      name: "Série 1",
+      url: "https://drive.google.com/file/d/1JEhm3WIgtKY1LRRz_LN1PM7dBvd2hkUc/preview"
+    },
+    {
+      name: "Correction Série 1",
+      url: "https://drive.google.com/file/d/1_6CSeP6G4eUCjaD2HLRxYNn86dnQ01E5/preview"
+    },
+    {
+      name: "Série 2",
+      url: "https://drive.google.com/file/d/10YazIBjYdsh_9U0fd1w18cZtJokM01NJ/preview"
+    },
+    {
+      name: "Correction Série 2",
+      url: "https://drive.google.com/file/d/1vNYU0iiQAfer4EMsYMLUYWl9MiamqBdQ/preview"
+    }
+  ]
+},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {
     "id": 15,
     "title": "Math – Intégrale",

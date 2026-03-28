@@ -1144,6 +1144,278 @@ description: "Ensemble structuré de devoirs de controle 1 en Sciences de la Vie
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+  id: 21,
+  title: "info – Structures de Données",
+  description: "Séries corrigées (Structures de données).",
+
+  files: [
+    {
+      name: "Série 1",
+      url: "https://drive.google.com/file/d/16sw-Kexz9ENFW_JzjyGTOnYdGRECSMCb/preview"
+    },
+    {
+      name: "Correction Série 1",
+      url: "https://drive.google.com/file/d/1NQqBR3bW_8KGi4HIiVWP1j6A3nubTJBE/preview"
+    }
+  ]
+},
+{
+  id: 22,
+  title: "info – Structures de Contrôle Itératives (Complexes)",
+  description: "Séries corrigées (Boucles complexes).",
+
+  files: [
+    {
+      name: "Série 2",
+      url: "https://drive.google.com/file/d/1GaBilcwhCwDFF4KVkGuBacr4OIb_4xMD/preview"
+    },
+    {
+      name: "Correction Série 2",
+      url: "https://drive.google.com/file/d/1J3DG_1rjqg9mUQtXYwKxI_xFe2hMkvhH/preview"
+    }
+  ]
+},
+{
+  id: 23,
+  title: "info – Structures de Contrôle Itératives à Conditions",
+  description: "Séries corrigées (Boucles avec conditions).",
+
+  files: [
+    {
+      name: "Série 3",
+      url: "https://drive.google.com/file/d/10QDwNBrkWqc3B95YmJCeOpAw2I76C29A/preview"
+    },
+    {
+      name: "Correction Série 3",
+      url: "https://drive.google.com/file/d/1ZItIYC2yM0sdCDG4Bb-iQy0NM01zLG5x/preview"
+    }
+  ]
+},
+{
+  id: 24,
+  title: "info – Sous-programmes",
+  description: "Séries corrigées (Sous-programmes).",
+
+  files: [
+    {
+      name: "Série 4",
+      url: "https://drive.google.com/file/d/16-NV6kmsQxKOAX0o7JOGerRo_VRdO9-T/preview"
+    },
+    {
+      name: "Correction Série 4",
+      url: "https://drive.google.com/file/d/13gePn9rc_Dsor5qobwiPOZPvJiUDuz6u/preview"
+    }
+  ]
+},
+{
+  id: 25,
+  title: "info – Recherche Séquentielle",
+  description: "Séries corrigées (Recherche séquentielle).",
+
+  files: [
+    {
+      name: "Série 5",
+      url: "https://drive.google.com/file/d/1f5g4CC4CdsSAc9mSao6UHmiHcjeB6Wc_/preview"
+    },
+    {
+      name: "Correction Série 5",
+      url: "https://drive.google.com/file/d/1SwInNMmXz9QEN6JUw8H1RsdEe-5NzD9C/preview"
+    }
+  ]
+},
+{
+  id: 26,
+  title: "info – Exercices BAC 2020",
+  description: "Séries corrigées (BAC 2020).",
+
+  files: [
+    {
+      name: "Série 6",
+      url: "https://drive.google.com/file/d/1AYklDph4GVJ2bCwVjVJoAB77f6py_izS/preview"
+    },
+    {
+      name: "Correction Série 6",
+      url: "https://drive.google.com/file/d/1nXWKMijP1-eaLJmdE82ougXG8go6e9qG/preview"
+    }
+  ]
+},
+{
+  id: 27,
+  title: "info – Tri (Très Important)",
+  description: "Séries corrigées (Algorithmes de tri).",
+
+  files: [
+    {
+      name: "Série 7",
+      url: "https://drive.google.com/file/d/1GBm-mB0DyIUsymavHbk-dHbbw4gAdo-z/preview"
+    },
+    {
+      name: "Correction Série 7",
+      url: "https://drive.google.com/file/d/1iIavCkxpimmDChAQGYdImIVIeMRXRLoJ/preview"
+    }
+  ]
+},
+{
+  id: 28,
+  title: "info – Interface Graphique",
+  description: "Séries corrigées (Interface graphique).",
+
+  files: [
+    {
+      name: "Série 8",
+      url: "https://drive.google.com/file/d/1zWdnMq5F-o5VPzTgNvINjNVxlQNtesMF/preview"
+    },
+    {
+      name: "Correction Série 8",
+      url: "https://drive.google.com/file/d/1X1JU8rr8LGjRJTlmLRIwaSxqODGUPZVb/preview"
+    }
+  ]
+},
+{
+  id: 29,
+  title: "info – Problèmes sur les Tableaux",
+  description: "Séries corrigées (Tableaux).",
+
+  files: [
+    {
+      name: "Série 9",
+      url: "https://drive.google.com/file/d/1Zyo1H4tBpDhQeMnp9gIUFHuoxxsVsATA/preview"
+    },
+    {
+      name: "Correction Série 9",
+      url: "https://drive.google.com/file/d/17HAlQYrCa7wvxO_p3RDgeTTdnJ9R1KIr/preview"
+    }
+  ]
+},
+
+
+
+{
+  id: 30,
+  title: "BAC Pratique Informatique – Préparation",
+  description: "Prototypes corrigés pour la préparation au BAC pratique.",
+
+  files: [
+    {
+      name: "Prototype 1",
+      url: "https://drive.google.com/file/d/16A9_Dbd5sU-4KEDUrK64OjO1Y7LLi68L/preview"
+    },
+    {
+      name: "Correction Prototype 1",
+      url: "https://drive.google.com/file/d/1E1YfwV_y5lkU29i0KZtshdV7Z3AO7-2K/preview"
+    },
+    {
+      name: "Prototype 2",
+      url: "https://drive.google.com/file/d/1J6tc5RsrKyOD9Pl8kQ1J0cIgs-Gkpfar/preview"
+    },
+    {
+      name: "Correction Prototype 2",
+      url: "https://drive.google.com/file/d/1T6Yq3UuaUXGzL_tfRcI3tMgN9fSvfIB5/preview"
+    },
+    {
+      name: "Prototype 3",
+      url: "https://drive.google.com/file/d/1SX5ZiGkNRAoshyAg41H6WBwNu9H2t6Hr/preview"
+    },
+    {
+      name: "Correction Prototype 3",
+      url: "https://drive.google.com/file/d/1bUdsNA2jsbgx8r0Vea8QMAPazQNO1Dm6/preview"
+    },
+    {
+      name: "Prototype 4",
+      url: "https://drive.google.com/file/d/1-Xew969o8n-dbnjPWsynW-q3WLqy8tWu/preview"
+    },
+    {
+      name: "Correction Prototype 4",
+      url: "https://drive.google.com/file/d/1mEexGBlcxZdOPkWLMW3-JMZADjBJ7aQw/preview"
+    },
+    {
+      name: "Prototype 5",
+      url: "https://drive.google.com/file/d/1OpXhW7FGGL9bl8M7YSK6rl3wxGDe2ukj/preview"
+    },
+    {
+      name: "Correction Prototype 5",
+      url: "https://drive.google.com/file/d/1w3jg3wo82RjA8UuUawUabWjxBjPm_zsx/preview"
+    },
+    {
+      name: "Prototype 6",
+      url: "https://drive.google.com/file/d/1WdRZXCTPCetCpZ82dVLGbd38FVWCEm6M/preview"
+    },
+    {
+      name: "Correction Prototype 6",
+      url: "https://drive.google.com/file/d/1OEKphsu32xeuETA9eO8Q4WO_SBUQppvs/preview"
+    },
+    {
+      name: "Prototype 7",
+      url: "https://drive.google.com/file/d/1I8fTPad_ycpvSHCuzT2L0t5TxGAoIFot/preview"
+    },
+    {
+      name: "Correction Prototype 7",
+      url: "https://drive.google.com/file/d/1rUloRy5GRsODogrjYL3HFG-xSOmfil4o/preview"
+    },
+    {
+      name: "Prototype 8",
+      url: "https://drive.google.com/file/d/1oWe-oi44nGB-nVzTzTaDf555NlWhTGnm/preview"
+    },
+    {
+      name: "Correction Prototype 8",
+      url: "https://drive.google.com/file/d/1PF7xFZwqPjE5P0keouaMdHiYb3CsafHF/preview"
+    }
+  ]
+},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {
     "id": 15,
     "title": "Math – Intégrale",

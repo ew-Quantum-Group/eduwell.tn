@@ -112,7 +112,7 @@ const notifications = [
   cat: 'academic',
   catLbl: 'English',
   catC: '#ff453a',
-  url: '../sahlacademy/index.html',
+  url: '../SahlAcademy/index',
   icon: `<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><polygon points="10 8 16 12 10 16 10 8"/></svg>` 
 },
 { 
@@ -124,7 +124,7 @@ const notifications = [
   cat: 'academic',
   catLbl: 'English',
   catC: '#ff453a',
-  url: '../sahlacademy/index.html',
+  url: '../SahlAcademy/index',
   icon: `<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><polygon points="10 8 16 12 10 16 10 8"/></svg>` 
 },
   { 
@@ -187,7 +187,7 @@ const notifications = [
   cat: 'academic',
   catLbl: 'English',
   catC: '#ff453a',
-  url: '../sahlacademy/index.html',
+  url: '../SahlAcademy/index',
   icon: `<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><polygon points="10 8 16 12 10 16 10 8"/></svg>` 
 },
 { 
@@ -247,7 +247,7 @@ const notifications = [
   cat: 'academic',
   catLbl: 'Physique',
   catC: '#ff453a',
-  url: '../sahlacademy/index.html',
+  url: '../SahlAcademy/index',
   icon: `<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><polygon points="10 8 16 12 10 16 10 8"/></svg>` 
 },
   
@@ -273,7 +273,7 @@ const notifications = [
   cat: 'platform',
   catLbl: 'INFO',
   catC: '#059669',
-  url: '../sahl haven/index.html',
+  url: '../Sahl Haven/index',
   icon: `<svg viewBox="0 0 24 24">
            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
            <polyline points="14 2 14 8 20 8"/>
@@ -291,7 +291,7 @@ const notifications = [
   cat: 'platform',
   catLbl: 'INFO',
   catC: '#059669',
-  url: '../sahl haven/index.html',
+  url: '../Sahl Haven/index',
   icon: `<svg viewBox="0 0 24 24">
            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
            <polyline points="14 2 14 8 20 8"/>
@@ -326,7 +326,7 @@ const notifications = [
   cat: 'unread',
   catLbl: 'SVT',
   catC: '#F57C00',
-  url: '../svtapp/index.html',
+  url: '../svtapp/index',
   icon: `<svg viewBox="0 0 24 24">
            <path d="M22 17H2a3 3 0 003-3V9a7 7 0 0114 0v5a3 3 0 003 3z"/>
            <path d="M13.73 21a2 2 0 01-3.46 0"/>
@@ -342,7 +342,7 @@ const notifications = [
   cat: 'all',
   catLbl: 'Plateforme',
   catC: '#7C3AED',
-  url: '../speakwell/index.html',
+  url: '../speakwell/index',
   icon: `<svg viewBox="0 0 24 24">
            <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/>
            <path d="M19 10v2a7 7 0 01-14 0v-2"/>

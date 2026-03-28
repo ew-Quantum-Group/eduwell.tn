@@ -880,7 +880,7 @@ description: "Ensemble structuré de devoirs de controle 1 en Sciences de la Vie
 
 {
   id: 16,
-  title: "Pack Révision BAC – Dipôle RC",
+  title: "RC - Pack Révision BAC – Dipôle RC",
   description: "Cours sur le dipôle RC avec fiche de méthode et séries corrigées pour le BAC.",
 
   files: [
@@ -920,7 +920,7 @@ description: "Ensemble structuré de devoirs de controle 1 en Sciences de la Vie
 },
 {
   id: 17,
-  title: "Pack Révision BAC – Dipôle RL",
+  title: "RL - Pack Révision BAC – Dipôle RL",
   description: "Cours + méthode + séries corrigées (Dipôle RL).",
 
   files: [
@@ -968,7 +968,7 @@ description: "Ensemble structuré de devoirs de controle 1 en Sciences de la Vie
 },
 {
   id: 18,
-  title: "Pack Révision BAC – RLC Libre",
+  title: "RLC - Pack Révision BAC – RLC Libre",
   description: "Cours + méthode + séries corrigées (RLC amorti et non amorti).",
 
   files: [
@@ -1023,7 +1023,7 @@ description: "Ensemble structuré de devoirs de controle 1 en Sciences de la Vie
 
 {
   id: 19,
-  title: "Pack Révision BAC – Oscillations",
+  title: "Force - Pack Révision BAC – Oscillations",
   description: "Cours + méthode + séries corrigées (Oscillations).",
 
   files: [
@@ -1081,7 +1081,7 @@ description: "Ensemble structuré de devoirs de controle 1 en Sciences de la Vie
 
 {
   id: 20,
-  title: "Pack Révision BAC – Bobine",
+  title: "Bobine - Pack Révision BAC – Bobine",
   description: "Séries corrigées (Bobine).",
 
   files: [

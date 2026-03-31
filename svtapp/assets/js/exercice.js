@@ -905,7 +905,7 @@ const COURS_DATA = [
     color: "teal",
     icon: "fa-shield-virus",
     lessons: 1,
-    url: "https://drive.google.com/file/d/#/preview"
+    url: "https://drive.google.com/file/d/1O2dV9hUP4JuKRgAHcEgP-ohtLxbIoPM6/preview"
   }
 ];
 

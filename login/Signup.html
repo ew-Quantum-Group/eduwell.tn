@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
+<head><head>
     
      <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNTBT1VQN7"></script>
@@ -667,7 +667,7 @@ function goToStep(step){
 
 function validateStep1(){
   const fn=firstNameInput.value.trim(),ln=lastNameInput.value.trim(),em=emailInput.value.trim(),ph=phoneInput.value.trim();
-  const ok=fn.length>=2&&ln.length>=2&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)&&/^[\d\s\-\+\(\)]{8,}$/.test(ph);
+  const phoneDigits=ph.replace(/\D/g,'');const ok=fn.length>=2&&ln.length>=2&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)&&phoneDigits.length>=8;
   nextStep1Btn.disabled=!ok;return ok;
 }
 
@@ -677,7 +677,7 @@ function showValidation(input){
     case 'firstName':isValid=v.length>=2;message=isValid?'Prénom valide':'Au moins 2 caractères';el=document.getElementById('firstNameValidation');break;
     case 'lastName':isValid=v.length>=2;message=isValid?'Nom valide':'Au moins 2 caractères';el=document.getElementById('lastNameValidation');break;
     case 'email':isValid=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);message=isValid?'Email valide':'Format invalide';el=document.getElementById('emailValidation');break;
-    case 'phone':isValid=/^[\d\s\-\+\(\)]{8,}$/.test(v);message=isValid?'Numéro valide':'Numéro invalide';el=document.getElementById('phoneValidation');break;
+    case 'phone':{const d=v.replace(/\D/g,'');isValid=d.length>=8;message=isValid?'Numéro valide':'Numéro invalide';el=document.getElementById('phoneValidation');break;}
   }
   if(el){el.textContent=message;el.className='vm '+(isValid?'ok':'bad');setTimeout(()=>el.classList.add('show'),10);input.classList.remove('ok','bad');input.classList.add(isValid?'ok':'bad');}
 }
@@ -731,7 +731,7 @@ function showVM(id,msg,type){
   const el=document.getElementById(id);el.textContent=msg;el.className='vm '+type;setTimeout(()=>el.classList.add('show'),10);
 }
 
-function isValidWhatsAppNumber(n){const c=n.replace(/\D/g,'');return c.length>=8&&['2','4','5','9'].includes(c.charAt(0));}
+function isValidWhatsAppNumber(n){const c=n.replace(/\D/g,'');return c.length>=8;}
 function isValidGrade(g){const n=parseFloat(g);return!isNaN(n)&&n>=0&&n<=20&&/^\d+(\.\d{1,2})?$/.test(g);}
 
 async function sendEmailWithFormSubmit(userData){
@@ -794,4 +794,12 @@ function resetForm(){
 
 gradeInputs.forEach(input=>{
   input.addEventListener('keydown',e=>{
-    if([46,8,9,27,13,110,190,189].includes(e.keyCode)||(e.keyCode===65&&e.ctrlKey)||(e.keyCode===67&&e.ctrlKey)||(e.keyCode===86&&e.ctrlKey)||(e.keyCode===88&&e.ctrlKey)||(e.ke
+    if([46,8,9,27,13,110,190,189].includes(e.keyCode)||(e.keyCode===65&&e.ctrlKey)||(e.keyCode===67&&e.ctrlKey)||(e.keyCode===86&&e.ctrlKey)||(e.keyCode===88&&e.ctrlKey)||(e.keyCode>=35&&e.keyCode<=39)) return;
+    if((e.shiftKey||(e.keyCode<48||e.keyCode>57))&&(e.keyCode<96||e.keyCode>105)) e.preventDefault();
+  });
+});
+
+document.addEventListener('DOMContentLoaded', initForm);
+</script>
+</body>
+</html>

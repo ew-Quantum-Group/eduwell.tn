@@ -1,378 +1,608 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Inscriptions fermées — Sahl Learn</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+     <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNTBT1VQN7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-FNTBT1VQN7');
+    </script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Login | SahlLearn</title>
+<link rel="shortcut icon" href="./assets/images/app-store.png" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --white: #ffffff; --near-white: #f9f9f8; --surface: #f4f4f2; --surface-2: #eeede9;
+  --border: rgba(0,0,0,0.08); --border-mid: rgba(0,0,0,0.13);
+  --ink: #111110; --ink-2: #3d3d3a; --ink-3: #7a7a76; --ink-4: #b0b0aa;
+  --blue: #1a6ef5; --blue-deep: #1258d6; --blue-soft: rgba(26,110,245,0.08);
+  --green: #0aab6a;
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-lg: 0 20px 56px rgba(0,0,0,0.10), 0 6px 16px rgba(0,0,0,0.05);
+  --shadow-xl: 0 36px 88px rgba(0,0,0,0.13), 0 10px 28px rgba(0,0,0,0.06);
+  --r-xs:8px; --r-sm:12px; --r-md:18px; --r-lg:24px; --r-xl:32px; --r-full:999px;
+  --ease: cubic-bezier(0.4,0,0.2,1); --spring: cubic-bezier(0.34,1.56,0.64,1);
+  --t: 0.22s; --ts: 0.4s;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Manrope', sans-serif; background: var(--white); color: var(--ink); -webkit-font-smoothing: antialiased; min-height: 100vh; overflow-x: hidden; }
+.page { display: none; min-height: 100vh; }
+.page.active { display: block; animation: pgIn 0.38s var(--ease) both; }
+@keyframes pgIn { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-    :root {
-      --white:   #ffffff;
-      --off:     #f9f9f7;
-      --border:  #e6e6e2;
-      --border2: #efefec;
-      --ink:     #0f0f0f;
-      --ink2:    #3a3a3a;
-      --muted:   #888882;
-      --faint:   #c8c8c4;
-      --gold:    #b5883a;
-      --gold-bg: #faf5eb;
-      --gold-br: #e8d9ad;
-      --shadow:  0 2px 6px rgba(0,0,0,0.04), 0 8px 32px rgba(0,0,0,0.07), 0 32px 64px rgba(0,0,0,0.05);
-    }
+/* NAVBAR */
+.navbar {
+  position: fixed; top:0; left:0; right:0; z-index:200; height:60px;
+  display:flex; align-items:center; justify-content:space-between; padding:0 48px;
+  background:rgba(255,255,255,0.9); backdrop-filter:blur(24px) saturate(160%);
+  -webkit-backdrop-filter:blur(24px) saturate(160%); border-bottom:1px solid var(--border);
+}
+.nb-logo { font-family:'Sora',sans-serif; font-size:17px; font-weight:700; letter-spacing:-0.4px; color:var(--ink); cursor:pointer; display:flex; align-items:center; gap:8px; transition:opacity var(--t) var(--ease); }
+.nb-logo:hover { opacity:0.6; }
+.nb-dot { width:7px; height:7px; border-radius:50%; background:var(--blue); }
+.nb-links { display:flex; align-items:center; gap:4px; }
+.nb-link { font-family:'Manrope',sans-serif; font-size:13.5px; font-weight:500; color:var(--ink-2); background:none; border:none; cursor:pointer; padding:7px 14px; border-radius:var(--r-full); transition:all var(--t) var(--ease); }
+.nb-link:hover { background:var(--surface); color:var(--ink); }
+.nb-cta { font-family:'Manrope',sans-serif; font-size:13.5px; font-weight:600; color:#fff; background:var(--ink); border:none; cursor:pointer; padding:8px 20px; border-radius:var(--r-full); transition:all var(--t) var(--ease); }
+.nb-cta:hover { background:var(--ink-2); transform:translateY(-1px); box-shadow:0 4px 14px rgba(0,0,0,0.18); }
 
-    html { height: 100%; }
+/* BUTTONS */
+.btn-ink { font-family:'Manrope',sans-serif; font-size:15px; font-weight:600; letter-spacing:-0.2px; padding:14px 32px; border-radius:var(--r-full); background:var(--ink); color:#fff; border:none; cursor:pointer; transition:all var(--t) var(--ease); box-shadow:0 2px 14px rgba(0,0,0,0.15); }
+.btn-ink:hover { background:var(--ink-2); transform:translateY(-2px); box-shadow:0 8px 28px rgba(0,0,0,0.22); }
+.btn-outline { font-family:'Manrope',sans-serif; font-size:15px; font-weight:600; letter-spacing:-0.2px; padding:13px 32px; border-radius:var(--r-full); background:transparent; color:var(--ink); border:1.5px solid var(--border-mid); cursor:pointer; transition:all var(--t) var(--ease); }
+.btn-outline:hover { background:var(--near-white); transform:translateY(-2px); box-shadow:var(--shadow-sm); }
 
-    body {
-      min-height: 100vh;
-      background: var(--off);
-      background-image:
-        radial-gradient(ellipse 900px 600px at 30% 20%, rgba(240,234,220,0.55) 0%, transparent 70%),
-        radial-gradient(ellipse 700px 500px at 80% 85%, rgba(220,230,240,0.3) 0%, transparent 70%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Inter', sans-serif;
-      padding: 48px 20px;
-      position: relative;
-    }
+/* LANDING */
+#page-landing { background:var(--white); }
+.lp-hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:100px 32px 60px; position:relative; overflow:hidden; }
+.lp-glow { position:absolute; width:700px; height:700px; border-radius:50%; background:radial-gradient(circle, rgba(26,110,245,0.07) 0%, transparent 65%); top:-100px; left:50%; transform:translateX(-50%); z-index:0; }
+.lp-hero-inner { position:relative; z-index:1; max-width:760px; }
+.hero-label { display:inline-flex; align-items:center; gap:7px; font-size:11px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:var(--blue); background:var(--blue-soft); border:1px solid rgba(26,110,245,0.14); padding:5px 13px; border-radius:var(--r-full); margin-bottom:36px; animation:fadeUp 0.5s var(--ease) both; }
+.hero-label-dot { width:5px; height:5px; border-radius:50%; background:var(--blue); animation:blink 1.8s infinite; }
+.hero-h1 { font-family:'Sora',sans-serif; font-size:clamp(48px,8.5vw,96px); font-weight:700; letter-spacing:-3.5px; line-height:1.0; color:var(--ink); margin-bottom:26px; animation:fadeUp 0.55s var(--ease) 0.08s both; }
+.hero-h1 span { background:linear-gradient(135deg, var(--blue) 0%, #5b9bff 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.hero-p { font-size:clamp(16px,2.2vw,19px); font-weight:300; line-height:1.65; color:var(--ink-3); max-width:480px; margin:0 auto 44px; animation:fadeUp 0.55s var(--ease) 0.15s both; }
+.hero-btns { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; animation:fadeUp 0.55s var(--ease) 0.22s both; }
+.trust-bar { display:flex; align-items:center; justify-content:center; gap:28px; flex-wrap:wrap; margin-top:56px; padding-top:40px; border-top:1px solid var(--border); animation:fadeUp 0.55s var(--ease) 0.35s both; }
+.trust-item { display:flex; align-items:center; gap:7px; }
+.trust-item span { font-size:13px; font-weight:500; color:var(--ink-3); }
+.trust-icon { color:var(--ink-4); }
 
-    /* subtle dot grid */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: radial-gradient(circle, #c8c8be 1px, transparent 1px);
-      background-size: 28px 28px;
-      opacity: 0.35;
-      pointer-events: none;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
-    }
+.lp-features { padding:100px 48px; background:var(--near-white); border-top:1px solid var(--border); }
+.sec-hd { text-align:center; margin-bottom:60px; }
+.sec-eye { font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--blue); margin-bottom:14px; }
+.sec-title { font-family:'Sora',sans-serif; font-size:clamp(28px,4vw,42px); font-weight:700; letter-spacing:-1.5px; color:var(--ink); margin-bottom:14px; }
+.sec-sub { font-size:16px; font-weight:300; color:var(--ink-3); max-width:440px; margin:0 auto; line-height:1.6; }
+.feats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:1000px; margin:0 auto; }
+.feat-card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); padding:32px 28px; transition:all var(--ts) var(--ease); }
+.feat-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-lg); border-color:transparent; }
+.feat-icon { width:44px; height:44px; border-radius:var(--r-sm); background:var(--blue-soft); display:flex; align-items:center; justify-content:center; margin-bottom:20px; color:var(--blue); }
+.feat-title { font-family:'Sora',sans-serif; font-size:16px; font-weight:600; letter-spacing:-0.4px; color:var(--ink); margin-bottom:8px; }
+.feat-desc { font-size:13.5px; color:var(--ink-3); line-height:1.6; }
 
-    /* ── Logo / wordmark ── */
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 48px;
-      opacity: 0;
-      animation: up 0.6s ease 0s forwards;
-    }
+.lp-stats { padding:88px 48px; background:var(--ink); }
+.stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; max-width:860px; margin:0 auto; background:rgba(255,255,255,0.08); border-radius:var(--r-xl); overflow:hidden; }
+.stat-item { background:var(--ink); padding:40px 32px; text-align:center; }
+.stat-num { font-family:'Sora',sans-serif; font-size:clamp(36px,5vw,52px); font-weight:700; letter-spacing:-2px; color:#fff; margin-bottom:6px; }
+.stat-num span { color:var(--blue); }
+.stat-lbl { font-size:13px; color:rgba(255,255,255,0.45); }
 
-    .brand-mark {
-      width: 34px; height: 34px;
-      background: var(--ink);
-      border-radius: 9px;
-      display: flex; align-items: center; justify-content: center;
-    }
+.lp-how { padding:100px 48px; background:var(--white); }
+.steps-row { display:flex; gap:0; max-width:860px; margin:0 auto; position:relative; }
+.steps-row::before { content:''; position:absolute; top:27px; left:calc(16.66% + 14px); right:calc(16.66% + 14px); height:1px; background:var(--border); z-index:0; }
+.step { flex:1; text-align:center; padding:0 16px; }
+.step-num { width:54px; height:54px; border-radius:50%; background:var(--white); border:1.5px solid var(--border-mid); display:flex; align-items:center; justify-content:center; font-family:'Sora',sans-serif; font-size:18px; font-weight:700; color:var(--ink); margin:0 auto 20px; position:relative; z-index:1; transition:all var(--t) var(--ease); }
+.step:hover .step-num { background:var(--blue); border-color:var(--blue); color:#fff; transform:scale(1.08); }
+.step-title { font-family:'Sora',sans-serif; font-size:15px; font-weight:600; color:var(--ink); margin-bottom:8px; letter-spacing:-0.3px; }
+.step-desc { font-size:13px; color:var(--ink-3); line-height:1.55; }
 
-    .brand-mark svg { width: 18px; height: 18px; }
+.lp-cta { padding:100px 48px; text-align:center; background:var(--near-white); border-top:1px solid var(--border); }
+.cta-box { max-width:620px; margin:0 auto; background:var(--white); border:1px solid var(--border); border-radius:var(--r-xl); padding:60px 48px; box-shadow:var(--shadow-lg); }
+.cta-title { font-family:'Sora',sans-serif; font-size:clamp(28px,4vw,40px); font-weight:700; letter-spacing:-1.5px; color:var(--ink); margin-bottom:14px; }
+.cta-sub { font-size:16px; font-weight:300; color:var(--ink-3); margin-bottom:32px; line-height:1.6; }
 
-    .brand-name {
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-    }
+.lp-footer { padding:32px 48px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+.footer-logo { font-family:'Sora',sans-serif; font-size:15px; font-weight:700; color:var(--ink); }
+.footer-copy { font-size:12.5px; color:var(--ink-4); }
+.footer-links { display:flex; gap:20px; }
+.footer-links a { font-size:12.5px; color:var(--ink-3); text-decoration:none; cursor:pointer; transition:color var(--t); }
+.footer-links a:hover { color:var(--ink); }
 
-    /* ── Card ── */
-    .card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      width: 100%;
-      max-width: 560px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(24px);
-      animation: up 0.8s cubic-bezier(0.16,1,0.3,1) 0.15s forwards;
-    }
+/* HOME PORTAL */
+#page-home { display:none; min-height:100vh; background:var(--white); flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:100px 32px 80px; position:relative; overflow:hidden; }
+.home-glow { position:absolute; width:800px; height:800px; border-radius:50%; background:radial-gradient(circle, rgba(26,110,245,0.06) 0%, transparent 65%); top:-120px; left:50%; transform:translateX(-50%); z-index:0; }
+.home-inner { position:relative; z-index:1; max-width:680px; }
+.home-chip { display:inline-flex; align-items:center; gap:7px; font-size:11px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:var(--blue); background:var(--blue-soft); border:1px solid rgba(26,110,245,0.14); padding:5px 14px; border-radius:var(--r-full); margin-bottom:32px; animation:fadeUp 0.5s var(--ease) both; }
+.home-chip-dot { width:5px; height:5px; border-radius:50%; background:var(--blue); animation:blink 1.8s infinite; }
+.home-h1 { font-family:'Sora',sans-serif; font-size:clamp(52px,9vw,100px); font-weight:700; letter-spacing:-3.5px; line-height:1.0; color:var(--ink); margin-bottom:22px; animation:fadeUp 0.55s var(--ease) 0.08s both; }
+.home-h1 b { color:var(--blue); }
+.home-sub { font-size:clamp(16px,2vw,19px); font-weight:300; color:var(--ink-3); max-width:440px; margin:0 auto 44px; line-height:1.65; animation:fadeUp 0.55s var(--ease) 0.15s both; }
+.home-btns { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; animation:fadeUp 0.55s var(--ease) 0.22s both; }
 
-    /* top accent bar */
-    .card-top-bar {
-      height: 3px;
-      background: linear-gradient(90deg, #d4b56a 0%, #e8cfa0 40%, #c8a84e 70%, #f0d890 100%);
-    }
+/* LOGIN */
+#page-login { display:none; min-height:100vh; background:var(--near-white); align-items:center; justify-content:center; padding:80px 24px; }
+.lc-card { width:100%; max-width:400px; background:var(--white); border:1px solid var(--border); border-radius:var(--r-xl); padding:48px 44px; box-shadow:var(--shadow-xl); animation:cardIn 0.5s var(--spring) both; }
+@keyframes cardIn { from{opacity:0;transform:scale(0.95) translateY(18px)} to{opacity:1;transform:scale(1) translateY(0)} }
+.lc-logo { font-family:'Sora',sans-serif; font-size:20px; font-weight:700; color:var(--ink); margin-bottom:4px; display:flex; align-items:center; gap:7px; }
+.lc-logo-dot { width:7px; height:7px; border-radius:50%; background:var(--blue); }
+.lc-sub { font-size:13.5px; color:var(--ink-3); margin-bottom:36px; }
+.lc-label { font-size:12.5px; font-weight:600; color:var(--ink-2); margin-bottom:6px; display:block; }
+.lc-input { width:100%; padding:11px 14px; border-radius:var(--r-sm); border:1.5px solid var(--border-mid); background:var(--near-white); font-family:'Manrope',sans-serif; font-size:14.5px; color:var(--ink); outline:none; transition:all var(--t) var(--ease); margin-bottom:14px; }
+.lc-input::placeholder { color:var(--ink-4); }
+.lc-input:focus { border-color:var(--blue); background:var(--white); box-shadow:0 0 0 3.5px var(--blue-soft); }
+.lc-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+.lc-forgot { font-size:12.5px; color:var(--blue); font-weight:500; text-decoration:none; cursor:pointer; transition:opacity var(--t); }
+.lc-forgot:hover { opacity:0.6; }
+.lc-btn { width:100%; padding:13px; margin-top:20px; background:var(--ink); color:#fff; border:none; border-radius:var(--r-sm); font-family:'Manrope',sans-serif; font-size:14.5px; font-weight:600; cursor:pointer; transition:all var(--t) var(--ease); }
+.lc-btn:hover { background:var(--ink-2); transform:translateY(-1px); box-shadow:0 6px 22px rgba(0,0,0,0.18); }
+.lc-div { display:flex; align-items:center; gap:10px; margin:20px 0 4px; }
+.lc-div::before,.lc-div::after { content:''; flex:1; height:1px; background:var(--border); }
+.lc-div span { font-size:11.5px; color:var(--ink-4); }
+.lc-back { display:flex; align-items:center; justify-content:center; gap:5px; font-size:13px; font-weight:500; color:var(--ink-3); cursor:pointer; transition:color var(--t); margin-top:14px; }
+.lc-back:hover { color:var(--ink); }
+.lc-back svg { transition:transform var(--t); }
+.lc-back:hover svg { transform:translateX(-3px); }
 
-    .card-body {
-      padding: 52px 56px 56px;
-      text-align: center;
-    }
+/* OFFERS */
+#page-offers { min-height:100vh; background:var(--near-white); }
+.off-wrap { padding:90px 32px 80px; max-width:940px; margin:0 auto; }
+.off-top { text-align:center; margin-bottom:44px; }
+.off-h { font-family:'Sora',sans-serif; font-size:clamp(30px,5vw,46px); font-weight:700; letter-spacing:-1.8px; color:var(--ink); margin-bottom:10px; animation:fadeUp 0.5s var(--ease) both; }
+.off-s { font-size:16px; font-weight:300; color:var(--ink-3); animation:fadeUp 0.5s var(--ease) 0.08s both; }
+.recover-btn { display:inline-flex; align-items:center; gap:7px; font-family:'Manrope',sans-serif; font-size:13.5px; font-weight:600; color:var(--ink-2); background:var(--white); border:1.5px solid var(--border-mid); border-radius:var(--r-full); padding:9px 20px; cursor:pointer; transition:all var(--t) var(--ease); box-shadow:var(--shadow-xs); margin-bottom:36px; animation:fadeUp 0.5s var(--ease) 0.15s both; }
+.recover-btn:hover { transform:translateY(-2px); box-shadow:var(--shadow-sm); }
+.off-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; animation:fadeUp 0.5s var(--ease) 0.2s both; }
+.ocard { background:var(--white); border:1px solid var(--border); border-radius:var(--r-xl); overflow:hidden; box-shadow:var(--shadow-sm); transition:all var(--ts) var(--ease); }
+.ocard:hover { transform:translateY(-5px); box-shadow:var(--shadow-xl); }
+.ocard-top { padding:32px 28px 26px; position:relative; overflow:hidden; }
+.ocard:nth-child(1) .ocard-top { background:linear-gradient(140deg,#f0f5ff 0%,#e9f0ff 100%); }
+.ocard:nth-child(2) .ocard-top { background:linear-gradient(140deg,#f0faf5 0%,#e8f8f0 100%); }
+.ocard-blob { position:absolute; width:160px; height:160px; border-radius:50%; top:-40px; right:-40px; }
+.ocard:nth-child(1) .ocard-blob { background:radial-gradient(circle,rgba(26,110,245,0.12),transparent 70%); }
+.ocard:nth-child(2) .ocard-blob { background:radial-gradient(circle,rgba(10,171,106,0.12),transparent 70%); }
+.ocard-badge { display:inline-block; font-size:10px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; padding:3px 9px; border-radius:4px; margin-bottom:14px; }
+.ocard:nth-child(1) .ocard-badge { background:rgba(26,110,245,0.1); color:var(--blue); }
+.ocard:nth-child(2) .ocard-badge { background:rgba(10,171,106,0.1); color:var(--green); }
+.ocard-name { font-family:'Sora',sans-serif; font-size:24px; font-weight:700; letter-spacing:-0.8px; color:var(--ink); margin-bottom:6px; }
+.ocard-tag { font-size:13px; color:var(--ink-3); line-height:1.5; }
+.ocard-body { padding:22px 28px 28px; }
+.ocard-price { display:flex; align-items:baseline; gap:4px; margin-bottom:18px; }
+.ocard-price-main { font-family:'Sora',sans-serif; font-size:40px; font-weight:700; letter-spacing:-2px; color:var(--ink); }
+.ocard-price-note { font-size:13px; color:var(--ink-4); }
+.ocard-list { list-style:none; margin-bottom:22px; }
+.ocard-list li { display:flex; align-items:center; gap:9px; font-size:13.5px; color:var(--ink-2); padding:7px 0; border-bottom:1px solid var(--border); }
+.ocard-list li:last-child { border:none; }
+.ocard-list li svg { flex-shrink:0; }
+.ocard:nth-child(1) .ocard-list li svg { color:var(--blue); }
+.ocard:nth-child(2) .ocard-list li svg { color:var(--green); }
+.ocard-cta { width:100%; padding:12px; font-family:'Manrope',sans-serif; font-size:14.5px; font-weight:600; border:none; border-radius:var(--r-sm); cursor:pointer; transition:all var(--t) var(--ease); }
+.ocard:nth-child(1) .ocard-cta { background:var(--blue); color:#fff; }
+.ocard:nth-child(1) .ocard-cta:hover { background:var(--blue-deep); transform:translateY(-1px); }
+.ocard:nth-child(2) .ocard-cta { background:var(--green); color:#fff; }
+.ocard:nth-child(2) .ocard-cta:hover { background:#0a9960; transform:translateY(-1px); }
 
-    /* ── Status pill ── */
-    .status {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--gold-bg);
-      border: 1px solid var(--gold-br);
-      border-radius: 100px;
-      padding: 6px 14px 6px 10px;
-      margin-bottom: 32px;
-    }
+/* MODAL */
+.overlay { position:fixed; inset:0; z-index:300; background:rgba(10,10,10,0.5); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); display:flex; align-items:center; justify-content:center; padding:24px; opacity:0; visibility:hidden; transition:opacity 0.3s var(--ease),visibility 0.3s var(--ease); }
+.overlay.open { opacity:1; visibility:visible; }
+.modal { background:var(--white); border-radius:var(--r-xl); width:100%; max-width:660px; max-height:86vh; overflow-y:auto; box-shadow:var(--shadow-xl); border:1px solid var(--border); transform:scale(0.93) translateY(20px); transition:transform 0.4s var(--spring); }
+.overlay.open .modal { transform:scale(1) translateY(0); }
+.modal-hd { display:flex; justify-content:space-between; align-items:flex-start; padding:30px 32px 22px; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--white); z-index:1; border-radius:var(--r-xl) var(--r-xl) 0 0; }
+.modal-eye { font-size:10.5px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:var(--blue); margin-bottom:3px; }
+.modal-title { font-family:'Sora',sans-serif; font-size:22px; font-weight:700; letter-spacing:-0.6px; color:var(--ink); }
+.modal-x { width:30px; height:30px; border-radius:50%; background:var(--surface); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all var(--t) var(--ease); }
+.modal-x:hover { background:var(--surface-2); transform:scale(1.1); }
+.modal-bd { padding:24px 32px 32px; }
+.modal-intro { font-size:14px; color:var(--ink-3); line-height:1.65; margin-bottom:24px; }
+.vids-lbl { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--ink-4); margin-bottom:12px; }
+.vid-list { display:flex; flex-direction:column; gap:10px; }
+.vid-item { border:1px solid var(--border); border-radius:var(--r-md); background:var(--near-white); overflow:hidden; cursor:pointer; transition:all var(--t) var(--ease); }
+.vid-item:hover { border-color:var(--border-mid); }
+.vid-item.vopen { border-color:rgba(26,110,245,0.25); box-shadow:0 0 0 3px var(--blue-soft); background:var(--white); }
+.vid-hd { display:flex; align-items:center; gap:12px; padding:13px 15px; }
+.vid-ico { width:44px; height:34px; border-radius:var(--r-xs); background:var(--blue-soft); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--blue); }
+.vid-meta { flex:1; }
+.vid-title { font-size:13.5px; font-weight:600; color:var(--ink); margin-bottom:1px; }
+.vid-dur { font-size:12px; color:var(--ink-4); }
+.vid-chev { color:var(--ink-4); flex-shrink:0; transition:transform var(--t) var(--ease); }
+.vid-item.vopen .vid-chev { transform:rotate(180deg); color:var(--blue); }
+.vid-embed { display:none; padding:0 12px 12px; }
+.vid-item.vopen .vid-embed { display:block; }
+.vid-embed iframe { width:100%; aspect-ratio:16/9; border:none; border-radius:var(--r-sm); }
+.modal-note { margin-top:20px; padding:14px 18px; background:var(--blue-soft); border:1px solid rgba(26,110,245,0.13); border-radius:var(--r-sm); display:flex; gap:10px; align-items:flex-start; }
+.modal-note svg { flex-shrink:0; margin-top:1px; color:var(--blue); }
+.modal-note p { font-size:13px; color:var(--ink-2); line-height:1.55; }
+.modal-note p strong { font-weight:600; }
 
-    .status-dot-wrap {
-      position: relative;
-      width: 8px; height: 8px;
-    }
-
-    .status-dot {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      background: var(--gold);
-    }
-
-    .status-dot-ring {
-      position: absolute;
-      inset: -3px;
-      border-radius: 50%;
-      border: 1.5px solid var(--gold);
-      opacity: 0;
-      animation: ripple 2.4s ease-out infinite;
-    }
-
-    @keyframes ripple {
-      0%   { opacity: 0.7; transform: scale(0.6); }
-      100% { opacity: 0;   transform: scale(1.8); }
-    }
-
-    .status-text {
-      font-size: 11.5px;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-
-    /* ── Icon ── */
-    .icon-wrap {
-      width: 72px; height: 72px;
-      margin: 0 auto 28px;
-      background: var(--off);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-    }
-
-    /* ── Heading ── */
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 500;
-      font-size: clamp(24px, 4.5vw, 36px);
-      line-height: 1.18;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-      margin-bottom: 20px;
-    }
-
-    /* ── Divider ── */
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 0 auto 24px;
-      width: fit-content;
-    }
-
-    .divider-line {
-      width: 40px; height: 1px;
-      background: var(--border);
-    }
-
-    .divider-diamond {
-      width: 5px; height: 5px;
-      background: var(--gold);
-      transform: rotate(45deg);
-      flex-shrink: 0;
-    }
-
-    /* ── Body text ── */
-    p {
-      font-size: 15.5px;
-      line-height: 1.8;
-      color: var(--muted);
-      font-weight: 300;
-      max-width: 400px;
-      margin: 0 auto 40px;
-    }
-
-    /* ── CTA button ── */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      background: var(--ink);
-      color: var(--white);
-      text-decoration: none;
-      font-family: 'Inter', sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.005em;
-      padding: 14px 28px;
-      border-radius: 12px;
-      transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.12);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 60%);
-    }
-
-    .btn:hover {
-      transform: translateY(-3px) scale(1.015);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.08), 0 12px 28px rgba(0,0,0,0.18);
-      background: #1c1c1c;
-    }
-
-    .btn:active { transform: translateY(-1px) scale(1); }
-
-    .btn-arrow {
-      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
-      font-size: 15px;
-      line-height: 1;
-    }
-
-    .btn:hover .btn-arrow { transform: translateX(4px); }
-
-    /* ── Card footer ── */
-    .card-footer {
-      border-top: 1px solid var(--border2);
-      padding: 18px 56px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      background: var(--off);
-    }
-
-    .card-footer-icon {
-      font-size: 13px;
-      opacity: 0.5;
-    }
-
-    .card-footer-text {
-      font-size: 12.5px;
-      color: var(--faint);
-      font-weight: 400;
-    }
-
-    /* ── Page footer ── */
-    .page-footer {
-      margin-top: 36px;
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      opacity: 0;
-      animation: up 0.6s ease 0.7s forwards;
-    }
-
-    .page-footer a {
-      font-size: 12px;
-      color: var(--faint);
-      text-decoration: none;
-      font-weight: 400;
-      transition: color 0.2s;
-    }
-
-    .page-footer a:hover { color: var(--muted); }
-
-    .page-footer-sep {
-      width: 3px; height: 3px;
-      background: var(--faint);
-      border-radius: 50%;
-    }
-
-    /* ── Animation ── */
-    @keyframes up {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 520px) {
-      .card-body    { padding: 40px 28px 44px; }
-      .card-footer  { padding: 16px 28px; }
-      .page-footer  { flex-direction: column; gap: 10px; }
-      .page-footer-sep { display: none; }
-    }
-  </style>
+@media (max-width:700px) {
+  .navbar { padding:0 20px; } .nb-link { display:none; }
+  .feats-grid,.stats-grid { grid-template-columns:1fr; }
+  .steps-row { flex-direction:column; gap:28px; } .steps-row::before { display:none; }
+  .off-grid { grid-template-columns:1fr; } .lc-card { padding:36px 28px; }
+  .modal-hd { padding:22px 22px 18px; } .modal-bd { padding:18px 22px 26px; }
+  .cta-box { padding:44px 28px; }
+  .lp-features,.lp-how,.lp-cta,.lp-stats { padding:72px 24px; }
+  .lp-footer { padding:28px 24px; flex-direction:column; gap:10px; text-align:center; }
+  .footer-links { justify-content:center; }
+  .hero-btns,.home-btns { flex-direction:column; align-items:center; }
+  .btn-ink,.btn-outline { width:100%; max-width:300px; }
+}
+</style>
 </head>
 <body>
 
-  <!-- Brand -->
-  <div class="brand" aria-label="Sahl Learn">
-    <div class="brand-mark">
-      <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M9 2L3 5.5V12.5L9 16L15 12.5V5.5L9 2Z" stroke="white" stroke-width="1.4" stroke-linejoin="round" fill="none"/>
-        <path d="M9 6.5L6 8.25V11.75L9 13.5L12 11.75V8.25L9 6.5Z" fill="white" opacity="0.6"/>
-      </svg>
-    </div>
-    <span class="brand-name">Sahl Learn</span>
+<nav class="navbar">
+  <div class="nb-logo" onclick="goTo('landing')"><div class="nb-dot"></div>Sahl</div>
+  <div class="nb-links">
+    <button class="nb-link" onclick="goTo('landing')">Accueil</button>
+    <button class="nb-link" onclick="goTo('offers')">Forfaits</button>
+    <button class="nb-cta" onclick="goTo('login')">Se connecter</button>
   </div>
+</nav>
 
-  <!-- Card -->
-  <div class="card">
-    <div class="card-top-bar"></div>
+<!-- LANDING -->
+<div id="page-landing" class="page active">
+  <section class="lp-hero">
+    <div class="lp-glow"></div>
+    <div class="lp-hero-inner">
+      <div class="hero-label"><span class="hero-label-dot"></span>Plateforme éducative tunisienne</div>
+      <h1 class="hero-h1">Votre réussite,<br><span>commence ici.</span></h1>
+      <p class="hero-p">Sahl est votre compagnon intelligent pour la réussite scolaire — des outils puissants pour exceller au Baccalauréat, partout, à tout moment.</p>
+      <div class="hero-btns">
+        <button class="btn-ink" onclick="goTo('home')">Commencer maintenant</button>
+        <button class="btn-outline" onclick="goTo('offers')">Voir les forfaits</button>
+      </div>
+      <div class="trust-bar">
+        <div class="trust-item"><svg class="trust-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Accès sécurisé SSL</span></div>
+        <div class="trust-item"><svg class="trust-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Disponible 24h/24</span></div>
+        <div class="trust-item"><svg class="trust-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Sans engagement</span></div>
+        <div class="trust-item"><svg class="trust-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>+1 000 étudiants</span></div>
+      </div>
+    </div>
+  </section>
 
-    <div class="card-body">
+  <section class="lp-features">
+    <div class="sec-hd">
+      <p class="sec-eye">Pourquoi Sahl</p>
+      <h2 class="sec-title">Tout ce qu'il vous faut<br>pour réussir le Bac.</h2>
+      <p class="sec-sub">Une plateforme complète pensée pour les lycéens tunisiens, avec des outils adaptés à chaque matière.</p>
+    </div>
+    <div class="feats-grid">
+      <div class="feat-card">
+        <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="feat-title">Sahl AI — modèle 4.0</div>
+        <p class="feat-desc">Une intelligence artificielle adaptative qui comprend vos lacunes et vous guide vers les bonnes réponses, matière par matière.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <div class="feat-title">Bibliothèque E-Book</div>
+        <p class="feat-desc">Accédez à une vaste bibliothèque de ressources numériques — cours, fiches de révision et annales — disponibles à tout moment.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <div class="feat-title">SpeakWell Plus & Chat Philo</div>
+        <p class="feat-desc">Pratiquez l'oral en langues et maîtrisez la dissertation philosophique grâce à des outils interactifs conçus pour le Baccalauréat tunisien.</p>
+      </div>
+    </div>
+  </section>
 
-      <div class="status">
-        <div class="status-dot-wrap">
-          <div class="status-dot"></div>
-          <div class="status-dot-ring"></div>
+  <section class="lp-stats">
+    <div class="stats-grid">
+      <div class="stat-item"><div class="stat-num">1<span>000+</span></div><div class="stat-lbl">Étudiants inscrits</div></div>
+      <div class="stat-item"><div class="stat-num">100<span>%</span></div><div class="stat-lbl">Taux de réussite au Baccalauréat</div></div>
+      <div class="stat-item"><div class="stat-num">4<span>.0</span></div><div class="stat-lbl">Sahl AI — modèle adaptatif</div></div>
+    </div>
+  </section>
+
+  <section class="lp-how">
+    <div class="sec-hd">
+      <p class="sec-eye">Comment ça marche</p>
+      <h2 class="sec-title">Prêt en quelques minutes.</h2>
+    </div>
+    <div class="steps-row">
+      <div class="step"><div class="step-num">1</div><div class="step-title">Choisissez votre forfait</div><p class="step-desc">Standard ou Elite — choisissez la formule adaptée à vos ambitions.</p></div>
+      <div class="step"><div class="step-num">2</div><div class="step-title">Créez votre compte</div><p class="step-desc">Inscription rapide et sécurisée en moins de deux minutes.</p></div>
+      <div class="step"><div class="step-num">3</div><div class="step-title">Révisez et réussissez</div><p class="step-desc">Accédez à tous vos outils et commencez à préparer le Bac dès aujourd'hui.</p></div>
+    </div>
+  </section>
+
+  <section class="lp-cta">
+    <div class="cta-box">
+      <h2 class="cta-title">Prêt à réussir le Bac ?</h2>
+      <p class="cta-sub">Rejoignez plus de 1 000 étudiants qui font confiance à Sahl pour préparer leur Baccalauréat.</p>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn-ink" onclick="goTo('home')">Commencer maintenant</button>
+        <button class="btn-outline" onclick="goTo('offers')">Voir les forfaits</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="lp-footer">
+    <div class="footer-logo">Sahl</div>
+   
+    <p class="footer-copy">© 2026 Sahl. Tous droits réservés.</p>
+  </footer>
+</div>
+
+<!-- HOME PORTAL -->
+<div id="page-home" class="page" style="display:none;">
+  <div class="home-glow"></div>
+  <div class="home-inner">
+    <div class="home-chip"><span class="home-chip-dot"></span>Plateforme éducative tunisienne</div>
+    <h1 class="home-h1">Bienvenue<br>chez <b>Sahl</b></h1>
+    <p class="home-sub">Votre compagnon intelligent pour la réussite scolaire — des outils adaptés pour exceller au Baccalauréat.</p>
+    <div class="home-btns">
+      <button class="btn-ink" onclick="goTo('login')">Se connecter</button>
+      <button class="btn-outline" onclick="goTo('offers')">Voir les forfaits</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div id="page-login" class="page" style="display:none;">
+  <div class="lc-card">
+    <div class="lc-logo"><div class="lc-logo-dot"></div>Sahl</div>
+    <p class="lc-sub">Connectez-vous à votre espace et reprenez où vous vous êtes arrêté</p>
+
+    <!-- Error / Success alerts -->
+    <div id="lc-error" style="display:none;align-items:center;gap:8px;padding:10px 14px;background:rgba(220,38,38,0.07);border:1px solid rgba(220,38,38,0.18);border-radius:var(--r-sm);font-size:13px;color:#b91c1c;margin-bottom:14px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span id="lc-error-text"></span>
+    </div>
+    <div id="lc-success" style="display:none;align-items:center;gap:8px;padding:10px 14px;background:rgba(10,171,106,0.07);border:1px solid rgba(10,171,106,0.18);border-radius:var(--r-sm);font-size:13px;color:#065f46;margin-bottom:14px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>
+      <span id="lc-success-text"></span>
+    </div>
+
+    <label class="lc-label">Email ou identifiant</label>
+    <input class="lc-input" id="lc-username" type="text" placeholder="vous@exemple.com" autocomplete="username" />
+    <label class="lc-label">Mot de passe</label>
+    <div style="position:relative;margin-bottom:14px;">
+      <input class="lc-input" id="lc-password" type="password" placeholder="••••••••" autocomplete="current-password" style="margin-bottom:0;padding-right:44px;" />
+      <button type="button" id="lc-eye" onclick="lcToggleEye()" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--ink-3);padding:4px;display:flex;align-items:center;justify-content:center;" aria-label="Afficher le mot de passe">
+        <svg id="lc-eye-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+    <button class="lc-btn" id="lc-btn" onclick="lcSubmit()">Se connecter</button>
+    <div class="lc-div"><span>ou</span></div>
+    <div class="lc-back" onclick="goTo('home')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>
+      Retour à l'accueil
+    </div>
+  </div>
+</div>
+
+<!-- OFFERS -->
+<div id="page-offers" class="page">
+  <div class="off-wrap">
+    <div class="off-top">
+      <h2 class="off-h">Choisissez votre formule</h2>
+      <p class="off-s">Simple. Puissant. Pour vous.</p>
+    </div>
+    <div style="display:flex;justify-content:center;">
+      <button class="recover-btn" onclick="openModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+        Comment créer un compte ?
+      </button>
+    </div>
+    <div class="off-grid">
+      <!-- Standard -->
+      <div class="ocard">
+        <div class="ocard-top">
+          <div class="ocard-blob"></div>
+          <div class="ocard-badge">Étudiant(e)</div>
+          <div class="ocard-name">Sahl Standard</div>
+          <p class="ocard-tag">Les essentiels pour réviser efficacement et exceller au Baccalauréat.</p>
         </div>
-        <span class="status-text">Maintenance en cours</span>
+        <div class="ocard-body">
+          <div class="ocard-price">
+            <span class="ocard-price-main">14</span>
+            <span class="ocard-price-note">DT / reste de l'année</span>
+          </div>
+          <ul class="ocard-list">
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>SVT App</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Bibliothèque E-Book</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Chat Philosophie</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>SpeakWell Plus</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Sahl AI — modèle 2.6.0</li>
+          </ul>
+         <button class="ocard-cta" onclick="window.location.href='../login/Signup'">S'inscrire — 14 DT</button>
+        </div>
       </div>
-
-      <div class="icon-wrap">🚧</div>
-
-      <h1>Inscriptions temporairement&nbsp;fermées</h1>
-
-      <div class="divider">
-        <div class="divider-line"></div>
-        <div class="divider-diamond"></div>
-        <div class="divider-line"></div>
+      <!-- Elite -->
+      <div class="ocard">
+        <div class="ocard-top">
+          <div class="ocard-blob"></div>
+          <div class="ocard-badge">Exclusif</div>
+          <div class="ocard-name">Sahl Elite</div>
+          <p class="ocard-tag">Maîtriser les clés de la réussite : révisions stratégiques pour exceller au Baccalauréat.</p>
+        </div>
+        <div class="ocard-body">
+          <div class="ocard-price">
+            <span class="ocard-price-main">20</span>
+            <span class="ocard-price-note">DT / reste de l'année</span>
+          </div>
+          <ul class="ocard-list">
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Sahl Academy</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>SVT App</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Bibliothèque E-Book</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Chat Philosophie</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>SpeakWell Plus</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Sahl AI — modèle 4.0</li>
+          </ul>
+          <button class="ocard-cta" onclick="window.location.href='../login/Signup'">Obtenir l'offre Elite</button>
+        </div>
       </div>
-
-      <p>Les inscriptions sont actuellement suspendues. Nous travaillons à améliorer votre expérience sur la plateforme. Elles seront bientôt réouvertes. Merci pour votre patience.</p>
-
-      <a class="btn" href="https://sahllearn.org" rel="noopener noreferrer">
-        Retourner à la plateforme
-        <span class="btn-arrow">→</span>
-      </a>
-
     </div>
-
-    <div class="card-footer">
-      <span class="card-footer-icon">🔒</span>
-      <span class="card-footer-text">Vos données sont en sécurité. Aucune action requise.</span>
+    <div style="text-align:center;margin-top:32px;">
+      <div class="lc-back" onclick="goTo('home')" style="justify-content:center;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>
+        Retour à l'accueil
+      </div>
     </div>
   </div>
+</div>
 
-  <!-- Page footer -->
-  <div class="page-footer">
-    <a href="https://sahllearn.org">sahllearn.org</a>
-    <div class="page-footer-sep"></div>
-    <a href="mailto:contact@sahllearn.org">Nous contacter</a>
-    <div class="page-footer-sep"></div>
-    <a href="#">© 2025 Sahl Learn</a>
+<!-- MODAL -->
+<div class="overlay" id="overlay" onclick="handleOvClick(event)">
+  <div class="modal">
+    <div class="modal-hd">
+      <div><p class="modal-eye">Centre d'aide</p><h3 class="modal-title">Comment créer votre compte Sahl</h3></div>
+      <button class="modal-x" onclick="closeModal()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-bd">
+      <p class="modal-intro">Suivez ces guides vidéo étape par étape pour créer votre compte et accéder à votre espace Sahl. Appuyez sur une vidéo pour la développer.</p>
+      <p class="vids-lbl">Tutoriels vidéo</p>
+      <div class="vid-list">
+        <div class="vid-item" id="v1" onclick="toggleVid('v1')">
+          <div class="vid-hd"><div class="vid-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="vid-meta"><div class="vid-title">Comment s'inscrire sur Sahl</div><div class="vid-dur">3:24 · Guide d'inscription complet</div></div><svg class="vid-chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+          <div class="vid-embed"><iframe src="https://www.youtube.com/embed/XSP2LBKky5c?rel=0&modestbranding=1" allowfullscreen loading="lazy" title="Inscription Sahl"></iframe></div>
+        </div>
+        <div class="vid-item" id="v2" onclick="toggleVid('v2')">
+          <div class="vid-hd"><div class="vid-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="vid-meta"><div class="vid-title">Choisir et activer votre forfait</div><div class="vid-dur">2:50 · Standard ou Elite ?</div></div><svg class="vid-chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+          <div class="vid-embed"><iframe src="https://www.youtube.com/embed/XSP2LBKky5c?rel=0&modestbranding=1&start=10" allowfullscreen loading="lazy" title="Activer forfait"></iframe></div>
+        </div>
+        <div class="vid-item" id="v3" onclick="toggleVid('v3')">
+          <div class="vid-hd"><div class="vid-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="vid-meta"><div class="vid-title">Utiliser Sahl AI pour réviser</div><div class="vid-dur">4:10 · Prise en main de Sahl AI</div></div><svg class="vid-chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+          <div class="vid-embed"><iframe src="https://www.youtube.com/embed/XSP2LBKky5c?rel=0&modestbranding=1&start=20" allowfullscreen loading="lazy" title="Sahl AI révisions"></iframe></div>
+        </div>
+      </div>
+      <div class="modal-note"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><p>Besoin d'aide supplémentaire ? <strong>Contactez notre équipe de support</strong> — disponible pour vous aider à accéder à votre espace en toute sécurité.</p></div>
+    </div>
   </div>
+</div>
 
+<script>
+  const disp = { landing:'block', home:'flex', login:'flex', offers:'block' };
+  function goTo(id) {
+    document.querySelectorAll('.page').forEach(p => { p.classList.remove('active'); p.style.display='none'; });
+    const t = document.getElementById('page-'+id);
+    if (!t) return;
+    t.style.display = disp[id]||'block';
+    void t.offsetWidth;
+    t.classList.add('active');
+    window.scrollTo(0,0);
+  }
+  function openModal() { document.getElementById('overlay').classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeModal() { document.getElementById('overlay').classList.remove('open'); document.body.style.overflow=''; }
+  function handleOvClick(e) { if(e.target===document.getElementById('overlay')) closeModal(); }
+  function toggleVid(id) {
+    const el=document.getElementById(id), was=el.classList.contains('vopen');
+    document.querySelectorAll('.vid-item').forEach(v=>v.classList.remove('vopen'));
+    if(!was) el.classList.add('vopen');
+  }
+  document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+
+  /* ── DISABLE RIGHT-CLICK & DEV SHORTCUTS ── */
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.addEventListener('keydown', e => {
+    if (e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) ||
+        (e.ctrlKey && e.key.toUpperCase() === 'U') ||
+        (e.ctrlKey && e.key.toUpperCase() === 'S') ||
+        (e.ctrlKey && e.key.toUpperCase() === 'P')) {
+      e.preventDefault(); return false;
+    }
+  });
+  ['home','login'].forEach(id => { document.getElementById('page-'+id).style.display='none'; });
+
+  const AUTH = {
+    isLoggedInKey:   'eduwell_svt_isLoggedIn',
+    usernameKey:     'eduwell_svt_username',
+    lastActivityKey: 'eduwell_svt_lastActivity'
+  };
+
+  function lcToggleEye() {
+    const pw = document.getElementById('lc-password');
+    const icon = document.getElementById('lc-eye-icon');
+    const hidden = pw.type === 'password';
+    pw.type = hidden ? 'text' : 'password';
+    icon.innerHTML = hidden
+      ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
+      : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+  }
+
+  function lcShowError(msg) {
+    const el = document.getElementById('lc-error');
+    document.getElementById('lc-error-text').textContent = msg;
+    el.style.display = 'flex';
+    document.getElementById('lc-success').style.display = 'none';
+  }
+  function lcShowSuccess(msg) {
+    const el = document.getElementById('lc-success');
+    document.getElementById('lc-success-text').textContent = msg;
+    el.style.display = 'flex';
+    document.getElementById('lc-error').style.display = 'none';
+  }
+  function lcHide() {
+    document.getElementById('lc-error').style.display = 'none';
+    document.getElementById('lc-success').style.display = 'none';
+  }
+
+  function lcSubmit() {
+    const username = document.getElementById('lc-username').value.trim();
+    const password = document.getElementById('lc-password').value;
+    const btn = document.getElementById('lc-btn');
+
+    lcHide();
+    if (!username || !password) { lcShowError('Veuillez remplir tous les champs.'); return; }
+
+    btn.textContent = 'Connexion…';
+    btn.disabled = true;
+
+    setTimeout(() => {
+      const user = VALID_CREDENTIALS.find(u => u.username === username && u.password === password);
+      if (!user) {
+        lcShowError('Identifiants invalides. Veuillez réessayer.');
+        btn.textContent = 'Se connecter';
+        btn.disabled = false;
+        document.getElementById('lc-password').value = '';
+        return;
+      }
+      localStorage.setItem(AUTH.isLoggedInKey,   'true');
+      localStorage.setItem(AUTH.usernameKey,     user.name || username);
+      localStorage.setItem(AUTH.lastActivityKey, Date.now().toString());
+      lcShowSuccess('Connexion réussie ! Redirection…');
+      setTimeout(() => {
+        const redirect = sessionStorage.getItem('eduwell_redirect_url') || 'index.html';
+        sessionStorage.removeItem('eduwell_redirect_url');
+        window.location.href = redirect;
+      }, 700);
+    }, 600);
+  }
+
+  /* Allow Enter key on login fields */
+  document.addEventListener('DOMContentLoaded', () => {
+    ['lc-username','lc-password'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('keydown', e => { if (e.key === 'Enter') lcSubmit(); });
+        el.addEventListener('input', lcHide);
+      }
+    });
+    /* Check already authenticated */
+    const lastActivity = localStorage.getItem(AUTH.lastActivityKey);
+    if (lastActivity && (Date.now() - parseInt(lastActivity)) / 60000 >= 30) {
+      localStorage.removeItem(AUTH.isLoggedInKey);
+      localStorage.removeItem(AUTH.usernameKey);
+      localStorage.removeItem(AUTH.lastActivityKey);
+    }
+    if (localStorage.getItem(AUTH.isLoggedInKey) === 'true') {
+      const redirect = sessionStorage.getItem('eduwell_redirect_url') || 'index.html';
+      sessionStorage.removeItem('eduwell_redirect_url');
+      window.location.href = redirect;
+    }
+  });
+</script>
+<script src="./login/js/ACC.js"></script>
 </body>
 </html>

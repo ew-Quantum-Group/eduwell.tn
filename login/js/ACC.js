@@ -37,7 +37,7 @@
             },
             { 
                 username: 'stu67@edu.com',
-                password: 'Studi2026', 
+                password: 'Studi20126', 
                 name: 'Bac2026' 
             },
             { 

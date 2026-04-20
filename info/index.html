@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Sahl Learn</title>
+<link rel="stylesheet" href="./data/css/style.css">
+ <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+
+<!-- PROTECTED OVERLAY (shown if not logged in) -->
+<div id="protectedOverlay" class="protected-overlay" style="display: none;">
+  <h2>🔐 Connexion requise</h2>
+  <p>Veuillez vous connecter pour accéder à votre espace EduVault et continuer votre apprentissage.</p>
+  <a href="../profile" class="login-btn" onclick="redirectToLogin()">
+    <i class="fas fa-sign-in-alt"></i> Se connecter
+  </a>
+</div>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-brand">
+      <div class="sb-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+        </svg>
+      </div>
+      <div class="sb-name">Sahl<em>Learn</em></div>
+    </div>
+   <nav class="sb-nav">
+  <div class="sb-section-label">Vue d'ensemble</div>
+  <a href="../profile/index" class="sb-item active"><div class="sb-ico"><i class="fas fa-house"></i></div> Tableau de bord</a>
+  <a href="../profile/index" class="sb-item"><div class="sb-ico"><i class="fas fa-graduation-cap"></i></div> Mes cours</a>
+  <a href="../profile/index" class="sb-item"><div class="sb-ico"><i class="fas fa-chart-line"></i></div> Progression</a>
+  <div class="sb-section-label">Bibliothèque</div>
+  <a href="../profile/index" class="sb-item"><div class="sb-ico"><i class="fas fa-chalkboard-user"></i></div> Cours</a>
+  <a href="../profile/index" class="sb-item"><div class="sb-ico"><i class="fas fa-pen-to-square"></i></div> Devoirs <span class="sb-pill">3</span></a>
+  <a href="../profile/index" class="sb-item"><div class="sb-ico"><i class="fas fa-layer-group"></i></div> Ressources</a>
+  <a href="../profile/index" class="sb-item"><div class="sb-ico"><i class="fas fa-file-circle-check"></i></div> Examens</a>
+  <div class="sb-section-label">Compte</div>
+  <a href="../profile/index" class="sb-item"><div class="sb-ico"><i class="fas fa-bell"></i></div> Notifications <span class="sb-pill">5</span></a>
+  <a href="../profile/index" class="sb-item"><div class="sb-ico"><i class="fas fa-gear"></i></div> Paramètres</a>
+</nav>
+    <div class="sb-foot">
+      <div class="sb-user" id="sidebarUser">
+        <div class="sb-av" id="userAvatar">AS</div>
+        <div><div class="sb-uname" id="userName">Alex Student</div><div class="sb-urole" id="userRole">Bac 2026</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <div>
+        <div class="tb-greeting">Sahl Learn</div>
+        <div class="tb-title">Apprenez, progressez, <em>excellez.</em></div>
+      </div>
+      <div class="tb-right">
+        <!-- Desktop back button -->
+        <a href="index.html" class="back-btn">
+          <i class="fas fa-arrow-left"></i>
+          <span>Retour</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Mobile Header with BLACK back button -->
+    <div class="mob-header">
+      <!-- Black back button for mobile (appears on left) -->
+      <a href="../profile/index" class="mobile-back-btn">
+        <i class="fas fa-arrow-left"></i>
+        <span>Retour</span>
+      </a>
+      <div class="mob-brand">
+       
+        <div class="mob-name">Sahl<em>Learn</em></div>
+      </div>
+      <div class="mob-actions">
+        
+        <button class="logout-btn" id="mobileLogoutBtn" onclick="logout()" style="width:32px;height:32px;" title="Déconnexion">
+          <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Greeting -->
+    <div class="mob-greeting">
+      <div class="greet-sub">Sahl Learn</div>
+      <div class="greet-title">Apprenez,<br><em>excellez.</em></div>
+    </div>
+
+    <!-- Page Body -->
+    <div class="page-body">
+
+      
+
+      <!-- Left column -->
+      <div class="col-main">
+
+       
+        <!-- Cours à la une -->
+        <div class="section">
+          <div class="sec-head">
+            <span class="sec-title">Cours à la une</span>
+            <a href="https://drive.google.com/drive/folders/1tFALZ8OWMILwE5e5SedBtlsfBkscttUg?usp=drive_link" class="sec-link">Voir tout <i class="fas fa-arrow-right" style="font-size:8px"></i></a>
+          </div>
+          <div class="courses-scroll">
+  <a href="https://drive.google.com/file/d/1T8IP7ilz16_gRrBJ4DH0AunWSd4tAgjC/view?usp=drive_link" class="course-card" style="display:block; text-decoration:none; color:inherit;">
+    <div class="cc-cover cov-a"><div class="cc-icon"><i class="fas fa-rocket"></i></div><span class="cc-chip">INFO</span><span class="cc-bm"><i class="fas fa-bookmark"></i></span></div>
+    <div class="cc-body"><div class="cc-subject"> Pack de révision complet </div><div class="cc-name">Bac Pratique</div><div class="cc-desc">avec 80 prototypes corrigés, méthodes claires et exercices types pour réussir avec confiance..</div><div class="cc-foot"><div class="cc-author"><div class="cc-av" style="background:linear-gradient(135deg,#1e3a8a,#2563eb)">SL</div><span class="cc-aname">Sahl Learn</span></div><div class="cc-stats"><span class="cc-stat"><i class="fas fa-users"></i> 2,4k</span><span class="cc-stat"><i class="fas fa-star" style="color:var(--amber)"></i> 4,9</span></div></div></div>
+  </a>
+
+  <a href="https://drive.google.com/drive/folders/1tFALZ8OWMILwE5e5SedBtlsfBkscttUg?usp=drive_link" class="course-card" style="display:block; text-decoration:none; color:inherit;">
+    <div class="cc-cover cov-b"><div class="cc-icon"><i class="fas fa-rocket"></i></div><span class="cc-chip">INFO</span><span class="cc-bm"><i class="fas fa-bookmark"></i></span></div>
+    <div class="cc-body"><div class="cc-subject">Pack de révision complet </div><div class="cc-name">Fonction Maximum en Python</div><div class="cc-desc">Dans ce post, on va découvrir comment créer une fonction maximum en Python pour trouver la plus grande valeur dans une liste.</div><div class="cc-foot"><div class="cc-author"><div class="cc-av" style="background:linear-gradient(135deg,#065f46,#059669)">SL</div><span class="cc-aname">Sahl Learn</span></div><div class="cc-stats"><span class="cc-stat"><i class="fas fa-users"></i> 1,8k</span><span class="cc-stat"><i class="fas fa-star" style="color:var(--amber)"></i> 4,8</span></div></div></div>
+  </a>
+
+  <a href="https://drive.google.com/drive/folders/1tFALZ8OWMILwE5e5SedBtlsfBkscttUg?usp=drive_link" class="course-card" style="display:block; text-decoration:none; color:inherit;">
+    <div class="cc-cover cov-c"><div class="cc-icon"><i class="fas fa-infinity"></i></div><span class="cc-chip">INFO</span><span class="cc-bm"><i class="fas fa-bookmark"></i></span></div>
+    <div class="cc-body"><div class="cc-subject">Pack de révision complet</div><div class="cc-name">Fonction d’inversion (reverse)</div><div class="cc-desc">Dans ce post, on va apprendre comment créer une fonction en Python qui permet d’inverser une liste.</div><div class="cc-foot"><div class="cc-author"><div class="cc-av" style="background:linear-gradient(135deg,#78350f,#d97706)">SL</div><span class="cc-aname">Sahl Learn</span></div><div class="cc-stats"><span class="cc-stat"><i class="fas fa-users"></i> 3,1k</span><span class="cc-stat"><i class="fas fa-star" style="color:var(--amber)"></i> 4,7</span></div></div></div>
+  </a>
+</div>
+        </div>
+
+
+        <!-- Supports de cours -->
+        <div class="section">
+          <div class="sec-head">
+            <span class="sec-title">Prototypes pratiques Bac</span>
+            <a href="https://drive.google.com/drive/folders/131P57QNBLCVxFIKtDdr3KyaDAghTadzM?usp=drive_link" class="sec-link">Voir tout <i class="fas fa-arrow-right" style="font-size:8px"></i></a>
+          </div>
+          <div class="panels-scroll" id="panelsScroll">
+
+            <div class="panel">
+              <div class="panel-head">
+                <div class="panel-left"><div class="panel-ico ico-b"><i class="fas fa-chalkboard-user"></i></div><span class="panel-title">Bac scientifique 2022</span></div>
+                <span class="panel-count">4 fichiers</span>
+              </div>
+              <div class="frow" onclick="openItemModal('calcul-ch7','Bac scientifique 2022','Bac Pratique  · Informatique 2022','pdf-ch7.pdf','Document · 4 pages','ico-r','#d92b20')">
+                <div class="frow-ico ico-r"><i class="fas fa-file-pdf"></i></div><div class="frow-body"><div class="frow-name">08:00</div><div class="frow-sub">le nombre hautement abondant </div></div><div class="frow-aside"><span class="badge b-new">Nouveau</span><span class="frow-date">10 avr.</span></div><i class="fas fa-chevron-right frow-chev"></i>
+              </div>
+              <div class="frow" onclick="openItemModal('mecanique-q','Bac scientifique 2022','Bac Pratique  · Informatique 2022','pdf-ch7.pdf','Document · 4 pages','ico-b','#0071e3')">
+                <div class="frow-ico ico-b"><i class="fas fa-file-powerpoint"></i></div><div class="frow-body"><div class="frow-name">9:30</div><div class="frow-sub">le nombre lisse</div></div><div class="frow-aside"><span class="frow-size">Nouveau</span><span class="frow-date">10 avr.</span></div><i class="fas fa-chevron-right frow-chev"></i>
+              </div>
+              <div class="frow" onclick="openItemModal('bio-cell','Bac scientifique 2022','Bac Pratique  · Informatique 2022','pdf-ch7.pdf','Document · 4 pages','ico-g','#1a9c2e')">
+                <div class="frow-ico ico-g"><i class="fas fa-file-lines"></i></div><div class="frow-body"><div class="frow-name">11:00</div><div class="frow-sub">le nombre semi-premier</div></div><div class="frow-aside"><span class="frow-size">Nouveau</span><span class="frow-date">10 avr.</span></div><i class="fas fa-chevron-right frow-chev"></i>
+              </div>
+              <div class="frow" onclick="openItemModal('histoire-v2','Bac scientifique 2022','Bac Pratique  · Informatique 2022','pdf-ch7.pdf','Document · 4 pages','ico-a','#c07800')">
+                <div class="frow-ico ico-a"><i class="fas fa-book-open"></i></div><div class="frow-body"><div class="frow-name">13:00</div><div class="frow-sub">nombre super-pairplus</div></div><div class="frow-aside"><span class="frow-size">Nouveau</span><span class="frow-date">10 avr.</span></div><i class="fas fa-chevron-right frow-chev"></i>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head">
+                <div class="panel-left"><div class="panel-ico ico-a"><i class="fas fa-pen-to-square"></i></div><span class="panel-title">Bac scientifique 2023</span></div>
+                <span class="panel-count">4 fichiers</span>
+              </div>
+              <div class="frow" onclick="openItemModal('climat','Bac scientifique 2023','Bac Pratique  · Informatique 2023','pdf-ch7.pdf','Document · 4 pages','ico-r','#d92b20')">
+                <div class="frow-ico ico-r"><i class="fas fa-file-circle-exclamation"></i></div><div class="frow-body"><div class="frow-name">08:00</div><div class="frow-sub">Bac Pratique </div></div><div class="frow-aside"><span class="badge b-due">Nouveau</span><span class="frow-date">14 avr.</span></div><i class="fas fa-chevron-right frow-chev"></i>
+              </div>
+              <div class="frow" onclick="openItemModal('serie-9','Bac scientifique 2023','Bac Pratique  · Informatique 2023','pdf-ch7.pdf','Document · 4 pages','ico-p','#9f3cd4')">
+                <div class="frow-ico ico-p"><i class="fas fa-file-circle-exclamation"></i></div><div class="frow-body"><div class="frow-name">09:30</div><div class="frow-sub">Bac Pratique </div></div><div class="frow-aside"><span class="frow-size">Nouveau</span><span class="frow-date">12 avr.</span></div><i class="fas fa-chevron-right frow-chev"></i>
+              </div>
+              <div class="frow" onclick="openItemModal('labo-4','Bac scientifique 2023','Bac Pratique  · Informatique 2023','pdf-ch7.pdf','Document · 4 pages','#0071e3')">
+                <div class="frow-ico ico-b"><i class="fas fa-file-circle-exclamation"></i></div><div class="frow-body"><div class="frow-name">11:00</div><div class="frow-sub">Bac Pratique </div></div><div class="frow-aside"><span class="badge b-done">Nouveau</span><span class="frow-date">6 avr.</span></div><i class="fas fa-chevron-right frow-chev"></i>
+              </div>
+              <div class="frow" onclick="openItemModal('geo-projet','Bac scientifique 2023','Bac Pratique  · Informatique 2023','pdf-ch7.pdf','Document · 4 pages','ico-g','#1a9c2e')">
+                <div class="frow-ico ico-g"><i class="fas fa-file-circle-exclamation"></i></div><div class="frow-body"><div class="frow-name">13:30</div><div class="frow-sub">Bac Pratique</div></div><div class="frow-aside"><span class="frow-size">Nouveau</span><span class="frow-date">1 avr.</span></div><i class="fas fa-chevron-right frow-chev"></i>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head">
+                <div class="panel-left"><div class="panel-ico ico-p"><i class="fas fa-layer-group"></i></div><span class="panel-title">Bac scientifique 2024</span></div>
+                <span class="panel-count">4 fichiers</span>
+              </div>
+              <div class="frow" onclick="openItemModal('photo-video','Bac scientifique 2024','Bac Pratique  · Informatique 2024','pdf-ch7.pdf','Document · 4 pages','ico-t','#1a8ab5')">
+                <div class="frow-ico ico-t"><i class="fas fa-file-circle-exclamation"></i></div><div class="frow-body"><div class="frow-name">08:00</div><div class="frow-sub">Bac Pratique </div></div><div class="frow-aside"><span class="badge b-new">Nouveau</span><span class="frow-date">9 avr.</span></div><i class="fas fa-chevron-right frow-chev"></i>
+              </div>
+              <div class="frow" onclick="openItemModal('mindmap','Bac scientifique 2024','Bac Pratique  · Informatique 2024','pdf-ch7.pdf','Document · 4 pages','ico-p','#9f3cd4')">
+                <div class="frow-ico ico-p"><i class="fas fa-file-circle-exclamation"></i></div><div class="frow-body"><div class="frow-name">09:30</div><div class="frow-sub">Bac Pratique </div></div><div class="frow-aside"><span class="frow-size">Nouveau</span><span class="frow-date">7 avr.</span></div><i class="fas fa-chevron-right frow-chev"></i>
+              </div>
+              <div class="frow" onclick="openItemModal('prononciation','Bac scientifique 2024','Bac Pratique  · Informatique 2024','pdf-ch7.pdf','Document · 4 pages','ico-a','#c07800')">
+                <div class="frow-ico ico-a"><i class="fas fa-file-circle-exclamation"></i></div><div class="frow-body"><div class="frow-name">11:00</div><div class="frow-sub">Bac Pratique </div></div><div class="frow-aside"><span class="frow-size">Nouveau</span><span class="frow-date">31 mars</span></div><i class="fas fa-chevron-right frow-chev"></i>
+              </div>
+              <div class="frow" onclick="openItemModal('eco-data','Bac scientifique 2024','Bac Pratique  · Informatique 2024','pdf-ch7.pdf','Document · 4 pages','ico-r','#d92b20')">
+                <div class="frow-ico ico-r"><i class="fas fa-file-circle-exclamation"></i></div><div class="frow-body"><div class="frow-name">13:00</div><div class="frow-sub">Bac Pratique </div></div><div class="frow-aside"><span class="frow-size">Nouveau</span><span class="frow-date">28 mars</span></div><i class="fas fa-chevron-right frow-chev"></i>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head">
+                <div class="panel-left"><div class="panel-ico ico-r"><i class="fas fa-file-circle-check"></i></div><span class="panel-title">Bac scientifique 2025</span></div>
+                <span class="panel-count">4 fichiers</span>
+              </div>
+              <div class="frow" onclick="openItemModal('mi-parcours','Bac scientifique 2025','Bac Pratique  · Informatique 2025','pdf-ch7.pdf','Document · 4 pages','ico-r','#d92b20')">
+                <div class="frow-ico ico-r"><i class="fas fa-clock-rotate-left"></i></div><div class="frow-body"><div class="frow-name">08:00</div><div class="frow-sub">Bac Pratique</div></div><div class="frow-aside"><span class="badge b-done">Top</span><span class="frow-date">20 mars</span></div><i class="fas fa-chevron-right frow-chev"></i>
+              </div>
+              <div class="frow" onclick="openItemModal('anglais-blanc','Bac scientifique 2025','Bac Pratique  · Informatique 2025','ico-p','#9f3cd4')">
+                <div class="frow-ico ico-p"><i class="fas fa-spell-check"></i></div><div class="frow-body"><div class="frow-name">09:30</div><div class="frow-sub">Bac Pratique</div></div><div class="frow-aside"><span class="frow-size">2,2 Mo</span><span class="frow-date">18 mars</span></div><i class="fas fa-chevron-right frow-chev"></i>
+              </div>
+              <div class="frow" onclick="openItemModal('physique-final','Bac scientifique 2025','Bac Pratique  · Informatique 2025','ico-g','#1a9c2e')">
+                <div class="frow-ico ico-g"><i class="fas fa-atom"></i></div><div class="frow-body"><div class="frow-name">11:00</div><div class="frow-sub">Bac Pratique</div></div><div class="frow-aside"><span class="badge b-due">Bientôt</span><span class="frow-date">20 avr.</span></div><i class="fas fa-chevron-right frow-chev"></i>
+              </div>
+              <div class="frow" onclick="openItemModal('formule-maths','Bac scientifique 2025','Bac Pratique  · Informatique 2025','ico-t','#1a8ab5')">
+                <div class="frow-ico ico-t"><i class="fas fa-calculator"></i></div><div class="frow-body"><div class="frow-name">13:00</div><div class="frow-sub">Bac Pratique</div></div><div class="frow-aside"><span class="frow-size">680 Ko</span><span class="frow-date">15 mars</span></div><i class="fas fa-chevron-right frow-chev"></i>
+              </div>
+            </div>
+
+          </div>
+          <div class="dots" id="panelDots">
+            <div class="dot on"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+          </div>
+        </div>
+
+        <!-- Documents PDF -->
+        <div class="section" style="padding-bottom:32px">
+          <div class="sec-head">
+            <span class="sec-title">Espace de révision des cours</span>
+            <a href="https://drive.google.com/drive/folders/1tFALZ8OWMILwE5e5SedBtlsfBkscttUg?usp=drive_link" class="sec-link">Voir tout <i class="fas fa-arrow-right" style="font-size:8px"></i></a>
+          </div>
+          <div class="pdf-list">
+
+            <div class="pdf-row" onclick="openPdfChoice('calcul-ch7')">
+              <div class="pdf-thumb ico-r"><i class="fas fa-file-pdf"></i></div>
+              <div class="pdf-info"><div class="pdf-name">1-Structures des données</div><div class="pdf-sub">info · 24 pages</div></div>
+              <div class="pdf-aside"><span class="badge b-new">Nouveau</span><span class="pdf-dt">20 avr.</span></div>
+              <i class="fas fa-chevron-right pdf-chv"></i>
+            </div>
+
+            <div class="pdf-row" onclick="openPdfChoice('mecanique-q')">
+              <div class="pdf-thumb ico-b"><i class="fas fa-file-pdf"></i></div>
+              <div class="pdf-info"><div class="pdf-name">2-Les structures de contrôle itératives complète</div><div class="pdf-sub">info · 14 pages</div></div>
+              <div class="pdf-aside"><span class="pdf-sz">Nouveau</span><span class="pdf-dt">20 avr.</span></div>
+              <i class="fas fa-chevron-right pdf-chv"></i>
+            </div>
+
+            <div class="pdf-row" onclick="openPdfChoice('bio-cell')">
+              <div class="pdf-thumb ico-g"><i class="fas fa-file-pdf"></i></div>
+              <div class="pdf-info"><div class="pdf-name">3-Structures de contrôle itératives à condition d_arrêt</div><div class="pdf-sub">info · 16 pages</div></div>
+              <div class="pdf-aside"><span class="pdf-sz">Nouveau</span><span class="pdf-dt">20 avr.</span></div>
+              <i class="fas fa-chevron-right pdf-chv"></i>
+            </div>
+
+            <div class="pdf-row" onclick="openPdfChoice('histoire-v2')">
+              <div class="pdf-thumb ico-a"><i class="fas fa-file-pdf"></i></div>
+              <div class="pdf-info"><div class="pdf-name">4-Les sous-programmes</div><div class="pdf-sub">info · 52 pages</div></div>
+              <div class="pdf-aside"><span class="badge b-due">Nouveau</span><span class="pdf-dt">20 avr.</span></div>
+              <i class="fas fa-chevron-right pdf-chv"></i>
+            </div>
+
+            <div class="pdf-row" onclick="openPdfChoice('philo')">
+              <div class="pdf-thumb ico-p"><i class="fas fa-file-pdf"></i></div>
+              <div class="pdf-info"><div class="pdf-name">5-La recherche séquentielle</div><div class="pdf-sub">info · 30 pages</div></div>
+              <div class="pdf-aside"><span class="pdf-sz">Nouveau</span><span class="pdf-dt">20 avr.</span></div>
+              <i class="fas fa-chevron-right pdf-chv"></i>
+            </div>
+
+            <div class="pdf-row" onclick="openPdfChoice('chimie')">
+              <div class="pdf-thumb ico-t"><i class="fas fa-file-pdf"></i></div>
+              <div class="pdf-info"><div class="pdf-name">6-serie  bac 2020</div><div class="pdf-sub">info · 44 pages</div></div>
+              <div class="pdf-aside"><span class="badge b-done">Nouveau</span><span class="pdf-dt">30 mars</span></div>
+              <i class="fas fa-chevron-right pdf-chv"></i>
+            </div>
+               <div class="pdf-row" onclick="openPdfChoice('chimie1')">
+              <div class="pdf-thumb ico-t"><i class="fas fa-file-pdf"></i></div>
+              <div class="pdf-info"><div class="pdf-name">7-tri TRES TRES IMPORTANT</div><div class="pdf-sub">info · 44 pages</div></div>
+              <div class="pdf-aside"><span class="badge b-done">Nouveau</span><span class="pdf-dt">30 mars</span></div>
+              <i class="fas fa-chevron-right pdf-chv"></i>
+            </div>
+               <div class="pdf-row" onclick="openPdfChoice('chimie2')">
+              <div class="pdf-thumb ico-t"><i class="fas fa-file-pdf"></i></div>
+              <div class="pdf-info"><div class="pdf-name">8-Interface Graphique</div><div class="pdf-sub">info · 44 pages</div></div>
+              <div class="pdf-aside"><span class="badge b-done">Nouveau</span><span class="pdf-dt">30 mars</span></div>
+              <i class="fas fa-chevron-right pdf-chv"></i>
+            </div>
+               <div class="pdf-row" onclick="openPdfChoice('chimie3')">
+              <div class="pdf-thumb ico-t"><i class="fas fa-file-pdf"></i></div>
+              <div class="pdf-info"><div class="pdf-name">9-prob tableaux</div><div class="pdf-sub">info· 44 pages</div></div>
+              <div class="pdf-aside"><span class="badge b-done">Nouveau</span><span class="pdf-dt">30 mars</span></div>
+              <i class="fas fa-chevron-right pdf-chv"></i>
+            </div>
+
+
+
+          </div>
+        </div>
+
+      </div><!-- /col-main -->
+
+      <!-- Right column -->
+      <div class="col-side">
+        <div class="side-card">
+  <div class="side-head">
+    <span class="side-head-title">Révision Bac Pratique</span>
+    <a href="#" class="side-head-link">Voir plus</a>
+  </div>
+
+  <div class="ss-row">
+    <div class="ss-ico ico-b"><i class="fas fa-file-code"></i></div>
+    <div class="ss-info">
+      <div class="ss-label">Correction Bac 2022</div>
+      <div class="ss-sub">Sujets pratiques expliqués</div>
+    </div>
+    <div class="ss-val">✓</div>
+  </div>
+
+  <div class="ss-row">
+    <div class="ss-ico ico-g"><i class="fas fa-code-branch"></i></div>
+    <div class="ss-info">
+      <div class="ss-label">Sous-programmes</div>
+      <div class="ss-sub">Fonctions & procédures</div>
+    </div>
+    <div class="ss-val">12</div>
+  </div>
+
+  <div class="ss-row">
+    <div class="ss-ico ico-a"><i class="fas fa-layer-group"></i></div>
+    <div class="ss-info">
+      <div class="ss-label">Prototypes Bac Pratique</div>
+      <div class="ss-sub">80 exercices de révision</div>
+    </div>
+    <div class="ss-val">80</div>
+  </div>
+
+  <div class="ss-row">
+    <div class="ss-ico ico-p"><i class="fas fa-table"></i></div>
+    <div class="ss-info">
+      <div class="ss-label">Tableaux & Algorithmes</div>
+      <div class="ss-sub">Révision complète en algo</div>
+    </div>
+    <div class="ss-val">✓</div>
+  </div>
+</div>
+
+        
+      </div>
+
+    </div><!-- /page-body -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+
+<!-- ═══════════════════════════════════════════════════════════
+  EXISTING MODALS (Supports de cours section — unchanged)
+═══════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-options">
+  <div class="modal-box">
+    <div class="modal-pill"></div>
+    <div class="modal-head">
+      <div><div class="modal-title" id="opt-title"></div><div class="modal-sub" id="opt-sub"></div></div>
+      <button class="modal-close" onclick="closeAll()"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="modal-options">
+      <div class="modal-opt" onclick="openPdfViewer()">
+        <div class="modal-opt-ico ico-r"><i class="fas fa-file-pdf"></i></div>
+        <div class="modal-opt-body"><div class="modal-opt-label">Énoncé</div><div class="modal-opt-hint">Lire le document PDF complet</div></div>
+        <i class="fas fa-chevron-right modal-opt-arrow"></i>
+      </div>
+      <div class="modal-opt" onclick="openCodeViewer()">
+        <div class="modal-opt-ico ico-g"><i class="fas fa-code"></i></div>
+        <div class="modal-opt-body"><div class="modal-opt-label">Code Python</div><div class="modal-opt-hint">Voir l'implémentation en Python</div></div>
+        <i class="fas fa-chevron-right modal-opt-arrow"></i>
+      </div>
+      <div class="modal-opt" onclick="openInterface()">
+        <div class="modal-opt-ico ico-p"><i class="fas fa-desktop"></i></div>
+        <div class="modal-opt-body"><div class="modal-opt-label">Interface</div><div class="modal-opt-hint">Lancer l'interface interactive</div></div>
+        <i class="fas fa-chevron-right modal-opt-arrow"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pdf-viewer-overlay" id="modal-pdf-viewer">
+  <div class="pdf-viewer-box">
+    <div class="pv-head">
+      <div class="pv-title-group">
+        <div class="pv-file-ico ico-r"><i class="fas fa-file-pdf"></i></div>
+        <div><div class="pv-name" id="pv-name">Calcul Chapitre 7</div><div class="pv-meta" id="pv-meta">Mathématiques · 24 pages</div></div>
+      </div>
+      <div class="pv-actions">
+        <a class="pv-gdrive-btn" id="pv-gdrive-btn" href="https://drive.google.com" target="_blank" rel="noopener">
+          <svg viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg"><path d="M6.6 66.85l3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8H0c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="M43.65 25L29.9 1.2C28.55 2 27.4 3.1 26.6 4.5L1.2 48.5C.4 49.9 0 51.45 0 53h27.5z" fill="#00ac47"/><path d="M73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75L86.1 57.5c.8-1.4 1.2-2.95 1.2-4.5H59.65L73.55 76.8z" fill="#ea4335"/><path d="M43.65 25L57.4 1.2C56.05.4 54.5 0 52.95 0H34.35c-1.55 0-3.1.45-4.45 1.2z" fill="#00832d"/><path d="M59.65 53H87.3c0-1.55-.4-3.1-1.2-4.5L61.1 4.5C60.3 3.1 59.15 2 57.8 1.2L44.05 25z" fill="#2684fc"/><path d="M27.5 53L13.75 76.8c1.35.8 2.9 1.2 4.45 1.2h50.9c1.55 0 3.1-.45 4.45-1.2L59.65 53z" fill="#ffba00"/></svg>
+          Ouvrir dans Drive
+        </a>
+        <button class="pv-close" onclick="closePdfViewer()"><i class="fas fa-xmark"></i></button>
+      </div>
+    </div>
+    <div class="pv-body" id="pv-body"><div class="pv-doc-area" id="pv-doc-area"></div></div>
+    <div class="pv-toolbar">
+      <span class="pv-page-info" id="pv-page-info">Page 1 sur 24</span>
+      <div class="pv-nav-btns">
+        <button class="pv-nav-btn"><i class="fas fa-chevron-left"></i></button>
+        <button class="pv-nav-btn"><i class="fas fa-chevron-right"></i></button>
+        <button class="pv-nav-btn"><i class="fas fa-magnifying-glass-plus"></i></button>
+        <button class="pv-nav-btn"><i class="fas fa-download"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="code-viewer-overlay" id="modal-code-viewer">
+  <div class="code-viewer-box">
+    <div class="cv-head-bar">
+      <div class="cv-dots-row"><div class="cv-dot cv-dot-r"></div><div class="cv-dot cv-dot-y"></div><div class="cv-dot cv-dot-g"></div></div>
+      <span class="cv-filename" id="cv-filename">calcul_ch7.py</span>
+      <button class="cv-copy-btn" id="cv-copy-btn" onclick="copyCode()">Copier</button>
+    </div>
+    <div class="cv-code-wrap"><pre id="cv-code-pre"></pre></div>
+    <div class="cv-footer"><span class="cv-lang-badge">Python 3</span><span class="cv-run-hint">pip install sympy numpy matplotlib</span></div>
+  </div>
+  <div style="position:absolute;bottom:0;left:0;right:0;height:60px;display:flex;justify-content:center;padding-bottom:16px;align-items:flex-end">
+    <button onclick="closeCodeViewer()" style="background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.15);color:#fff;font-family:inherit;font-size:11px;font-weight:600;padding:8px 20px;border-radius:980px;cursor:pointer">Fermer</button>
+  </div>
+</div>
+
+<div class="iface-overlay" id="modal-interface">
+  <div class="iface-box">
+    <div class="iface-head">
+      <div><div class="iface-title" id="iface-title">Interface</div><div class="iface-sub" id="iface-sub"></div></div>
+      <button class="iface-close" onclick="closeInterface()"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="iface-body" id="iface-body"></div>
+    <div class="iface-footer">
+      <a class="iface-open-btn" id="iface-open-btn" href="#" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square"></i> Ouvrir l'interface complète</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+  DOCUMENTS PDF MODALS
+  Modal A : Choix Énoncé / Correction
+  Modal B : Visionneuse iframe Google Drive
+═══════════════════════════════════════════════════════════ -->
+
+<!-- MODAL A : choix -->
+<div class="pdf-choice-overlay" id="modal-pdf-choice">
+  <div class="pdf-choice-box">
+    <div class="pdc-pill"></div>
+    <div class="pdc-head">
+      <div class="pdc-file-row">
+        <div class="pdc-file-ico" id="pdc-file-ico"><i class="fas fa-file-pdf"></i></div>
+        <div>
+          <div class="pdc-title" id="pdc-title">Calcul Chapitre 7</div>
+          <div class="pdc-sub"   id="pdc-sub">Mathématiques · 24 pages</div>
+        </div>
+      </div>
+      <button class="pdc-close" onclick="closePdfChoice()"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="pdc-label">Choisir le document</div>
+    <div class="pdc-options">
+      <div class="pdc-opt enonce" onclick="openDriveViewer('enonce')">
+        <div class="pdc-opt-ico ico-b"><i class="fas fa-file-lines"></i></div>
+        <div class="pdc-opt-body">
+          <div class="pdc-opt-label">Énoncé</div>
+          <div class="pdc-opt-hint">Document officiel · Questions &amp; exercices</div>
+        </div>
+        <span class="pdc-opt-tag">PDF</span>
+      </div>
+      <div class="pdc-opt correction" onclick="openDriveViewer('correction')">
+        <div class="pdc-opt-ico ico-g"><i class="fas fa-circle-check"></i></div>
+        <div class="pdc-opt-body">
+          <div class="pdc-opt-label">Correction</div>
+          <div class="pdc-opt-hint">Corrigé détaillé · Réponses complètes</div>
+        </div>
+        <span class="pdc-opt-tag">PDF</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL B : visionneuse iframe Drive -->
+<div class="gdrive-viewer-overlay" id="modal-gdrive-viewer">
+  <div class="gdrive-viewer-box">
+
+    <!-- Header -->
+    <div class="gdv-head">
+      <div class="gdv-left">
+        <div class="gdv-type-badge" id="gdv-type-badge"><i class="fas fa-file-lines" style="font-size:9px"></i> Énoncé</div>
+        <div>
+          <div class="gdv-doc-name" id="gdv-doc-name">Calcul Chapitre 7</div>
+          <div class="gdv-doc-sub"  id="gdv-doc-sub">Mathématiques · 24 pages</div>
+        </div>
+      </div>
+      <div class="gdv-actions">
+        <a class="gdv-open-btn" id="gdv-open-btn" href="https://drive.google.com" target="_blank" rel="noopener">
+          <svg viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg"><path d="M6.6 66.85l3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8H0c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="M43.65 25L29.9 1.2C28.55 2 27.4 3.1 26.6 4.5L1.2 48.5C.4 49.9 0 51.45 0 53h27.5z" fill="#00ac47"/><path d="M73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75L86.1 57.5c.8-1.4 1.2-2.95 1.2-4.5H59.65L73.55 76.8z" fill="#ea4335"/><path d="M43.65 25L57.4 1.2C56.05.4 54.5 0 52.95 0H34.35c-1.55 0-3.1.45-4.45 1.2z" fill="#00832d"/><path d="M59.65 53H87.3c0-1.55-.4-3.1-1.2-4.5L61.1 4.5C60.3 3.1 59.15 2 57.8 1.2L44.05 25z" fill="#2684fc"/><path d="M27.5 53L13.75 76.8c1.35.8 2.9 1.2 4.45 1.2h50.9c1.55 0 3.1-.45 4.45-1.2L59.65 53z" fill="#ffba00"/></svg>
+          Ouvrir dans Drive
+        </a>
+        <button class="gdv-close" onclick="closeDriveViewer()"><i class="fas fa-xmark"></i></button>
+      </div>
+    </div>
+
+    <!-- ── REAL iframe (remplace l'ancien viewer simulé) ── -->
+    <div class="gdv-iframe-wrap" id="gdv-iframe-wrap">
+      <!-- Spinner visible pendant le chargement -->
+      <div class="gdv-loading" id="gdv-loading">
+        <div class="gdv-spinner"></div>
+        <span class="gdv-loading-text">Chargement du document…</span>
+      </div>
+      <iframe
+        id="gdv-iframe"
+        src=""
+        allowfullscreen
+        loading="lazy"
+        title="Visionneuse Google Drive">
+      </iframe>
+    </div>
+
+    <!-- Statusbar -->
+    <div class="gdv-statusbar">
+      <div class="gdv-status-left">
+        <i class="fas fa-file-pdf" style="font-size:10px; color:var(--red)"></i>
+        <span id="gdv-page-label">Chargement…</span>
+      </div>
+      <div class="gdv-status-right">
+        <button class="gdv-nav-btn" title="Ouvrir dans Drive" onclick="window.open(document.getElementById('gdv-open-btn').href,'_blank')">
+          <i class="fas fa-arrow-up-right-from-square"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST NOTIFICATION -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   AUTHENTICATION FUNCTIONS
+══════════════════════════════════════════════════════ */
+const AUTH_CONFIG = {
+    isLoggedInKey: 'eduwell_svt_isLoggedIn',
+    usernameKey: 'eduwell_svt_username',
+    lastActivityKey: 'eduwell_svt_lastActivity'
+};
+
+// Get current user info
+function getCurrentUser() {
+    return {
+        username: localStorage.getItem(AUTH_CONFIG.usernameKey) || 'Alex Student',
+        email: localStorage.getItem(AUTH_CONFIG.usernameKey) || 'alex@eduvault.com'
+    };
+}
+
+// Check if user is authenticated
+function isAuthenticated() {
+    const isLoggedIn = localStorage.getItem(AUTH_CONFIG.isLoggedInKey) === 'true';
+    if (!isLoggedIn) return false;
+    
+    const lastActivity = localStorage.getItem(AUTH_CONFIG.lastActivityKey);
+    if (lastActivity) {
+        const lastActivityTime = parseInt(lastActivity);
+        const minutesDiff = (Date.now() - lastActivityTime) / (1000 * 60);
+        if (minutesDiff >= 30) {
+            // Session expired due to inactivity
+            localStorage.removeItem(AUTH_CONFIG.isLoggedInKey);
+            localStorage.removeItem(AUTH_CONFIG.usernameKey);
+            localStorage.removeItem(AUTH_CONFIG.lastActivityKey);
+            return false;
+        }
+    }
+    return true;
+}
+
+// Update user activity timestamp
+function updateUserActivity() {
+    if (localStorage.getItem(AUTH_CONFIG.isLoggedInKey) === 'true') {
+        localStorage.setItem(AUTH_CONFIG.lastActivityKey, Date.now().toString());
+    }
+}
+
+// Initialize activity tracking
+function initActivityTracking() {
+    ['click', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(event => {
+        document.addEventListener(event, updateUserActivity);
+    });
+    
+    // Check session every minute
+    window.activityTimer = setInterval(() => {
+        if (isAuthenticated()) {
+            const lastActivity = localStorage.getItem(AUTH_CONFIG.lastActivityKey);
+            if (lastActivity) {
+                const lastActivityTime = parseInt(lastActivity);
+                const minutesDiff = (Date.now() - lastActivityTime) / (1000 * 60);
+                if (minutesDiff >= 30) {
+                    toast('Session expirée - veuillez vous reconnecter');
+                    showLoginOverlay();
+                }
+            }
+        }
+    }, 60000);
+}
+
+// Toast notification
+let toastTimer;
+function toast(message) {
+    const el = document.getElementById('toast');
+    if (el) {
+        el.innerHTML = `<i class="fas fa-info-circle"></i> ${message}`;
+        el.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+    }
+}
+
+// Show login overlay
+function showLoginOverlay() {
+    document.getElementById('protectedOverlay').style.display = 'flex';
+}
+
+// Redirect to login
+function redirectToLogin() {
+    sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+    window.location.href = 'login.html';
+}
+
+// Logout function
+function logout() {
+    localStorage.removeItem(AUTH_CONFIG.isLoggedInKey);
+    localStorage.removeItem(AUTH_CONFIG.usernameKey);
+    localStorage.removeItem(AUTH_CONFIG.lastActivityKey);
+    
+    // Clear any activity tracking timers
+    if (window.activityTimer) clearInterval(window.activityTimer);
+    
+    toast('Déconnexion réussie');
+    
+    // Update UI to show login overlay
+    showLoginOverlay();
+}
+
+// Update UI with user info
+function updateUserUI() {
+    if (isAuthenticated()) {
+        const user = getCurrentUser();
+        const userName = user.username;
+        
+        // Update sidebar profile
+        document.getElementById('userName').textContent = userName;
+        document.getElementById('userAvatar').textContent = userName.charAt(0) + (userName.split(' ')[1]?.charAt(0) || '');
+        
+        // Update role
+        const roleElement = document.getElementById('userRole');
+        if (roleElement) {
+            roleElement.textContent = 'Bac 2026';
+        }
+    }
+}
+
+// Check authentication on page load
+function checkAuth() {
+    if (!isAuthenticated()) {
+        // Store current page for redirect back
+        sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+        showLoginOverlay();
+    } else {
+        // Initialize activity tracking
+        initActivityTracking();
+        updateUserActivity();
+        updateUserUI();
+    }
+}
+
+/* ══════════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════════ */
+// Call checkAuth when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    checkAuth();
+});
+
+// Handle page show event (for back/forward cache)
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+        // Page was restored from cache, re-check authentication
+        if (!isAuthenticated()) {
+            showLoginOverlay();
+        } else {
+            updateUserUI();
+            updateUserActivity();
+        }
+    }
+});
+
+// Disable right-click and save shortcuts (optional)
+document.addEventListener('contextmenu', function(e) { 
+    if (!isAuthenticated()) return;
+    e.preventDefault(); 
+    return false; 
+});
+
+document.addEventListener('keydown', function(e) {
+    if (!isAuthenticated()) return;
+    if ((e.ctrlKey && e.key === 's') || 
+        (e.ctrlKey && e.shiftKey && e.key === 'S') || 
+        (e.ctrlKey && e.key === 'p') ||
+        e.key === 'F12') {
+        e.preventDefault();
+        return false;
+    }
+});
+</script>
+
+<script src="./data/js/script.js"></script>
+</body>
+</html>

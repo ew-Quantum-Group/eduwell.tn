@@ -190,7 +190,7 @@ document.getElementById('modal-gdrive-viewer').addEventListener('click', functio
 // ══════════════════════════════════════════════════════
 const DATA = {
   'calcul-ch7': {
-    filename: 'calcul_ch7.py',
+    filename: 'Prototypes pratiques Bac.py',
     gdrive: 'https://drive.google.com/file/d/CALCUL_CH7_ID/view',
     iface_url: 'https://drive.google.com/file/d/1Snc3tbCZo6NdwNwK-4JESdyV5RGa5mix/view?usp=drive_link',
     iface_label: 'Ouvrir QT',
@@ -255,7 +255,7 @@ app.exec_()`,
   </div>
 </div>`
   },
-  'mecanique-q': { filename:'mecanique_quantique.py', 
+  'mecanique-q': { filename:'Prototypes pratiques Bac.py', 
     gdrive: 'https://drive.google.com/file/d/CALCUL_CH7_ID/view',
     iface_url: 'https://drive.google.com/file/d/1jJfOP6KyxlOoPwXYivhf1CFZWz3Cnm3D/view?usp=drive_link',
     iface_label: 'Ouvrir QT',
@@ -303,7 +303,7 @@ app.exec_()`,
     iface_preview:'<div class="iface-preview"><div class="iface-preview-body"><p style="font-size:10.5px;color:var(--ink-3)">QT Design.</p></div></div>' },
 
 
-  'bio-cell': { filename:'biologie_cellulaire.py', 
+  'bio-cell': { filename:'Prototypes pratiques Bac.py', 
      gdrive: 'https://drive.google.com/file/d/1iqxIvYwio-DtnH3KPqZ9tN7GQADh5KZh/view',
     iface_url: 'https://drive.google.com/file/d/1lOquRgf6bLqn-rjAuHijgx7kxqQomRhT/view?usp=drive_link',
     iface_label: 'Ouvrir QT',
@@ -349,7 +349,7 @@ app.exec_()`,
 
     
     
- 'climat': { filename:'changement_climatique.py', 
+ 'climat': { filename:'Prototypes pratiques Bac.py', 
   gdrive: 'https://drive.google.com/file/d/1L_C9Mwryxovc0BuXYjKohxibut0sHFti/view',
     iface_url: 'https://drive.google.com/file/d/1k5Fs-SJ2KyNhq-gGLoQyymLGFTNQyR29/view?usp=drive_link',
     iface_label: 'Ouvrir QT',
@@ -392,7 +392,7 @@ app.exec_()`,
     iface_preview:'<div class="iface-preview"><div class="iface-preview-body"><p style="font-size:10.5px;color:var(--ink-3)">QT Design.</p></div></div>' },
 
 
-  'serie-9': { filename:'serie_exercices_9.py',   
+  'serie-9': { filename:'Prototypes pratiques Bac.py',   
     gdrive: 'https://drive.google.com/file/d/14uZblWrqG0syBnNm3Pzfa0xHaf2MHBa5/view',
     iface_url: 'https://drive.google.com/file/d/1jm-2PtsDElK9Rkf3Qcvet8X_GiqwKHuV/view?usp=drive_link',
     iface_label: 'Ouvrir QT',
@@ -438,7 +438,7 @@ app.exec_()`,
 
 
 
-  'labo-4': { filename:'rapport_labo_4.py',  gdrive: 'https://drive.google.com/file/d/14uZblWrqG0syBnNm3Pzfa0xHaf2MHBa5/view',
+  'labo-4': { filename:'Prototypes pratiques Bac.py',  gdrive: 'https://drive.google.com/file/d/14uZblWrqG0syBnNm3Pzfa0xHaf2MHBa5/view',
     iface_url: 'https://drive.google.com/file/d/1jm-2PtsDElK9Rkf3Qcvet8X_GiqwKHuV/view?usp=drive_link',
     iface_label: 'Ouvrir QT',
     pages: '24', subject: 'Mathématiques',
@@ -484,7 +484,7 @@ app.exec_()`,
 
 
 
-  'geo-projet': { filename:'geo_projet.py', 
+  'geo-projet': { filename:'Prototypes pratiques Bac.py', 
     
      iface_url: 'https://drive.google.com/file/d/1jm-2PtsDElK9Rkf3Qcvet8X_GiqwKHuV/view?usp=drive_link',
     iface_label: 'Ouvrir QT',
@@ -530,7 +530,7 @@ app.exec_()`,
 
 
   
-  'photo-video': { filename:'photosynthese.py',
+  'photo-video': { filename:'Prototypes pratiques Bac.py',
     
      iface_url: 'https://drive.google.com/file/d/1zP8rxR2PMJYjja4oEFdLqhE7Oc4zHbf7/view?usp=drive_link',
     iface_label: 'Ouvrir QT',
@@ -585,7 +585,7 @@ app.exec_()`,
     iface_preview:'<div class="iface-preview"><div class="iface-preview-body"><p style="font-size:10.5px;color:var(--ink-3)">QT Design.</p></div></div>' },
 
   
-     'mindmap': { filename:'mindmap_gen.py', 
+     'mindmap': { filename:'Prototypes pratiques Bac.py', 
       
       
       
@@ -643,7 +643,7 @@ app.exec_()`,
 
   
   
-      'prononciation': { filename:'phonemes_fr.py', 
+      'prononciation': { filename:'Prototypes pratiques Bac.py', 
         
         
        iface_url: 'https://drive.google.com/file/d/1fcIkU7TqYnflQbLNe2JZ9xme3iFFz8_n/view?usp=drive_link',
@@ -696,7 +696,7 @@ app.exec_()`,
 
   
   
-        'eco-data': { filename:'donnees_eco.py', 
+        'eco-data': { filename:'Prototypes pratiques Bac.py', 
           
        iface_url: 'https://drive.google.com/file/d/1F5HpnkgrdDO5G0zHG4iZLFf3C40eFMfh/view?usp=drive_link',
     iface_label: 'Ouvrir QT',
@@ -762,7 +762,7 @@ app.exec_()`,
 
   
   
-          'mi-parcours': { filename:'analyse_resultats.py', 
+          'mi-parcours': { filename:'Prototypes pratiques Bac.py', 
             
             
             
@@ -815,7 +815,7 @@ app.exec_()`,
   
   
   
-            'anglais-blanc': { filename:'analyseur_anglais.py', 
+            'anglais-blanc': { filename:'Prototypes pratiques Bac.py', 
               
        iface_url: 'https://drive.google.com/file/d/1fDlxFPqyFiGUm2ahqXKDWEoF_rbN51Vt/view?usp=drive_link',
     iface_label: 'Ouvrir QT',
@@ -866,7 +866,7 @@ windows.Afficher.clicked.connect(<span class="t-fn">play</span>)
 app.exec_()`, 
     iface_preview:'<div class="iface-preview"><div class="iface-preview-body"><p style="font-size:10.5px;color:var(--ink-3)">QT Design.</p></div></div>' },
 
-              'physique-final': { filename:'physique_formules.py', 
+              'physique-final': { filename:'Prototypes pratiques Bac.py', 
                 
                 
        iface_url: 'https://drive.google.com/file/d/1dcEKZmxm-2MFNv_uABUSB9CGa_jsXQnG/view?usp=drive_link',
@@ -930,7 +930,7 @@ app.exec_()`,
     iface_preview:'<div class="iface-preview"><div class="iface-preview-body"><p style="font-size:10.5px;color:var(--ink-3)">QT Design.</p></div></div>' },
 
   
-                'formule-maths': { filename:'formulaire_maths.py', 
+                'formule-maths': { filename:'Prototypes pratiques Bac.py', 
                   
                   
                   

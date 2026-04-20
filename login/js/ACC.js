@@ -10,6 +10,11 @@
                 password: 'Issal123&', 
                 name: 'Issal' 
             },
+              { 
+                username: 'dallalimaysem07@gmail.com',
+                password: 'Admise*9', 
+                name: 'Maysem' 
+            },
             { 
                 username: 'gharsallah216@gmail.com',
                 password: 'Azer123:', 

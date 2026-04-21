@@ -1398,18 +1398,310 @@ description: "Ensemble structuré de devoirs de controle 1 en Sciences de la Vie
 },
 
 
+{
+  id: 31,
+  title: "English Grammar and Writing Revision",
+  description: "Tasks and corrections for grammar and writing practice.",
+
+  files: [
+    {
+      name: "Task 1",
+      url: "https://drive.google.com/file/d/1oIMlJjplqsj6ymifT912PhiQu2rv2gX-/preview"
+    },
+    {
+      name: "Correction Task 1",
+      url: "https://drive.google.com/file/d/1UtTyEEOIWN_b5j1lLrE3bCeeyevtD2s-/preview"
+    },
+    {
+      name: "Task 2",
+      url: "https://drive.google.com/file/d/1OyMFnZL-1BGbpBoKNwOnbrogHsBbOl07/preview"
+    },
+    {
+      name: "Correction Task 2",
+      url: "https://drive.google.com/file/d/1B3Z5ycnPY0lEtjb8jelfjHhzVuXwEYw9/preview"
+    },
+    {
+      name: "Task 3",
+      url: "https://drive.google.com/file/d/1uV7maZKvFvRW0QHa2btYXvW4iBMSuefn/preview"
+    },
+    {
+      name: "Correction Task 3",
+      url: "https://drive.google.com/file/d/1SXH5MN-lHizWESXhn5J-ouPaRd6YZ8od/preview"
+    },
+    {
+      name: "Task 4",
+      url: "https://drive.google.com/file/d/1TlL1i98H1v15fVczgkxv5Bf57JCgVK1k/preview"
+    },
+    {
+      name: "Correction Task 4",
+      url: "https://drive.google.com/file/d/1zyPc6UcSYH5g6IHoX1RSKwO4zbwhlreW/preview"
+    }
+  ]
+},
+
+{
+  id: 32,
+  title: "Immunité : Séries Corrigées",
+  description: "Ensemble de séries d'exercices en immunité (SVT).",
+
+  files: [
+    {
+      name: "Série 1",
+      url: "https://drive.google.com/file/d/1FgU_f3EMa7XWVdti9AADLa2SF9VjLjst/preview"
+    },
+    {
+      name: "Correction Série 1",
+      url: "https://drive.google.com/file/d/1RSawQG5j_sMGmb6lUfVBw6uoW7POrtkH/preview"
+    },
+    {
+      name: "Série 2",
+      url: "https://drive.google.com/file/d/1-DJlxPcAz0Sf2ymC7R54NVIFhelxYM3T/preview"
+    },
+    {
+      name: "Correction Série 2",
+      url: "https://drive.google.com/file/d/1RhjJrxTJVNtotLD91kg5L_3XOOUJVFvj/preview"
+    },
+    {
+      name: "Série 3",
+      url: "https://drive.google.com/file/d/17zT-LWa5T1urEjDqbAuuxIn0Rgcd21S_/preview"
+    },
+    {
+      name: "Correction Série 3",
+      url: "https://drive.google.com/file/d/1tOQtk7uPnWlBJ4T6TVHBjilQaEobEBv2/preview"
+    },
+    {
+      name: "Série 4",
+      url: "https://drive.google.com/file/d/1CvNn7-yNjcu0SZ_DrSMVAmwGHm3VhnPs/preview"
+    },
+    {
+      name: "Correction Série 4",
+      url: "https://drive.google.com/file/d/1i-B51m0Lwnre3Rh7MRiyb4Mr8IMvAVAM/preview"
+    },
+    {
+      name: "Série 5",
+      url: "https://drive.google.com/file/d/1wguj9N6NYtKsV9CPcM_TFMfOj1xxCnif/preview"
+    },
+    {
+      name: "Correction Série 5",
+      url: "https://drive.google.com/file/d/1x29no5EWhtEyIZ-PAC6blCOIoLFJiM9n/preview"
+    }
+  ]
+},
+
+{
+  id: 33,
+  title: "Les muscles squelettiques",
+  description: "Séries d'exercices sur Les muscles squelettiques (SVT)",
+
+  files: [
+    {
+      name: "Série 1",
+      url: "https://drive.google.com/file/d/1ZHb-Xlglorq8DahlKzr7y5SRLEbCAJaZ/preview"
+    },
+    {
+      name: "Correction Série 1",
+      url: "https://drive.google.com/file/d/1mDRfhTJFaDeXo3Kfin1upLft7m8EOjyj/preview"
+    },
+    {
+      name: "Série 2",
+      url: "https://drive.google.com/file/d/16paee30-W5X_gxgh_d75CpRJRVhh6xMh/preview"
+    },
+    {
+      name: "Correction Série 2",
+      url: "https://drive.google.com/file/d/1K-WxB7gPMLO0-dNe1y9TXKlPdgcg5s3x/preview"
+    },
+    {
+      name: "Série 3",
+      url: "https://drive.google.com/file/d/1_7QUBstuNN4pUheTlY01KaZc-Ar3LIgw/preview"
+    },
+    {
+      name: "Correction Série 3",
+      url: "https://drive.google.com/file/d/1mM4mra2H6BSG0OX7NZnbGC6oyU85m5mw/preview"
+    },
+    {
+      name: "Série 4",
+      url: "https://drive.google.com/file/d/1afcTNr3xzctSLhivmO6DJXjpqcl_lEwT/preview"
+    },
+    {
+      name: "Correction Série 4",
+      url: "https://drive.google.com/file/d/1KLA_WRSpSaprX9E2w4vjLeX82hvvLMCY/preview"
+    },
+    {
+      name: "Série 5",
+      url: "https://drive.google.com/file/d/1YF7qwAESD0cRHHyzrLdTEbNPCp3Tzqba/preview"
+    },
+    {
+      name: "Correction Série 5",
+      url: "https://drive.google.com/file/d/1ewzSoAFqBFKVnaA9IqlH5Qk9EJjhN0Dq/preview"
+    }
+  ]
+},
 
 
+{
+  "id": 34,
+  "title": "Complexes & Analyse – Séries 1, 2, 3",
+  "description": "Séries d'exercices sur les nombres complexes et l'analyse avec corrections. Destinées aux élèves du baccalauréat pour renforcer la pratique et la maîtrise des types d'exercices.",
+
+  "files": [
+    {
+      "name": "Série 1 – Complexe + Analyse",
+      "url": "https://drive.google.com/file/d/170eJsS1ai9pTtiADsLoMnQXTDs5rmDFr/preview"
+    },
+    {
+      "name": "Correction Série 1",
+      "url": "https://drive.google.com/file/d/19MS0RGRSf74N8QT17jniG_7MhmlRU0hL/preview"
+    },
+    {
+      "name": "Série 2 – Complexe + Analyse",
+      "url": "https://drive.google.com/file/d/1acp61r869r_RyjEGDmkOP3U4VijGFMRP/preview"
+    },
+    {
+      "name": "Correction Série 2",
+      "url": "https://drive.google.com/file/d/1bdYroTxQEVGB38DBx2K_C7_npYCNGde-/preview"
+    },
+    {
+      "name": "Série 3 – Complexe",
+      "url": "https://drive.google.com/file/d/1eKuVfoKcs989vPb4Ogp0oyBqHpZMMObX/preview"
+    },
+    {
+      "name": "Correction Série 3",
+      "url": "https://drive.google.com/file/d/1P4tcltxYt_-l5aStZ6exnjiOzuqJRhrE/preview"
+    }
+  ]
+},
+{
+  "id": 35,
+  "title": "Fonction exponentielle – Série + Correction",
+  "description": "Série d’exercices sur la fonction exponentielle avec correction détaillée. Destinée aux élèves du baccalauréat pour maîtriser les limites, dérivées et études de fonctions exponentielles.",
+
+  "files": [
+    {
+      "name": "Série Exponentielle",
+      "url": "https://drive.google.com/file/d/1I-FeMbXprtaSefEud6S5K23nrX1kb0zK/preview"
+    },
+    {
+      "name": "Correction Série Exponentielle",
+      "url": "https://drive.google.com/file/d/1mJWV3ITn8i1VN-uJrb7YBe4aTNRt2FbW/preview"
+    }
+  ]
+},
+
+{
+  "id": 36,
+  "title": "Fonction logarithme – Série + Correction",
+  "description": "Série d’exercices sur la fonction logarithme népérien avec correction détaillée. Destinée aux élèves du baccalauréat pour maîtriser les propriétés du logarithme, les équations et les études de fonctions.",
+
+  "files": [
+    {
+      "name": "Série Logarithme",
+      "url": "https://drive.google.com/file/d/1wV7H0TNb7kZDzST9t67wES5ODGfe0UB5/preview"
+    },
+    {
+      "name": "Correction Série Logarithme",
+      "url": "https://drive.google.com/file/d/1PS4CCudGE02gycOXBxvOdvJcJMpRrXF3/preview"
+    }
+  ]
+},
+{
+  "id": 37,
+  "title": "Suites numériques – Série + Correction",
+  "description": "Série d’exercices sur les suites numériques avec correction détaillée. Destinée aux élèves du baccalauréat pour maîtriser les suites arithmétiques, géométriques et récurrentes ainsi que les limites de suites.",
+
+  "files": [
+    {
+      "name": "Série Suites",
+      "url": "https://drive.google.com/file/d/1CwuAv5MrXmGzKGLD9rSmZ9gzmOfoflam/preview"
+    },
+    {
+      "name": "Correction Série Suites",
+      "url": "https://drive.google.com/file/d/17MIliY2XqquCxs4eTcsSgSyLZao_dysJ/preview"
+    }
+  ]
+},
+{
+  "id": 38,
+  "title": "Révision Générale – Mathématiques",
+  "description": "Série de révision générale en mathématiques pour les élèves du baccalauréat. Contient des exercices et corrections couvrant plusieurs chapitres essentiels.",
+
+  "files": [
+    {
+      "name": "Série 1 (S1)",
+      "url": "https://drive.google.com/file/d/1aLWxxkR-oxxY_BWH7gEumYjmhgc2_xVZ/preview"
+    },
+    {
+      "name": "Correction 1 (C1)",
+      "url": "https://drive.google.com/file/d/13ytIwlJDUMbVwPPdTpzkZsVSAv-ghipd/preview"
+    },
+    {
+      "name": "Série 2 (S2)",
+      "url": "https://drive.google.com/file/d/1JBF-IZnrCJyrdcJ596RIfDFbv3X-VNjq/preview"
+    },
+    {
+      "name": "Correction 2 (C2)",
+      "url": "https://drive.google.com/file/d/1r9yMy12xiOZ_x8BKGY1nFHfvlwqTMQAB/preview"
+    }
+  ]
+},
+
+{
+  "id": 39,
+  "title": "Intégrales – Séries 1 à 4 avec correction",
+  "description": "Séries d’exercices sur les intégrales avec correction détaillée. Destinées aux élèves du baccalauréat pour maîtriser le calcul intégral, les primitives et les applications.",
+
+  "files": [
+    {
+      "name": "Série 1 + Correction",
+      "url": "https://drive.google.com/file/d/1egbMCaDx1fTSoENQgxadit43wvWnTCg-/preview"
+    },
+    {
+      "name": "Série 2 + Correction",
+      "url": "https://drive.google.com/file/d/1pNGZSgUhMVkz99kcPrPRayc_0FD8eBgV/preview"
+    },
+    {
+      "name": "Série 3 + Correction",
+      "url": "https://drive.google.com/file/d/1QLcZFTIEOVZ-YwuxDhwOsfI7QypFoBNv/preview"
+    },
+    {
+      "name": "Série 4 + Correction",
+      "url": "https://drive.google.com/file/d/1XseU26RFDUZcmlbO0C7RzrA61m-k9j0z/preview"
+    }
+  ]
+},
 
 
+{
+  "id": 40,
+  "title": "Ondes & Interaction matière – Série + Correction",
+  "description": "Séries d’exercices sur les ondes mécaniques et leur interaction avec la matière. Couvre les ondes progressives, stationnaires, la propagation et les phénomènes physiques associés. Destiné aux élèves du baccalauréat.",
 
-
-
-
-
-
-
-
+  "files": [
+    {
+      "name": "Série 1 – Ondes & Interaction",
+      "url": "https://drive.google.com/file/d/1P-0jrl687l20whMdRjaUnDX_plRtXdhY/preview"
+    },
+    {
+      "name": "Correction Série 1",
+      "url": "https://drive.google.com/file/d/1dm1-EFzUVf_hnOpOmUyPs-s_d8OsYMyj/preview"
+    },
+    {
+      "name": "Série 2 – Ondes & Interaction",
+      "url": "https://drive.google.com/file/d/1asJeYhD4pRL8qUmImh7jVC6awHgcvhWh/preview"
+    },
+    {
+      "name": "Correction Série 2",
+      "url": "https://drive.google.com/file/d/1P8R1K-L55VbsnCuWcidOzkKqdBFBSKyi/preview"
+    },
+    {
+      "name": "Série 3 – Ondes & Interaction",
+      "url": "https://drive.google.com/file/d/144nlY1UGODzS3XIa4-Yp_SD81gnSDLDU/preview"
+    },
+    {
+      "name": "Correction Série 3",
+      "url": "https://drive.google.com/file/d/1Eggm8SDZiIMU4mGCGVadPe_vhXd_x49q/preview"
+    }
+  ]
+},
 
 
 
@@ -1417,7 +1709,7 @@ description: "Ensemble structuré de devoirs de controle 1 en Sciences de la Vie
 
 
 {
-    "id": 15,
+    "id": 41,
     "title": "Math – Intégrale",
     "description": "Séries d'exercices avec corrections pour maîtriser le calcul integral et se préparer au Bac.",
     "files": [

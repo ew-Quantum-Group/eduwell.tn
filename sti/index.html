@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz STI — 4ème Sciences de l'Informatique</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
+
+    <style>
+        /* ─── RESET & BASE ─────────────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --white:      #ffffff;
+            --surface:    #f5f5f7;
+            --surface-2:  #ebebed;
+            --border:     rgba(0,0,0,0.08);
+            --shadow-sm:  0 1px 3px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05);
+            --shadow-md:  0 4px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
+            --shadow-lg:  0 16px 48px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06);
+
+            --text-primary:   #1d1d1f;
+            --text-secondary: #6e6e73;
+            --text-tertiary:  #aeaeb2;
+
+            --accent:     #0071e3;
+            --accent-hover: #0077ed;
+            --accent-light: rgba(0,113,227,0.08);
+
+            --green:  #34c759;
+            --red:    #ff3b30;
+            --yellow: #ff9f0a;
+            --purple: #af52de;
+            --indigo: #5856d6;
+            --teal:   #32ade6;
+
+            --radius-sm:  10px;
+            --radius-md:  16px;
+            --radius-lg:  20px;
+            --radius-xl:  28px;
+
+            --font: 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+            --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font);
+            background: var(--surface);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 48px 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ─── LAYOUT ────────────────────────────────────────────── */
+        .container {
+            width: 100%;
+            max-width: 680px;
+        }
+
+        section { display: none; animation: fadeUp 0.45s cubic-bezier(0.4,0,0.2,1) both; }
+        section.visible { display: block; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ─── CARDS ─────────────────────────────────────────────── */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+            padding: 36px;
+            transition: box-shadow var(--transition);
+        }
+
+        /* ─── HEADER / LOGO AREA ─────────────────────────────────── */
+        .home-logo {
+            width: 88px; height: 88px;
+            background: linear-gradient(145deg, #0071e3, #32ade6);
+            border-radius: 24px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 28px;
+            box-shadow: 0 8px 32px rgba(0,113,227,0.28);
+        }
+        .home-logo svg { width: 48px; height: 48px; color: white; }
+
+        .home-tag {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--accent-light);
+            color: var(--accent);
+            font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 5px 12px; border-radius: 999px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: clamp(28px, 5vw, 42px);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+        h1 sup { font-size: 0.55em; vertical-align: super; }
+
+        .subtitle {
+            font-size: 17px; font-weight: 400;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 36px;
+        }
+
+        /* ─── BUTTONS ────────────────────────────────────────────── */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            font-family: var(--font);
+            font-size: 15px; font-weight: 600;
+            padding: 13px 28px;
+            border-radius: var(--radius-md);
+            border: none; cursor: pointer;
+            transition: all var(--transition);
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+        }
+        .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 16px rgba(0,113,227,0.32);
+        }
+        .btn-primary:hover:not(:disabled) {
+            background: var(--accent-hover);
+            box-shadow: 0 6px 24px rgba(0,113,227,0.42);
+            transform: translateY(-1px);
+        }
+        .btn-primary:active:not(:disabled) { transform: translateY(0); }
+
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover:not(:disabled) {
+            background: var(--surface-2);
+            transform: translateY(-1px);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+        .btn-ghost:hover:not(:disabled) {
+            background: var(--surface);
+            color: var(--text-primary);
+        }
+
+        .btn-danger {
+            background: rgba(255,59,48,0.08);
+            color: var(--red);
+            border: 1px solid rgba(255,59,48,0.15);
+        }
+        .btn-danger:hover { background: rgba(255,59,48,0.14); }
+
+        .btn-warn {
+            background: rgba(255,159,10,0.10);
+            color: #b86e00;
+            border: 1px solid rgba(255,159,10,0.18);
+        }
+        .btn-warn:hover { background: rgba(255,159,10,0.18); }
+
+        .btn svg { width: 17px; height: 17px; flex-shrink: 0; }
+
+        /* ─── CONFIG SCREEN ──────────────────────────────────────── */
+        .config-section-title {
+            font-size: 13px; font-weight: 600; letter-spacing: 0.08em;
+            text-transform: uppercase; color: var(--text-tertiary);
+            margin-bottom: 14px; margin-top: 32px;
+        }
+        .config-section-title:first-child { margin-top: 0; }
+
+        /* Theme chips */
+        .theme-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+
+        .theme-chip input { display: none; }
+        .theme-chip label {
+            display: flex; align-items: center; gap: 9px;
+            padding: 10px 18px;
+            border-radius: var(--radius-md);
+            border: 1.5px solid var(--border);
+            background: var(--white);
+            cursor: pointer;
+            font-size: 14px; font-weight: 500;
+            color: var(--text-secondary);
+            transition: all var(--transition);
+            user-select: none;
+        }
+        .theme-chip label:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+        .theme-chip input:checked + label {
+            background: var(--accent-light);
+            border-color: var(--accent);
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .theme-chip label .dot {
+            width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+        }
+
+        /* Pill selectors (level / length) */
+        .pill-group { display: flex; flex-wrap: wrap; gap: 8px; }
+        .pill-option input { display: none; }
+        .pill-option label {
+            padding: 9px 20px;
+            border-radius: 999px;
+            border: 1.5px solid var(--border);
+            background: var(--white);
+            cursor: pointer;
+            font-size: 14px; font-weight: 500;
+            color: var(--text-secondary);
+            transition: all var(--transition);
+            user-select: none;
+        }
+        .pill-option label:hover { border-color: var(--accent); color: var(--accent); }
+        .pill-option input:checked + label {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+            font-weight: 600;
+        }
+
+        .divider { height: 1px; background: var(--border); margin: 28px 0; }
+
+        /* ─── QUIZ SCREEN ────────────────────────────────────────── */
+        .quiz-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .progress-text {
+            font-size: 13px; font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: 0.02em;
+        }
+
+        .timer {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 14px; font-weight: 600;
+            color: var(--text-secondary);
+            background: var(--surface);
+            padding: 6px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+        }
+        .timer svg { width: 14px; height: 14px; color: var(--accent); }
+
+        .progress-bar-track {
+            width: 100%; height: 4px;
+            background: var(--surface-2);
+            border-radius: 999px;
+            margin-bottom: 28px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--teal));
+            border-radius: 999px;
+            transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        .question-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+            text-transform: uppercase; padding: 4px 12px;
+            border-radius: 999px; margin-bottom: 18px;
+        }
+        .question-badge .badge-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+        #question-text {
+            font-size: 19px; font-weight: 600;
+            line-height: 1.55;
+            color: var(--text-primary);
+            margin-bottom: 28px;
+        }
+
+        /* Options */
+        .option-label {
+            display: flex; align-items: flex-start; gap: 14px;
+            padding: 16px 20px;
+            border-radius: var(--radius-md);
+            border: 1.5px solid var(--border);
+            background: var(--white);
+            cursor: pointer;
+            font-size: 15px; font-weight: 400;
+            color: var(--text-primary);
+            transition: all var(--transition);
+            margin-bottom: 10px;
+        }
+        .option-label:hover { border-color: var(--accent); background: var(--accent-light); }
+        .option-label input[type="radio"]:checked ~ *,
+        .option-label:has(input:checked) {
+            /* handled by JS toggling a class */
+        }
+        .option-label.selected {
+            border-color: var(--accent);
+            background: var(--accent-light);
+        }
+        .option-label .custom-check {
+            width: 20px; height: 20px; flex-shrink: 0;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            margin-top: 1px;
+            transition: all var(--transition);
+        }
+        .option-label.selected .custom-check {
+            background: var(--accent); border-color: var(--accent);
+        }
+        .option-label .custom-check svg { width: 11px; height: 11px; color: white; opacity: 0; transition: opacity 0.15s; }
+        .option-label.selected .custom-check svg { opacity: 1; }
+
+        .option-label .custom-box {
+            width: 20px; height: 20px; flex-shrink: 0;
+            border-radius: 6px;
+            border: 2px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            margin-top: 1px;
+            transition: all var(--transition);
+        }
+        .option-label.selected .custom-box {
+            background: var(--accent); border-color: var(--accent);
+        }
+        .option-label.selected .custom-box svg { opacity: 1; }
+        .option-label .custom-box svg { width: 11px; height: 11px; color: white; opacity: 0; transition: opacity 0.15s; }
+
+        input[type="text"].quiz-input {
+            width: 100%; padding: 14px 18px;
+            font-family: var(--font-mono);
+            font-size: 15px;
+            border-radius: var(--radius-md);
+            border: 1.5px solid var(--border);
+            background: var(--white);
+            color: var(--text-primary);
+            outline: none;
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+        input[type="text"].quiz-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0,113,227,0.12);
+        }
+        input[type="text"].quiz-input::placeholder { color: var(--text-tertiary); }
+
+        .quiz-nav {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-top: 32px; padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+        .quiz-nav-right { display: flex; gap: 10px; align-items: center; }
+
+        /* ─── CODE BLOCKS ────────────────────────────────────────── */
+        :not(pre) > code {
+            font-family: var(--font-mono);
+            background: #f0f4ff;
+            color: var(--accent);
+            padding: 2px 7px;
+            border-radius: 6px;
+            font-size: 0.88em;
+            border: 1px solid rgba(0,113,227,0.15);
+        }
+        pre[class*="language-"] {
+            border-radius: var(--radius-md);
+            font-family: var(--font-mono) !important;
+            font-size: 13px;
+            margin: 12px 0;
+            border: 1px solid var(--border);
+        }
+
+        /* ─── RESULTS SCREEN ─────────────────────────────────────── */
+        .score-hero {
+            text-align: center; padding: 48px 32px;
+            background: linear-gradient(145deg, #f0f7ff, var(--white));
+            border-radius: var(--radius-xl);
+            border: 1px solid rgba(0,113,227,0.12);
+            margin-bottom: 24px;
+            position: relative; overflow: hidden;
+        }
+        .score-hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(circle at 70% 30%, rgba(0,113,227,0.06), transparent 60%);
+            pointer-events: none;
+        }
+        .score-hero .label { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 10px; }
+        .score-number { font-size: 64px; font-weight: 800; letter-spacing: -0.04em; color: var(--accent); line-height: 1; margin-bottom: 6px; }
+        .score-time {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 13px; font-weight: 500; color: var(--text-secondary);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 5px 14px; border-radius: 999px;
+        }
+        .score-time svg { width: 13px; height: 13px; }
+
+        .theme-score-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 20px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            margin-bottom: 8px;
+        }
+        .theme-score-row .name { font-size: 14px; font-weight: 600; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
+        .theme-score-row .score-badge { font-size: 13px; font-weight: 700; color: var(--accent); background: var(--accent-light); padding: 4px 12px; border-radius: 999px; }
+
+        .wrong-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 14px;
+        }
+        .wrong-card .q-text { font-size: 15px; font-weight: 600; margin-bottom: 14px; color: var(--text-primary); }
+        .answer-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; font-size: 14px; }
+        .answer-row .al { font-weight: 700; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; flex-shrink: 0; }
+        .answer-row.wrong .al { color: var(--red); }
+        .answer-row.correct .al { color: var(--green); }
+        .answer-row.wrong .av { color: #b94040; }
+        .answer-row.correct .av { color: #237a38; }
+        .explain { font-size: 13px; color: var(--text-secondary); margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); line-height: 1.6; }
+
+        .section-heading {
+            font-size: 18px; font-weight: 700; color: var(--text-primary);
+            margin-bottom: 14px; letter-spacing: -0.02em;
+        }
+        .section-heading span { color: var(--text-tertiary); font-weight: 500; font-size: 14px; margin-left: 8px; }
+
+        /* ─── FOOTER ─────────────────────────────────────────────── */
+        footer {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ─── THEME DOT COLORS ───────────────────────────────────── */
+        .dot-html    { background: #ff3b30; }
+        .dot-css     { background: #0071e3; }
+        .dot-js      { background: #ff9f0a; }
+        .dot-php     { background: #af52de; }
+        .dot-db      { background: #34c759; }
+
+        /* ─── EMPTY STATE ────────────────────────────────────────── */
+        .all-correct {
+            text-align: center; padding: 32px;
+            background: linear-gradient(145deg, #f0fff5, var(--white));
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(52,199,89,0.2);
+        }
+        .all-correct .icon { font-size: 40px; margin-bottom: 10px; }
+        .all-correct p { font-size: 15px; font-weight: 600; color: var(--green); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ── HOME SCREEN ──────────────────────────────────────── -->
+    <section id="home-screen">
+        <div style="text-align:center; padding: 16px 0 48px;">
+            <div class="home-logo">
+                <!-- Brain/chip icon -->
+                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 8C16 8 10 8 8 14C6 20 8 26 12 28" />
+                    <path d="M32 8C32 8 38 8 40 14C42 20 40 26 36 28" />
+                    <rect x="16" y="10" width="16" height="24" rx="4" />
+                    <line x1="20" y1="34" x2="20" y2="40" />
+                    <line x1="28" y1="34" x2="28" y2="40" />
+                    <line x1="16" y1="40" x2="32" y2="40" />
+                    <line x1="20" y1="17" x2="28" y2="17" />
+                    <line x1="20" y1="22" x2="28" y2="22" />
+                    <line x1="20" y1="27" x2="25" y2="27" />
+                </svg>
+            </div>
+            <div class="home-tag">
+                <svg viewBox="0 0 16 16" fill="currentColor" style="width:10px;height:10px"><circle cx="8" cy="8" r="5"/></svg>
+                Sciences de l'Informatique · 4ème
+            </div>
+            <h1>Quiz STI<sup>ème</sup></h1>
+            <p class="subtitle">Entraînez-vous sur les thèmes clés du programme.<br>Bases de données, HTML, CSS, JavaScript & PHP.</p>
+            <button id="start-config-btn" class="btn btn-primary" style="font-size:16px; padding:15px 40px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Commencer le Quiz
+            </button>
+        </div>
+        <!-- Feature pills -->
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px; margin-top: 0;">
+            <div style="display:flex;align-items:center;gap:7px;background:var(--white);border:1px solid var(--border);border-radius:999px;padding:7px 16px;font-size:13px;font-weight:500;color:var(--text-secondary);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;color:var(--accent)"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                5 thèmes
+            </div>
+            <div style="display:flex;align-items:center;gap:7px;background:var(--white);border:1px solid var(--border);border-radius:999px;padding:7px 16px;font-size:13px;font-weight:500;color:var(--text-secondary);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;color:var(--green)"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                3 niveaux
+            </div>
+            <div style="display:flex;align-items:center;gap:7px;background:var(--white);border:1px solid var(--border);border-radius:999px;padding:7px 16px;font-size:13px;font-weight:500;color:var(--text-secondary);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;color:var(--yellow)"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Chrono intégré
+            </div>
+        </div>
+    </section>
+
+    <!-- ── CONFIG SCREEN ─────────────────────────────────────── -->
+    <section id="config-screen">
+        <div style="margin-bottom:32px;">
+            <button id="back-home-btn" class="btn btn-ghost" style="font-size:13px;padding:8px 16px;margin-bottom:24px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><polyline points="15 18 9 12 15 6"/></svg>
+                Retour
+            </button>
+            <h1 style="font-size:30px; margin-bottom:4px;">Configurez votre quiz</h1>
+            <p style="font-size:15px;color:var(--text-secondary);">Choisissez vos préférences pour personnaliser l'épreuve.</p>
+        </div>
+
+        <div class="card">
+            <p class="config-section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;width:13px;height:13px;vertical-align:middle;margin-right:5px;"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+                Thèmes
+            </p>
+            <div id="themes-container" class="theme-grid"></div>
+
+            <div class="divider"></div>
+
+            <p class="config-section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;width:13px;height:13px;vertical-align:middle;margin-right:5px;"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                Niveau de difficulté
+            </p>
+            <div id="level-container" class="pill-group"></div>
+
+            <div class="divider"></div>
+
+            <p class="config-section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;width:13px;height:13px;vertical-align:middle;margin-right:5px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Longueur de l'épreuve
+            </p>
+            <div id="length-container" class="pill-group"></div>
+
+            <div class="divider"></div>
+
+            <div style="text-align:right;">
+                <button id="start-quiz-btn" class="btn btn-primary" disabled style="font-size:15px;padding:13px 32px;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    Démarrer
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── QUIZ SCREEN ───────────────────────────────────────── -->
+    <section id="quiz-screen">
+        <div class="quiz-header">
+            <span class="progress-text" id="progress-indicator">Question 1 / 20</span>
+            <div class="timer" id="timer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                00:00
+            </div>
+        </div>
+
+        <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+        </div>
+
+        <div class="card">
+            <div id="question-badge" class="question-badge">
+                <span class="badge-dot"></span>
+                <span id="question-theme-text"></span>
+            </div>
+
+            <div id="question-text"></div>
+            <div id="options-container"></div>
+
+            <div class="quiz-nav">
+                <button id="prev-btn" class="btn btn-ghost">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                    Précédent
+                </button>
+                <div class="quiz-nav-right">
+                    <button id="skip-btn" class="btn btn-warn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 9 2 12 5 15"/><path d="M2 12h14"/><polyline points="15 9 18 12 15 15"/><path d="M8 4h8a4 4 0 010 8H8"/></svg>
+                        Ignorer
+                    </button>
+                    <button id="next-btn" class="btn btn-primary">
+                        Suivant
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── RESULTS SCREEN ───────────────────────────────────── -->
+    <section id="results-screen">
+        <div class="score-hero">
+            <p class="label">Score final</p>
+            <div class="score-number" id="final-score">—</div>
+            <div class="score-time" id="total-time">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                —
+            </div>
+        </div>
+
+        <div id="theme-scores-container" style="margin-bottom:28px;"></div>
+        <div id="wrong-answers-container"></div>
+
+        <div style="display:flex;justify-content:center;gap:12px;margin-top:36px;">
+            <button id="replay-btn" class="btn btn-primary" style="padding:13px 32px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+                Rejouer
+            </button>
+            <button id="quit-btn" class="btn btn-secondary" style="padding:13px 32px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Accueil
+            </button>
+        </div>
+    </section>
+
+    <footer>
+        <address style="font-style:normal;">Créé par Abidi Mohamed Fadhel — 28552707</address>
+    </footer>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    // ── DOM ─────────────────────────────────────────────────────
+    const $ = id => document.getElementById(id);
+    const screens = {
+        home:    $('home-screen'),
+        config:  $('config-screen'),
+        quiz:    $('quiz-screen'),
+        results: $('results-screen')
+    };
+
+    // ── CONSTANTS ───────────────────────────────────────────────
+    const THEMES = ['Bases de données', 'HTML', 'CSS', 'JavaScript', 'PHP'];
+    const LEVELS = ['mixte', 'debutant', 'intermediaire', 'avance'];
+    const QUIZ_LENGTHS = { courte: 20, moyenne: 40, longue: 60 };
+
+    const THEME_META = {
+        'HTML':            { dot: 'dot-html',  label: 'HTML',             badge: '#ff3b30', badgeBg: '#fff1f0' },
+        'CSS':             { dot: 'dot-css',   label: 'CSS',              badge: '#0071e3', badgeBg: '#f0f7ff' },
+        'JavaScript':      { dot: 'dot-js',    label: 'JavaScript',       badge: '#b86e00', badgeBg: '#fff8e6' },
+        'PHP':             { dot: 'dot-php',   label: 'PHP',              badge: '#af52de', badgeBg: '#faf0ff' },
+        'Bases de données':{ dot: 'dot-db',    label: 'Bases de données', badge: '#237a38', badgeBg: '#f0fff5' }
+    };
+
+    const THEME_FILES = {
+        'Bases de données': 'bases_de_donnees.json',
+        'HTML': 'html.json', 'CSS': 'css.json',
+        'JavaScript': 'javascript.json', 'PHP': 'php.json'
+    };
+
+    const LEVEL_LABELS = { mixte: 'Mixte', debutant: 'Débutant', intermediaire: 'Intermédiaire', avance: 'Avancé' };
+    const LENGTH_LABELS = { courte: 'Courte', moyenne: 'Moyenne', longue: 'Longue' };
+
+    // ── STATE ───────────────────────────────────────────────────
+    let allQuestions = [], currentQuizQuestions = [], currentQuestionIndex = 0;
+    let userAnswers = {}, timerInterval, secondsElapsed = 0, skippedCount = 0;
+
+    // ── UTILS ───────────────────────────────────────────────────
+    const escapeHTML = str => { const p = document.createElement('p'); p.textContent = str; return p.innerHTML; };
+
+    const themeToPrism = theme => ({ HTML:'html', CSS:'css', JavaScript:'javascript', PHP:'php', 'Bases de données':'sql' })[theme] || '';
+
+    const formatText = (text, theme) => {
+        if (!text) return '';
+        const lang = themeToPrism(theme);
+        if (text.includes('```')) {
+            return text.replace(/```([\s\S]+?)```/g, (_, c) =>
+                `<pre class="language-${lang}"><code class="language-${lang}">${escapeHTML(c.trim())}</code></pre>`);
+        }
+        return escapeHTML(text).replace(/`([^`]+?)`/g, '<code>$1</code>');
+    };
+
+    const showScreen = name => {
+        Object.values(screens).forEach(s => s.classList.remove('visible'));
+        screens[name].classList.add('visible');
+    };
+
+    const shuffleArray = arr => {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    };
+
+    const highlight = () => { if (window.Prism) setTimeout(() => Prism.highlightAll(), 0); };
+
+    // ── LOAD QUESTIONS ──────────────────────────────────────────
+    const loadAllQuestions = async () => {
+        try {
+            const responses = await Promise.all(Object.values(THEME_FILES).map(f => fetch(`./data/${f}`)));
+            for (const r of responses) if (!r.ok) throw new Error(`HTTP ${r.status}`);
+            const data = await Promise.all(responses.map(r => r.json()));
+            const seen = new Set();
+            allQuestions = data.flat().filter(q => { if (seen.has(q.id)) return false; seen.add(q.id); return true; });
+            populateConfig();
+        } catch (err) {
+            console.error('Load error:', err);
+            $('themes-container').innerHTML = `<p style="color:var(--red);font-size:14px;">Impossible de charger les questions. Vérifiez le dossier <code>data/</code>.</p>`;
+        }
+    };
+
+    // ── CONFIG SCREEN ───────────────────────────────────────────
+    const populateConfig = () => {
+        // Themes
+        $('themes-container').innerHTML = THEMES.map(t => {
+            const m = THEME_META[t];
+            return `<div class="theme-chip">
+                <input type="checkbox" name="theme" value="${t}" id="theme-${t}">
+                <label for="theme-${t}">
+                    <span class="dot ${m.dot}"></span>
+                    ${t}
+                </label>
+            </div>`;
+        }).join('');
+
+        // Levels
+        $('level-container').innerHTML = LEVELS.map((l, i) =>
+            `<div class="pill-option">
+                <input type="radio" name="level" value="${l}" id="level-${l}" ${i === 0 ? 'checked' : ''}>
+                <label for="level-${l}">${LEVEL_LABELS[l]}</label>
+            </div>`
+        ).join('');
+
+        // Lengths
+        $('length-container').innerHTML = Object.keys(QUIZ_LENGTHS).map((k, i) =>
+            `<div class="pill-option">
+                <input type="radio" name="length" value="${k}" id="len-${k}" ${i === 0 ? 'checked' : ''}>
+                <label for="len-${k}">${LENGTH_LABELS[k]} <span style="opacity:0.6;font-weight:400;">${QUIZ_LENGTHS[k]}q</span></label>
+            </div>`
+        ).join('');
+
+        $('config-screen').addEventListener('change', validateConfig);
+        validateConfig();
+    };
+
+    const validateConfig = () => {
+        $('start-quiz-btn').disabled = document.querySelectorAll('input[name="theme"]:checked').length === 0;
+    };
+
+    // ── START QUIZ ──────────────────────────────────────────────
+    const startQuiz = () => {
+        const selectedThemes = Array.from(document.querySelectorAll('input[name="theme"]:checked')).map(c => c.value);
+        const selectedLevel  = document.querySelector('input[name="level"]:checked').value;
+        const desired        = QUIZ_LENGTHS[document.querySelector('input[name="length"]:checked').value];
+        let final = [];
+
+        if (selectedLevel === 'mixte') {
+            const props = { debutant: 0.5, intermediaire: 0.3, avance: 0.2 };
+            const byLevel = {};
+            ['debutant', 'intermediaire', 'avance'].forEach(lv => {
+                byLevel[lv] = shuffleArray(allQuestions.filter(q => q.niveau === lv && selectedThemes.includes(q.theme)));
+            });
+            const d = Math.round(desired * props.debutant);
+            const im = Math.round(desired * props.intermediaire);
+            final.push(...byLevel.debutant.slice(0, d), ...byLevel.intermediaire.slice(0, im), ...byLevel.avance.slice(0, desired - d - im));
+        } else {
+            const pool = allQuestions.filter(q => q.niveau === selectedLevel && selectedThemes.includes(q.theme));
+            const byTheme = {};
+            selectedThemes.forEach(t => { byTheme[t] = shuffleArray(pool.filter(q => q.theme === t)); });
+            for (let i = 0; final.length < desired; i++) {
+                let added = false;
+                selectedThemes.forEach(t => { if (byTheme[t][i] && final.length < desired) { final.push(byTheme[t][i]); added = true; } });
+                if (!added) break;
+            }
+        }
+
+        if (final.length === 0) { alert('Aucune question trouvée pour cette sélection.'); return; }
+        if (final.length < desired) alert(`Attention : seulement ${final.length} questions disponibles.`);
+
+        currentQuizQuestions = shuffleArray(final);
+        currentQuestionIndex = 0; userAnswers = {}; secondsElapsed = 0; skippedCount = 0;
+
+        showScreen('quiz');
+        displayQuestion();
+        startTimer();
+    };
+
+    // ── DISPLAY QUESTION ────────────────────────────────────────
+    const displayQuestion = () => {
+        const q = currentQuizQuestions[currentQuestionIndex];
+        const meta = THEME_META[q.theme] || { badge: '#0071e3', badgeBg: '#f0f7ff', dot: '', label: q.theme };
+
+        // Badge
+        const badge = $('question-badge');
+        badge.style.color = meta.badge;
+        badge.style.background = meta.badgeBg;
+        badge.querySelector('.badge-dot').style.background = meta.badge;
+        $('question-theme-text').textContent = meta.label;
+
+        // Question text
+        $('question-text').innerHTML = formatText(q.question, q.theme);
+
+        // Progress bar
+        $('progress-bar').style.width = `${((currentQuestionIndex + 1) / currentQuizQuestions.length) * 100}%`;
+
+        // Options
+        const saved = userAnswers[q.id];
+        let html = '';
+
+        if (q.type === 'choix_simple') {
+            html = q.options.map(opt => {
+                const sel = saved && saved[0] === opt;
+                return `<label class="option-label${sel ? ' selected' : ''}">
+                    <input type="radio" name="opt" value="${escapeHTML(opt)}" style="display:none" ${sel ? 'checked' : ''}>
+                    <span class="custom-check">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                    <span>${formatText(opt, q.theme)}</span>
+                </label>`;
+            }).join('');
+        } else if (q.type === 'choix_multiple') {
+            html = q.options.map(opt => {
+                const sel = saved && saved.includes(opt);
+                return `<label class="option-label${sel ? ' selected' : ''}">
+                    <input type="checkbox" name="opt" value="${escapeHTML(opt)}" style="display:none" ${sel ? 'checked' : ''}>
+                    <span class="custom-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                    <span>${formatText(opt, q.theme)}</span>
+                </label>`;
+            }).join('');
+        } else {
+            html = `<input type="text" class="quiz-input" placeholder="Entrez votre réponse…" value="${saved ? escapeHTML(saved[0]) : ''}">`;
+        }
+
+        $('options-container').innerHTML = html;
+
+        // Click-to-select for visual labels
+        $('options-container').querySelectorAll('.option-label').forEach(label => {
+            label.addEventListener('click', () => {
+                const inp = label.querySelector('input');
+                if (inp.type === 'radio') {
+                    $('options-container').querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+                    inp.checked = true;
+                    label.classList.add('selected');
+                } else {
+                    inp.checked = !inp.checked;
+                    label.classList.toggle('selected', inp.checked);
+                }
+            });
+        });
+
+        updateNav();
+        highlight();
+    };
+
+    const updateNav = () => {
+        const prev = $('prev-btn');
+        const skip = $('skip-btn');
+        const next = $('next-btn');
+
+        prev.disabled = currentQuestionIndex === 0;
+        prev.style.opacity = prev.disabled ? '0.35' : '1';
+
+        const remaining = currentQuizQuestions.length - currentQuestionIndex;
+        skip.style.display = (remaining <= skippedCount + 1) ? 'none' : 'inline-flex';
+
+        next.innerHTML = currentQuestionIndex === currentQuizQuestions.length - 1
+            ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Soumettre`
+            : `Suivant <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>`;
+
+        $('progress-indicator').textContent = `Question ${currentQuestionIndex + 1} / ${currentQuizQuestions.length}`;
+    };
+
+    // ── SAVE ANSWER ─────────────────────────────────────────────
+    const saveAnswer = () => {
+        const q = currentQuizQuestions[currentQuestionIndex];
+        let ans;
+        if (q.type === 'choix_simple') {
+            const c = document.querySelector('.option-label.selected input[type="radio"]');
+            ans = c ? [c.value] : [];
+        } else if (q.type === 'choix_multiple') {
+            ans = Array.from(document.querySelectorAll('.option-label.selected input[type="checkbox"]')).map(c => c.value);
+        } else {
+            const inp = $('options-container').querySelector('.quiz-input');
+            ans = inp && inp.value.trim() ? [inp.value.trim()] : [];
+        }
+        if (ans && ans.length) userAnswers[q.id] = ans;
+        else delete userAnswers[q.id];
+    };
+
+    // ── NAVIGATION ──────────────────────────────────────────────
+    const nextQuestion = () => {
+        saveAnswer();
+        if (currentQuestionIndex < currentQuizQuestions.length - 1) { currentQuestionIndex++; displayQuestion(); }
+        else showResults();
+    };
+
+    const prevQuestion = () => {
+        saveAnswer();
+        if (currentQuestionIndex > 0) { currentQuestionIndex--; displayQuestion(); }
+    };
+
+    const skipQuestion = () => {
+        saveAnswer();
+        currentQuizQuestions.push(currentQuizQuestions.splice(currentQuestionIndex, 1)[0]);
+        skippedCount++;
+        displayQuestion();
+    };
+
+    // ── TIMER ───────────────────────────────────────────────────
+    const fmtTime = s => `${String(Math.floor(s / 60)).padStart(2,'0')}:${String(s % 60).padStart(2,'0')}`;
+
+    const startTimer = () => {
+        timerInterval = setInterval(() => {
+            secondsElapsed++;
+            $('timer').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;color:var(--accent)"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${fmtTime(secondsElapsed)}`;
+        }, 1000);
+    };
+
+    const stopTimer = () => clearInterval(timerInterval);
+
+    // ── IS CORRECT ──────────────────────────────────────────────
+    const isCorrect = (q, ua) => {
+        if (q.type === 'zone_saisie' || q.type === 'saisie_libre') {
+            if (!ua.length) return false;
+            const norm = s => s.replace(/^`|`$/g,'').replace(/\s/g,'').replace(/;$/,'').toLowerCase();
+            return q.reponse.some(r => norm(r) === norm(ua[0]));
+        }
+        if (ua.length !== q.reponse.length) return false;
+        return [...ua].sort().join(',') === [...q.reponse].sort().join(',');
+    };
+
+    // ── SHOW RESULTS ────────────────────────────────────────────
+    const showResults = () => {
+        stopTimer();
+        showScreen('results');
+
+        let score = 0;
+        const themeScores = {};
+        currentQuizQuestions.forEach(q => { if (!themeScores[q.theme]) themeScores[q.theme] = { correct: 0, total: 0 }; });
+
+        let wrongHTML = '';
+
+        currentQuizQuestions.forEach(q => {
+            const ua = userAnswers[q.id] || [];
+            const ok = isCorrect(q, ua);
+            themeScores[q.theme].total++;
+            if (ok) { score++; themeScores[q.theme].correct++; }
+            else {
+                wrongHTML += `<div class="wrong-card">
+                    <div class="q-text">${formatText(q.question, q.theme)}</div>
+                    <div class="answer-row wrong">
+                        <span class="al">✗ Votre réponse</span>
+                        <span class="av">${formatText(ua.join(', ') || 'Aucune', q.theme)}</span>
+                    </div>
+                    <div class="answer-row correct">
+                        <span class="al">✓ Bonne réponse</span>
+                        <span class="av">${formatText(q.reponse.join(', '), q.theme)}</span>
+                    </div>
+                    ${q.explication ? `<div class="explain">${formatText(q.explication, q.theme)}</div>` : ''}
+                </div>`;
+            }
+        });
+
+        $('final-score').textContent = `${score} / ${currentQuizQuestions.length}`;
+        $('total-time').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Terminé en ${fmtTime(secondsElapsed)}`;
+
+        // Theme scores
+        const tsHTML = Object.entries(themeScores).filter(([, s]) => s.total > 0).map(([theme, s]) => {
+            const m = THEME_META[theme] || {};
+            return `<div class="theme-score-row">
+                <span class="name"><span class="dot ${m.dot || ''}" style="display:inline-block;width:10px;height:10px;border-radius:50%;"></span>${theme}</span>
+                <span class="score-badge">${s.correct} / ${s.total}</span>
+            </div>`;
+        }).join('');
+
+        $('theme-scores-container').innerHTML = `
+            <p class="section-heading">Score par thème <span>${Object.values(themeScores).reduce((a,b)=>a+b.total,0)} questions</span></p>
+            ${tsHTML}
+            <div style="height:20px;"></div>`;
+
+        $('wrong-answers-container').innerHTML = wrongHTML
+            ? `<p class="section-heading">Erreurs à revoir <span>${currentQuizQuestions.length - score} erreurs</span></p>${wrongHTML}`
+            : `<div class="all-correct"><div class="icon">🎉</div><p>Parfait ! Aucune erreur !</p></div>`;
+
+        highlight();
+    };
+
+    // ── EVENT LISTENERS ─────────────────────────────────────────
+    $('start-config-btn').addEventListener('click', () => showScreen('config'));
+    $('back-home-btn')?.addEventListener('click', () => showScreen('home'));
+    $('start-quiz-btn').addEventListener('click', startQuiz);
+    $('next-btn').addEventListener('click', nextQuestion);
+    $('prev-btn').addEventListener('click', prevQuestion);
+    $('skip-btn').addEventListener('click', skipQuestion);
+    $('replay-btn').addEventListener('click', () => { populateConfig(); showScreen('config'); });
+    $('quit-btn').addEventListener('click', () => { populateConfig(); showScreen('home'); });
+
+    // ── INIT ─────────────────────────────────────────────────────
+    loadAllQuestions();
+    showScreen('home');
+});
+</script>
+</body>
+</html>

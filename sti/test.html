@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz STI — 4ème Sciences de l'Informatique</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+    --white:#ffffff;
+    --surface:#f2f2f7;
+    --surface-2:#e5e5ea;
+    --surface-3:#d1d1d6;
+    --border:rgba(0,0,0,0.09);
+    --border-strong:rgba(0,0,0,0.15);
+    --shadow-sm:0 1px 4px rgba(0,0,0,0.06),0 2px 8px rgba(0,0,0,0.04);
+    --shadow-md:0 4px 20px rgba(0,0,0,0.07),0 1px 4px rgba(0,0,0,0.05);
+    --shadow-lg:0 12px 40px rgba(0,0,0,0.10),0 4px 12px rgba(0,0,0,0.06);
+    --text-primary:#1c1c1e;
+    --text-secondary:#636366;
+    --text-tertiary:#aeaeb2;
+    --accent:#0071e3;
+    --accent-dark:#0062c4;
+    --accent-light:rgba(0,113,227,0.09);
+    --accent-border:rgba(0,113,227,0.22);
+    --green:#34c759;--green-light:rgba(52,199,89,0.10);--green-border:rgba(52,199,89,0.25);
+    --red:#ff3b30;--red-light:rgba(255,59,48,0.09);--red-border:rgba(255,59,48,0.22);
+    --yellow:#ff9f0a;--yellow-light:rgba(255,159,10,0.10);--yellow-border:rgba(255,159,10,0.22);
+    --purple:#af52de;--teal:#32ade6;
+    --r-sm:10px;--r-md:14px;--r-lg:20px;--r-xl:26px;--r-2xl:32px;
+    --font:'Sora',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'JetBrains Mono','Fira Code',monospace;
+    --ease:0.22s cubic-bezier(0.4,0,0.2,1);
+}
+html{scroll-behavior:smooth;scrollbar-gutter:stable}
+body{
+    font-family:var(--font);background:var(--surface);color:var(--text-primary);
+    min-height:100vh;display:flex;align-items:flex-start;justify-content:center;
+    padding:40px 16px 80px;-webkit-font-smoothing:antialiased;
+}
+.container{width:100%;max-width:700px}
+section{display:none}
+section.visible{display:block;animation:fadeUp 0.4s cubic-bezier(0.4,0,0.2,1) both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── TYPOGRAPHY ── */
+h1{font-size:clamp(26px,5vw,40px);font-weight:800;letter-spacing:-0.03em;line-height:1.1;color:var(--text-primary);margin-bottom:10px}
+h1 sup{font-size:0.5em;vertical-align:super}
+.subtitle{font-size:16px;font-weight:400;color:var(--text-secondary);line-height:1.65;margin-bottom:32px}
+
+/* ── CARD ── */
+.card{background:var(--white);border-radius:var(--r-2xl);border:1px solid var(--border);box-shadow:var(--shadow-md);padding:28px 32px}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;font-family:var(--font);font-size:14px;font-weight:600;padding:11px 22px;border-radius:var(--r-md);border:none;cursor:pointer;transition:all var(--ease);letter-spacing:-0.01em;white-space:nowrap;line-height:1;user-select:none;-webkit-tap-highlight-color:transparent}
+.btn:disabled{opacity:0.38;cursor:not-allowed;pointer-events:none}
+.btn svg{width:15px;height:15px;flex-shrink:0}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 3px 12px rgba(0,113,227,0.28)}
+.btn-primary:hover:not(:disabled){background:var(--accent-dark);box-shadow:0 5px 20px rgba(0,113,227,0.36);transform:translateY(-1px)}
+.btn-primary:active:not(:disabled){transform:translateY(0);box-shadow:0 2px 8px rgba(0,113,227,0.22)}
+.btn-secondary{background:var(--white);color:var(--text-primary);border:1.5px solid var(--border)}
+.btn-secondary:hover:not(:disabled){background:var(--surface);border-color:var(--border-strong);transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--text-secondary);border:1.5px solid var(--border)}
+.btn-ghost:hover:not(:disabled){background:var(--surface);color:var(--text-primary)}
+.btn-danger{background:var(--red-light);color:var(--red);border:1.5px solid var(--red-border)}
+.btn-danger:hover:not(:disabled){background:rgba(255,59,48,0.14)}
+.btn-warn{background:var(--yellow-light);color:#9a5d00;border:1.5px solid var(--yellow-border)}
+.btn-warn:hover:not(:disabled){background:rgba(255,159,10,0.16)}
+
+/* ── HOME ── */
+.app-icon{width:90px;height:90px;background:linear-gradient(150deg,#0071e3,#32ade6);border-radius:22px;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;box-shadow:0 10px 36px rgba(0,113,227,0.26)}
+.app-icon svg{width:48px;height:48px;color:#fff}
+.home-tag{display:inline-flex;align-items:center;gap:6px;background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin-bottom:14px;border:1px solid var(--accent-border)}
+.feature-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:4px}
+.feature-pill{display:flex;align-items:center;gap:6px;background:var(--white);border:1px solid var(--border);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:500;color:var(--text-secondary);box-shadow:var(--shadow-sm)}
+.feature-pill svg{width:13px;height:13px;flex-shrink:0}
+
+/* ── CONFIG ── */
+.section-label{font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.section-label svg{width:12px;height:12px}
+.divider{height:1px;background:var(--border);margin:24px 0}
+.theme-grid{display:flex;flex-wrap:wrap;gap:8px}
+.theme-chip input{display:none}
+.theme-chip label{display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:var(--r-md);border:1.5px solid var(--border);background:var(--white);cursor:pointer;font-size:13px;font-weight:500;color:var(--text-secondary);transition:all var(--ease);user-select:none;-webkit-tap-highlight-color:transparent;min-height:44px}
+.theme-chip label:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
+.theme-chip input:checked+label{background:var(--accent-light);border-color:var(--accent);color:var(--accent);font-weight:600}
+.theme-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.dot-html{background:#ff3b30}.dot-css{background:#0071e3}.dot-js{background:#ff9f0a}.dot-php{background:#af52de}.dot-db{background:#34c759}
+.pill-group{display:flex;flex-wrap:wrap;gap:7px}
+.pill-option input{display:none}
+.pill-option label{padding:9px 18px;border-radius:999px;border:1.5px solid var(--border);background:var(--white);cursor:pointer;font-size:13px;font-weight:500;color:var(--text-secondary);transition:all var(--ease);user-select:none;-webkit-tap-highlight-color:transparent;min-height:40px;display:flex;align-items:center}
+.pill-option label:hover{border-color:var(--accent);color:var(--accent)}
+.pill-option input:checked+label{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+
+/* ── QUIZ HEADER ── */
+.quiz-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:12px;flex-wrap:wrap}
+.quiz-meta{display:flex;align-items:center;gap:8px}
+.progress-label{font-size:13px;font-weight:600;color:var(--text-secondary);white-space:nowrap}
+.timer-pill{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--text-secondary);background:var(--white);border:1px solid var(--border);padding:6px 12px;border-radius:999px;box-shadow:var(--shadow-sm);white-space:nowrap;flex-shrink:0}
+.timer-pill svg{width:13px;height:13px;color:var(--accent)}
+.cancel-btn-top{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--red);background:var(--red-light);border:1.5px solid var(--red-border);padding:6px 12px;border-radius:999px;cursor:pointer;transition:all var(--ease);white-space:nowrap;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.cancel-btn-top:hover{background:rgba(255,59,48,0.14);transform:translateY(-1px)}
+.cancel-btn-top svg{width:12px;height:12px}
+.progress-track{width:100%;height:6px;background:var(--surface-2);border-radius:999px;margin-bottom:24px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--teal));border-radius:999px;transition:width 0.4s cubic-bezier(0.4,0,0.2,1);min-width:6px}
+
+/* ── QUESTION ── */
+.q-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-bottom:16px;flex-shrink:0}
+.q-badge-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.q-type-tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;color:var(--text-tertiary);background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:999px;margin-left:8px;vertical-align:middle;white-space:nowrap}
+#question-text{font-size:17px;font-weight:600;line-height:1.6;color:var(--text-primary);margin-bottom:22px;word-break:break-word}
+
+/* ── OPTIONS ── */
+.option-label{display:flex;align-items:flex-start;gap:12px;padding:13px 16px;border-radius:var(--r-md);border:1.5px solid var(--border);background:var(--white);cursor:pointer;font-size:14px;color:var(--text-primary);transition:all var(--ease);margin-bottom:9px;line-height:1.5;-webkit-tap-highlight-color:transparent;user-select:none;word-break:break-word}
+.option-label:hover{border-color:var(--accent);background:var(--accent-light);color:var(--text-primary)}
+.option-label.selected{border-color:var(--accent);background:var(--accent-light)}
+.option-label:last-child{margin-bottom:0}
+.opt-indicator{width:20px;height:20px;min-width:20px;flex-shrink:0;border-radius:50%;border:2px solid var(--border-strong);display:flex;align-items:center;justify-content:center;margin-top:2px;transition:all var(--ease)}
+.opt-indicator.box{border-radius:6px}
+.option-label.selected .opt-indicator{background:var(--accent);border-color:var(--accent)}
+.option-label:hover:not(.selected) .opt-indicator{border-color:var(--accent)}
+.opt-indicator svg{width:10px;height:10px;color:#fff;opacity:0;transition:opacity 0.12s}
+.option-label.selected .opt-indicator svg{opacity:1}
+input.quiz-input{width:100%;padding:13px 16px;font-family:var(--mono);font-size:14px;border-radius:var(--r-md);border:1.5px solid var(--border);background:var(--white);color:var(--text-primary);outline:none;transition:border-color var(--ease),box-shadow var(--ease)}
+input.quiz-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,113,227,0.12)}
+input.quiz-input::placeholder{color:var(--text-tertiary)}
+
+/* ── NAV ── */
+.quiz-nav{display:flex;align-items:center;justify-content:space-between;margin-top:28px;padding-top:20px;border-top:1px solid var(--border);flex-wrap:wrap;gap:10px}
+.quiz-nav-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* ── CODE ── */
+:not(pre)>code{font-family:var(--mono);background:#eef3ff;color:var(--accent);padding:2px 6px;border-radius:5px;font-size:0.87em;border:1px solid rgba(0,113,227,0.14);word-break:break-all}
+pre[class*="language-"]{border-radius:var(--r-md);font-family:var(--mono)!important;font-size:12.5px;margin:10px 0;border:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch}
+pre[class*="language-"] code{word-break:normal}
+
+/* ── CANCEL MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:1000;opacity:0;pointer-events:none;transition:opacity 0.2s;padding:16px}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-box{background:var(--white);border-radius:var(--r-xl);padding:32px;max-width:360px;width:100%;box-shadow:var(--shadow-lg);transform:scale(0.94) translateY(8px);transition:all 0.22s cubic-bezier(0.4,0,0.2,1);border:1px solid var(--border)}
+.modal-overlay.open .modal-box{transform:scale(1) translateY(0)}
+.modal-icon{width:52px;height:52px;border-radius:16px;background:var(--red-light);border:1px solid var(--red-border);display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+.modal-icon svg{width:26px;height:26px;color:var(--red)}
+.modal-title{font-size:18px;font-weight:700;text-align:center;margin-bottom:8px;letter-spacing:-0.02em}
+.modal-subtitle{font-size:14px;color:var(--text-secondary);text-align:center;margin-bottom:24px;line-height:1.55}
+.modal-actions{display:flex;gap:10px}
+.modal-actions .btn{flex:1;justify-content:center}
+
+/* ── RESULTS ── */
+.results-hero{background:linear-gradient(145deg,#f0f7ff,var(--white));border-radius:var(--r-2xl);border:1px solid rgba(0,113,227,0.13);padding:36px 28px;text-align:center;margin-bottom:16px;position:relative;overflow:hidden}
+.results-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 20%,rgba(0,113,227,0.05),transparent 55%);pointer-events:none}
+.results-hero .rh-label{font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:8px}
+.score-big{font-size:clamp(52px,10vw,72px);font-weight:800;letter-spacing:-0.05em;color:var(--accent);line-height:1;margin-bottom:4px}
+.score-sub{font-size:13px;color:var(--text-tertiary);margin-bottom:16px}
+.score-time-badge{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);padding:6px 14px;border-radius:999px;font-size:12px;font-weight:500;color:var(--text-secondary)}
+.score-time-badge svg{width:12px;height:12px;color:var(--accent)}
+
+/* stats row */
+.stats-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:16px}
+.stat-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 12px;text-align:center}
+.stat-card .sv{font-size:clamp(22px,5vw,28px);font-weight:800;letter-spacing:-0.03em;margin-bottom:4px}
+.stat-card .sl{font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-tertiary)}
+.stat-card.ok .sv{color:var(--green)}
+.stat-card.err .sv{color:var(--red)}
+.stat-card.skip .sv{color:var(--yellow)}
+
+/* theme scores */
+.theme-breakdown{background:var(--white);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:16px}
+.theme-breakdown-header{padding:16px 20px 12px;border-bottom:1px solid var(--border)}
+.theme-breakdown-header h3{font-size:15px;font-weight:700;letter-spacing:-0.01em}
+.theme-row{display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid var(--border)}
+.theme-row:last-child{border-bottom:none}
+.theme-row-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.theme-row-name{font-size:13px;font-weight:600;flex:1;color:var(--text-primary);min-width:80px}
+.theme-row-bar-track{flex:2;height:8px;background:var(--surface-2);border-radius:999px;overflow:hidden;min-width:0}
+.theme-row-bar-fill{height:100%;border-radius:999px;transition:width 0.6s cubic-bezier(0.4,0,0.2,1);min-width:4px}
+.theme-row-score{font-size:12px;font-weight:700;color:var(--text-secondary);min-width:40px;text-align:right;flex-shrink:0}
+
+/* wrong answers */
+.wrong-section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.wrong-section-header h3{font-size:16px;font-weight:700;letter-spacing:-0.01em}
+.wrong-section-header .count-badge{background:var(--red-light);color:var(--red);border:1px solid var(--red-border);font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px}
+
+.wrong-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:12px;box-shadow:var(--shadow-sm)}
+.wrong-card-header{padding:16px 20px 12px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:10px}
+.wrong-card-num{width:24px;height:24px;min-width:24px;border-radius:8px;background:var(--red-light);border:1px solid var(--red-border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--red);flex-shrink:0;margin-top:2px}
+.wrong-card-q{font-size:14px;font-weight:600;line-height:1.55;color:var(--text-primary);flex:1;min-width:0;word-break:break-word}
+.wrong-card-body{padding:14px 20px;overflow:hidden}
+.answer-block{border-radius:var(--r-md);padding:10px 14px;margin-bottom:9px;display:flex;align-items:flex-start;gap:10px;word-break:break-word;overflow:hidden}
+.answer-block:last-child{margin-bottom:0}
+.answer-block.user-wrong{background:var(--red-light);border:1px solid var(--red-border)}
+.answer-block.correct-ans{background:var(--green-light);border:1px solid var(--green-border)}
+.answer-block.user-correct{background:var(--green-light);border:1px solid var(--green-border)}
+.ab-icon{width:20px;height:20px;min-width:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.ab-icon svg{width:11px;height:11px}
+.answer-block.user-wrong .ab-icon{background:rgba(255,59,48,0.18)}
+.answer-block.user-wrong .ab-icon svg{color:var(--red)}
+.answer-block.correct-ans .ab-icon,.answer-block.user-correct .ab-icon{background:rgba(52,199,89,0.22)}
+.answer-block.correct-ans .ab-icon svg,.answer-block.user-correct .ab-icon svg{color:var(--green)}
+.ab-label{font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:3px}
+.answer-block.user-wrong .ab-label{color:var(--red)}
+.answer-block.correct-ans .ab-label,.answer-block.user-correct .ab-label{color:var(--green)}
+.ab-value{font-size:13px;font-weight:500;line-height:1.5;color:var(--text-primary);min-width:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.ab-value pre[class*="language-"]{margin:6px 0 0}
+.wrong-explain{padding:12px 20px 16px;border-top:1px solid var(--border);background:var(--surface);display:flex;gap:8px;align-items:flex-start}
+.wrong-explain-icon{width:18px;height:18px;min-width:18px;border-radius:5px;background:rgba(0,113,227,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.wrong-explain-icon svg{width:10px;height:10px;color:var(--accent)}
+.wrong-explain p{font-size:12px;color:var(--text-secondary);line-height:1.6;flex:1;min-width:0;word-break:break-word}
+
+.all-perfect{background:linear-gradient(145deg,#f0fff5,var(--white));border:1px solid var(--green-border);border-radius:var(--r-xl);padding:36px;text-align:center}
+.all-perfect .ap-icon{font-size:44px;margin-bottom:12px}
+.all-perfect p{font-size:15px;font-weight:600;color:var(--green)}
+
+.results-actions{display:flex;justify-content:center;gap:10px;margin-top:28px;flex-wrap:wrap}
+.results-actions .btn{padding:12px 28px}
+
+footer{text-align:center;font-size:11px;color:var(--text-tertiary);margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
+
+/* ── RESPONSIVE ── */
+@media (max-width:480px){
+    body{padding:20px 12px 60px}
+    .card{padding:20px 18px}
+    .quiz-topbar{gap:8px}
+    .quiz-nav{flex-direction:column;align-items:stretch}
+    .quiz-nav-right{justify-content:flex-end}
+    .results-hero{padding:28px 20px}
+    .theme-row-name{font-size:12px}
+    .wrong-card-header{padding:14px 16px 10px}
+    .wrong-card-body{padding:12px 16px}
+    .wrong-explain{padding:10px 16px 14px}
+    .answer-block{padding:9px 12px}
+    .stats-row{gap:8px}
+    .stat-card{padding:14px 8px}
+    .results-actions .btn{flex:1;justify-content:center}
+}</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HOME -->
+<section id="home-screen">
+  <div style="text-align:center;padding:20px 0 44px">
+    <div class="app-icon">
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="14" y="8" width="20" height="28" rx="4"/>
+        <line x1="19" y1="15" x2="29" y2="15"/><line x1="19" y1="20" x2="29" y2="20"/><line x1="19" y1="25" x2="25" y2="25"/>
+        <line x1="19" y1="36" x2="19" y2="42"/><line x1="29" y1="36" x2="29" y2="42"/>
+        <line x1="14" y1="42" x2="34" y2="42"/>
+        <path d="M8 16c0 0-4 2-4 8s4 8 4 8"/><path d="M40 16c0 0 4 2 4 8s-4 8-4 8"/>
+      </svg>
+    </div>
+    <div class="home-tag">
+      <svg viewBox="0 0 16 16" fill="currentColor" style="width:8px;height:8px"><circle cx="8" cy="8" r="5"/></svg>
+      Sciences de l'Informatique &middot; 4ème
+    </div>
+    <h1>Quiz<sup>4ème</sup> STI</h1>
+    <p class="subtitle">Entraînez-vous sur les thèmes clés du programme.<br>794 questions · 5 thèmes · 3 niveaux.</p>
+    <button id="start-config-btn" class="btn btn-primary" style="font-size:15px;padding:13px 36px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      Commencer
+    </button>
+  </div>
+  <div class="feature-pills">
+    <div class="feature-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>5 thèmes</div>
+    <div class="feature-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>3 niveaux</div>
+    <div class="feature-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--yellow)"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Chrono</div>
+    <div class="feature-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--purple)"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>794 QCM</div>
+  </div>
+</section>
+
+<!-- CONFIG -->
+<section id="config-screen">
+  <div style="margin-bottom:28px">
+    <button id="back-home-btn" class="btn btn-ghost" style="font-size:12px;padding:7px 14px;margin-bottom:20px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Accueil
+    </button>
+    <h1 style="font-size:28px;margin-bottom:4px">Configurer le quiz</h1>
+    <p style="font-size:14px;color:var(--text-secondary)">Personnalisez votre session d'entraînement.</p>
+  </div>
+  <div class="card">
+    <p class="section-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>Thèmes</p>
+    <div id="themes-container" class="theme-grid"></div>
+    <div class="divider"></div>
+    <p class="section-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Niveau</p>
+    <div id="level-container" class="pill-group"></div>
+    <div class="divider"></div>
+    <p class="section-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Longueur</p>
+    <div id="length-container" class="pill-group"></div>
+    <div class="divider"></div>
+    <div style="text-align:right">
+      <button id="start-quiz-btn" class="btn btn-primary" disabled style="padding:12px 28px;font-size:15px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Démarrer !
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz-screen">
+  <div class="quiz-topbar">
+    <div class="quiz-meta">
+      <span class="progress-label" id="progress-indicator">1 / 20</span>
+    </div>
+    <div id="timer" class="timer-pill">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      00:00
+    </div>
+    <button class="cancel-btn-top" id="cancel-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      Annuler
+    </button>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progress-bar" style="width:0%"></div></div>
+  <div class="card">
+    <div style="display:flex;align-items:center;margin-bottom:16px">
+      <div id="question-badge" class="q-badge"><span class="q-badge-dot"></span><span id="question-theme-text"></span></div>
+      <span id="question-type-tag" class="q-type-tag"></span>
+    </div>
+    <div id="question-text"></div>
+    <div id="options-container"></div>
+    <div class="quiz-nav">
+      <button id="prev-btn" class="btn btn-ghost" style="padding:10px 18px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Précédent
+      </button>
+      <div class="quiz-nav-right">
+        <button id="skip-btn" class="btn btn-warn" style="padding:10px 16px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 15 2 12 5 9"/><path d="M2 12h12"/><polyline points="13 9 16 12 13 15"/></svg>
+          Ignorer
+        </button>
+        <button id="next-btn" class="btn btn-primary" style="padding:10px 20px">
+          Suivant
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results-screen">
+  <div class="results-hero">
+    <p class="rh-label">Score final</p>
+    <div class="score-big" id="final-score">—</div>
+    <p class="score-sub" id="score-pct"></p>
+    <div class="score-time-badge" id="total-time">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      —
+    </div>
+  </div>
+  <div class="stats-row" id="stats-row"></div>
+  <div id="theme-scores-container"></div>
+  <div id="wrong-answers-container"></div>
+  <div class="results-actions">
+    <button id="replay-btn" class="btn btn-primary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+      Rejouer
+    </button>
+    <button id="quit-btn" class="btn btn-secondary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Accueil
+    </button>
+  </div>
+</section>
+
+</div>
+
+<!-- CANCEL MODAL -->
+<div class="modal-overlay" id="cancel-modal">
+  <div class="modal-box">
+    <div class="modal-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </div>
+    <p class="modal-title">Quitter le quiz ?</p>
+    <p class="modal-subtitle">Votre progression sera perdue.<br>Vous retournerez à l'écran d'accueil.</p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="modal-continue">Continuer</button>
+      <button class="btn btn-danger" id="modal-quit">Oui, quitter</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>  

@@ -184,8 +184,8 @@ const DT_COURS = [
   { title: "الأنية والغيرية", sub: "درس فلسفي يعرّف بمفهوم الأنية وعلاقتها بالغير", meta: "درس كامل", pct: 0, ico: "🌍", faIcon: "fa-solid fa-globe-africa", strip: "#8b5cf6", icoBg: "#f5f3ff", pdfUrl: "https://drive.google.com/file/d/1lgQtrt8w5feiJ4pV9lhP0laKfLq5OX8j/preview", docs: [] },
   { title: "الخصوصية والكونية", sub: "درس فلسفي يدرس العلاقة بين الخصوصية الثقافية والكونية الإنسانية", meta: "درس كامل", pct: 0, ico: "🌍", faIcon: "fa-solid fa-globe-africa", strip: "#8b5cf6", icoBg: "#f5f3ff", pdfUrl: "https://drive.google.com/file/d/1yMiRH-usumvip9CsYp_FLq5fJzBa_Byt/preview", docs: [] },
   { title: "النمذجة", sub: "درس فلسفي يوضّح مفهوم النمذجة باعتبارها أداة معرفية", meta: "درس كامل", pct: 0, ico: "🔬", faIcon: "fa-solid fa-diagram-project", strip: "#0ea5e9", icoBg: "#e0f2fe", pdfUrl: "https://drive.google.com/file/d/1i03yMC4njP9235OBnL3v28M2saaN31BD/preview", docs: [] },
-  { title: "الدولة", sub: "درس فلسفي يتناول مفهوم الدولة، الاستبداد، الديمقراطية، والمواطنة الكونية", meta: "4 مراحل", pct: 0, ico: "🏛️", faIcon: "fa-solid fa-landmark", strip: "#10b981", icoBg: "#ecfdf5", pdfUrl: "https://drive.google.com/file/d/1i03yMC4njP9235OBnL3v28M2saaN31BD/preview", docs: [] },
-  { title: "خير وسعادة", sub: "درس فلسفي في الأخلاق: العلاقة بين الخير والسعادة عند أرسطو، كانط، وأبيقور", meta: "4 مراحل", pct: 0, ico: "🌟", faIcon: "fa-solid fa-star", strip: "#f97316", icoBg: "#fff7ed", pdfUrl: "https://drive.google.com/file/d/1i03yMC4njP9235OBnL3v28M2saaN31BD/preview", docs: [] }
+  { title: "الدولة", sub: "درس فلسفي يتناول مفهوم الدولة، الاستبداد، الديمقراطية، والمواطنة الكونية", meta: "4 مراحل", pct: 0, ico: "🏛️", faIcon: "fa-solid fa-landmark", strip: "#10b981", icoBg: "#ecfdf5", pdfUrl: "https://drive.google.com/file/d/1qP6RKVc357OpP8BUjMxuu8evtNHaa0Cv/preview", docs: [] },
+  { title: "خير وسعادة", sub: "درس فلسفي في الأخلاق: العلاقة بين الخير والسعادة عند أرسطو، كانط، وأبيقور", meta: "4 مراحل", pct: 0, ico: "🌟", faIcon: "fa-solid fa-star", strip: "#f97316", icoBg: "#fff7ed", pdfUrl: "https://drive.google.com/file/d/1zTmk3QWQ7adOYD0NOaRCMX0L09xEwmo9/preview", docs: [] }
 ];
 
 const DT_EXERCICES = [

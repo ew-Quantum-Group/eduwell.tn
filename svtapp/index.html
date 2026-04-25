@@ -19,117 +19,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <link rel="stylesheet" href="./assets/css/style.css">
 <style>
-/* Toast notification */
-.toast {
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%) translateY(20px);
-  background: #1e293b;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 40px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-  z-index: 10000;
-  opacity: 0;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255,255,255,0.1);
-  pointer-events: none;
-}
-
-.toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-.toast i {
-  color: #10b981;
-  margin-right: 8px;
-}
-
-/* Protected overlay */
-.protected-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: rgba(0, 0, 0, 0.95);
-  backdrop-filter: blur(24px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 20px;
-  color: white;
-  text-align: center;
-}
-
-.protected-overlay h2 {
-  font-family: 'Newsreader', serif;
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  font-style: italic;
-}
-
-.protected-overlay p {
-  font-size: 1rem;
-  margin-bottom: 2rem;
-  opacity: 0.7;
-  max-width: 500px;
-}
-
-.protected-overlay .login-btn {
-  background: #10b981;
-  color: white;
-  padding: 14px 32px;
-  border-radius: 40px;
-  font-size: 1rem;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  border: none;
-  cursor: pointer;
-}
-
-.protected-overlay .login-btn:hover {
-  filter: brightness(1.1);
-  transform: translateY(-3px);
-}
-
-/* ── Desktop version link (added) ── */
-.db-desktop-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 28px;
-  padding: 10px 22px;
-  border-radius: 40px;
-  border: 1.5px solid rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 0.85rem;
-  font-weight: 500;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  backdrop-filter: blur(6px);
-}
-
-.db-desktop-link:hover {
-  border-color: rgba(255, 255, 255, 0.35);
-  background: rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.85);
-  transform: translateY(-2px);
-}
-
-.db-desktop-link i {
-  font-size: 0.95rem;
-  opacity: 0.8;
-}
 </style>
 </head>
 <body>
@@ -214,6 +103,29 @@
     <div class="path-sec-label"><i class="fa-solid fa-route"></i>Parcours</div>
     <div class="path-sec-line"></div>
     <div class="path-sec-count" id="pathCount">0 / 5</div>
+  </div>
+
+  <!-- ══ FREE MODE TOGGLE (NEW) ══ -->
+  <div class="free-mode-wrap" id="freeModeWrap">
+    <div class="free-mode-left">
+      <div class="free-mode-icon" id="freeModeIcon">
+        <i class="fa-solid fa-lock-open" id="freeModeIco"></i>
+      </div>
+      <div class="free-mode-text">
+        <div class="free-mode-title" id="freeModeTitleTxt">Mode Libre</div>
+        <div class="free-mode-desc" id="freeModeDescTxt">Activez pour jouer n'importe quelle étape librement</div>
+      </div>
+    </div>
+    <label class="fm-toggle" title="Activer le mode libre">
+      <input type="checkbox" id="freeModeToggle" onchange="toggleFreeMode(this.checked)"/>
+      <span class="fm-slider"></span>
+    </label>
+  </div>
+
+  <!-- Free mode active banner (shown when ON) -->
+  <div class="free-mode-banner" id="freeModeBanner" style="display:none;">
+    <i class="fa-solid fa-unlock"></i>
+    <span>Mode Libre activé — toutes les étapes sont déverrouillées !</span>
   </div>
 
   <!-- PATH -->
@@ -1150,20 +1062,15 @@ function updateUserUI() {
         if (userNameElement) {
             userNameElement.textContent = `Bienvenue, ${userName}`;
         }
-        
-        // You can also update other elements with user info if needed
-        // For example, you might want to display the user's name in the nav
     }
 }
 
 // Check authentication on page load
 function checkAuth() {
     if (!isAuthenticated()) {
-        // Store current page for redirect back
         sessionStorage.setItem('eduwell_redirect_url', window.location.href);
         showLoginOverlay();
     } else {
-        // Initialize activity tracking
         initActivityTracking();
         updateUserActivity();
         updateUserUI();
@@ -1171,11 +1078,109 @@ function checkAuth() {
 }
 
 /* ══════════════════════════════════════════════════════
+   ██  FREE MODE — GLOBAL STATE & FUNCTIONS
+   
+   isFreeMode() → returns true/false
+   toggleFreeMode(bool) → called by the toggle switch
+   renderHome() must check isFreeMode() when deciding
+   whether a node is locked.
+══════════════════════════════════════════════════════ */
+
+const FREE_MODE_KEY = 'svtapp_free_mode';
+
+/** Returns true if Free Mode is currently ON */
+function isFreeMode() {
+  return localStorage.getItem(FREE_MODE_KEY) === 'true';
+}
+
+/**
+ * Called by the toggle switch onchange event.
+ * Updates localStorage, visual state of the button,
+ * banner, and re-renders the path nodes.
+ */
+function toggleFreeMode(enabled) {
+  localStorage.setItem(FREE_MODE_KEY, enabled ? 'true' : 'false');
+
+  // Update wrap styling
+  const wrap   = document.getElementById('freeModeWrap');
+  const banner = document.getElementById('freeModeBanner');
+  const icon   = document.getElementById('freeModeIco');
+  const title  = document.getElementById('freeModeTitleTxt');
+  const desc   = document.getElementById('freeModeDescTxt');
+
+  if (enabled) {
+    wrap.classList.add('active');
+    banner.style.display = 'flex';
+    icon.className  = 'fa-solid fa-unlock';
+    title.textContent = 'Mode Libre — Actif';
+    desc.textContent  = 'Toutes les étapes sont déverrouillées';
+    toast('🔓 Mode Libre activé — jouez n\'importe quelle étape !');
+  } else {
+    wrap.classList.remove('active');
+    banner.style.display = 'none';
+    icon.className  = 'fa-solid fa-lock-open';
+    title.textContent = 'Mode Libre';
+    desc.textContent  = 'Activez pour jouer n\'importe quelle étape librement';
+    toast('🔒 Mode séquentiel rétabli');
+  }
+
+  // Re-render the path so nodes update their locked/unlocked state
+  if (typeof renderHome === 'function') renderHome();
+}
+
+/** Sync the toggle checkbox to match localStorage on page load */
+function syncFreeModeUI() {
+  const enabled = isFreeMode();
+  const toggle  = document.getElementById('freeModeToggle');
+  if (toggle) toggle.checked = enabled;
+
+  const wrap   = document.getElementById('freeModeWrap');
+  const banner = document.getElementById('freeModeBanner');
+  const icon   = document.getElementById('freeModeIco');
+  const title  = document.getElementById('freeModeTitleTxt');
+  const desc   = document.getElementById('freeModeDescTxt');
+
+  if (enabled) {
+    wrap.classList.add('active');
+    banner.style.display = 'flex';
+    icon.className  = 'fa-solid fa-unlock';
+    title.textContent = 'Mode Libre — Actif';
+    desc.textContent  = 'Toutes les étapes sont déverrouillées';
+  } else {
+    wrap.classList.remove('active');
+    banner.style.display = 'none';
+  }
+}
+
+/*
+ * ── INTEGRATION NOTE FOR renderHome() / openSheet() ──────────────────
+ *
+ * In your existing renderHome() function (inside exercice.js or inline),
+ * wherever you check if a stage is "locked" (e.g. i > 0 && !stages[i-1].done),
+ * wrap it with:
+ *
+ *   const locked = !isFreeMode() && (i > 0 && !stages[i-1].done);
+ *
+ * And in openSheet() wherever you show the "sh-locked-tip" and disable
+ * the start button, do the same:
+ *
+ *   if (!isFreeMode() && stage.locked) { ... show locked UI ... }
+ *   else { shStartBtn.disabled = false; shLockedTip.style.display='none'; }
+ *
+ * This makes isFreeMode() the single source of truth for bypassing locks.
+ * ─────────────────────────────────────────────────────────────────────
+ *
+ * If renderHome is defined AFTER this script block (e.g. in exercice.js),
+ * that's fine — toggleFreeMode() calls renderHome() after the external
+ * script loads because DOMContentLoaded fires last.
+ */
+
+/* ══════════════════════════════════════════════════════
    ██  BOOT
 ══════════════════════════════════════════════════════ */
-// Call checkAuth when page loads
 document.addEventListener('DOMContentLoaded', function() {
     checkAuth();
+    syncFreeModeUI();   // ← restore toggle visual state
     renderHome();
     renderExercices();
 });
@@ -1183,7 +1188,6 @@ document.addEventListener('DOMContentLoaded', function() {
 // Handle page show event (for back/forward cache)
 window.addEventListener('pageshow', function(event) {
     if (event.persisted) {
-        // Page was restored from cache, re-check authentication
         if (!isAuthenticated()) {
             showLoginOverlay();
         } else {

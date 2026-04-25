@@ -196,6 +196,270 @@ html, body {
 /* NODE */
 .node { position:relative; display:flex; flex-direction:column; align-items:center; }
 
+/* Button Container */
+.stages-controls {
+  padding: clamp(10px, 3vw, 14px) var(--pad-x);
+  margin: 0 calc(-1 * var(--pad-x)) clamp(10px, 3vw, 14px);
+  background: linear-gradient(180deg, rgba(13,27,34,.95), rgba(13,27,34,.85));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 50;
+}
+.stages-controls::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
+}
+
+/* Base Button Style */
+.stage-ctrl-btn {
+  /* Layout & Sizing */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(6px, 2vw, 9px);
+  padding: clamp(11px, 3.5vw, 14px) clamp(16px, 5vw, 22px);
+  min-height: 44px; /* Touch target */
+  
+  /* Typography */
+  font-family: 'Cairo', 'Nunito', sans-serif;
+  font-size: clamp(12px, 3.8vw, 14px);
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  
+  /* Visuals */
+  border: none;
+  border-radius: clamp(12px, 4vw, 16px);
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  
+  /* Transitions */
+  transition: all 0.22s cubic-bezier(0.34, 1.2, 0.64, 1);
+  transform: translateZ(0);
+  will-change: transform, box-shadow;
+  
+  /* Interaction */
+  touch-action: manipulation;
+  user-select: none;
+}
+
+/* Primary State — Matches your green banner style */
+.stage-ctrl-btn.primary {
+  /* Gradient background matching .banner */
+  background: linear-gradient(140deg, var(--green-lt), var(--green) 50%, var(--green-dk));
+  color: #ffffff;
+  
+  /* 3D shadow stack matching .nbtn.done/.current */
+  box-shadow: 
+    0 clamp(4px, 1.5vw, 7px) 0 var(--green-sh),
+    0 clamp(8px, 3vw, 14px) clamp(20px, 6vw, 28px) var(--green-glow),
+    inset 0 1px 0 rgba(255,255,255,.25);
+  
+  /* Subtle border for depth */
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+/* Hover State */
+.stage-ctrl-btn.primary:hover {
+  /* Brighter gradient on hover */
+  background: linear-gradient(140deg, #85e03a, var(--green-lt) 50%, var(--green));
+  
+  /* Enhanced glow */
+  box-shadow: 
+    0 clamp(4px, 1.5vw, 7px) 0 var(--green-sh),
+    0 clamp(12px, 4vw, 18px) clamp(28px, 8vw, 40px) rgba(88,204,2,.42),
+    inset 0 1px 0 rgba(255,255,255,.35);
+  
+  /* Slight lift */
+  transform: translateY(-2px);
+}
+
+/* Active/Pressed State */
+.stage-ctrl-btn.primary:active {
+  /* Compressed shadow */
+  box-shadow: 
+    0 2px 0 var(--green-sh),
+    0 4px 12px rgba(88,204,2,.25),
+    inset 0 1px 0 rgba(255,255,255,.15);
+  
+  /* Press down effect */
+  transform: translateY(1px) scale(0.98);
+  transition-duration: 0.08s;
+}
+
+/* Focus State (accessibility) */
+.stage-ctrl-btn.primary:focus-visible {
+  outline: 2px solid rgba(88,204,2,.6);
+  outline-offset: 2px;
+}
+
+/* Disabled State */
+.stage-ctrl-btn.primary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none !important;
+  background: linear-gradient(140deg, #4a6b3a, var(--green-dk) 50%, #2d5a1a);
+  box-shadow: 
+    0 clamp(3px, 1vw, 5px) 0 var(--green-sh),
+    0 clamp(6px, 2vw, 10px) clamp(14px, 4vw, 20px) rgba(88,204,2,.12);
+  pointer-events: none;
+}
+
+/* Icon inside button */
+.stage-ctrl-btn i,
+.stage-ctrl-btn svg {
+  width: clamp(16px, 4.5vw, 19px);
+  height: clamp(16px, 4.5vw, 19px);
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.25));
+  transition: transform 0.2s ease;
+}
+.stage-ctrl-btn.primary:hover i,
+.stage-ctrl-btn.primary:hover svg {
+  transform: scale(1.08);
+}
+
+/* Secondary/Collapse Button Style — Matches your card/overlay style */
+.stage-ctrl-btn.secondary {
+  background: var(--card);
+  color: var(--txt-sub);
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0,0,0,.15), inset 0 1px 0 rgba(255,255,255,.04);
+}
+.stage-ctrl-btn.secondary:hover {
+  background: rgba(255,255,255,.08);
+  color: var(--txt);
+  border-color: rgba(255,255,255,.15);
+  transform: translateY(-1px);
+}
+.stage-ctrl-btn.secondary:active {
+  transform: translateY(0) scale(0.98);
+  background: rgba(255,255,255,.05);
+}
+
+/* Ripple effect matching your .ripple-el */
+.stage-ctrl-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle, rgba(255,255,255,.35) 0%, transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.stage-ctrl-btn:active::after {
+  opacity: 1;
+  animation: btnRipple 0.45s ease-out forwards;
+}
+@keyframes btnRipple {
+  0% { transform: scale(0); opacity: 0.6; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* ══════════════════════════════════════════
+   FINAL NODE PULSE ANIMATION — MATCHES YOUR GLOW SYSTEM
+══════════════════════════════════════════ */
+@keyframes finalPulse {
+  0%, 100% {
+    box-shadow: 
+      0 clamp(5px,1.8vw,8px) 0 var(--green-sh),
+      0 0 0 0 rgba(88, 204, 2, 0.4),
+      0 clamp(10px,3.5vw,16px) clamp(24px,7vw,32px) var(--green-glow),
+      inset 0 2px 0 rgba(255,255,255,.3);
+  }
+  50% {
+    box-shadow: 
+      0 clamp(5px,1.8vw,8px) 0 var(--green-sh),
+      0 0 0 clamp(12px, 4vw, 18px) rgba(88, 204, 2, 0),
+      0 clamp(18px,6vw,28px) clamp(36px,10vw,52px) rgba(88,204,2,.55),
+      inset 0 2px 0 rgba(255,255,255,.3);
+  }
+}
+.nbtn.current.final-unlocked {
+  animation: finalPulse 2.2s ease-in-out infinite;
+  border: 2px solid var(--green) !important;
+  z-index: 15;
+}
+
+/* Badge animation for completed nodes — matches your .done-badge */
+@keyframes badgePopComplete {
+  from {
+    opacity: 0;
+    transform: scale(0) rotate(-20deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+.done-badge.complete-all {
+  animation: badgePopComplete 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE ADJUSTMENTS
+══════════════════════════════════════════ */
+
+/* Small phones (≤360px) */
+@media (max-width: 360px) {
+  .stages-controls {
+    padding: 8px 12px;
+    margin: 0 -12px 8px;
+  }
+  .stage-ctrl-btn {
+    padding: 10px 14px;
+    font-size: 11px;
+    gap: 5px;
+  }
+  .stage-ctrl-btn i,
+  .stage-ctrl-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* Large phones / small tablets (≥481px) */
+@media (min-width: 481px) {
+  .stages-controls {
+    padding: 12px 24px;
+    margin: 0 -24px 12px;
+  }
+  .stage-ctrl-btn {
+    padding: 13px 24px;
+    font-size: 14px;
+    border-radius: 18px;
+  }
+}
+
+/* Tablet/Desktop (≥769px) — Hide button, show message */
+@media (min-width: 769px) {
+  .stages-controls {
+    display: none;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .stage-ctrl-btn,
+  .stage-ctrl-btn::after,
+  .stage-ctrl-btn i,
+  .stage-ctrl-btn svg,
+  .nbtn.current.final-unlocked {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
 .nbtn {
   width:var(--node-size); height:var(--node-size);
   border-radius:50%; border:none; cursor:pointer; outline:none;
@@ -1072,3 +1336,76 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   filter: brightness(1.1);
   transform: translateY(-3px);
 }
+
+
+
+/* Toast notification */
+.toast {
+  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: #1e293b; color: white; padding: 12px 24px; border-radius: 40px;
+  font-size: 0.9rem; font-weight: 500; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  z-index: 10000; opacity: 0; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.1);
+  pointer-events: none; font-family: 'Cairo', sans-serif; direction: rtl;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast i { color: #10b981; margin-left: 8px; }
+
+/* Protected overlay */
+.protected-overlay {
+  position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.95);
+  backdrop-filter: blur(24px); display: flex; align-items: center; justify-content: center;
+  flex-direction: column; padding: 20px; color: white; text-align: center; direction: rtl;
+}
+.protected-overlay h2 { font-family: 'Cairo', sans-serif; font-size: 2rem; margin-bottom: 1rem; font-weight: 700; }
+.protected-overlay p { font-size: 1rem; margin-bottom: 2rem; opacity: 0.7; max-width: 500px; font-family: 'Cairo', sans-serif; }
+.protected-overlay .login-btn {
+  background: #58cc02; color: white; padding: 14px 32px; border-radius: 40px;
+  font-size: 1rem; font-weight: 500; text-decoration: none; transition: all 0.3s ease;
+  display: inline-flex; align-items: center; gap: 10px; border: none; cursor: pointer; font-family: 'Cairo', sans-serif;
+}
+.protected-overlay .login-btn:hover { filter: brightness(1.1); transform: translateY(-3px); }
+
+/* Mobile Only Message */
+#mobileOnlyMsg {
+  display: none; position: fixed !important; inset: 0 !important; z-index: 99999 !important;
+  align-items: center !important; justify-content: center !important; flex-direction: column !important;
+  gap: 20px !important; text-align: center !important; pointer-events: all !important; background: transparent !important;
+}
+.mob-card {
+  background: rgba(255,255,255,.06) !important; border: 1px solid rgba(255,255,255,.1) !important;
+  backdrop-filter: blur(20px) !important; border-radius: 28px !important; padding: 40px 36px 36px !important;
+  display: flex !important; flex-direction: column !important; align-items: center !important; gap: 16px !important;
+  max-width: 340px !important; width: 90% !important; box-shadow: 0 20px 60px rgba(0,0,0,.4) !important;
+  position: relative !important; z-index: 100000 !important; pointer-events: all !important;
+}
+.mob-card-icon {
+  width: 72px; height: 72px; border-radius: 22px;
+  background: linear-gradient(135deg,#5b52f0,#8b5cf6);
+  display: flex; align-items: center; justify-content: center; font-size: 32px;
+  box-shadow: 0 8px 28px rgba(91,82,240,.45);
+}
+.mob-card h2 { font-family: 'Cairo', sans-serif; font-weight: 900; font-size: 20px; color: #fff; line-height: 1.3; }
+.mob-card p { font-family: 'Cairo', sans-serif; font-size: 13px; color: rgba(255,255,255,.55); line-height: 1.7; max-width: 260px; }
+.mob-card-phones { display: flex; gap: 10px; margin-top: 4px; }
+.mob-phone {
+  display: flex; align-items: center; gap: 7px; background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.1); border-radius: 99px; padding: 7px 14px;
+  font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 700; color: rgba(255,255,255,.7);
+}
+.mob-phone i { font-size: 13px; color: #818cf8; }
+.mob-desktop-link {
+  display: inline-flex !important; align-items: center !important; gap: 8px !important;
+  margin-top: 4px !important; padding: 10px 22px !important; border-radius: 40px !important;
+  border: 1.5px solid rgba(255,255,255,0.25) !important; background: rgba(255,255,255,0.08) !important;
+  color: rgba(255,255,255,0.7) !important; font-family: 'Cairo', sans-serif !important;
+  font-size: 13px !important; font-weight: 600 !important; text-decoration: none !important;
+  cursor: pointer !important; pointer-events: all !important; transition: all 0.25s ease !important;
+  position: relative !important; z-index: 100001 !important;
+}
+.mob-desktop-link:hover {
+  border-color: rgba(255,255,255,0.5) !important; background: rgba(255,255,255,0.15) !important;
+  color: #fff !important; transform: translateY(-2px) !important;
+}
+.mob-desktop-link:active { transform: scale(0.97) !important; }
+.mob-desktop-link i { font-size: 14px; opacity: 0.9; }
+@media (min-width: 769px) { #mobileOnlyMsg { display: flex !important; } }

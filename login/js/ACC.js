@@ -47,8 +47,8 @@
             },
              { 
                 username: 'jebrane2026@gmail.com',
-                password: 'jebrane', 
-                name: 'Bac2026' 
+                password: 'Bac2026', 
+                name: 'jebrane' 
             },
             { 
                 username: 'slimeniamine14@gmail.com',

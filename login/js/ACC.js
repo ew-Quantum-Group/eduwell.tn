@@ -42,7 +42,12 @@
             },
             { 
                 username: 'stu67@edu.com',
-                password: 'Studi20126', 
+                password: 'Studi2026', 
+                name: 'Bac2026' 
+            },
+             { 
+                username: 'jebrane2026@gmail.com',
+                password: 'jebrane', 
                 name: 'Bac2026' 
             },
             { 

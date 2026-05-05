@@ -192,7 +192,58 @@ const DT_EXERCICES = [
    { title: "الأنية والغيرية", sub: "درس فلسفة", meta: "1 وثائق", pct: 0, ico: "🧩", faIcon: "fa-solid fa-diagram-project", strip: "#8b5cf6", icoBg: "#f5f3ff", docs: [{ name: "تمارين مع الإصلاح", type: "pdf", driveId: "1egBp-8_IzGrrrjEKnpDDnR3xItxMyIFp" }] },
   { title: "الخصوصية والكونية", sub: "درس فلسفة", meta: "6 وثائق", pct: 0, ico: "🌍", faIcon: "fa-solid fa-globe", strip: "#3b82f6", icoBg: "#eff6ff", docs: [{ name: "فقرة: الخصوصية والكونية", type: "pdf", driveId: "1TLK9pZ36ZhYl2BFgI3wRwOdskWZqMR--" }, { name: "تمارين باك (1)", type: "pdf", driveId: "1znKznhFSEeh41qTHwqU_8wCb1bKlI0Kr" }, { name: "تمارين باك (2)", type: "pdf", driveId: "1Mi1itwHIIB_6rE62zxuBTQ0j8SPxE2Xw" }, { name: "تمارين باك (3)", type: "pdf", driveId: "1ktNiRLagWXGjLw3nfE5be7qsbQu6rtk8" }, { name: "تمارين باك (4)", type: "pdf", driveId: "1-Cmsfw1imogld59n4ls0L7HxTeJrEncc" }, { name: "تمارين باك (5)", type: "pdf", driveId: "1n5itg2okXfN73x-MQJ-z6eniFS1F1Bt_" }] },
   { title: "النمذجة", sub: "درس فلسفة", meta: "5 وثائق", pct: 0, ico: "🧩", faIcon: "fa-solid fa-diagram-project", strip: "#8b5cf6", icoBg: "#f5f3ff", docs: [{ name: "تمارين مع الإصلاح", type: "pdf", driveId: "1d7pUS4QD_bFDPZAXiyISTuSA_yM2IvBy" }, { name: "فقرة: النمذجة", type: "pdf", driveId: "1FM5WvkoMu6SlISqnt-sPoiPWy8tOLQ01" }, { name: "تمارين باك (1)", type: "pdf", driveId: "1rdhkWsmFNUhcv7UeUR9o7_nF2-XnofGW" }, { name: "تمارين باك (2)", type: "pdf", driveId: "1IN9b7RuCbjOJtfJ3JH77Xq1LCVf-Bi_X" }, { name: "تمارين باك (3)", type: "pdf", driveId: "1a0y4ge6FH4g85UvNsABM9i65Y9xosPLy" }, { name: "تمارين باك (4)", type: "pdf", driveId: "1J22_4pdNnp7urZ_6r084PMei8CX3tTQ-" }] },
-  { title: "منهجية الإجابة", sub: "منهجية الفلسفة", meta: "وثيقة واحدة", pct: 0, ico: "✍️", faIcon: "fa-solid fa-pen", strip: "#f59e0b", icoBg: "#fffbeb", docs: [{ name: "منهجية الإجابة في فرض الفلسفة", type: "pdf", driveId: "1wkw2Cq5xZ49JZkCPGH7yWoslr5oqNTSL" }] },
+  {
+    title: "منهجية الإجابة",
+    sub: "منهجية الفلسفة",
+    meta: "7 وثائق",
+    pct: 0,
+    ico: "✍️",
+    faIcon: "fa-solid fa-pen",
+    strip: "#f59e0b",
+    icoBg: "#fffbeb",
+    docs: [
+      {
+        name: "منهجية الإجابة في فرض الفلسفة",
+        type: "pdf",
+        driveId: "1wkw2Cq5xZ49JZkCPGH7yWoslr5oqNTSL"
+      },
+      {
+        name: "حدّد المسلّمات الضمنية / المفترضات / الضمنيّات",
+        type: "pdf",
+        driveId: "1zTXmISQAnQ_13N8A3s-PMev9WHRLKyiL"
+      },
+      {
+        name: "ما معنى / ما دلالة / ما المقصود بـ",
+        type: "pdf",
+        driveId: "1EJS3gWYHVAYnSw6bB2tDknYbfuc6AwHj"
+      },
+      {
+        name: "ماهي الإحراجات / الهواجس / المخاوف / التبعات / المخاطر",
+        type: "pdf",
+        driveId: "1jT8TNWE62Q4KLZkC3_wIJhej1gNsGrLH"
+      },
+      {
+        name: "حدّد رهانات / غايات / أهداف / ما يريد تحقيقه",
+        type: "pdf",
+        driveId: "1sN76uUTSL6BFzwXy0kaZY-2366jGejzE"
+      },
+      {
+        name: "ما مدى راهنية / حضور / ملائمة (اليوم)",
+        type: "pdf",
+        driveId: "14GrDGgzBCW7VkdtAVDvNaFPM9ferNtr4"
+      },
+      {
+        name: "ما وظيفة / ما مهمّة / ما الذي ينجزه",
+        type: "pdf",
+        driveId: "1Wetb4ZRzEP5obKpnalrVQtrb_gfkH2A_"
+      },
+      {
+        name: "ما قيمة / ما مشروعية / ما وجاهة / ما مدى صحّة",
+        type: "pdf",
+        driveId: "17G3qAR0RDZmK68EaEAhYw8QKkoYvks6F"
+      }
+    ]
+  },
 { title: "الدولة", sub: "درس فلسفة", meta: "1 وثائق", pct: 0, ico: "🏛️", faIcon: "fa-solid fa-landmark", strip: "#10b981", icoBg: "#ecfdf5", docs: [{ name: "تمارين مع الإصلاح", type: "pdf", driveId: "1D8h_s1sfrkyT1WrMy4GqoBj48Jp9nfXE" }] }
 ];
 function renderDtGrid(data, gridId) {

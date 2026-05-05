@@ -46,6 +46,11 @@
                 name: 'Bac2026' 
             },
             { 
+                username: 'ymleouhi@gmail.com',
+                password: 'Yassin123.', 
+                name: 'Yassin' 
+            },
+            { 
                 username: 'dandondondon7@gmail.com',
                 password: 'ritajamila77#R', 
                 name: 'Ritej' 

@@ -10,7 +10,243 @@ setTimeout(()=>{ const f=document.getElementById('progress-fill'); if(f) f.style
 const notifications = [
 
 
- 
+
+  
+
+
+
+
+
+
+
+
+  { 
+    title: 'Nouveau document d’étude',
+    desc: '6- Les types de tirages 3',
+    time: '07/05',
+    color: 'linear-gradient(135deg,#059669,#10b981)',
+    unread: true,
+    cat: 'platform',
+    catLbl: 'MATH',
+    catC: '#059669',
+    url: 'https://drive.google.com/file/d/1gj6H6jlAIHDO8NFxcGj1qGtJeqGz568H/view?usp=drive_link',
+    icon: `<svg viewBox="0 0 24 24">
+             <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+             <polyline points="14 2 14 8 20 8"/>
+             <line x1="16" y1="13" x2="8" y2="13"/>
+             <line x1="16" y1="17" x2="8" y2="17"/>
+           </svg>` 
+  }, 
+  { 
+    title: 'Nouveau document d’étude',
+    desc: '6- Les types de tirages 2',
+    time: '07/05',
+    color: 'linear-gradient(135deg,#059669,#10b981)',
+    unread: true,
+    cat: 'platform',
+    catLbl: 'MATH',
+    catC: '#059669',
+    url: 'https://drive.google.com/file/d/1sseWF7JFmTegaYTluD5tGckJ3xpukHq0/view?usp=drive_link',
+    icon: `<svg viewBox="0 0 24 24">
+             <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+             <polyline points="14 2 14 8 20 8"/>
+             <line x1="16" y1="13" x2="8" y2="13"/>
+             <line x1="16" y1="17" x2="8" y2="17"/>
+           </svg>` 
+  }, 
+  { 
+    title: 'Nouveau document d’étude',
+    desc: '5- Les types de tirages 1',
+    time: '07/05',
+    color: 'linear-gradient(135deg,#059669,#10b981)',
+    unread: true,
+    cat: 'platform',
+    catLbl: 'MATH',
+    catC: '#059669',
+    url: 'https://drive.google.com/file/d/1rTyE8INRqkKeRxXv-Qnt_U9XOpqqbAGc/view?usp=drive_link',
+    icon: `<svg viewBox="0 0 24 24">
+             <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+             <polyline points="14 2 14 8 20 8"/>
+             <line x1="16" y1="13" x2="8" y2="13"/>
+             <line x1="16" y1="17" x2="8" y2="17"/>
+           </svg>` 
+  }, 
+  { 
+    title: 'Nouveau document d’étude',
+    desc: '4- Probabilités conditionelles 4',
+    time: '07/05',
+    color: 'linear-gradient(135deg,#059669,#10b981)',
+    unread: true,
+    cat: 'platform',
+    catLbl: 'MATH',
+    catC: '#059669',
+    url: 'https://drive.google.com/file/d/1uUpgmuri_Lm-hBCW_Gc-d3gB2ackcGHJ/view?usp=drive_link',
+    icon: `<svg viewBox="0 0 24 24">
+             <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+             <polyline points="14 2 14 8 20 8"/>
+             <line x1="16" y1="13" x2="8" y2="13"/>
+             <line x1="16" y1="17" x2="8" y2="17"/>
+           </svg>` 
+  }, 
+  { 
+    title: 'Nouveau document d’étude',
+    desc: '3- Probabilités conditionelles 3',
+    time: '07/05',
+    color: 'linear-gradient(135deg,#059669,#10b981)',
+    unread: true,
+    cat: 'platform',
+    catLbl: 'MATH',
+    catC: '#059669',
+    url: 'https://drive.google.com/file/d/17LZG6UvIDEpKgeR7ZywrlzxpfUSZykiI/view?usp=drive_link',
+    icon: `<svg viewBox="0 0 24 24">
+             <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+             <polyline points="14 2 14 8 20 8"/>
+             <line x1="16" y1="13" x2="8" y2="13"/>
+             <line x1="16" y1="17" x2="8" y2="17"/>
+           </svg>` 
+  }, 
+  { 
+    title: 'Nouveau document d’étude',
+    desc: '2- Probabilités conditionelles 1',
+    time: '07/05',
+    color: 'linear-gradient(135deg,#059669,#10b981)',
+    unread: true,
+    cat: 'platform',
+    catLbl: 'MATH',
+    catC: '#059669',
+    url: 'https://drive.google.com/file/d/1BICNsmQcStdWkLVucCcmKPx7XULR_h3-/view?usp=drive_link',
+    icon: `<svg viewBox="0 0 24 24">
+             <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+             <polyline points="14 2 14 8 20 8"/>
+             <line x1="16" y1="13" x2="8" y2="13"/>
+             <line x1="16" y1="17" x2="8" y2="17"/>
+           </svg>` 
+  }, 
+  { 
+    title: 'Nouveau document d’étude',
+    desc: '1- Probabilités conditionelles 2 ',
+    time: '07/05',
+    color: 'linear-gradient(135deg,#059669,#10b981)',
+    unread: true,
+    cat: 'platform',
+    catLbl: 'MATH',
+    catC: '#059669',
+    url: 'https://drive.google.com/file/d/1GeVxBVhFF3YcUc8tZFAL4ME7PXY0UJ5j/view?usp=drive_link',
+    icon: `<svg viewBox="0 0 24 24">
+             <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+             <polyline points="14 2 14 8 20 8"/>
+             <line x1="16" y1="13" x2="8" y2="13"/>
+             <line x1="16" y1="17" x2="8" y2="17"/>
+           </svg>` 
+  }, 
+  { 
+    title: 'Nouveau document d’étude',
+    desc: '5- Les primitives FONCTION EXPONENTIELLE    ',
+    time: '07/05',
+    color: 'linear-gradient(135deg,#059669,#10b981)',
+    unread: true,
+    cat: 'platform',
+    catLbl: 'MATH',
+    catC: '#059669',
+    url: 'https://drive.google.com/file/d/1qZB5Wo3LQ355LM0TnnOJDFRpfj0cvD0V/view?usp=drive_link',
+    icon: `<svg viewBox="0 0 24 24">
+             <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+             <polyline points="14 2 14 8 20 8"/>
+             <line x1="16" y1="13" x2="8" y2="13"/>
+             <line x1="16" y1="17" x2="8" y2="17"/>
+           </svg>` 
+  }, 
+
+  { 
+    title: 'Nouveau document d’étude',
+    desc: '4- Lecture graphique - études des fonctions  FONCTION EXPONENTIELLE    ',
+    time: '07/05',
+    color: 'linear-gradient(135deg,#059669,#10b981)',
+    unread: true,
+    cat: 'platform',
+    catLbl: 'MATH',
+    catC: '#059669',
+    url: 'https://drive.google.com/file/d/1SDYAw65gEfbeSqYQHTDOoEtwqYszkjk2/view?usp=drive_link',
+    icon: `<svg viewBox="0 0 24 24">
+             <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+             <polyline points="14 2 14 8 20 8"/>
+             <line x1="16" y1="13" x2="8" y2="13"/>
+             <line x1="16" y1="17" x2="8" y2="17"/>
+           </svg>` 
+  }, 
+  { 
+    title: 'Nouveau document d’étude  FONCTION EXPONENTIELLE    ',
+    desc: '3- Etudes fonctions – fonction réciproque',
+    time: '07/05',
+    color: 'linear-gradient(135deg,#059669,#10b981)',
+    unread: true,
+    cat: 'platform',
+    catLbl: 'MATH',
+    catC: '#059669',
+    url: 'https://drive.google.com/file/d/1XbBK57EhT3EsAiKbdWHmBi7FjPGzyBi_/view?usp=drive_link',
+    icon: `<svg viewBox="0 0 24 24">
+             <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+             <polyline points="14 2 14 8 20 8"/>
+             <line x1="16" y1="13" x2="8" y2="13"/>
+             <line x1="16" y1="17" x2="8" y2="17"/>
+           </svg>` 
+  }, 
+  { 
+    title: 'Nouveau document d’étude  FONCTION EXPONENTIELLE    ',
+    desc: '2- dériée',
+    time: '07/05',
+    color: 'linear-gradient(135deg,#059669,#10b981)',
+    unread: true,
+    cat: 'platform',
+    catLbl: 'MATH',
+    catC: '#059669',
+    url: 'https://drive.google.com/file/d/10pG5hiV0ak8fJzxFRN7yBaG0wPqi-BIn/view?usp=drive_link',
+    icon: `<svg viewBox="0 0 24 24">
+             <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+             <polyline points="14 2 14 8 20 8"/>
+             <line x1="16" y1="13" x2="8" y2="13"/>
+             <line x1="16" y1="17" x2="8" y2="17"/>
+           </svg>` 
+  }, 
+
+  { 
+    title: 'Nouveau document d’étude  FONCTION EXPONENTIELLE    ',
+    desc: '1- resolution des equations',
+    time: '07/05',
+    color: 'linear-gradient(135deg,#059669,#10b981)',
+    unread: true,
+    cat: 'platform',
+    catLbl: 'MATH',
+    catC: '#059669',
+    url: 'https://drive.google.com/file/d/1PHjp0f8I8EhBK4-P1RFabdlpbBTMekY2/view?usp=drive_link',
+    icon: `<svg viewBox="0 0 24 24">
+             <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+             <polyline points="14 2 14 8 20 8"/>
+             <line x1="16" y1="13" x2="8" y2="13"/>
+             <line x1="16" y1="17" x2="8" y2="17"/>
+           </svg>` 
+  }, 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 { 
   title: 'Nouveau document d’étude',
   desc: 'Pack de révision – Pression intérieure : 86 exercices avec correction',

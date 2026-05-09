@@ -1762,7 +1762,7 @@ description: "Ensemble structuré de devoirs de controle 1 en Sciences de la Vie
 {
     id: 42,
     title: "Devoirs de synthèse n°3 – Physique",
-    description: "Série de devoirs de synthèse 3 Physique avec corrections pour réviser efficacement et se préparer au Bac.",
+    description: "Série de devoirs de synthese 3 Physique avec corrections pour réviser efficacement et se préparer au Bac.",
     files: [
         {
             name: "Devoir de synthèse n°3 - 1",

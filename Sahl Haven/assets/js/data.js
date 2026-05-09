@@ -1754,10 +1754,74 @@ description: "Ensemble structuré de devoirs de controle 1 en Sciences de la Vie
             "url": "https://drive.google.com/file/d/1da0QPlsTou8M0m1ygAUYFijrvy_p6Sr_/view?usp=drive_link"
         }
     ]
-}
+},
 
 
 
+
+{
+    id: 42,
+    title: "Devoirs de synthèse n°3 – Physique",
+    description: "Série de devoirs de synthèse 3 Physique avec corrections pour réviser efficacement et se préparer au Bac.",
+    files: [
+        {
+            name: "Devoir de synthèse n°3 - 1",
+            url: "https://drive.google.com/file/d/1c_Jd0jqynJ4cZ1mHMfd3biIK-2LSG8K9/preview"
+        },
+        {
+            name: "Correction n°3 - 1",
+            url: "https://drive.google.com/file/d/1gg5dQyAUZx0dT53YjXIhX_ZRmOCVwO24/preview"
+        },
+        {
+            name: "Devoir de synthèse n°3 - 2",
+            url: "https://drive.google.com/file/d/1cIsvVKmyV5yH9AA1Eg8rNmUmdXDoFKYp/preview"
+        },
+        {
+            name: "Correction n°3 - 2",
+            url: "https://drive.google.com/file/d/19OSEe4VJnf2H-1PcBOzP4gLDDkghFF-I/preview"
+        },
+        {
+            name: "Devoir de synthèse n°3 - 3",
+            url: "https://drive.google.com/file/d/1JRZ3VW47OgHZiAopB99OK2y9YcQ4Q4nY/preview"
+        },
+        {
+            name: "Correction n°3 - 3",
+            url: "https://drive.google.com/file/d/1k_12UiLnCRTuaDe2lUv0xSPS2aNeFo1G/preview"
+        },
+        {
+            name: "Devoir de synthèse n°3 - 4",
+            url: "https://drive.google.com/file/d/1ui6TB4Lxd-PvvJFB4zOSL_F57M2V99Kh/preview"
+        },
+        {
+            name: "Correction n°3 - 4",
+            url: "https://drive.google.com/file/d/1WCvCgQDvwFK-MTMwXipkXbrcieQB5Ynb/preview"
+        },
+        {
+            name: "Devoir de synthèse n°3 - 5",
+            url: "https://drive.google.com/file/d/1414_mtXZ45eB_0CwJL2Fld9RnlBeJEjN/preview"
+        },
+        {
+            name: "Correction n°3 - 5",
+            url: "https://drive.google.com/file/d/1yh_EeGx3Ezg1NwZp85zQZFXHxum_jth_/preview"
+        },
+        {
+            name: "Devoir de synthèse n°3 - 6",
+            url: "https://drive.google.com/file/d/1tigyj91mNV59ceab6b57VyNKcKF2MWBQ/preview"
+        },
+        {
+            name: "Correction n°3 - 6",
+            url: "https://drive.google.com/file/d/1VnhhglZ7TmZ0pLKuSK06JE9Xksh1eT_w/preview"
+        },
+        {
+            name: "Devoir de synthèse n°3 - 7",
+            url: "https://drive.google.com/file/d/1iH2Qe3hWQ8Jm93oeeyfVxXIWwO6aCman/preview"
+        },
+        {
+            name: "Correction n°3 - 7",
+            url: "https://drive.google.com/file/d/1VgWQ1cCAJ0_1coT_vouFiPIE9JgJ4IbW/preview"
+        }
+    ]
+},
 
 
 

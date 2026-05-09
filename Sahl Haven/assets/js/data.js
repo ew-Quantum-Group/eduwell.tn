@@ -1822,11 +1822,62 @@ description: "Ensemble structuré de devoirs de controle 1 en Sciences de la Vie
         }
     ]
 },
+{
+    id: 43,
+    title: "Le Spectre – Physique",
+    description: "Cours, fiches de méthode et séries corrigées sur le chapitre du spectre en Physique pour maîtriser les notions essentielles du Bac.",
+    files: [
+        {
+            name: "Fiche de méthode – Le Spectre",
+            url: "https://drive.google.com/file/d/17SG5v79gy_DTwv4N4w0OODpsptDi6qFQ/preview"
+        },
+        {
+            name: "Série 1 avec correction",
+            url: "https://drive.google.com/file/d/1zIvo1rEGD9OxqZnIAJoPqmdH_2DhA9NZ/preview"
+        },
+        {
+            name: "Série 2 avec correction",
+            url: "https://drive.google.com/file/d/1LHyNp_6t60t2KgzFaYtkDLKv_Xo6wu_f/preview"
+        }
+    ]
+},
+
+{
+    id: 44,
+    title: "Les Amides – Physique",
+    description: "Séries corrigées sur le chapitre des amides en Physique pour renforcer la compréhension et s’entraîner efficacement pour le Bac.",
+    files: [
+        {
+            name: "Série 1 – Les Amides",
+            url: "https://drive.google.com/file/d/1GD4YK62eaAAj_yO7pS16BzsppBLmSz_U/preview"
+        },
+        {
+            name: "Correction Série 1",
+            url: "https://drive.google.com/file/d/1yqXGDBqp7fQE3J2byw0Dy-6Iq53Yfbic/preview"
+        }
+    ]
+},
 
 
-
-
-
+{
+    id: 45,
+    title: "Réactions Nucléaires – Physique",
+    description: "Fiche de méthode et séries corrigées sur les réactions nucléaires en Physique pour bien comprendre le chapitre et réussir le Bac.",
+    files: [
+        {
+            name: "Fiche de méthode – Réactions Nucléaires",
+            url: "https://drive.google.com/file/d/14OcIQK-7Er7UcXVdQpKeW-gv8fKdc3Zk/preview"
+        },
+        {
+            name: "Série 1 – Réactions Nucléaires",
+            url: "https://drive.google.com/file/d/1COFT64BhCER9rOom0Rqj9sQtnTXZq3M7/preview"
+        },
+        {
+            name: "Correction Série 1",
+            url: "https://drive.google.com/file/d/1i68qHgwNwJLTWwGV50Qc_YQ-9FiIfvfS/preview"
+        }
+    ]
+}
 
 
 

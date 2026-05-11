@@ -1,1888 +1,2000 @@
-     const resources = [
+const resources = [
              
-{
-  id: 2,
- title: "Série de devoirs de contrôle 1 – Sciences (SVT)",
-description: "Ensemble structuré de devoirs de controle 1 en Sciences de la Vie et de la Terre accompagnés de leurs corrections détaillées pour renforcer la compréhension et la réussite.",
-
-  files: [
-    {
-      name: "Devoir de contrôle n°1 - 1",
-      url: "https://drive.google.com/file/d/1kV3SgxTy3OUdunymHPButv0NL6cjqc-l/preview"
-    },
-    {
-      name: "Correction n°1 - 1",
-      url: "https://drive.google.com/file/d/1u_g16KgIoI_91VZuzZsGwIZKoMc10R34/preview"
-    },
-    {
-      name: "Devoir de contrôle n°1 - 2",
-      url: "https://drive.google.com/file/d/1EGDdWmC6bFgxaUPvBfmckTQjo708TC09/preview"
-    },
-    {
-      name: "Correction n°1 - 2",
-      url: "https://drive.google.com/file/d/1ScPH5pqQzB3rmHdCVDhCVDh2qCI8bywHw4hn/preview"
-    },
-    {
-      name: "Devoir de contrôle n°1 - 3",
-      url: "https://drive.google.com/file/d/1XXf14GysWZ2ZiV_rKOg1Sopy0f11CDf_/preview"
-    },
-    {
-      name: "Correction n°1 - 3",
-      url: "https://drive.google.com/file/d/1K25mNwH7ehgKZMf6o-U-RxZY_u3EhbZ2/preview"
-    },
-    {
-      name: "Devoir de contrôle n°1 - 4",
-      url: "https://drive.google.com/file/d/10VOFLTJwEscEYs3R1kl0FWKcw9N0yxyR/preview"
-    },
-    {
-      name: "Correction n°1 - 4",
-      url: "https://drive.google.com/file/d/1bhx9Uj5uUqbX6Yn_o_iJ7Gc-Qn2Bugkq/preview"
-    },
-    {
-      name: "Devoir de contrôle n°1 - 5",
-      url: "https://drive.google.com/file/d/11YNhR45ZjtZ5t_EyEhH5gIlWtgeGeLqX/preview"
-    },
-    {
-      name: "Correction n°1 - 5",
-      url: "https://drive.google.com/file/d/1looWDr8DWC7cF8VdzlKXypMAFAvzh15w/preview"
-    },
-    {
-      name: "Devoir de contrôle n°1 - 6",
-      url: "https://drive.google.com/file/d/19JvFK_FSSVABX0WdcD1Vbfp7H6k3V-x9/preview"
-    },
-    {
-      name: "Correction n°1 - 6",
-      url: "https://drive.google.com/file/d/1vOYh3f2GSSdEUnOAVn19chjGA52jop4w/preview"
-    },
-    {
-      name: "Devoir de contrôle n°1 - 7",
-      url: "https://drive.google.com/file/d/1L7fmwkz9uXdYYQkvYebqhAeR-eW1Edy-/preview"
-    },
-    {
-      name: "Correction n°1 - 7",
-      url: "https://drive.google.com/file/d/1f4n-CRWd_LbIAwxQSuYzRlPPp0gOSoQs/preview"
-    },
-    {
-      name: "Devoir de contrôle n°1 - 8",
-      url: "https://drive.google.com/file/d/1uCLrk0b2yT0pZQzX-BNJZV7pryQWLIyl/preview"
-    },
-    {
-      name: "Correction n°1 - 8",
-      url: "https://drive.google.com/file/d/1sXUW8XQdBbZ3lpIXAKqeydramXjlGeql/preview"
-    }
-  ]
-},
-
-
-
-
-{
-  id: 3,
-  title: "Devoirs de Synthèse n°1 – Sciences (SVT)",
-  description: "Collection complète des devoirs de synthese 1 Sciences de la Vie et de la Terre avec leurs corrections détaillées pour une préparation optimale au Bac.",
-  files: [
-    {
-      name: "Devoir de Synthèse n°1 - 1",
-      url: "https://drive.google.com/file/d/1t0Fg7h1bTTmx2vj8iW-cRBab5wauHE8P/preview"
-    },
-    {
-      name: "Correction n°1 - 1",
-      url: "https://drive.google.com/file/d/15r6etwFagbEtFvwhFZppCEaV2-vKasPO/preview"
-    },
-    {
-      name: "Devoir de Synthèse n°1 - 2",
-      url: "https://drive.google.com/file/d/1ZpEUvFYNJ8O-afCEv21Lt9CRtyIjaiKJ/preview"
-    },
-    {
-      name: "Correction n°1 - 2",
-      url: "https://drive.google.com/file/d/1BqrO14cebgI5cpxkjsLYAugEOtoEfnNK/preview"
-    },
-    {
-      name: "Devoir de Synthèse n°1 - 3",
-      url: "https://drive.google.com/file/d/1hMZjtQ0crvaGS7LVueIT1HsspGq46QPD/preview"
-    },
-    {
-      name: "Correction n°1 - 3",
-      url: "https://drive.google.com/file/d/1J_OF8qoq4PdT4rmH5tuIQDJDn4wepJzj/preview"
-    },
-    {
-      name: "Devoir de Synthèse n°1 - 4",
-      url: "https://drive.google.com/file/d/1m0XzvDWEuFFq2BVcfVpZKUBN6AqlypoF/preview"
-    },
-    {
-      name: "Correction n°1 - 4",
-      url: "https://drive.google.com/file/d/1cRv8K5Fq_pRXh7ijeOMc_Pwt45CWJN-G/preview"
-    },
-    {
-      name: "Devoir de Synthèse n°1 - 5",
-      url: "https://drive.google.com/file/d/1MoVImSn3gvRsFAvtEs_bDW1-ald3ATEx/preview"
-    },
-    {
-      name: "Correction n°1 - 5",
-      url: "https://drive.google.com/file/d/1fATQ8WHKwNUw6IHw8k8MxoObGIP3NEaK/preview"
-    },
-    {
-      name: "Devoir de Synthèse n°1 - 6",
-      url: "https://drive.google.com/file/d/1iRAZ4lmOS70JryDX9VIwejfgpe5oGuVP/preview"
-    },
-    {
-      name: "Correction n°1 - 6",
-      url: "https://drive.google.com/file/d/1TJniXtIfLfe5RjtUn1B9PeJjWYn1WwqQ/preview"
-    },
-    {
-      name: "Devoir de Synthèse n°1 - 7",
-      url: "https://drive.google.com/file/d/1JCUspvbQTTZiZQvuId_gAk6fsL7HjIvx/preview"
-    },
-    {
-      name: "Correction n°1 - 7",
-      url: "https://drive.google.com/file/d/1gcT9sKOnNs-5MCAHHYxfGpsY4Wu-5qjJ/preview"
-    }
-  ]
-},
-
-
-
-
-
-
-{
-  id: 4,
-  title: "Devoirs de contrôle n°2 – Sciences (SVT)",
-  description: "Collection complète des devoirs de controle 2 Sciences de la Vie et de la Terre avec leurs corrections détaillées pour renforcer la préparation au Bac.",
-  files: [
-    { name: "Devoir de contrôle n°2 - 1", url: "https://drive.google.com/file/d/1vP-dy1ixVT_oV0qwXh51OiIeHSB_Dxn8/preview" },
-    { name: "Correction n°2 - 1", url: "https://drive.google.com/file/d/1iwR8n3kaovAin6fox7e99PKlezq24NNN/preview" },
-    { name: "Devoir de contrôle n°2 - 2", url: "https://drive.google.com/file/d/1x2SzBoyv2JPj72YHR17Cv9E5VEPAbtIx/preview" },
-    { name: "Correction n°2 - 2", url: "https://drive.google.com/file/d/1o-LIrPnHMfpZjDGWCzTNVaiT_cR2rsCp/preview" },
-    { name: "Devoir de contrôle n°2 - 3", url: "https://drive.google.com/file/d/1zAEVxQDn4AztwlKk_TP1-gjXX1L9ibvu/preview" },
-    { name: "Correction n°2 - 3", url: "https://drive.google.com/file/d/1AKW-G3QciSFjeVSoV4XqOy-fnjyaf0FG/preview" },
-    { name: "Devoir de contrôle n°2 - 4", url: "https://drive.google.com/file/d/1uokaWh3POG2l7SX4p0uepwDgu4tbniK5/preview" },
-    { name: "Correction n°2 - 4", url: "https://drive.google.com/file/d/1Xed2Pbau9jU9IUbb5pRJUobEVvjgQtad/preview" },
-    { name: "Devoir de contrôle n°2 - 5", url: "https://drive.google.com/file/d/1cckv9f2CP3oB3k98Cl7X2R4R3bMYt8id/preview" },
-    { name: "Correction n°2 - 5", url: "https://drive.google.com/file/d/1bi8gZkF3dsGRkNpgJdmBeSFTl61vxz0G/preview" },
-    { name: "Devoir de contrôle n°2 - 6", url: "https://drive.google.com/file/d/1QR7zWhGJrp9ED5EdFxzk1FemKrM3pua4/preview" },
-    { name: "Correction n°2 - 6", url: "https://drive.google.com/file/d/1o-EURyFQ6hQwonnmF5TRosD19dEqmv9H/preview" },
-    { name: "Devoir de contrôle n°2 - 7", url: "https://drive.google.com/file/d/1bLYFO6g2nM1flSgA0lN20WW1g1bMFlRu/preview" },
-    { name: "Correction n°2 - 7", url: "https://drive.google.com/file/d/1rTMQK-S-RGGps4iJLxdl62ruR5GU_Jmc/preview" },
-    { name: "Devoir de contrôle n°2 - 8", url: "https://drive.google.com/file/d/1Z0Avao0rWBKV63OBNjejN8g8ij8yupcK/preview" },
-    { name: "Correction n°2 - 8", url: "https://drive.google.com/file/d/18vkwSwxvTZ_v3QGYE7r56wY2qRzGLEr_/preview" },
-    { name: "Devoir de contrôle n°2 - 9", url: "https://drive.google.com/file/d/1fcFrxebQIAVaXhnHE-IXV6sItVZM15lL/preview" },
-    { name: "Correction n°2 - 9", url: "https://drive.google.com/file/d/1L0ZXQvL11faCLKmhMiB_LFGj3_SEBnSu/preview" },
-    { name: "Devoir de contrôle n°2 - 10", url: "https://drive.google.com/file/d/1307_PtyYtjCUJxp2lqkWC2_XJ4mqAL3J/preview" },
-    { name: "Correction n°2 - 10", url: "https://drive.google.com/file/d/1Rek3xlV9CvR6DHCH1E6W2rZWrzxqL45K/preview" },
-    { name: "Devoir de contrôle n°2 - 11", url: "https://drive.google.com/file/d/1UEfkXjxUgiksEq9OJuPR3OkRrR2ai6Le/preview" },
-    { name: "Correction n°2 - 11", url: "https://drive.google.com/file/d/1IVjoZzvuCAcVa29Fle06hi3KRiFukMPP/preview" }
-  ]
-},
-
-
-
-{
-  id: 5,
-  title: "Devoirs de synthèse n°2 – Sciences (SVT)",
-  description: "Ensemble complet des devoirs de synthese 2 Sciences avec corrections détaillées pour une préparation avancée au Bac.",
-  files: [
-    { name: "Devoir de Synthèse n°2 - 1", url: "https://drive.google.com/file/d/1BppMoMAQusin8pBD8aZRlz21DLJyOkv_/preview" },
-    { name: "Correction n°2 - 1", url: "https://drive.google.com/file/d/1MgQY2IcxI-OVcFLEUeIYbLyqEb5PyTc3/preview" },
-    { name: "Devoir de Synthèse n°2 - 2", url: "https://drive.google.com/file/d/1ljEq_kYXoz_TFxtxGmAg3DDiv4bmpvB1/preview" },
-    { name: "Correction n°2 - 2", url: "https://drive.google.com/file/d/1KVwdGlXKGonSFx0FdD_CNhRcXeAWptug/preview" },
-    { name: "Devoir de Synthèse n°2 - 3", url: "https://drive.google.com/file/d/1g_ucSrhYrk7ty4s5XZraJhY0VMFncX3J/preview" },
-    { name: "Correction n°2 - 3", url: "https://drive.google.com/file/d/1DRvRB5PkupxlOd0fV-v4uYu-bb9dZIQb/preview" },
-    { name: "Devoir de Synthèse n°2 - 4", url: "https://drive.google.com/file/d/1hH9kCXULmB4t_tHhyvkXouU7sstAg6hr/preview" },
-    { name: "Correction n°2 - 4", url: "https://drive.google.com/file/d/1s881DCVLaMafNIYR7Y9gebcGlJHaheOi/preview" },
-    { name: "Devoir de Synthèse n°2 - 5", url: "https://drive.google.com/file/d/1jjOuGivmRo3oxYCq56QgKLUmGBJnulZw/preview" },
-    { name: "Correction n°2 - 5", url: "https://drive.google.com/file/d/1qFl_1auY2MgnzzDEWNQxnbuo1P4mnmHX/preview" },
-    { name: "Devoir de Synthèse n°2 - 6", url: "https://drive.google.com/file/d/17jTtksChAQ3HTb-4iVTSkM3rfZo8fKJ8/preview" },
-    { name: "Correction n°2 - 6", url: "https://drive.google.com/file/d/174EzYYUa3IhVhIpc7r1W0NaK822YE_ag/preview" }
-  ]
-},
-
-
-
-{
-  id: 6,
-  title: "Devoirs de contrôle n°3 – Sciences (SVT)",
-  description: "Série de devoirs de controle 3 Sciences avec corrections pour évaluer et améliorer le niveau avant le Bac.",
-  files: [
-    { name: "Devoir de contrôle n°3 - 1", url: "https://drive.google.com/file/d/1K6vk4qaWpWWe1rhTxxtYtR5J09BcTJHI/preview" },
-    { name: "Correction n°3 - 1", url: "https://drive.google.com/file/d/1QLiAtoc_2mDlqgK6X6IPX7TnnjdnPRLh/preview" },
-    { name: "Devoir de contrôle n°3 - 2", url: "https://drive.google.com/file/d/1QMQ1pOca3wS9lV3qKGZM0Ep5cbynY546/preview" },
-    { name: "Correction n°3 - 2", url: "https://drive.google.com/file/d/1-LfuH_zX8WFKMXhZxj0xdtjbgqhMzx-0/preview" },
-    { name: "Devoir de contrôle n°3 - 3", url: "https://drive.google.com/file/d/1OLrGzA_ROLbN3OMyJoS_GleC3IyLsYk9/preview" },
-    { name: "Correction n°3 - 3", url: "https://drive.google.com/file/d/1VGIfxq5pil1sDciZxpi-sEv1NpiiiCIW/preview" },
-    { name: "Devoir de contrôle n°3 - 4", url: "https://drive.google.com/file/d/19mnZ2gUdOYfUCZm6a1pu3a9o497CctSP/preview" }
-  ]
-},
-
-{
-  id: 7,
-  title: "Devoirs de synthèse n°3 – Sciences (SVT)",
-  description: "Collection complète des devoirs de synthese 3 Sciences avec corrections détaillées pour une préparation finale au Bac.",
-  files: [
-    { name: "Devoir de Synthèse n°3 - 1", url: "https://drive.google.com/file/d/1Pcu_KJDtsCIxu4r-4el4P9LsygMe0cCV/preview" },
-    { name: "Correction n°3 - 1", url: "https://drive.google.com/file/d/1M0uy7SQAWv_qChiiie8Az9SynlUnYLFf/preview" },
-    { name: "Devoir de Synthèse n°3 - 2", url: "https://drive.google.com/file/d/1XRh_EKWpNjSdA13ei_H4K-4P9twCjZNs/preview" },
-    { name: "Correction n°3 - 2", url: "https://drive.google.com/file/d/1bW4QT1nxrqKDrYQhs9Ou57QuMJy6fY1l/preview" },
-    { name: "Devoir de Synthèse n°3 - 3", url: "https://drive.google.com/file/d/11ci6vka0YS6FDM0C0S32xqgdP29wkPFQ/preview" },
-    { name: "Correction n°3 - 3", url: "https://drive.google.com/file/d/13niJzN6AcdAZQMpNExjIzEbezBbQGCeY/preview" },
-    { name: "Devoir de Synthèse n°3 - 4", url: "https://drive.google.com/file/d/1MHTIiC9fGejsIyNV0aKOe-uYbQbcRtMc/preview" },
-    { name: "Correction n°3 - 4", url: "https://drive.google.com/file/d/1ukBKHXibt1vMvoBih8lQs5VuabOh7sF9/preview" },
-    { name: "Devoir de Synthèse n°3 - 5", url: "https://drive.google.com/file/d/1uIgdnRIUR6mrttLnRLBI0mr1oj211IV6/preview" },
-    { name: "Correction n°3 - 5", url: "https://drive.google.com/file/d/1E6K4uXlZ7WLdJtQG30GNEF4rNUG-JKas/preview" },
-    { name: "Devoir de Synthèse n°3 - 6", url: "https://drive.google.com/file/d/1bgGsiLGVqeZ_MowdSiwmxF3KOfwLn81I/preview" },
-    { name: "Correction n°3 - 6", url: "https://drive.google.com/file/d/1p_p2dl9W1uEh3gBcRe4NyoT7hVtGxjAg/preview" },
-    { name: "Devoir de Synthèse n°3 - 7", url: "https://drive.google.com/file/d/1spZ83XEB2oBk4XQNNgXx-g2fCI9S5bE3/preview" },
-    { name: "Correction n°3 - 7", url: "https://drive.google.com/file/d/1_7wzkJgJUKxXiaGPvFy0D4D3t0gY5sld/preview" }
-  ]
-},
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{
-    id: 17,
-    title: "Séries d’exercices – Pression intérieure",
-    description: "Série d’exercices sur la pression interieure (énoncés + corrections) pour préparation Bac avec amélioration du niveau.",
+  {
+    id: 2,
+   title: "Série de devoirs de contrôle 1 – Sciences (SVT)",
+  description: "Ensemble structuré de devoirs de controle 1 en Sciences de la Vie et de la Terre accompagnés de leurs corrections détaillées pour renforcer la compréhension et la réussite.",
+  
     files: [
-        {
-            name: "Énoncé - 1",
-            url: "https://drive.google.com/file/d/1d1HuTg4dpr26cmlyGjl5pO_Wig47oUyj/preview"
-        },
-        {
-            name: "Correction - 1",
-            url: "https://drive.google.com/file/d/1fvO2wT5lGYwf3lK4sCNaR3dfIgAYLztm/preview"
-        },
-        {
-            name: "Énoncé - 2",
-            url: "https://drive.google.com/file/d/1z3guLBD25Seo-CL38L2c97HYqe5OZdM9/preview"
-        },
-        {
-            name: "Correction - 2",
-            url: "https://drive.google.com/file/d/1dLD590UVbtGApsrB85UOCAv-vzi99isu/preview"
-        },
-        {
-            name: "Énoncé - 3",
-            url: "https://drive.google.com/file/d/1KQutZfvgJ57a-PhjS6ieyavue42veI4b/preview"
-        },
-        {
-            name: "Correction - 3",
-            url: "https://drive.google.com/file/d/1FaerIfWgKuwBMIZWplilo5pQUBoIP8Gs/preview"
-        },
-        {
-            name: "Énoncé - 4",
-            url: "https://drive.google.com/file/d/19i45GY4zHopKR3_u8UExqN5OZJxmXCQ7/preview"
-        },
-        {
-            name: "Correction - 4",
-            url: "https://drive.google.com/file/d/19R1srnCNksuaTEAu22kkcXsksvSqcLRI/preview"
-        },
+      {
+        name: "Devoir de contrôle n°1 - 1",
+        url: "https://drive.google.com/file/d/1kV3SgxTy3OUdunymHPButv0NL6cjqc-l/preview"
+      },
+      {
+        name: "Correction n°1 - 1",
+        url: "https://drive.google.com/file/d/1u_g16KgIoI_91VZuzZsGwIZKoMc10R34/preview"
+      },
+      {
+        name: "Devoir de contrôle n°1 - 2",
+        url: "https://drive.google.com/file/d/1EGDdWmC6bFgxaUPvBfmckTQjo708TC09/preview"
+      },
+      {
+        name: "Correction n°1 - 2",
+        url: "https://drive.google.com/file/d/1ScPH5pqQzB3rmHdCVDhCVDh2qCI8bywHw4hn/preview"
+      },
+      {
+        name: "Devoir de contrôle n°1 - 3",
+        url: "https://drive.google.com/file/d/1XXf14GysWZ2ZiV_rKOg1Sopy0f11CDf_/preview"
+      },
+      {
+        name: "Correction n°1 - 3",
+        url: "https://drive.google.com/file/d/1K25mNwH7ehgKZMf6o-U-RxZY_u3EhbZ2/preview"
+      },
+      {
+        name: "Devoir de contrôle n°1 - 4",
+        url: "https://drive.google.com/file/d/10VOFLTJwEscEYs3R1kl0FWKcw9N0yxyR/preview"
+      },
+      {
+        name: "Correction n°1 - 4",
+        url: "https://drive.google.com/file/d/1bhx9Uj5uUqbX6Yn_o_iJ7Gc-Qn2Bugkq/preview"
+      },
+      {
+        name: "Devoir de contrôle n°1 - 5",
+        url: "https://drive.google.com/file/d/11YNhR45ZjtZ5t_EyEhH5gIlWtgeGeLqX/preview"
+      },
+      {
+        name: "Correction n°1 - 5",
+        url: "https://drive.google.com/file/d/1looWDr8DWC7cF8VdzlKXypMAFAvzh15w/preview"
+      },
+      {
+        name: "Devoir de contrôle n°1 - 6",
+        url: "https://drive.google.com/file/d/19JvFK_FSSVABX0WdcD1Vbfp7H6k3V-x9/preview"
+      },
+      {
+        name: "Correction n°1 - 6",
+        url: "https://drive.google.com/file/d/1vOYh3f2GSSdEUnOAVn19chjGA52jop4w/preview"
+      },
+      {
+        name: "Devoir de contrôle n°1 - 7",
+        url: "https://drive.google.com/file/d/1L7fmwkz9uXdYYQkvYebqhAeR-eW1Edy-/preview"
+      },
+      {
+        name: "Correction n°1 - 7",
+        url: "https://drive.google.com/file/d/1f4n-CRWd_LbIAwxQSuYzRlPPp0gOSoQs/preview"
+      },
+      {
+        name: "Devoir de contrôle n°1 - 8",
+        url: "https://drive.google.com/file/d/1uCLrk0b2yT0pZQzX-BNJZV7pryQWLIyl/preview"
+      },
+      {
+        name: "Correction n°1 - 8",
+        url: "https://drive.google.com/file/d/1sXUW8XQdBbZ3lpIXAKqeydramXjlGeql/preview"
+      }
+    ]
+  },
+  
+  
+  
+  
+  {
+    id: 3,
+    title: "Devoirs de Synthèse n°1 – Sciences (SVT)",
+    description: "Collection complète des devoirs de synthese 1 Sciences de la Vie et de la Terre avec leurs corrections détaillées pour une préparation optimale au Bac.",
+    files: [
+      {
+        name: "Devoir de Synthèse n°1 - 1",
+        url: "https://drive.google.com/file/d/1t0Fg7h1bTTmx2vj8iW-cRBab5wauHE8P/preview"
+      },
+      {
+        name: "Correction n°1 - 1",
+        url: "https://drive.google.com/file/d/15r6etwFagbEtFvwhFZppCEaV2-vKasPO/preview"
+      },
+      {
+        name: "Devoir de Synthèse n°1 - 2",
+        url: "https://drive.google.com/file/d/1ZpEUvFYNJ8O-afCEv21Lt9CRtyIjaiKJ/preview"
+      },
+      {
+        name: "Correction n°1 - 2",
+        url: "https://drive.google.com/file/d/1BqrO14cebgI5cpxkjsLYAugEOtoEfnNK/preview"
+      },
+      {
+        name: "Devoir de Synthèse n°1 - 3",
+        url: "https://drive.google.com/file/d/1hMZjtQ0crvaGS7LVueIT1HsspGq46QPD/preview"
+      },
+      {
+        name: "Correction n°1 - 3",
+        url: "https://drive.google.com/file/d/1J_OF8qoq4PdT4rmH5tuIQDJDn4wepJzj/preview"
+      },
+      {
+        name: "Devoir de Synthèse n°1 - 4",
+        url: "https://drive.google.com/file/d/1m0XzvDWEuFFq2BVcfVpZKUBN6AqlypoF/preview"
+      },
+      {
+        name: "Correction n°1 - 4",
+        url: "https://drive.google.com/file/d/1cRv8K5Fq_pRXh7ijeOMc_Pwt45CWJN-G/preview"
+      },
+      {
+        name: "Devoir de Synthèse n°1 - 5",
+        url: "https://drive.google.com/file/d/1MoVImSn3gvRsFAvtEs_bDW1-ald3ATEx/preview"
+      },
+      {
+        name: "Correction n°1 - 5",
+        url: "https://drive.google.com/file/d/1fATQ8WHKwNUw6IHw8k8MxoObGIP3NEaK/preview"
+      },
+      {
+        name: "Devoir de Synthèse n°1 - 6",
+        url: "https://drive.google.com/file/d/1iRAZ4lmOS70JryDX9VIwejfgpe5oGuVP/preview"
+      },
+      {
+        name: "Correction n°1 - 6",
+        url: "https://drive.google.com/file/d/1TJniXtIfLfe5RjtUn1B9PeJjWYn1WwqQ/preview"
+      },
+      {
+        name: "Devoir de Synthèse n°1 - 7",
+        url: "https://drive.google.com/file/d/1JCUspvbQTTZiZQvuId_gAk6fsL7HjIvx/preview"
+      },
+      {
+        name: "Correction n°1 - 7",
+        url: "https://drive.google.com/file/d/1gcT9sKOnNs-5MCAHHYxfGpsY4Wu-5qjJ/preview"
+      }
+    ]
+  },
+  
+  
+  
+  
+  
+  
+  {
+    id: 4,
+    title: "Devoirs de contrôle n°2 – Sciences (SVT)",
+    description: "Collection complète des devoirs de controle 2 Sciences de la Vie et de la Terre avec leurs corrections détaillées pour renforcer la préparation au Bac.",
+    files: [
+      { name: "Devoir de contrôle n°2 - 1", url: "https://drive.google.com/file/d/1vP-dy1ixVT_oV0qwXh51OiIeHSB_Dxn8/preview" },
+      { name: "Correction n°2 - 1", url: "https://drive.google.com/file/d/1iwR8n3kaovAin6fox7e99PKlezq24NNN/preview" },
+      { name: "Devoir de contrôle n°2 - 2", url: "https://drive.google.com/file/d/1x2SzBoyv2JPj72YHR17Cv9E5VEPAbtIx/preview" },
+      { name: "Correction n°2 - 2", url: "https://drive.google.com/file/d/1o-LIrPnHMfpZjDGWCzTNVaiT_cR2rsCp/preview" },
+      { name: "Devoir de contrôle n°2 - 3", url: "https://drive.google.com/file/d/1zAEVxQDn4AztwlKk_TP1-gjXX1L9ibvu/preview" },
+      { name: "Correction n°2 - 3", url: "https://drive.google.com/file/d/1AKW-G3QciSFjeVSoV4XqOy-fnjyaf0FG/preview" },
+      { name: "Devoir de contrôle n°2 - 4", url: "https://drive.google.com/file/d/1uokaWh3POG2l7SX4p0uepwDgu4tbniK5/preview" },
+      { name: "Correction n°2 - 4", url: "https://drive.google.com/file/d/1Xed2Pbau9jU9IUbb5pRJUobEVvjgQtad/preview" },
+      { name: "Devoir de contrôle n°2 - 5", url: "https://drive.google.com/file/d/1cckv9f2CP3oB3k98Cl7X2R4R3bMYt8id/preview" },
+      { name: "Correction n°2 - 5", url: "https://drive.google.com/file/d/1bi8gZkF3dsGRkNpgJdmBeSFTl61vxz0G/preview" },
+      { name: "Devoir de contrôle n°2 - 6", url: "https://drive.google.com/file/d/1QR7zWhGJrp9ED5EdFxzk1FemKrM3pua4/preview" },
+      { name: "Correction n°2 - 6", url: "https://drive.google.com/file/d/1o-EURyFQ6hQwonnmF5TRosD19dEqmv9H/preview" },
+      { name: "Devoir de contrôle n°2 - 7", url: "https://drive.google.com/file/d/1bLYFO6g2nM1flSgA0lN20WW1g1bMFlRu/preview" },
+      { name: "Correction n°2 - 7", url: "https://drive.google.com/file/d/1rTMQK-S-RGGps4iJLxdl62ruR5GU_Jmc/preview" },
+      { name: "Devoir de contrôle n°2 - 8", url: "https://drive.google.com/file/d/1Z0Avao0rWBKV63OBNjejN8g8ij8yupcK/preview" },
+      { name: "Correction n°2 - 8", url: "https://drive.google.com/file/d/18vkwSwxvTZ_v3QGYE7r56wY2qRzGLEr_/preview" },
+      { name: "Devoir de contrôle n°2 - 9", url: "https://drive.google.com/file/d/1fcFrxebQIAVaXhnHE-IXV6sItVZM15lL/preview" },
+      { name: "Correction n°2 - 9", url: "https://drive.google.com/file/d/1L0ZXQvL11faCLKmhMiB_LFGj3_SEBnSu/preview" },
+      { name: "Devoir de contrôle n°2 - 10", url: "https://drive.google.com/file/d/1307_PtyYtjCUJxp2lqkWC2_XJ4mqAL3J/preview" },
+      { name: "Correction n°2 - 10", url: "https://drive.google.com/file/d/1Rek3xlV9CvR6DHCH1E6W2rZWrzxqL45K/preview" },
+      { name: "Devoir de contrôle n°2 - 11", url: "https://drive.google.com/file/d/1UEfkXjxUgiksEq9OJuPR3OkRrR2ai6Le/preview" },
+      { name: "Correction n°2 - 11", url: "https://drive.google.com/file/d/1IVjoZzvuCAcVa29Fle06hi3KRiFukMPP/preview" }
+    ]
+  },
+  
+  
+  
+  {
+    id: 5,
+    title: "Devoirs de synthèse n°2 – Sciences (SVT)",
+    description: "Ensemble complet des devoirs de synthese 2 Sciences avec corrections détaillées pour une préparation avancée au Bac.",
+    files: [
+      { name: "Devoir de Synthèse n°2 - 1", url: "https://drive.google.com/file/d/1BppMoMAQusin8pBD8aZRlz21DLJyOkv_/preview" },
+      { name: "Correction n°2 - 1", url: "https://drive.google.com/file/d/1MgQY2IcxI-OVcFLEUeIYbLyqEb5PyTc3/preview" },
+      { name: "Devoir de Synthèse n°2 - 2", url: "https://drive.google.com/file/d/1ljEq_kYXoz_TFxtxGmAg3DDiv4bmpvB1/preview" },
+      { name: "Correction n°2 - 2", url: "https://drive.google.com/file/d/1KVwdGlXKGonSFx0FdD_CNhRcXeAWptug/preview" },
+      { name: "Devoir de Synthèse n°2 - 3", url: "https://drive.google.com/file/d/1g_ucSrhYrk7ty4s5XZraJhY0VMFncX3J/preview" },
+      { name: "Correction n°2 - 3", url: "https://drive.google.com/file/d/1DRvRB5PkupxlOd0fV-v4uYu-bb9dZIQb/preview" },
+      { name: "Devoir de Synthèse n°2 - 4", url: "https://drive.google.com/file/d/1hH9kCXULmB4t_tHhyvkXouU7sstAg6hr/preview" },
+      { name: "Correction n°2 - 4", url: "https://drive.google.com/file/d/1s881DCVLaMafNIYR7Y9gebcGlJHaheOi/preview" },
+      { name: "Devoir de Synthèse n°2 - 5", url: "https://drive.google.com/file/d/1jjOuGivmRo3oxYCq56QgKLUmGBJnulZw/preview" },
+      { name: "Correction n°2 - 5", url: "https://drive.google.com/file/d/1qFl_1auY2MgnzzDEWNQxnbuo1P4mnmHX/preview" },
+      { name: "Devoir de Synthèse n°2 - 6", url: "https://drive.google.com/file/d/17jTtksChAQ3HTb-4iVTSkM3rfZo8fKJ8/preview" },
+      { name: "Correction n°2 - 6", url: "https://drive.google.com/file/d/174EzYYUa3IhVhIpc7r1W0NaK822YE_ag/preview" }
+    ]
+  },
+  
+  
+  
+  {
+    id: 6,
+    title: "Devoirs de contrôle n°3 – Sciences (SVT)",
+    description: "Série de devoirs de controle 3 Sciences avec corrections pour évaluer et améliorer le niveau avant le Bac.",
+    files: [
+      { name: "Devoir de contrôle n°3 - 1", url: "https://drive.google.com/file/d/1K6vk4qaWpWWe1rhTxxtYtR5J09BcTJHI/preview" },
+      { name: "Correction n°3 - 1", url: "https://drive.google.com/file/d/1QLiAtoc_2mDlqgK6X6IPX7TnnjdnPRLh/preview" },
+      { name: "Devoir de contrôle n°3 - 2", url: "https://drive.google.com/file/d/1QMQ1pOca3wS9lV3qKGZM0Ep5cbynY546/preview" },
+      { name: "Correction n°3 - 2", url: "https://drive.google.com/file/d/1-LfuH_zX8WFKMXhZxj0xdtjbgqhMzx-0/preview" },
+      { name: "Devoir de contrôle n°3 - 3", url: "https://drive.google.com/file/d/1OLrGzA_ROLbN3OMyJoS_GleC3IyLsYk9/preview" },
+      { name: "Correction n°3 - 3", url: "https://drive.google.com/file/d/1VGIfxq5pil1sDciZxpi-sEv1NpiiiCIW/preview" },
+      { name: "Devoir de contrôle n°3 - 4", url: "https://drive.google.com/file/d/19mnZ2gUdOYfUCZm6a1pu3a9o497CctSP/preview" }
+    ]
+  },
+  
+  {
+    id: 7,
+    title: "Devoirs de synthèse n°3 – Sciences (SVT)",
+    description: "Collection complète des devoirs de synthese 3 Sciences avec corrections détaillées pour une préparation finale au Bac.",
+    files: [
+      { name: "Devoir de Synthèse n°3 - 1", url: "https://drive.google.com/file/d/1Pcu_KJDtsCIxu4r-4el4P9LsygMe0cCV/preview" },
+      { name: "Correction n°3 - 1", url: "https://drive.google.com/file/d/1M0uy7SQAWv_qChiiie8Az9SynlUnYLFf/preview" },
+      { name: "Devoir de Synthèse n°3 - 2", url: "https://drive.google.com/file/d/1XRh_EKWpNjSdA13ei_H4K-4P9twCjZNs/preview" },
+      { name: "Correction n°3 - 2", url: "https://drive.google.com/file/d/1bW4QT1nxrqKDrYQhs9Ou57QuMJy6fY1l/preview" },
+      { name: "Devoir de Synthèse n°3 - 3", url: "https://drive.google.com/file/d/11ci6vka0YS6FDM0C0S32xqgdP29wkPFQ/preview" },
+      { name: "Correction n°3 - 3", url: "https://drive.google.com/file/d/13niJzN6AcdAZQMpNExjIzEbezBbQGCeY/preview" },
+      { name: "Devoir de Synthèse n°3 - 4", url: "https://drive.google.com/file/d/1MHTIiC9fGejsIyNV0aKOe-uYbQbcRtMc/preview" },
+      { name: "Correction n°3 - 4", url: "https://drive.google.com/file/d/1ukBKHXibt1vMvoBih8lQs5VuabOh7sF9/preview" },
+      { name: "Devoir de Synthèse n°3 - 5", url: "https://drive.google.com/file/d/1uIgdnRIUR6mrttLnRLBI0mr1oj211IV6/preview" },
+      { name: "Correction n°3 - 5", url: "https://drive.google.com/file/d/1E6K4uXlZ7WLdJtQG30GNEF4rNUG-JKas/preview" },
+      { name: "Devoir de Synthèse n°3 - 6", url: "https://drive.google.com/file/d/1bgGsiLGVqeZ_MowdSiwmxF3KOfwLn81I/preview" },
+      { name: "Correction n°3 - 6", url: "https://drive.google.com/file/d/1p_p2dl9W1uEh3gBcRe4NyoT7hVtGxjAg/preview" },
+      { name: "Devoir de Synthèse n°3 - 7", url: "https://drive.google.com/file/d/1spZ83XEB2oBk4XQNNgXx-g2fCI9S5bE3/preview" },
+      { name: "Correction n°3 - 7", url: "https://drive.google.com/file/d/1_7wzkJgJUKxXiaGPvFy0D4D3t0gY5sld/preview" }
+    ]
+  },
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  {
+      id: 17,
+      title: "Séries d’exercices – Pression intérieure",
+      description: "Série d’exercices sur la pression interieure (énoncés + corrections) pour préparation Bac avec amélioration du niveau.",
+      files: [
           {
-            name: "Énoncé - 5",
-            url: "https://drive.google.com/file/d/1J2v5ZN1UNTcVxiWgWJ9XBW7j1Dkj5qJ-/preview"
-        },
-        {
-            name: "Correction - 5",
-            url: "https://drive.google.com/file/d/1N1RUAt0SZOwL8JmT3E0p0mcIhw5RSsEf/preview"
-        },
-        {
-            name: "Énoncé - 6",
-            url: "https://drive.google.com/file/d/1cwxF85Q1hJjY5Y_DC4M6SgJmy9EZ9m3-/preview"
-        },
-        {
-            name: "Correction - 6",
-            url: "https://drive.google.com/file/d/1HvfHLhY6zz8ZeVRVU81BwoQCkoX4mALZ/preview"
-        },
-        {
-            name: "Énoncé - 7",
-            url: "https://drive.google.com/file/d/1YQ-SUw6TY2NrzhePbJvho5SbQq1zTj-o/preview"
-        },
-        {
-            name: "Correction - 7",
-            url: "https://drive.google.com/file/d/1G8VRQghL8_0Xi8J5SYXKCedI7JUjo7kd/preview"
-        },
-        {
-            name: "Énoncé - 8",
-            url: "https://drive.google.com/file/d/1Y3QagTqATXLXW23jps58gQToHFMgPOsK/preview"
-        },
-        {
-            name: "Correction - 8",
-            url: "https://drive.google.com/file/d/1R6KElxabF9QYKwFxBaU4H9lOl28ksnMK/preview"
-        }
+              name: "Énoncé - 1",
+              url: "https://drive.google.com/file/d/1d1HuTg4dpr26cmlyGjl5pO_Wig47oUyj/preview"
+          },
+          {
+              name: "Correction - 1",
+              url: "https://drive.google.com/file/d/1fvO2wT5lGYwf3lK4sCNaR3dfIgAYLztm/preview"
+          },
+          {
+              name: "Énoncé - 2",
+              url: "https://drive.google.com/file/d/1z3guLBD25Seo-CL38L2c97HYqe5OZdM9/preview"
+          },
+          {
+              name: "Correction - 2",
+              url: "https://drive.google.com/file/d/1dLD590UVbtGApsrB85UOCAv-vzi99isu/preview"
+          },
+          {
+              name: "Énoncé - 3",
+              url: "https://drive.google.com/file/d/1KQutZfvgJ57a-PhjS6ieyavue42veI4b/preview"
+          },
+          {
+              name: "Correction - 3",
+              url: "https://drive.google.com/file/d/1FaerIfWgKuwBMIZWplilo5pQUBoIP8Gs/preview"
+          },
+          {
+              name: "Énoncé - 4",
+              url: "https://drive.google.com/file/d/19i45GY4zHopKR3_u8UExqN5OZJxmXCQ7/preview"
+          },
+          {
+              name: "Correction - 4",
+              url: "https://drive.google.com/file/d/19R1srnCNksuaTEAu22kkcXsksvSqcLRI/preview"
+          },
+            {
+              name: "Énoncé - 5",
+              url: "https://drive.google.com/file/d/1J2v5ZN1UNTcVxiWgWJ9XBW7j1Dkj5qJ-/preview"
+          },
+          {
+              name: "Correction - 5",
+              url: "https://drive.google.com/file/d/1N1RUAt0SZOwL8JmT3E0p0mcIhw5RSsEf/preview"
+          },
+          {
+              name: "Énoncé - 6",
+              url: "https://drive.google.com/file/d/1cwxF85Q1hJjY5Y_DC4M6SgJmy9EZ9m3-/preview"
+          },
+          {
+              name: "Correction - 6",
+              url: "https://drive.google.com/file/d/1HvfHLhY6zz8ZeVRVU81BwoQCkoX4mALZ/preview"
+          },
+          {
+              name: "Énoncé - 7",
+              url: "https://drive.google.com/file/d/1YQ-SUw6TY2NrzhePbJvho5SbQq1zTj-o/preview"
+          },
+          {
+              name: "Correction - 7",
+              url: "https://drive.google.com/file/d/1G8VRQghL8_0Xi8J5SYXKCedI7JUjo7kd/preview"
+          },
+          {
+              name: "Énoncé - 8",
+              url: "https://drive.google.com/file/d/1Y3QagTqATXLXW23jps58gQToHFMgPOsK/preview"
+          },
+          {
+              name: "Correction - 8",
+              url: "https://drive.google.com/file/d/1R6KElxabF9QYKwFxBaU4H9lOl28ksnMK/preview"
+          }
+      ]
+  },
+  {
+      id: 18,
+      title: "Cours – Pression intérieure",
+      description: "Cours complet sur la pression interieure pour bien comprendre les notions essentielles et préparer le Bac efficacement.",
+      files: [
+          {
+              name: "Cours - Pression intérieure",
+              url: "https://drive.google.com/file/d/1L1Gdp_Gv8AMS2te4F5qoHT2NZPnmGCej/preview"
+          }
+      ]
+  },
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  {
+      id: 8,
+      title: "Devoirs de contrôle n°1 – Physique",
+      description: "Série de devoirs de controle 1 Physique avec corrections pour évaluer et améliorer le niveau avant le Bac.",
+      files: [
+          {
+              name: "Devoir de contrôle n°1 - 1",
+              url: "https://drive.google.com/file/d/17NOhVYrYApXXkAsr2viJkk50fB5fQYGz/preview"
+          },
+          {
+              name: "Correction n°1 - 1",
+              url: "https://drive.google.com/file/d/1bY5NQ9g9ya1sQ_iUJjwN_CJQTzkEBkZd/preview"
+          },
+          {
+              name: "Devoir de contrôle n°1 - 2",
+              url: "https://drive.google.com/file/d/1UbBWLXRaPakRX-VAvOUzQPrdQIoa28dF/preview"
+          },
+          {
+              name: "Correction n°1 - 2",
+              url: "https://drive.google.com/file/d/1gL9ra4OkBN_xI6aQfO1xMLSGvUFPuEfx/preview"
+          },
+          {
+              name: "Devoir de contrôle n°1 - 3",
+              url: "https://drive.google.com/file/d/1bxwoSLUYGo6-gfBEygQE1DTh2N0_drHs/preview"
+          },
+          {
+              name: "Correction n°1 - 3",
+              url: "https://drive.google.com/file/d/1t5LameT9Vfcza49x0js6_ifBFpSV_4r9/preview"
+          },
+          {
+              name: "Devoir de contrôle n°1 - 4",
+              url: "https://drive.google.com/file/d/18QTUKGUHqmkvIeqSStYkjIk58SN83RKD/preview"
+          },
+          {
+              name: "Correction n°1 - 4",
+              url: "https://drive.google.com/file/d/1GBO25YDNdsR7Ua4cILZiWkKJaL4eanWU/preview"
+          },
+          {
+              name: "Devoir de contrôle n°1 - 5",
+              url: "https://drive.google.com/file/d/1sHQz7Na3ehSYrTT9fYzh0ZojOe1_tP7M/preview"
+          },
+          {
+              name: "Correction n°1 - 5",
+              url: "https://drive.google.com/file/d/14-buAcPusjjpAIEvEnS6iHl9by0Xri5D/preview"
+          },
+          {
+              name: "Devoir de contrôle n°1 - 6",
+              url: "https://drive.google.com/file/d/1l8oAxD_iexUoQuPakJRhlb2-0PbJP0iP/preview"
+          },
+          {
+              name: "Correction n°1 - 6",
+              url: "https://drive.google.com/file/d/11ghGpjbizsz6o5rXl571ZubQG2xSFNZe/preview"
+          },
+          {
+              name: "Devoir de contrôle n°1 - 7",
+              url: "https://drive.google.com/file/d/1hcTeKWR6nqflG00UC1OK7ErJqMFPQh11/preview"
+          },
+          {
+              name: "Correction n°1 - 7",
+              url: "https://drive.google.com/file/d/1rSerIx6rtMvUPqlUyD0ZCGiIO4NlKjaC/preview"
+          },
+          {
+              name: "Devoir de contrôle n°1 - 8",
+              url: "https://drive.google.com/file/d/1IGzVDnG44TmGaZ9MEGLE3xEUPZGSNR1c/preview"
+          },
+          {
+              name: "Correction n°1 - 8",
+              url: "https://drive.google.com/file/d/1nTtGZQMt8K0vHLkPvnB2apwZrpOQnls2/preview"
+          },
+          {
+              name: "Devoir de contrôle n°1 - 9",
+              url: "https://drive.google.com/file/d/1nUtYhEUH-IAVfEMcfa7pSxTg6qMI129i/preview"
+          },
+          {
+              name: "Correction n°1 - 9",
+              url: "https://drive.google.com/file/d/1pI8F0C31-B2EUarNITsBXmDNFv52qbT-/preview"
+          }
+      ]
+  },
+  {
+      id: 9,
+      title: "Devoirs de synthèse n°1 – Physique",
+      description: "Série de devoirs de synthese 1 Physique avec corrections pour évaluation complète avant le Bac.",
+      files: [
+          {
+              name: "Devoir de synthèse n°1 - 1",
+              url: "https://drive.google.com/file/d/1L6vukmzLqs3ysv-j9hK40ExTe0bGLoTa/preview"
+          },
+          {
+              name: "Correction n°1 - 1",
+              url: "https://drive.google.com/file/d/1rEL5MFwP-qLHiFPDVVQJpiw2aocmj47n/preview"
+          },
+          {
+              name: "Devoir de synthèse n°1 - 2",
+              url: "https://drive.google.com/file/d/1NO1Mtniv17WUBbOYSzkULnqhJzTK7iVY/preview"
+          },
+          {
+              name: "Correction n°1 - 2",
+              url: "https://drive.google.com/file/d/1OOXUh9p5BBhDBDRpLxUS3Fc11Um8rBMF/preview"
+          },
+          {
+              name: "Devoir de synthèse n°1 - 3",
+              url: "https://drive.google.com/file/d/1jNLPGwyf3CJK-hJzKjFDmb5xRL9T468v/preview"
+          },
+          {
+              name: "Correction n°1 - 3",
+              url: "https://drive.google.com/file/d/1TgaKYv3QkzSpaPJP_Y-iiw5oUoAJX3mJ/preview"
+          },
+          {
+              name: "Devoir de synthèse n°1 - 4",
+              url: "https://drive.google.com/file/d/1eG6bBcxY1z086f9Mp_9bpUQowWN_WNEp/preview"
+          },
+          {
+              name: "Correction n°1 - 4",
+              url: "https://drive.google.com/file/d/1yIQrxamL1P78Pj2Zn3ou5Hp-7QkWkczN/preview"
+          },
+          {
+              name: "Devoir de synthèse n°1 - 5",
+              url: "https://drive.google.com/file/d/1hwdBzNx4VNAcZmXtplr4WJ_b9AtFzzef/preview"
+          },
+          {
+              name: "Correction n°1 - 5",
+              url: "https://drive.google.com/file/d/1mjJuPAuKOwYSinMyf1sG_26BuAH3iM4N/preview"
+          }
+      ]
+  },
+  
+  {
+      id: 10,
+      title: "Devoirs de contrôle n°2 – Physique",
+      description: "Série de devoirs de controle 2 Physique avec corrections pour évaluer et améliorer le niveau avant le Bac.",
+      files: [
+          {
+              name: "Devoir de contrôle n°2 - 1",
+              url: "https://drive.google.com/file/d/1OR8C9zPeBt49_32VL6bQifcyXa3ubbcE/preview"
+          },
+          {
+              name: "Correction n°2 - 1",
+              url: "https://drive.google.com/file/d/1cuDDYKBmhl43-3_vYwzvezQLSUAlrber/preview"
+          },
+          {
+              name: "Devoir de contrôle n°2 - 2",
+              url: "https://drive.google.com/file/d/1N0Vkdv1s9CXNSXotqcTE3vuTgwQnjCk0/preview"
+          },
+          {
+              name: "Correction n°2 - 2",
+              url: "https://drive.google.com/file/d/1TfEJIxNrEILz7lAs1C8_82jLe6VOEWvY/preview"
+          },
+          {
+              name: "Devoir de contrôle n°2 - 3",
+              url: "https://drive.google.com/file/d/1C77S8Ie7CxtWfjD4bXnWGw2yxeyIJs0K/preview"
+          },
+          {
+              name: "Correction n°2 - 3",
+              url: "https://drive.google.com/file/d/1-mb9VuX0rleOsryr7GRKSZsGavLukDVB/preview"
+          },
+          {
+              name: "Devoir de contrôle n°2 - 4",
+              url: "https://drive.google.com/file/d/1d52Tp3CNjnaY3co3_OXzgs6H3-Annx4T/preview"
+          },
+          {
+              name: "Correction n°2 - 4",
+              url: "https://drive.google.com/file/d/177jzGfxOg1dAb2wYQi_nI2u5KWLbc-yP/preview"
+          },
+          {
+              name: "Devoir de contrôle n°2 - 5",
+              url: "https://drive.google.com/file/d/1GOOdJQic5HB5CpZLaYiNsS9ONjO1TcVF/preview"
+          },
+          {
+              name: "Correction n°2 - 5",
+              url: "https://drive.google.com/file/d/1W_bUPYF9XhlKR1cxatWleKNGaAEC8Ar9/preview"
+          },
+          {
+              name: "Devoir de contrôle n°2 - 6",
+              url: "https://drive.google.com/file/d/122LnzV-LR8_XflCrS_fgD-5vPvn_Px9V/preview"
+          },
+          {
+              name: "Correction n°2 - 6",
+              url: "https://drive.google.com/file/d/1SEiDC6Bgv1RQN8Y-r0dQy_Y_wUMQnCZA/preview"
+          },
+          {
+              name: "Devoir de contrôle n°2 - 7",
+              url: "https://drive.google.com/file/d/1tSVBi5xlb2aBsLjyU6SzDY6ouFw7YaMt/preview"
+          },
+          {
+              name: "Correction n°2 - 7",
+              url: "https://drive.google.com/file/d/1KIMbXbZh8BNJPaJLq8_zEcOWUTVgZhHW/preview"
+          },
+          {
+              name: "Devoir de contrôle n°2 - 8",
+              url: "https://drive.google.com/file/d/1SwQILCPBKkSKxXi2a1rmTzyqSES30dZH/preview"
+          },
+          {
+              name: "Correction n°2 - 8",
+              url: "https://drive.google.com/file/d/1XvLqxS9kUKli-bkmed2g7RHlNyQ5eH_8/preview"
+          },
+          {
+              name: "Devoir de contrôle n°2 - 9",
+              url: "https://drive.google.com/file/d/1vbMoxRaKhdKqW-RAxfVhaDoO7Dafm9Xn/preview"
+          },
+          {
+              name: "Correction n°2 - 9",
+              url: "https://drive.google.com/file/d/1-nJirEa1OSk1y3SSQ6UAGGo1Cm8jyW9W/preview"
+          }
+      ]
+  },
+  
+  {
+      id: 11,
+      title: "Devoirs de synthèse n°2 – Physique",
+      description: "Série de devoirs de synthèse n°2 Physique avec corrections pour évaluation complète avant le Bac.",
+      files: [
+          {
+              name: "Devoir de synthèse n°2 - 1",
+              url: "https://drive.google.com/file/d/1_4WJSdvSos5S46Syf95hbvnEneN1knmc/preview"
+          },
+          {
+              name: "Correction n°2 - 1",
+              url: "https://drive.google.com/file/d/19_gtdI4wrFVLwIldYy69vv8ya2RgcAmQ/preview"
+          },
+          {
+              name: "Devoir de synthèse n°2 - 2",
+              url: "https://drive.google.com/file/d/1fjZUbCI1cVIjZ6MAv-mkLezgNbZQ6Uf6/preview"
+          },
+          {
+              name: "Correction n°2 - 2",
+              url: "https://drive.google.com/file/d/1HUwpFZaOMTxaQ5Hj9GWovlBFmVCUuMO5/preview"
+          },
+          {
+              name: "Devoir de synthèse n°2 - 3",
+              url: "https://drive.google.com/file/d/1eMF0wTx3hIotAu4_YX77glKU542sWcgE/preview"
+          },
+          {
+              name: "Correction n°2 - 3",
+              url: "https://drive.google.com/file/d/1KOnL17PazaHjCxzKbvJhHf9jH0Nn4_cG/preview"
+          },
+          {
+              name: "Devoir de synthèse n°2 - 4",
+              url: "https://drive.google.com/file/d/1l0PBL2GA_YS9Y2KVHIQC6FNunmzkPgnU/preview"
+          },
+          {
+              name: "Correction n°2 - 4",
+              url: "https://drive.google.com/file/d/1hcmd59wqYdzeBAw7r-FI7VciMvKHJlFn/preview"
+          },
+          {
+              name: "Devoir de synthèse n°2 - 5",
+              url: "https://drive.google.com/file/d/10QaWgnGKGyp7zCQdPpW6ekqnR2ll74IJ/preview"
+          },
+          {
+              name: "Correction n°2 - 5",
+              url: "https://drive.google.com/file/d/1piXKYug6_WnS5b4pIK7_SMuYZCulSMGY/preview"
+          }
+      ]
+  },
+  {
+      id: 12,
+      title: "Devoirs de contrôle n°3 – Physique",
+      description: "Série de devoirs de contrôle n°3 Physique avec corrections pour évaluer et améliorer le niveau avant le Bac.",
+      files: [
+          {
+              name: "Devoir de contrôle n°3 - 1",
+              url: "https://drive.google.com/file/d/1IqsgjBO4ZDMwQLAIBuBYQ-duyPshGVLg/preview"
+          },
+          {
+              name: "Correction n°3 - 1",
+              url: "https://drive.google.com/file/d/1n8SB9VzKw5koUB-GuGUloKXpAUM_tlsJ/preview"
+          },
+          {
+              name: "Devoir de contrôle n°3 - 2",
+              url: "https://drive.google.com/file/d/1enwPc3uXwZ305IspUFB1p4Ft7zz_Cf6F/preview"
+          },
+          {
+              name: "Correction n°3 - 2",
+              url: "https://drive.google.com/file/d/1VcxSmruvyN9rV3DnL3pjlY4ie7fJOum0/preview"
+          },
+          {
+              name: "Devoir de contrôle n°3 - 3",
+              url: "https://drive.google.com/file/d/1rr8e_SoeNulaslOHt14aCpix8SknFFq-/preview"
+          },
+          {
+              name: "Correction n°3 - 3",
+              url: "https://drive.google.com/file/d/1K21iJfRSJAbiw30NQ4qUDBQndaz44mKI/preview"
+          },
+          {
+              name: "Devoir de contrôle n°3 - 4",
+              url: "https://drive.google.com/file/d/1fpZ35JIR5t7i0GmJfbMPchYNh0eF29jo/preview"
+          },
+          {
+              name: "Correction n°3 - 4",
+              url: "https://drive.google.com/file/d/15g8ch73FvipbqIhsRgTvgO2_EYy_8h52/preview"
+          },
+          {
+              name: "Devoir de contrôle n°3 - 5",
+              url: "https://drive.google.com/file/d/1R97xxeX702UGWm84ZxmFQDaxWbqO73kf/preview"
+          },
+          {
+              name: "Correction n°3 - 5",
+              url: "https://drive.google.com/file/d/1MYNiMCE3GaH6qsVPc6EPJk6hSDwo7fk6/preview"
+          },
+          {
+              name: "Devoir de contrôle n°3 - 6",
+              url: "https://drive.google.com/file/d/1o9i021tY3k-G2hvkCbIRjz01Jw8b_Kxp/preview"
+          },
+          {
+              name: "Correction n°3 - 6",
+              url: "https://drive.google.com/file/d/1vnU-33145MsdsIA4bXWC33s86zAwh4wv/preview"
+          },
+          {
+              name: "Devoir de contrôle n°3 - 7",
+              url: "https://drive.google.com/file/d/1J77rPXFJ7qfDQiVsuFkahdWaQT4LmUno/preview"
+          },
+          {
+              name: "Correction n°3 - 7",
+              url: "https://drive.google.com/file/d/14AYTvIb4IH6AJkU6tR0lWQiMg6xsZSDX/preview"
+          }
+      ]
+  },
+  {
+      "id": 13,
+      "title": "Oscillation Mécanique – Force",
+      "description": "Fiches de méthode et séries d'exercices avec corrections pour maîtriser les oscillations mecaniques force.",
+      "files": [
+          {
+              "name": "Fiche de méthode – Oscillation Mécanique Force",
+              "url": "https://drive.google.com/file/d/1_5OSDcNtn0XncXGjEQTW6ts7gvqzLRFi/view?usp=drive_link"
+          },
+          {
+              "name": "Série d'exercices 1 – Oscillation Mécanique Force",
+              "url": "https://drive.google.com/file/d/1emPCMvH4KIpMgpJnSr6pAP61To0QBZ-h/view?usp=drive_link"
+          },
+          {
+              "name": "Correction Série 1 – Oscillation Mécanique Force",
+              "url": "https://drive.google.com/file/d/1W3RXFxRDqCYjg7ATPjQeAj-pai8b1gac/view?usp=drive_link"
+          },
+          {
+              "name": "Série d'exercices 2 – Oscillation Mecanique Force",
+              "url": "https://drive.google.com/file/d/18VlBXxdq3chrZsHG5p--11fonRxrRUyl/view?usp=drive_link"
+          },
+          {
+              "name": "Correction Série 2 – Oscillation Mécanique Force",
+              "url": "https://drive.google.com/file/d/1ZAYJJuihlO17yNBaeiwGTgMlXe-UTmLV/view?usp=drive_link"
+          },
+          {
+              "name": "Série d'exercices 3 – Oscillation Mécanique Force",
+              "url": "https://drive.google.com/file/d/1_Lfd8DKzUZUDh16QFbSNaPWEMkUqOaPh/view?usp=drive_link"
+          },
+          {
+              "name": "Correction Série 3 – Oscillation Mécanique Force",
+              "url": "https://drive.google.com/file/d/1IAkGRc44UmBAhK4wQK5R8WPmVh5AymJP/view?usp=drive_link"
+          },
+          {
+              "name": "Série d'exercices 4 – Oscillation Mécanique Force",
+              "url": "https://drive.google.com/file/d/1q6xbmPXfu0mh8_V0S4pL463KjSuxiwKI/view?usp=drive_link"
+          },
+          {
+              "name": "Correction Série 4 – Oscillation Mécanique Force",
+              "url": "https://drive.google.com/file/d/1NQKYcXWo2bnUfel4yu04wYXBsZ16PYad/view?usp=drive_link"
+          }
+      ]
+  },
+  
+  {
+      "id": 14,
+      "title": "Oscillation Mécanique Libre",
+      "description": "Séries d'exercices et corrections pour étudier l'oscillation mecanique libre et consolider les notions avant le Bac.",
+      "files": [
+          {
+              "name": "Série 1 – Oscillation Mécanique Libre",
+              "url": "https://drive.google.com/file/d/1NHv0lICGxHAX4rS2hx8Z7djUkPXi9MfL/view?usp=drive_link"
+          },
+          {
+              "name": "Correction Série 1 – Oscillation Mécanique Libre",
+              "url": "https://drive.google.com/file/d/1hRhhdoo3qKUQ-WsIkIYsG4tP4G6J-X5z/view?usp=drive_link"
+          },
+          {
+              "name": "Série 2 – Oscillation Mécanique Libre",
+              "url": "https://drive.google.com/file/d/1PpmRx_T8H1zC2NONWEupK0GQunKup7Hz/view?usp=drive_link"
+          },
+          {
+              "name": "Correction Série 2 – Oscillation Mécanique Libre",
+              "url": "https://drive.google.com/file/d/1DpZqaqkoncpPBvkqkeLne7e_RqrgTpyO/view?usp=drive_link"
+          }
+      ]
+  },
+  
+  
+  
+  {
+    id: 16,
+    title: "RC - Pack Révision BAC – Dipôle RC",
+    description: "Cours sur le dipôle RC avec fiche de méthode et séries corrigées pour le BAC.",
+  
+    files: [
+      {
+        name: "Cours – Dipôle RC",
+        url: "https://drive.google.com/file/d/1LLVCH54WILXm5LMA-6X7oKgZSoVkptxs/preview"
+      },
+      {
+        name: "Fiche de méthode – Dipôle RC",
+        url: "https://drive.google.com/file/d/1pL6CybKv8RwsHZU5hRgerNoRB6hF7GL2/preview"
+      },
+      {
+        name: "Série 1",
+        url: "https://drive.google.com/file/d/1m8l3-xBjSdjcru2sIoN_Y7XpfguxKgJh/preview"
+      },
+      {
+        name: "Correction Série 1",
+        url: "https://drive.google.com/file/d/1FcbL4h7h4pXwEy52_g_0MnHeWjDMZTDz/preview"
+      },
+      {
+        name: "Série 2",
+        url: "https://drive.google.com/file/d/1MPaRzF50ZnbKu8ujvH3NpD439-_otkOP/preview"
+      },
+      {
+        name: "Correction Série 2",
+        url: "https://drive.google.com/file/d/1D2w_izgMdgMkKkSG_GfRMAhPv7tHctbs/preview"
+      },
+      {
+        name: "Série 3",
+        url: "https://drive.google.com/file/d/1jTsfza86Rhvh6qWmOe-N8GkKQaV7Bi5B/preview"
+      },
+      {
+        name: "Correction Série 3",
+        url: "https://drive.google.com/file/d/1D43dVaGx6uUJbi_P8ejswStXHkFuHbHb/preview"
+      }
     ]
-},
-{
+  },
+  {
+    id: 17,
+    title: "RL - Pack Révision BAC – Dipôle RL",
+    description: "Cours + méthode + séries corrigées (Dipôle RL).",
+  
+    files: [
+      {
+        name: "Cours – Dipôle RL",
+        url: "https://drive.google.com/file/d/1BcrRsf1F4MB78bSXBOnp-ISZOL6ECPH4/preview"
+      },
+      {
+        name: "Fiche de méthode – Dipôle RL",
+        url: "https://drive.google.com/file/d/12DFxwJ03tpfo-mkUysRDSuaIG-KOeHDn/preview"
+      },
+      {
+        name: "Série 1",
+        url: "https://drive.google.com/file/d/1xys-CciliPMWUcyygKM-lubiXPdaesRS/preview"
+      },
+      {
+        name: "Correction Série 1",
+        url: "https://drive.google.com/file/d/1ov8cUoCJhB_pw426A7aLVtHm77Ysusqv/preview"
+      },
+      {
+        name: "Série 2",
+        url: "https://drive.google.com/file/d/11ZVXNJ51oehqE5-GHLvEq2_Vrt6QgyBu/preview"
+      },
+      {
+        name: "Correction Série 2",
+        url: "https://drive.google.com/file/d/1d1OIIg37ogH6TmHpCTJdgaIA0lnA9j5x/preview"
+      },
+      {
+        name: "Série 3",
+        url: "https://drive.google.com/file/d/19CgIwY7SddtfjTU2T3SCDEhAQ38oyoN_/preview"
+      },
+      {
+        name: "Correction Série 3",
+        url: "https://drive.google.com/file/d/1brORJl87YBTHNUnbitU01FQhpmUKmQeR/preview"
+      },
+      {
+        name: "Série 4",
+        url: "https://drive.google.com/file/d/1Q4R7meHuvFxXe8YGCS4uls02wfdLSkzJ/preview"
+      },
+      {
+        name: "Correction Série 4",
+        url: "https://drive.google.com/file/d/1aIzaOVkNBLl03ML2RMD0EARpzXZLotDo/preview"
+      }
+    ]
+  },
+  {
     id: 18,
-    title: "Cours – Pression intérieure",
-    description: "Cours complet sur la pression interieure pour bien comprendre les notions essentielles et préparer le Bac efficacement.",
+    title: "RLC - Pack Révision BAC – RLC Libre",
+    description: "Cours + méthode + séries corrigées (RLC amorti et non amorti).",
+  
     files: [
-        {
-            name: "Cours - Pression intérieure",
-            url: "https://drive.google.com/file/d/1L1Gdp_Gv8AMS2te4F5qoHT2NZPnmGCej/preview"
-        }
+      {
+        name: "Cours 1 – RLC Libre",
+        url: "https://drive.google.com/file/d/1Kx1zVKDFiqr1Xu7o1WSkA6IyCnQVQ8lu/preview"
+      },
+      {
+        name: "Cours 2 – RLC Libre",
+        url: "https://drive.google.com/file/d/114cVVqt23C5q_seu8eqeHiHCyCU3wCdh/preview"
+      },
+      {
+        name: "Fiche de méthode – RLC",
+        url: "https://drive.google.com/file/d/1JkJH94xSaonh5CqWol4QbFwqt5ySxxuJ/preview"
+      },
+      {
+        name: "Série 1",
+        url: "https://drive.google.com/file/d/1xPDfIrDwYLs3wHL10OnDxDKjTldMzvJl/preview"
+      },
+      {
+        name: "Correction Série 1",
+        url: "https://drive.google.com/file/d/1aLleGYAACAAN36Om0mjzQ2iAzgFW_M6U/preview"
+      },
+      {
+        name: "Série 2",
+        url: "https://drive.google.com/file/d/1uZozW1x4KnsFQCefONiq3KrEwtzzs-6-/preview"
+      },
+      {
+        name: "Correction Série 2",
+        url: "https://drive.google.com/file/d/1rTs4HYb1tqpG4uNeniYAZhINO7p162Qi/preview"
+      },
+      {
+        name: "Série 3",
+        url: "https://drive.google.com/file/d/1E1e2-suyJXe5sBoiRzK0Cy_k_RZTF-4F/preview"
+      },
+      {
+        name: "Correction Série 3",
+        url: "https://drive.google.com/file/d/1wowd2FUFk9W_Sv94MI4W9q76ZCqw8WnW/preview"
+      },
+      {
+        name: "Série 4",
+        url: "https://drive.google.com/file/d/1cdOWi9EnB2MsUyaIoj2YAjk8A2RQ8ZTd/preview"
+      },
+      {
+        name: "Correction Série 4",
+        url: "https://drive.google.com/file/d/1A78L5EOhdpzyG_8hPpqt-qBxeYbH68cb/preview"
+      }
     ]
-},
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{
-    id: 8,
-    title: "Devoirs de contrôle n°1 – Physique",
-    description: "Série de devoirs de controle 1 Physique avec corrections pour évaluer et améliorer le niveau avant le Bac.",
+  },
+  
+  
+  
+  {
+    id: 19,
+    title: "Force - Pack Révision BAC – Oscillations",
+    description: "Cours + méthode + séries corrigées (Oscillations).",
+  
     files: [
-        {
-            name: "Devoir de contrôle n°1 - 1",
-            url: "https://drive.google.com/file/d/17NOhVYrYApXXkAsr2viJkk50fB5fQYGz/preview"
-        },
-        {
-            name: "Correction n°1 - 1",
-            url: "https://drive.google.com/file/d/1bY5NQ9g9ya1sQ_iUJjwN_CJQTzkEBkZd/preview"
-        },
-        {
-            name: "Devoir de contrôle n°1 - 2",
-            url: "https://drive.google.com/file/d/1UbBWLXRaPakRX-VAvOUzQPrdQIoa28dF/preview"
-        },
-        {
-            name: "Correction n°1 - 2",
-            url: "https://drive.google.com/file/d/1gL9ra4OkBN_xI6aQfO1xMLSGvUFPuEfx/preview"
-        },
-        {
-            name: "Devoir de contrôle n°1 - 3",
-            url: "https://drive.google.com/file/d/1bxwoSLUYGo6-gfBEygQE1DTh2N0_drHs/preview"
-        },
-        {
-            name: "Correction n°1 - 3",
-            url: "https://drive.google.com/file/d/1t5LameT9Vfcza49x0js6_ifBFpSV_4r9/preview"
-        },
-        {
-            name: "Devoir de contrôle n°1 - 4",
-            url: "https://drive.google.com/file/d/18QTUKGUHqmkvIeqSStYkjIk58SN83RKD/preview"
-        },
-        {
-            name: "Correction n°1 - 4",
-            url: "https://drive.google.com/file/d/1GBO25YDNdsR7Ua4cILZiWkKJaL4eanWU/preview"
-        },
-        {
-            name: "Devoir de contrôle n°1 - 5",
-            url: "https://drive.google.com/file/d/1sHQz7Na3ehSYrTT9fYzh0ZojOe1_tP7M/preview"
-        },
-        {
-            name: "Correction n°1 - 5",
-            url: "https://drive.google.com/file/d/14-buAcPusjjpAIEvEnS6iHl9by0Xri5D/preview"
-        },
-        {
-            name: "Devoir de contrôle n°1 - 6",
-            url: "https://drive.google.com/file/d/1l8oAxD_iexUoQuPakJRhlb2-0PbJP0iP/preview"
-        },
-        {
-            name: "Correction n°1 - 6",
-            url: "https://drive.google.com/file/d/11ghGpjbizsz6o5rXl571ZubQG2xSFNZe/preview"
-        },
-        {
-            name: "Devoir de contrôle n°1 - 7",
-            url: "https://drive.google.com/file/d/1hcTeKWR6nqflG00UC1OK7ErJqMFPQh11/preview"
-        },
-        {
-            name: "Correction n°1 - 7",
-            url: "https://drive.google.com/file/d/1rSerIx6rtMvUPqlUyD0ZCGiIO4NlKjaC/preview"
-        },
-        {
-            name: "Devoir de contrôle n°1 - 8",
-            url: "https://drive.google.com/file/d/1IGzVDnG44TmGaZ9MEGLE3xEUPZGSNR1c/preview"
-        },
-        {
-            name: "Correction n°1 - 8",
-            url: "https://drive.google.com/file/d/1nTtGZQMt8K0vHLkPvnB2apwZrpOQnls2/preview"
-        },
-        {
-            name: "Devoir de contrôle n°1 - 9",
-            url: "https://drive.google.com/file/d/1nUtYhEUH-IAVfEMcfa7pSxTg6qMI129i/preview"
-        },
-        {
-            name: "Correction n°1 - 9",
-            url: "https://drive.google.com/file/d/1pI8F0C31-B2EUarNITsBXmDNFv52qbT-/preview"
-        }
+      {
+        name: "Cours – Oscillations",
+        url: "https://drive.google.com/file/d/1YY_Mve9f1izU23brgz2sToOa6-E_8unt/preview"
+      },
+      {
+        name: "Fiche de méthode – Oscillations",
+        url: "https://drive.google.com/file/d/1dOZYCtT_ffFnb9AAAuZCmiOPJgiVh36X/preview"
+      },
+      {
+        name: "Série 1",
+        url: "https://drive.google.com/file/d/1jlLWFWmJDxwyNx0sndCt7FaAhc149qOi/preview"
+      },
+      {
+        name: "Correction Série 1",
+        url: "https://drive.google.com/file/d/11m1l4nTrzbONtbJshJm-k27hRuyPZ3JZ/preview"
+      },
+      {
+        name: "Série 2",
+        url: "https://drive.google.com/file/d/1P-1YwGbQuNU8FZWWKbNu2ayadNJI7Lc9/preview"
+      },
+      {
+        name: "Correction Série 2",
+        url: "https://drive.google.com/file/d/1oBfQZqN7w760MGW2xwhRcj-ZQjJcaCAF/preview"
+      },
+      {
+        name: "Série 3",
+        url: "https://drive.google.com/file/d/15grugW6vHrPwv1EJQnAMVzl53ss38DP0/preview"
+      },
+      {
+        name: "Correction Série 3",
+        url: "https://drive.google.com/file/d/19xjui9q16zwDI4Mb53ycPWQXkD4Jozhf/preview"
+      },
+      {
+        name: "Série 4",
+        url: "https://drive.google.com/file/d/15RnjncyHJpocu1KnAAfgM0Q9EvVXoVVA/preview"
+      },
+      {
+        name: "Correction Série 4",
+        url: "https://drive.google.com/file/d/12jnYi0f3H93LgblD3D22bXK6lFsPALTy/preview"
+      },
+      {
+        name: "Série 5",
+        url: "https://drive.google.com/file/d/1pj9MRQKi3sT-QQ-PNvnY_CRTKgP3hfCK/preview"
+      },
+      {
+        name: "Correction Série 5",
+        url: "https://drive.google.com/file/d/1VSMYVaxKyaBPu5YhtztJz7IwiYHzmjCd/preview"
+      }
     ]
-},
-{
-    id: 9,
-    title: "Devoirs de synthèse n°1 – Physique",
-    description: "Série de devoirs de synthese 1 Physique avec corrections pour évaluation complète avant le Bac.",
+  },
+  
+  
+  {
+    id: 20,
+    title: "Bobine - Pack Révision BAC – Bobine",
+    description: "Séries corrigées (Bobine).",
+  
     files: [
-        {
-            name: "Devoir de synthèse n°1 - 1",
-            url: "https://drive.google.com/file/d/1L6vukmzLqs3ysv-j9hK40ExTe0bGLoTa/preview"
-        },
-        {
-            name: "Correction n°1 - 1",
-            url: "https://drive.google.com/file/d/1rEL5MFwP-qLHiFPDVVQJpiw2aocmj47n/preview"
-        },
-        {
-            name: "Devoir de synthèse n°1 - 2",
-            url: "https://drive.google.com/file/d/1NO1Mtniv17WUBbOYSzkULnqhJzTK7iVY/preview"
-        },
-        {
-            name: "Correction n°1 - 2",
-            url: "https://drive.google.com/file/d/1OOXUh9p5BBhDBDRpLxUS3Fc11Um8rBMF/preview"
-        },
-        {
-            name: "Devoir de synthèse n°1 - 3",
-            url: "https://drive.google.com/file/d/1jNLPGwyf3CJK-hJzKjFDmb5xRL9T468v/preview"
-        },
-        {
-            name: "Correction n°1 - 3",
-            url: "https://drive.google.com/file/d/1TgaKYv3QkzSpaPJP_Y-iiw5oUoAJX3mJ/preview"
-        },
-        {
-            name: "Devoir de synthèse n°1 - 4",
-            url: "https://drive.google.com/file/d/1eG6bBcxY1z086f9Mp_9bpUQowWN_WNEp/preview"
-        },
-        {
-            name: "Correction n°1 - 4",
-            url: "https://drive.google.com/file/d/1yIQrxamL1P78Pj2Zn3ou5Hp-7QkWkczN/preview"
-        },
-        {
-            name: "Devoir de synthèse n°1 - 5",
-            url: "https://drive.google.com/file/d/1hwdBzNx4VNAcZmXtplr4WJ_b9AtFzzef/preview"
-        },
-        {
-            name: "Correction n°1 - 5",
-            url: "https://drive.google.com/file/d/1mjJuPAuKOwYSinMyf1sG_26BuAH3iM4N/preview"
-        }
+      {
+        name: "Série 1",
+        url: "https://drive.google.com/file/d/1JEhm3WIgtKY1LRRz_LN1PM7dBvd2hkUc/preview"
+      },
+      {
+        name: "Correction Série 1",
+        url: "https://drive.google.com/file/d/1_6CSeP6G4eUCjaD2HLRxYNn86dnQ01E5/preview"
+      },
+      {
+        name: "Série 2",
+        url: "https://drive.google.com/file/d/10YazIBjYdsh_9U0fd1w18cZtJokM01NJ/preview"
+      },
+      {
+        name: "Correction Série 2",
+        url: "https://drive.google.com/file/d/1vNYU0iiQAfer4EMsYMLUYWl9MiamqBdQ/preview"
+      }
     ]
-},
-
-{
-    id: 10,
-    title: "Devoirs de contrôle n°2 – Physique",
-    description: "Série de devoirs de controle 2 Physique avec corrections pour évaluer et améliorer le niveau avant le Bac.",
+  },
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  {
+    id: 21,
+    title: "info – Structures de Données",
+    description: "Séries corrigées (Structures de données).",
+  
     files: [
-        {
-            name: "Devoir de contrôle n°2 - 1",
-            url: "https://drive.google.com/file/d/1OR8C9zPeBt49_32VL6bQifcyXa3ubbcE/preview"
-        },
-        {
-            name: "Correction n°2 - 1",
-            url: "https://drive.google.com/file/d/1cuDDYKBmhl43-3_vYwzvezQLSUAlrber/preview"
-        },
-        {
-            name: "Devoir de contrôle n°2 - 2",
-            url: "https://drive.google.com/file/d/1N0Vkdv1s9CXNSXotqcTE3vuTgwQnjCk0/preview"
-        },
-        {
-            name: "Correction n°2 - 2",
-            url: "https://drive.google.com/file/d/1TfEJIxNrEILz7lAs1C8_82jLe6VOEWvY/preview"
-        },
-        {
-            name: "Devoir de contrôle n°2 - 3",
-            url: "https://drive.google.com/file/d/1C77S8Ie7CxtWfjD4bXnWGw2yxeyIJs0K/preview"
-        },
-        {
-            name: "Correction n°2 - 3",
-            url: "https://drive.google.com/file/d/1-mb9VuX0rleOsryr7GRKSZsGavLukDVB/preview"
-        },
-        {
-            name: "Devoir de contrôle n°2 - 4",
-            url: "https://drive.google.com/file/d/1d52Tp3CNjnaY3co3_OXzgs6H3-Annx4T/preview"
-        },
-        {
-            name: "Correction n°2 - 4",
-            url: "https://drive.google.com/file/d/177jzGfxOg1dAb2wYQi_nI2u5KWLbc-yP/preview"
-        },
-        {
-            name: "Devoir de contrôle n°2 - 5",
-            url: "https://drive.google.com/file/d/1GOOdJQic5HB5CpZLaYiNsS9ONjO1TcVF/preview"
-        },
-        {
-            name: "Correction n°2 - 5",
-            url: "https://drive.google.com/file/d/1W_bUPYF9XhlKR1cxatWleKNGaAEC8Ar9/preview"
-        },
-        {
-            name: "Devoir de contrôle n°2 - 6",
-            url: "https://drive.google.com/file/d/122LnzV-LR8_XflCrS_fgD-5vPvn_Px9V/preview"
-        },
-        {
-            name: "Correction n°2 - 6",
-            url: "https://drive.google.com/file/d/1SEiDC6Bgv1RQN8Y-r0dQy_Y_wUMQnCZA/preview"
-        },
-        {
-            name: "Devoir de contrôle n°2 - 7",
-            url: "https://drive.google.com/file/d/1tSVBi5xlb2aBsLjyU6SzDY6ouFw7YaMt/preview"
-        },
-        {
-            name: "Correction n°2 - 7",
-            url: "https://drive.google.com/file/d/1KIMbXbZh8BNJPaJLq8_zEcOWUTVgZhHW/preview"
-        },
-        {
-            name: "Devoir de contrôle n°2 - 8",
-            url: "https://drive.google.com/file/d/1SwQILCPBKkSKxXi2a1rmTzyqSES30dZH/preview"
-        },
-        {
-            name: "Correction n°2 - 8",
-            url: "https://drive.google.com/file/d/1XvLqxS9kUKli-bkmed2g7RHlNyQ5eH_8/preview"
-        },
-        {
-            name: "Devoir de contrôle n°2 - 9",
-            url: "https://drive.google.com/file/d/1vbMoxRaKhdKqW-RAxfVhaDoO7Dafm9Xn/preview"
-        },
-        {
-            name: "Correction n°2 - 9",
-            url: "https://drive.google.com/file/d/1-nJirEa1OSk1y3SSQ6UAGGo1Cm8jyW9W/preview"
-        }
+      {
+        name: "Série 1",
+        url: "https://drive.google.com/file/d/16sw-Kexz9ENFW_JzjyGTOnYdGRECSMCb/preview"
+      },
+      {
+        name: "Correction Série 1",
+        url: "https://drive.google.com/file/d/1NQqBR3bW_8KGi4HIiVWP1j6A3nubTJBE/preview"
+      }
     ]
-},
-
-{
-    id: 11,
-    title: "Devoirs de synthèse n°2 – Physique",
-    description: "Série de devoirs de synthèse n°2 Physique avec corrections pour évaluation complète avant le Bac.",
+  },
+  {
+    id: 22,
+    title: "info – Structures de Contrôle Itératives (Complexes)",
+    description: "Séries corrigées (Boucles complexes).",
+  
     files: [
-        {
-            name: "Devoir de synthèse n°2 - 1",
-            url: "https://drive.google.com/file/d/1_4WJSdvSos5S46Syf95hbvnEneN1knmc/preview"
-        },
-        {
-            name: "Correction n°2 - 1",
-            url: "https://drive.google.com/file/d/19_gtdI4wrFVLwIldYy69vv8ya2RgcAmQ/preview"
-        },
-        {
-            name: "Devoir de synthèse n°2 - 2",
-            url: "https://drive.google.com/file/d/1fjZUbCI1cVIjZ6MAv-mkLezgNbZQ6Uf6/preview"
-        },
-        {
-            name: "Correction n°2 - 2",
-            url: "https://drive.google.com/file/d/1HUwpFZaOMTxaQ5Hj9GWovlBFmVCUuMO5/preview"
-        },
-        {
-            name: "Devoir de synthèse n°2 - 3",
-            url: "https://drive.google.com/file/d/1eMF0wTx3hIotAu4_YX77glKU542sWcgE/preview"
-        },
-        {
-            name: "Correction n°2 - 3",
-            url: "https://drive.google.com/file/d/1KOnL17PazaHjCxzKbvJhHf9jH0Nn4_cG/preview"
-        },
-        {
-            name: "Devoir de synthèse n°2 - 4",
-            url: "https://drive.google.com/file/d/1l0PBL2GA_YS9Y2KVHIQC6FNunmzkPgnU/preview"
-        },
-        {
-            name: "Correction n°2 - 4",
-            url: "https://drive.google.com/file/d/1hcmd59wqYdzeBAw7r-FI7VciMvKHJlFn/preview"
-        },
-        {
-            name: "Devoir de synthèse n°2 - 5",
-            url: "https://drive.google.com/file/d/10QaWgnGKGyp7zCQdPpW6ekqnR2ll74IJ/preview"
-        },
-        {
-            name: "Correction n°2 - 5",
-            url: "https://drive.google.com/file/d/1piXKYug6_WnS5b4pIK7_SMuYZCulSMGY/preview"
-        }
+      {
+        name: "Série 2",
+        url: "https://drive.google.com/file/d/1GaBilcwhCwDFF4KVkGuBacr4OIb_4xMD/preview"
+      },
+      {
+        name: "Correction Série 2",
+        url: "https://drive.google.com/file/d/1J3DG_1rjqg9mUQtXYwKxI_xFe2hMkvhH/preview"
+      }
     ]
-},
-{
-    id: 12,
-    title: "Devoirs de contrôle n°3 – Physique",
-    description: "Série de devoirs de contrôle n°3 Physique avec corrections pour évaluer et améliorer le niveau avant le Bac.",
+  },
+  {
+    id: 23,
+    title: "info – Structures de Contrôle Itératives à Conditions",
+    description: "Séries corrigées (Boucles avec conditions).",
+  
     files: [
-        {
-            name: "Devoir de contrôle n°3 - 1",
-            url: "https://drive.google.com/file/d/1IqsgjBO4ZDMwQLAIBuBYQ-duyPshGVLg/preview"
-        },
-        {
-            name: "Correction n°3 - 1",
-            url: "https://drive.google.com/file/d/1n8SB9VzKw5koUB-GuGUloKXpAUM_tlsJ/preview"
-        },
-        {
-            name: "Devoir de contrôle n°3 - 2",
-            url: "https://drive.google.com/file/d/1enwPc3uXwZ305IspUFB1p4Ft7zz_Cf6F/preview"
-        },
-        {
-            name: "Correction n°3 - 2",
-            url: "https://drive.google.com/file/d/1VcxSmruvyN9rV3DnL3pjlY4ie7fJOum0/preview"
-        },
-        {
-            name: "Devoir de contrôle n°3 - 3",
-            url: "https://drive.google.com/file/d/1rr8e_SoeNulaslOHt14aCpix8SknFFq-/preview"
-        },
-        {
-            name: "Correction n°3 - 3",
-            url: "https://drive.google.com/file/d/1K21iJfRSJAbiw30NQ4qUDBQndaz44mKI/preview"
-        },
-        {
-            name: "Devoir de contrôle n°3 - 4",
-            url: "https://drive.google.com/file/d/1fpZ35JIR5t7i0GmJfbMPchYNh0eF29jo/preview"
-        },
-        {
-            name: "Correction n°3 - 4",
-            url: "https://drive.google.com/file/d/15g8ch73FvipbqIhsRgTvgO2_EYy_8h52/preview"
-        },
-        {
-            name: "Devoir de contrôle n°3 - 5",
-            url: "https://drive.google.com/file/d/1R97xxeX702UGWm84ZxmFQDaxWbqO73kf/preview"
-        },
-        {
-            name: "Correction n°3 - 5",
-            url: "https://drive.google.com/file/d/1MYNiMCE3GaH6qsVPc6EPJk6hSDwo7fk6/preview"
-        },
-        {
-            name: "Devoir de contrôle n°3 - 6",
-            url: "https://drive.google.com/file/d/1o9i021tY3k-G2hvkCbIRjz01Jw8b_Kxp/preview"
-        },
-        {
-            name: "Correction n°3 - 6",
-            url: "https://drive.google.com/file/d/1vnU-33145MsdsIA4bXWC33s86zAwh4wv/preview"
-        },
-        {
-            name: "Devoir de contrôle n°3 - 7",
-            url: "https://drive.google.com/file/d/1J77rPXFJ7qfDQiVsuFkahdWaQT4LmUno/preview"
-        },
-        {
-            name: "Correction n°3 - 7",
-            url: "https://drive.google.com/file/d/14AYTvIb4IH6AJkU6tR0lWQiMg6xsZSDX/preview"
-        }
+      {
+        name: "Série 3",
+        url: "https://drive.google.com/file/d/10QDwNBrkWqc3B95YmJCeOpAw2I76C29A/preview"
+      },
+      {
+        name: "Correction Série 3",
+        url: "https://drive.google.com/file/d/1ZItIYC2yM0sdCDG4Bb-iQy0NM01zLG5x/preview"
+      }
     ]
-},
-{
-    "id": 13,
-    "title": "Oscillation Mécanique – Force",
-    "description": "Fiches de méthode et séries d'exercices avec corrections pour maîtriser les oscillations mecaniques force.",
+  },
+  {
+    id: 24,
+    title: "info – Sous-programmes",
+    description: "Séries corrigées (Sous-programmes).",
+  
+    files: [
+      {
+        name: "Série 4",
+        url: "https://drive.google.com/file/d/16-NV6kmsQxKOAX0o7JOGerRo_VRdO9-T/preview"
+      },
+      {
+        name: "Correction Série 4",
+        url: "https://drive.google.com/file/d/13gePn9rc_Dsor5qobwiPOZPvJiUDuz6u/preview"
+      }
+    ]
+  },
+  {
+    id: 25,
+    title: "info – Recherche Séquentielle",
+    description: "Séries corrigées (Recherche séquentielle).",
+  
+    files: [
+      {
+        name: "Série 5",
+        url: "https://drive.google.com/file/d/1f5g4CC4CdsSAc9mSao6UHmiHcjeB6Wc_/preview"
+      },
+      {
+        name: "Correction Série 5",
+        url: "https://drive.google.com/file/d/1SwInNMmXz9QEN6JUw8H1RsdEe-5NzD9C/preview"
+      }
+    ]
+  },
+  {
+    id: 26,
+    title: "info – Exercices BAC 2020",
+    description: "Séries corrigées (BAC 2020).",
+  
+    files: [
+      {
+        name: "Série 6",
+        url: "https://drive.google.com/file/d/1AYklDph4GVJ2bCwVjVJoAB77f6py_izS/preview"
+      },
+      {
+        name: "Correction Série 6",
+        url: "https://drive.google.com/file/d/1nXWKMijP1-eaLJmdE82ougXG8go6e9qG/preview"
+      }
+    ]
+  },
+  {
+    id: 27,
+    title: "info – Tri (Très Important)",
+    description: "Séries corrigées (Algorithmes de tri).",
+  
+    files: [
+      {
+        name: "Série 7",
+        url: "https://drive.google.com/file/d/1GBm-mB0DyIUsymavHbk-dHbbw4gAdo-z/preview"
+      },
+      {
+        name: "Correction Série 7",
+        url: "https://drive.google.com/file/d/1iIavCkxpimmDChAQGYdImIVIeMRXRLoJ/preview"
+      }
+    ]
+  },
+  {
+    id: 28,
+    title: "info – Interface Graphique",
+    description: "Séries corrigées (Interface graphique).",
+  
+    files: [
+      {
+        name: "Série 8",
+        url: "https://drive.google.com/file/d/1zWdnMq5F-o5VPzTgNvINjNVxlQNtesMF/preview"
+      },
+      {
+        name: "Correction Série 8",
+        url: "https://drive.google.com/file/d/1X1JU8rr8LGjRJTlmLRIwaSxqODGUPZVb/preview"
+      }
+    ]
+  },
+  {
+    id: 29,
+    title: "info – Problèmes sur les Tableaux",
+    description: "Séries corrigées (Tableaux).",
+  
+    files: [
+      {
+        name: "Série 9",
+        url: "https://drive.google.com/file/d/1Zyo1H4tBpDhQeMnp9gIUFHuoxxsVsATA/preview"
+      },
+      {
+        name: "Correction Série 9",
+        url: "https://drive.google.com/file/d/17HAlQYrCa7wvxO_p3RDgeTTdnJ9R1KIr/preview"
+      }
+    ]
+  },
+  
+  
+  
+  {
+    id: 30,
+    title: "BAC Pratique Informatique – Préparation",
+    description: "Prototypes corrigés pour la préparation au BAC pratique.",
+  
+    files: [
+      {
+        name: "Prototype 1",
+        url: "https://drive.google.com/file/d/16A9_Dbd5sU-4KEDUrK64OjO1Y7LLi68L/preview"
+      },
+      {
+        name: "Correction Prototype 1",
+        url: "https://drive.google.com/file/d/1E1YfwV_y5lkU29i0KZtshdV7Z3AO7-2K/preview"
+      },
+      {
+        name: "Prototype 2",
+        url: "https://drive.google.com/file/d/1J6tc5RsrKyOD9Pl8kQ1J0cIgs-Gkpfar/preview"
+      },
+      {
+        name: "Correction Prototype 2",
+        url: "https://drive.google.com/file/d/1T6Yq3UuaUXGzL_tfRcI3tMgN9fSvfIB5/preview"
+      },
+      {
+        name: "Prototype 3",
+        url: "https://drive.google.com/file/d/1SX5ZiGkNRAoshyAg41H6WBwNu9H2t6Hr/preview"
+      },
+      {
+        name: "Correction Prototype 3",
+        url: "https://drive.google.com/file/d/1bUdsNA2jsbgx8r0Vea8QMAPazQNO1Dm6/preview"
+      },
+      {
+        name: "Prototype 4",
+        url: "https://drive.google.com/file/d/1-Xew969o8n-dbnjPWsynW-q3WLqy8tWu/preview"
+      },
+      {
+        name: "Correction Prototype 4",
+        url: "https://drive.google.com/file/d/1mEexGBlcxZdOPkWLMW3-JMZADjBJ7aQw/preview"
+      },
+      {
+        name: "Prototype 5",
+        url: "https://drive.google.com/file/d/1OpXhW7FGGL9bl8M7YSK6rl3wxGDe2ukj/preview"
+      },
+      {
+        name: "Correction Prototype 5",
+        url: "https://drive.google.com/file/d/1w3jg3wo82RjA8UuUawUabWjxBjPm_zsx/preview"
+      },
+      {
+        name: "Prototype 6",
+        url: "https://drive.google.com/file/d/1WdRZXCTPCetCpZ82dVLGbd38FVWCEm6M/preview"
+      },
+      {
+        name: "Correction Prototype 6",
+        url: "https://drive.google.com/file/d/1OEKphsu32xeuETA9eO8Q4WO_SBUQppvs/preview"
+      },
+      {
+        name: "Prototype 7",
+        url: "https://drive.google.com/file/d/1I8fTPad_ycpvSHCuzT2L0t5TxGAoIFot/preview"
+      },
+      {
+        name: "Correction Prototype 7",
+        url: "https://drive.google.com/file/d/1rUloRy5GRsODogrjYL3HFG-xSOmfil4o/preview"
+      },
+      {
+        name: "Prototype 8",
+        url: "https://drive.google.com/file/d/1oWe-oi44nGB-nVzTzTaDf555NlWhTGnm/preview"
+      },
+      {
+        name: "Correction Prototype 8",
+        url: "https://drive.google.com/file/d/1PF7xFZwqPjE5P0keouaMdHiYb3CsafHF/preview"
+      }
+    ]
+  },
+  
+  
+  {
+    id: 31,
+    title: "English Grammar and Writing Revision",
+    description: "Tasks and corrections for grammar and writing practice.",
+  
+    files: [
+      {
+        name: "Task 1",
+        url: "https://drive.google.com/file/d/1oIMlJjplqsj6ymifT912PhiQu2rv2gX-/preview"
+      },
+      {
+        name: "Correction Task 1",
+        url: "https://drive.google.com/file/d/1UtTyEEOIWN_b5j1lLrE3bCeeyevtD2s-/preview"
+      },
+      {
+        name: "Task 2",
+        url: "https://drive.google.com/file/d/1OyMFnZL-1BGbpBoKNwOnbrogHsBbOl07/preview"
+      },
+      {
+        name: "Correction Task 2",
+        url: "https://drive.google.com/file/d/1B3Z5ycnPY0lEtjb8jelfjHhzVuXwEYw9/preview"
+      },
+      {
+        name: "Task 3",
+        url: "https://drive.google.com/file/d/1uV7maZKvFvRW0QHa2btYXvW4iBMSuefn/preview"
+      },
+      {
+        name: "Correction Task 3",
+        url: "https://drive.google.com/file/d/1SXH5MN-lHizWESXhn5J-ouPaRd6YZ8od/preview"
+      },
+      {
+        name: "Task 4",
+        url: "https://drive.google.com/file/d/1TlL1i98H1v15fVczgkxv5Bf57JCgVK1k/preview"
+      },
+      {
+        name: "Correction Task 4",
+        url: "https://drive.google.com/file/d/1zyPc6UcSYH5g6IHoX1RSKwO4zbwhlreW/preview"
+      }
+    ]
+  },
+  
+  {
+    id: 32,
+    title: "Immunité : Séries Corrigées",
+    description: "Ensemble de séries d'exercices en immunité (SVT).",
+  
+    files: [
+      {
+        name: "Série 1",
+        url: "https://drive.google.com/file/d/1FgU_f3EMa7XWVdti9AADLa2SF9VjLjst/preview"
+      },
+      {
+        name: "Correction Série 1",
+        url: "https://drive.google.com/file/d/1RSawQG5j_sMGmb6lUfVBw6uoW7POrtkH/preview"
+      },
+      {
+        name: "Série 2",
+        url: "https://drive.google.com/file/d/1-DJlxPcAz0Sf2ymC7R54NVIFhelxYM3T/preview"
+      },
+      {
+        name: "Correction Série 2",
+        url: "https://drive.google.com/file/d/1RhjJrxTJVNtotLD91kg5L_3XOOUJVFvj/preview"
+      },
+      {
+        name: "Série 3",
+        url: "https://drive.google.com/file/d/17zT-LWa5T1urEjDqbAuuxIn0Rgcd21S_/preview"
+      },
+      {
+        name: "Correction Série 3",
+        url: "https://drive.google.com/file/d/1tOQtk7uPnWlBJ4T6TVHBjilQaEobEBv2/preview"
+      },
+      {
+        name: "Série 4",
+        url: "https://drive.google.com/file/d/1CvNn7-yNjcu0SZ_DrSMVAmwGHm3VhnPs/preview"
+      },
+      {
+        name: "Correction Série 4",
+        url: "https://drive.google.com/file/d/1i-B51m0Lwnre3Rh7MRiyb4Mr8IMvAVAM/preview"
+      },
+      {
+        name: "Série 5",
+        url: "https://drive.google.com/file/d/1wguj9N6NYtKsV9CPcM_TFMfOj1xxCnif/preview"
+      },
+      {
+        name: "Correction Série 5",
+        url: "https://drive.google.com/file/d/1x29no5EWhtEyIZ-PAC6blCOIoLFJiM9n/preview"
+      }
+    ]
+  },
+  
+  {
+    id: 33,
+    title: "Les muscles squelettiques",
+    description: "Séries d'exercices sur Les muscles squelettiques (SVT)",
+  
+    files: [
+      {
+        name: "Série 1",
+        url: "https://drive.google.com/file/d/1ZHb-Xlglorq8DahlKzr7y5SRLEbCAJaZ/preview"
+      },
+      {
+        name: "Correction Série 1",
+        url: "https://drive.google.com/file/d/1mDRfhTJFaDeXo3Kfin1upLft7m8EOjyj/preview"
+      },
+      {
+        name: "Série 2",
+        url: "https://drive.google.com/file/d/16paee30-W5X_gxgh_d75CpRJRVhh6xMh/preview"
+      },
+      {
+        name: "Correction Série 2",
+        url: "https://drive.google.com/file/d/1K-WxB7gPMLO0-dNe1y9TXKlPdgcg5s3x/preview"
+      },
+      {
+        name: "Série 3",
+        url: "https://drive.google.com/file/d/1_7QUBstuNN4pUheTlY01KaZc-Ar3LIgw/preview"
+      },
+      {
+        name: "Correction Série 3",
+        url: "https://drive.google.com/file/d/1mM4mra2H6BSG0OX7NZnbGC6oyU85m5mw/preview"
+      },
+      {
+        name: "Série 4",
+        url: "https://drive.google.com/file/d/1afcTNr3xzctSLhivmO6DJXjpqcl_lEwT/preview"
+      },
+      {
+        name: "Correction Série 4",
+        url: "https://drive.google.com/file/d/1KLA_WRSpSaprX9E2w4vjLeX82hvvLMCY/preview"
+      },
+      {
+        name: "Série 5",
+        url: "https://drive.google.com/file/d/1YF7qwAESD0cRHHyzrLdTEbNPCp3Tzqba/preview"
+      },
+      {
+        name: "Correction Série 5",
+        url: "https://drive.google.com/file/d/1ewzSoAFqBFKVnaA9IqlH5Qk9EJjhN0Dq/preview"
+      }
+    ]
+  },
+  
+  
+  {
+    "id": 34,
+    "title": "Complexes & Analyse – Séries 1, 2, 3",
+    "description": "Séries d'exercices sur les nombres complexes et l'analyse avec corrections. Destinées aux élèves du baccalauréat pour renforcer la pratique et la maîtrise des types d'exercices.",
+  
     "files": [
-        {
-            "name": "Fiche de méthode – Oscillation Mécanique Force",
-            "url": "https://drive.google.com/file/d/1_5OSDcNtn0XncXGjEQTW6ts7gvqzLRFi/view?usp=drive_link"
-        },
-        {
-            "name": "Série d'exercices 1 – Oscillation Mécanique Force",
-            "url": "https://drive.google.com/file/d/1emPCMvH4KIpMgpJnSr6pAP61To0QBZ-h/view?usp=drive_link"
-        },
-        {
-            "name": "Correction Série 1 – Oscillation Mécanique Force",
-            "url": "https://drive.google.com/file/d/1W3RXFxRDqCYjg7ATPjQeAj-pai8b1gac/view?usp=drive_link"
-        },
-        {
-            "name": "Série d'exercices 2 – Oscillation Mecanique Force",
-            "url": "https://drive.google.com/file/d/18VlBXxdq3chrZsHG5p--11fonRxrRUyl/view?usp=drive_link"
-        },
-        {
-            "name": "Correction Série 2 – Oscillation Mécanique Force",
-            "url": "https://drive.google.com/file/d/1ZAYJJuihlO17yNBaeiwGTgMlXe-UTmLV/view?usp=drive_link"
-        },
-        {
-            "name": "Série d'exercices 3 – Oscillation Mécanique Force",
-            "url": "https://drive.google.com/file/d/1_Lfd8DKzUZUDh16QFbSNaPWEMkUqOaPh/view?usp=drive_link"
-        },
-        {
-            "name": "Correction Série 3 – Oscillation Mécanique Force",
-            "url": "https://drive.google.com/file/d/1IAkGRc44UmBAhK4wQK5R8WPmVh5AymJP/view?usp=drive_link"
-        },
-        {
-            "name": "Série d'exercices 4 – Oscillation Mécanique Force",
-            "url": "https://drive.google.com/file/d/1q6xbmPXfu0mh8_V0S4pL463KjSuxiwKI/view?usp=drive_link"
-        },
-        {
-            "name": "Correction Série 4 – Oscillation Mécanique Force",
-            "url": "https://drive.google.com/file/d/1NQKYcXWo2bnUfel4yu04wYXBsZ16PYad/view?usp=drive_link"
-        }
+      {
+        "name": "Série 1 – Complexe + Analyse",
+        "url": "https://drive.google.com/file/d/170eJsS1ai9pTtiADsLoMnQXTDs5rmDFr/preview"
+      },
+      {
+        "name": "Correction Série 1",
+        "url": "https://drive.google.com/file/d/19MS0RGRSf74N8QT17jniG_7MhmlRU0hL/preview"
+      },
+      {
+        "name": "Série 2 – Complexe + Analyse",
+        "url": "https://drive.google.com/file/d/1acp61r869r_RyjEGDmkOP3U4VijGFMRP/preview"
+      },
+      {
+        "name": "Correction Série 2",
+        "url": "https://drive.google.com/file/d/1bdYroTxQEVGB38DBx2K_C7_npYCNGde-/preview"
+      },
+      {
+        "name": "Série 3 – Complexe",
+        "url": "https://drive.google.com/file/d/1eKuVfoKcs989vPb4Ogp0oyBqHpZMMObX/preview"
+      },
+      {
+        "name": "Correction Série 3",
+        "url": "https://drive.google.com/file/d/1P4tcltxYt_-l5aStZ6exnjiOzuqJRhrE/preview"
+      }
     ]
-},
-
-{
-    "id": 14,
-    "title": "Oscillation Mécanique Libre",
-    "description": "Séries d'exercices et corrections pour étudier l'oscillation mecanique libre et consolider les notions avant le Bac.",
+  },
+  {
+    "id": 35,
+    "title": "Fonction exponentielle – Série + Correction",
+    "description": "Série d’exercices sur la fonction exponentielle avec correction détaillée. Destinée aux élèves du baccalauréat pour maîtriser les limites, dérivées et études de fonctions exponentielles.",
+  
     "files": [
-        {
-            "name": "Série 1 – Oscillation Mécanique Libre",
-            "url": "https://drive.google.com/file/d/1NHv0lICGxHAX4rS2hx8Z7djUkPXi9MfL/view?usp=drive_link"
-        },
-        {
-            "name": "Correction Série 1 – Oscillation Mécanique Libre",
-            "url": "https://drive.google.com/file/d/1hRhhdoo3qKUQ-WsIkIYsG4tP4G6J-X5z/view?usp=drive_link"
-        },
-        {
-            "name": "Série 2 – Oscillation Mécanique Libre",
-            "url": "https://drive.google.com/file/d/1PpmRx_T8H1zC2NONWEupK0GQunKup7Hz/view?usp=drive_link"
-        },
-        {
-            "name": "Correction Série 2 – Oscillation Mécanique Libre",
-            "url": "https://drive.google.com/file/d/1DpZqaqkoncpPBvkqkeLne7e_RqrgTpyO/view?usp=drive_link"
-        }
+      {
+        "name": "Série Exponentielle",
+        "url": "https://drive.google.com/file/d/1I-FeMbXprtaSefEud6S5K23nrX1kb0zK/preview"
+      },
+      {
+        "name": "Correction Série Exponentielle",
+        "url": "https://drive.google.com/file/d/1mJWV3ITn8i1VN-uJrb7YBe4aTNRt2FbW/preview"
+      }
     ]
-},
-
-
-
-{
-  id: 16,
-  title: "RC - Pack Révision BAC – Dipôle RC",
-  description: "Cours sur le dipôle RC avec fiche de méthode et séries corrigées pour le BAC.",
-
-  files: [
-    {
-      name: "Cours – Dipôle RC",
-      url: "https://drive.google.com/file/d/1LLVCH54WILXm5LMA-6X7oKgZSoVkptxs/preview"
-    },
-    {
-      name: "Fiche de méthode – Dipôle RC",
-      url: "https://drive.google.com/file/d/1pL6CybKv8RwsHZU5hRgerNoRB6hF7GL2/preview"
-    },
-    {
-      name: "Série 1",
-      url: "https://drive.google.com/file/d/1m8l3-xBjSdjcru2sIoN_Y7XpfguxKgJh/preview"
-    },
-    {
-      name: "Correction Série 1",
-      url: "https://drive.google.com/file/d/1FcbL4h7h4pXwEy52_g_0MnHeWjDMZTDz/preview"
-    },
-    {
-      name: "Série 2",
-      url: "https://drive.google.com/file/d/1MPaRzF50ZnbKu8ujvH3NpD439-_otkOP/preview"
-    },
-    {
-      name: "Correction Série 2",
-      url: "https://drive.google.com/file/d/1D2w_izgMdgMkKkSG_GfRMAhPv7tHctbs/preview"
-    },
-    {
-      name: "Série 3",
-      url: "https://drive.google.com/file/d/1jTsfza86Rhvh6qWmOe-N8GkKQaV7Bi5B/preview"
-    },
-    {
-      name: "Correction Série 3",
-      url: "https://drive.google.com/file/d/1D43dVaGx6uUJbi_P8ejswStXHkFuHbHb/preview"
-    }
-  ]
-},
-{
-  id: 17,
-  title: "RL - Pack Révision BAC – Dipôle RL",
-  description: "Cours + méthode + séries corrigées (Dipôle RL).",
-
-  files: [
-    {
-      name: "Cours – Dipôle RL",
-      url: "https://drive.google.com/file/d/1BcrRsf1F4MB78bSXBOnp-ISZOL6ECPH4/preview"
-    },
-    {
-      name: "Fiche de méthode – Dipôle RL",
-      url: "https://drive.google.com/file/d/12DFxwJ03tpfo-mkUysRDSuaIG-KOeHDn/preview"
-    },
-    {
-      name: "Série 1",
-      url: "https://drive.google.com/file/d/1xys-CciliPMWUcyygKM-lubiXPdaesRS/preview"
-    },
-    {
-      name: "Correction Série 1",
-      url: "https://drive.google.com/file/d/1ov8cUoCJhB_pw426A7aLVtHm77Ysusqv/preview"
-    },
-    {
-      name: "Série 2",
-      url: "https://drive.google.com/file/d/11ZVXNJ51oehqE5-GHLvEq2_Vrt6QgyBu/preview"
-    },
-    {
-      name: "Correction Série 2",
-      url: "https://drive.google.com/file/d/1d1OIIg37ogH6TmHpCTJdgaIA0lnA9j5x/preview"
-    },
-    {
-      name: "Série 3",
-      url: "https://drive.google.com/file/d/19CgIwY7SddtfjTU2T3SCDEhAQ38oyoN_/preview"
-    },
-    {
-      name: "Correction Série 3",
-      url: "https://drive.google.com/file/d/1brORJl87YBTHNUnbitU01FQhpmUKmQeR/preview"
-    },
-    {
-      name: "Série 4",
-      url: "https://drive.google.com/file/d/1Q4R7meHuvFxXe8YGCS4uls02wfdLSkzJ/preview"
-    },
-    {
-      name: "Correction Série 4",
-      url: "https://drive.google.com/file/d/1aIzaOVkNBLl03ML2RMD0EARpzXZLotDo/preview"
-    }
-  ]
-},
-{
-  id: 18,
-  title: "RLC - Pack Révision BAC – RLC Libre",
-  description: "Cours + méthode + séries corrigées (RLC amorti et non amorti).",
-
-  files: [
-    {
-      name: "Cours 1 – RLC Libre",
-      url: "https://drive.google.com/file/d/1Kx1zVKDFiqr1Xu7o1WSkA6IyCnQVQ8lu/preview"
-    },
-    {
-      name: "Cours 2 – RLC Libre",
-      url: "https://drive.google.com/file/d/114cVVqt23C5q_seu8eqeHiHCyCU3wCdh/preview"
-    },
-    {
-      name: "Fiche de méthode – RLC",
-      url: "https://drive.google.com/file/d/1JkJH94xSaonh5CqWol4QbFwqt5ySxxuJ/preview"
-    },
-    {
-      name: "Série 1",
-      url: "https://drive.google.com/file/d/1xPDfIrDwYLs3wHL10OnDxDKjTldMzvJl/preview"
-    },
-    {
-      name: "Correction Série 1",
-      url: "https://drive.google.com/file/d/1aLleGYAACAAN36Om0mjzQ2iAzgFW_M6U/preview"
-    },
-    {
-      name: "Série 2",
-      url: "https://drive.google.com/file/d/1uZozW1x4KnsFQCefONiq3KrEwtzzs-6-/preview"
-    },
-    {
-      name: "Correction Série 2",
-      url: "https://drive.google.com/file/d/1rTs4HYb1tqpG4uNeniYAZhINO7p162Qi/preview"
-    },
-    {
-      name: "Série 3",
-      url: "https://drive.google.com/file/d/1E1e2-suyJXe5sBoiRzK0Cy_k_RZTF-4F/preview"
-    },
-    {
-      name: "Correction Série 3",
-      url: "https://drive.google.com/file/d/1wowd2FUFk9W_Sv94MI4W9q76ZCqw8WnW/preview"
-    },
-    {
-      name: "Série 4",
-      url: "https://drive.google.com/file/d/1cdOWi9EnB2MsUyaIoj2YAjk8A2RQ8ZTd/preview"
-    },
-    {
-      name: "Correction Série 4",
-      url: "https://drive.google.com/file/d/1A78L5EOhdpzyG_8hPpqt-qBxeYbH68cb/preview"
-    }
-  ]
-},
-
-
-
-{
-  id: 19,
-  title: "Force - Pack Révision BAC – Oscillations",
-  description: "Cours + méthode + séries corrigées (Oscillations).",
-
-  files: [
-    {
-      name: "Cours – Oscillations",
-      url: "https://drive.google.com/file/d/1YY_Mve9f1izU23brgz2sToOa6-E_8unt/preview"
-    },
-    {
-      name: "Fiche de méthode – Oscillations",
-      url: "https://drive.google.com/file/d/1dOZYCtT_ffFnb9AAAuZCmiOPJgiVh36X/preview"
-    },
-    {
-      name: "Série 1",
-      url: "https://drive.google.com/file/d/1jlLWFWmJDxwyNx0sndCt7FaAhc149qOi/preview"
-    },
-    {
-      name: "Correction Série 1",
-      url: "https://drive.google.com/file/d/11m1l4nTrzbONtbJshJm-k27hRuyPZ3JZ/preview"
-    },
-    {
-      name: "Série 2",
-      url: "https://drive.google.com/file/d/1P-1YwGbQuNU8FZWWKbNu2ayadNJI7Lc9/preview"
-    },
-    {
-      name: "Correction Série 2",
-      url: "https://drive.google.com/file/d/1oBfQZqN7w760MGW2xwhRcj-ZQjJcaCAF/preview"
-    },
-    {
-      name: "Série 3",
-      url: "https://drive.google.com/file/d/15grugW6vHrPwv1EJQnAMVzl53ss38DP0/preview"
-    },
-    {
-      name: "Correction Série 3",
-      url: "https://drive.google.com/file/d/19xjui9q16zwDI4Mb53ycPWQXkD4Jozhf/preview"
-    },
-    {
-      name: "Série 4",
-      url: "https://drive.google.com/file/d/15RnjncyHJpocu1KnAAfgM0Q9EvVXoVVA/preview"
-    },
-    {
-      name: "Correction Série 4",
-      url: "https://drive.google.com/file/d/12jnYi0f3H93LgblD3D22bXK6lFsPALTy/preview"
-    },
-    {
-      name: "Série 5",
-      url: "https://drive.google.com/file/d/1pj9MRQKi3sT-QQ-PNvnY_CRTKgP3hfCK/preview"
-    },
-    {
-      name: "Correction Série 5",
-      url: "https://drive.google.com/file/d/1VSMYVaxKyaBPu5YhtztJz7IwiYHzmjCd/preview"
-    }
-  ]
-},
-
-
-{
-  id: 20,
-  title: "Bobine - Pack Révision BAC – Bobine",
-  description: "Séries corrigées (Bobine).",
-
-  files: [
-    {
-      name: "Série 1",
-      url: "https://drive.google.com/file/d/1JEhm3WIgtKY1LRRz_LN1PM7dBvd2hkUc/preview"
-    },
-    {
-      name: "Correction Série 1",
-      url: "https://drive.google.com/file/d/1_6CSeP6G4eUCjaD2HLRxYNn86dnQ01E5/preview"
-    },
-    {
-      name: "Série 2",
-      url: "https://drive.google.com/file/d/10YazIBjYdsh_9U0fd1w18cZtJokM01NJ/preview"
-    },
-    {
-      name: "Correction Série 2",
-      url: "https://drive.google.com/file/d/1vNYU0iiQAfer4EMsYMLUYWl9MiamqBdQ/preview"
-    }
-  ]
-},
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{
-  id: 21,
-  title: "info – Structures de Données",
-  description: "Séries corrigées (Structures de données).",
-
-  files: [
-    {
-      name: "Série 1",
-      url: "https://drive.google.com/file/d/16sw-Kexz9ENFW_JzjyGTOnYdGRECSMCb/preview"
-    },
-    {
-      name: "Correction Série 1",
-      url: "https://drive.google.com/file/d/1NQqBR3bW_8KGi4HIiVWP1j6A3nubTJBE/preview"
-    }
-  ]
-},
-{
-  id: 22,
-  title: "info – Structures de Contrôle Itératives (Complexes)",
-  description: "Séries corrigées (Boucles complexes).",
-
-  files: [
-    {
-      name: "Série 2",
-      url: "https://drive.google.com/file/d/1GaBilcwhCwDFF4KVkGuBacr4OIb_4xMD/preview"
-    },
-    {
-      name: "Correction Série 2",
-      url: "https://drive.google.com/file/d/1J3DG_1rjqg9mUQtXYwKxI_xFe2hMkvhH/preview"
-    }
-  ]
-},
-{
-  id: 23,
-  title: "info – Structures de Contrôle Itératives à Conditions",
-  description: "Séries corrigées (Boucles avec conditions).",
-
-  files: [
-    {
-      name: "Série 3",
-      url: "https://drive.google.com/file/d/10QDwNBrkWqc3B95YmJCeOpAw2I76C29A/preview"
-    },
-    {
-      name: "Correction Série 3",
-      url: "https://drive.google.com/file/d/1ZItIYC2yM0sdCDG4Bb-iQy0NM01zLG5x/preview"
-    }
-  ]
-},
-{
-  id: 24,
-  title: "info – Sous-programmes",
-  description: "Séries corrigées (Sous-programmes).",
-
-  files: [
-    {
-      name: "Série 4",
-      url: "https://drive.google.com/file/d/16-NV6kmsQxKOAX0o7JOGerRo_VRdO9-T/preview"
-    },
-    {
-      name: "Correction Série 4",
-      url: "https://drive.google.com/file/d/13gePn9rc_Dsor5qobwiPOZPvJiUDuz6u/preview"
-    }
-  ]
-},
-{
-  id: 25,
-  title: "info – Recherche Séquentielle",
-  description: "Séries corrigées (Recherche séquentielle).",
-
-  files: [
-    {
-      name: "Série 5",
-      url: "https://drive.google.com/file/d/1f5g4CC4CdsSAc9mSao6UHmiHcjeB6Wc_/preview"
-    },
-    {
-      name: "Correction Série 5",
-      url: "https://drive.google.com/file/d/1SwInNMmXz9QEN6JUw8H1RsdEe-5NzD9C/preview"
-    }
-  ]
-},
-{
-  id: 26,
-  title: "info – Exercices BAC 2020",
-  description: "Séries corrigées (BAC 2020).",
-
-  files: [
-    {
-      name: "Série 6",
-      url: "https://drive.google.com/file/d/1AYklDph4GVJ2bCwVjVJoAB77f6py_izS/preview"
-    },
-    {
-      name: "Correction Série 6",
-      url: "https://drive.google.com/file/d/1nXWKMijP1-eaLJmdE82ougXG8go6e9qG/preview"
-    }
-  ]
-},
-{
-  id: 27,
-  title: "info – Tri (Très Important)",
-  description: "Séries corrigées (Algorithmes de tri).",
-
-  files: [
-    {
-      name: "Série 7",
-      url: "https://drive.google.com/file/d/1GBm-mB0DyIUsymavHbk-dHbbw4gAdo-z/preview"
-    },
-    {
-      name: "Correction Série 7",
-      url: "https://drive.google.com/file/d/1iIavCkxpimmDChAQGYdImIVIeMRXRLoJ/preview"
-    }
-  ]
-},
-{
-  id: 28,
-  title: "info – Interface Graphique",
-  description: "Séries corrigées (Interface graphique).",
-
-  files: [
-    {
-      name: "Série 8",
-      url: "https://drive.google.com/file/d/1zWdnMq5F-o5VPzTgNvINjNVxlQNtesMF/preview"
-    },
-    {
-      name: "Correction Série 8",
-      url: "https://drive.google.com/file/d/1X1JU8rr8LGjRJTlmLRIwaSxqODGUPZVb/preview"
-    }
-  ]
-},
-{
-  id: 29,
-  title: "info – Problèmes sur les Tableaux",
-  description: "Séries corrigées (Tableaux).",
-
-  files: [
-    {
-      name: "Série 9",
-      url: "https://drive.google.com/file/d/1Zyo1H4tBpDhQeMnp9gIUFHuoxxsVsATA/preview"
-    },
-    {
-      name: "Correction Série 9",
-      url: "https://drive.google.com/file/d/17HAlQYrCa7wvxO_p3RDgeTTdnJ9R1KIr/preview"
-    }
-  ]
-},
-
-
-
-{
-  id: 30,
-  title: "BAC Pratique Informatique – Préparation",
-  description: "Prototypes corrigés pour la préparation au BAC pratique.",
-
-  files: [
-    {
-      name: "Prototype 1",
-      url: "https://drive.google.com/file/d/16A9_Dbd5sU-4KEDUrK64OjO1Y7LLi68L/preview"
-    },
-    {
-      name: "Correction Prototype 1",
-      url: "https://drive.google.com/file/d/1E1YfwV_y5lkU29i0KZtshdV7Z3AO7-2K/preview"
-    },
-    {
-      name: "Prototype 2",
-      url: "https://drive.google.com/file/d/1J6tc5RsrKyOD9Pl8kQ1J0cIgs-Gkpfar/preview"
-    },
-    {
-      name: "Correction Prototype 2",
-      url: "https://drive.google.com/file/d/1T6Yq3UuaUXGzL_tfRcI3tMgN9fSvfIB5/preview"
-    },
-    {
-      name: "Prototype 3",
-      url: "https://drive.google.com/file/d/1SX5ZiGkNRAoshyAg41H6WBwNu9H2t6Hr/preview"
-    },
-    {
-      name: "Correction Prototype 3",
-      url: "https://drive.google.com/file/d/1bUdsNA2jsbgx8r0Vea8QMAPazQNO1Dm6/preview"
-    },
-    {
-      name: "Prototype 4",
-      url: "https://drive.google.com/file/d/1-Xew969o8n-dbnjPWsynW-q3WLqy8tWu/preview"
-    },
-    {
-      name: "Correction Prototype 4",
-      url: "https://drive.google.com/file/d/1mEexGBlcxZdOPkWLMW3-JMZADjBJ7aQw/preview"
-    },
-    {
-      name: "Prototype 5",
-      url: "https://drive.google.com/file/d/1OpXhW7FGGL9bl8M7YSK6rl3wxGDe2ukj/preview"
-    },
-    {
-      name: "Correction Prototype 5",
-      url: "https://drive.google.com/file/d/1w3jg3wo82RjA8UuUawUabWjxBjPm_zsx/preview"
-    },
-    {
-      name: "Prototype 6",
-      url: "https://drive.google.com/file/d/1WdRZXCTPCetCpZ82dVLGbd38FVWCEm6M/preview"
-    },
-    {
-      name: "Correction Prototype 6",
-      url: "https://drive.google.com/file/d/1OEKphsu32xeuETA9eO8Q4WO_SBUQppvs/preview"
-    },
-    {
-      name: "Prototype 7",
-      url: "https://drive.google.com/file/d/1I8fTPad_ycpvSHCuzT2L0t5TxGAoIFot/preview"
-    },
-    {
-      name: "Correction Prototype 7",
-      url: "https://drive.google.com/file/d/1rUloRy5GRsODogrjYL3HFG-xSOmfil4o/preview"
-    },
-    {
-      name: "Prototype 8",
-      url: "https://drive.google.com/file/d/1oWe-oi44nGB-nVzTzTaDf555NlWhTGnm/preview"
-    },
-    {
-      name: "Correction Prototype 8",
-      url: "https://drive.google.com/file/d/1PF7xFZwqPjE5P0keouaMdHiYb3CsafHF/preview"
-    }
-  ]
-},
-
-
-{
-  id: 31,
-  title: "English Grammar and Writing Revision",
-  description: "Tasks and corrections for grammar and writing practice.",
-
-  files: [
-    {
-      name: "Task 1",
-      url: "https://drive.google.com/file/d/1oIMlJjplqsj6ymifT912PhiQu2rv2gX-/preview"
-    },
-    {
-      name: "Correction Task 1",
-      url: "https://drive.google.com/file/d/1UtTyEEOIWN_b5j1lLrE3bCeeyevtD2s-/preview"
-    },
-    {
-      name: "Task 2",
-      url: "https://drive.google.com/file/d/1OyMFnZL-1BGbpBoKNwOnbrogHsBbOl07/preview"
-    },
-    {
-      name: "Correction Task 2",
-      url: "https://drive.google.com/file/d/1B3Z5ycnPY0lEtjb8jelfjHhzVuXwEYw9/preview"
-    },
-    {
-      name: "Task 3",
-      url: "https://drive.google.com/file/d/1uV7maZKvFvRW0QHa2btYXvW4iBMSuefn/preview"
-    },
-    {
-      name: "Correction Task 3",
-      url: "https://drive.google.com/file/d/1SXH5MN-lHizWESXhn5J-ouPaRd6YZ8od/preview"
-    },
-    {
-      name: "Task 4",
-      url: "https://drive.google.com/file/d/1TlL1i98H1v15fVczgkxv5Bf57JCgVK1k/preview"
-    },
-    {
-      name: "Correction Task 4",
-      url: "https://drive.google.com/file/d/1zyPc6UcSYH5g6IHoX1RSKwO4zbwhlreW/preview"
-    }
-  ]
-},
-
-{
-  id: 32,
-  title: "Immunité : Séries Corrigées",
-  description: "Ensemble de séries d'exercices en immunité (SVT).",
-
-  files: [
-    {
-      name: "Série 1",
-      url: "https://drive.google.com/file/d/1FgU_f3EMa7XWVdti9AADLa2SF9VjLjst/preview"
-    },
-    {
-      name: "Correction Série 1",
-      url: "https://drive.google.com/file/d/1RSawQG5j_sMGmb6lUfVBw6uoW7POrtkH/preview"
-    },
-    {
-      name: "Série 2",
-      url: "https://drive.google.com/file/d/1-DJlxPcAz0Sf2ymC7R54NVIFhelxYM3T/preview"
-    },
-    {
-      name: "Correction Série 2",
-      url: "https://drive.google.com/file/d/1RhjJrxTJVNtotLD91kg5L_3XOOUJVFvj/preview"
-    },
-    {
-      name: "Série 3",
-      url: "https://drive.google.com/file/d/17zT-LWa5T1urEjDqbAuuxIn0Rgcd21S_/preview"
-    },
-    {
-      name: "Correction Série 3",
-      url: "https://drive.google.com/file/d/1tOQtk7uPnWlBJ4T6TVHBjilQaEobEBv2/preview"
-    },
-    {
-      name: "Série 4",
-      url: "https://drive.google.com/file/d/1CvNn7-yNjcu0SZ_DrSMVAmwGHm3VhnPs/preview"
-    },
-    {
-      name: "Correction Série 4",
-      url: "https://drive.google.com/file/d/1i-B51m0Lwnre3Rh7MRiyb4Mr8IMvAVAM/preview"
-    },
-    {
-      name: "Série 5",
-      url: "https://drive.google.com/file/d/1wguj9N6NYtKsV9CPcM_TFMfOj1xxCnif/preview"
-    },
-    {
-      name: "Correction Série 5",
-      url: "https://drive.google.com/file/d/1x29no5EWhtEyIZ-PAC6blCOIoLFJiM9n/preview"
-    }
-  ]
-},
-
-{
-  id: 33,
-  title: "Les muscles squelettiques",
-  description: "Séries d'exercices sur Les muscles squelettiques (SVT)",
-
-  files: [
-    {
-      name: "Série 1",
-      url: "https://drive.google.com/file/d/1ZHb-Xlglorq8DahlKzr7y5SRLEbCAJaZ/preview"
-    },
-    {
-      name: "Correction Série 1",
-      url: "https://drive.google.com/file/d/1mDRfhTJFaDeXo3Kfin1upLft7m8EOjyj/preview"
-    },
-    {
-      name: "Série 2",
-      url: "https://drive.google.com/file/d/16paee30-W5X_gxgh_d75CpRJRVhh6xMh/preview"
-    },
-    {
-      name: "Correction Série 2",
-      url: "https://drive.google.com/file/d/1K-WxB7gPMLO0-dNe1y9TXKlPdgcg5s3x/preview"
-    },
-    {
-      name: "Série 3",
-      url: "https://drive.google.com/file/d/1_7QUBstuNN4pUheTlY01KaZc-Ar3LIgw/preview"
-    },
-    {
-      name: "Correction Série 3",
-      url: "https://drive.google.com/file/d/1mM4mra2H6BSG0OX7NZnbGC6oyU85m5mw/preview"
-    },
-    {
-      name: "Série 4",
-      url: "https://drive.google.com/file/d/1afcTNr3xzctSLhivmO6DJXjpqcl_lEwT/preview"
-    },
-    {
-      name: "Correction Série 4",
-      url: "https://drive.google.com/file/d/1KLA_WRSpSaprX9E2w4vjLeX82hvvLMCY/preview"
-    },
-    {
-      name: "Série 5",
-      url: "https://drive.google.com/file/d/1YF7qwAESD0cRHHyzrLdTEbNPCp3Tzqba/preview"
-    },
-    {
-      name: "Correction Série 5",
-      url: "https://drive.google.com/file/d/1ewzSoAFqBFKVnaA9IqlH5Qk9EJjhN0Dq/preview"
-    }
-  ]
-},
-
-
-{
-  "id": 34,
-  "title": "Complexes & Analyse – Séries 1, 2, 3",
-  "description": "Séries d'exercices sur les nombres complexes et l'analyse avec corrections. Destinées aux élèves du baccalauréat pour renforcer la pratique et la maîtrise des types d'exercices.",
-
-  "files": [
-    {
-      "name": "Série 1 – Complexe + Analyse",
-      "url": "https://drive.google.com/file/d/170eJsS1ai9pTtiADsLoMnQXTDs5rmDFr/preview"
-    },
-    {
-      "name": "Correction Série 1",
-      "url": "https://drive.google.com/file/d/19MS0RGRSf74N8QT17jniG_7MhmlRU0hL/preview"
-    },
-    {
-      "name": "Série 2 – Complexe + Analyse",
-      "url": "https://drive.google.com/file/d/1acp61r869r_RyjEGDmkOP3U4VijGFMRP/preview"
-    },
-    {
-      "name": "Correction Série 2",
-      "url": "https://drive.google.com/file/d/1bdYroTxQEVGB38DBx2K_C7_npYCNGde-/preview"
-    },
-    {
-      "name": "Série 3 – Complexe",
-      "url": "https://drive.google.com/file/d/1eKuVfoKcs989vPb4Ogp0oyBqHpZMMObX/preview"
-    },
-    {
-      "name": "Correction Série 3",
-      "url": "https://drive.google.com/file/d/1P4tcltxYt_-l5aStZ6exnjiOzuqJRhrE/preview"
-    }
-  ]
-},
-{
-  "id": 35,
-  "title": "Fonction exponentielle – Série + Correction",
-  "description": "Série d’exercices sur la fonction exponentielle avec correction détaillée. Destinée aux élèves du baccalauréat pour maîtriser les limites, dérivées et études de fonctions exponentielles.",
-
-  "files": [
-    {
-      "name": "Série Exponentielle",
-      "url": "https://drive.google.com/file/d/1I-FeMbXprtaSefEud6S5K23nrX1kb0zK/preview"
-    },
-    {
-      "name": "Correction Série Exponentielle",
-      "url": "https://drive.google.com/file/d/1mJWV3ITn8i1VN-uJrb7YBe4aTNRt2FbW/preview"
-    }
-  ]
-},
-
-{
-  "id": 36,
-  "title": "Fonction logarithme – Série + Correction",
-  "description": "Série d’exercices sur la fonction logarithme népérien avec correction détaillée. Destinée aux élèves du baccalauréat pour maîtriser les propriétés du logarithme, les équations et les études de fonctions.",
-
-  "files": [
-    {
-      "name": "Série Logarithme",
-      "url": "https://drive.google.com/file/d/1wV7H0TNb7kZDzST9t67wES5ODGfe0UB5/preview"
-    },
-    {
-      "name": "Correction Série Logarithme",
-      "url": "https://drive.google.com/file/d/1PS4CCudGE02gycOXBxvOdvJcJMpRrXF3/preview"
-    }
-  ]
-},
-{
-  "id": 37,
-  "title": "Suites numériques – Série + Correction",
-  "description": "Série d’exercices sur les suites numériques avec correction détaillée. Destinée aux élèves du baccalauréat pour maîtriser les suites arithmétiques, géométriques et récurrentes ainsi que les limites de suites.",
-
-  "files": [
-    {
-      "name": "Série Suites",
-      "url": "https://drive.google.com/file/d/1CwuAv5MrXmGzKGLD9rSmZ9gzmOfoflam/preview"
-    },
-    {
-      "name": "Correction Série Suites",
-      "url": "https://drive.google.com/file/d/17MIliY2XqquCxs4eTcsSgSyLZao_dysJ/preview"
-    }
-  ]
-},
-{
-  "id": 38,
-  "title": "Révision Générale – Mathématiques",
-  "description": "Série de révision générale en mathématiques pour les élèves du baccalauréat. Contient des exercices et corrections couvrant plusieurs chapitres essentiels.",
-
-  "files": [
-    {
-      "name": "Série 1 (S1)",
-      "url": "https://drive.google.com/file/d/1aLWxxkR-oxxY_BWH7gEumYjmhgc2_xVZ/preview"
-    },
-    {
-      "name": "Correction 1 (C1)",
-      "url": "https://drive.google.com/file/d/13ytIwlJDUMbVwPPdTpzkZsVSAv-ghipd/preview"
-    },
-    {
-      "name": "Série 2 (S2)",
-      "url": "https://drive.google.com/file/d/1JBF-IZnrCJyrdcJ596RIfDFbv3X-VNjq/preview"
-    },
-    {
-      "name": "Correction 2 (C2)",
-      "url": "https://drive.google.com/file/d/1r9yMy12xiOZ_x8BKGY1nFHfvlwqTMQAB/preview"
-    }
-  ]
-},
-
-{
-  "id": 39,
-  "title": "Intégrales – Séries 1 à 4 avec correction",
-  "description": "Séries d’exercices sur les intégrales avec correction détaillée. Destinées aux élèves du baccalauréat pour maîtriser le calcul intégral, les primitives et les applications.",
-
-  "files": [
-    {
-      "name": "Série 1 + Correction",
-      "url": "https://drive.google.com/file/d/1egbMCaDx1fTSoENQgxadit43wvWnTCg-/preview"
-    },
-    {
-      "name": "Série 2 + Correction",
-      "url": "https://drive.google.com/file/d/1pNGZSgUhMVkz99kcPrPRayc_0FD8eBgV/preview"
-    },
-    {
-      "name": "Série 3 + Correction",
-      "url": "https://drive.google.com/file/d/1QLcZFTIEOVZ-YwuxDhwOsfI7QypFoBNv/preview"
-    },
-    {
-      "name": "Série 4 + Correction",
-      "url": "https://drive.google.com/file/d/1XseU26RFDUZcmlbO0C7RzrA61m-k9j0z/preview"
-    }
-  ]
-},
-
-
-{
-  "id": 40,
-  "title": "Ondes & Interaction matière – Série + Correction",
-  "description": "Séries d’exercices sur les ondes mécaniques et leur interaction avec la matière. Couvre les ondes progressives, stationnaires, la propagation et les phénomènes physiques associés. Destiné aux élèves du baccalauréat.",
-
-  "files": [
-    {
-      "name": "Série 1 – Ondes & Interaction",
-      "url": "https://drive.google.com/file/d/1P-0jrl687l20whMdRjaUnDX_plRtXdhY/preview"
-    },
-    {
-      "name": "Correction Série 1",
-      "url": "https://drive.google.com/file/d/1dm1-EFzUVf_hnOpOmUyPs-s_d8OsYMyj/preview"
-    },
-    {
-      "name": "Série 2 – Ondes & Interaction",
-      "url": "https://drive.google.com/file/d/1asJeYhD4pRL8qUmImh7jVC6awHgcvhWh/preview"
-    },
-    {
-      "name": "Correction Série 2",
-      "url": "https://drive.google.com/file/d/1P8R1K-L55VbsnCuWcidOzkKqdBFBSKyi/preview"
-    },
-    {
-      "name": "Série 3 – Ondes & Interaction",
-      "url": "https://drive.google.com/file/d/144nlY1UGODzS3XIa4-Yp_SD81gnSDLDU/preview"
-    },
-    {
-      "name": "Correction Série 3",
-      "url": "https://drive.google.com/file/d/1Eggm8SDZiIMU4mGCGVadPe_vhXd_x49q/preview"
-    }
-  ]
-},
-
-
-
-
-
-
-{
-    "id": 41,
-    "title": "Math – Intégrale",
-    "description": "Séries d'exercices avec corrections pour maîtriser le calcul integral et se préparer au Bac.",
+  },
+  
+  {
+    "id": 36,
+    "title": "Fonction logarithme – Série + Correction",
+    "description": "Série d’exercices sur la fonction logarithme népérien avec correction détaillée. Destinée aux élèves du baccalauréat pour maîtriser les propriétés du logarithme, les équations et les études de fonctions.",
+  
     "files": [
+      {
+        "name": "Série Logarithme",
+        "url": "https://drive.google.com/file/d/1wV7H0TNb7kZDzST9t67wES5ODGfe0UB5/preview"
+      },
+      {
+        "name": "Correction Série Logarithme",
+        "url": "https://drive.google.com/file/d/1PS4CCudGE02gycOXBxvOdvJcJMpRrXF3/preview"
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "title": "Suites numériques – Série + Correction",
+    "description": "Série d’exercices sur les suites numériques avec correction détaillée. Destinée aux élèves du baccalauréat pour maîtriser les suites arithmétiques, géométriques et récurrentes ainsi que les limites de suites.",
+  
+    "files": [
+      {
+        "name": "Série Suites",
+        "url": "https://drive.google.com/file/d/1CwuAv5MrXmGzKGLD9rSmZ9gzmOfoflam/preview"
+      },
+      {
+        "name": "Correction Série Suites",
+        "url": "https://drive.google.com/file/d/17MIliY2XqquCxs4eTcsSgSyLZao_dysJ/preview"
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "title": "Révision Générale – Mathématiques",
+    "description": "Série de révision générale en mathématiques pour les élèves du baccalauréat. Contient des exercices et corrections couvrant plusieurs chapitres essentiels.",
+  
+    "files": [
+      {
+        "name": "Série 1 (S1)",
+        "url": "https://drive.google.com/file/d/1aLWxxkR-oxxY_BWH7gEumYjmhgc2_xVZ/preview"
+      },
+      {
+        "name": "Correction 1 (C1)",
+        "url": "https://drive.google.com/file/d/13ytIwlJDUMbVwPPdTpzkZsVSAv-ghipd/preview"
+      },
+      {
+        "name": "Série 2 (S2)",
+        "url": "https://drive.google.com/file/d/1JBF-IZnrCJyrdcJ596RIfDFbv3X-VNjq/preview"
+      },
+      {
+        "name": "Correction 2 (C2)",
+        "url": "https://drive.google.com/file/d/1r9yMy12xiOZ_x8BKGY1nFHfvlwqTMQAB/preview"
+      }
+    ]
+  },
+  
+  {
+    "id": 39,
+    "title": "Intégrales – Séries 1 à 4 avec correction",
+    "description": "Séries d’exercices sur les intégrales avec correction détaillée. Destinées aux élèves du baccalauréat pour maîtriser le calcul intégral, les primitives et les applications.",
+  
+    "files": [
+      {
+        "name": "Série 1 + Correction",
+        "url": "https://drive.google.com/file/d/1egbMCaDx1fTSoENQgxadit43wvWnTCg-/preview"
+      },
+      {
+        "name": "Série 2 + Correction",
+        "url": "https://drive.google.com/file/d/1pNGZSgUhMVkz99kcPrPRayc_0FD8eBgV/preview"
+      },
+      {
+        "name": "Série 3 + Correction",
+        "url": "https://drive.google.com/file/d/1QLcZFTIEOVZ-YwuxDhwOsfI7QypFoBNv/preview"
+      },
+      {
+        "name": "Série 4 + Correction",
+        "url": "https://drive.google.com/file/d/1XseU26RFDUZcmlbO0C7RzrA61m-k9j0z/preview"
+      }
+    ]
+  },
+  
+  
+  {
+    "id": 40,
+    "title": "Ondes & Interaction matière – Série + Correction",
+    "description": "Séries d’exercices sur les ondes mécaniques et leur interaction avec la matière. Couvre les ondes progressives, stationnaires, la propagation et les phénomènes physiques associés. Destiné aux élèves du baccalauréat.",
+  
+    "files": [
+      {
+        "name": "Série 1 – Ondes & Interaction",
+        "url": "https://drive.google.com/file/d/1P-0jrl687l20whMdRjaUnDX_plRtXdhY/preview"
+      },
+      {
+        "name": "Correction Série 1",
+        "url": "https://drive.google.com/file/d/1dm1-EFzUVf_hnOpOmUyPs-s_d8OsYMyj/preview"
+      },
+      {
+        "name": "Série 2 – Ondes & Interaction",
+        "url": "https://drive.google.com/file/d/1asJeYhD4pRL8qUmImh7jVC6awHgcvhWh/preview"
+      },
+      {
+        "name": "Correction Série 2",
+        "url": "https://drive.google.com/file/d/1P8R1K-L55VbsnCuWcidOzkKqdBFBSKyi/preview"
+      },
+      {
+        "name": "Série 3 – Ondes & Interaction",
+        "url": "https://drive.google.com/file/d/144nlY1UGODzS3XIa4-Yp_SD81gnSDLDU/preview"
+      },
+      {
+        "name": "Correction Série 3",
+        "url": "https://drive.google.com/file/d/1Eggm8SDZiIMU4mGCGVadPe_vhXd_x49q/preview"
+      }
+    ]
+  },
+  
+  
+  
+  
+  
+  
+  {
+      "id": 41,
+      "title": "Math – Intégrale",
+      "description": "Séries d'exercices avec corrections pour maîtriser le calcul integral et se préparer au Bac.",
+      "files": [
+          {
+              "name": "Série 1 – Intégrale",
+              "url": "https://drive.google.com/file/d/1wFWsbHSXBTV8snVzx6hHpB7Hkr9LUmAt/view?usp=drive_link"
+          },
+          {
+              "name": "Correction Série 1 – Intégrale",
+              "url": "https://drive.google.com/file/d/1wFWsbHSXBTV8snVzx6hHpB7Hkr9LUmAt/view?usp=drive_link"
+          },
+          {
+              "name": "Série 2 – Intégrale",
+              "url": "https://drive.google.com/file/d/1_qmruUYcu4d4OCsnGyqNpnP-ogk19eKd/view?usp=drive_link"
+          },
+          {
+              "name": "Correction Série 2 – Intégrale",
+              "url": "https://drive.google.com/file/d/1_qmruUYcu4d4OCsnGyqNpnP-ogk19eKd/view?usp=drive_link"
+          },
+          {
+              "name": "Série 3 – Intégrale",
+              "url": "https://drive.google.com/file/d/14SkWEinpVwyL114OuJLZU2B6dSJxEht8/view?usp=drive_link"
+          },
+          {
+              "name": "Correction Série 3 – Intégrale",
+              "url": "https://drive.google.com/file/d/14SkWEinpVwyL114OuJLZU2B6dSJxEht8/view?usp=drive_link"
+          },
+          {
+              "name": "Série 4 – Intégrale",
+              "url": "https://drive.google.com/file/d/1lGi9bMBsbThj3QBdun27ODQs6VvjQ6J1/view?usp=drive_link"
+          },
+          {
+              "name": "Correction Série 4 – Intégrale",
+              "url": "https://drive.google.com/file/d/1lGi9bMBsbThj3QBdun27ODQs6VvjQ6J1/view?usp=drive_link"
+          },
+          {
+              "name": "Série 5 – Intégrale",
+              "url": "https://drive.google.com/file/d/1l5aDIRTmSekTjDt6pQ388e6IO2AUVTrk/view?usp=drive_link"
+          },
+          {
+              "name": "Correction Série 5 – Intégrale",
+              "url": "https://drive.google.com/file/d/1da0QPlsTou8M0m1ygAUYFijrvy_p6Sr_/view?usp=drive_link"
+          }
+      ]
+  },
+  
+  
+  
+  
+  {
+      id: 42,
+      title: "Devoirs de synthèse n°3 – Physique",
+      description: "Série de devoirs de synthese 3 Physique avec corrections pour réviser efficacement et se préparer au Bac.",
+      files: [
+          {
+              name: "Devoir de synthèse n°3 - 1",
+              url: "https://drive.google.com/file/d/1c_Jd0jqynJ4cZ1mHMfd3biIK-2LSG8K9/preview"
+          },
+          {
+              name: "Correction n°3 - 1",
+              url: "https://drive.google.com/file/d/1gg5dQyAUZx0dT53YjXIhX_ZRmOCVwO24/preview"
+          },
+          {
+              name: "Devoir de synthèse n°3 - 2",
+              url: "https://drive.google.com/file/d/1cIsvVKmyV5yH9AA1Eg8rNmUmdXDoFKYp/preview"
+          },
+          {
+              name: "Correction n°3 - 2",
+              url: "https://drive.google.com/file/d/19OSEe4VJnf2H-1PcBOzP4gLDDkghFF-I/preview"
+          },
+          {
+              name: "Devoir de synthèse n°3 - 3",
+              url: "https://drive.google.com/file/d/1JRZ3VW47OgHZiAopB99OK2y9YcQ4Q4nY/preview"
+          },
+          {
+              name: "Correction n°3 - 3",
+              url: "https://drive.google.com/file/d/1k_12UiLnCRTuaDe2lUv0xSPS2aNeFo1G/preview"
+          },
+          {
+              name: "Devoir de synthèse n°3 - 4",
+              url: "https://drive.google.com/file/d/1ui6TB4Lxd-PvvJFB4zOSL_F57M2V99Kh/preview"
+          },
+          {
+              name: "Correction n°3 - 4",
+              url: "https://drive.google.com/file/d/1WCvCgQDvwFK-MTMwXipkXbrcieQB5Ynb/preview"
+          },
+          {
+              name: "Devoir de synthèse n°3 - 5",
+              url: "https://drive.google.com/file/d/1414_mtXZ45eB_0CwJL2Fld9RnlBeJEjN/preview"
+          },
+          {
+              name: "Correction n°3 - 5",
+              url: "https://drive.google.com/file/d/1yh_EeGx3Ezg1NwZp85zQZFXHxum_jth_/preview"
+          },
+          {
+              name: "Devoir de synthèse n°3 - 6",
+              url: "https://drive.google.com/file/d/1tigyj91mNV59ceab6b57VyNKcKF2MWBQ/preview"
+          },
+          {
+              name: "Correction n°3 - 6",
+              url: "https://drive.google.com/file/d/1VnhhglZ7TmZ0pLKuSK06JE9Xksh1eT_w/preview"
+          },
+          {
+              name: "Devoir de synthèse n°3 - 7",
+              url: "https://drive.google.com/file/d/1iH2Qe3hWQ8Jm93oeeyfVxXIWwO6aCman/preview"
+          },
+          {
+              name: "Correction n°3 - 7",
+              url: "https://drive.google.com/file/d/1VgWQ1cCAJ0_1coT_vouFiPIE9JgJ4IbW/preview"
+          }
+      ]
+  },
+  {
+      id: 43,
+      title: "Le Spectre – Physique",
+      description: "Cours, fiches de méthode et séries corrigées sur le chapitre du spectre en Physique pour maîtriser les notions essentielles du Bac.",
+      files: [
+          {
+              name: "Fiche de méthode – Le Spectre",
+              url: "https://drive.google.com/file/d/17SG5v79gy_DTwv4N4w0OODpsptDi6qFQ/preview"
+          },
+          {
+              name: "Série 1 avec correction",
+              url: "https://drive.google.com/file/d/1zIvo1rEGD9OxqZnIAJoPqmdH_2DhA9NZ/preview"
+          },
+          {
+              name: "Série 2 avec correction",
+              url: "https://drive.google.com/file/d/1LHyNp_6t60t2KgzFaYtkDLKv_Xo6wu_f/preview"
+          }
+      ]
+  },
+  
+  {
+      id: 44,
+      title: "Les Amides – Physique",
+      description: "Séries corrigées sur le chapitre des amides en Physique pour renforcer la compréhension et s’entraîner efficacement pour le Bac.",
+      files: [
+          {
+              name: "Série 1 – Les Amides",
+              url: "https://drive.google.com/file/d/1GD4YK62eaAAj_yO7pS16BzsppBLmSz_U/preview"
+          },
+          {
+              name: "Correction Série 1",
+              url: "https://drive.google.com/file/d/1yqXGDBqp7fQE3J2byw0Dy-6Iq53Yfbic/preview"
+          }
+      ]
+  },
+  
+  
+  {
+      id: 45,
+      title: "Réactions Nucléaires – Physique",
+      description: "Fiche de méthode et séries corrigées sur les réactions nucléaires en Physique pour bien comprendre le chapitre et réussir le Bac.",
+      files: [
+          {
+              name: "Fiche de méthode – Réactions Nucléaires",
+              url: "https://drive.google.com/file/d/14OcIQK-7Er7UcXVdQpKeW-gv8fKdc3Zk/preview"
+          },
+          {
+              name: "Série 1 – Réactions Nucléaires",
+              url: "https://drive.google.com/file/d/1COFT64BhCER9rOom0Rqj9sQtnTXZq3M7/preview"
+          },
+          {
+              name: "Correction Série 1",
+              url: "https://drive.google.com/file/d/1i68qHgwNwJLTWwGV50Qc_YQ-9FiIfvfS/preview"
+          }
+      ]
+  },
+  {
+    id: 46,
+    title: "العربية – منهجية ولغة",
+    description: "ملخصات، مسائل لغوية، ووثائق منهجية في مادة العربية لمساعدة تلامذة البكالوريا على تحسين الفهم والتحضير الجيد للامتحان.",
+    files: [
         {
-            "name": "Série 1 – Intégrale",
-            "url": "https://drive.google.com/file/d/1wFWsbHSXBTV8snVzx6hHpB7Hkr9LUmAt/view?usp=drive_link"
+            name: "أنواع الحجج في مادة العربية",
+            url: "https://drive.google.com/file/d/1d18frNgUbF4UbW3KJ-ucrifGdlGt6dRb/preview"
         },
         {
-            "name": "Correction Série 1 – Intégrale",
-            "url": "https://drive.google.com/file/d/1wFWsbHSXBTV8snVzx6hHpB7Hkr9LUmAt/view?usp=drive_link"
+            name: "تلخيص المحتوى الفني والمسائل اللغوية",
+            url: "https://drive.google.com/file/d/13mtNANhW6Hb3kru90EFsfcMD9BfUvpmu/preview"
         },
         {
-            "name": "Série 2 – Intégrale",
-            "url": "https://drive.google.com/file/d/1_qmruUYcu4d4OCsnGyqNpnP-ogk19eKd/view?usp=drive_link"
+            name: "مسائل لغوية لمادة العربية",
+            url: "https://drive.google.com/file/d/1KfP6f6g8ltd8noo-ajdKzSKrV3rnNtJC/preview"
         },
         {
-            "name": "Correction Série 2 – Intégrale",
-            "url": "https://drive.google.com/file/d/1_qmruUYcu4d4OCsnGyqNpnP-ogk19eKd/view?usp=drive_link"
+            name: "مساعدة منهجية للشعب العلمية",
+            url: "https://drive.google.com/file/d/1u-Vj-8R0SIyqVLjmtdzzV8arB-VxZlni/preview"
         },
         {
-            "name": "Série 3 – Intégrale",
-            "url": "https://drive.google.com/file/d/14SkWEinpVwyL114OuJLZU2B6dSJxEht8/view?usp=drive_link"
-        },
-        {
-            "name": "Correction Série 3 – Intégrale",
-            "url": "https://drive.google.com/file/d/14SkWEinpVwyL114OuJLZU2B6dSJxEht8/view?usp=drive_link"
-        },
-        {
-            "name": "Série 4 – Intégrale",
-            "url": "https://drive.google.com/file/d/1lGi9bMBsbThj3QBdun27ODQs6VvjQ6J1/view?usp=drive_link"
-        },
-        {
-            "name": "Correction Série 4 – Intégrale",
-            "url": "https://drive.google.com/file/d/1lGi9bMBsbThj3QBdun27ODQs6VvjQ6J1/view?usp=drive_link"
-        },
-        {
-            "name": "Série 5 – Intégrale",
-            "url": "https://drive.google.com/file/d/1l5aDIRTmSekTjDt6pQ388e6IO2AUVTrk/view?usp=drive_link"
-        },
-        {
-            "name": "Correction Série 5 – Intégrale",
-            "url": "https://drive.google.com/file/d/1da0QPlsTou8M0m1ygAUYFijrvy_p6Sr_/view?usp=drive_link"
+            name: "وثيقة منهجية لمادة العربية",
+            url: "https://drive.google.com/file/d/1vy2TwO7qfE2gogeDSvRpJgDdjf7K8-R5/preview"
         }
     ]
 },
-
-
-
-
 {
-    id: 42,
-    title: "Devoirs de synthèse n°3 – Physique",
-    description: "Série de devoirs de synthese 3 Physique avec corrections pour réviser efficacement et se préparer au Bac.",
-    files: [
-        {
-            name: "Devoir de synthèse n°3 - 1",
-            url: "https://drive.google.com/file/d/1c_Jd0jqynJ4cZ1mHMfd3biIK-2LSG8K9/preview"
-        },
-        {
-            name: "Correction n°3 - 1",
-            url: "https://drive.google.com/file/d/1gg5dQyAUZx0dT53YjXIhX_ZRmOCVwO24/preview"
-        },
-        {
-            name: "Devoir de synthèse n°3 - 2",
-            url: "https://drive.google.com/file/d/1cIsvVKmyV5yH9AA1Eg8rNmUmdXDoFKYp/preview"
-        },
-        {
-            name: "Correction n°3 - 2",
-            url: "https://drive.google.com/file/d/19OSEe4VJnf2H-1PcBOzP4gLDDkghFF-I/preview"
-        },
-        {
-            name: "Devoir de synthèse n°3 - 3",
-            url: "https://drive.google.com/file/d/1JRZ3VW47OgHZiAopB99OK2y9YcQ4Q4nY/preview"
-        },
-        {
-            name: "Correction n°3 - 3",
-            url: "https://drive.google.com/file/d/1k_12UiLnCRTuaDe2lUv0xSPS2aNeFo1G/preview"
-        },
-        {
-            name: "Devoir de synthèse n°3 - 4",
-            url: "https://drive.google.com/file/d/1ui6TB4Lxd-PvvJFB4zOSL_F57M2V99Kh/preview"
-        },
-        {
-            name: "Correction n°3 - 4",
-            url: "https://drive.google.com/file/d/1WCvCgQDvwFK-MTMwXipkXbrcieQB5Ynb/preview"
-        },
-        {
-            name: "Devoir de synthèse n°3 - 5",
-            url: "https://drive.google.com/file/d/1414_mtXZ45eB_0CwJL2Fld9RnlBeJEjN/preview"
-        },
-        {
-            name: "Correction n°3 - 5",
-            url: "https://drive.google.com/file/d/1yh_EeGx3Ezg1NwZp85zQZFXHxum_jth_/preview"
-        },
-        {
-            name: "Devoir de synthèse n°3 - 6",
-            url: "https://drive.google.com/file/d/1tigyj91mNV59ceab6b57VyNKcKF2MWBQ/preview"
-        },
-        {
-            name: "Correction n°3 - 6",
-            url: "https://drive.google.com/file/d/1VnhhglZ7TmZ0pLKuSK06JE9Xksh1eT_w/preview"
-        },
-        {
-            name: "Devoir de synthèse n°3 - 7",
-            url: "https://drive.google.com/file/d/1iH2Qe3hWQ8Jm93oeeyfVxXIWwO6aCman/preview"
-        },
-        {
-            name: "Correction n°3 - 7",
-            url: "https://drive.google.com/file/d/1VgWQ1cCAJ0_1coT_vouFiPIE9JgJ4IbW/preview"
-        }
-    ]
+  id: 47,
+  title: "العربية – المعهد النموذجي بسوسة",
+  description: "ملخصات شاملة لمحاور مادة العربية الخاصة بالمعهد النموذجي بسوسة لمساعدة تلامذة البكالوريا على المراجعة والتحضير الجيد للامتحان.",
+  files: [
+      {
+          name: "تلخيص جميع المحاور",
+          url: "https://drive.google.com/file/d/1MFYvJlAFxxrO3hqIQbtb536pC5ZP8d4d/preview"
+      },
+      {
+          name: "شواغل عالمنا المعاصر",
+          url: "https://drive.google.com/file/d/1x6uaV6TreeTpTuVea-S3VDkbj5Jm4tAZ/preview"
+      },
+      {
+          name: "في التفكير العلمي",
+          url: "https://drive.google.com/file/d/1HSsdJDLmq_KCm7hB8gXQDOAQ2YniKuPS/preview"
+      },
+      {
+          name: "في الفكر والفن",
+          url: "https://drive.google.com/file/d/1cBAbFktFrNH1NIYLv6FdYKc9NPQJHp_p/preview"
+      },
+      {
+          name: "في الفن والأدب",
+          url: "https://drive.google.com/file/d/1MHvqpMdXl7BreCjyIEso2IUoq4I57IL-/preview"
+      },
+      {
+          name: "في حوار الحضارات",
+          url: "https://drive.google.com/file/d/11-rldxUwap6SDGoNwqKYBnYyaiZ3WmQR/preview"
+      }
+  ]
+}, 
+{
+  id: 48,
+  title: "العربية – المعهد النموذجي بمدنين",
+  description: "ملخصات لمحاور مادة العربية الخاصة بالمعهد النموذجي بمدنين لمساعدة تلامذة البكالوريا على الفهم الجيد والتحضير للامتحان.",
+  files: [
+      {
+          name: "في التفكير العلمي",
+          url: "https://drive.google.com/file/d/1-2wCSo1HzdbLhEovvodv5owlCrEApY_5/preview"
+      },
+      {
+          name: "في الفكر والفنّ",
+          url: "https://drive.google.com/file/d/1e7HwoAX9LtZbkQSDKjj9vk2lnnHu6aQa/preview"
+      },
+      {
+          name: "في حوار الحضارات",
+          url: "https://drive.google.com/file/d/1dzJxJc9jDgu5A8GAB3EX70YFTBIzIXgh/preview"
+      }
+  ]
 },
 {
-    id: 43,
-    title: "Le Spectre – Physique",
-    description: "Cours, fiches de méthode et séries corrigées sur le chapitre du spectre en Physique pour maîtriser les notions essentielles du Bac.",
-    files: [
-        {
-            name: "Fiche de méthode – Le Spectre",
-            url: "https://drive.google.com/file/d/17SG5v79gy_DTwv4N4w0OODpsptDi6qFQ/preview"
-        },
-        {
-            name: "Série 1 avec correction",
-            url: "https://drive.google.com/file/d/1zIvo1rEGD9OxqZnIAJoPqmdH_2DhA9NZ/preview"
-        },
-        {
-            name: "Série 2 avec correction",
-            url: "https://drive.google.com/file/d/1LHyNp_6t60t2KgzFaYtkDLKv_Xo6wu_f/preview"
-        }
-    ]
-},
-
-{
-    id: 44,
-    title: "Les Amides – Physique",
-    description: "Séries corrigées sur le chapitre des amides en Physique pour renforcer la compréhension et s’entraîner efficacement pour le Bac.",
-    files: [
-        {
-            name: "Série 1 – Les Amides",
-            url: "https://drive.google.com/file/d/1GD4YK62eaAAj_yO7pS16BzsppBLmSz_U/preview"
-        },
-        {
-            name: "Correction Série 1",
-            url: "https://drive.google.com/file/d/1yqXGDBqp7fQE3J2byw0Dy-6Iq53Yfbic/preview"
-        }
-    ]
-},
-
-
-{
-    id: 45,
-    title: "Réactions Nucléaires – Physique",
-    description: "Fiche de méthode et séries corrigées sur les réactions nucléaires en Physique pour bien comprendre le chapitre et réussir le Bac.",
-    files: [
-        {
-            name: "Fiche de méthode – Réactions Nucléaires",
-            url: "https://drive.google.com/file/d/14OcIQK-7Er7UcXVdQpKeW-gv8fKdc3Zk/preview"
-        },
-        {
-            name: "Série 1 – Réactions Nucléaires",
-            url: "https://drive.google.com/file/d/1COFT64BhCER9rOom0Rqj9sQtnTXZq3M7/preview"
-        },
-        {
-            name: "Correction Série 1",
-            url: "https://drive.google.com/file/d/1i68qHgwNwJLTWwGV50Qc_YQ-9FiIfvfS/preview"
-        }
-    ]
+  id: 49,
+  title: "Pile de Daniell – Physique",
+  description: "Fiche de méthode et séries corrigées sur la pile de Daniell en Physique pour maîtriser le chapitre et bien préparer le Bac.",
+  files: [
+      {
+          name: "Fiche de méthode – Pile de Daniell",
+          url: "https://drive.google.com/file/d/1z9RfPDpufPJFMUC6TffBBGSguX8Wo8AH/preview"
+      },
+      {
+          name: "Série 1 – Pile de Daniell",
+          url: "https://drive.google.com/file/d/15aKSuhjSp6vaGd4DozujlNYeHpm0yyCe/preview"
+      },
+      {
+          name: "Correction Série 1",
+          url: "https://drive.google.com/file/d/15jjKqLEXuxbCw1acB9tqdZzih9WH1gcC/preview"
+      },
+      {
+          name: "Série 2 – Pile de Daniell",
+          url: "https://drive.google.com/file/d/1eTafJzW87QAvAA0aXqNnkLDi84YN0Hde/preview"
+      },
+      {
+          name: "Correction Série 2",
+          url: "https://drive.google.com/file/d/144YOUNW_qWbzt2KygKcIhnMovBCi5NCq/preview"
+      },
+      {
+          name: "Série 3 – Pile de Daniell",
+          url: "https://drive.google.com/file/d/1tlOq8lvjRMHD8JPEC1KkQRn8Np46kiNl/preview"
+      },
+      {
+          name: "Correction Série 3",
+          url: "https://drive.google.com/file/d/12M76u2R9o3ZhyVQearuGuHCLo4ObcTjU/preview"
+      }
+  ]
 }
-
-
-
-
-
-
-               
-            ];
+  
+  
+  
+  
+  
+  
+                 
+              ];

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduPath — رحلة التعلم</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="./assets/css/style.css">
+<style>
+/* Toast notification */
+.toast-auth {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #1e293b;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 40px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  z-index: 10001;
+  opacity: 0;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.1);
+  pointer-events: none;
+  font-family: 'Tajawal', sans-serif;
+  direction: rtl;
+}
+.toast-auth.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.toast-auth i {
+  color: #10b981;
+  margin-left: 8px;
+}
+
+/* Protected overlay */
+.protected-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(24px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
+.protected-overlay h2 {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+.protected-overlay p {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  opacity: 0.7;
+  max-width: 500px;
+  font-family: 'Tajawal', sans-serif;
+}
+.protected-overlay .login-btn {
+  background: linear-gradient(135deg, #4F46E5, #7C3AED);
+  color: white;
+  padding: 14px 32px;
+  border-radius: 40px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Tajawal', sans-serif;
+}
+.protected-overlay .login-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-3px);
+}
+</style>
+</head>
+<body>
+
+<!-- PROTECTED OVERLAY (shown if not logged in) -->
+<div id="protectedOverlay" class="protected-overlay" style="display: none;">
+  <h2>🔐 تسجيل الدخول مطلوب</h2>
+  <p>يرجى تسجيل الدخول للوصول إلى منصة EduPath ومواصلة رحلة التعلم.</p>
+  <a href="../profile/login.html" class="login-btn" onclick="redirectToLogin()">
+    <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+  </a>
+</div>
+
+<!-- TOAST AUTH -->
+<div class="toast-auth" id="toastAuth"></div>
+
+<!-- ═══ TOP BAR ═══ -->
+<header class="topbar">
+  <a class="tb-logo" href="../profile/index.html" style="text-decoration:none;">
+    <div class="tb-icon" style="background:rgba(80,80,180,.1);box-shadow:none;border:1.5px solid var(--border2);">
+      <i class="fas fa-chevron-right" style="color:var(--text2);font-size:13px;"></i>
+    </div>
+    <span class="tb-name" style="font-size:14px;font-weight:600;color:var(--text2);">رجوع</span>
+  </a>
+  <div class="tb-divider"></div>
+  <span class="tb-course">رحلة التعلم الفلسفي</span>
+  <div class="tb-right">
+    <div class="tb-progress-wrap">
+      <span class="tb-progress-label" id="progLabel">0 من 30</span>
+      <div class="tb-progress-track">
+        <div class="tb-progress-fill" id="progFill" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="tb-badge">
+      <div class="dot"></div>
+      <span id="pctText">0% مكتمل</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ MAP ═══ -->
+<main class="map-outer" id="mapOuter">
+  <svg class="map-svg" id="svgOverlay"></svg>
+</main>
+
+<!-- ═══ COMPLETION TOAST ═══ -->
+<div class="toast" id="toast">
+  <div class="toast-inner">
+    <div class="toast-ico"><i class="fas fa-check"></i></div>
+    <div class="toast-text">
+      <strong id="toastTitle">تم إكمال الدرس!</strong>
+      <span id="toastSub">عمل رائع — واصل التعلم!</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DETAIL SHEET ═══ -->
+<div class="overlay" id="overlay">
+  <div class="ov-scrim" id="ovScrim"></div>
+  <div class="det-panel">
+    <div class="det-handle"></div>
+    <button class="det-close" id="detClose"><i class="fas fa-times"></i></button>
+    <div class="det-top">
+      <div class="det-ico" id="detIco"></div>
+      <div class="det-meta">
+        <div class="det-unit-label" id="detUnitLabel"></div>
+        <div class="det-title" id="detTitle"></div>
+        <div class="det-subtitle" id="detSub"></div>
+      </div>
+    </div>
+    <div class="det-divider"></div>
+    <div class="det-stats" id="detStats"></div>
+    <div class="det-prog-label">
+      <span>تقدم الدرس</span>
+      <span id="detPct"></span>
+    </div>
+    <div class="det-prog-track">
+      <div class="det-prog-fill" id="detFill" style="width:0%"></div>
+    </div>
+    <div class="det-completion-note" id="detNote">
+      <i class="fas fa-info-circle"></i>
+      <span id="detNoteText">افتح ملف PDF، اقرأ الدرس، ثم أغلق القارئ — سيتم حفظ تقدمك تلقائيًا.</span>
+    </div>
+    <div class="det-actions">
+      <button class="btn-start" id="btnStart">
+        <i class="fas fa-book-open"></i>
+        <span id="btnStartLabel">فتح الدرس</span>
+      </button>
+      <button class="btn-sec" id="btnBookmark" title="إشارة مرجعية">
+        <i class="far fa-bookmark"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PDF READER ═══ -->
+<div class="reader-modal" id="readerModal">
+  <div class="reader-scrim" id="readerScrim"></div>
+  <div class="reader-box">
+    <div class="reader-bar">
+      <div class="reader-dots">
+        <div class="rdot r" id="rdotClose"></div>
+        <div class="rdot y"></div>
+        <div class="rdot g" id="rdotExpand"></div>
+      </div>
+      <div class="reader-bar-center">
+        <div class="reader-stage-pill" id="readerPill">الدرس</div>
+      </div>
+      <div class="reader-bar-right">
+        <button class="reader-btn" id="readerNewTab" title="فتح في تبويب جديد">
+          <i class="fas fa-external-link-alt"></i>
+        </button>
+        <button class="reader-btn" id="readerClose" title="إغلاق">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+    <div class="reader-complete-bar" id="readerCompleteBar">
+      <div class="rcb-text">
+        <i class="fas fa-check-circle"></i>
+        تم تحديد الدرس كمكتمل — عمل رائع!
+      </div>
+      <button class="rcb-close" id="rcbClose">تم <i class="fas fa-arrow-left" style="margin-right:5px"></i></button>
+    </div>
+    <div class="reader-body">
+      <div class="reader-placeholder" id="readerPh">
+        <div class="rph-icon"><i class="fas fa-file-pdf"></i></div>
+        <div class="rph-title">أضف ملف PDF الخاص بك</div>
+        <div class="rph-body">
+          أضف معرّف ملف Google Drive إلى حقل <code>driveId</code> في كل درس.<br><br>
+          احصل عليه من: <code>drive.google.com/file/d/<strong>FILE_ID</strong>/view</code>
+        </div>
+      </div>
+      <iframe id="readerFrame" src="" style="display:none"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BOTTOM NAV ═══ -->
+<nav class="nav-bar">
+  <div class="nav-pill">
+    <button class="nav-btn" id="navPrev"><i class="fas fa-chevron-right"></i></button>
+    <div class="nav-center" id="navDots"></div>
+    <button class="nav-btn" id="navNext"><i class="fas fa-chevron-left"></i></button>
+  </div>
+</nav>
+
+<!-- ═══ FILO SIDE TRIGGERS ═══ -->
+<div class="filo-side-btn" id="filoBtn1" style="top:38%;" onclick="openFiloPanel('lessons')" title="الدروس والملخصات">
+  <div class="filo-side-notch" style="background:linear-gradient(135deg,#4F46E5,#7C3AED);">
+    <i class="filo-notch-icon fas fa-book-open"></i>
+    <span class="filo-notch-label">الدروس</span>
+    <i class="filo-notch-arrow fas fa-chevron-left"></i>
+  </div>
+</div>
+<div class="filo-side-btn" id="filoBtn2" style="top:50%;" onclick="openFiloPanel('exercises')" title="التمارين والفروض">
+  <div class="filo-side-notch" style="background:linear-gradient(135deg,#0369A1,#0EA5E9);">
+    <i class="filo-notch-icon fas fa-pen-to-square"></i>
+    <span class="filo-notch-label">التمارين</span>
+    <i class="filo-notch-arrow fas fa-chevron-left"></i>
+  </div>
+</div>
+<div class="filo-side-btn" id="filoBtn3" style="top:62%;" onclick="openFiloPanel('devoirs')" title="Devoirs">
+  <div class="filo-side-notch" style="background:linear-gradient(135deg,#047857,#10B981);">
+    <i class="filo-notch-icon fas fa-clipboard-list"></i>
+    <span class="filo-notch-label">Devoirs</span>
+    <i class="filo-notch-arrow fas fa-chevron-left"></i>
+  </div>
+</div>
+
+<!-- ═══ FILO MODAL ═══ -->
+<div class="filo-overlay" id="filoOverlay">
+  <div class="filo-scrim" id="filoScrim"></div>
+  <div class="filo-panel">
+    <div class="filo-banner" id="filoBanner">
+      <div class="filo-banner-bg" id="filoBannerBg"></div>
+      <div class="filo-banner-inner">
+        <div class="filo-banner-top-row">
+          <div class="filo-banner-icon-wrap" id="filoBannerIcon"><i class="fas fa-book-open"></i></div>
+          <button class="filo-banner-close" id="filoBannerClose"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="filo-banner-eyebrow" id="filoBannerEyebrow">فلسفة الباكالوريا</div>
+        <div class="filo-banner-title" id="filoBannerTitle">الدروس والملخّصات</div>
+        <div class="filo-banner-sub" id="filoBannerSub">بطاقات دروس كاملة للتحكّم في البرنامج</div>
+        <div class="filo-tab-bar">
+          <button class="filo-tab-btn active" id="tabLessons" onclick="switchFiloTab('lessons')">
+            <i class="fas fa-book-open"></i> الدروس
+          </button>
+          <button class="filo-tab-btn" id="tabExercises" onclick="switchFiloTab('exercises')">
+            <i class="fas fa-pen-to-square"></i> التمارين
+          </button>
+          <button class="filo-tab-btn" id="tabDevoirs" onclick="switchFiloTab('devoirs')">
+            <i class="fas fa-clipboard-list"></i> Devoirs
+          </button>
+        </div>
+      </div>
+      <div class="filo-banner-bottom"></div>
+    </div>
+    <div class="filo-content" id="filoContent"></div>
+  </div>
+</div>
+
+<!-- ═══ EXERCISE DETAIL MODAL (new — level 2) ═══ -->
+<div class="exdet-overlay" id="exdetOverlay">
+  <div class="exdet-scrim" id="exdetScrim"></div>
+  <div class="exdet-panel">
+    <div class="exdet-banner">
+      <div class="exdet-banner-bg" id="exdetBannerBg"></div>
+      <div class="exdet-banner-orb"></div>
+      <div class="exdet-banner-orb2"></div>
+      <div class="exdet-banner-inner">
+        <div class="exdet-banner-row1">
+          <button class="exdet-back-btn" id="exdetBackBtn">
+            <i class="fas fa-chevron-right"></i> رجوع
+          </button>
+          <button class="exdet-close-btn" id="exdetCloseBtn">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="exdet-banner-icon" id="exdetBannerIcon">
+          <i class="fas fa-pen-to-square"></i>
+        </div>
+        <div class="exdet-banner-eyebrow" id="exdetEyebrow">التمارين</div>
+        <div class="exdet-banner-title" id="exdetTitle">عنوان الوحدة</div>
+        <div class="exdet-banner-sub" id="exdetSub">اختر الملف الذي تريد فتحه</div>
+        <div class="exdet-banner-chips" id="exdetChips"></div>
+      </div>
+      <div class="exdet-banner-curve"></div>
+    </div>
+    <div class="exdet-content" id="exdetContent"></div>
+  </div>
+</div>
+
+<!-- ═══ FILO PDF READER ═══ -->
+<div class="filo-reader-overlay" id="filoReaderOverlay">
+  <div class="filo-reader-scrim" id="filoReaderScrim"></div>
+  <div class="filo-reader-box">
+    <div class="filo-reader-bar">
+      <div class="filo-reader-dots">
+        <div class="rdot r" id="filoRdotClose" style="cursor:pointer"></div>
+        <div class="rdot y"></div>
+        <div class="rdot g" id="filoRdotExpand" style="cursor:pointer"></div>
+      </div>
+      <div class="filo-reader-pill">
+        <span id="filoReaderPill">المستند</span>
+      </div>
+      <div style="display:flex;gap:7px;">
+        <button class="filo-reader-ext-btn" id="filoReaderExtBtn" title="فتح في تبويب جديد">
+          <i class="fas fa-external-link-alt"></i>
+        </button>
+        <button class="filo-reader-close-btn" id="filoReaderCloseBtn" title="إغلاق">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+    <div class="filo-reader-body">
+      <div class="filo-reader-ph" id="filoReaderPh">
+        <div class="filo-reader-ph-ico"><i class="fas fa-file-pdf"></i></div>
+        <div class="filo-reader-ph-title">أضف رابط Google Drive</div>
+        <div class="filo-reader-ph-body">
+          أضف <code>driveId</code> للملف ليظهر هنا.<br>
+          رابط الملف: <code>drive.google.com/file/d/<strong>FILE_ID</strong>/view</code>
+        </div>
+      </div>
+      <iframe id="filoReaderFrame" src="" style="display:none"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   AUTHENTICATION FUNCTIONS
+══════════════════════════════════════════════════════ */
+const AUTH_CONFIG = {
+    isLoggedInKey: 'eduwell_svt_isLoggedIn',
+    usernameKey: 'eduwell_svt_username',
+    lastActivityKey: 'eduwell_svt_lastActivity'
+};
+
+// Get current user info
+function getCurrentUser() {
+    return {
+        username: localStorage.getItem(AUTH_CONFIG.usernameKey) || 'طالب',
+        email: localStorage.getItem(AUTH_CONFIG.usernameKey) || 'student@edupath.com'
+    };
+}
+
+// Check if user is authenticated
+function isAuthenticated() {
+    const isLoggedIn = localStorage.getItem(AUTH_CONFIG.isLoggedInKey) === 'true';
+    if (!isLoggedIn) return false;
+    
+    const lastActivity = localStorage.getItem(AUTH_CONFIG.lastActivityKey);
+    if (lastActivity) {
+        const lastActivityTime = parseInt(lastActivity);
+        const minutesDiff = (Date.now() - lastActivityTime) / (1000 * 60);
+        if (minutesDiff >= 30) {
+            // Session expired due to inactivity
+            localStorage.removeItem(AUTH_CONFIG.isLoggedInKey);
+            localStorage.removeItem(AUTH_CONFIG.usernameKey);
+            localStorage.removeItem(AUTH_CONFIG.lastActivityKey);
+            return false;
+        }
+    }
+    return true;
+}
+
+// Update user activity timestamp
+function updateUserActivity() {
+    if (localStorage.getItem(AUTH_CONFIG.isLoggedInKey) === 'true') {
+        localStorage.setItem(AUTH_CONFIG.lastActivityKey, Date.now().toString());
+    }
+}
+
+// Initialize activity tracking
+function initActivityTracking() {
+    ['click', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(event => {
+        document.addEventListener(event, updateUserActivity);
+    });
+    
+    // Check session every minute
+    window.activityTimer = setInterval(() => {
+        if (isAuthenticated()) {
+            const lastActivity = localStorage.getItem(AUTH_CONFIG.lastActivityKey);
+            if (lastActivity) {
+                const lastActivityTime = parseInt(lastActivity);
+                const minutesDiff = (Date.now() - lastActivityTime) / (1000 * 60);
+                if (minutesDiff >= 30) {
+                    toastAuth('انتهت الجلسة - يرجى تسجيل الدخول مرة أخرى');
+                    showLoginOverlay();
+                }
+            }
+        }
+    }, 60000);
+}
+
+// Toast auth notification
+var toastAuthTimer;
+function toastAuth(message) {
+    var el = document.getElementById('toastAuth');
+    if (el) {
+        el.innerHTML = '<i class="fas fa-info-circle"></i> ' + message;
+        el.classList.add('show');
+        clearTimeout(toastAuthTimer);
+        toastAuthTimer = setTimeout(function() {
+            el.classList.remove('show');
+        }, 3000);
+    }
+}
+
+// Show login overlay
+function showLoginOverlay() {
+    document.getElementById('protectedOverlay').style.display = 'flex';
+}
+
+// Redirect to login
+function redirectToLogin() {
+    sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+    window.location.href = '../profile/login.html';
+}
+
+// Check authentication on page load
+function checkAuth() {
+    if (!isAuthenticated()) {
+        // Store current page for redirect back
+        sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+        showLoginOverlay();
+    } else {
+        // Initialize activity tracking
+        initActivityTracking();
+        updateUserActivity();
+    }
+}
+
+/* ══════════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════════ */
+// Call checkAuth when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    checkAuth();
+});
+
+// Handle page show event (for back/forward cache)
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+        // Page was restored from cache, re-check authentication
+        if (!isAuthenticated()) {
+            showLoginOverlay();
+        } else {
+            updateUserActivity();
+        }
+    }
+});
+
+// Disable right-click and save shortcuts (optional)
+document.addEventListener('contextmenu', function(e) { 
+    if (!isAuthenticated()) return;
+    e.preventDefault(); 
+    return false; 
+});
+
+document.addEventListener('keydown', function(e) {
+    if (!isAuthenticated()) return;
+    if ((e.ctrlKey && e.key === 's') || 
+        (e.ctrlKey && e.shiftKey && e.key === 'S') || 
+        (e.ctrlKey && e.key === 'p') ||
+        e.key === 'F12') {
+        e.preventDefault();
+        return false;
+    }
+});
+</script>
+
+<script src="./assets/js/script.js"></script>
+</body>
+</html>

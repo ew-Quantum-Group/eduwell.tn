@@ -45,6 +45,11 @@
                 password: 'Studi2026', 
                 name: 'Bac2026' 
             },
+            { 
+                username: 'amira661616@gmail.com',
+                password: 'Si01/50165', 
+                name: 'Amira Bv' 
+            },
              { 
                 username: 'ahlemlaz09@gmail.com',
                 password: 'Cin102007.', 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
+<html lang="fr" data-theme="light">
+<head> 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNTBT1VQN7"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -12,1078 +12,464 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sahl Learn | منصة سهل</title>
   <link rel="shortcut icon" href="./assets/images/app-store.png" type="image/x-icon">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Caveat:wght@700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --black:    #0A0A0B;
-      --gray-2:   #48484A;
-      --gray-3:   #8E8E93;
-      --gray-4:   #C7C7CC;
-      --white:    #FFFFFF;
-      --border:   rgba(0,0,0,0.07);
-      --f:        'Plus Jakarta Sans', sans-serif;
-      --f-hand:   'Caveat', cursive;
-      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-      --ease-in:  cubic-bezier(0.64, 0, 0.78, 0);
-    }
-
-    html, body {
-      height: 100%;
-      font-family: var(--f);
-      background: #ffffff;
-      color: var(--black);
-      overflow: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .page {
-      position: fixed; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      z-index: 10;
-      will-change: opacity, transform;
-    }
-    .page.leave { animation: leaveUp 0.45s var(--ease-in) forwards; }
-    .page.enter { animation: enterUp 0.55s var(--ease-out) forwards; }
-    .page.gone  { display: none; }
-
-    @keyframes leaveUp {
-      to { opacity:0; transform:translateY(-28px) scale(0.98); }
-    }
-    @keyframes enterUp {
-      from { opacity:0; transform:translateY(36px); }
-      to   { opacity:1; transform:translateY(0); }
-    }
-
-    /* ══════════════════════════════════════
-       PAGE 1 — WHITE + BLUE BLOB EFFECT
-    ══════════════════════════════════════ */
-    #p1 {
-      background-color: #ffffff;
-      background-image:
-        radial-gradient(ellipse 65% 55% at 0% 0%,   rgba(120, 80, 255, 0.10) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 45% at 100% 0%,  rgba(80,  40, 200, 0.08) 0%, transparent 65%),
-        radial-gradient(ellipse 55% 50% at 100% 100%,rgba(0,  200, 230, 0.12) 0%, transparent 65%),
-        radial-gradient(ellipse 45% 40% at 20% 100%, rgba(0,  160, 210, 0.08) 0%, transparent 65%),
-        radial-gradient(ellipse 35% 35% at 55% 50%,  rgba(100, 50, 220, 0.05) 0%, transparent 60%);
-      padding: 2rem;
-      text-align: center;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-    }
-    #p1 > *:not(.bg-grain):not(.bg-grid):not(.bg-edge):not(.bg-blobs) {
-      position: relative; z-index: 3;
-    }
-
-    .bg-grid {
-      position: absolute; inset: 0; z-index: 1; pointer-events: none;
-      opacity: 0.07;
-      background-image:
-        linear-gradient(rgba(80,60,200,0.6) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(80,60,200,0.6) 1px, transparent 1px);
-      background-size: 40px 40px;
-      mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 80%);
-      -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 80%);
-    }
-
-    .bg-grain {
-      position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0.025;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 180px 180px;
-    }
-
-    .bg-edge {
-      position: absolute; inset: 0; z-index: 2; pointer-events: none;
-      background: radial-gradient(ellipse 85% 85% at 50% 50%, transparent 45%, rgba(240,242,255,0.60) 100%);
-    }
-
-    .bg-blobs { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
-    .blob { position: absolute; border-radius: 50%; filter: blur(90px); will-change: transform; }
-    .blob-1 {
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(110, 60, 255, 0.14) 0%, transparent 70%);
-      top: -10%; left: -10%;
-      animation: b1 30s ease-in-out infinite alternate;
-    }
-    .blob-2 {
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(0, 190, 220, 0.14) 0%, transparent 70%);
-      bottom: -10%; right: -8%;
-      animation: b2 35s ease-in-out infinite alternate;
-    }
-    .blob-3 {
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, rgba(80, 30, 200, 0.10) 0%, transparent 70%);
-      top: 40%; left: 60%;
-      animation: b3 28s ease-in-out infinite alternate;
-    }
-    @keyframes b1 { 0%{transform:translate(0,0) scale(1)} 100%{transform:translate(60px,80px) scale(1.1)} }
-    @keyframes b2 { 0%{transform:translate(0,0) scale(1)} 100%{transform:translate(-50px,-60px) scale(1.08)} }
-    @keyframes b3 { 0%{transform:translate(0,0) scale(1)} 100%{transform:translate(-40px,50px) scale(1.12)} }
-
-    #p1 .wordmark         { color: #0A0A0B; }
-    #p1 .wordmark em      { color: #4B6FFF; }
-    #p1 .tagline          { color: #8E8E93; }
-    #p1 .proof-text       { color: #8E8E93; }
-    #p1 .proof-text strong{ color: #0A0A0B; }
-    #p1 .proof-avatars span {
-      background: rgba(75, 111, 255, 0.08);
-      border-color: rgba(75, 111, 255, 0.18);
-      color: #4B6FFF;
-    }
-
-    .icon-scene {
-      width: 84px; height: 84px; perspective: 600px;
-      margin: 0 auto 28px;
-      animation: iconIn 0.7s var(--ease-out) 0.05s both;
-      flex-shrink: 0;
-    }
-    .app-icon {
-      width: 100%; height: 100%; position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.8s cubic-bezier(0.4,0,0.2,1);
-    }
-    .app-icon.flipped { transform: rotateY(180deg); }
-    .icon-face {
-      position: absolute; inset: 0; border-radius: 22px;
-      display: flex; align-items: center; justify-content: center;
-      backface-visibility: hidden; -webkit-backface-visibility: hidden;
-    }
-    .icon-face-front {
-      background: rgba(255,255,255,0.70);
-      border: 1px solid rgba(75,111,255,0.20);
-      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 2px 28px rgba(75,111,255,0.12), inset 0 1px 0 rgba(255,255,255,0.9);
-    }
-    .icon-face-back {
-      background: #FFFFFF;
-      border: 1px solid rgba(0,0,0,0.07);
-      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
-      transform: rotateY(180deg);
-    }
-    .icon-face i { font-size: 32px; color: #4B6FFF; }
-    .icon-face-back img { width: 50px; height: 50px; object-fit: contain; display: block; }
-    @keyframes glowPulse {
-      0%,100% { box-shadow: 0 2px 16px rgba(0,0,0,0.08); }
-      50%      { box-shadow: 0 0 0 14px rgba(75,111,255,0.08), 0 8px 40px rgba(0,180,255,0.18); }
-    }
-    .icon-face-back.glow { animation: glowPulse 2.2s ease-in-out 0.8s 2; }
-    @keyframes iconIn {
-      from { opacity:0; transform:scale(0.75) translateY(10px); }
-      to   { opacity:1; transform:scale(1) translateY(0); }
-    }
-
-    .wordmark {
-      font-size: clamp(52px, 10vw, 82px);
-      font-weight: 800; letter-spacing: -0.045em; line-height: 1;
-      margin-bottom: 18px;
-      animation: fadeUp 0.7s var(--ease-out) 0.10s both;
-      display: flex; align-items: baseline; gap: 10px; justify-content: center;
-    }
-    .wordmark em {
-      font-style: italic; font-family: var(--f-hand);
-      font-weight: 700; font-size: 1.18em;
-      letter-spacing: -0.01em; line-height: 1;
-      display: inline-block; position: relative; padding-bottom: 5px;
-    }
-    .wordmark em::after {
-      content: '';
-      position: absolute; bottom: -3px; left: -2px; right: -2px; height: 6px;
-      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5 Q20 1 40 5 Q60 9 80 4 Q100 0 118 5' stroke='%234B6FFF' stroke-width='2.5' fill='none' stroke-linecap='round' opacity='0.7'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
-      opacity: 0;
-      animation: underlineDraw 0.8s var(--ease-out) 0.6s forwards;
-    }
-    @keyframes underlineDraw {
-      from { opacity:0; transform:scaleX(0); transform-origin:left; }
-      to   { opacity:1; transform:scaleX(1); transform-origin:left; }
-    }
-    .wordmark em .letter {
-      display: inline-block; opacity: 0;
-      transform: translateY(8px) rotate(-4deg);
-      animation: letterDrop 0.4s var(--ease-out) forwards;
-    }
-    @keyframes letterDrop { to { opacity:1; transform:translateY(0) rotate(0deg); } }
-
-    .tagline {
-      font-size: clamp(15px, 2.5vw, 18px); font-weight: 400;
-      letter-spacing: -0.01em; margin-bottom: 44px;
-      animation: fadeUp 0.7s var(--ease-out) 0.18s both;
-      min-height: 1.5em;
-    }
-    .tagline.animOut { animation: tagOut 0.3s var(--ease-in) forwards; }
-    .tagline.animIn  { animation: tagIn  0.4s var(--ease-out) forwards; }
-    @keyframes tagOut { to { opacity:0; transform:translateY(-8px); } }
-    @keyframes tagIn  { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-    @keyframes fadeUp {
-      from { opacity:0; transform:translateY(18px); }
-      to   { opacity:1; transform:translateY(0); }
-    }
-
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 10px;
-      font-family: var(--f); font-size: 16px; font-weight: 600;
-      letter-spacing: -0.02em; padding: 0 28px; height: 52px;
-      border: none; border-radius: 100px; cursor: pointer;
-      animation: fadeUp 0.7s var(--ease-out) 0.26s both;
-      overflow: hidden; position: relative;
-      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-      background: #4B6FFF;
-      color: #FFFFFF;
-    }
-    .btn-primary:hover {
-      background: #3A5CE6;
-      transform: translateY(-1px);
-      box-shadow: 0 8px 32px rgba(75,111,255,0.30);
-    }
-    .btn-primary:active { transform: scale(0.97); }
-    .btn-primary .arrow {
-      width: 20px; height: 20px; border-radius: 50%;
-      background: rgba(255,255,255,0.20);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 9px; flex-shrink: 0;
-      transition: transform 0.25s var(--ease-out);
-    }
-    .btn-primary:hover .arrow { transform: translateX(3px); }
-    .btn-primary .spinner {
-      display: none; width: 14px; height: 14px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-top-color: #fff; border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-    }
-    .btn-primary.loading .lbl,
-    .btn-primary.loading .arrow { opacity: 0; }
-    .btn-primary.loading .spinner { display: block; position: absolute; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .proof {
-      display: flex; align-items: center; gap: 12px;
-      margin-top: 36px;
-      animation: fadeUp 0.7s var(--ease-out) 0.34s both;
-    }
-    .proof-avatars { display: flex; }
-    .proof-avatars span {
-      width: 28px; height: 28px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 11px; margin-left: -8px; font-weight: 600;
-      border: 2px solid;
-    }
-    .proof-avatars span:first-child { margin-left: 0; }
-    .proof-text { font-size: 13px; }
-
-    /* ═══════════════════════════
-       PAGE 2 — WHITE
-    ═══════════════════════════ */
-    #p2 {
-      background: var(--white);
-      justify-content: flex-start; padding: 0;
-      color: var(--black);
-      overflow-y: auto;
-      overflow-x: hidden;
-    }
-    #p2.gone { display: none; }
-
-    .nav {
-      position: sticky; top: 0; left: 0; right: 0;
-      width: 100%;
-      height: 60px; display: flex; align-items: center;
-      justify-content: space-between; padding: 0 28px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(255,255,255,0.88);
-      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-      z-index: 30;
-      flex-shrink: 0;
-      align-self: stretch;
-    }
-    .nav-brand {
-      display: flex; align-items: center; gap: 9px;
-      font-size: 15px; font-weight: 700;
-      color: var(--black); letter-spacing: -0.02em;
-    }
-    .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: #4B6FFF; }
-    .nav-back {
-      display: flex; align-items: center; gap: 6px;
-      font-size: 14px; font-weight: 500; color: #4B6FFF;
-      background: none; border: none; cursor: pointer;
-      padding: 6px 0; letter-spacing: -0.01em; transition: opacity 0.15s;
-    }
-    .nav-back:hover { opacity: 0.65; }
-    .nav-back i { font-size: 12px; }
-
-    .menu-wrap {
-      display: flex; flex-direction: column;
-      align-items: center;
-      width: 100%; padding: 36px 24px 0;
-    }
-    .menu-label {
-      font-size: 12px; font-weight: 600;
-      letter-spacing: 0.10em; text-transform: uppercase;
-      color: #4B6FFF; margin-bottom: 10px;
-    }
-    .menu-title {
-      font-size: clamp(26px, 4vw, 38px); font-weight: 800;
-      letter-spacing: -0.04em; color: var(--black);
-      text-align: center; margin-bottom: 8px; line-height: 1.05;
-    }
-    .menu-sub {
-      font-size: 15px; color: #8E8E93;
-      margin-bottom: 44px; font-weight: 400;
-    }
-
-    .cards {
-      display: flex; flex-direction: column;
-      gap: 12px; width: 100%; max-width: 420px;
-    }
-
-    .action-card {
-      display: flex; align-items: center; gap: 16px;
-      padding: 18px 20px; background: #FFFFFF;
-      border: 1px solid rgba(0,0,0,0.07); border-radius: 16px;
-      cursor: pointer;
-      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s var(--ease-out);
-      text-align: left; width: 100%;
-      opacity: 0; transform: translateY(20px); overflow: hidden;
-    }
-    .action-card.in { animation: cardIn 0.5s var(--ease-out) forwards; }
-    .action-card:nth-child(1).in { animation-delay: 0.05s; }
-    .action-card:nth-child(3).in { animation-delay: 0.19s; }
-    @keyframes cardIn { to { opacity:1; transform:translateY(0); } }
-    .action-card:hover {
-      border-color: rgba(0,0,0,0.12);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-      transform: translateY(-2px);
-    }
-    .action-card:active { transform: scale(0.985); }
-
-    .ac-icon {
-      width: 44px; height: 44px; border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px; flex-shrink: 0;
-      transition: transform 0.25s var(--ease-out);
-    }
-    .action-card:hover .ac-icon { transform: scale(1.08); }
-    .ic-a { background: rgba(75,111,255,0.08); color: #4B6FFF; }
-    .ic-c { background: rgba(255,159,10,0.10); color: #FF9F0A; }
-
-    .ac-text { flex: 1; }
-    .ac-title { font-size: 15px; font-weight: 600; color: var(--black); letter-spacing: -0.02em; margin-bottom: 2px; }
-    .ac-desc  { font-size: 12.5px; color: #8E8E93; letter-spacing: -0.01em; }
-    .ac-chev  { color: #C7C7CC; font-size: 12px; flex-shrink: 0; transition: transform 0.2s var(--ease-out), color 0.2s; }
-    .action-card:hover .ac-chev { transform: translateX(3px); color: #48484A; }
-
-    .featured-wrap {
-      width: 100%; opacity: 0; transform: translateY(20px);
-    }
-    .featured-wrap.in { animation: cardIn 0.5s var(--ease-out) 0.12s forwards; }
-
-    .featured-card {
-      width: 100%; border: 1px solid rgba(0,0,0,0.07); cursor: pointer; text-align: left;
-      background: #FFFFFF; border-radius: 16px;
-      overflow: hidden; display: block;
-      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s var(--ease-out);
-    }
-    .featured-card:hover {
-      border-color: rgba(0,0,0,0.12);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-      transform: translateY(-2px);
-    }
-    .featured-card:active { transform: scale(0.985); }
-
-    .fc-top {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 9px 20px;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-      background: rgba(75,111,255,0.03);
-    }
-    .fc-label { font-size: 11px; font-weight: 600; color: #8E8E93; letter-spacing: 0.04em; text-transform: uppercase; }
-    .fc-pricing { display: flex; align-items: center; gap: 7px; }
-    .fc-old  { font-size: 12px; color: #C7C7CC; text-decoration: line-through; font-weight: 500; }
-    .fc-new  { font-size: 13px; color: #0A0A0B; font-weight: 700; letter-spacing: -0.02em; }
-    .fc-pill { font-size: 11px; font-weight: 700; background: rgba(75,111,255,0.10); color: #4B6FFF; padding: 2px 8px; border-radius: 100px; }
-
-    .fc-main { display: flex; align-items: center; gap: 16px; padding: 16px 20px 18px; }
-    .fc-icon-bg {
-      width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
-      background: rgba(52,199,89,0.10);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px; color: #34C759;
-      transition: transform 0.25s var(--ease-out);
-    }
-    .featured-card:hover .fc-icon-bg { transform: scale(1.08); }
-    .fc-body { flex: 1; }
-    .fc-title { font-size: 15px; font-weight: 600; color: #0A0A0B; letter-spacing: -0.02em; margin-bottom: 2px; }
-    .fc-desc  { font-size: 12.5px; color: #8E8E93; letter-spacing: -0.01em; }
-    .fc-chev  { color: #C7C7CC; font-size: 12px; flex-shrink: 0; transition: transform 0.2s var(--ease-out), color 0.2s; }
-    .featured-card:hover .fc-chev { transform: translateX(3px); color: #48484A; }
-
-    .menu-note {
-      margin-top: 24px; font-size: 12px; color: #C7C7CC;
-      display: flex; align-items: center; gap: 5px;
-      margin-bottom: 0;
-    }
-    .menu-note i { font-size: 10px; }
-
-    /* ══════════════════════════════════════════════════════
-       COLLECTION — Apple-style with real <img> backgrounds
-    ══════════════════════════════════════════════════════ */
-    .collection-section {
-      width: 100%;
-      background: #000000;
-      padding: 64px 0 72px;
-      margin-top: 48px;
-      flex-shrink: 0;
-    }
-
-    .collection-header {
-      padding: 0 28px 40px;
-      max-width: 600px;
-    }
-
-    .collection-eyebrow {
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.40);
-      margin-bottom: 12px;
-    }
-
-    .collection-title {
-      font-family: var(--f);
-      font-size: clamp(36px, 9vw, 60px);
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      color: #FFFFFF;
-      line-height: 1.02;
-      margin-bottom: 14px;
-    }
-
-    .collection-subtitle {
-      font-size: 16px;
-      font-weight: 400;
-      color: rgba(255,255,255,0.40);
-      letter-spacing: -0.01em;
-      line-height: 1.55;
-      max-width: 340px;
-    }
-
-    /* ── Scroll track ── */
-    .collection-scroll {
-      display: flex;
-      gap: 14px;
-      padding: 0 28px 4px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .collection-scroll::-webkit-scrollbar { display: none; }
-
-    /* ── Base card ── */
-    .app-card {
-      flex-shrink: 0;
-      width: 280px;
-      border-radius: 28px;
-      overflow: hidden;
-      scroll-snap-align: start;
-      position: relative;
-      cursor: pointer;
-      text-decoration: none;
-      display: block;
-      transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
-      opacity: 0;
-      transform: translateY(28px);
-      outline: 1px solid rgba(255,255,255,0.06);
-    }
-    .app-card.in {
-      animation: cardIn 0.6s var(--ease-out) forwards;
-    }
-    .app-card:hover {
-      transform: scale(1.025) translateY(-4px);
-      box-shadow: 0 28px 70px rgba(0,0,0,0.55);
-      outline-color: rgba(255,255,255,0.14);
-    }
-    .app-card:active { transform: scale(0.98); }
-
-    /* ── Inner wrapper — always 400px tall ── */
-    .app-card-inner {
-      width: 100%;
-      height: 420px;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      overflow: hidden;
-    }
-
-    /* ── Background image fills the card ── */
-    .app-card-bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      transition: transform 0.6s var(--ease-out);
-      z-index: 0;
-    }
-    .app-card:hover .app-card-bg {
-      transform: scale(1.04);
-    }
-
-    /* ── Color overlay on top of the image ── */
-    .app-card-overlay {
-      position: absolute;
-      inset: 0; z-index: 1;
-    }
-
-    /* Per-card overlay tints */
-    .card-sahl-ai   .app-card-overlay { background: linear-gradient(180deg, rgba(10,20,80,0.45) 0%, rgba(10,20,80,0.0) 40%, rgba(5,10,50,0.82) 100%); }
-    .card-svt       .app-card-overlay { background: linear-gradient(180deg, rgba(0,20,10,0.50) 0%, rgba(0,20,10,0.0) 35%, rgba(0,15,8,0.88) 100%); }
-    .card-sahl-app  .app-card-overlay { background: linear-gradient(180deg, rgba(255,250,235,0.30) 0%, rgba(255,250,235,0.0) 40%, rgba(200,185,155,0.80) 100%); }
-    .card-physique  .app-card-overlay { background: linear-gradient(180deg, rgba(0,15,30,0.55) 0%, rgba(0,15,30,0.0) 35%, rgba(0,10,25,0.88) 100%); }
-    .card-maths     .app-card-overlay { background: linear-gradient(180deg, rgba(0,20,5,0.55) 0%, rgba(0,20,5,0.0) 35%, rgba(0,15,3,0.88) 100%); }
-    .card-philo     .app-card-overlay { background: linear-gradient(180deg, rgba(30,5,15,0.55) 0%, rgba(30,5,15,0.0) 35%, rgba(20,3,10,0.88) 100%); }
-
-    /* ── Fallback gradient bg (shown while img loads or if no img) ── */
-    .card-sahl-ai   .app-card-inner { background: linear-gradient(160deg, #1a3aff 0%, #001080 100%); }
-    .card-svt       .app-card-inner { background: linear-gradient(160deg, #0a2a18 0%, #020d08 100%); }
-    .card-sahl-app  .app-card-inner { background: linear-gradient(160deg, #e8dfc8 0%, #c8b890 100%); }
-    .card-physique  .app-card-inner { background: linear-gradient(160deg, #071828 0%, #020810 100%); }
-    .card-maths     .app-card-inner { background: linear-gradient(160deg, #082010 0%, #020c05 100%); }
-    .card-philo     .app-card-inner { background: linear-gradient(160deg, #280a14 0%, #0e0308 100%); }
-
-    /* ── Top badge ── */
-    .app-card-badge {
-      position: absolute;
-      top: 18px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      background: rgba(0,0,0,0.32);
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-      border: 1px solid rgba(255,255,255,0.16);
-      border-radius: 100px;
-      padding: 6px 14px 6px 9px;
-      white-space: nowrap;
-      z-index: 10;
-    }
-    .card-sahl-app .app-card-badge {
-      background: rgba(255,255,255,0.32);
-      border-color: rgba(0,0,0,0.12);
-    }
-
-    .badge-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .badge-name {
-      font-size: 12px; font-weight: 600;
-      color: rgba(255,255,255,0.92);
-      letter-spacing: 0.01em;
-    }
-    .card-sahl-app .badge-name { color: rgba(0,0,0,0.65); }
-
-    /* ── Bottom content (sits above overlay) ── */
-    .app-card-content {
-      position: relative; z-index: 5;
-      padding: 0 20px 20px;
-    }
-
-    .app-card-tag {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.38);
-      margin-bottom: 5px;
-    }
-    .card-sahl-app .app-card-tag { color: rgba(0,0,0,0.30); }
-
-    .app-card-name {
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: -0.035em;
-      color: #FFFFFF;
-      margin-bottom: 3px;
-      line-height: 1.1;
-    }
-    .card-sahl-app .app-card-name { color: #1a1208; }
-
-    .app-card-desc {
-      font-size: 12px;
-      font-weight: 400;
-      color: rgba(255,255,255,0.50);
-      letter-spacing: -0.01em;
-      margin-bottom: 18px;
-      line-height: 1.45;
-    }
-    .card-sahl-app .app-card-desc { color: rgba(0,0,0,0.42); }
-
-    /* ── CTA button ── */
-    .app-card-btn {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      height: 46px;
-      padding: 0 18px;
-      border-radius: 14px;
-      border: none;
-      cursor: pointer;
-      font-family: var(--f);
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      background: rgba(255,255,255,0.14);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.18);
-      color: #FFFFFF;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .card-sahl-app .app-card-btn {
-      background: rgba(0,0,0,0.12);
-      border-color: rgba(0,0,0,0.14);
-      color: #1a1208;
-    }
-    .app-card-btn:hover {
-      background: rgba(255,255,255,0.22);
-      transform: scale(1.01);
-    }
-    .card-sahl-app .app-card-btn:hover {
-      background: rgba(0,0,0,0.20);
-    }
-    .app-card-btn .btn-label { flex: 1; }
-    .app-card-btn .btn-arrow {
-      width: 26px; height: 26px; border-radius: 8px;
-      background: rgba(255,255,255,0.18);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 10px;
-      transition: transform 0.2s var(--ease-out);
-    }
-    .card-sahl-app .app-card-btn .btn-arrow { background: rgba(0,0,0,0.10); }
-    .app-card:hover .btn-arrow { transform: translateX(2px); }
-
-    /* ── Bottom scroll hint ── */
-    .collection-footer {
-      padding: 24px 28px 0;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .scroll-dots {
-      display: flex; gap: 5px;
-    }
-    .scroll-dot {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: rgba(255,255,255,0.20);
-      transition: background 0.25s, width 0.25s;
-    }
-    .scroll-dot.active { background: rgba(255,255,255,0.70); width: 16px; border-radius: 3px; }
-    .scroll-hint {
-      font-size: 12px; color: rgba(255,255,255,0.25);
-      letter-spacing: -0.01em; margin-left: 4px;
-    }
-
-    @media (max-width: 500px) {
-      .wordmark { font-size: 52px; }
-      .nav { padding: 0 16px; }
-      .cards { max-width: 100%; }
-      .app-card { width: 248px; }
-      .collection-title { font-size: 36px; }
-      .collection-header { padding: 0 20px 32px; }
-      .collection-scroll { padding: 0 20px 4px; gap: 12px; }
-    }
-
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="./home/css/style.css">
 </head>
+
 <body>
 
-<!-- ══════ PAGE 1 ══════ -->
-<section class="page" id="p1">
-
-  <div class="bg-blobs">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-  </div>
-  <div class="bg-grid"></div>
-  <div class="bg-grain"></div>
-  <div class="bg-edge"></div>
-
-  <div class="icon-scene">
-    <div class="app-icon" id="appIcon">
-      <div class="icon-face icon-face-front">
-        <i class="fa-solid fa-book-open-reader"></i>
-      </div>
-      <div class="icon-face icon-face-back" id="iconBack">
-        <img src="./assets/images/app-store.png" alt="Sahl Learn icon" />
+  <!-- INTRO ANIMATION OVERLAY -->
+  <div class="site-intro" id="siteIntro">
+    <div class="intro-backdrop"></div>
+    <div class="intro-logo-wrap">
+      <img src="./assets/images/sahllearn2.png" alt="Sahl Learn" class="intro-logo-img" />
+      <div class="intro-loader">
+        <div class="intro-loader-dot"></div>
+        <div class="intro-loader-dot"></div>
+        <div class="intro-loader-dot"></div>
       </div>
     </div>
   </div>
 
-  <h1 class="wordmark">
-    Sahl
-    <em id="learnWord">
-      <span class="letter">L</span><span class="letter">e</span><span class="letter">a</span><span class="letter">r</span><span class="letter">n</span>
-    </em>
-  </h1>
-
-  <p class="tagline" id="tagline">Bac 2026.</p>
-
-  <button class="btn-primary" id="btnStart">
-    <span class="lbl">Commencer</span>
-    <span class="arrow"><i class="fa-solid fa-arrow-right"></i></span>
-    <span class="spinner"></span>
-  </button>
-
-  <div class="proof">
-    <div class="proof-avatars">
-      <span>A</span><span>M</span><span>S</span><span>+</span>
-    </div>
-    <p class="proof-text"><strong>1 246+</strong> apprenants déjà inscrits</p>
-  </div>
-
-</section>
-
-
-<!-- ══════ PAGE 2 ══════ -->
-<section class="page gone" id="p2">
-
-  <nav class="nav">
-    <div class="nav-brand">
-      <span class="nav-dot"></span>
-      Sahl Learn
-    </div>
-    <button class="nav-back" id="btnBack">
-      <i class="fa-solid fa-chevron-left"></i>
-      Retour
-    </button>
-  </nav>
-
-  <div class="menu-wrap">
-    <p class="menu-label">Bienvenue</p>
-    <h2 class="menu-title">Où souhaitez-vous<br>aller ?</h2>
-    <p class="menu-sub">Choisissez une option pour continuer.</p>
-
-    <div class="cards">
-
-      <button class="action-card" onclick="window.location.href='./profile/login'">
-        <div class="ac-icon ic-a"><i class="fa-solid fa-right-to-bracket"></i></div>
-        <div class="ac-text">
-          <div class="ac-title">Se connecter</div>
-          <div class="ac-desc">Reprenez votre parcours d'apprentissage</div>
-        </div>
-        <i class="fa-solid fa-chevron-right ac-chev"></i>
-      </button>
-
+  <!-- HEADER -->
+  <header class="header" id="siteHeader">
+    <a href="#" class="logo-mark" id="logoLink">
+      <span class="logo-text"></em></span>
+    </a>
+    <nav class="nav">
+      <a href="./about" class="nav-link">À propos</a>
       
+      <button class="btn-sign-in">
+        <a href="./profile/login">Connexion</a>
+      </button>
+    </nav>
+  </header>
+
+  <!-- HOME PAGE -->
+  <section id="homePage" class="page">
+
+    <div class="home-body">
+
+      <img src="./assets/images/sahllearn2.png" alt="Sahl Learn" class="hero-logo-img" />
+      <div class="search-wrap" id="homeSearchWrap">
+        <div class="search-shell" id="homeShell">
+          <div class="search-field">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+              type="text"
+              class="search-input"
+              id="homeInput"
+              placeholder="Rechercher des leçons, cours, sujets…"
+              autocomplete="off"
+            />
+            <div class="search-divider"></div>
+            <button class="search-submit" id="homeSubmit">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+          <div class="hidden" id="homeSuggestions"></div>
+        </div>
+
+        <div class="search-actions">
+          <button class="btn-text" id="homeSearchBtn">
+            <i class="fa-solid fa-magnifying-glass" style="margin-right:7px;font-size:12px;"></i>
+            Rechercher
+          </button>
+          <button class="btn-text" id="luckyBtn">
+            <i class="fa-solid fa-dice" style="margin-right:7px;font-size:12px;"></i>
+            Découvrir quelque chose
+          </button>
+        </div>
+
+        <div class="trending">
+          <span class="trending-label">
+            <i class="fa-solid fa-fire-flame-curved" style="margin-right:4px;color:#e85d04;"></i>
+          </span>
+          <span class="chip" data-query="Immunité"><i class="fa-solid fa-shield-virus"></i> Immunité</span>
+          <span class="chip" data-query="RLC Libre"><i class="fa-solid fa-wave-square"></i> RLC Libre</span>
+          <span class="chip" data-query="العربية"><i class="fa-solid fa-language"></i> العربية</span>
+          <span class="chip" data-query="Mécanique"><i class="fa-solid fa-gears"></i> Mécanique</span>
+          <span class="chip" data-query="Pression"><i class="fa-solid fa-gauge-high"></i> Pression</span>
+        </div>
+      </div>
+
     </div>
 
-    <p class="menu-note">
-      <i class="fa-solid fa-lock"></i>
-      Sécurisé &amp; privé · Aucun spam, jamais
-    </p>
+    <footer class="home-footer">
+      <div class="home-footer-inner">
+        <span class="footer-region"><i class="fa-solid fa-location-dot"></i> Ghardimaou, TN</span>
+        <div class="footer-links">
+          <a href="./about" class="footer-link">Confidentialité</a>
+          <a href="./privacy" class="footer-link">Conditions</a>
+          <span class="footer-link" id="openSettings">Paramètres</span>
+          <a href="./contact" class="footer-link">Aide</a>
+        </div>
+      </div>
+    </footer>
+
+  </section>
+
+  <!-- RESULTS PAGE -->
+  <section id="resultsPage" class="page hidden">
+
+    <div class="results-bar">
+      <div class="results-bar-inner">
+        <button class="back-btn" id="backBtn">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <div class="results-search-wrap">
+          <div class="results-search-field">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" class="results-input" id="resultsInput" autocomplete="off"/>
+            <button class="results-submit" id="resultsSubmit">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+          <div class="hidden" id="resultsSuggestions"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="results-tabs-row">
+      <div class="results-tabs">
+        <button class="tab active"><i class="fa-solid fa-globe"></i> <span>Tout</span></button>
+        <button class="tab-sahl-ai" id="sahlAiTab">
+          <i class="fa-solid fa-robot"></i>
+          <span class="ai-badge">
+            <span class="ai-dot"></span>
+            Sahl AI
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <div class="results-layout">
+      <div id="correctionBox"></div>
+      <div id="statsBar" class="stats-bar"></div>
+      <p class="results-meta" id="resultsMeta"></p>
+      <div class="results-two-col">
+        <div>
+          <div id="snippetArea"></div>
+          <div class="results-list" id="resultsList"></div>
+        </div>
+        <aside id="sidebarArea"></aside>
+      </div>
+    </div>
+
+    <!-- ===== SAHL ECOSYSTEM SECTION ===== -->
+    <section class="ecosystem-section" id="ecosystemSection">
+
+      <div class="eco-header">
+        <span class="eco-label">SAHL ECOSYSTEM</span>
+        <h2 class="eco-title">8 Apps.<br>Une réussite.</h2>
+        <p class="eco-sub">Toutes les matières du Bac, dans une collection d'applications conçue pour te faire progresser vite.</p>
+      </div>
+
+      <div class="eco-track-wrap">
+        <div class="eco-track" id="ecoTrack">
+
+          <!-- Card 1 – Sahl App -->
+          <div class="eco-card eco-card--purple">
+            <img class="eco-card-bg-img" src="./assets/images/p23.jpg" alt="" />
+            <div class="eco-card-bg-overlay"></div>
+            <span class="eco-badge"><span class="eco-dot"></span>Sahl App</span>
+            <div class="eco-card-art">
+              <div style="position:relative;z-index:1;text-align:center;">
+               
+               
+              </div>
+            </div>
+            <div class="eco-card-body">
+              <div class="eco-card-tag">PLATEFORME ÉDUCATIVE BAC</div>
+              <div class="eco-card-name">Sahl App</div>
+              <div class="eco-card-desc">Plateforme intelligente dédiée au Bac : vidéos éducatives et une bibliothèque riche et organisée.</div>
+              <a href="./profile/login" target="_blank" class="eco-btn">Télécharger l'app <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <!-- Card 2 – فيلو Chat -->
+          <div class="eco-card eco-card--blue">
+            <img class="eco-card-bg-img" src="./assets/images/5.webp" alt="" />
+            <div class="eco-card-bg-overlay"></div>
+            <span class="eco-badge"><span class="eco-dot"></span>Sahl App</span>
+            <div class="eco-card-art">
+              
+            </div>
+            <div class="eco-card-body">
+              <div class="eco-card-tag">SAHL MARK · TOUJOURS DISPONIBLE</div>
+              <div class="eco-card-name">فيلو Chat</div>
+              <div class="eco-card-desc">Ton assistant intelligent pour réviser la philosophie du Bac avec des cours interactifs.</div>
+              <a href="./profile/login" target="_blank" class="eco-btn">Essayer maintenant <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <!-- Card 3 – SVT App -->
+          <div class="eco-card eco-card--green">
+            <img class="eco-card-bg-img" src="./assets/images/2.webp" alt="" />
+            <div class="eco-card-bg-overlay"></div>
+            <span class="eco-badge"><span class="eco-dot"></span>SVT App</span>
+            <div class="eco-card-art">
+             
+            </div>
+            <div class="eco-card-body">
+              <div class="eco-card-tag">BAC SCIENCES · SVT</div>
+              <div class="eco-card-name">SVT App</div>
+              <div class="eco-card-desc">Apprends la SVT facilement avec des cours interactifs.</div>
+              <a href="./profile/login" target="_blank" class="eco-btn">Découvrir l'application <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <!-- Card 4 – E-Books -->
+          <div class="eco-card eco-card--teal">
+            <img class="eco-card-bg-img" src="./assets/images/3.webp" alt="" />
+            <div class="eco-card-bg-overlay"></div>
+            <span class="eco-badge"><span class="eco-dot"></span>E-Books</span>
+            <div class="eco-card-art">
+              
+            </div>
+            <div class="eco-card-body">
+              <div class="eco-card-tag">BIBLIOTHÈQUE · RESSOURCES COMPLÈTES</div>
+              <div class="eco-card-name">E-Book</div>
+              <div class="eco-card-desc">Accède à une collection complète de séries, cours et devoirs pour réviser efficacement.</div>
+              <a href="./profile/login" target="_blank" class="eco-btn">Explorer la bibliothèque <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <!-- Card 5 – Formatik -->
+          <div class="eco-card eco-card--cyan">
+            <img class="eco-card-bg-img" src="./assets/images/6.webp" alt="" />
+            <div class="eco-card-bg-overlay"></div>
+            <span class="eco-badge"><span class="eco-dot"></span>Sahl Learn</span>
+            <div class="eco-card-art">
+              
+            </div>
+            <div class="eco-card-body">
+              <div class="eco-card-tag">OUTILS INTELLIGENTS · BAC PRATIQUE</div>
+              <div class="eco-card-name">Formatik App</div>
+              <div class="eco-card-desc">Des outils simples et efficaces pour réviser l'informatique du Bac pratique.</div>
+              <a href="./profile/login" target="_blank" class="eco-btn">Essayer maintenant <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <!-- Card 6 – STI -->
+          <div class="eco-card eco-card--indigo">
+            <img class="eco-card-bg-img" src="./assets/images/00123.jpg" alt="" />
+            <div class="eco-card-bg-overlay"></div>
+            <span class="eco-badge"><span class="eco-dot"></span>Sahl Learn</span>
+            <div class="eco-card-art">
+             
+            </div>
+            <div class="eco-card-body">
+              <div class="eco-card-tag">BAC INFO · PRÉPARATION STI</div>
+              <div class="eco-card-name">STI App</div>
+              <div class="eco-card-desc">Une plateforme dédiée pour aider les élèves du Bac Info à se préparer efficacement au STI pratique.</div>
+              <a href="./profile/login" target="_blank" class="eco-btn">Essayer maintenant <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <!-- Card 7 – QUIZ QCM -->
+          <div class="eco-card eco-card--violet">
+            <img class="eco-card-bg-img" src="./assets/images/l2.webp" alt="" />
+            <div class="eco-card-bg-overlay"></div>
+            <span class="eco-badge"><span class="eco-dot"></span>Sahl Learn</span>
+            <div class="eco-card-art">
+             
+            </div>
+            <div class="eco-card-body">
+              <div class="eco-card-tag">SVT · BAC SCIENCES</div>
+              <div class="eco-card-name">QUIZ QCM</div>
+              <div class="eco-card-desc">Teste tes connaissances en SVT avec des QCM interactifs pour réviser efficacement le Bac.</div>
+              <a href="./profile/login" target="_blank" class="eco-btn">Essayer maintenant <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <!-- Card 8 – Sahl Search -->
+          <div class="eco-card eco-card--dark">
+            <img class="eco-card-bg-img" src="./assets/images/img_1772682079623.webp" alt="" />
+            <div class="eco-card-bg-overlay"></div>
+            <span class="eco-badge"><span class="eco-dot"></span>Sahl Learn</span>
+            <div class="eco-card-art">
+              
+            </div>
+            <div class="eco-card-body">
+              <div class="eco-card-tag">RECHERCHE · RESSOURCES BAC</div>
+              <div class="eco-card-name">Sahl Search</div>
+              <div class="eco-card-desc">Moteur de recherche dédié aux ressources du Bac tunisien. Cours, exercices et corrections.</div>
+              <a href="./profile/login" class="eco-btn" id="ecoSearchBtn">Rechercher <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+        </div><!-- /eco-track -->
+      </div><!-- /eco-track-wrap -->
+
+      <div class="eco-dots" id="ecoDots"></div>
+
+    </section>
+    <!-- ===== /ECOSYSTEM SECTION ===== -->
+
+  </section>
+
+  <!-- ===================== PDF VIEWER MODAL ===================== -->
+  <div class="pdf-overlay hidden" id="pdfOverlay">
+    <div class="pdf-modal" id="pdfModal">
+      <div class="pdf-modal-header">
+        <div class="pdf-modal-icon">
+          <i class="fa-solid fa-file-pdf"></i>
+        </div>
+        <div class="pdf-modal-title-wrap">
+          <div class="pdf-modal-title" id="pdfModalTitle">Document</div>
+          <div class="pdf-modal-sub" id="pdfModalSub">sahllearn.org</div>
+        </div>
+        <div class="pdf-modal-actions">
+         
+          <button class="pdf-close-btn" id="pdfClose" title="Fermer">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+      <div class="pdf-modal-body">
+        <div class="pdf-loading" id="pdfLoading">
+          <div class="pdf-spinner"></div>
+          <span>Chargement du document…</span>
+        </div>
+        <iframe class="pdf-iframe hidden" id="pdfIframe" allowfullscreen></iframe>
+      </div>
+    </div>
   </div>
 
-  <div class="collection-section" id="collectionSection">
+  <!-- SAHL AI MODAL -->
+  <div class="sahl-ai-overlay hidden" id="sahlAiOverlay">
+    <div class="sahl-ai-modal" id="sahlAiModal">
 
-    <div class="collection-header">
-      <p class="collection-eyebrow">Sahl Ecosystem</p>
-      <h2 class="collection-title">8 Apps.<br>Une réussite.</h2>
-      <p class="collection-subtitle">Toutes les matières du Bac, dans une collection d'applications conçue pour te faire progresser vite.</p>
-    </div>
+      <div class="sahl-ai-modal-header">
+        <button class="sahl-ai-modal-close" id="sahlAiClose">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
 
-    <div class="collection-scroll" id="collectionScroll">
+        <div class="sahl-ai-wordmark">
+          <span class="sahl-ai-wordmark-dot"></span>
+          <span class="sahl-ai-wordmark-text">Sahl Learn</span>
+        </div>
 
-      <!-- ── Card 1 — Sahl AI ── -->
-      <a class="app-card card-sahl-ai" href="https://www.sahllearn.org/app/workspace.html">
-        <div class="app-card-inner">
-          <img class="app-card-bg" src="./assets/images/p23.jpg" alt="Sahl AI background"/>
-          <div class="app-card-overlay"></div>
-          <div class="app-card-badge">
-            <span class="badge-dot" style="background:#4B6FFF;"></span>
-            <span class="badge-name">  Sahl App</span>
+        <div class="sahl-ai-modal-title">Votre assistant<br><em>intelligent</em></div>
+        <div class="sahl-ai-modal-subtitle">Apprenez plus vite avec une IA adaptée au programme tunisien.</div>
+      </div>
+
+      <div class="sahl-ai-divider"></div>
+
+      <div class="sahl-ai-modal-features">
+        <div class="sahl-ai-feature-row">
+          <div class="sahl-ai-feat-icon c-blue"><i class="fa-solid fa-lightbulb"></i></div>
+          <div class="sahl-ai-feat-text">
+            <div class="sahl-ai-feat-title">Explications adaptées</div>
+            <div class="sahl-ai-feat-desc">Réponses claires selon votre niveau</div>
           </div>
-          <div class="app-card-content">
-            <div class="app-card-tag">Plateforme éducative · Bac</div>
-            <div class="app-card-name">Sahl <strong>App</strong></div>
-            <div class="app-card-desc">Plateforme intelligente dédiée au Bac avec vidéos éducatives et une bibliothèque riche et organisée.</div>
-            <div class="app-card-btn">
-              <span class="btn-label"> Télécharger l’app</span>
-              <span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+        <div class="sahl-ai-feature-row">
+          <div class="sahl-ai-feat-icon c-teal"><i class="fa-solid fa-check-double"></i></div>
+          <div class="sahl-ai-feat-text">
+            <div class="sahl-ai-feat-title">Correction de devoirs</div>
+            <div class="sahl-ai-feat-desc">Vérification d'exercices en temps réel</div>
+          </div>
+        </div>
+        <div class="sahl-ai-feature-row">
+          <div class="sahl-ai-feat-icon c-violet"><i class="fa-solid fa-comments"></i></div>
+          <div class="sahl-ai-feat-text">
+            <div class="sahl-ai-feat-title">Multilingue</div>
+            <div class="sahl-ai-feat-desc">Arabe, français ou anglais</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sahl-ai-modal-cta">
+        <a href="./profile/login" target="_blank" class="btn-use-sahl-ai">
+          Ouvrir Sahl AI
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+        <p class="sahl-ai-modal-note">Gratuit · Tunisie</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SETTINGS MODAL -->
+  <div class="settings-overlay hidden" id="settingsOverlay">
+    <div class="settings-modal">
+
+      <div class="settings-head">
+        <div class="settings-head-title">
+          <i class="fa-solid fa-gear"></i>
+          Paramètres
+        </div>
+        <button class="settings-close" id="settingsClose">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="settings-body">
+
+        <div>
+          <div class="settings-section-label">Apparence</div>
+          <div class="theme-options">
+            <div class="theme-option active" id="themeLight" data-theme="light">
+              <div class="theme-preview theme-preview-light">
+                <div class="tp-bar accent"></div>
+                <div class="tp-bar" style="width:80%"></div>
+                <div class="tp-bar" style="width:60%"></div>
+              </div>
+              <div class="theme-option-label">
+                <i class="fa-solid fa-sun"></i>
+                Clair
+              </div>
+            </div>
+            <div class="theme-option" id="themeDark" data-theme="dark">
+              <div class="theme-preview theme-preview-dark">
+                <div class="tp-bar accent"></div>
+                <div class="tp-bar" style="width:80%"></div>
+                <div class="tp-bar" style="width:60%"></div>
+              </div>
+              <div class="theme-option-label">
+                <i class="fa-solid fa-moon"></i>
+                Sombre
+              </div>
             </div>
           </div>
         </div>
-      </a>
-<!-- ── Card 2 — Chat Philo App ── -->
-<a class="app-card card-svt" href="./inscrire">
-  <div class="app-card-inner">
-    <img class="app-card-bg" src="./assets/images/5.webp" alt="Chat Philo App background"/>
-    <div class="app-card-overlay"></div>
-    <div class="app-card-badge">
-      <span class="badge-dot" style="background:#30D158;"></span>
-      <span class="badge-name">Sahl App</span>
-    </div>
-    <div class="app-card-content">
-      <div class="app-card-tag">Sahl Learn · Toujours disponible</div>
-      <div class="app-card-name"><strong>Chat </strong> فيلو</div>
-      <div class="app-card-desc">Ton assistant intelligent pour réviser la philosophie du Bac بسهولة.</div>
-      <div class="app-card-btn">
-        <span class="btn-label"> Essayer maintenant</span>
-        <span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span>
-      </div>
-    </div>
-  </div>
-</a>
 
-
-      <!-- ── Card 4 — Physique ── -->
-      <a class="app-card card-physique" href="./inscrire">
-        <div class="app-card-inner">
-          <img class="app-card-bg" src="./assets/images/2.webp" alt="Physique App background"/>
-          <div class="app-card-overlay"></div>
-          <div class="app-card-badge">
-            <span class="badge-dot" style="background:#0A84FF;"></span>
-            <span class="badge-name">SVT App</span>
-          </div>
-          <div class="app-card-content">
-            <div class="app-card-tag">SVT · Révision Bac</div>
-            <div class="app-card-name">SVT <strong>App</strong></div>
-            <div class="app-card-desc">Apprends la SVT facilement avec des cours interactifs.</div>
-            <div class="app-card-btn">
-              <span class="btn-label">Découvrir l'application</span>
-              <span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+        <div>
+          <div class="settings-section-label">Région</div>
+          <div class="settings-row">
+            <div class="settings-row-label">
+              <i class="fa-solid fa-location-dot"></i>
+              Région
+            </div>
+            <div class="settings-row-value">
+              Tunis, TN <i class="fa-solid fa-chevron-right"></i>
             </div>
           </div>
         </div>
-      </a>
 
-      <!-- ── Card 5 — Maths ── -->
-      <a class="app-card card-maths" href="./inscrire">
-        <div class="app-card-inner">
-          <img class="app-card-bg" src="./assets/images/3.webp" alt="Maths App background"/>
-          <div class="app-card-overlay"></div>
-          <div class="app-card-badge">
-            <span class="badge-dot" style="background:#30D158;"></span>
-            <span class="badge-name"> E-Books</span>
-          </div>
-          <div class="app-card-content">
-            <div class="app-card-tag">Bibliothèque · BAC</div>
-            <div class="app-card-name">E-Book </div>
-            <div class="app-card-desc">Accède à une collection complète de séries, cours et devoirs pour réviser efficacement.</div>
-            <div class="app-card-btn">
-              <span class="btn-label"> Explorer la bibliothèque</span>
-              <span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+        <div>
+          <div class="settings-section-label">Langue</div>
+          <div class="settings-row">
+            <div class="settings-row-label">
+              <i class="fa-solid fa-language"></i>
+              Langue d'affichage
+            </div>
+            <div class="settings-row-value">
+              Français <i class="fa-solid fa-chevron-right"></i>
             </div>
           </div>
         </div>
-      </a>
 
-      <!-- ── Card 3 — Formatik App ── -->
-<a class="app-card card-svt" href="./inscrire">
-  <div class="app-card-inner">
-    <img class="app-card-bg" src="./assets/images/6.webp" alt="Formatik App background"/>
-    <div class="app-card-overlay"></div>
-    <div class="app-card-badge">
-      <span class="badge-dot" style="background:#30D158;"></span>
-      <span class="badge-name">Sahl Learn</span>
-    </div>
-    <div class="app-card-content">
-      <div class="app-card-tag">Outils intelligents · Bac pratique</div>
-      <div class="app-card-name"><strong>Formatik</strong> App</div>
-      <div class="app-card-desc">Des outils simples et efficaces pour réviser l’informatique du Bac pratique </div>
-      <div class="app-card-btn">
-        <span class="btn-label"> Essayer maintenant</span>
-        <span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span>
       </div>
     </div>
   </div>
-</a>
-<!-- ── Card 4 — STI App ── -->
-<a class="app-card card-svt" href="./inscrire">
-  <div class="app-card-inner">
-    <img class="app-card-bg" src="./assets/images/00123.jpg" alt="STI App background"/>
-    <div class="app-card-overlay"></div>
-    <div class="app-card-badge">
-      <span class="badge-dot" style="background:#30D158;"></span>
-      <span class="badge-name">Sahl Learn</span>
-    </div>
-    <div class="app-card-content">
-      <div class="app-card-tag">Bac Info · Préparation STI</div>
-      <div class="app-card-name"><strong>STI</strong> App</div>
-      <div class="app-card-desc">Une plateforme dédiée pour aider les élèves du Bac info à se préparer efficacement au STI pratique.</div>
-      <div class="app-card-btn">
-        <span class="btn-label"> Essayer maintenant</span>
-        <span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span>
-      </div>
-    </div>
-  </div>
-</a>
-<!-- ── Card 5 — QUIZ QCM App ── -->
-<a class="app-card card-svt" href="./inscrire">
-  <div class="app-card-inner">
-    <img class="app-card-bg" src="./assets/images/l2.webp" alt="QUIZ QCM App background"/>
-    <div class="app-card-overlay"></div>
-    <div class="app-card-badge">
-      <span class="badge-dot" style="background:#30D158;"></span>
-      <span class="badge-name">Sahl Learn</span>
-    </div>
-    <div class="app-card-content">
-      <div class="app-card-tag">SVT · Bac sciences</div>
-      <div class="app-card-name"><strong>QUIZ QCM</strong></div>
-      <div class="app-card-desc">Teste tes connaissances en SVT avec des QCM interactifs pour réussir le Bac sciences. </div>
-      <div class="app-card-btn">
-        <span class="btn-label"> Essayer maintenant</span>
-        <span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span>
-      </div>
-    </div>
-  </div>
-</a>
-<!-- ── Card 6 — Bibliothèque Sahl App ── -->
-<a class="app-card card-svt" href="./inscrire">
-  <div class="app-card-inner">
-    <img class="app-card-bg" src="./assets/images/img_1772682079623.webp" alt="Bibliothèque Sahl App background"/>
-    <div class="app-card-overlay"></div>
-    <div class="app-card-badge">
-      <span class="badge-dot" style="background:#30D158;"></span>
-      <span class="badge-name">Sahl Learn</span>
-    </div>
-    <div class="app-card-content">
-      <div class="app-card-tag">Cours · Exercices · Corrections</div>
-      <div class="app-card-name"><strong>Bibliothèque Sahl</strong></div>
-      <div class="app-card-desc">Accède à des cours, exercices, sujets pilote, bac et réo avec correction pour réviser efficacement.</div>
-      <div class="app-card-btn">
-        <span class="btn-label"> Essayer maintenant</span>
-        <span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span>
-      </div>
-    </div>
-  </div>
-</a>
 
-    </div><!-- /collection-scroll -->
-
-    <!-- Scroll indicator dots -->
-    <div class="collection-footer">
-      <div class="scroll-dots" id="scrollDots">
-        <div class="scroll-dot active"></div>
-        <div class="scroll-dot"></div>
-        <div class="scroll-dot"></div>
-        <div class="scroll-dot"></div>
-        <div class="scroll-dot"></div>
-        <div class="scroll-dot"></div>
-      </div>
-      <span class="scroll-hint">Faire défiler</span>
-    </div>
-
-  </div>
-  <!-- ══ END COLLECTION ══ -->
-
-</section>
-
-
-<script>
-  /* ── Letter stagger ── */
-  document.querySelectorAll('#learnWord .letter').forEach((el, i) => {
-    el.style.animationDelay = `${0.22 + i * 0.07}s`;
-  });
-
-  const p1       = document.getElementById('p1');
-  const p2       = document.getElementById('p2');
-  const btnStart = document.getElementById('btnStart');
-  const btnBack  = document.getElementById('btnBack');
-
-  function showPage2() {
-    p1.classList.add('leave');
-    setTimeout(() => {
-      p1.classList.add('gone'); p1.classList.remove('leave');
-      p2.classList.remove('gone'); p2.classList.add('enter');
-      p2.addEventListener('animationend', () => p2.classList.remove('enter'), { once: true });
-
-      const cards = p2.querySelectorAll('.action-card');
-      cards.forEach(c => { c.classList.remove('in'); void c.offsetWidth; });
-      requestAnimationFrame(() => cards.forEach(c => c.classList.add('in')));
-
-      const fw = p2.querySelector('.featured-wrap');
-      if (fw) { fw.classList.remove('in'); void fw.offsetWidth; requestAnimationFrame(() => fw.classList.add('in')); }
-
-      /* Stagger app cards */
-      const appCards = p2.querySelectorAll('.app-card');
-      appCards.forEach(c => { c.classList.remove('in'); void c.offsetWidth; });
-      appCards.forEach((c, i) => {
-        setTimeout(() => c.classList.add('in'), 280 + i * 75);
-      });
-
-      btnStart.classList.remove('loading');
-      btnStart.disabled = false;
-    }, 420);
-  }
-
-  function showPage1() {
-    p2.classList.add('leave');
-    setTimeout(() => {
-      p2.classList.add('gone'); p2.classList.remove('leave');
-      p1.classList.remove('gone'); p1.classList.add('enter');
-      p1.addEventListener('animationend', () => p1.classList.remove('enter'), { once: true });
-    }, 420);
-  }
-
-  btnStart.addEventListener('click', () => {
-    btnStart.classList.add('loading');
-    btnStart.disabled = true;
-    setTimeout(showPage2, 680);
-  });
-  btnBack.addEventListener('click', showPage1);
-
-  /* ── Icon flip ── */
-  setTimeout(() => {
-    document.getElementById('appIcon').classList.add('flipped');
-    setTimeout(() => document.getElementById('iconBack').classList.add('glow'), 800);
-  }, 5000);
-
-  /* ── Tagline rotator ── */
-  const taglines = [
-    "Commence à préparer le bac pratique.",
-    "Révise les sciences pour le bac blanc.",
-    "Prépare la philosophie pour le bac blanc.",
-    "Sahl AI – Résolution d'exercices",
-    "E-Books – Bibliothèque du bac",
-    "Bibliothèque des documents de synthèse 3.",
-    "Des résumés en physique, en mathématiques et en sciences.",
-    "Ressources – Cours & tutoriels"
-  ];
-  const tagEl = document.getElementById('tagline');
-  let tlIdx = 0;
-  setInterval(() => {
-    tlIdx = (tlIdx + 1) % taglines.length;
-    tagEl.classList.remove('animIn');
-    tagEl.classList.add('animOut');
-    setTimeout(() => {
-      tagEl.textContent = taglines[tlIdx];
-      tagEl.classList.remove('animOut');
-      tagEl.classList.add('animIn');
-    }, 320);
-  }, 2800);
-
-  /* ── Scroll dots sync ── */
-  const scrollEl = document.getElementById('collectionScroll');
-  const dots     = document.querySelectorAll('#scrollDots .scroll-dot');
-  if (scrollEl && dots.length) {
-    scrollEl.addEventListener('scroll', () => {
-      const cardW = 280 + 14; // width + gap
-      const idx   = Math.round(scrollEl.scrollLeft / cardW);
-      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-    }, { passive: true });
-  }
-</script>
+  <script src="./home/js/script.js"></script>
 </body>
 </html>

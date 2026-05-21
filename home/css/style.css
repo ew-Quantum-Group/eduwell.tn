@@ -1454,3 +1454,308 @@ html { scroll-behavior: smooth; }
   width: 100%;
   height: 100%;
 }
+
+
+
+
+
+    @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600&display=swap');
+
+    :root {
+      --ap-font: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                 "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      --ap-radius: 20px;
+      --ap-blur: blur(40px) saturate(180%);
+      --ap-shadow: 0 32px 80px rgba(0,0,0,.18), 0 8px 24px rgba(0,0,0,.10);
+      --ap-border-light: rgba(255,255,255,.72);
+      --ap-border-dark:  rgba(255,255,255,.10);
+    }
+
+    #sahlWelcomeOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: rgba(0, 0, 0, .38);
+      backdrop-filter: blur(6px) saturate(130%);
+      -webkit-backdrop-filter: blur(6px) saturate(130%);
+      opacity: 0;
+      transition: opacity .35s cubic-bezier(.4,0,.2,1);
+    }
+    #sahlWelcomeOverlay.visible   { opacity: 1; }
+    #sahlWelcomeOverlay.dismissing{ opacity: 0; pointer-events: none; }
+
+    #sahlWelcomeCard {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      border-radius: var(--ap-radius);
+      overflow: hidden;
+      font-family: var(--ap-font);
+      background: rgba(255,255,255,.82);
+      backdrop-filter: var(--ap-blur);
+      -webkit-backdrop-filter: var(--ap-blur);
+      border: 1px solid var(--ap-border-light);
+      box-shadow: var(--ap-shadow);
+      transform: scale(.88) translateY(24px);
+      opacity: 0;
+      transition:
+        transform .45s cubic-bezier(.34,1.56,.64,1),
+        opacity   .35s cubic-bezier(.4,0,.2,1);
+    }
+    #sahlWelcomeOverlay.visible #sahlWelcomeCard {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+    #sahlWelcomeOverlay.dismissing #sahlWelcomeCard {
+      transform: scale(.94) translateY(12px);
+      opacity: 0;
+    }
+
+    [data-theme="dark"] #sahlWelcomeCard {
+      background: rgba(28,28,30,.86);
+      border-color: var(--ap-border-dark);
+    }
+
+   
+
+    #sahlWelcomeCard .awp-body {
+      padding: 36px 32px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    #sahlWelcomeCard .awp-icon-wrap {
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      background: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    #sahlWelcomeCard .awp-icon-wrap .awp-logo-img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      display: block;
+    }
+
+    #sahlWelcomeCard .awp-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -.4px;
+      color: #1d1d1f;
+      text-align: center;
+      margin: 0 0 8px;
+      line-height: 1.22;
+    }
+    [data-theme="dark"] #sahlWelcomeCard .awp-title { color: #f5f5f7; }
+
+    #sahlWelcomeCard .awp-sub {
+      font-size: 14px;
+      font-weight: 400;
+      color: #6e6e73;
+      text-align: center;
+      margin: 0 0 30px;
+      line-height: 1.5;
+      max-width: 280px;
+    }
+    [data-theme="dark"] #sahlWelcomeCard .awp-sub { color: #98989d; }
+
+    #sahlWelcomeCard .awp-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(0,0,0,.08);
+      margin-bottom: 20px;
+    }
+    [data-theme="dark"] #sahlWelcomeCard .awp-divider {
+      background: rgba(255,255,255,.10);
+    }
+
+    #sahlWelcomeCard .awp-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      width: 100%;
+    }
+
+    #sahlWelcomeCard .awp-btn-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 12px;
+      background: #0071e3;
+      color: #fff;
+      font-family: var(--ap-font);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -.15px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition:
+        background .18s ease,
+        transform   .12s ease,
+        box-shadow  .18s ease;
+      box-shadow: 0 4px 14px rgba(0,113,227,.32);
+    }
+    #sahlWelcomeCard .awp-btn-primary:hover {
+      background: #0077ed;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0,113,227,.40);
+    }
+    #sahlWelcomeCard .awp-btn-primary:active {
+      background: #005ec4;
+      transform: translateY(0);
+    }
+    #sahlWelcomeCard .awp-btn-primary i {
+      font-size: 15px;
+      opacity: .88;
+    }
+
+    #sahlWelcomeCard .awp-btn-secondary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 12px;
+      background: rgba(0,0,0,.055);
+      color: #1d1d1f;
+      font-family: var(--ap-font);
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -.15px;
+      border: 1px solid rgba(0,0,0,.09);
+      cursor: pointer;
+      transition:
+        background .18s ease,
+        transform   .12s ease;
+    }
+    #sahlWelcomeCard .awp-btn-secondary:hover {
+      background: rgba(0,0,0,.09);
+      transform: translateY(-1px);
+    }
+    #sahlWelcomeCard .awp-btn-secondary:active {
+      background: rgba(0,0,0,.12);
+      transform: translateY(0);
+    }
+    [data-theme="dark"] #sahlWelcomeCard .awp-btn-secondary {
+      background: rgba(255,255,255,.08);
+      color: #f5f5f7;
+      border-color: rgba(255,255,255,.12);
+    }
+    [data-theme="dark"] #sahlWelcomeCard .awp-btn-secondary:hover {
+      background: rgba(255,255,255,.13);
+    }
+    #sahlWelcomeCard .awp-btn-secondary i {
+      font-size: 15px;
+      color: #6e6e73;
+    }
+    [data-theme="dark"] #sahlWelcomeCard .awp-btn-secondary i { color: #98989d; }
+
+    #sahlWelcomeCard .awp-note {
+      margin-top: 18px;
+      font-size: 11.5px;
+      color: #aeaeb2;
+      text-align: center;
+      letter-spacing: -.05px;
+    }
+    #sahlWelcomeCard .awp-note a {
+      color: #0071e3;
+      text-decoration: none;
+    }
+    #sahlWelcomeCard .awp-note a:hover { text-decoration: underline; }
+
+    @media (max-width: 440px) {
+      #sahlWelcomeCard .awp-body { padding: 28px 22px 22px; }
+      #sahlWelcomeCard .awp-title { font-size: 20px; }
+    }
+    #homeShell .search-field { position: relative; }
+    #homeInput::placeholder { color: transparent !important; }
+
+    .ph-anim-wrap {
+      position: absolute;
+      left: 46px;
+      right: 72px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: 400;
+      color: #b0b0b8;
+      white-space: nowrap;
+      overflow: hidden;
+      line-height: 1;
+      transition: opacity .2s ease;
+    }
+    .ph-anim-wrap.hidden-ph { opacity: 0; }
+
+    .ph-prefix {
+      flex-shrink: 0;
+      color: #c0c0c8;
+    }
+    .ph-sep {
+      flex-shrink: 0;
+      margin: 0 7px;
+      opacity: .35;
+    }
+    .ph-word {
+      display: inline-block;
+      color: #888894;
+      font-weight: 500;
+      transition: opacity .28s ease;
+    }
+    .ph-word.ph-hidden { opacity: 0; }
+
+    [data-theme="dark"] .ph-anim-wrap { color: #555560; }
+    [data-theme="dark"] .ph-prefix    { color: #4a4a55; }
+    [data-theme="dark"] .ph-word      { color: #66666f; }
+  
+    /* hide the old mobile fixed pill completely */
+    .mobile-about-link { display: none !important; }
+
+    /* shared base for shop link */
+    .desktop-about-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      color: inherit;
+      opacity: 0.85;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 0.5px solid rgba(0, 0, 0, 0.13);
+      transition: opacity .15s ease, background .15s ease;
+    }
+    .desktop-about-link:hover {
+      opacity: 1;
+      background: rgba(0, 0, 0, 0.04);
+    }
+    .desktop-about-link i {
+      font-size: 14px;
+    }
+
+    [data-theme="dark"] .desktop-about-link {
+      border-color: rgba(255, 255, 255, 0.13);
+    }
+    [data-theme="dark"] .desktop-about-link:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }

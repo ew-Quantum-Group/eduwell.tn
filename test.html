@@ -365,32 +365,53 @@
     .scroll-hint { font-size: 12px; color: rgba(255,255,255,0.25); margin-left: 4px; }
 
     /* ═══════════════════════════════════════════
-       ACETERNITY POPUP SYSTEM
+       ACETERNITY POPUP SYSTEM — GPU-composited
+       Only opacity + transform are animated.
+       No display toggling inside rAF.
+       No layout-triggering backdrop-filter on overlay.
     ═══════════════════════════════════════════ */
 
+    /* Overlay — pure opacity, no backdrop-filter toggle */
     .modal-overlay {
       position: fixed; inset: 0; z-index: 8000;
-      background: rgba(0,0,0,0);
+      background: rgba(10, 10, 12, 0.40);
       pointer-events: none;
-      transition: background 0.3s ease, backdrop-filter 0.3s ease;
+      opacity: 0;
+      will-change: opacity;
+      transition: opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .modal-overlay.open {
-      background: rgba(0,0,0,0.28);
-      backdrop-filter: blur(3px);
+      opacity: 1;
       pointer-events: all;
     }
 
+    /* Modal wrapper — always in DOM, visibility driven by opacity+transform ONLY */
     .fp-modal {
       position: fixed; z-index: 9000;
-      width: 340px;
-      opacity: 0; pointer-events: none;
-      transform: translateY(20px) scale(0.95);
-      transition: opacity 0.28s var(--ease-out), transform 0.28s var(--ease-out);
-      display: none;
+      width: min(340px, calc(100vw - 24px));
+      /* Pre-positioned to centre so first paint is never at 0,0 */
+      top: 50%; left: 50%;
+      /* translate(-50%,-50%) is the BASE; JS adds fine offset if needed */
+      --tx: -50%; --ty: -50%;
+      transform: translate(var(--tx), calc(var(--ty) + 18px)) scale(0.96);
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+      will-change: transform, opacity;
+      transition:
+        opacity  0.30s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.30s cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0s linear 0.30s;   /* hide after close anim finishes */
     }
     .fp-modal.open {
-      opacity: 1; pointer-events: all;
-      transform: translateY(0) scale(1);
+      transform: translate(var(--tx), var(--ty)) scale(1);
+      opacity: 1;
+      pointer-events: all;
+      visibility: visible;
+      transition:
+        opacity  0.30s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.30s cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0s linear 0s;      /* show immediately */
     }
 
     /* ── Card shell ── */
@@ -399,7 +420,11 @@
       border: 1px solid rgba(0,0,0,0.09);
       background: #ffffff;
       overflow: hidden;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.06);
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,0.04),
+        0 4px 6px rgba(0,0,0,0.04),
+        0 12px 32px rgba(0,0,0,0.10),
+        0 32px 64px rgba(0,0,0,0.08);
       font-family: var(--f2);
     }
 
@@ -411,22 +436,23 @@
     }
     .fp-card-img img {
       width: 100%; height: 100%; object-fit: cover; display: block;
-      transition: transform 0.45s var(--ease-out), border-radius 0.45s var(--ease-out);
+      will-change: transform;
+      transition: transform 0.50s cubic-bezier(0.22, 1, 0.36, 1),
+                  border-radius 0.50s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .fp-card:hover .fp-card-img img {
       transform: scale(0.94); border-radius: 13px;
     }
 
-    /* ── Coloured icon badge overlaid on image ── */
+    /* ── Icon badge on image ── */
     .fp-img-badge {
       position: absolute; bottom: 14px; left: 14px;
       display: flex; align-items: center; gap: 9px;
-      background: rgba(255,255,255,0.96);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.97);
+      border: 1px solid rgba(0,0,0,0.07);
       border-radius: 12px;
       padding: 8px 13px 8px 9px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      box-shadow: 0 2px 14px rgba(0,0,0,0.10);
       z-index: 5;
     }
     .fp-badge-icon {
@@ -438,23 +464,23 @@
     .fp-badge-label { font-size: 12px; font-weight: 700; color: #18181b; line-height: 1; }
     .fp-badge-sub   { font-size: 10px; font-weight: 500; color: #71717a; line-height: 1; }
 
-    /* ── Close button (top-right of image) ── */
+    /* ── Close button ── */
     .fp-close-btn {
       position: absolute; top: 12px; right: 12px; z-index: 10;
       width: 30px; height: 30px; border-radius: 50%;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.94);
       border: 1px solid rgba(0,0,0,0.08);
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; font-size: 11px; color: #52525b;
-      transition: background 0.15s, transform 0.15s, color 0.15s;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.10);
+      will-change: transform;
+      transition: background 0.18s ease, transform 0.18s ease, color 0.18s ease;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.12);
     }
     .fp-close-btn:hover {
-      background: #18181b; color: #ffffff; transform: scale(1.08);
+      background: #18181b; color: #ffffff; transform: scale(1.10) rotate(90deg);
     }
 
-    /* ── Body ── */
+    /* ── Card body ── */
     .fp-card-body { padding: 18px 18px 16px; }
 
     .fp-author-row {
@@ -472,9 +498,7 @@
       width: 3px; height: 3px; border-radius: 50%;
       background: #d4d4d8; flex-shrink: 0; margin: 0 2px;
     }
-    .fp-author-category {
-      font-size: 12px; font-weight: 500; color: #a1a1aa;
-    }
+    .fp-author-category { font-size: 12px; font-weight: 500; color: #a1a1aa; }
 
     .fp-card-title {
       font-size: 17px; font-weight: 700;
@@ -482,14 +506,12 @@
       line-height: 1.3; margin-bottom: 7px;
     }
     .fp-card-desc {
-      font-size: 13px; line-height: 1.65; color: #71717a;
-      margin-bottom: 16px;
+      font-size: 13px; line-height: 1.65; color: #71717a; margin-bottom: 16px;
     }
 
     .fp-footer {
       display: flex; align-items: center; justify-content: space-between;
-      padding-top: 14px;
-      border-top: 1px solid #f4f4f5;
+      padding-top: 14px; border-top: 1px solid #f4f4f5;
     }
     .fp-date {
       display: flex; align-items: center; gap: 6px;
@@ -500,13 +522,13 @@
       display: inline-flex; align-items: center; gap: 7px;
       background: #0f0f0f; color: #fff;
       font-family: var(--f2); font-size: 12px; font-weight: 700;
-      padding: 9px 16px; border-radius: 10px;
-      text-decoration: none;
-      transition: opacity 0.15s, transform 0.2s var(--ease-out);
+      padding: 9px 16px; border-radius: 10px; text-decoration: none;
+      will-change: transform;
+      transition: opacity 0.15s ease, transform 0.22s cubic-bezier(0.22,1,0.36,1);
     }
-    .fp-cta i { font-size: 10px; transition: transform 0.2s; }
-    .fp-cta:hover { opacity: 0.88; transform: translateY(-1px); }
-    .fp-cta:hover i { transform: translateX(2px); }
+    .fp-cta i { font-size: 10px; transition: transform 0.22s cubic-bezier(0.22,1,0.36,1); }
+    .fp-cta:hover { opacity: 0.88; transform: translateY(-2px); }
+    .fp-cta:hover i { transform: translateX(3px); }
 
     /* Icon colour helpers */
     .bi-blue   { background: rgba(75,111,255,0.12); color: #3b5bdb; }
@@ -1004,53 +1026,59 @@
   const sc=document.getElementById('collectionScroll'),dots=document.querySelectorAll('#scrollDots .scroll-dot');
   if(sc&&dots.length){sc.addEventListener('scroll',()=>{const i=Math.round(sc.scrollLeft/294);dots.forEach((d,j)=>d.classList.toggle('active',j===i));},{passive:true});}
 
-  /* ══════════════════════════════════
-     MODAL ENGINE
-  ══════════════════════════════════ */
+  /* ══════════════════════════════════════════
+     MODAL ENGINE — GPU-composited, zero layout thrash
+     Strategy:
+       • All modals are always in the DOM (no display:none toggle)
+       • visibility + opacity + transform handle show/hide
+       • CSS handles ALL timing — JS just toggles .open
+       • No requestAnimationFrame chains needed
+       • No left/top repositioning (CSS translate(-50%,-50%) centres perfectly)
+  ══════════════════════════════════════════ */
   const overlay = document.getElementById('modalOverlay');
-  let activeModal = null;
+  let activeModalId = null;
 
-  function positionModal(modal) {
-    const vw = window.innerWidth, vh = window.innerHeight;
-    const mw = modal.offsetWidth  || 340;
-    const mh = modal.offsetHeight || 440;
-    const left = Math.max(12, Math.min((vw - mw) / 2, vw - mw - 12));
-    const top  = Math.max(12, Math.min((vh - mh) / 2, vh - mh - 12));
-    modal.style.left = left + 'px';
-    modal.style.top  = top  + 'px';
-  }
+  /* Pre-warm all modals so they're already laid out and composited */
+  document.querySelectorAll('.fp-modal').forEach(m => {
+    /* Force the browser to create a compositor layer up front */
+    m.style.willChange = 'transform, opacity';
+  });
 
   function openModal(id) {
-    if (activeModal) closeModal();
+    /* Close previous without waiting for its animation */
+    if (activeModalId && activeModalId !== id) {
+      const prev = document.getElementById('modal-' + activeModalId);
+      if (prev) prev.classList.remove('open');
+    }
+
+    activeModalId = id;
     const modal = document.getElementById('modal-' + id);
     if (!modal) return;
-    activeModal = modal;
-    modal.style.display = 'block';
-    requestAnimationFrame(() => {
-      positionModal(modal);
-      requestAnimationFrame(() => {
-        modal.classList.add('open');
-        overlay.classList.add('open');
-      });
-    });
-    document.body.style.overflow = 'hidden';
+
+    /* Single class toggle — CSS transition handles everything */
+    overlay.classList.add('open');
+    modal.classList.add('open');
   }
 
   function closeModal() {
-    if (!activeModal) return;
-    const m = activeModal;
-    activeModal = null;
-    m.classList.remove('open');
+    if (!activeModalId) return;
+    const modal = document.getElementById('modal-' + activeModalId);
+    activeModalId = null;
+    if (modal) modal.classList.remove('open');
     overlay.classList.remove('open');
-    document.body.style.overflow = '';
-    setTimeout(() => { m.style.display = 'none'; }, 300);
   }
-
-  window.addEventListener('resize', () => { if (activeModal) positionModal(activeModal); });
 
   /* Nav triggers */
   document.querySelectorAll('[data-modal]').forEach(el => {
-    el.addEventListener('click', e => { e.preventDefault(); openModal(el.dataset.modal); });
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      /* Toggle: clicking the same item again closes it */
+      if (activeModalId === el.dataset.modal) {
+        closeModal();
+      } else {
+        openModal(el.dataset.modal);
+      }
+    });
   });
 
   /* Close buttons inside cards */
@@ -1064,7 +1092,7 @@
   /* Escape key */
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-  /* Prevent card clicks from closing */
+  /* Stop card clicks bubbling to overlay */
   document.querySelectorAll('.fp-modal').forEach(m => {
     m.addEventListener('click', e => e.stopPropagation());
   });

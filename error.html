@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Animated Gradient Background</title>
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #0A0A0A;
+    }
+
+    /* ── Entrance animation: opacity 0→1, scale 1.5→1 over 2s (framer-motion equivalent) ── */
+    @keyframes entrance {
+      from {
+        opacity: 0;
+        transform: scale(1.5);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    #gradient-wrapper {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      animation: entrance 2s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+    }
+
+    #gradient-bg {
+      position: absolute;
+      inset: 0;
+      /* JS sets background on each frame */
+    }
+
+    /* ── Content overlay ── */
+    #content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      padding-top: 128px; /* pt-32 = 8rem */
+      text-align: center;
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    /* Lottie player sizing */
+    dotlottie-player {
+      width: 280px;
+      height: 280px;
+    }
+
+    /* mt-4 text-lg text-gray-300 md:text-xl max-w-lg */
+    #subtitle {
+      margin-top: 16px;
+      font-size: 18px;
+      color: #D1D5DB; /* text-gray-300 */
+      max-width: 512px; /* max-w-lg */
+      line-height: 1.7;
+      font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    }
+
+    @media (min-width: 768px) {
+      #subtitle {
+        font-size: 20px; /* md:text-xl */
+      }
+    }
+
+    #home-btn {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      z-index: 50;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    }
+
+    #home-btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-1px);
+    }
+
+    #home-btn:active {
+      transform: translateY(0);
+    }
+
+    #home-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Home button -->
+  <a id="home-btn" href="./index.html">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 12L12 3l9 9"/>
+      <path d="M9 21V12h6v9"/>
+      <path d="M3 12v9h18v-9"/>
+    </svg>
+    Back to Home
+  </a>
+
+  <!-- AnimatedGradientBackground -->
+  <div id="gradient-wrapper">
+    <div id="gradient-bg"></div>
+  </div>
+
+  <!-- Demo content (DemoVariant1) -->
+  <div id="content">
+    <!-- DotLottie animation -->
+    <dotlottie-player
+      src="https://lottie.host/8cf4ba71-e5fb-44f3-8134-178c4d389417/0CCsdcgNIP.json"
+      background="transparent"
+      speed="1"
+      loop
+      autoplay
+    ></dotlottie-player>
+
+    <p id="subtitle">
+      A customizable animated radial gradient background with a subtle
+      breathing effect.
+    </p>
+  </div>
+
+  <script>
+    /*
+      AnimatedGradientBackground — JS port of the React component
+      Props used (matching component defaults):
+        startingGap    = 125
+        Breathing      = false  (component default is false; demo doesn't pass it)
+        gradientColors = ["#0A0A0A","#2979FF","#FF80AB","#FF6D00","#FFD600","#00E676","#3D5AFE"]
+        gradientStops  = [35, 50, 60, 70, 80, 90, 100]
+        animationSpeed = 0.02
+        breathingRange = 5
+        topOffset      = 0
+    */
+
+    const GRADIENT_COLORS = [
+      "#0A0A0A",
+      "#2979FF",
+      "#FF80AB",
+      "#FF6D00",
+      "#FFD600",
+      "#00E676",
+      "#3D5AFE"
+    ];
+    const GRADIENT_STOPS  = [35, 50, 60, 70, 80, 90, 100];
+
+    const startingGap    = 125;
+    const breathing      = false;   // DemoVariant1 does NOT pass Breathing prop → default false
+    const animationSpeed = 0.02;
+    const breathingRange = 5;
+    const topOffset      = 0;
+
+    const bgEl = document.getElementById('gradient-bg');
+
+    let width     = startingGap;
+    let direction = 1;
+
+    function animate() {
+      // Breathing bounce
+      if (width >= startingGap + breathingRange) direction = -1;
+      if (width <= startingGap - breathingRange) direction =  1;
+
+      const effectiveDir = breathing ? direction : 0;
+      width += effectiveDir * animationSpeed;
+
+      // Build gradient string
+      const stops = GRADIENT_STOPS
+        .map((stop, i) => `${GRADIENT_COLORS[i]} ${stop}%`)
+        .join(', ');
+
+      bgEl.style.background =
+        `radial-gradient(${width.toFixed(3)}% ${(width + topOffset).toFixed(3)}% at 50% 20%, ${stops})`;
+
+      requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+  </script>
+</body>
+</html>

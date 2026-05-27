@@ -22,6 +22,7 @@
       --gray-2: #48484A;
       --gray-3: #8E8E93;
       --gray-4: #C7C7CC;
+      --gray-40: #e3e3e7;
       --white: #FFFFFF;
       --border: rgba(0,0,0,0.07);
       --blue: #4B6FFF;
@@ -42,11 +43,102 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
+    /* ═══════════════════════════════════════
+       GOOEY LOADER SPLASH SCREEN
+    ═══════════════════════════════════════ */
+    #loader-splash {
+      position: fixed; inset: 0; z-index: 99999;
+      background: #ffffff;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 2rem;
+      transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+    #loader-splash.hide { opacity: 0; transform: scale(1.04); pointer-events: none; }
+
+    .splash-logo {
+      font-family: var(--f); font-size: 1.1rem; font-weight: 600;
+      letter-spacing: -0.03em; color: #111110;
+      opacity: 0; transform: translateY(10px);
+      animation: splashFadeIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+    }
+    @keyframes splashFadeIn { to { opacity: 1; transform: translateY(0); } }
+
+    .gooey-wrap {
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; opacity: 0;
+      animation: splashFadeIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+    }
+    .gooey-svg-filter { position: absolute; width: 0; height: 0; }
+    .gooey-loader {
+      width: 12em; height: 3em; position: relative;
+      overflow: hidden; border-bottom: 8px solid #c5c2f0;
+      filter: url(#gooey-loader-filter);
+    }
+    .gooey-loader::before, .gooey-loader::after {
+      content: ''; position: absolute; border-radius: 50%;
+    }
+    .gooey-loader::before {
+      width: 22em; height: 18em; background-color: #7F77DD;
+      left: -2em; bottom: -18em;
+      animation: gooey-wee1 2s linear infinite;
+    }
+    .gooey-loader::after {
+      width: 16em; height: 12em; background-color: #1D9E75;
+      left: -4em; bottom: -12em;
+      animation: gooey-wee2 2s linear infinite 0.75s;
+    }
+    @keyframes gooey-wee1 {
+      0%   { transform: translateX(-10em) rotate(0deg); }
+      100% { transform: translateX(7em)  rotate(180deg); }
+    }
+    @keyframes gooey-wee2 {
+      0%   { transform: translateX(-8em) rotate(0deg); }
+      100% { transform: translateX(8em)  rotate(180deg); }
+    }
+
+    /* ═══════════════════════════════════════
+       GRADIENT TEXT — FIXED
+       Uses background-clip: text so the gradient
+       is strictly clipped to the text pixels only.
+    ═══════════════════════════════════════ */
+    @keyframes gradientShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .gradient-text {
+      /* inline so it only wraps the text itself */
+      display: inline;
+      /* animated gradient that shifts colours */
+      background: linear-gradient(
+        270deg,
+        hsl(180, 100%, 63%),
+        hsl(231, 100%, 63%),
+        hsl(210, 100%, 63%),
+        hsl(195, 100%, 63%),
+        hsl(236, 100%, 63%)
+      );
+      background-size: 300% 300%;
+      animation: gradientShift 12s ease-in-out infinite;
+      /* clip to text */
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      /* keep the asterisk visible */
+      position: relative;
+    }
+
+    /* ═══════════════════════════════════════
+       PAGE SYSTEM
+    ═══════════════════════════════════════ */
     .page {
       position: fixed; inset: 0;
       display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      z-index: 10;
+      align-items: center; justify-content: center; z-index: 10;
     }
     .page.leave { animation: leaveUp 0.45s var(--ease-in) forwards; }
     .page.enter { animation: enterUp 0.55s var(--ease-out) forwards; }
@@ -84,13 +176,10 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       background-size: 200px 200px;
     }
-
     .morphing-bg {
-      position: absolute; inset: 0;
-      background: var(--bg);
+      position: absolute; inset: 0; background: var(--bg);
       display: flex; align-items: center; justify-content: center;
     }
-
     .morph-img-stack {
       position: absolute; top: 50%; left: 50%;
       transform: translate(-50%, -50%);
@@ -113,7 +202,6 @@
     .morph-img-stack .pcard:nth-child(3) { transform: rotate(-3deg); z-index: 3; }
     .morph-img-stack .pcard:nth-child(4) { transform: rotate(8deg);  z-index: 4; }
     .morph-img-stack .pcard:nth-child(5) { transform: rotate(-5deg); z-index: 5; }
-
     .morph-container {
       position: relative; width: 90%; max-width: 1100px;
       height: clamp(120px,22vw,260px); text-align: center;
@@ -125,7 +213,6 @@
       position: absolute; inset: 0; width: 100%;
       display: inline-block; color: rgba(17,17,16,0.10);
     }
-
     .gradient-overlay {
       pointer-events: none; position: absolute; inset: 0;
       background: linear-gradient(to bottom, rgba(240,239,232,0.40) 0%, transparent 45%, rgba(240,239,232,0.65) 100%);
@@ -146,13 +233,11 @@
       font-size: 0.8125rem; font-weight: 500;
       transition: color 0.2s, background 0.2s;
       white-space: nowrap; padding: 0.45rem 0.85rem;
-      border-radius: 999px;
-      display: flex; align-items: center; gap: 6px;
+      border-radius: 999px; display: flex; align-items: center; gap: 6px;
     }
     .nav-inner a i { font-size: 11px; opacity: 0.75; flex-shrink: 0; }
     .nav-inner a:hover { color: var(--accent); background: rgba(255,255,255,0.08); }
     .nav-inner a:hover i { opacity: 1; }
-
     @media (max-width: 600px) {
       .nav-inner { gap: 0.05rem; padding: 0.35rem 0.4rem; }
       .nav-inner a { padding: 0.5rem 0.7rem; font-size: 0.75rem; gap: 0; }
@@ -177,20 +262,24 @@
     }
     .word-wrap { overflow: hidden; display: inline-block; }
     .word-inner { display: inline-block; position: relative; transform: translateY(120%); opacity: 0; }
-    .asterisk { position: absolute; top: 0.65em; right: -0.3em; font-size: 0.31em; line-height: 1; }
+    .asterisk {
+      position: absolute; top: 0.65em; right: -0.3em;
+      font-size: 0.31em; line-height: 1;
+      /* make asterisk visible since parent uses -webkit-text-fill-color: transparent */
+      -webkit-text-fill-color: var(--primary);
+      color: var(--primary);
+    }
 
     .edu-strip {
       display: flex; align-items: center; gap: 10px;
-      margin-bottom: 18px; opacity: 0;
-      transform: translateY(14px);
+      margin-bottom: 18px; opacity: 0; transform: translateY(14px);
       transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
     }
     .edu-strip.visible { opacity: 1; transform: translateY(0); }
     .edu-chip {
       display: flex; align-items: center; gap: 9px;
       padding: 9px 16px 9px 12px;
-      background: rgba(17,17,16,0.055);
-      border: 1px solid rgba(17,17,16,0.08);
+      background: rgba(17,17,16,0.055); border: 1px solid rgba(17,17,16,0.08);
       border-radius: 100px; cursor: default;
       transition: background 0.25s, transform 0.3s var(--ease-out);
       backdrop-filter: blur(8px);
@@ -209,7 +298,6 @@
     .ic-info { background: rgba(75,111,255,0.08); }.ic-info i { color: #4B6FFF; }
     .edu-chip-label { font-size: 12px; font-weight: 600; color: rgba(17,17,16,0.48); white-space: nowrap; }
     .edu-strip-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(17,17,16,0.15); flex-shrink: 0; }
-
     @keyframes chipFloat {
       0%,100% { transform: translateY(0px); } 50% { transform: translateY(-5px); }
     }
@@ -275,7 +363,6 @@
       overflow-y: auto; overflow-x: hidden; font-family: var(--f2);
     }
     #p2.gone { display: none; }
-
     .sahl-nav {
       position: sticky; top: 0; left: 0; right: 0; width: 100%;
       height: 60px; display: flex; align-items: center;
@@ -293,7 +380,6 @@
       transition: opacity 0.15s; font-family: var(--f2);
     }
     .sahl-nav-back:hover { opacity: 0.65; }
-
     .menu-wrap { display: flex; flex-direction: column; align-items: center; width: 100%; padding: 36px 24px 0; }
     .menu-label { font-size: 12px; font-weight: 600; letter-spacing: 0.10em; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
     .menu-title { font-size: clamp(26px,4vw,38px); font-weight: 800; letter-spacing: -0.04em; color: var(--black); text-align: center; margin-bottom: 8px; line-height: 1.05; }
@@ -324,8 +410,6 @@
     .ac-chev  { color: var(--gray-4); font-size: 12px; flex-shrink: 0; transition: transform 0.2s; }
     .action-card:hover .ac-chev { transform: translateX(3px); }
     .menu-note { margin-top: 24px; font-size: 12px; color: var(--gray-4); display: flex; align-items: center; gap: 5px; }
-
-    /* COLLECTION */
     .collection-section { width: 100%; background: #000000; padding: 64px 0 72px; margin-top: 48px; flex-shrink: 0; }
     .collection-header { padding: 0 28px 40px; max-width: 600px; }
     .collection-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.40); margin-bottom: 12px; }
@@ -364,173 +448,65 @@
     .scroll-dot.active { background: rgba(255,255,255,0.70); width: 16px; border-radius: 3px; }
     .scroll-hint { font-size: 12px; color: rgba(255,255,255,0.25); margin-left: 4px; }
 
-    /* ═══════════════════════════════════════════
-       ACETERNITY POPUP SYSTEM — GPU-composited
-       Only opacity + transform are animated.
-       No display toggling inside rAF.
-       No layout-triggering backdrop-filter on overlay.
-    ═══════════════════════════════════════════ */
-
-    /* Overlay — pure opacity, no backdrop-filter toggle */
+    /* MODAL SYSTEM */
     .modal-overlay {
       position: fixed; inset: 0; z-index: 8000;
       background: rgba(10, 10, 12, 0.40);
-      pointer-events: none;
-      opacity: 0;
-      will-change: opacity;
+      pointer-events: none; opacity: 0; will-change: opacity;
       transition: opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .modal-overlay.open {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    /* Modal wrapper — always in DOM, visibility driven by opacity+transform ONLY */
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
     .fp-modal {
       position: fixed; z-index: 9000;
       width: min(340px, calc(100vw - 24px));
-      /* Pre-positioned to centre so first paint is never at 0,0 */
       top: 50%; left: 50%;
-      /* translate(-50%,-50%) is the BASE; JS adds fine offset if needed */
       --tx: -50%; --ty: -50%;
       transform: translate(var(--tx), calc(var(--ty) + 18px)) scale(0.96);
-      opacity: 0;
-      pointer-events: none;
-      visibility: hidden;
+      opacity: 0; pointer-events: none; visibility: hidden;
       will-change: transform, opacity;
-      transition:
-        opacity  0.30s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.30s cubic-bezier(0.22, 1, 0.36, 1),
-        visibility 0s linear 0.30s;   /* hide after close anim finishes */
+      transition: opacity 0.30s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.30s cubic-bezier(0.22, 1, 0.36, 1),
+                  visibility 0s linear 0.30s;
     }
     .fp-modal.open {
       transform: translate(var(--tx), var(--ty)) scale(1);
-      opacity: 1;
-      pointer-events: all;
-      visibility: visible;
-      transition:
-        opacity  0.30s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.30s cubic-bezier(0.22, 1, 0.36, 1),
-        visibility 0s linear 0s;      /* show immediately */
+      opacity: 1; pointer-events: all; visibility: visible;
+      transition: opacity 0.30s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.30s cubic-bezier(0.22, 1, 0.36, 1),
+                  visibility 0s linear 0s;
     }
-
-    /* ── Card shell ── */
     .fp-card {
-      border-radius: 20px;
-      border: 1px solid rgba(0,0,0,0.09);
-      background: #ffffff;
-      overflow: hidden;
-      box-shadow:
-        0 0 0 1px rgba(0,0,0,0.04),
-        0 4px 6px rgba(0,0,0,0.04),
-        0 12px 32px rgba(0,0,0,0.10),
-        0 32px 64px rgba(0,0,0,0.08);
+      border-radius: 20px; border: 1px solid rgba(0,0,0,0.09);
+      background: #ffffff; overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.04), 0 4px 6px rgba(0,0,0,0.04),
+                  0 12px 32px rgba(0,0,0,0.10), 0 32px 64px rgba(0,0,0,0.08);
       font-family: var(--f2);
     }
-
-    /* ── Hero image ── */
-    .fp-card-img {
-      position: relative; width: 100%;
-      aspect-ratio: 16/10; overflow: hidden;
-      background: #f4f4f5;
-    }
-    .fp-card-img img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-      will-change: transform;
-      transition: transform 0.50s cubic-bezier(0.22, 1, 0.36, 1),
-                  border-radius 0.50s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .fp-card:hover .fp-card-img img {
-      transform: scale(0.94); border-radius: 13px;
-    }
-
-    /* ── Icon badge on image ── */
-    .fp-img-badge {
-      position: absolute; bottom: 14px; left: 14px;
-      display: flex; align-items: center; gap: 9px;
-      background: rgba(255,255,255,0.97);
-      border: 1px solid rgba(0,0,0,0.07);
-      border-radius: 12px;
-      padding: 8px 13px 8px 9px;
-      box-shadow: 0 2px 14px rgba(0,0,0,0.10);
-      z-index: 5;
-    }
-    .fp-badge-icon {
-      width: 30px; height: 30px; border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; font-size: 14px;
-    }
+    .fp-card-img { position: relative; width: 100%; aspect-ratio: 16/10; overflow: hidden; background: #f4f4f5; }
+    .fp-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; will-change: transform; transition: transform 0.50s cubic-bezier(0.22, 1, 0.36, 1), border-radius 0.50s cubic-bezier(0.22, 1, 0.36, 1); }
+    .fp-card:hover .fp-card-img img { transform: scale(0.94); border-radius: 13px; }
+    .fp-img-badge { position: absolute; bottom: 14px; left: 14px; display: flex; align-items: center; gap: 9px; background: rgba(255,255,255,0.97); border: 1px solid rgba(0,0,0,0.07); border-radius: 12px; padding: 8px 13px 8px 9px; box-shadow: 0 2px 14px rgba(0,0,0,0.10); z-index: 5; }
+    .fp-badge-icon { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; }
     .fp-badge-text { display: flex; flex-direction: column; gap: 1px; }
     .fp-badge-label { font-size: 12px; font-weight: 700; color: #18181b; line-height: 1; }
     .fp-badge-sub   { font-size: 10px; font-weight: 500; color: #71717a; line-height: 1; }
-
-    /* ── Close button ── */
-    .fp-close-btn {
-      position: absolute; top: 12px; right: 12px; z-index: 10;
-      width: 30px; height: 30px; border-radius: 50%;
-      background: rgba(255,255,255,0.94);
-      border: 1px solid rgba(0,0,0,0.08);
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; font-size: 11px; color: #52525b;
-      will-change: transform;
-      transition: background 0.18s ease, transform 0.18s ease, color 0.18s ease;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.12);
-    }
-    .fp-close-btn:hover {
-      background: #18181b; color: #ffffff; transform: scale(1.10) rotate(90deg);
-    }
-
-    /* ── Card body ── */
+    .fp-close-btn { position: absolute; top: 12px; right: 12px; z-index: 10; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.94); border: 1px solid rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 11px; color: #52525b; will-change: transform; transition: background 0.18s ease, transform 0.18s ease, color 0.18s ease; box-shadow: 0 1px 6px rgba(0,0,0,0.12); }
+    .fp-close-btn:hover { background: #18181b; color: #ffffff; transform: scale(1.10) rotate(90deg); }
     .fp-card-body { padding: 18px 18px 16px; }
-
-    .fp-author-row {
-      display: flex; align-items: center; gap: 8px; margin-bottom: 11px;
-    }
-    .fp-author-icon {
-      width: 22px; height: 22px; border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 11px; flex-shrink: 0;
-    }
-    .fp-author-name {
-      font-size: 12px; font-weight: 600; color: #71717a; letter-spacing: 0.01em;
-    }
-    .fp-author-dot {
-      width: 3px; height: 3px; border-radius: 50%;
-      background: #d4d4d8; flex-shrink: 0; margin: 0 2px;
-    }
+    .fp-author-row { display: flex; align-items: center; gap: 8px; margin-bottom: 11px; }
+    .fp-author-icon { width: 22px; height: 22px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
+    .fp-author-name { font-size: 12px; font-weight: 600; color: #71717a; letter-spacing: 0.01em; }
+    .fp-author-dot { width: 3px; height: 3px; border-radius: 50%; background: #d4d4d8; flex-shrink: 0; margin: 0 2px; }
     .fp-author-category { font-size: 12px; font-weight: 500; color: #a1a1aa; }
-
-    .fp-card-title {
-      font-size: 17px; font-weight: 700;
-      letter-spacing: -0.03em; color: #0f0f0f;
-      line-height: 1.3; margin-bottom: 7px;
-    }
-    .fp-card-desc {
-      font-size: 13px; line-height: 1.65; color: #71717a; margin-bottom: 16px;
-    }
-
-    .fp-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      padding-top: 14px; border-top: 1px solid #f4f4f5;
-    }
-    .fp-date {
-      display: flex; align-items: center; gap: 6px;
-      font-size: 12px; color: #a1a1aa;
-    }
+    .fp-card-title { font-size: 17px; font-weight: 700; letter-spacing: -0.03em; color: #0f0f0f; line-height: 1.3; margin-bottom: 7px; }
+    .fp-card-desc { font-size: 13px; line-height: 1.65; color: #71717a; margin-bottom: 16px; }
+    .fp-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid #f4f4f5; }
+    .fp-date { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #a1a1aa; }
     .fp-date i { font-size: 11px; }
-    .fp-cta {
-      display: inline-flex; align-items: center; gap: 7px;
-      background: #0f0f0f; color: #fff;
-      font-family: var(--f2); font-size: 12px; font-weight: 700;
-      padding: 9px 16px; border-radius: 10px; text-decoration: none;
-      will-change: transform;
-      transition: opacity 0.15s ease, transform 0.22s cubic-bezier(0.22,1,0.36,1);
-    }
+    .fp-cta { display: inline-flex; align-items: center; gap: 7px; background: #0f0f0f; color: #fff; font-family: var(--f2); font-size: 12px; font-weight: 700; padding: 9px 16px; border-radius: 10px; text-decoration: none; will-change: transform; transition: opacity 0.15s ease, transform 0.22s cubic-bezier(0.22,1,0.36,1); }
     .fp-cta i { font-size: 10px; transition: transform 0.22s cubic-bezier(0.22,1,0.36,1); }
     .fp-cta:hover { opacity: 0.88; transform: translateY(-2px); }
     .fp-cta:hover i { transform: translateX(3px); }
-
-    /* Icon colour helpers */
     .bi-blue   { background: rgba(75,111,255,0.12); color: #3b5bdb; }
     .bi-green  { background: rgba(34,197,94,0.12);  color: #16a34a; }
     .bi-orange { background: rgba(249,115,22,0.12); color: #ea580c; }
@@ -538,564 +514,515 @@
     .bi-rose   { background: rgba(244,63,94,0.12);  color: #e11d48; }
     .bi-dark   { background: rgba(15,15,15,0.08);   color: #18181b; }
     .bi-teal   { background: rgba(20,184,166,0.12); color: #0d9488; }
+    .shadcn-btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; white-space: nowrap; border-radius: 8px; font-size: 13px; font-weight: 500; font-family: var(--f2); height: 36px; padding: 0 16px; background: #0f0f0f; color: #ffffff; border: none; cursor: pointer; text-decoration: none; box-shadow: 0 1px 3px rgba(0,0,0,0.18), 0 1px 2px rgba(0,0,0,0.10); outline-offset: 2px; transition: background 0.18s, transform 0.20s cubic-bezier(0.22,1,0.36,1), box-shadow 0.18s; will-change: transform; }
+    .shadcn-btn i { font-size: 10px; transition: transform 0.20s cubic-bezier(0.22,1,0.36,1); }
+    .shadcn-btn:hover { background: rgba(15,15,15,0.86); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.18); }
+    .shadcn-btn:hover i { transform: translateX(3px); }
+    .shadcn-btn:active { transform: scale(0.97); }
+    .shadcn-btn:focus-visible { outline: 2px solid rgba(15,15,15,0.45); }
+    .action-card.pink-card { background: linear-gradient(135deg, #FFF0F3 0%, #FFE4EC 100%); border-color: rgba(255, 45, 85, 0.13); }
+    .action-card.pink-card:hover { border-color: rgba(255, 45, 85, 0.24); box-shadow: 0 4px 24px rgba(255, 45, 85, 0.10); }
+    .action-card.pink-card .ac-title { color: #1a0009; }
+    .action-card.pink-card .ac-desc  { color: rgba(120, 20, 50, 0.55); }
+    .action-card.pink-card .ac-chev  { color: rgba(255, 45, 85, 0.35); }
+    .action-card.pink-card:hover .ac-chev { color: #FF2D55; transform: translateX(4px); }
+    .ic-pink { background: rgba(255, 45, 85, 0.10); color: #FF2D55; }
   </style>
 </head>
 <body>
 
-<!-- PAGE 1 — HERO -->
-<section class="page" id="p1">
-  <div class="morphing-bg">
-    <div class="morph-container">
-      <div class="morph-img-stack">
-        <div class="pcard"><img src="https://images.unsplash.com/photo-1517322048670-4fba75cbbb62?q=80&w=500&auto=format&fit=crop" alt="" /></div>
-        <div class="pcard"><img src="https://images.unsplash.com/photo-1573790387438-4da905039392?q=80&w=500&auto=format&fit=crop" alt="" /></div>
-        <div class="pcard"><img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?q=80&w=500&auto=format&fit=crop" alt="" /></div>
-        <div class="pcard"><img src="https://images.unsplash.com/photo-1554931670-4ebfabf6e7a9?q=80&w=500&auto=format&fit=crop" alt="" /></div>
-        <div class="pcard"><img src="https://images.unsplash.com/photo-1546484475-7f7bd55792da?q=80&w=500&auto=format&fit=crop" alt="" /></div>
-      </div>
-      <span class="morph-span" id="morph-text1"></span>
-      <span class="morph-span" id="morph-text2"></span>
+  <div id="loader-splash">
+    <svg class="gooey-svg-filter" aria-hidden="true">
+      <defs>
+        <filter id="gooey-loader-filter">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 48 -7" result="goo" />
+          <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+        </filter>
+      </defs>
+    </svg>
+    <div class="gooey-wrap" role="status" aria-label="Chargement…">
+      <div class="gooey-loader"></div>
     </div>
   </div>
-  <div class="noise-overlay"></div>
-  <div class="gradient-overlay"></div>
 
-  <nav class="p1-nav">
-    <div class="nav-inner">
-      <a href="#" data-modal="contact"><i class="fa-solid fa-paper-plane"></i><span class="nav-lbl">Contact</span></a>
-      <a href="#" data-modal="shop"><i class="fa-solid fa-bag-shopping"></i><span class="nav-lbl">Shop</span></a>
-      <a href="#" data-modal="inscription"><i class="fa-solid fa-user-plus"></i><span class="nav-lbl">Inscription</span></a>
-      <a href="#" data-modal="bac"><i class="fa-solid fa-graduation-cap"></i><span class="nav-lbl">Bac</span></a>
-      <a href="#" data-modal="library"><i class="fa-solid fa-book-open-reader"></i><span class="nav-lbl">Bibliothèque</span></a>
-    </div>
-  </nav>
-
-  <div class="hero-content">
-    <div class="hero-grid">
-      <div class="heading-col">
-        <div class="edu-strip" id="eduStrip">
-          <div class="edu-chip"><div class="edu-chip-icon ic-phys"><i class="fa-solid fa-atom"></i></div><span class="edu-chip-label">Physique</span></div>
-          <span class="edu-strip-dot"></span>
-          <div class="edu-chip"><div class="edu-chip-icon ic-math"><i class="fa-solid fa-square-root-variable"></i></div><span class="edu-chip-label">Maths</span></div>
-          <span class="edu-strip-dot"></span>
-          <div class="edu-chip"><div class="edu-chip-icon ic-svt"><i class="fa-solid fa-dna"></i></div><span class="edu-chip-label">SVT</span></div>
-          <span class="edu-strip-dot"></span>
-          <div class="edu-chip"><div class="edu-chip-icon ic-chem"><i class="fa-solid fa-flask-vial"></i></div><span class="edu-chip-label">Chimie</span></div>
-          <span class="edu-strip-dot"></span>
-          <div class="edu-chip"><div class="edu-chip-icon ic-phil"><i class="fa-solid fa-landmark"></i></div><span class="edu-chip-label">Philo</span></div>
-          <span class="edu-strip-dot"></span>
-          <div class="edu-chip"><div class="edu-chip-icon ic-info"><i class="fa-solid fa-laptop-code"></i></div><span class="edu-chip-label">Info</span></div>
+  <!-- PAGE 1 — HERO -->
+  <section class="page" id="p1">
+    <div class="morphing-bg">
+      <div class="morph-container">
+        <div class="morph-img-stack">
+          <div class="pcard"><img src="./assets/images/web/3.jpg" alt="" /></div>
+          <div class="pcard"><img src="./assets/images/web/4.jpg" alt="" /></div>
+          <div class="pcard"><img src="./assets/images/web/1.jpg" alt="" /></div>
+          <div class="pcard"><img src="./assets/images/web/2.jpg" alt="" /></div>
+          <div class="pcard"><img src="./assets/images/web/5.jpg" alt="" /></div>
         </div>
-        <h1 id="headline"></h1>
+        <span class="morph-span" id="morph-text1"></span>
+        <span class="morph-span" id="morph-text2"></span>
       </div>
-      <div class="right-col">
-        <p class="hero-text" id="hero-text">Prisma est un réseau mondial d'artistes visuels, de cinéastes et de conteurs, unis non par un lieu, un statut ou des étiquettes, mais par la passion et la volonté de libérer leur potentiel.</p>
-        <button class="hero-btn" id="btnJoin">
-          <span class="lbl">Rejoindre le labo</span>
-          <span class="p1-btn-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </span>
-          <span class="spinner"></span>
+    </div>
+    <div class="noise-overlay"></div>
+    <div class="gradient-overlay"></div>
+
+    <nav class="p1-nav">
+      <div class="nav-inner">
+        <a href="#" data-modal="contact"><i class="fa-solid fa-paper-plane"></i><span class="nav-lbl">Contact</span></a>
+        <a href="#" data-modal="shop"><i class="fa-solid fa-bag-shopping"></i><span class="nav-lbl">Shop</span></a>
+        <a href="#" data-modal="inscription"><i class="fa-solid fa-user-plus"></i><span class="nav-lbl">Inscription</span></a>
+        <a href="#" data-modal="bac"><i class="fa-solid fa-graduation-cap"></i><span class="nav-lbl">Bac</span></a>
+        <a href="#" data-modal="library"><i class="fa-solid fa-book-open-reader"></i><span class="nav-lbl">Bibliothèque</span></a>
+      </div>
+    </nav>
+
+    <div class="hero-content">
+      <div class="hero-grid">
+        <div class="heading-col">
+          <div class="edu-strip" id="eduStrip">
+            <div class="edu-chip"><div class="edu-chip-icon ic-phys"><i class="fa-solid fa-atom"></i></div><span class="edu-chip-label">Physique</span></div>
+            <span class="edu-strip-dot"></span>
+            <div class="edu-chip"><div class="edu-chip-icon ic-math"><i class="fa-solid fa-square-root-variable"></i></div><span class="edu-chip-label">Maths</span></div>
+            <span class="edu-strip-dot"></span>
+            <div class="edu-chip"><div class="edu-chip-icon ic-svt"><i class="fa-solid fa-dna"></i></div><span class="edu-chip-label">SVT</span></div>
+            <span class="edu-strip-dot"></span>
+            <div class="edu-chip"><div class="edu-chip-icon ic-chem"><i class="fa-solid fa-flask-vial"></i></div><span class="edu-chip-label">Chimie</span></div>
+            <span class="edu-strip-dot"></span>
+            <div class="edu-chip"><div class="edu-chip-icon ic-phil"><i class="fa-solid fa-landmark"></i></div><span class="edu-chip-label">Philo</span></div>
+            <span class="edu-strip-dot"></span>
+            <div class="edu-chip"><div class="edu-chip-icon ic-info"><i class="fa-solid fa-laptop-code"></i></div><span class="edu-chip-label">Info</span></div>
+          </div>
+          <h1 id="headline"></h1>
+        </div>
+        <div class="right-col">
+          <p class="hero-text" id="hero-text">Prisma est un réseau mondial d'artistes visuels, de cinéastes et de conteurs, unis non par un lieu, un statut ou des étiquettes, mais par la passion et la volonté de libérer leur potentiel.</p>
+          <button class="hero-btn" id="btnJoin">
+            <span class="lbl">Rejoindre le labo</span>
+            <span class="p1-btn-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+            <span class="spinner"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 2 — SAHL -->
+  <section class="page gone" id="p2">
+    <nav class="sahl-nav">
+      <div class="sahl-nav-brand"><span class="sahl-nav-dot"></span>Sahl Learn</div>
+      <button class="sahl-nav-back" id="btnBack"><i class="fa-solid fa-chevron-left"></i> Retour</button>
+    </nav>
+    <div class="menu-wrap">
+      <p class="menu-label">Bienvenue</p>
+      <h2 class="menu-title">Où souhaitez-vous<br>aller ?</h2>
+      <p class="menu-sub">Choisissez une option pour continuer.</p>
+      <div class="cards">
+        <button class="action-card" onclick="window.location.href='./profile/login.html'">
+          <div class="ac-icon ic-a"><i class="fa-solid fa-right-to-bracket"></i></div>
+          <div class="ac-text"><div class="ac-title">Se connecter</div><div class="ac-desc">Reprenez votre parcours d'apprentissage</div></div>
+          <i class="fa-solid fa-chevron-right ac-chev"></i>
+        </button>
+        <button class="action-card" onclick="window.location.href='./profile/register.html'">
+          <div class="ac-icon ic-b"><i class="fa-solid fa-user-plus"></i></div>
+          <div class="ac-text"><div class="ac-title">S'inscrire</div><div class="ac-desc">Créez votre compte et commencez à apprendre</div></div>
+          <i class="fa-solid fa-chevron-right ac-chev"></i>
+        </button>
+        <button class="action-card pink-card" onclick="window.location.href='./shop/index.html'">
+          <div class="ac-icon ic-pink"><i class="fa-solid fa-bag-shopping"></i></div>
+          <div class="ac-text"><div class="ac-title">Boutique</div><div class="ac-desc">Découvrez nos offres, cours et abonnements</div></div>
+          <i class="fa-solid fa-chevron-right ac-chev"></i>
         </button>
       </div>
+      <p class="menu-note"><i class="fa-solid fa-lock"></i> Sécurisé &amp; privé · Aucun spam, jamais</p>
     </div>
-  </div>
-</section>
-
-
-<!-- PAGE 2 — SAHL -->
-<section class="page gone" id="p2">
-  <nav class="sahl-nav">
-    <div class="sahl-nav-brand"><span class="sahl-nav-dot"></span>Sahl Learn</div>
-    <button class="sahl-nav-back" id="btnBack"><i class="fa-solid fa-chevron-left"></i> Retour</button>
-  </nav>
-  <div class="menu-wrap">
-    <p class="menu-label">Bienvenue</p>
-    <h2 class="menu-title">Où souhaitez-vous<br>aller ?</h2>
-    <p class="menu-sub">Choisissez une option pour continuer.</p>
-    <div class="cards">
-      <button class="action-card" onclick="window.location.href='./profile/login.html'">
-        <div class="ac-icon ic-a"><i class="fa-solid fa-right-to-bracket"></i></div>
-        <div class="ac-text"><div class="ac-title">Se connecter</div><div class="ac-desc">Reprenez votre parcours d'apprentissage</div></div>
-        <i class="fa-solid fa-chevron-right ac-chev"></i>
-      </button>
-      <button class="action-card" onclick="window.location.href='./profile/register.html'">
-        <div class="ac-icon ic-b"><i class="fa-solid fa-user-plus"></i></div>
-        <div class="ac-text"><div class="ac-title">S'inscrire</div><div class="ac-desc">Créez votre compte et commencez à apprendre</div></div>
-        <i class="fa-solid fa-chevron-right ac-chev"></i>
-      </button>
-      <button class="action-card" onclick="window.location.href='./shop/index.html'">
-        <div class="ac-icon ic-c"><i class="fa-solid fa-bag-shopping"></i></div>
-        <div class="ac-text"><div class="ac-title">Boutique</div><div class="ac-desc">Découvrez nos offres, cours et abonnements</div></div>
-        <i class="fa-solid fa-chevron-right ac-chev"></i>
-      </button>
-    </div>
-    <p class="menu-note"><i class="fa-solid fa-lock"></i> Sécurisé &amp; privé · Aucun spam, jamais</p>
-  </div>
-  <div class="collection-section">
-    <div class="collection-header">
-      <p class="collection-eyebrow">Sahl Ecosystem</p>
-      <h2 class="collection-title">8 Apps.<br>Une réussite.</h2>
-      <p class="collection-subtitle">Toutes les matières du Bac, dans une collection d'applications conçue pour te faire progresser vite.</p>
-    </div>
-    <div class="collection-scroll" id="collectionScroll">
-      <a class="app-card card-sahl-ai" href="https://www.sahllearn.org/app/workspace.html">
-        <div class="app-card-inner">
-          <img class="app-card-bg" src="./assets/images/p23.jpg" alt="Sahl AI"/>
-          <div class="app-card-overlay"></div>
-          <div class="app-card-badge"><span class="badge-dot" style="background:#4B6FFF;"></span><span class="badge-name">Sahl App</span></div>
-          <div class="app-card-content">
-            <div class="app-card-tag">Plateforme éducative · Bac</div>
-            <div class="app-card-name">Sahl <strong>App</strong></div>
-            <div class="app-card-desc">Plateforme intelligente dédiée au Bac avec vidéos éducatives et une bibliothèque riche.</div>
-            <button class="app-card-btn"><span>Télécharger l'app</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
-          </div>
-        </div>
-      </a>
-      <a class="app-card card-svt" href="./inscrire">
-        <div class="app-card-inner">
-          <img class="app-card-bg" src="./assets/images/5.webp" alt="Chat Philo"/>
-          <div class="app-card-overlay"></div>
-          <div class="app-card-badge"><span class="badge-dot" style="background:#30D158;"></span><span class="badge-name">Sahl App</span></div>
-          <div class="app-card-content">
-            <div class="app-card-tag">Sahl Learn · Toujours disponible</div>
-            <div class="app-card-name"><strong>Chat</strong> فيلو</div>
-            <div class="app-card-desc">Ton assistant intelligent pour réviser la philosophie du Bac بسهولة.</div>
-            <button class="app-card-btn"><span>Essayer maintenant</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
-          </div>
-        </div>
-      </a>
-      <a class="app-card card-physique" href="./inscrire">
-        <div class="app-card-inner">
-          <img class="app-card-bg" src="./assets/images/2.webp" alt="SVT App"/>
-          <div class="app-card-overlay"></div>
-          <div class="app-card-badge"><span class="badge-dot" style="background:#0A84FF;"></span><span class="badge-name">SVT App</span></div>
-          <div class="app-card-content">
-            <div class="app-card-tag">SVT · Révision Bac</div>
-            <div class="app-card-name">SVT <strong>App</strong></div>
-            <div class="app-card-desc">Apprends la SVT facilement avec des cours interactifs.</div>
-            <button class="app-card-btn"><span>Découvrir l'application</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
-          </div>
-        </div>
-      </a>
-      <a class="app-card card-maths" href="./inscrire">
-        <div class="app-card-inner">
-          <img class="app-card-bg" src="./assets/images/3.webp" alt="E-Books"/>
-          <div class="app-card-overlay"></div>
-          <div class="app-card-badge"><span class="badge-dot" style="background:#30D158;"></span><span class="badge-name">E-Books</span></div>
-          <div class="app-card-content">
-            <div class="app-card-tag">Bibliothèque · BAC</div>
-            <div class="app-card-name">E-Book</div>
-            <div class="app-card-desc">Accède à une collection complète de séries, cours et devoirs.</div>
-            <button class="app-card-btn"><span>Explorer la bibliothèque</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
-          </div>
-        </div>
-      </a>
-      <a class="app-card card-svt" href="./inscrire">
-        <div class="app-card-inner">
-          <img class="app-card-bg" src="./assets/images/6.webp" alt="Formatik"/>
-          <div class="app-card-overlay"></div>
-          <div class="app-card-badge"><span class="badge-dot" style="background:#30D158;"></span><span class="badge-name">Sahl Learn</span></div>
-          <div class="app-card-content">
-            <div class="app-card-tag">Outils intelligents · Bac pratique</div>
-            <div class="app-card-name"><strong>Formatik</strong> App</div>
-            <div class="app-card-desc">Des outils simples et efficaces pour réviser l'informatique du Bac pratique.</div>
-            <button class="app-card-btn"><span>Essayer maintenant</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
-          </div>
-        </div>
-      </a>
-      <a class="app-card card-svt" href="./inscrire">
-        <div class="app-card-inner">
-          <img class="app-card-bg" src="./assets/images/00123.jpg" alt="STI App"/>
-          <div class="app-card-overlay"></div>
-          <div class="app-card-badge"><span class="badge-dot" style="background:#30D158;"></span><span class="badge-name">Sahl Learn</span></div>
-          <div class="app-card-content">
-            <div class="app-card-tag">Bac Info · Préparation STI</div>
-            <div class="app-card-name"><strong>STI</strong> App</div>
-            <div class="app-card-desc">Une plateforme dédiée pour aider les élèves du Bac info à se préparer au STI pratique.</div>
-            <button class="app-card-btn"><span>Essayer maintenant</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
-          </div>
-        </div>
-      </a>
-      <a class="app-card card-svt" href="./inscrire">
-        <div class="app-card-inner">
-          <img class="app-card-bg" src="./assets/images/l2.webp" alt="QUIZ QCM"/>
-          <div class="app-card-overlay"></div>
-          <div class="app-card-badge"><span class="badge-dot" style="background:#30D158;"></span><span class="badge-name">Sahl Learn</span></div>
-          <div class="app-card-content">
-            <div class="app-card-tag">SVT · Bac sciences</div>
-            <div class="app-card-name"><strong>QUIZ QCM</strong></div>
-            <div class="app-card-desc">Teste tes connaissances en SVT avec des QCM interactifs.</div>
-            <button class="app-card-btn"><span>Essayer maintenant</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
-          </div>
-        </div>
-      </a>
-      <a class="app-card card-svt" href="./inscrire">
-        <div class="app-card-inner">
-          <img class="app-card-bg" src="./assets/images/img_1772682079623.webp" alt="Bibliothèque Sahl"/>
-          <div class="app-card-overlay"></div>
-          <div class="app-card-badge"><span class="badge-dot" style="background:#30D158;"></span><span class="badge-name">Sahl Learn</span></div>
-          <div class="app-card-content">
-            <div class="app-card-tag">Cours · Exercices · Corrections</div>
-            <div class="app-card-name"><strong>Bibliothèque Sahl</strong></div>
-            <div class="app-card-desc">Accède à des cours, exercices, sujets pilote, bac et réo avec correction.</div>
-            <button class="app-card-btn"><span>Essayer maintenant</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="collection-footer">
-      <div class="scroll-dots" id="scrollDots">
-        <div class="scroll-dot active"></div><div class="scroll-dot"></div>
-        <div class="scroll-dot"></div><div class="scroll-dot"></div>
-        <div class="scroll-dot"></div><div class="scroll-dot"></div>
-        <div class="scroll-dot"></div><div class="scroll-dot"></div>
+    <div class="collection-section">
+      <div class="collection-header">
+        <p class="collection-eyebrow">Sahl Ecosystem</p>
+        <h2 class="collection-title">8 Apps.<br>Une réussite.</h2>
+        <p class="collection-subtitle">Toutes les matières du Bac, dans une collection d'applications conçue pour te faire progresser vite.</p>
       </div>
-      <span class="scroll-hint">Faire défiler</span>
-    </div>
-  </div>
-</section>
-
-
-<!-- OVERLAY -->
-<div class="modal-overlay" id="modalOverlay"></div>
-
-
-<!-- ══════════════════════════════════════
-     POPUP — CONTACT
-     icon: fa-headset (support headset)
-══════════════════════════════════════ -->
-<div class="fp-modal" id="modal-contact">
-  <div class="fp-card">
-    <div class="fp-card-img">
-      <img src="https://images.unsplash.com/photo-1596526131083-e8c633064a6b?q=80&w=800&auto=format&fit=crop" alt="Contact" />
-      <!-- Close button -->
-      <button class="fp-close-btn" data-close><i class="fa-solid fa-xmark"></i></button>
-      <!-- Icon badge -->
-      <div class="fp-img-badge">
-        <div class="fp-badge-icon bi-rose"><i class="fa-solid fa-headset"></i></div>
-        <div class="fp-badge-text">
-          <span class="fp-badge-label">Support</span>
-          <span class="fp-badge-sub">Réponse rapide</span>
-        </div>
-      </div>
-    </div>
-    <div class="fp-card-body">
-      <div class="fp-author-row">
-        <div class="fp-author-icon bi-rose"><i class="fa-solid fa-circle-dot" style="font-size:9px;"></i></div>
-        <span class="fp-author-name">Équipe Sahl Learn</span>
-        <span class="fp-author-dot"></span>
-        <span class="fp-author-category">Contact</span>
-      </div>
-      <div class="fp-card-title">Contactez-nous directement</div>
-      <div class="fp-card-desc">Instagram, WhatsApp, email ou téléphone — on répond rapidement à chaque message reçu.</div>
-      <div class="fp-footer">
-        <span class="fp-date"><i class="fa-solid fa-shield-halved"></i>Données privées</span>
-        <a class="fp-cta" href="https://instagram.com/sahllearn" target="_blank" rel="noopener">
-          Nous écrire <i class="fa-solid fa-arrow-right"></i>
+      <div class="collection-scroll" id="collectionScroll">
+        <a class="app-card card-sahl-ai" href="https://www.sahllearn.org/app/workspace.html">
+          <div class="app-card-inner">
+            <img class="app-card-bg" src="./assets/images/p23.jpg" alt="Sahl AI"/>
+            <div class="app-card-overlay"></div>
+            <div class="app-card-badge"><span class="badge-dot" style="background:#4B6FFF;"></span><span class="badge-name">Sahl App</span></div>
+            <div class="app-card-content">
+              <div class="app-card-tag">Plateforme éducative · Bac</div>
+              <div class="app-card-name">Sahl <strong>App</strong></div>
+              <div class="app-card-desc">Plateforme intelligente dédiée au Bac avec vidéos éducatives et une bibliothèque riche.</div>
+              <button class="app-card-btn"><span>Télécharger l'app</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
+            </div>
+          </div>
+        </a>
+        <a class="app-card card-svt" href="./inscrire">
+          <div class="app-card-inner">
+            <img class="app-card-bg" src="./assets/images/5.webp" alt="Chat Philo"/>
+            <div class="app-card-overlay"></div>
+            <div class="app-card-badge"><span class="badge-dot" style="background:#30D158;"></span><span class="badge-name">Sahl App</span></div>
+            <div class="app-card-content">
+              <div class="app-card-tag">Sahl Learn · Toujours disponible</div>
+              <div class="app-card-name"><strong>Chat</strong> فيلو</div>
+              <div class="app-card-desc">Ton assistant intelligent pour réviser la philosophie du Bac بسهولة.</div>
+              <button class="app-card-btn"><span>Essayer maintenant</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
+            </div>
+          </div>
+        </a>
+        <a class="app-card card-physique" href="./inscrire">
+          <div class="app-card-inner">
+            <img class="app-card-bg" src="./assets/images/2.webp" alt="SVT App"/>
+            <div class="app-card-overlay"></div>
+            <div class="app-card-badge"><span class="badge-dot" style="background:#0A84FF;"></span><span class="badge-name">SVT App</span></div>
+            <div class="app-card-content">
+              <div class="app-card-tag">SVT · Révision Bac</div>
+              <div class="app-card-name">SVT <strong>App</strong></div>
+              <div class="app-card-desc">Apprends la SVT facilement avec des cours interactifs.</div>
+              <button class="app-card-btn"><span>Découvrir l'application</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
+            </div>
+          </div>
+        </a>
+        <a class="app-card card-maths" href="./inscrire">
+          <div class="app-card-inner">
+            <img class="app-card-bg" src="./assets/images/3.webp" alt="E-Books"/>
+            <div class="app-card-overlay"></div>
+            <div class="app-card-badge"><span class="badge-dot" style="background:#30D158;"></span><span class="badge-name">E-Books</span></div>
+            <div class="app-card-content">
+              <div class="app-card-tag">Bibliothèque · BAC</div>
+              <div class="app-card-name">E-Book</div>
+              <div class="app-card-desc">Accède à une collection complète de séries, cours et devoirs.</div>
+              <button class="app-card-btn"><span>Explorer la bibliothèque</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
+            </div>
+          </div>
+        </a>
+        <a class="app-card card-svt" href="./inscrire">
+          <div class="app-card-inner">
+            <img class="app-card-bg" src="./assets/images/6.webp" alt="Formatik"/>
+            <div class="app-card-overlay"></div>
+            <div class="app-card-badge"><span class="badge-dot" style="background:#30D158;"></span><span class="badge-name">Sahl Learn</span></div>
+            <div class="app-card-content">
+              <div class="app-card-tag">Outils intelligents · Bac pratique</div>
+              <div class="app-card-name"><strong>Formatik</strong> App</div>
+              <div class="app-card-desc">Des outils simples et efficaces pour réviser l'informatique du Bac pratique.</div>
+              <button class="app-card-btn"><span>Essayer maintenant</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
+            </div>
+          </div>
+        </a>
+        <a class="app-card card-svt" href="./inscrire">
+          <div class="app-card-inner">
+            <img class="app-card-bg" src="./assets/images/00123.jpg" alt="STI App"/>
+            <div class="app-card-overlay"></div>
+            <div class="app-card-badge"><span class="badge-dot" style="background:#30D158;"></span><span class="badge-name">Sahl Learn</span></div>
+            <div class="app-card-content">
+              <div class="app-card-tag">Bac Info · Préparation STI</div>
+              <div class="app-card-name"><strong>STI</strong> App</div>
+              <div class="app-card-desc">Une plateforme dédiée pour aider les élèves du Bac info à se préparer au STI pratique.</div>
+              <button class="app-card-btn"><span>Essayer maintenant</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
+            </div>
+          </div>
+        </a>
+        <a class="app-card card-svt" href="./inscrire">
+          <div class="app-card-inner">
+            <img class="app-card-bg" src="./assets/images/l2.webp" alt="QUIZ QCM"/>
+            <div class="app-card-overlay"></div>
+            <div class="app-card-badge"><span class="badge-dot" style="background:#30D158;"></span><span class="badge-name">Sahl Learn</span></div>
+            <div class="app-card-content">
+              <div class="app-card-tag">SVT · Bac sciences</div>
+              <div class="app-card-name"><strong>QUIZ QCM</strong></div>
+              <div class="app-card-desc">Teste tes connaissances en SVT avec des QCM interactifs.</div>
+              <button class="app-card-btn"><span>Essayer maintenant</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
+            </div>
+          </div>
+        </a>
+        <a class="app-card card-svt" href="./inscrire">
+          <div class="app-card-inner">
+            <img class="app-card-bg" src="./assets/images/img_1772682079623.webp" alt="Bibliothèque Sahl"/>
+            <div class="app-card-overlay"></div>
+            <div class="app-card-badge"><span class="badge-dot" style="background:#30D158;"></span><span class="badge-name">Sahl Learn</span></div>
+            <div class="app-card-content">
+              <div class="app-card-tag">Cours · Exercices · Corrections</div>
+              <div class="app-card-name"><strong>Bibliothèque Sahl</strong></div>
+              <div class="app-card-desc">Accède à des cours, exercices, sujets pilote, bac et réo avec correction.</div>
+              <button class="app-card-btn"><span>Essayer maintenant</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
+            </div>
+          </div>
         </a>
       </div>
+      <div class="collection-footer">
+        <div class="scroll-dots" id="scrollDots">
+          <div class="scroll-dot active"></div><div class="scroll-dot"></div>
+          <div class="scroll-dot"></div><div class="scroll-dot"></div>
+          <div class="scroll-dot"></div><div class="scroll-dot"></div>
+          <div class="scroll-dot"></div><div class="scroll-dot"></div>
+        </div>
+        <span class="scroll-hint">Faire défiler</span>
+      </div>
     </div>
-  </div>
-</div>
+  </section>
 
+  <div class="modal-overlay" id="modalOverlay"></div>
 
-<!-- ══════════════════════════════════════
-     POPUP — SHOP
-     icon: fa-store
-══════════════════════════════════════ -->
-<div class="fp-modal" id="modal-shop">
-  <div class="fp-card">
-    <div class="fp-card-img">
-      <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=800&auto=format&fit=crop" alt="Boutique" />
-      <button class="fp-close-btn" data-close><i class="fa-solid fa-xmark"></i></button>
-      <div class="fp-img-badge">
-        <div class="fp-badge-icon bi-orange"><i class="fa-solid fa-store"></i></div>
-        <div class="fp-badge-text">
-          <span class="fp-badge-label">Boutique</span>
-          <span class="fp-badge-sub">Paiement sécurisé</span>
+  <!-- POPUP — CONTACT -->
+  <div class="fp-modal" id="modal-contact">
+    <div class="fp-card">
+      <div class="fp-card-img">
+        <img src="https://images.unsplash.com/photo-1596526131083-e8c633064a6b?q=80&w=800&auto=format&fit=crop" alt="Contact" />
+        <button class="fp-close-btn" data-close><i class="fa-solid fa-xmark"></i></button>
+        <div class="fp-img-badge">
+          <div class="fp-badge-icon bi-rose"><i class="fa-solid fa-headset"></i></div>
+          <div class="fp-badge-text"><span class="fp-badge-label">Support</span><span class="fp-badge-sub">Réponse rapide</span></div>
+        </div>
+      </div>
+      <div class="fp-card-body">
+        <div class="fp-author-row">
+          <div class="fp-author-icon bi-rose"><i class="fa-solid fa-circle-dot" style="font-size:9px;"></i></div>
+          <span class="fp-author-name">Équipe Sahl Learn</span><span class="fp-author-dot"></span><span class="fp-author-category">Contact</span>
+        </div>
+        <div class="fp-card-title">Contactez-nous directement</div>
+        <div class="fp-card-desc">Instagram, WhatsApp, email ou téléphone — on répond rapidement à chaque message reçu.</div>
+        <div class="fp-footer">
+          <span class="fp-date"><i class="fa-solid fa-shield-halved"></i>Données privées</span>
+          <a class="fp-cta" href="https://instagram.com/sahllearn" target="_blank" rel="noopener">Nous écrire <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
     </div>
-    <div class="fp-card-body">
-      <div class="fp-author-row">
-        <div class="fp-author-icon bi-orange"><i class="fa-solid fa-circle-dot" style="font-size:9px;"></i></div>
-        <span class="fp-author-name">Sahl Store</span>
-        <span class="fp-author-dot"></span>
-        <span class="fp-author-category">Abonnements &amp; cours</span>
-      </div>
-      <div class="fp-card-title">Cours, abonnements &amp; ressources Bac</div>
-      <div class="fp-card-desc">Accédez à tout le contenu premium pour préparer votre Bac dans les meilleures conditions.</div>
-      <div class="fp-footer">
-        <span class="fp-date"><i class="fa-solid fa-lock"></i>Paiement sécurisé</span>
-        <a class="fp-cta" href="./shop/index.html">
-          Voir la boutique <i class="fa-solid fa-arrow-right"></i>
-        </a>
-      </div>
-    </div>
   </div>
-</div>
 
-
-<!-- ══════════════════════════════════════
-     POPUP — INSCRIPTION
-     icon: fa-id-card-clip
-══════════════════════════════════════ -->
-<div class="fp-modal" id="modal-inscription">
-  <div class="fp-card">
-    <div class="fp-card-img">
-      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop" alt="Inscription" />
-      <button class="fp-close-btn" data-close><i class="fa-solid fa-xmark"></i></button>
-      <div class="fp-img-badge">
-        <div class="fp-badge-icon bi-green"><i class="fa-solid fa-id-card-clip"></i></div>
-        <div class="fp-badge-text">
-          <span class="fp-badge-label">Inscription</span>
-          <span class="fp-badge-sub">100 % gratuit</span>
+  <!-- POPUP — SHOP -->
+  <div class="fp-modal" id="modal-shop">
+    <div class="fp-card">
+      <div class="fp-card-img">
+        <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=800&auto=format&fit=crop" alt="Boutique" />
+        <button class="fp-close-btn" data-close><i class="fa-solid fa-xmark"></i></button>
+        <div class="fp-img-badge">
+          <div class="fp-badge-icon bi-orange"><i class="fa-solid fa-store"></i></div>
+          <div class="fp-badge-text"><span class="fp-badge-label">Boutique</span><span class="fp-badge-sub">Paiement sécurisé</span></div>
+        </div>
+      </div>
+      <div class="fp-card-body">
+        <div class="fp-author-row">
+          <div class="fp-author-icon bi-orange"><i class="fa-solid fa-circle-dot" style="font-size:9px;"></i></div>
+          <span class="fp-author-name">Sahl Store</span><span class="fp-author-dot"></span><span class="fp-author-category">Abonnements &amp; cours</span>
+        </div>
+        <div class="fp-card-title">Cours, abonnements &amp; ressources Bac</div>
+        <div class="fp-card-desc">Accédez à tout le contenu premium pour préparer votre Bac dans les meilleures conditions.</div>
+        <div class="fp-footer">
+          <span class="fp-date"><i class="fa-solid fa-lock"></i>Paiement sécurisé</span>
+          <a class="shadcn-btn" href="./shop/index.html">Voir la boutique <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
     </div>
-    <div class="fp-card-body">
-      <div class="fp-author-row">
-        <div class="fp-author-icon bi-green"><i class="fa-solid fa-circle-dot" style="font-size:9px;"></i></div>
-        <span class="fp-author-name">Sahl Learn</span>
-        <span class="fp-author-dot"></span>
-        <span class="fp-author-category">Compte gratuit</span>
-      </div>
-      <div class="fp-card-title">Rejoins Sahl Learn aujourd'hui</div>
-      <div class="fp-card-desc">Crée ton compte gratuitement et commence à réviser dès maintenant avec nos outils intelligents.</div>
-      <div class="fp-footer">
-        <span class="fp-date"><i class="fa-solid fa-clock"></i>2 min · Aucun spam</span>
-        <a class="fp-cta" href="./profile/register.html">
-          S'inscrire <i class="fa-solid fa-arrow-right"></i>
-        </a>
-      </div>
-    </div>
   </div>
-</div>
 
-
-<!-- ══════════════════════════════════════
-     POPUP — BAC
-     icon: fa-school-flag
-══════════════════════════════════════ -->
-<div class="fp-modal" id="modal-bac">
-  <div class="fp-card">
-    <div class="fp-card-img">
-      <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800&auto=format&fit=crop" alt="Bac" />
-      <button class="fp-close-btn" data-close><i class="fa-solid fa-xmark"></i></button>
-      <div class="fp-img-badge">
-        <div class="fp-badge-icon bi-blue"><i class="fa-solid fa-school-flag"></i></div>
-        <div class="fp-badge-text">
-          <span class="fp-badge-label">Bac Tunisien</span>
-          <span class="fp-badge-sub">8 matières</span>
+  <!-- POPUP — INSCRIPTION -->
+  <div class="fp-modal" id="modal-inscription">
+    <div class="fp-card">
+      <div class="fp-card-img">
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop" alt="Inscription" />
+        <button class="fp-close-btn" data-close><i class="fa-solid fa-xmark"></i></button>
+        <div class="fp-img-badge">
+          <div class="fp-badge-icon bi-green"><i class="fa-solid fa-id-card-clip"></i></div>
+          <div class="fp-badge-text"><span class="fp-badge-label">Inscription</span><span class="fp-badge-sub">100 % gratuit</span></div>
+        </div>
+      </div>
+      <div class="fp-card-body">
+        <div class="fp-author-row">
+          <div class="fp-author-icon bi-green"><i class="fa-solid fa-circle-dot" style="font-size:9px;"></i></div>
+          <span class="fp-author-name">Sahl Learn</span><span class="fp-author-dot"></span><span class="fp-author-category">Compte gratuit</span>
+        </div>
+        <div class="fp-card-title">Rejoins Sahl Learn aujourd'hui</div>
+        <div class="fp-card-desc">Crée ton compte gratuitement et commence à réviser dès maintenant avec nos outils intelligents.</div>
+        <div class="fp-footer">
+          <span class="fp-date"><i class="fa-solid fa-clock"></i>2 min · Aucun spam</span>
+          <a class="fp-cta" href="./profile/register.html">S'inscrire <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
     </div>
-    <div class="fp-card-body">
-      <div class="fp-author-row">
-        <div class="fp-author-icon bi-blue"><i class="fa-solid fa-circle-dot" style="font-size:9px;"></i></div>
-        <span class="fp-author-name">Préparation Bac</span>
-        <span class="fp-author-dot"></span>
-        <span class="fp-author-category">Programme officiel</span>
-      </div>
-      <div class="fp-card-title">Toutes les matières réunies en un seul endroit</div>
-      <div class="fp-card-desc">Physique, Maths, SVT, Chimie, Info, Philo — vidéos, QCM et annales avec corrections détaillées.</div>
-      <div class="fp-footer">
-        <span class="fp-date"><i class="fa-solid fa-star"></i>Programme officiel</span>
-        <a class="fp-cta" href="https://www.sahllearn.org/app/workspace.html" target="_blank" rel="noopener">
-          Commencer <i class="fa-solid fa-arrow-right"></i>
-        </a>
-      </div>
-    </div>
   </div>
-</div>
 
-
-<!-- ══════════════════════════════════════
-     POPUP — BIBLIOTHÈQUE
-     icon: fa-building-columns (bibliothèque)
-══════════════════════════════════════ -->
-<div class="fp-modal" id="modal-library">
-  <div class="fp-card">
-    <div class="fp-card-img">
-      <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=800&auto=format&fit=crop" alt="Bibliothèque" />
-      <button class="fp-close-btn" data-close><i class="fa-solid fa-xmark"></i></button>
-      <div class="fp-img-badge">
-        <div class="fp-badge-icon bi-purple"><i class="fa-solid fa-building-columns"></i></div>
-        <div class="fp-badge-text">
-          <span class="fp-badge-label">Bibliothèque</span>
-          <span class="fp-badge-sub">500+ ressources</span>
+  <!-- POPUP — BAC -->
+  <div class="fp-modal" id="modal-bac">
+    <div class="fp-card">
+      <div class="fp-card-img">
+        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800&auto=format&fit=crop" alt="Bac" />
+        <button class="fp-close-btn" data-close><i class="fa-solid fa-xmark"></i></button>
+        <div class="fp-img-badge">
+          <div class="fp-badge-icon bi-blue"><i class="fa-solid fa-school-flag"></i></div>
+          <div class="fp-badge-text"><span class="fp-badge-label">Bac Tunisien</span><span class="fp-badge-sub">8 matières</span></div>
+        </div>
+      </div>
+      <div class="fp-card-body">
+        <div class="fp-author-row">
+          <div class="fp-author-icon bi-blue"><i class="fa-solid fa-circle-dot" style="font-size:9px;"></i></div>
+          <span class="fp-author-name">Préparation Bac</span><span class="fp-author-dot"></span><span class="fp-author-category">Programme officiel</span>
+        </div>
+        <div class="fp-card-title">Toutes les matières réunies en un seul endroit</div>
+        <div class="fp-card-desc">Physique, Maths, SVT, Chimie, Info, Philo — vidéos, QCM et annales avec corrections détaillées.</div>
+        <div class="fp-footer">
+          <span class="fp-date"><i class="fa-solid fa-star"></i>Programme officiel</span>
+          <a class="fp-cta" href="https://www.sahllearn.org/app/workspace.html" target="_blank" rel="noopener">Commencer <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
     </div>
-    <div class="fp-card-body">
-      <div class="fp-author-row">
-        <div class="fp-author-icon bi-purple"><i class="fa-solid fa-circle-dot" style="font-size:9px;"></i></div>
-        <span class="fp-author-name">Bibliothèque Sahl</span>
-        <span class="fp-author-dot"></span>
-        <span class="fp-author-category">Ressources pédagogiques</span>
+  </div>
+
+  <!-- POPUP — BIBLIOTHÈQUE -->
+  <div class="fp-modal" id="modal-library">
+    <div class="fp-card">
+      <div class="fp-card-img">
+        <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=800&auto=format&fit=crop" alt="Bibliothèque" />
+        <button class="fp-close-btn" data-close><i class="fa-solid fa-xmark"></i></button>
+        <div class="fp-img-badge">
+          <div class="fp-badge-icon bi-purple"><i class="fa-solid fa-building-columns"></i></div>
+          <div class="fp-badge-text"><span class="fp-badge-label">Bibliothèque</span><span class="fp-badge-sub">500+ ressources</span></div>
+        </div>
       </div>
-      <div class="fp-card-title">500+ cours, 1 200+ exercices, 8 matières</div>
-      <div class="fp-card-desc">Fiches de révision, e-books, sujets pilote, annales et corrigés — tout mis à jour régulièrement.</div>
-      <div class="fp-footer">
-        <span class="fp-date"><i class="fa-solid fa-rotate"></i>Mis à jour régulièrement</span>
-        <a class="fp-cta" href="./inscrire">
-          Explorer <i class="fa-solid fa-arrow-right"></i>
-        </a>
+      <div class="fp-card-body">
+        <div class="fp-author-row">
+          <div class="fp-author-icon bi-purple"><i class="fa-solid fa-circle-dot" style="font-size:9px;"></i></div>
+          <span class="fp-author-name">Bibliothèque Sahl</span><span class="fp-author-dot"></span><span class="fp-author-category">Ressources pédagogiques</span>
+        </div>
+        <div class="fp-card-title">500+ cours, 1 200+ exercices, 8 matières</div>
+        <div class="fp-card-desc">Fiches de révision, e-books, sujets pilote, annales et corrigés — tout mis à jour régulièrement.</div>
+        <div class="fp-footer">
+          <span class="fp-date"><i class="fa-solid fa-rotate"></i>Mis à jour régulièrement</span>
+          <a class="fp-cta" href="./inscrire">Explorer <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
+  <script>
+    /* LOADER */
+    (function(){
+      const splash=document.getElementById('loader-splash');
+      const MIN=2400,start=Date.now();
+      let pageReady=false,timerDone=false;
+      function tryDismiss(){if(!pageReady||!timerDone)return;splash.classList.add('hide');setTimeout(()=>{splash.style.display='none';},700);}
+      setTimeout(()=>{timerDone=true;tryDismiss();},MIN);
+      if(document.readyState==='complete'){pageReady=true;tryDismiss();}
+      else window.addEventListener('load',()=>{pageReady=true;tryDismiss();});
+    })();
 
-<script>
-  /* MORPHING TEXT */
-  (function(){
-    const MT=1.5,CT=0.5,texts=["UI/UX","Visuels","Motion","Histoires","Film","Design","Art","Couleur"];
-    const e1=document.getElementById('morph-text1'),e2=document.getElementById('morph-text2');
-    let idx=0,morph=0,cool=CT,last=performance.now();
-    function styles(f){
-      e2.style.filter=`blur(${Math.min(8/f-8,100)}px)`;e2.style.opacity=`${Math.pow(f,.4)*100}%`;
-      const v=1-f;e1.style.filter=`blur(${Math.min(8/v-8,100)}px)`;e1.style.opacity=`${Math.pow(v,.4)*100}%`;
-      e1.textContent=texts[idx%texts.length];e2.textContent=texts[(idx+1)%texts.length];
-    }
-    function tick(now){
-      requestAnimationFrame(tick);const dt=(now-last)/1e3;last=now;cool-=dt;
-      if(cool<=0){morph-=cool;cool=0;let f=morph/MT;if(f>1){cool=CT;f=1;}styles(f);if(f===1)idx++;}
-      else{morph=0;e2.style.filter='none';e2.style.opacity='100%';e1.style.filter='none';e1.style.opacity='0%';}
-    }
-    e1.textContent=texts[0];e2.textContent=texts[1];requestAnimationFrame(tick);
-  })();
-
-  /* HERO ENTRANCE */
-  function eoe(t){return t===1?1:1-Math.pow(2,-10*t);}
-  function anim(el,fy,ty,fo,to,dur,del){
-    let s=null;
-    setTimeout(()=>{
-      function step(ts){
-        if(!s)s=ts;const p=Math.min((ts-s)/dur,1),e=eoe(p);
-        el.style.transform=`translateY(${fy+(ty-fy)*e}px)`;el.style.opacity=fo+(to-fo)*e;
-        if(p<1)requestAnimationFrame(step);
+    /* MORPHING TEXT */
+    (function(){
+      const MT=1.5,CT=0.5,texts=["UI/UX","Visuels","Motion","Histoires","Film","Design","Art","Couleur"];
+      const e1=document.getElementById('morph-text1'),e2=document.getElementById('morph-text2');
+      let idx=0,morph=0,cool=CT,last=performance.now();
+      function styles(f){
+        e2.style.filter=`blur(${Math.min(8/f-8,100)}px)`;e2.style.opacity=`${Math.pow(f,.4)*100}%`;
+        const v=1-f;e1.style.filter=`blur(${Math.min(8/v-8,100)}px)`;e1.style.opacity=`${Math.pow(v,.4)*100}%`;
+        e1.textContent=texts[idx%texts.length];e2.textContent=texts[(idx+1)%texts.length];
       }
-      requestAnimationFrame(step);
-    },del);
-  }
-  const hl=document.getElementById('headline');
-  ['SahlLearn'].forEach((w,i,a)=>{
-    const wrap=document.createElement('span');wrap.className='word-wrap';
-    const inner=document.createElement('span');inner.className='word-inner';inner.textContent=w;
-    if(i===a.length-1){const ast=document.createElement('span');ast.className='asterisk';ast.textContent='*';inner.appendChild(ast);}
-    if(i<a.length-1)inner.style.marginRight='0.25em';
-    wrap.appendChild(inner);hl.appendChild(wrap);
-    anim(inner,120,0,0,1,600,i*80);
-  });
-  anim(document.getElementById('hero-text'),20,0,0,1,800,500);
-  anim(document.getElementById('btnJoin'),20,0,0,1,800,700);
-  setTimeout(()=>document.getElementById('eduStrip').classList.add('visible'),400);
+      function tick(now){
+        requestAnimationFrame(tick);const dt=(now-last)/1e3;last=now;cool-=dt;
+        if(cool<=0){morph-=cool;cool=0;let f=morph/MT;if(f>1){cool=CT;f=1;}styles(f);if(f===1)idx++;}
+        else{morph=0;e2.style.filter='none';e2.style.opacity='100%';e1.style.filter='none';e1.style.opacity='0%';}
+      }
+      e1.textContent=texts[0];e2.textContent=texts[1];requestAnimationFrame(tick);
+    })();
 
-  /* PAGE TRANSITIONS */
-  const p1=document.getElementById('p1'),p2=document.getElementById('p2');
-  const btnJoin=document.getElementById('btnJoin'),btnBack=document.getElementById('btnBack');
-  function showPage2(){
-    p1.classList.add('leave');
-    setTimeout(()=>{
-      p1.classList.add('gone');p1.classList.remove('leave');
-      p2.classList.remove('gone');p2.classList.add('enter');
-      p2.addEventListener('animationend',()=>p2.classList.remove('enter'),{once:true});
-      const cards=p2.querySelectorAll('.action-card');
-      cards.forEach(c=>{c.classList.remove('in');void c.offsetWidth;});
-      requestAnimationFrame(()=>cards.forEach(c=>c.classList.add('in')));
-      const ac=p2.querySelectorAll('.app-card');
-      ac.forEach(c=>{c.classList.remove('in');void c.offsetWidth;});
-      ac.forEach((c,i)=>setTimeout(()=>c.classList.add('in'),280+i*75));
-      btnJoin.classList.remove('loading');btnJoin.disabled=false;
-    },420);
-  }
-  function showPage1(){
-    p2.classList.add('leave');p2.scrollTop=0;
-    setTimeout(()=>{
-      p2.classList.add('gone');p2.classList.remove('leave');
-      p1.classList.remove('gone');p1.classList.add('enter');
-      p1.addEventListener('animationend',()=>p1.classList.remove('enter'),{once:true});
-    },420);
-  }
-  btnJoin.addEventListener('click',()=>{btnJoin.classList.add('loading');btnJoin.disabled=true;setTimeout(showPage2,600);});
-  btnBack.addEventListener('click',showPage1);
-
-  /* SCROLL DOTS */
-  const sc=document.getElementById('collectionScroll'),dots=document.querySelectorAll('#scrollDots .scroll-dot');
-  if(sc&&dots.length){sc.addEventListener('scroll',()=>{const i=Math.round(sc.scrollLeft/294);dots.forEach((d,j)=>d.classList.toggle('active',j===i));},{passive:true});}
-
-  /* ══════════════════════════════════════════
-     MODAL ENGINE — GPU-composited, zero layout thrash
-     Strategy:
-       • All modals are always in the DOM (no display:none toggle)
-       • visibility + opacity + transform handle show/hide
-       • CSS handles ALL timing — JS just toggles .open
-       • No requestAnimationFrame chains needed
-       • No left/top repositioning (CSS translate(-50%,-50%) centres perfectly)
-  ══════════════════════════════════════════ */
-  const overlay = document.getElementById('modalOverlay');
-  let activeModalId = null;
-
-  /* Pre-warm all modals so they're already laid out and composited */
-  document.querySelectorAll('.fp-modal').forEach(m => {
-    /* Force the browser to create a compositor layer up front */
-    m.style.willChange = 'transform, opacity';
-  });
-
-  function openModal(id) {
-    /* Close previous without waiting for its animation */
-    if (activeModalId && activeModalId !== id) {
-      const prev = document.getElementById('modal-' + activeModalId);
-      if (prev) prev.classList.remove('open');
+    /* HERO ENTRANCE */
+    function eoe(t){return t===1?1:1-Math.pow(2,-10*t);}
+    function animEl(el,fy,ty,fo,to,dur,del){
+      let s=null;
+      setTimeout(()=>{
+        function step(ts){if(!s)s=ts;const p=Math.min((ts-s)/dur,1),e=eoe(p);el.style.transform=`translateY(${fy+(ty-fy)*e}px)`;el.style.opacity=fo+(to-fo)*e;if(p<1)requestAnimationFrame(step);}
+        requestAnimationFrame(step);
+      },del);
     }
 
-    activeModalId = id;
-    const modal = document.getElementById('modal-' + id);
-    if (!modal) return;
+    const hl = document.getElementById('headline');
 
-    /* Single class toggle — CSS transition handles everything */
-    overlay.classList.add('open');
-    modal.classList.add('open');
-  }
+    /* Word 1: "Sahl" — plain text */
+    (function(){
+      const wrap  = document.createElement('span'); wrap.className  = 'word-wrap';
+      const inner = document.createElement('span'); inner.className = 'word-inner';
+      inner.textContent = 'Sahl';
+      inner.style.marginRight = '0.2em';
+      wrap.appendChild(inner);
+      hl.appendChild(wrap);
+      animEl(inner, 120, 0, 0, 1, 600, 0);
+    })();
 
-  function closeModal() {
-    if (!activeModalId) return;
-    const modal = document.getElementById('modal-' + activeModalId);
-    activeModalId = null;
-    if (modal) modal.classList.remove('open');
-    overlay.classList.remove('open');
-  }
+    /* Word 2: "Learn" — background-clip gradient, strictly within text */
+    (function(){
+      const wrap  = document.createElement('span'); wrap.className  = 'word-wrap';
+      const inner = document.createElement('span'); inner.className = 'word-inner';
 
-  /* Nav triggers */
-  document.querySelectorAll('[data-modal]').forEach(el => {
-    el.addEventListener('click', e => {
-      e.preventDefault();
-      /* Toggle: clicking the same item again closes it */
-      if (activeModalId === el.dataset.modal) {
-        closeModal();
-      } else {
-        openModal(el.dataset.modal);
-      }
+      /* Gradient text element */
+      const gt = document.createElement('span');
+      gt.className = 'gradient-text';
+      gt.textContent = 'Learn';
+
+      /* Asterisk — separate element so it stays opaque */
+      const ast = document.createElement('span');
+      ast.className = 'asterisk';
+      ast.textContent = '*';
+
+      inner.appendChild(gt);
+      inner.appendChild(ast);
+      wrap.appendChild(inner);
+      hl.appendChild(wrap);
+      animEl(inner, 120, 0, 0, 1, 600, 80);
+    })();
+
+    animEl(document.getElementById('hero-text'), 20, 0, 0, 1, 800, 500);
+    animEl(document.getElementById('btnJoin'),   20, 0, 0, 1, 800, 700);
+    setTimeout(()=>document.getElementById('eduStrip').classList.add('visible'), 400);
+
+    /* PAGE TRANSITIONS */
+    const p1=document.getElementById('p1'),p2=document.getElementById('p2');
+    const btnJoin=document.getElementById('btnJoin'),btnBack=document.getElementById('btnBack');
+    function showPage2(){
+      p1.classList.add('leave');
+      setTimeout(()=>{
+        p1.classList.add('gone');p1.classList.remove('leave');
+        p2.classList.remove('gone');p2.classList.add('enter');
+        p2.addEventListener('animationend',()=>p2.classList.remove('enter'),{once:true});
+        const cards=p2.querySelectorAll('.action-card');
+        cards.forEach(c=>{c.classList.remove('in');void c.offsetWidth;});
+        requestAnimationFrame(()=>cards.forEach(c=>c.classList.add('in')));
+        const ac=p2.querySelectorAll('.app-card');
+        ac.forEach(c=>{c.classList.remove('in');void c.offsetWidth;});
+        ac.forEach((c,i)=>setTimeout(()=>c.classList.add('in'),280+i*75));
+        btnJoin.classList.remove('loading');btnJoin.disabled=false;
+      },420);
+    }
+    function showPage1(){
+      p2.classList.add('leave');p2.scrollTop=0;
+      setTimeout(()=>{
+        p2.classList.add('gone');p2.classList.remove('leave');
+        p1.classList.remove('gone');p1.classList.add('enter');
+        p1.addEventListener('animationend',()=>p1.classList.remove('enter'),{once:true});
+      },420);
+    }
+    btnJoin.addEventListener('click',()=>{btnJoin.classList.add('loading');btnJoin.disabled=true;setTimeout(showPage2,600);});
+    btnBack.addEventListener('click',showPage1);
+
+    /* SCROLL DOTS */
+    const sc=document.getElementById('collectionScroll'),dots=document.querySelectorAll('#scrollDots .scroll-dot');
+    if(sc&&dots.length){sc.addEventListener('scroll',()=>{const i=Math.round(sc.scrollLeft/294);dots.forEach((d,j)=>d.classList.toggle('active',j===i));},{passive:true});}
+
+    /* MODAL ENGINE */
+    const overlay=document.getElementById('modalOverlay');
+    let activeModalId=null;
+    document.querySelectorAll('.fp-modal').forEach(m=>{m.style.willChange='transform, opacity';});
+    function openModal(id){
+      if(activeModalId&&activeModalId!==id){const prev=document.getElementById('modal-'+activeModalId);if(prev)prev.classList.remove('open');}
+      activeModalId=id;const modal=document.getElementById('modal-'+id);if(!modal)return;
+      overlay.classList.add('open');modal.classList.add('open');
+    }
+    function closeModal(){
+      if(!activeModalId)return;const modal=document.getElementById('modal-'+activeModalId);
+      activeModalId=null;if(modal)modal.classList.remove('open');overlay.classList.remove('open');
+    }
+    document.querySelectorAll('[data-modal]').forEach(el=>{
+      el.addEventListener('click',e=>{e.preventDefault();activeModalId===el.dataset.modal?closeModal():openModal(el.dataset.modal);});
     });
-  });
-
-  /* Close buttons inside cards */
-  document.querySelectorAll('[data-close]').forEach(btn => {
-    btn.addEventListener('click', e => { e.stopPropagation(); closeModal(); });
-  });
-
-  /* Overlay click */
-  overlay.addEventListener('click', closeModal);
-
-  /* Escape key */
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-  /* Stop card clicks bubbling to overlay */
-  document.querySelectorAll('.fp-modal').forEach(m => {
-    m.addEventListener('click', e => e.stopPropagation());
-  });
-</script>
+    document.querySelectorAll('[data-close]').forEach(btn=>{btn.addEventListener('click',e=>{e.stopPropagation();closeModal();});});
+    overlay.addEventListener('click',closeModal);
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+    document.querySelectorAll('.fp-modal').forEach(m=>{m.addEventListener('click',e=>e.stopPropagation());});
+  </script>
 </body>
 </html>

@@ -24,20 +24,56 @@ const STAGES_RAW = [
   {id:13,title:'العولمة والهوية الثقافية',sub:'بين الانفتاح وتهديد الخصوصيات',icon:'fa-network-wired',driveId:'19_qvr7huiS4EH4k2NrjNqAnrM3iigr5w',duration:'10 دقيقة',level:'متقدم'},
   {id:14,title:'الاختلاف داخل العالم المعولم',sub:'حماية الخصوصية مع الانفتاح',icon:'fa-globe',driveId:'1sraVLX4g8Wl_2t5OWZiw5v6cxrith9dz',duration:'15 دقيقة',level:'متوسط'},
 
-  {id:15,title:'ما هو النموذج؟',      sub:'تعريفات وأنواع النمذجة',       icon:'fa-cube',              driveId:'',duration:'45 دقيقة',level:'مبتدئ'},
-  {id:16,title:'النماذج العلمية',     sub:'بين الواقع والتجريد',          icon:'fa-flask-vial',        driveId:'',duration:'55 دقيقة',level:'متوسط'},
-  {id:17,title:'النمذجة الرياضية',    sub:'الصياغة الرمزية للعالم',       icon:'fa-infinity',          driveId:'',duration:'65 دقيقة',level:'متقدم'},
-  {id:18,title:'حدود النماذج',        sub:'ما لا يمكن للنموذج قوله',      icon:'fa-circle-question',   driveId:'',duration:'50 دقيقة',level:'متقدم'},
-  {id:19,title:'النموذج والواقع',     sub:'علاقة التمثيل بالحقيقة',       icon:'fa-mirror',            driveId:'',duration:'55 دقيقة',level:'متقدم'},
-  {id:20,title:'النمذجة والمعرفة',    sub:'كيف نبني المعرفة نمذجةً؟',    icon:'fa-brain',             driveId:'',duration:'60 دقيقة',level:'متقدم'},
-  {id:21,title:'النمذجة الفلسفية',    sub:'تطبيقات فكرية معاصرة',        icon:'fa-lightbulb',         driveId:'',duration:'50 دقيقة',level:'متوسط'},
-  {id:22,title:'نشأة الدولة',         sub:'نظريات العقد الاجتماعي',       icon:'fa-city',              driveId:'',duration:'55 دقيقة',level:'متوسط'},
-  {id:23,title:'السلطة والشرعية',     sub:'من أين تأتي السلطة؟',          icon:'fa-gavel',             driveId:'',duration:'60 دقيقة',level:'متوسط'},
-  {id:24,title:'العدالة السياسية',    sub:'توزيع الموارد والحقوق',        icon:'fa-scale-balanced',    driveId:'',duration:'65 دقيقة',level:'متقدم'},
-  {id:25,title:'الديمقراطية والحرية', sub:'نقد وتأسيس الأنظمة',          icon:'fa-landmark-dome',     driveId:'',duration:'70 دقيقة',level:'متقدم'},
-  {id:26,title:'الدولة والمجتمع',     sub:'الفرد والجماعة والمؤسسة',      icon:'fa-people-roof',       driveId:'',duration:'60 دقيقة',level:'متوسط'},
-  {id:27,title:'الثورة والإصلاح',     sub:'متى يحق تغيير النظام؟',        icon:'fa-fire',              driveId:'',duration:'65 دقيقة',level:'متقدم'},
-  {id:28,title:'الدولة والأخلاق',     sub:'الحياد أم الالتزام الأخلاقي؟', icon:'fa-hand-holding-heart',driveId:'',duration:'60 دقيقة',level:'متقدم'},
+  {id:15,title:'دلالة النمذجة ومفهومها',            
+  sub:'ما النمذجة وكيف يشتغل العلم الحديث؟',           
+  icon:'fa-cube',            
+  driveId:'1_VSTvnVo4KXuauuAbmn281OcCy2phpIU',
+  duration:'45 دقيقة',
+  level:'مبتدئ'},
+  
+  {id:16,title:'النمذجة بين الفهم والتفسير',         
+  sub:'كيف يفهم العلم الواقع وكيف يفسره؟',             
+  icon:'fa-flask-vial',      
+  driveId:'1k0TR-8lAj8HZ2sevuAFSwLo9cObGcTsN',
+  duration:'55 دقيقة',
+  level:'متوسط'},
+  
+  {id:17,title:'النمذجة والمنفعة والنجاعة العلمية',  
+  sub:'العلم بين الإنتاج، المنفعة، والفعالية',          
+  icon:'fa-chart-line',      
+  driveId:'1xzY7zB3yDE4cX9T5gtieD0ajIAhVS7HQ',
+  duration:'65 دقيقة',
+  level:'متقدم'},
+  
+  {id:18,title:'النمذجة ومفهوم البراديقم',           
+  sub:'كيف تؤثر الثقافة والمجتمع على المعرفة؟',         
+  icon:'fa-network-wired',   
+  driveId:'1sIbTF9waIUAdOgwh7nGK24O8TFqGp6zc',
+  duration:'50 دقيقة',
+  level:'متقدم'},
+  
+  {id:19,title:'أبعاد النمذجة الثلاثة',              
+  sub:'البعد التركيبي والدلالي والتداولي',              
+  icon:'fa-layer-group',     
+  driveId:'1521goCq7vR4tx8gpTHK3qPezvXDY6h5d',
+  duration:'55 دقيقة',
+  level:'متقدم'},
+  
+  {id:20,title:'الحدود المعرفية والإبستمولوجية للنمذجة', 
+  sub:'إشكاليات الحقيقة والاختزال والفهم الجزئي',   
+  icon:'fa-brain',           
+  driveId:'1QNV3Y_CB4HOnuwgwfa2gnSUUvEYpfO7d',
+  duration:'60 دقيقة',
+  level:'متقدم'},
+  
+  {id:21,title:'الحدود الفلسفية والأخلاقية للنمذجة', 
+  sub:'العلم بين القيم والمخاطر الإنسانية',             
+  icon:'fa-lightbulb',       
+  driveId:'1x4xXQeAxOfN32scG8Jb8PYaHTle0KPBO',
+  duration:'50 دقيقة',
+  level:'متوسط'},
+  
+  
   {id:29,title:'الفضيلة الأرسطية',   sub:'السعادة كغاية قصوى',           icon:'fa-star-half-stroke',  driveId:'',duration:'50 دقيقة',level:'متوسط'},
   {id:30,title:'اللذة والألم',        sub:'المذاهب الأبيقورية والرواقية', icon:'fa-yin-yang',          driveId:'',duration:'55 دقيقة',level:'متوسط'},
   {id:31,title:'الأخلاق الواجبية',   sub:'كانط والفعل الأخلاقي',         icon:'fa-compass',           driveId:'',duration:'60 دقيقة',level:'متقدم'},
@@ -83,7 +119,7 @@ function buildMap(){
         <div class="ub-desc">${unit.desc}</div>
       </div>
       <div class="ub-progress">
-        <div class="ub-pct">${pct}%</div>
+        <div class="ub-pct">${pct}%</div>t
         <div class="ub-pct-lbl">مكتمل</div>
         <div class="ub-mini-bar"><div class="ub-mini-fill" style="width:${pct}%"></div></div>
       </div>`;

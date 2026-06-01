@@ -1,4 +1,3 @@
-
 /* ══════ DATA ══════ */
 const UNITS=[
   {name:'الأنية والغيرية',   desc:'الهوية الذاتية وعلاقتها بالآخر',     icon:'fa-user-circle',     bg:'linear-gradient(135deg,#4F46E5,#7C3AED)', color:'#4F46E5', nodeColor:'#4F46E5', shadow:'#3730A3', light:'#EEF2FF', border:'rgba(79,70,229,.15)', dark:'#3730A3'},
@@ -8,6 +7,7 @@ const UNITS=[
   {name:'الخير والسعادة',   desc:'الأخلاق والفضيلة والغاية القصوى',   icon:'fa-seedling',        bg:'linear-gradient(135deg,#BE185D,#EC4899)', color:'#BE185D', nodeColor:'#EC4899', shadow:'#9D174D', light:'#FCE7F3', border:'rgba(190,24,93,.15)',  dark:'#9D174D'},
 ];
 const STAGES_RAW = [
+  /* ── وحدة 1: الأنية والغيرية ── */
   {id:1, title:'الإنيّة كجوهر روحاني', sub:'أفلاطون وابن سينا والنفس المتعالية', icon:'fa-brain', driveId:'11i38Hx-lGC_iEM-AUyYvb7-5YvcccybW', duration:'15 دقيقة', level:'مبتدئ'},
   {id:2, title:'الكوجيتو الديكارتي', sub:'أنا أفكر إذن أنا موجود', icon:'fa-lightbulb', driveId:'1uRPgCJZEvmmCltEFF7yl4u9JkAwxcA25', duration:'10 دقيقة', level:'متوسط'},
   {id:3, title:'ثنائية النفس والجسد', sub:'حدود التصور المتعالي للإنيّة', icon:'fa-scale-balanced', driveId:'1iGXMwslyVZba0QBw-MFVx3wVCyBVjq3g', duration:'15 دقيقة', level:'متوسط'},
@@ -15,119 +15,42 @@ const STAGES_RAW = [
   {id:5, title:'تاريخية الوعي', sub:'الواقع الاجتماعي وتشكّل الذات', icon:'fa-clock-rotate-left', driveId:'1KZlSbyPcC09s3Vi9FxYsM5qlFeQrza8b', duration:'15 دقيقة', level:'متوسط'},
   {id:6, title:'اللاوعي وحدود الذات', sub:'فرويد وخفايا النفس الإنسانية', icon:'fa-moon', driveId:'1YriiCtr7oSKbwFNnckI3gOBVIoB_DrTH', duration:'10 دقيقة', level:'متقدم'},
   {id:7, title:'الغير والاعتراف', sub:'هيقل وتكوّن الوعي بالآخر', icon:'fa-handshake', driveId:'13uh6wkxNX6eYFrZ2VsIEJ-f_EggV959x', duration:'50 دقيقة', level:'متوسط'},
-  
-  {id:8,title:'مفهوم الهوية',sub:'الهوية الفردية والجماعية والثقافية',icon:'fa-id-card',driveId:'156V1_0a3an8W6iW8e-nE6LztZPX0O5hI',duration:'10 دقيقة',level:'متوسط'},
-  {id:9,title:'أزمة الهوية والانتماء',sub:'شروط تحقق الهوية وتجاوز الأزمة',icon:'fa-person-circle-question',driveId:'1TC63Sn_gSq1GSP-YsCH6MDI0TRKGKSc6',duration:'15 دقيقة',level:'متوسط'},
-  {id:10,title:'الكونية والقيم المشتركة',sub:'الحرية والعدالة والكرامة الإنسانية',icon:'fa-earth-americas',driveId:'1K_NV7IMQc7bvjns7GOXtXl8YiNWAzHkP',duration:'10 دقيقة',level:'متقدم'},
-  {id:11,title:'تعاون الخصوصيات',sub:'الفارابي وبناء الكونية الإنسانية',icon:'fa-people-arrows',driveId:'1RGeUyyieVWtJCaReOLSFB1R2xuTCsSKD',duration:'10 دقيقة',level:'متوسط'},
-  {id:12,title:'التعصب وصراع الهويات',sub:'تهديد التعايش والاعتراف بالآخر',icon:'fa-triangle-exclamation',driveId:'1jkfcGSA56ygrUpGMmQHxc7y36ktUE9Mt',duration:'15 دقيقة',level:'متوسط'},
-  {id:13,title:'العولمة والهوية الثقافية',sub:'بين الانفتاح وتهديد الخصوصيات',icon:'fa-network-wired',driveId:'19_qvr7huiS4EH4k2NrjNqAnrM3iigr5w',duration:'10 دقيقة',level:'متقدم'},
-  {id:14,title:'الاختلاف داخل العالم المعولم',sub:'حماية الخصوصية مع الانفتاح',icon:'fa-globe',driveId:'1sraVLX4g8Wl_2t5OWZiw5v6cxrith9dz',duration:'15 دقيقة',level:'متوسط'},
 
-  {id:15,title:'دلالة النمذجة ومفهومها',            
-  sub:'ما النمذجة وكيف يشتغل العلم الحديث؟',           
-  icon:'fa-cube',            
-  driveId:'1_VSTvnVo4KXuauuAbmn281OcCy2phpIU',
-  duration:'45 دقيقة',
-  level:'مبتدئ'},
-  
-  {id:16,title:'النمذجة بين الفهم والتفسير',         
-  sub:'كيف يفهم العلم الواقع وكيف يفسره؟',             
-  icon:'fa-flask-vial',      
-  driveId:'1k0TR-8lAj8HZ2sevuAFSwLo9cObGcTsN',
-  duration:'55 دقيقة',
-  level:'متوسط'},
-  
-  {id:17,title:'النمذجة والمنفعة والنجاعة العلمية',  
-  sub:'العلم بين الإنتاج، المنفعة، والفعالية',          
-  icon:'fa-chart-line',      
-  driveId:'1xzY7zB3yDE4cX9T5gtieD0ajIAhVS7HQ',
-  duration:'65 دقيقة',
-  level:'متقدم'},
-  
-  {id:18,title:'النمذجة ومفهوم البراديقم',           
-  sub:'كيف تؤثر الثقافة والمجتمع على المعرفة؟',         
-  icon:'fa-network-wired',   
-  driveId:'1sIbTF9waIUAdOgwh7nGK24O8TFqGp6zc',
-  duration:'50 دقيقة',
-  level:'متقدم'},
-  
-  {id:19,title:'أبعاد النمذجة الثلاثة',              
-  sub:'البعد التركيبي والدلالي والتداولي',              
-  icon:'fa-layer-group',     
-  driveId:'1521goCq7vR4tx8gpTHK3qPezvXDY6h5d',
-  duration:'55 دقيقة',
-  level:'متقدم'},
-  
-  {id:20,title:'الحدود المعرفية والإبستمولوجية للنمذجة', 
-  sub:'إشكاليات الحقيقة والاختزال والفهم الجزئي',   
-  icon:'fa-brain',           
-  driveId:'1QNV3Y_CB4HOnuwgwfa2gnSUUvEYpfO7d',
-  duration:'60 دقيقة',
-  level:'متقدم'},
-  
-  {id:21,title:'الحدود الفلسفية والأخلاقية للنمذجة', 
-  sub:'العلم بين القيم والمخاطر الإنسانية',             
-  icon:'fa-lightbulb',       
-  driveId:'1x4xXQeAxOfN32scG8Jb8PYaHTle0KPBO',
-  duration:'50 دقيقة',
-  level:'متوسط'},
-  
-  {id:22,
-title:'إشكالية الخير والسعادة والعلاقة بينهما',
-sub:'هل يقود الخير إلى السعادة؟',
-icon:'fa-star-half-stroke',
-driveId:'1olf_7Q6IUf9yILA9jCfwfM0lSATCZdcM',
-duration:'50 دقيقة',
-level:'متوسط'},
+  /* ── وحدة 2: الخصوصية والكونية ── */
+  {id:8,  title:'مفهوم الهوية',          sub:'الهوية الفردية والجماعية والثقافية',   icon:'fa-id-card',                driveId:'156V1_0a3an8W6iW8e-nE6LztZPX0O5hI', duration:'10 دقيقة', level:'متوسط'},
+  {id:9,  title:'أزمة الهوية والانتماء', sub:'شروط تحقق الهوية وتجاوز الأزمة',      icon:'fa-person-circle-question', driveId:'1TC63Sn_gSq1GSP-YsCH6MDI0TRKGKSc6', duration:'15 دقيقة', level:'متوسط'},
+  {id:10, title:'الكونية والقيم المشتركة',sub:'الحرية والعدالة والكرامة الإنسانية', icon:'fa-earth-americas',          driveId:'1K_NV7IMQc7bvjns7GOXtXl8YiNWAzHkP', duration:'10 دقيقة', level:'متقدم'},
+  {id:11, title:'تعاون الخصوصيات',       sub:'الفارابي وبناء الكونية الإنسانية',    icon:'fa-people-arrows',           driveId:'1RGeUyyieVWtJCaReOLSFB1R2xuTCsSKD', duration:'10 دقيقة', level:'متوسط'},
+  {id:12, title:'التعصب وصراع الهويات',  sub:'تهديد التعايش والاعتراف بالآخر',      icon:'fa-triangle-exclamation',   driveId:'1jkfcGSA56ygrUpGMmQHxc7y36ktUE9Mt', duration:'15 دقيقة', level:'متوسط'},
+  {id:13, title:'العولمة والهوية الثقافية',sub:'بين الانفتاح وتهديد الخصوصيات',    icon:'fa-network-wired',           driveId:'19_qvr7huiS4EH4k2NrjNqAnrM3iigr5w', duration:'10 دقيقة', level:'متقدم'},
+  {id:14, title:'الاختلاف داخل العالم المعولم',sub:'حماية الخصوصية مع الانفتاح',   icon:'fa-globe',                   driveId:'1sraVLX4g8Wl_2t5OWZiw5v6cxrith9dz', duration:'15 دقيقة', level:'متوسط'},
 
-{id:23,
-title:'السعادة باعتبارها لذة وإشباعاً للرغبات',
-sub:'اللذة والمتعة كطريق نحو السعادة',
-icon:'fa-yin-yang',
-driveId:'12FtRF0gZ0d89dslTV80QYgcypglMbAoB',
-duration:'55 دقيقة',
-level:'متوسط'},
+  /* ── وحدة 3: النمذجة ── */
+  {id:15, title:'دلالة النمذجة ومفهومها',              sub:'ما النمذجة وكيف يشتغل العلم الحديث؟',         icon:'fa-cube',            driveId:'1_VSTvnVo4KXuauuAbmn281OcCy2phpIU', duration:'45 دقيقة', level:'مبتدئ'},
+  {id:16, title:'النمذجة بين الفهم والتفسير',          sub:'كيف يفهم العلم الواقع وكيف يفسره؟',           icon:'fa-flask-vial',      driveId:'1k0TR-8lAj8HZ2sevuAFSwLo9cObGcTsN', duration:'55 دقيقة', level:'متوسط'},
+  {id:17, title:'النمذجة والمنفعة والنجاعة العلمية',   sub:'العلم بين الإنتاج، المنفعة، والفعالية',        icon:'fa-chart-line',      driveId:'1xzY7zB3yDE4cX9T5gtieD0ajIAhVS7HQ', duration:'65 دقيقة', level:'متقدم'},
+  {id:18, title:'النمذجة ومفهوم البراديقم',            sub:'كيف تؤثر الثقافة والمجتمع على المعرفة؟',       icon:'fa-network-wired',   driveId:'1sIbTF9waIUAdOgwh7nGK24O8TFqGp6zc', duration:'50 دقيقة', level:'متقدم'},
+  {id:19, title:'أبعاد النمذجة الثلاثة',               sub:'البعد التركيبي والدلالي والتداولي',            icon:'fa-layer-group',     driveId:'1521goCq7vR4tx8gpTHK3qPezvXDY6h5d', duration:'55 دقيقة', level:'متقدم'},
+  {id:20, title:'الحدود المعرفية والإبستمولوجية للنمذجة',sub:'إشكاليات الحقيقة والاختزال والفهم الجزئي', icon:'fa-brain',           driveId:'1QNV3Y_CB4HOnuwgwfa2gnSUUvEYpfO7d', duration:'60 دقيقة', level:'متقدم'},
+  {id:21, title:'الحدود الفلسفية والأخلاقية للنمذجة',  sub:'العلم بين القيم والمخاطر الإنسانية',          icon:'fa-lightbulb',       driveId:'1x4xXQeAxOfN32scG8Jb8PYaHTle0KPBO', duration:'50 دقيقة', level:'متوسط'},
 
-{id:24,
-title:'السعادة باعتبارها فضيلة وكمالاً أخلاقياً',
-sub:'الفضيلة وبناء الذات نحو السعادة الحقيقية',
-icon:'fa-compass',
-driveId:'1_Bk7DBWo5qigot1I7NDDSPk_2mGZmvHS',
-duration:'60 دقيقة',
-level:'متقدم'},
+  /* ── وحدة 4: الدولة ── */
+  {id:22, title:'نشأة الدولة وتأسيسها',   sub:'الدولة الطبيعية والتعاقدية',         icon:'fa-landmark',          driveId:'', duration:'—', level:'مبتدئ'},
+  {id:23, title:'الدولة والسلطة',          sub:'مفهوم السلطة السياسية وشرعيتها',     icon:'fa-gavel',             driveId:'', duration:'—', level:'مبتدئ'},
+  {id:24, title:'الدولة والقانون',         sub:'العلاقة بين الدولة والتشريع',         icon:'fa-scale-balanced',    driveId:'', duration:'—', level:'مبتدئ'},
+  {id:25, title:'الدولة والحرية',          sub:'حدود سلطة الدولة على الفرد',          icon:'fa-person-walking',    driveId:'', duration:'—', level:'مبتدئ'},
+  {id:26, title:'الدولة والعدالة',         sub:'توزيع الحقوق والواجبات',              icon:'fa-balance-scale',     driveId:'', duration:'—', level:'مبتدئ'},
+  {id:27, title:'الدولة والمجتمع المدني',  sub:'العلاقة بين المؤسسات والمواطنين',     icon:'fa-city',              driveId:'', duration:'—', level:'مبتدئ'},
+  {id:28, title:'نقد الدولة وحدودها',      sub:'الدولة بين الضرورة والإشكال',         icon:'fa-circle-question',   driveId:'', duration:'—', level:'مبتدئ'},
 
-{id:25,
-title:'الخير بين المنفعة والواجب',
-sub:'المصلحة الشخصية أم الواجب الأخلاقي؟',
-icon:'fa-question-circle',
-driveId:'1UhPb3LU96MZAyaIp28GDsunMn9GvvhNw',
-duration:'65 دقيقة',
-level:'متقدم'},
-
-{id:26,
-title:'الأخلاق الشرطية والأخلاق القطعية',
-sub:'بين المصلحة الفردية والواجب المطلق',
-icon:'fa-circle-half-stroke',
-driveId:'1yQCpN4iS1fA-ViHfTF87N5iOzGTHKG5O',
-duration:'55 دقيقة',
-level:'متوسط'},
-
-{id:27,
-title:'حدود تحقيق السعادة ومفارقاتها',
-sub:'لماذا تبقى السعادة مشروعاً غير مكتمل؟',
-icon:'fa-sun',
-driveId:'15Csyqfcws-Y-vcOHqy5FsE5wRALN7kuI',
-duration:'50 دقيقة',
-level:'مبتدئ'},
-
-{id:28,
-title:'الأخلاق والسعادة كمشروع إنساني مفتوح',
-sub:'تعدد السعادات والأنساق الأخلاقية',
-icon:'fa-seedling',
-driveId:'1SOUEOYYFE46XtmiIv5OV-qiyUEHMpxiJ',
-duration:'55 دقيقة',
-level:'متوسط'},
+  /* ── وحدة 5: الخير والسعادة ── */
+  {id:29, title:'إشكالية الخير والسعادة والعلاقة بينهما', sub:'هل يقود الخير إلى السعادة؟',                    icon:'fa-star-half-stroke',   driveId:'1olf_7Q6IUf9yILA9jCfwfM0lSATCZdcM', duration:'50 دقيقة', level:'متوسط'},
+  {id:30, title:'السعادة باعتبارها لذة وإشباعاً للرغبات', sub:'اللذة والمتعة كطريق نحو السعادة',               icon:'fa-yin-yang',           driveId:'12FtRF0gZ0d89dslTV80QYgcypglMbAoB', duration:'55 دقيقة', level:'متوسط'},
+  {id:31, title:'السعادة باعتبارها فضيلة وكمالاً أخلاقياً',sub:'الفضيلة وبناء الذات نحو السعادة الحقيقية',  icon:'fa-compass',            driveId:'1_Bk7DBWo5qigot1I7NDDSPk_2mGZmvHS', duration:'60 دقيقة', level:'متقدم'},
+  {id:32, title:'الخير بين المنفعة والواجب',               sub:'المصلحة الشخصية أم الواجب الأخلاقي؟',         icon:'fa-question-circle',    driveId:'1UhPb3LU96MZAyaIp28GDsunMn9GvvhNw', duration:'65 دقيقة', level:'متقدم'},
+  {id:33, title:'الأخلاق الشرطية والأخلاق القطعية',        sub:'بين المصلحة الفردية والواجب المطلق',           icon:'fa-circle-half-stroke', driveId:'1yQCpN4iS1fA-ViHfTF87N5iOzGTHKG5O', duration:'55 دقيقة', level:'متوسط'},
+  {id:34, title:'حدود تحقيق السعادة ومفارقاتها',           sub:'لماذا تبقى السعادة مشروعاً غير مكتمل؟',        icon:'fa-sun',                driveId:'15Csyqfcws-Y-vcOHqy5FsE5wRALN7kuI', duration:'50 دقيقة', level:'مبتدئ'},
+  {id:35, title:'الأخلاق والسعادة كمشروع إنساني مفتوح',   sub:'تعدد السعادات والأنساق الأخلاقية',             icon:'fa-seedling',           driveId:'1SOUEOYYFE46XtmiIv5OV-qiyUEHMpxiJ', duration:'55 دقيقة', level:'متوسط'},
 ];
 const STAGES_PER_UNIT=7;
 
@@ -166,7 +89,7 @@ function buildMap(){
         <div class="ub-desc">${unit.desc}</div>
       </div>
       <div class="ub-progress">
-        <div class="ub-pct">${pct}%</div>t
+        <div class="ub-pct">${pct}%</div>
         <div class="ub-pct-lbl">مكتمل</div>
         <div class="ub-mini-bar"><div class="ub-mini-fill" style="width:${pct}%"></div></div>
       </div>`;
@@ -178,7 +101,6 @@ function buildMap(){
     path.style.paddingBottom=(ui<UNITS.length-1)?'0':'200px';
 
     unitStages.forEach((stage,si)=>{
-      const globalIdx=ui*STAGES_PER_UNIT+si;
       const isDone=stage.completed;
       const isCurrent=stage.id===currentStageId&&!isDone;
 
@@ -391,440 +313,99 @@ const FILO_LESSONS=[
 const FILO_EXERCISES=[
   {unitName:'الأنية والغيرية',unitIcon:'fa-user-circle',unitColor:'#4F46E5',unitBg:'#EEF2FF',items:[{title:'الأنية والغيرية',sub:'فروض ومواضيع اختبارات بتصحيح',tag:'تمرين',docs:4,subItems:[
     {title:'تمارين مع الإصلاح',type:'sujet',icon:'fa-file-alt',desc:'موضوع الاختبار الأول',duration:'30min',difficulty:'متوسط',driveId:'1egBp-8_IzGrrrjEKnpDDnR3xItxMyIFp'},
-    
   ]}]},
   {unitName:'الخصوصية والكونية',unitIcon:'fa-globe-europe',unitColor:'#0369A1',unitBg:'#E0F2FE',items:[{title:'الخصوصية والكونية',sub:'فروض ومواضيع اختبارات بتصحيح',tag:'تمرين',docs:3,subItems:[
     {title:'فقرة: الخصوصية والكونية',type:'sujet',icon:'fa-file-alt',desc:'موضوع الاختبار الأول',duration:'2h',difficulty:'متوسط',driveId:'1TLK9pZ36ZhYl2BFgI3wRwOdskWZqMR--'},
     {title:'تمارين باك (1)',type:'corrige',icon:'fa-check-double',desc:'التصحيح النموذجي',duration:'—',difficulty:'—',driveId:'1znKznhFSEeh41qTHwqU_8wCb1bKlI0Kr'},
     {title:'تمارين باك (2)',type:'sujet',icon:'fa-file-alt',desc:'موضوع الاختبار الثاني',duration:'1h',difficulty:'متقدم',driveId:'1Mi1itwHIIB_6rE62zxuBTQ0j8SPxE2Xw'},
-    {title:'تمارين باك (3) ',type:'sujet',icon:'fa-file-alt',desc:'موضوع الاختبار الثاني',duration:'2h',difficulty:'متقدم',driveId:'1ktNiRLagWXGjLw3nfE5be7qsbQu6rtk8'},
-    {title:'تمارين باك (4) ',type:'sujet',icon:'fa-file-alt',desc:'موضوع الاختبار الثاني',duration:'2h',difficulty:'متقدم',driveId:'1-Cmsfw1imogld59n4ls0L7HxTeJrEncc'},
-    {title:'تمارين باك (5) ',type:'sujet',icon:'fa-file-alt',desc:'موضوع الاختبار الثاني',duration:'2h',difficulty:'متقدم',driveId:'1n5itg2okXfN73x-MQJ-z6eniFS1F1Bt_'},
+    {title:'تمارين باك (3)',type:'sujet',icon:'fa-file-alt',desc:'موضوع الاختبار الثاني',duration:'2h',difficulty:'متقدم',driveId:'1ktNiRLagWXGjLw3nfE5be7qsbQu6rtk8'},
+    {title:'تمارين باك (4)',type:'sujet',icon:'fa-file-alt',desc:'موضوع الاختبار الثاني',duration:'2h',difficulty:'متقدم',driveId:'1-Cmsfw1imogld59n4ls0L7HxTeJrEncc'},
+    {title:'تمارين باك (5)',type:'sujet',icon:'fa-file-alt',desc:'موضوع الاختبار الثاني',duration:'2h',difficulty:'متقدم',driveId:'1n5itg2okXfN73x-MQJ-z6eniFS1F1Bt_'},
   ]}]},
   {
-    unitName: 'النمذجة',
-    unitIcon: 'fa-project-diagram',
-    unitColor: '#047857',
-    unitBg: '#D1FAE5',
-    items: [
-      {
-        title: 'النمذجة',
-        sub: 'فروض ومواضيع اختبارات',
-        tag: 'تمرين',
-        docs: 6,
-        subItems: [
-          {
-            title: 'تمارين مع الإصلاح',
-            type: 'pdf',
-            icon: 'fa-file-alt',
-            desc: 'ملف تمارين مع الإصلاح',
-            driveId: '1d7pUS4QD_bFDPZAXiyISTuSA_yM2IvBy'
-          },
-          {
-            title: 'فقرة: النمذجة',
-            type: 'pdf',
-            icon: 'fa-file-alt',
-            desc: 'شرح الدرس',
-            driveId: '1FM5WvkoMu6SlISqnt-sPoiPWy8tOLQ01'
-          },
-          {
-            title: 'تمارين باك (1)',
-            type: 'pdf',
-            icon: 'fa-file-alt',
-            desc: 'تمارين بكالوريا 1',
-            driveId: '1rdhkWsmFNUhcv7UeUR9o7_nF2-XnofGW'
-          },
-          {
-            title: 'تمارين باك (2)',
-            type: 'pdf',
-            icon: 'fa-file-alt',
-            desc: 'تمارين بكالوريا 2',
-            driveId: '1IN9b7RuCbjOJtfJ3JH77Xq1LCVf-Bi_X'
-          },
-          {
-            title: 'تمارين باك (3)',
-            type: 'pdf',
-            icon: 'fa-file-alt',
-            desc: 'تمارين بكالوريا 3',
-            driveId: '1a0y4ge6FH4g85UvNsABM9i65Y9xosPLy'
-          },
-          {
-            title: 'تمارين باك (4)',
-            type: 'pdf',
-            icon: 'fa-file-alt',
-            desc: 'تمارين بكالوريا 4',
-            driveId: '1J22_4pdNnp7urZ_6r084PMei8CX3tTQ-'
-          }
-        ]
-      }
-    ]
+    unitName:'النمذجة',unitIcon:'fa-project-diagram',unitColor:'#047857',unitBg:'#D1FAE5',
+    items:[{title:'النمذجة',sub:'فروض ومواضيع اختبارات',tag:'تمرين',docs:6,subItems:[
+      {title:'تمارين مع الإصلاح',type:'pdf',icon:'fa-file-alt',desc:'ملف تمارين مع الإصلاح',driveId:'1d7pUS4QD_bFDPZAXiyISTuSA_yM2IvBy'},
+      {title:'فقرة: النمذجة',type:'pdf',icon:'fa-file-alt',desc:'شرح الدرس',driveId:'1FM5WvkoMu6SlISqnt-sPoiPWy8tOLQ01'},
+      {title:'تمارين باك (1)',type:'pdf',icon:'fa-file-alt',desc:'تمارين بكالوريا 1',driveId:'1rdhkWsmFNUhcv7UeUR9o7_nF2-XnofGW'},
+      {title:'تمارين باك (2)',type:'pdf',icon:'fa-file-alt',desc:'تمارين بكالوريا 2',driveId:'1IN9b7RuCbjOJtfJ3JH77Xq1LCVf-Bi_X'},
+      {title:'تمارين باك (3)',type:'pdf',icon:'fa-file-alt',desc:'تمارين بكالوريا 3',driveId:'1a0y4ge6FH4g85UvNsABM9i65Y9xosPLy'},
+      {title:'تمارين باك (4)',type:'pdf',icon:'fa-file-alt',desc:'تمارين بكالوريا 4',driveId:'1J22_4pdNnp7urZ_6r084PMei8CX3tTQ-'},
+    ]}]
   },
   {
-    unitName: 'منهجية الإجابة',
-    unitIcon: 'fa-pen',
-    unitColor: '#f59e0b',
-    unitBg: '#fffbeb',
-    items: [
-      {
-        title: 'منهجية الإجابة',
-        sub: 'منهجية الفلسفة',
-        tag: 'منهجية',
-        docs: 8,
-        subItems: [
-          {
-            title: 'منهجية الإجابة في فرض الفلسفة',
-            type: 'pdf',
-            icon: 'fa-file-alt',
-            desc: 'منهجية عامة للإجابة في الفروض',
-            driveId: '1wkw2Cq5xZ49JZkCPGH7yWoslr5oqNTSL'
-          },
-          {
-            title: 'حدّد المسلّمات الضمنية / المفترضات / الضمنيّات',
-            type: 'pdf',
-            icon: 'fa-file-alt',
-            desc: 'تحليل الافتراضات الضمنية في النصوص',
-            driveId: '1zTXmISQAnQ_13N8A3s-PMev9WHRLKyiL'
-          },
-          {
-            title: 'ما معنى / ما دلالة / ما المقصود بـ',
-            type: 'pdf',
-            icon: 'fa-file-alt',
-            desc: 'شرح المفاهيم والتعريفات',
-            driveId: '1EJS3gWYHVAYnSw6bB2tDknYbfuc6AwHj'
-          },
-          {
-            title: 'ماهي الإحراجات / الهواجس / المخاوف / التبعات / المخاطر',
-            type: 'pdf',
-            icon: 'fa-file-alt',
-            desc: 'تحليل الإشكالات والمخاطر',
-            driveId: '1jT8TNWE62Q4KLZkC3_wIJhej1gNsGrLH'
-          },
-          {
-            title: 'حدّد رهانات / غايات / أهداف / ما يريد تحقيقه',
-            type: 'pdf',
-            icon: 'fa-file-alt',
-            desc: 'استخراج الأهداف والغايات',
-            driveId: '1sN76uUTSL6BFzwXy0kaZY-2366jGejzE'
-          },
-          {
-            title: 'ما مدى راهنية / حضور / ملائمة (اليوم)',
-            type: 'pdf',
-            icon: 'fa-file-alt',
-            desc: 'مدى ارتباط الأفكار بالواقع',
-            driveId: '14GrDGgzBCW7VkdtAVDvNaFPM9ferNtr4'
-          },
-          {
-            title: 'ما وظيفة / ما مهمّة / ما الذي ينجزه',
-            type: 'pdf',
-            icon: 'fa-file-alt',
-            desc: 'تحديد الوظيفة والدور',
-            driveId: '1Wetb4ZRzEP5obKpnalrVQtrb_gfkH2A_'
-          },
-          {
-            title: 'ما قيمة / ما مشروعية / ما وجاهة / ما مدى صحّة',
-            type: 'pdf',
-            icon: 'fa-file-alt',
-            desc: 'تقييم القيمة والمشروعية',
-            driveId: '17G3qAR0RDZmK68EaEAhYw8QKkoYvks6F'
-          }
-        ]
-      }
-    ]
-  },{
-    unitName: 'الدولة',
-    unitIcon: 'fa-landmark',
-    unitColor: '#10b981',
-    unitBg: '#ecfdf5',
-    items: [
-      {
-        title: 'الدولة',
-        sub: 'درس فلسفة',
-        tag: 'درس',
-        docs: 1,
-        subItems: [
-          {
-            title: 'تمارين مع الإصلاح',
-            type: 'pdf',
-            icon: 'fa-file-alt',
-            desc: 'تمارين مع الإصلاح في درس الدولة',
-            driveId: '1D8h_s1sfrkyT1WrMy4GqoBj48Jp9nfXE'
-          }
-        ]
-      }
-    ]
+    unitName:'منهجية الإجابة',unitIcon:'fa-pen',unitColor:'#f59e0b',unitBg:'#fffbeb',
+    items:[{title:'منهجية الإجابة',sub:'منهجية الفلسفة',tag:'منهجية',docs:8,subItems:[
+      {title:'منهجية الإجابة في فرض الفلسفة',type:'pdf',icon:'fa-file-alt',desc:'منهجية عامة للإجابة في الفروض',driveId:'1wkw2Cq5xZ49JZkCPGH7yWoslr5oqNTSL'},
+      {title:'حدّد المسلّمات الضمنية / المفترضات / الضمنيّات',type:'pdf',icon:'fa-file-alt',desc:'تحليل الافتراضات الضمنية في النصوص',driveId:'1zTXmISQAnQ_13N8A3s-PMev9WHRLKyiL'},
+      {title:'ما معنى / ما دلالة / ما المقصود بـ',type:'pdf',icon:'fa-file-alt',desc:'شرح المفاهيم والتعريفات',driveId:'1EJS3gWYHVAYnSw6bB2tDknYbfuc6AwHj'},
+      {title:'ماهي الإحراجات / الهواجس / المخاوف / التبعات / المخاطر',type:'pdf',icon:'fa-file-alt',desc:'تحليل الإشكالات والمخاطر',driveId:'1jT8TNWE62Q4KLZkC3_wIJhej1gNsGrLH'},
+      {title:'حدّد رهانات / غايات / أهداف / ما يريد تحقيقه',type:'pdf',icon:'fa-file-alt',desc:'استخراج الأهداف والغايات',driveId:'1sN76uUTSL6BFzwXy0kaZY-2366jGejzE'},
+      {title:'ما مدى راهنية / حضور / ملائمة (اليوم)',type:'pdf',icon:'fa-file-alt',desc:'مدى ارتباط الأفكار بالواقع',driveId:'14GrDGgzBCW7VkdtAVDvNaFPM9ferNtr4'},
+      {title:'ما وظيفة / ما مهمّة / ما الذي ينجزه',type:'pdf',icon:'fa-file-alt',desc:'تحديد الوظيفة والدور',driveId:'1Wetb4ZRzEP5obKpnalrVQtrb_gfkH2A_'},
+      {title:'ما قيمة / ما مشروعية / ما وجاهة / ما مدى صحّة',type:'pdf',icon:'fa-file-alt',desc:'تقييم القيمة والمشروعية',driveId:'17G3qAR0RDZmK68EaEAhYw8QKkoYvks6F'},
+    ]}]
+  },
+  {
+    unitName:'الدولة',unitIcon:'fa-landmark',unitColor:'#10b981',unitBg:'#ecfdf5',
+    items:[{title:'الدولة',sub:'درس فلسفة',tag:'درس',docs:1,subItems:[
+      {title:'تمارين مع الإصلاح',type:'pdf',icon:'fa-file-alt',desc:'تمارين مع الإصلاح في درس الدولة',driveId:'1D8h_s1sfrkyT1WrMy4GqoBj48Jp9nfXE'},
+    ]}]
   },
 ];
 const FILO_DEVOIRS=[
   {
-    unitName: 'Devoirs de contrôle 1',
-    unitIcon: 'fa-user-circle',
-    unitColor: '#4F46E5',
-    unitBg: '#EEF2FF',
-    items: [
-      {
-        title: 'Devoir de contrôle 1 ',
-        sub: 'Sujet + Corrigé + Training',
-        tag: 'Devoir',
-        docs: 6,
-        subItems: [
-          {
-            title: 'Devoir de contrôle 1 (1)',
-            type: 'devoir',
-            icon: 'fa-file-alt',
-            desc: 'موضوع الفرض المراقب 1',
-            driveId: '164y8kKzkYhwBflRhugu_h7AQ_kFflvyS'
-          },
-          {
-            title: 'Devoir de contrôle 1 (2)',
-            type: 'devoir',
-            icon: 'fa-file-alt',
-            desc: 'موضوع الفرض المراقب 2',
-            driveId: '1sBsxqr5pqvYIGi7m63jPHEkk7HEitYo_'
-          },
-          {
-            title: 'Devoir de contrôle 1 (3)',
-            type: 'devoir',
-            icon: 'fa-file-alt',
-            desc: 'موضوع الفرض المراقب 3',
-            driveId: '1zo9lm2kMnDuEbo-wpTyYTcfwVumbU_wl'
-          },
-          {
-            title: 'Devoir de contrôle 1 (4)',
-            type: 'devoir',
-            icon: 'fa-file-alt',
-            desc: 'موضوع الفرض المراقب 4',
-            driveId: '1Osk5D_6KUna-6a8JNOIhTZ4zEVX7p6pZ'
-          },
-          {
-            title: 'Devoir de contrôle 1 (5)',
-            type: 'devoir',
-            icon: 'fa-file-alt',
-            desc: 'موضوع الفرض المراقب 5',
-            driveId: '1xD3Xg6vgQCC_1ZY26i_e6BFk0OG24VAS'
-          },
-          {
-            title: 'تدريب على إنجاز إختبار فلسفة + الإصلاح',
-            type: 'training',
-            icon: 'fa-check-double',
-            desc: 'تمرين شامل مع الإصلاح',
-            driveId: '1b0ix5y4coFJw2izz6-YR6NUNjWieHP-q'
-          }
-        ]
-      }
-    ]
+    unitName:'Devoirs de contrôle 1',unitIcon:'fa-user-circle',unitColor:'#4F46E5',unitBg:'#EEF2FF',
+    items:[{title:'Devoir de contrôle 1',sub:'Sujet + Corrigé + Training',tag:'Devoir',docs:6,subItems:[
+      {title:'Devoir de contrôle 1 (1)',type:'devoir',icon:'fa-file-alt',desc:'موضوع الفرض المراقب 1',driveId:'164y8kKzkYhwBflRhugu_h7AQ_kFflvyS'},
+      {title:'Devoir de contrôle 1 (2)',type:'devoir',icon:'fa-file-alt',desc:'موضوع الفرض المراقب 2',driveId:'1sBsxqr5pqvYIGi7m63jPHEkk7HEitYo_'},
+      {title:'Devoir de contrôle 1 (3)',type:'devoir',icon:'fa-file-alt',desc:'موضوع الفرض المراقب 3',driveId:'1zo9lm2kMnDuEbo-wpTyYTcfwVumbU_wl'},
+      {title:'Devoir de contrôle 1 (4)',type:'devoir',icon:'fa-file-alt',desc:'موضوع الفرض المراقب 4',driveId:'1Osk5D_6KUna-6a8JNOIhTZ4zEVX7p6pZ'},
+      {title:'Devoir de contrôle 1 (5)',type:'devoir',icon:'fa-file-alt',desc:'موضوع الفرض المراقب 5',driveId:'1xD3Xg6vgQCC_1ZY26i_e6BFk0OG24VAS'},
+      {title:'تدريب على إنجاز إختبار فلسفة + الإصلاح',type:'training',icon:'fa-check-double',desc:'تمرين شامل مع الإصلاح',driveId:'1b0ix5y4coFJw2izz6-YR6NUNjWieHP-q'},
+    ]}]
   },
   {
-    unitName: 'Devoir de synthèse 1',
-    unitIcon: 'fa-file-signature',
-    unitColor: '#0EA5E9',
-    unitBg: '#E0F2FE',
-    items: [
-      {
-        title: 'Devoir de synthèse 1',
-        sub: 'فلسفة — فرض تأليفي',
-        tag: 'Synthèse',
-        docs: 5,
-        subItems: [
-          {
-            title: 'Devoir de synthèse 1 (1)',
-            type: 'synthese',
-            icon: 'fa-file-alt',
-            desc: 'فرض تأليفي 1',
-            driveId: '1pSY-n6_UkbMRYX_n3wH4rN6MojseR6B7'
-          },
-          {
-            title: 'Devoir de synthèse 1 (2)',
-            type: 'synthese',
-            icon: 'fa-file-alt',
-            desc: 'فرض تأليفي 2',
-            driveId: '1vsPoVv697z5wPE4GZKxOl8nImGau3HWO'
-          },
-          {
-            title: 'Devoir de synthèse 1 (3)',
-            type: 'synthese',
-            icon: 'fa-file-alt',
-            desc: 'فرض تأليفي 3',
-            driveId: '1skfvrN65M9Bc-vWpc2HPB713G8Co0IIt'
-          },
-          {
-            title: 'Devoir de synthèse 1 (4)',
-            type: 'synthese',
-            icon: 'fa-file-alt',
-            desc: 'فرض تأليفي 4',
-            driveId: '1FtA3WCWvnCnWNq6gqydJwN4wze3mZuu_'
-          },
-          {
-            title: 'Devoir de synthèse 1 (5)',
-            type: 'synthese',
-            icon: 'fa-file-alt',
-            desc: 'فرض تأليفي 5',
-            driveId: '1Rz7spYJF_BqIwdwlkNIcqhsfXM3j5xL3'
-          }
-        ]
-      }
-    ]
+    unitName:'Devoir de synthèse 1',unitIcon:'fa-file-signature',unitColor:'#0EA5E9',unitBg:'#E0F2FE',
+    items:[{title:'Devoir de synthèse 1',sub:'فلسفة — فرض تأليفي',tag:'Synthèse',docs:5,subItems:[
+      {title:'Devoir de synthèse 1 (1)',type:'synthese',icon:'fa-file-alt',desc:'فرض تأليفي 1',driveId:'1pSY-n6_UkbMRYX_n3wH4rN6MojseR6B7'},
+      {title:'Devoir de synthèse 1 (2)',type:'synthese',icon:'fa-file-alt',desc:'فرض تأليفي 2',driveId:'1vsPoVv697z5wPE4GZKxOl8nImGau3HWO'},
+      {title:'Devoir de synthèse 1 (3)',type:'synthese',icon:'fa-file-alt',desc:'فرض تأليفي 3',driveId:'1skfvrN65M9Bc-vWpc2HPB713G8Co0IIt'},
+      {title:'Devoir de synthèse 1 (4)',type:'synthese',icon:'fa-file-alt',desc:'فرض تأليفي 4',driveId:'1FtA3WCWvnCnWNq6gqydJwN4wze3mZuu_'},
+      {title:'Devoir de synthèse 1 (5)',type:'synthese',icon:'fa-file-alt',desc:'فرض تأليفي 5',driveId:'1Rz7spYJF_BqIwdwlkNIcqhsfXM3j5xL3'},
+    ]}]
   },
   {
-    unitName: 'Devoirs de contrôle 2',
-    unitIcon: 'fa-user-circle',
-    unitColor: '#4F46E5',
-    unitBg: '#EEF2FF',
-    items: [
-      {
-        title: 'Devoir de contrôle 2',
-        sub: 'فلسفة — سلسلة فروض',
-        tag: 'Devoir',
-        docs: 8,
-        subItems: [
-          {
-            title: 'Devoir de contrôle 2 (1)',
-            type: 'devoir',
-            icon: 'fa-file-alt',
-            desc: 'فرض مراقب 2 رقم 1',
-            driveId: '1fhhL39WPPtI5oyITJKrXlM6LJr6Kd8Rb'
-          },
-          {
-            title: 'Devoir de contrôle 2 (2)',
-            type: 'devoir',
-            icon: 'fa-file-alt',
-            desc: 'فرض مراقب 2 رقم 2',
-            driveId: '1Nh7SotvvZLhEW_SP8v_I5F9XwQrm2R5p'
-          },
-          {
-            title: 'Devoir de contrôle 2 (3)',
-            type: 'devoir',
-            icon: 'fa-file-alt',
-            desc: 'فرض مراقب 2 رقم 3',
-            driveId: '14NPVOyOcsctWQPPvX0QBTTRyNknvoOD8'
-          },
-          {
-            title: 'Devoir de contrôle 2 (4)',
-            type: 'devoir',
-            icon: 'fa-file-alt',
-            desc: 'فرض مراقب 2 رقم 4',
-            driveId: '1a5B-yIx-zgzUTxqRsZj_NHtaZjIJW8SL'
-          },
-          {
-            title: 'Devoir de contrôle 2 (5)',
-            type: 'devoir',
-            icon: 'fa-file-alt',
-            desc: 'فرض مراقب 2 رقم 5',
-            driveId: '1RqsiEao9Kp1NZIbBa3XQipwW8IZvW6oV'
-          },
-          {
-            title: 'Devoir de contrôle 2 (6)',
-            type: 'devoir',
-            icon: 'fa-file-alt',
-            desc: 'فرض مراقب 2 رقم 6',
-            driveId: '1SJDVWdImNaWnZTc1tRpisIjPCHY4KLAw'
-          },
-          {
-            title: 'Devoir de contrôle 2 (7)',
-            type: 'devoir',
-            icon: 'fa-file-alt',
-            desc: 'فرض مراقب 2 رقم 7',
-            driveId: '1b4yTMIktmO8UI7PCuFc3LvqMDQuwLut8'
-          },
-          {
-            title: 'Devoir de contrôle 2 (8)',
-            type: 'devoir',
-            icon: 'fa-file-alt',
-            desc: 'فرض مراقب 2 رقم 8',
-            driveId: '1ui80vi5ID4JGN2hrq9iyX0jE2rJoaKoV'
-          }
-        ]
-      }
-    ]
+    unitName:'Devoirs de contrôle 2',unitIcon:'fa-user-circle',unitColor:'#4F46E5',unitBg:'#EEF2FF',
+    items:[{title:'Devoir de contrôle 2',sub:'فلسفة — سلسلة فروض',tag:'Devoir',docs:8,subItems:[
+      {title:'Devoir de contrôle 2 (1)',type:'devoir',icon:'fa-file-alt',desc:'فرض مراقب 2 رقم 1',driveId:'1fhhL39WPPtI5oyITJKrXlM6LJr6Kd8Rb'},
+      {title:'Devoir de contrôle 2 (2)',type:'devoir',icon:'fa-file-alt',desc:'فرض مراقب 2 رقم 2',driveId:'1Nh7SotvvZLhEW_SP8v_I5F9XwQrm2R5p'},
+      {title:'Devoir de contrôle 2 (3)',type:'devoir',icon:'fa-file-alt',desc:'فرض مراقب 2 رقم 3',driveId:'14NPVOyOcsctWQPPvX0QBTTRyNknvoOD8'},
+      {title:'Devoir de contrôle 2 (4)',type:'devoir',icon:'fa-file-alt',desc:'فرض مراقب 2 رقم 4',driveId:'1a5B-yIx-zgzUTxqRsZj_NHtaZjIJW8SL'},
+      {title:'Devoir de contrôle 2 (5)',type:'devoir',icon:'fa-file-alt',desc:'فرض مراقب 2 رقم 5',driveId:'1RqsiEao9Kp1NZIbBa3XQipwW8IZvW6oV'},
+      {title:'Devoir de contrôle 2 (6)',type:'devoir',icon:'fa-file-alt',desc:'فرض مراقب 2 رقم 6',driveId:'1SJDVWdImNaWnZTc1tRpisIjPCHY4KLAw'},
+      {title:'Devoir de contrôle 2 (7)',type:'devoir',icon:'fa-file-alt',desc:'فرض مراقب 2 رقم 7',driveId:'1b4yTMIktmO8UI7PCuFc3LvqMDQuwLut8'},
+      {title:'Devoir de contrôle 2 (8)',type:'devoir',icon:'fa-file-alt',desc:'فرض مراقب 2 رقم 8',driveId:'1ui80vi5ID4JGN2hrq9iyX0jE2rJoaKoV'},
+    ]}]
   },
   {
-    unitName: 'Devoirs de synthèse 2',
-    unitIcon: 'fa-file-alt',
-    unitColor: '#0EA5E9',
-    unitBg: '#E0F2FE',
-    items: [
-      {
-        title: 'Devoir de synthèse 2',
-        sub: 'فلسفة — فرض تأليفي 2',
-        tag: 'Synthèse',
-        docs: 2,
-        subItems: [
-          {
-            title: 'Devoir de synthèse 2 (1)',
-            type: 'synthese',
-            icon: 'fa-file-alt',
-            desc: 'فرض تأليفي 2 رقم 1',
-            driveId: '1kG2i-k9udFZcAhVrjtDYOy5bpsm-V0XI'
-          },
-          {
-            title: 'Devoir de synthèse 2 (2)',
-            type: 'synthese',
-            icon: 'fa-file-alt',
-            desc: 'فرض تأليفي 2 رقم 2',
-            driveId: '1_RjJedsyfNtYEING4cmh7Y28ZvVt13SW'
-          }
-        ]
-      }
-    ]
+    unitName:'Devoirs de synthèse 2',unitIcon:'fa-file-alt',unitColor:'#0EA5E9',unitBg:'#E0F2FE',
+    items:[{title:'Devoir de synthèse 2',sub:'فلسفة — فرض تأليفي 2',tag:'Synthèse',docs:2,subItems:[
+      {title:'Devoir de synthèse 2 (1)',type:'synthese',icon:'fa-file-alt',desc:'فرض تأليفي 2 رقم 1',driveId:'1kG2i-k9udFZcAhVrjtDYOy5bpsm-V0XI'},
+      {title:'Devoir de synthèse 2 (2)',type:'synthese',icon:'fa-file-alt',desc:'فرض تأليفي 2 رقم 2',driveId:'1_RjJedsyfNtYEING4cmh7Y28ZvVt13SW'},
+    ]}]
   },
   {
-    unitName: 'Devoir de synthèse 3',
-    unitIcon: 'fa-file-alt',
-    unitColor: '#0EA5E9',
-    unitBg: '#E0F2FE',
-    items: [
-      {
-        title: 'Devoir de synthèse 3',
-        sub: 'فلسفة — فرض تأليفي 3',
-        tag: 'Synthèse',
-        docs: 6,
-        subItems: [
-          {
-            title: 'Devoir de synthèse 3 (1)',
-            type: 'synthese',
-            icon: 'fa-file-alt',
-            desc: 'فرض تأليفي 3 رقم 1',
-            driveId: '12rs_pVrNDi7ZrO5ANuM0NlU1kD-_ruQt'
-          },
-          {
-            title: 'Devoir de synthèse 3 (2)',
-            type: 'synthese',
-            icon: 'fa-file-alt',
-            desc: 'فرض تأليفي 3 رقم 2',
-            driveId: '16hMzrAccu3dVySdWlDuW-Wjq_RS20CcL'
-          },
-          {
-            title: 'Devoir de synthèse 3 (3)',
-            type: 'synthese',
-            icon: 'fa-file-alt',
-            desc: 'فرض تأليفي 3 رقم 3',
-            driveId: '1QcjVs64ZtpH2ttr7WyeTArDD6RQBwz6U'
-          },
-          {
-            title: 'Devoir de synthèse 3 (4)',
-            type: 'synthese',
-            icon: 'fa-file-alt',
-            desc: 'فرض تأليفي 3 رقم 4',
-            driveId: '17U8vtas_uylQvlDLRmP-juHR4f4sFjJL'
-          },
-          {
-            title: 'Devoir de synthèse 3 (5)',
-            type: 'synthese',
-            icon: 'fa-file-alt',
-            desc: 'فرض تأليفي 3 رقم 5',
-            driveId: '1w_Up93gvRakCV2Xqwx8HhWviAK_iQlde'
-          },
-          {
-            title: 'Devoir de synthèse 3 (6)',
-            type: 'synthese',
-            icon: 'fa-file-alt',
-            desc: 'فرض تأليفي 3 رقم 6',
-            driveId: '1QqBW-yMx2A6zm_hxeR2Gdc5vTJ2tlt6m'
-          }
-        ]
-      }
-    ]
+    unitName:'Devoir de synthèse 3',unitIcon:'fa-file-alt',unitColor:'#0EA5E9',unitBg:'#E0F2FE',
+    items:[{title:'Devoir de synthèse 3',sub:'فلسفة — فرض تأليفي 3',tag:'Synthèse',docs:6,subItems:[
+      {title:'Devoir de synthèse 3 (1)',type:'synthese',icon:'fa-file-alt',desc:'فرض تأليفي 3 رقم 1',driveId:'12rs_pVrNDi7ZrO5ANuM0NlU1kD-_ruQt'},
+      {title:'Devoir de synthèse 3 (2)',type:'synthese',icon:'fa-file-alt',desc:'فرض تأليفي 3 رقم 2',driveId:'16hMzrAccu3dVySdWlDuW-Wjq_RS20CcL'},
+      {title:'Devoir de synthèse 3 (3)',type:'synthese',icon:'fa-file-alt',desc:'فرض تأليفي 3 رقم 3',driveId:'1QcjVs64ZtpH2ttr7WyeTArDD6RQBwz6U'},
+      {title:'Devoir de synthèse 3 (4)',type:'synthese',icon:'fa-file-alt',desc:'فرض تأليفي 3 رقم 4',driveId:'17U8vtas_uylQvlDLRmP-juHR4f4sFjJL'},
+      {title:'Devoir de synthèse 3 (5)',type:'synthese',icon:'fa-file-alt',desc:'فرض تأليفي 3 رقم 5',driveId:'1w_Up93gvRakCV2Xqwx8HhWviAK_iQlde'},
+      {title:'Devoir de synthèse 3 (6)',type:'synthese',icon:'fa-file-alt',desc:'فرض تأليفي 3 رقم 6',driveId:'1QqBW-yMx2A6zm_hxeR2Gdc5vTJ2tlt6m'},
+    ]}]
   },
-  
 ];
 
 const TAB_CONFIG={
@@ -923,8 +504,8 @@ function openExdetModal(item,unit,sourceTab){
           <div class="exdet-si-desc">${si.desc}</div>
         </div>
         <div class="exdet-si-meta">
-          ${si.duration!=='—'?`<div class="exdet-si-tag" style="--si-color:${meta.color}"><i class="fas fa-clock"></i>${si.duration}</div>`:''}
-          ${si.difficulty!=='—'?`<div class="exdet-si-tag" style="--si-color:${meta.color}"><i class="fas fa-signal"></i>${si.difficulty}</div>`:''}
+          ${si.duration&&si.duration!=='—'?`<div class="exdet-si-tag" style="--si-color:${meta.color}"><i class="fas fa-clock"></i>${si.duration}</div>`:''}
+          ${si.difficulty&&si.difficulty!=='—'?`<div class="exdet-si-tag" style="--si-color:${meta.color}"><i class="fas fa-signal"></i>${si.difficulty}</div>`:''}
           <div class="exdet-si-open" style="background:${meta.bg};color:${meta.color}"><i class="fas fa-folder-open" style="font-size:10px"></i>فتح</div>
         </div>
       </div>`;

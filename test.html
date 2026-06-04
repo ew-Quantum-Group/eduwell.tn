@@ -1157,15 +1157,150 @@
 
       <!-- PAGE: SEARCH -->
       <div class="page" id="page-search">
-        <div class="search-wrap">
-          <i class="fa-solid fa-magnifying-glass search-wrap-icon"></i>
-          <input type="text" class="search-input" id="srInput" placeholder="Search courses, universities..." oninput="handleSearch()" autocomplete="off" />
-          <div class="dropdown" id="dropdown"></div>
+
+        <style>
+          #page-search { --psych-purple: #6b4cf6; --psych-dark: #1e1e2a; }
+
+          @keyframes psych-cardIn { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+          @keyframes psych-wordIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+          @keyframes psych-fadeIn { from { opacity: 0; } to { opacity: 1; } }
+          @keyframes psych-chipPop { 0% { opacity: 0; transform: scale(0.78) translateY(14px); } 70% { transform: scale(1.05) translateY(0); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+          @keyframes psych-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+          #page-search .srch-banner { background-color: #1e1e2a; border-radius: 18px; padding: 38px 52px 32px; width: 100%; position: relative; overflow: hidden; animation: psych-cardIn 0.65s cubic-bezier(0.22,1,0.36,1) both; }
+          #page-search .srch-headline { display: flex; flex-direction: column; gap: 2px; }
+          #page-search .srch-row { display: flex; align-items: center; gap: 12px; flex-wrap: nowrap; }
+          #page-search .srch-word { font-family: 'Epilogue', sans-serif; font-weight: 900; font-size: clamp(34px, 5.5vw, 62px); line-height: 1; color: #fff; letter-spacing: -1.5px; white-space: nowrap; opacity: 0; animation: psych-wordIn 0.55s cubic-bezier(0.22,1,0.36,1) forwards; }
+          #page-search .srch-word-b { animation-delay: 0.15s; }
+          #page-search .srch-word-y { animation-delay: 0.30s; }
+          #page-search .srch-word-s { animation-delay: 0.45s; }
+          #page-search .srch-word-o { animation-delay: 0.65s; }
+
+          #page-search .srch-chip { display: inline-flex; align-items: center; justify-content: center; border-radius: 14px; flex-shrink: 0; gap: 6px; height: clamp(40px, 6vw, 60px); opacity: 0; animation: psych-chipPop 0.55s cubic-bezier(0.34,1.56,0.64,1) forwards; cursor: default; transition: transform .2s ease, box-shadow .2s ease; }
+          #page-search .srch-chip:hover { transform: scale(1.07); box-shadow: 0 6px 20px rgba(0,0,0,0.35); }
+          #page-search .srch-chip-purple { background-color: #6b4cf6; padding: 0 12px; gap: 3px; animation-delay: 0.22s; }
+          #page-search .srch-chip-green { background-color: #4ecba6; padding: 0 12px; width: clamp(40px, 6vw, 60px); animation-delay: 0.38s; }
+          #page-search .srch-chip-yellow { background-color: #f5c518; padding: 0; width: clamp(40px, 6vw, 60px); animation-delay: 0.55s; }
+
+          #page-search .srch-icon { display: inline-flex; align-items: center; justify-content: center; }
+          #page-search .srch-icon svg { width: clamp(18px, 2.8vw, 26px); height: clamp(18px, 2.8vw, 26px); fill: #fff; flex-shrink: 0; }
+          #page-search .srch-chip-yellow .srch-icon svg { fill: #1e1e2a; }
+          #page-search .srch-icon-flower svg { animation: psych-spin 6s linear infinite; animation-delay: 0.8s; }
+
+          #page-search .srch-subtext { margin-top: 16px; text-align: center; font-family: 'Epilogue', sans-serif; font-weight: 400; font-size: clamp(11px, 1.3vw, 13px); color: #8a8a9a; line-height: 1.55; opacity: 0; animation: psych-fadeIn 0.7s ease forwards; animation-delay: 0.85s; }
+
+          #page-search .srch-bar-wrap { margin-top: 24px; display: flex; justify-content: center; opacity: 0; animation: psych-fadeIn 0.7s ease forwards; animation-delay: 1.05s; }
+          #page-search .srch-bar { display: flex; align-items: center; background-color: #14141f; border: 1.5px solid #2e2e42; border-radius: 50px; padding: 0 8px 0 26px; width: 100%; max-width: 624px; gap: 13px; transition: border-color .2s ease, box-shadow .2s ease; }
+          #page-search .srch-bar:focus-within { border-color: #6b4cf6; box-shadow: 0 0 0 3px rgba(107,76,246,0.18); }
+          #page-search .srch-bar svg { width: 22px; height: 22px; fill: none; stroke: #5a5a72; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; transition: stroke .2s ease; }
+          #page-search .srch-bar:focus-within svg { stroke: #6b4cf6; }
+          #page-search .srch-bar input { flex: 1; background: transparent; border: none; outline: none; font-family: 'Epilogue', sans-serif; font-size: 17px; font-weight: 400; color: #d0d0e0; padding: 16px 0; letter-spacing: .01em; }
+          #page-search .srch-bar input::placeholder { color: #4e4e66; }
+          #page-search .srch-btn { flex-shrink: 0; background-color: #6b4cf6; border: none; border-radius: 40px; color: #fff; font-family: 'Epilogue', sans-serif; font-size: 15px; font-weight: 800; letter-spacing: .03em; padding: 11px 24px; cursor: pointer; transition: background-color .2s ease, transform .15s ease; }
+          #page-search .srch-btn:hover { background-color: #7d62f8; transform: scale(1.03); }
+          #page-search .srch-btn:active { transform: scale(0.97); }
+
+          #page-search .search-wrap { position: relative; flex: 1; }
+          #page-search .search-wrap-icon { display: none; }
+          #page-search .search-input { all: unset; flex: 1; font-family: 'Epilogue', sans-serif; font-size: 17px; font-weight: 400; color: #d0d0e0; padding: 16px 0; letter-spacing: .01em; }
+          #page-search .search-input::placeholder { color: #4e4e66; }
+          #page-search .dropdown { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #14141f; border: 1.5px solid #2e2e42; border-radius: 16px; overflow: hidden; z-index: 100; display: none; padding: 6px; }
+          #page-search .dropdown.show { display: block; }
+          #page-search .dropdown-item { padding: 10px 16px; cursor: pointer; color: #d0d0e0; font-size: 14px; border-radius: 10px; transition: background .15s; }
+          #page-search .dropdown-item:hover { background: rgba(255,255,255,.06); }
+
+          @media (max-width: 640px) {
+            #page-search .srch-banner { padding: 24px 20px 26px; }
+            #page-search .srch-word { font-size: clamp(26px, 8vw, 36px); }
+            #page-search .srch-row { gap: 8px; }
+            #page-search .srch-chip { height: clamp(32px, 8vw, 44px); }
+            #page-search .srch-chip-purple { padding: 0 8px; gap: 2px; }
+            #page-search .srch-bar { padding: 0 6px 0 16px; gap: 8px; }
+            #page-search .srch-bar input { font-size: 14px; padding: 12px 0; }
+            #page-search .srch-btn { font-size: 13px; padding: 9px 18px; }
+          }
+        </style>
+
+        <div class="srch-banner">
+          <div class="srch-headline">
+            <div class="srch-row">
+              <span class="srch-word srch-word-b">Build</span>
+              <span class="srch-chip srch-chip-purple">
+                <span class="srch-icon srch-icon-flower">
+                  <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="16" cy="16" r="4"/>
+                    <ellipse cx="16" cy="7"  rx="3" ry="5" transform="rotate(0   16 16)"/>
+                    <ellipse cx="16" cy="7"  rx="3" ry="5" transform="rotate(45  16 16)"/>
+                    <ellipse cx="16" cy="7"  rx="3" ry="5" transform="rotate(90  16 16)"/>
+                    <ellipse cx="16" cy="7"  rx="3" ry="5" transform="rotate(135 16 16)"/>
+                    <ellipse cx="16" cy="7"  rx="3" ry="5" transform="rotate(180 16 16)"/>
+                    <ellipse cx="16" cy="7"  rx="3" ry="5" transform="rotate(225 16 16)"/>
+                    <ellipse cx="16" cy="7"  rx="3" ry="5" transform="rotate(270 16 16)"/>
+                    <ellipse cx="16" cy="7"  rx="3" ry="5" transform="rotate(315 16 16)"/>
+                  </svg>
+                </span>
+                <span class="srch-icon">
+                  <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="14" y="2" width="4" height="28" rx="2"/>
+                    <rect x="14" y="2" width="4" height="28" rx="2" transform="rotate(60  16 16)"/>
+                    <rect x="14" y="2" width="4" height="28" rx="2" transform="rotate(120 16 16)"/>
+                  </svg>
+                </span>
+                <span class="srch-icon">
+                  <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6a10 10 0 1 0 0 20 8 8 0 1 1 0-20z"/>
+                  </svg>
+                </span>
+              </span>
+              <span class="srch-word srch-word-y">your</span>
+            </div>
+            <div class="srch-row">
+              <span class="srch-chip srch-chip-green">
+                <span class="srch-icon">
+                  <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="14" y="4"  width="4" height="24" rx="2"/>
+                    <rect x="4"  y="14" width="24" height="4" rx="2"/>
+                    <polygon points="16,2 13,7 19,7"/>
+                    <polygon points="16,30 13,25 19,25"/>
+                    <polygon points="2,16 7,13 7,19"/>
+                    <polygon points="30,16 25,13 25,19"/>
+                  </svg>
+                </span>
+              </span>
+              <span class="srch-word srch-word-s">skills</span>
+              <span class="srch-chip srch-chip-yellow">
+                <span class="srch-icon">
+                  <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="16" cy="16" r="12" fill="none" stroke="#1e1e2a" stroke-width="3.5"/>
+                    <circle cx="16" cy="16" r="6"  fill="none" stroke="#1e1e2a" stroke-width="3.5"/>
+                    <circle cx="16" cy="16" r="2"  fill="#1e1e2a"/>
+                  </svg>
+                </span>
+              </span>
+              <span class="srch-word srch-word-o">online</span>
+            </div>
+          </div>
+          <p class="srch-subtext">Learn and improve your skills with interactive courses and skill tests built for future professionals</p>
+          <div class="srch-bar-wrap">
+            <div class="srch-bar">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="11" cy="11" r="7"/>
+                <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+              </svg>
+              <div class="search-wrap">
+                <input type="text" class="search-input" id="srInput" placeholder="Search for courses, skills, topics…" oninput="handleSearch()" autocomplete="off" />
+                <div class="dropdown" id="dropdown"></div>
+              </div>
+              <button class="srch-btn">Search</button>
+            </div>
+          </div>
         </div>
-        <div class="sec-head"><h2><i class="fa-solid fa-layer-group"></i> Categories</h2></div>
+
+        <div class="sec-head" style="margin-top:22px"><h2><i class="fa-solid fa-layer-group"></i> Categories</h2></div>
         <div class="cat-grid" id="catGrid"></div>
         <div class="sec-head" style="margin-top:22px"><h2><i class="fa-solid fa-lightbulb"></i> Suggestions</h2></div>
         <div class="sug-grid" id="sugGrid"></div>
+
       </div>
 
       <!-- PAGE: NOTIFICATIONS -->

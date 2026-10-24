@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>E-Books by sahllearn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;600;700&family=Poppins:wght@600;700&family=Source+Serif+4:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0b2e6f;--blue:#1556d6;--blue-d:#0a3a9e;--pink:#e8336d;--ink:#14161a;--muted:#7b8190;--line:#e8e6e1;--card:#faf9f6;--bg:#fff;--r:12px}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,"Noto Sans Arabic",sans-serif;color:var(--ink);background:var(--bg);font-size:14px;line-height:1.55}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+img{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.container{max-width:1160px;margin:0 auto;padding:0 24px}
+h1,h2,h3,h4{font-family:"Source Serif 4",Georgia,serif}
+
+/* top bar */
+.topbar{background:linear-gradient(90deg,var(--navy),var(--blue-d));color:#fff;display:flex;gap:12px;justify-content:center;align-items:center;padding:9px 12px;font-size:14px}
+.topbar a{background:#ffffff2b;padding:4px 14px;border-radius:7px;font-weight:600;font-size:13px}
+.topbar a:hover{background:#ffffff44}
+
+/* header */
+.header{position:sticky;top:0;z-index:30;background:#ffffffee;backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .2s}
+.header.scrolled{border-color:var(--line)}
+.nav{display:flex;align-items:center;gap:40px;height:78px}
+.logo{display:flex;flex-direction:column;line-height:1;color:var(--navy);font-family:Poppins,Inter,sans-serif;font-size:25px;font-weight:700;letter-spacing:-.5px}
+.logo small{font-family:Inter;font-size:11px;font-weight:600;letter-spacing:.2px;color:var(--muted);margin-top:4px}
+.logo small b{color:var(--pink);font-weight:700}
+.menu{display:flex;gap:34px;align-items:center;font-size:13px;font-weight:500}
+.menu a:hover,.dd-btn:hover{color:var(--blue)}
+.dd-btn{background:none;border:0;display:flex;gap:6px;align-items:center;font-weight:500}
+.dropdown{position:relative}
+.dd-menu{position:absolute;top:140%;left:-14px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:6px;min-width:180px;display:none;box-shadow:0 14px 32px #0b2e6f1a}
+.dropdown.open .dd-menu{display:block}
+.dd-menu a{display:block;padding:9px 12px;border-radius:7px}
+.dd-menu a:hover{background:var(--card)}
+.actions{margin-left:auto;display:flex;gap:14px;align-items:center}
+.search{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:9px;padding:0 12px;height:42px;color:#555;background:#fff;transition:border-color .15s,box-shadow .15s}
+.search:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px #1556d61f}
+.search input{border:0;outline:0;background:none;font:inherit;width:130px}
+kbd{font:11px Inter;border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--muted);background:var(--card)}
+.cart{display:flex;gap:8px;align-items:center;border:1px solid var(--line);background:#fff;border-radius:9px;height:42px;padding:0 16px;font-weight:500;font-size:13px}
+.cart:hover{border-color:var(--navy)}
+#cartCount{background:var(--pink);color:#fff;border-radius:99px;font-size:11px;font-weight:600;padding:1px 7px}
+
+/* hero */
+.hero{margin-top:26px;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:18px;text-align:center;padding:64px 20px 68px;
+  background:radial-gradient(600px 220px at 15% 0,#1556d612,transparent),radial-gradient(500px 220px at 90% 100%,#e8336d12,transparent),#f8f8f7}
+.hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(#0b2e6f14 1px,transparent 1px);background-size:22px 22px;mask-image:linear-gradient(#000,transparent 80%)}
+.hero>*{position:relative}
+.pill{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:99px;padding:6px 18px;font-size:12.5px;color:var(--navy);font-weight:500;box-shadow:0 2px 8px #0b2e6f0d}
+.hero h1{font-family:"Noto Sans Arabic";font-weight:700;font-size:40px;line-height:1.45;margin:22px 0 14px;letter-spacing:-.3px}
+.hero h1 em{font-style:normal;color:var(--blue)}
+.hero p{color:#5f6675;max-width:560px;margin:0 auto 30px;font-size:15.5px;line-height:1.95}
+.cta{display:inline-block;background:linear-gradient(135deg,#d6246a,#f0608d);color:#fff;padding:13px 32px;border-radius:10px;font-weight:700;font-size:15px;box-shadow:0 10px 24px #e8336d40;transition:transform .15s,box-shadow .15s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 14px 28px #e8336d55}
+
+/* sections */
+section{margin-top:84px;scroll-margin-top:90px}
+h2{font-size:30px;font-weight:600;letter-spacing:-.4px}
+.sub{color:var(--muted);font-size:13px;margin-top:3px}
+.grid{display:grid;gap:16px;margin-top:24px}
+.g5{grid-template-columns:repeat(5,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr);gap:36px 26px}
+.card{position:relative;display:block;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;min-height:108px;transition:transform .18s,border-color .18s,box-shadow .18s}
+.card h3{font-size:17px;font-weight:600}
+.card span{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:13px;margin-top:10px}
+.card:hover{transform:translateY(-3px);border-color:var(--blue);box-shadow:0 12px 26px #0b2e6f14}
+.card:hover span{color:var(--blue)}
+.sep{border:0;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:56px 0 0}
+.head-row{display:flex;justify-content:space-between;align-items:flex-end}
+.all{font-size:13px;font-weight:600;color:var(--blue)}
+
+/* products */
+.product{display:flex;flex-direction:column}
+.cover{position:relative;aspect-ratio:2479/3508;border-radius:var(--r);overflow:hidden;background:linear-gradient(145deg,var(--blue),var(--navy))}
+.cover img{width:100%;height:100%;object-fit:cover;transition:transform .35s}
+.product:hover .cover img{transform:scale(1.04)}
+.cover.noimg::after{content:"Image";position:absolute;inset:0;display:grid;place-items:center;color:#ffffff80;font-size:13px;font-weight:500}
+.cover.noimg img{display:none}
+.badge{position:absolute;top:12px;left:12px;background:#d92b2b;color:#fff;font-size:10.5px;font-weight:600;padding:4px 9px;border-radius:6px;z-index:1}
+.name{margin-top:16px;font-size:15px;font-weight:600;line-height:1.35;min-height:41px}
+.price{margin-top:12px;color:var(--navy);font-weight:700;font-size:14px}
+.add{margin-top:12px;border:1px solid var(--line);background:#fff;border-radius:9px;padding:9px;font-size:12.5px;font-weight:600;transition:.15s}
+.add:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+.add.done{background:#16a34a;border-color:#16a34a;color:#fff}
+
+/* rupture de stock */
+.badge.stock{left:auto;right:12px;background:#111}
+.product.soldout .cover img{filter:grayscale(1);opacity:.55}
+.product.soldout:hover .cover img{transform:none}
+.price.out{color:#d92b2b}
+
+/* cart drawer */
+.overlay{position:fixed;inset:0;background:#0b1530a0;opacity:0;pointer-events:none;transition:opacity .2s;z-index:40}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(400px,100%);background:#fff;z-index:50;transform:translateX(100%);transition:transform .25s;display:flex;flex-direction:column}
+body.cart-open .overlay{opacity:1;pointer-events:auto}
+body.cart-open .drawer{transform:none;box-shadow:-12px 0 40px #0003}
+.d-head{display:flex;justify-content:space-between;align-items:center;padding:22px 24px;border-bottom:1px solid var(--line)}
+.d-head h3{font-size:20px}
+.x{background:none;border:0;font-size:26px;line-height:1;color:var(--muted)}
+.d-body{flex:1;overflow:auto;padding:8px 24px}
+.item{display:flex;gap:12px;padding:16px 0;border-bottom:1px solid var(--line);align-items:center}
+.item .t{flex:1;font-weight:600;font-size:13px;line-height:1.35}
+.item .t small{display:block;color:var(--navy);font-weight:600;margin-top:4px}
+.item button{background:none;border:0;color:var(--muted);font-size:12px;text-decoration:underline}
+.d-empty{color:var(--muted);text-align:center;margin-top:60px}
+.d-foot{padding:20px 24px;border-top:1px solid var(--line)}
+.total{display:flex;justify-content:space-between;font-weight:700;font-size:16px;margin-bottom:14px}
+.order{display:block;text-align:center;background:var(--navy);color:#fff;border-radius:10px;padding:13px;font-weight:600}
+.order:hover{background:var(--blue-d)}
+
+
+.cats{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.card{cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%}
+.card.on{border-color:var(--blue);background:#eef3ff}
+.product{cursor:pointer;color:inherit}
+.product:hover .name{color:var(--blue)}
+.price.big{font-size:24px;margin-top:10px}
+.add.big{margin:0;flex:1;padding:14px;font-size:14px;background:var(--navy);color:#fff;border-color:var(--navy)}
+.add.big:hover{background:var(--blue-d)}
+.specs{display:grid;grid-template-columns:auto 1fr;gap:10px 22px;padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:22px;font-size:13.5px}
+.specs dt{color:var(--muted)}.specs dd{margin:0;font-weight:600}
+.qty{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px}
+.qty button{background:none;border:0;width:38px;height:100%;font-size:18px}
+.qty span{min-width:26px;text-align:center;font-weight:600}
+.qrow{display:flex;gap:10px;align-items:center;margin-top:8px}
+.qrow button{width:24px;height:24px;border:1px solid var(--line);background:#fff;border-radius:6px;line-height:1}
+.qrow span{min-width:18px;text-align:center;font-weight:600;font-size:13px}
+.pp{padding-top:30px}
+.crumbs{font-size:13px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}
+.crumbs a:hover{color:var(--blue)}
+.pp-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;margin-top:22px;align-items:start}
+.gallery{position:sticky;top:96px}
+.g-main{border-radius:16px}
+.g-nav{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:0;background:#ffffffe8;font-size:24px;line-height:1;box-shadow:0 4px 14px #0003;z-index:2}
+.g-nav:hover{background:#fff}.g-nav.prev{left:12px}.g-nav.next{right:12px}
+.thumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:12px}
+.th{display:block;width:100%;padding:0;border:2px solid transparent;border-radius:10px;overflow:hidden;aspect-ratio:2479/3508;background:linear-gradient(145deg,var(--blue),var(--navy));opacity:.7;transition:.15s}
+.th:hover{opacity:1}.th.on{border-color:var(--blue);opacity:1}
+.th img{width:100%;height:100%;object-fit:cover}.th.noimg img{display:none}
+.p-info .badge{position:static;display:inline-block}
+.p-info h1{font-size:34px;line-height:1.22;margin:14px 0 0;letter-spacing:-.5px}
+.p-desc{color:#5f6675;margin:16px 0 22px;line-height:1.75;font-size:15px}
+.p-desc.rtl, #pContent.rtl li{direction:rtl;text-align:right;font-family:'Noto Sans Arabic',system-ui,sans-serif;unicode-bidi:embed}
+.note{font-size:12.5px;color:var(--muted);margin-top:14px}
+.related{margin-top:90px}
+@media(max-width:860px){.pp-grid{grid-template-columns:1fr;gap:28px}.gallery{position:static}.p-info h1{font-size:26px}}
+.back{display:inline-block;margin-bottom:14px;font-weight:600;color:var(--blue);font-size:13px}
+.back:hover{text-decoration:underline}
+.wa-btn{display:flex;justify-content:center;margin-top:10px;border:1px solid #25d366;color:#128c4a;border-radius:10px;padding:13px;font-weight:600;background:#fff;transition:.15s}
+.wa-btn:hover{background:#25d366;color:#fff}
+.pp-more{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:60px}
+.box{border:1px solid var(--line);border-radius:14px;padding:26px;background:var(--card)}
+.box h3{font-size:20px;margin-bottom:16px}
+.offer-countdown{display:flex;align-items:center;gap:12px;background:linear-gradient(90deg,#fff4f8,#fff);border:1px solid #ffd1e3;border-radius:999px;padding:10px 18px;margin:14px 0 18px;width:fit-content;flex-wrap:wrap}
+.offer-countdown .label{font-weight:700;color:#d6246a;font-size:13px}
+.offer-countdown .timer{display:flex;gap:8px}
+.offer-countdown .unit{display:flex;flex-direction:column;align-items:center;background:#fff;border:1px solid #ffd1e3;border-radius:10px;padding:6px 10px;min-width:56px}
+.offer-countdown .num{font-weight:800;font-size:16px;color:var(--navy)}
+.offer-countdown .txt{font-size:10px;text-transform:uppercase;color:var(--muted);letter-spacing:.4px}
+.offer-countdown .expired{color:#d92b2b;font-weight:700}
+.checks{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.checks li{position:relative;padding-left:28px}
+.checks li::before{content:"✓";position:absolute;left:0;color:#16a34a;font-weight:700}
+@media(max-width:860px){.pp-more{grid-template-columns:1fr}}
+.offer{display:grid;grid-template-columns:.85fr 1.15fr;gap:44px;align-items:center;background:linear-gradient(135deg,var(--navy),var(--blue-d));color:#fff;border-radius:22px;padding:34px;position:relative;overflow:hidden}
+.offer::after{content:"";position:absolute;right:-90px;top:-90px;width:300px;height:300px;border-radius:50%;background:radial-gradient(#e8336d55,transparent 70%)}
+.offer>*{position:relative;z-index:1}
+.o-img{display:block;max-width:340px;width:100%;margin:0 auto;border:1px solid #ffffff33;box-shadow:0 20px 50px #0006}
+.o-img .badge{background:var(--pink)}
+.eyebrow{display:inline-block;background:#ffffff1f;border:1px solid #ffffff33;padding:5px 14px;border-radius:99px;font-size:12px;font-weight:600}
+.offer h2{color:#fff;font-size:32px;line-height:1.2;margin:16px 0 10px}
+.offer p{color:#ffffffcc;max-width:480px;line-height:1.7}
+.offer .checks{margin:18px 0}.offer .checks li::before{color:#7dffb0}
+.o-price{font-size:30px;font-weight:700;margin-bottom:18px}
+.o-price s{font-size:16px;font-weight:500;opacity:.6;margin-right:10px}
+@media(max-width:860px){.offer{grid-template-columns:1fr;gap:26px;padding:22px}.offer h2{font-size:25px}}
+
+/* footer */
+footer{margin-top:100px;background:var(--card);border-top:1px solid var(--line)}
+.foot{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:40px;padding-top:72px;padding-bottom:72px}
+.foot .sub{margin-top:26px;max-width:280px;font-size:13.5px}
+.foot h4{font-size:14px;margin-bottom:20px;letter-spacing:.4px}
+.foot p,.foot a{display:block;margin-bottom:14px;font-size:13.5px}
+.foot a:hover{color:var(--blue)}
+.foot a.logo{display:flex;font-size:25px;margin:0}
+.legal{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding:22px 24px;font-size:12px;color:var(--muted)}
+.legal a{margin-left:24px;color:var(--ink)}
+
+@media(max-width:960px){
+  .g5{grid-template-columns:repeat(2,1fr)}.g4{grid-template-columns:repeat(2,1fr);gap:28px 16px}.g3{grid-template-columns:1fr}
+  .menu,kbd{display:none}.nav{gap:12px}.search input{width:80px}.foot{grid-template-columns:1fr;gap:28px}
+  .hero{padding:48px 16px}.hero h1{font-size:26px}h2{font-size:25px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<div class="topbar"><span dir="rtl">#الباك_عمرو_ما_كان_صعيب</span></div>
+
+<header class="header" id="header">
+  <div class="container nav">
+    <a href="#" class="logo">E-Books<small>by <b>sahllearn</b></small></a>
+    <nav class="menu">
+      <a href="#">Accueil</a>
+      <div class="dropdown">
+        <button class="dd-btn" aria-expanded="false">Catalogue
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="dd-menu"><a href="#bac">Bac</a><a href="#offre">Pack numérique</a><a href="#produits">Produits</a></div>
+      </div>
+      <a href="#footer">Contact</a>
+    </nav>
+    <div class="actions">
+      <label class="search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="Rechercher" autocomplete="off" aria-label="Rechercher">
+        <kbd>Ctrl K</kbd>
+      </label>
+      <button class="cart" id="cartBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h2l2.4 11h10.2L20 7H6.2"/><circle cx="9" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>
+        Panier <span id="cartCount" hidden>0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="container" id="home">
+  <section class="hero" style="margin-top:26px">
+    <span class="pill" dir="rtl">🏅 سر النجاح بـ Mention في باك 2026</span>
+    <h1 dir="rtl">النجاح في الباك موش بكثرة القراية...<br><em>بل بالقراية بذكاء.</em></h1>
+    <p dir="rtl">يّزي ما ضيعت وقتك تلوّح على السيريات! E-Books by sahllearn يملكلك أحسن المراجع لمواد الأساسية والثانوية حسب شعبتك.</p>
+    <a href="#produits" class="cta" dir="rtl">اكتشف الكتب</a>
+  </section>
+
+  <section id="bac">
+    <h2>Bac</h2><p class="sub">Collections pour le baccalauréat</p>
+    <div class="grid cats" id="bacGrid"></div>
+  </section>
+
+  <section id="offre"><div class="offer" id="offerBox"></div></section>
+
+  <hr class="sep">
+
+  <section id="produits" style="margin-top:56px">
+    <div class="head-row">
+      <div><h2>Produits en vedette</h2><p class="sub">Derniers ajouts à notre catalogue</p></div>
+      <a href="#produits" class="all" id="allBtn">Tout voir →</a>
+    </div>
+    <div class="grid g4" id="products"></div>
+    <p id="empty" class="sub" hidden>Aucun produit ne correspond à votre recherche.</p>
+  </section>
+</main>
+
+<main class="container pp" id="productPage" hidden>
+  <a class="back" href="#produits">← Retour au catalogue</a>
+  <nav class="crumbs" aria-label="Fil d'Ariane"><a href="#">Accueil</a><span>/</span><a href="#produits">Catalogue</a><span>/</span><span id="pCrumb"></span></nav>
+  <div class="pp-grid">
+    <div class="gallery">
+      <div class="cover g-main" id="gMain">
+        <img id="gImg" alt="" onerror="this.parentNode.classList.add('noimg')">
+        <button class="g-nav prev" id="gPrev" aria-label="Photo précédente">‹</button>
+        <button class="g-nav next" id="gNext" aria-label="Photo suivante">›</button>
+      </div>
+      <div class="thumbs" id="thumbs"></div>
+    </div>
+    <div class="p-info">
+      <span class="badge" id="pBadge"></span>
+      <h1 id="pTitle"></h1>
+      <div class="price big" id="pPrice"></div>
+      <p class="p-desc" id="pDesc"></p>
+      <dl class="specs" id="pSpecs"></dl>
+      <div class="m-buy" style="display:flex;gap:12px">
+        <div class="qty"><button id="qMinus" aria-label="Moins">−</button><span id="qVal">1</span><button id="qPlus" aria-label="Plus">+</button></div>
+        <button class="add big" id="pAdd">Ajouter au panier</button>
+      </div>
+      <a class="wa-btn" id="pWa" href="#" target="_blank" rel="noopener">Commander directement sur WhatsApp</a>
+      <p class="note">La commande se confirme directement sur WhatsApp.</p>
+    </div>
+  </div>
+    <div class="pp-more">
+    <div class="box"><h3>Ce que contient ce livre</h3><ul class="checks" id="pContent"></ul></div>
+    <div class="box"><h3>Informations</h3><dl class="specs" id="pInfo" style="border:0;padding:0;margin:0"></dl></div>
+  </div>
+  <section class="related"><h2>Vous aimerez aussi</h2><div class="grid g4" id="related"></div></section>
+</main>
+
+
+<footer id="footer">
+  <div class="container foot">
+    <div>
+      <a href="#" class="logo" style="margin:0">E-Books<small>by <b>sahllearn</b></small></a>
+      <p class="sub">Librairie éducative — livres numériques et ressources pour réussir le Bac.</p>
+    </div>
+    <div><h4>CONTACT</h4><p>+216 00 000 000</p><p>contact@sahllearn.org</p></div>
+    <div><h4>NAVIGATION</h4><a href="#">Accueil</a><a href="#bac">Catalogue</a><a href="#footer">Contact</a><a href="#">FAQ</a></div>
+  </div>
+  <div class="container legal">
+    <span>© 2026 sahllearn</span>
+
+  </div>
+</footer>
+
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" aria-label="Panier">
+  <div class="d-head"><h3>Votre panier</h3><button class="x" id="closeCart" aria-label="Fermer">×</button></div>
+  <div class="d-body" id="cartItems"></div>
+  <div class="d-foot">
+    <div class="total"><span>Total</span><span id="cartTotal">0.000 DT</span></div>
+    <a class="order" id="orderBtn" href="#" target="_blank" rel="noopener">Commander via WhatsApp</a>
+  </div>
+</aside>
+
+<script>
+/* ====== À MODIFIER ====== */
+const WHATSAPP = "21647050644";
+const cats = ["Chimie","Anglais","Français","Informatique","Mathématiques","Philosophie","Physique","SVT"];
+const CONTENU = ["Résumés de cours","Astuces et méthodes","QCM d'entraînement","Sujets types Bac","Corrigés détaillés"];
+const DESC = "Résumés de cours, astuces et méthodes, QCM d'entraînement, sujets types Bac et corrigés détaillés.";
+// Couverture : assets/images/cover/<nom>.png — le nom du fichier = la matière du livre
+const B = {desc:DESC, contenu:CONTENU, langue:"Français", format:"Livre"};   // valeurs par défaut (modifiables par produit)
+const cover = f => [`assets/images/cover/${f}.png`];
+const imgs = k => [1,2,3,4,5].map(n => `images/${k}-${n}.jpg`);   // photos du pack (à ajouter dans images/)
+const products = [
+  {n:"Chimie - Bac Sciences Expérimentales (E-Book PDF Numérique)", b:"E-BOOK NUMÉRIQUE", price:37, soldout:true, imgs:cover("chimie"), cat:"Chimie", matiere:"Chimie", section:"Bac Sciences Expérimentales", ...B, format:"Livre numérique (PDF) – Téléchargement immédiat", desc:"Ce que contient ce livre", contenu:["Tous les cours de chimie du Bac Sciences, couvrant l’intégralité du programme de l’année scolaire.","Des fiches de méthodes complètes, avec les questions classiques susceptibles de tomber aux devoirs et aux examens, accompagnées des méthodes de résolution.","Une grande collection de devoirs et de sujets, issus des lycées pilotes, des lycées de référence (Réos) et des épreuves du Bac tunisien.","Des corrections détaillées pour tous les exercices, afin de comprendre les méthodes de résolution et de progresser efficacement.","🎁 Bonus exclusif","Un abonnement d’un an à Sahl Learn Tools OFFERT !","Profite gratuitement de tous les outils Sahl Learn Tools pendant une année complète pour t’entraîner, réviser et mieux préparer ton Bac Sciences."]},
+  {n:"Anglais - Bac Sciences Expérimentales", b:"BAC", price:45, soldout:true, imgs:cover("english"), cat:"Anglais", matiere:"Anglais", section:"Bac Sciences Expérimentales", ...B, desc:"## Ce que contient ce livre", contenu:["Des résumés complets de tous les cours d’anglais du programme de 4ᵉ année secondaire – Bac Sciences Expérimentales.","Des devoirs corrigés du Bac, pour s’entraîner sur des sujets types et comprendre les attentes des examens.","Des prototypes de préparation aux devoirs de toute l’année, pour réviser efficacement et être prêt pour chaque évaluation.","Des prototypes de préparation au Bac national, pour s’entraîner dans les conditions de l’examen final et aborder le Bac avec confiance.","🎁 Bonus exclusif","Un abonnement d’un an à Sahl Learn Tools OFFERT !","Profite gratuitement de tous les outils Sahl Learn Tools pendant une année complète pour t’entraîner, réviser et mieux préparer ton Bac Sciences."]},
+  {n:"Français - Bac Sciences Expérimentales", b:"BAC", price:35, soldout:true, imgs:cover("fr"), cat:"Français", matiere:"Français", section:"Bac Sciences Expérimentales", ...B, desc:"## Ce que contient ce livre", contenu:["Des devoirs de français avec leurs corrections, pour t’entraîner sur des sujets types, améliorer tes compétences et maîtriser les méthodes attendues aux devoirs et au Bac.","🎁 Bonus exclusif","Un abonnement d’un an à Sahl Learn Tools OFFERT !","Profite gratuitement de tous les outils Sahl Learn Tools pendant une année complète pour réviser, t’entraîner et préparer efficacement ton Bac Sciences Expérimentales."]},
+  {n:"Informatique - Bac Sciences de l'Informatique", b:"BAC", price:45, soldout:true, imgs:cover("info"), cat:"Informatique", matiere:"Informatique", section:"Bac Sciences de l'Informatique", ...B, desc:"## Ce que contient ce pack", contenu:["Des cours expliqués en derja tunisienne, pour comprendre facilement les leçons d’informatique et maîtriser les notions essentielles du programme.","Toutes les fonctions susceptibles de tomber au Bac, expliquées simplement en tunisien, avec des exemples pour comprendre leur fonctionnement et savoir les utiliser.","Plus de 88 prototypes de devoirs pratiques du Bac avec leurs corrections, pour s’entraîner sur des sujets types et se familiariser avec les exercices pratiques.","Plus de 180 exercices corrigés, couvrant le programme de toute l’année pour consolider tes connaissances et progresser étape par étape.","Un abonnement d’un an à Sahl Learn Tools OFFERT ! Profite gratuitement de tous les outils Sahl Learn Tools pendant une année complète pour réviser et préparer efficacement ton Bac Informatique."]},
+  {n:"Mathématiques - Bac Sciences Expérimentales", b:"BAC", price:45, soldout:true, imgs:cover("math"), cat:"Mathématiques", matiere:"Mathématiques", section:"Bac Sciences Expérimentales", ...B, desc:"## Ce que contient ce livre", contenu:["Des résumés des règles essentielles de mathématiques, regroupant les formules et les propriétés les plus importantes à maîtriser pour le Bac Sciences Expérimentales.","Des séries d’exercices pour chaque chapitre, accompagnées de corrections détaillées pour comprendre les méthodes de résolution et progresser étape par étape.","Des devoirs de lycées pilotes corrigés, pour s’entraîner sur des exercices de niveau avancé et renforcer ses acquis.","Des prototypes de préparation aux devoirs et au Bac, pour s’entraîner sur des sujets types et se préparer efficacement aux examens.","🎁 Bonus exclusif","Un abonnement d’un an à Sahl Learn Tools OFFERT !","Accède gratuitement à tous les outils Sahl Learn Tools pendant une année complète pour réviser, t’entraîner et maximiser tes chances de réussite au Bac."]},
+  {n:"Philosophie - Bac Sciences Expérimentales", b:"BAC", price:45, soldout:true, imgs:cover("philo"), cat:"Philosophie", matiere:"Philosophie", section:"Bac Sciences Expérimentales", ...B, desc:"## ماذا يحتوي هذا الكتاب؟", contenu:["شرح جميع دروس الفلسفة بالتفصيل وبالتونسي، لفهم المفاهيم الفلسفية واستيعاب الأفكار الأساسية بطريقة سهلة وواضحة.","فروض السنة الدراسية كاملة مع الإصلاح، لمساعدتك على فهم طريقة الإجابة والتدرّب على مختلف أنواع الأسئلة.","نماذج تطبيقية للتحضير للفروض والبكالوريا، تساعدك على تنظيم أفكارك، وتحسين منهجية الكتابة الفلسفية والاستعداد الجيد للامتحانات.","🎁 هدية حصرية","اشتراك مجاني لمدة سنة كاملة في ChatPhilo!","استفد من ChatPhilo طوال سنة كاملة لمساعدتك على فهم دروس الفلسفة، ومراجعة المفاهيم، والتدرّب على الكتابة الفلسفية استعدادًا للبكالوريا."]},
+  {n:"Physique - Bac Sciences Expérimentales (E-Book PDF Numérique)", b:"E-BOOK NUMÉRIQUE", price:79, soldout:true, imgs:cover("physique"), cat:"Physique", matiere:"Physique", section:"Bac Sciences Expérimentales", ...B, format:"Livre numérique (PDF) – Téléchargement immédiat", desc:"Ce que contient ce livre", contenu:["Tous les cours de physique de l’année, couvrant l’intégralité du programme du Bac Sciences Expérimentales.","Des fiches de méthodes pour chaque chapitre, regroupant les questions classiques susceptibles de tomber aux devoirs et aux examens, avec les méthodes pour les résoudre.","Des exercices corrigés adaptés à ton niveau, pour chaque cours, afin de progresser étape par étape et de mieux maîtriser les notions essentielles.","Des devoirs et sujets du Bac, des lycées pilotes et (Réo), avec leurs corrections, pour t’entraîner tout au long de l’année et te préparer efficacement aux examens.","🎁 Bonus exclusif","Un abonnement d’un an à Sahl Learn Tools OFFERT !","Profite gratuitement de tous les outils Sahl Learn Tools pendant une année complète pour réviser, t’entraîner et préparer ton Bac Sciences dans les meilleures conditions."]},
+  {n:"SVT - Bac Sciences Expérimentales", b:"BAC", price:45, soldout:true, imgs:cover("svt"), cat:"SVT", matiere:"SVT", section:"Bac Sciences Expérimentales", ...B},
+  {n:"Pack E-Book Bac – Toutes les matières (PDF Numérique)", b:"E-BOOK NUMÉRIQUE", price:47, priceLabel:"47 DT", imgs:["assets/images/cover/all.jpg","assets/images/cover/1.jpg","assets/images/cover/2.jpg","assets/images/cover/3.jpg","assets/images/cover/4.jpg","assets/images/cover/5.jpg","assets/images/cover/6.jpg"], cat:"Pack", pack:true, matiere:"Toutes les matières", section:"Bac (selon votre section)", ...B, format:"Livre numérique (PDF) – Téléchargement immédiat",
+   desc:"## Ce que contient ce pack",
+   contenu:["Des cours pour toutes les matières du Bac : Mathématiques, Physique, Sciences de la Vie et de la Terre (SVT), Anglais, Philosophie, Français et Informatique.","Des fiches de méthodes en Physique et en Chimie, regroupant les questions classiques susceptibles de tomber aux devoirs et aux examens, avec les méthodes et les étapes pour y répondre correctement.","Des séries d’exercices et des devoirs corrigés en Physique, Chimie, SVT, Philosophie, Français, Anglais et Informatique, pour t’entraîner tout au long de l’année et mieux te préparer aux examens.","🎁 Bonus exclusif","Un abonnement d’un an à Sahl Learn Tools OFFERT !","Profite gratuitement de tous les outils Sahl Learn Tools pendant une année complète pour réviser, t’entraîner et préparer ton Bac dans les meilleures conditions."]}
+];
+/* ======================== */
+
+const $ = s => document.querySelector(s);
+const fmt = n => n.toFixed(3) + " DT";
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const specsOf = p => [["Matière",p.matiere],["Section",p.section],["Tome",p.tome]].filter(r => r[1]);
+const cardHTML = (p,i) => `
+  <a class="product${p.soldout ? " soldout" : ""}" href="#/produit/${i}" aria-label="${esc(p.n)}">
+    <div class="cover"><span class="badge">${esc(p.b)}</span>${p.soldout ? `<span class="badge stock">Rupture de stock</span>` : ""}
+      <img src="${esc(p.imgs[0])}" alt="${esc(p.n)}" loading="lazy" onerror="this.parentNode.classList.add('noimg')">
+    </div>
+    <h3 class="name">${esc(p.n)}</h3>
+    ${p.soldout ? `<div class="price out">Rupture de stock</div>` : `<div class="price">${p.priceLabel || fmt(p.price)}</div>`}
+  </a>`;
+
+/* catalogue: filters + render */
+let filter = {cat:null, q:""};
+function drawCats(){
+  $("#bacGrid").innerHTML = cats.map(c => `<button class="card${filter.cat===c?" on":""}" data-c="${esc(c)}"><h3>${esc(c)}</h3><span>Voir les produits →</span></button>`).join("");
+}
+function render(){
+  const q = filter.q.toLowerCase();
+  const list = products.map((p,i) => ({p,i})).filter(({p}) => (q || !p.pack) && (!filter.cat || p.cat===filter.cat) && p.n.toLowerCase().includes(q));
+  $("#products").innerHTML = list.map(({p,i}) => cardHTML(p,i)).join("");
+  $("#empty").hidden = list.length > 0;
+  $("#allBtn").style.visibility = filter.cat ? "visible" : "hidden";
+}
+$("#bacGrid").addEventListener("click", e => {
+  const b = e.target.closest(".card"); if (!b) return;
+  filter.cat = filter.cat === b.dataset.c ? null : b.dataset.c;
+  drawCats(); render();
+  if (filter.cat) $("#produits").scrollIntoView({behavior:"smooth"});
+});
+$("#allBtn").addEventListener("click", e => { e.preventDefault(); filter.cat = null; drawCats(); render(); });
+$("#q").addEventListener("input", e => {
+  filter.q = e.target.value.trim(); render();
+  if (!$("#productPage").hidden) location.hash = "#produits";
+});
+function drawOffer(){
+  const k = products.findIndex(p => p.pack), box = $("#offerBox");
+  if (k < 0) { $("#offre").hidden = true; return; }
+  const p = products[k];
+  box.innerHTML = `
+    <a class="cover o-img" href="#/produit/${k}" aria-label="${esc(p.n)}"><span class="badge">${esc(p.b)}</span>
+      <img src="${esc(p.imgs[0])}" alt="${esc(p.n)}" loading="lazy" onerror="this.parentNode.classList.add('noimg')"></a>
+    <div>
+      <span class="eyebrow">Offre spéciale · Livre numérique</span>
+      <h2>${esc(p.n)}</h2>
+      <div class="offer-countdown" id="packCountdown" data-end="2025-11-07T23:59:59">
+        <div class="label">⏰ Offre exclusive valable jusqu'au <strong>7 Novembre</strong></div>
+        <div class="timer">
+          <div class="unit"><span class="num" data-d>00</span><span class="txt">Jours</span></div>
+          <div class="unit"><span class="num" data-h>00</span><span class="txt">Heures</span></div>
+          <div class="unit"><span class="num" data-m>00</span><span class="txt">Min</span></div>
+          <div class="unit"><span class="num" data-s>00</span><span class="txt">Sec</span></div>
+        </div>
+        <div class="expired" style="display:none">Offre expirée</div>
+      </div>
+      <p>${esc(p.desc)}</p>
+      <ul class="checks">${(p.contenu || []).map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+      <div class="o-price">${p.oldPrice ? `<s>${fmt(p.oldPrice)}</s>` : ""}${p.priceLabel || fmt(p.price)}</div>
+      <a class="cta" href="#/produit/${k}">Voir le pack →</a>
+    </div>`;
+}
+drawCats(); render(); drawOffer();
+function updatePackCountdown(){
+  const cd = document.getElementById('packCountdown');
+  if (!cd) return;
+  const end = new Date(cd.dataset.end);
+  const now = new Date();
+  const diff = end - now;
+  if (diff <= 0){
+    cd.querySelector('.timer').style.display = 'none';
+    cd.querySelector('.expired').style.display = 'block';
+    return;
+  }
+  const d = Math.floor(diff/86400000);
+  const h = Math.floor((diff%86400000)/3600000);
+  const m = Math.floor((diff%3600000)/60000);
+  const s = Math.floor((diff%60000)/1000);
+  cd.querySelector('[data-d]').textContent = String(d).padStart(2,'0');
+  cd.querySelector('[data-h]').textContent = String(h).padStart(2,'0');
+  cd.querySelector('[data-m]').textContent = String(m).padStart(2,'0');
+  cd.querySelector('[data-s]').textContent = String(s).padStart(2,'0');
+}
+updatePackCountdown();
+setInterval(updatePackCountdown, 1000);
+
+addEventListener("keydown", e => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); $("#q").focus(); }
+  if (e.key === "Escape") toggleCart(false);
+  if (!$("#productPage").hidden && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) {
+    if (e.key === "ArrowLeft") setImg(gi - 1);
+    if (e.key === "ArrowRight") setImg(gi + 1);
+  }
+});
+addEventListener("scroll", () => $("#header").classList.toggle("scrolled", scrollY > 10), {passive:true});
+
+/* dropdown */
+const dd = $(".dropdown");
+dd.querySelector(".dd-btn").onclick = e => e.currentTarget.setAttribute("aria-expanded", dd.classList.toggle("open"));
+document.addEventListener("click", e => { if (!dd.contains(e.target)) dd.classList.remove("open"); });
+
+/* product page */
+let cur = 0, qty = 1, gi = 0;
+function setImg(k){
+  const list = products[cur].imgs;
+  gi = (k + list.length) % list.length;
+  $("#gMain").classList.remove("noimg");
+  $("#gImg").src = list[gi];
+  document.querySelectorAll(".th").forEach((t,n) => t.classList.toggle("on", n === gi));
+}
+function showProduct(i){
+  const p = products[i]; cur = i; qty = 1; $("#qVal").textContent = 1;
+  document.title = p.n + " – E-Books by sahllearn";
+  $("#pCrumb").textContent = p.n;
+  $("#pBadge").textContent = p.soldout ? p.b + " · Rupture de stock" : p.b;
+  $("#pBadge").classList.toggle("stock", !!p.soldout);
+  $("#pTitle").textContent = p.n;
+  $("#pPrice").textContent = p.soldout ? "Rupture de stock" : (p.priceLabel || fmt(p.price));
+  $("#pPrice").classList.toggle("out", !!p.soldout);
+  const pd = $("#pDesc");
+  pd.textContent = p.desc || "";
+  pd.classList.toggle("rtl", /[\u0600-\u06FF]/.test(p.desc || ""));
+  $("#pSpecs").innerHTML = specsOf(p).map(([k,v]) => `<dt>${k}</dt><dd>${esc(v)}</dd>`).join("");
+  $("#thumbs").innerHTML = p.imgs.length > 1
+    ? p.imgs.map((src,k) => `<button class="th" data-k="${k}" aria-label="Photo ${k+1}"><img src="${esc(src)}" alt="" onerror="this.parentNode.classList.add('noimg')"></button>`).join("") : "";
+  document.querySelectorAll(".g-nav").forEach(b => b.style.display = p.imgs.length > 1 ? "" : "none");
+  setImg(0);
+  const pc = $("#pContent");
+  pc.innerHTML = (p.contenu || []).map(x => `<li>${esc(x)}</li>`).join("");
+  pc.classList.toggle("rtl", /[\u0600-\u06FF]/.test((p.contenu||[]).join(" ")));
+  pc.style.direction = pc.classList.contains("rtl") ? "rtl" : "";
+  pc.style.textAlign = pc.classList.contains("rtl") ? "right" : "";
+  Array.from(pc.querySelectorAll("li")).forEach(li => {
+    if (pc.classList.contains("rtl")) { li.style.direction = "rtl"; li.style.textAlign = "right"; }
+    else { li.style.direction = ""; li.style.textAlign = ""; }
+  });
+  $("#pInfo").innerHTML = [["Niveau","Baccalauréat"],["Matière",p.matiere],["Section",p.section],["Tome",p.tome],["Langue",p.langue],["Format",p.format],["Prix",p.priceLabel || fmt(p.price)]]
+    .filter(r => r[1]).map(([k,v]) => `<dt>${k}</dt><dd>${esc(v)}</dd>`).join("");
+  updateWa();
+  document.querySelector(".m-buy").style.display = p.soldout ? "none" : "flex";
+  $("#pWa").style.display = p.soldout ? "none" : "";
+  const note = document.querySelector(".note");
+  if (note) note.textContent = p.soldout ? "Rupture de stock — la commande de ce livre est momentanément indisponible." : "La commande se confirme directement sur WhatsApp.";
+  const rel = products.map((q,k) => ({q,k})).filter(r => r.k !== i)
+    .sort((a,b) => (b.q.cat === p.cat) - (a.q.cat === p.cat)).slice(0,4);
+  $("#related").innerHTML = rel.map(r => cardHTML(r.q, r.k)).join("");
+}
+$("#thumbs").addEventListener("click", e => { const t = e.target.closest(".th"); if (t) setImg(+t.dataset.k); });
+$("#gPrev").onclick = () => setImg(gi - 1);
+$("#gNext").onclick = () => setImg(gi + 1);
+$("#qMinus").onclick = () => { qty = Math.max(1, qty - 1); $("#qVal").textContent = qty; updateWa(); };
+$("#qPlus").onclick = () => { qty = Math.min(20, qty + 1); $("#qVal").textContent = qty; updateWa(); };
+function updateWa(){ $("#pWa").href = waURL([{i:cur, q:qty}]); }
+$("#pAdd").onclick = () => {
+  if (products[cur] && products[cur].soldout) return;
+  const row = cart.find(r => r.i === cur);
+  row ? row.q += qty : cart.push({i:cur, q:qty});
+  drawCart(); toggleCart(true);
+};
+
+/* router: #/produit/<n> = page produit, sinon accueil */
+let homeY = 0;
+function route(){
+  const m = location.hash.match(/^#\/produit\/(\d+)$/), home = $("#home"), pg = $("#productPage");
+  if (m && products[+m[1]]) {
+    if (!home.hidden) homeY = scrollY;
+    showProduct(+m[1]); home.hidden = true; pg.hidden = false; scrollTo(0,0);
+  } else {
+    const was = !pg.hidden;
+    pg.hidden = true; home.hidden = false; document.title = "E-Books by sahllearn";
+    const el = location.hash.length > 1 && document.getElementById(location.hash.slice(1));
+    if (el) el.scrollIntoView(); else if (was) scrollTo(0, homeY);
+  }
+}
+addEventListener("hashchange", route);
+
+/* cart */
+let cart = [];
+try { cart = JSON.parse(localStorage.getItem("cart2") || "[]").filter(r => products[r.i] && r.q > 0 && !products[r.i].soldout); } catch {}
+function waURL(items){
+  const base = location.protocol.startsWith("http") ? location.href.split("#")[0] : "";
+  const total = items.reduce((s,r) => s + products[r.i].price * r.q, 0);
+  const lines = items.map((r,k) => {
+    const p = products[r.i];
+    const d = specsOf(p).map(([a,b]) => `${a}: ${b}`).join(" | ");
+    return `${k+1}. ${p.n}\n   ${d}\n   ${r.q} x ${fmt(p.price)} = ${fmt(p.price*r.q)}` + (base ? `\n   ${base}#/produit/${r.i}` : "");
+  }).join("\n\n");
+  const msg = `Bonjour 👋\nJe souhaite commander :\n\n${lines}\n\nTotal : ${fmt(total)}\n\nMerci !`;
+  return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+}
+function drawCart(){
+  try { localStorage.setItem("cart2", JSON.stringify(cart)); } catch {}
+  const count = cart.reduce((s,r) => s + r.q, 0), el = $("#cartCount");
+  el.hidden = !count; el.textContent = count;
+  $("#cartItems").innerHTML = cart.length
+    ? cart.map((r,k) => { const p = products[r.i]; return `<div class="item"><div class="t">${esc(p.n)}<small>${fmt(p.price)}</small>
+        <div class="qrow"><button data-a="-" data-k="${k}" aria-label="Moins">−</button><span>${r.q}</span><button data-a="+" data-k="${k}" aria-label="Plus">+</button></div></div>
+        <button data-a="x" data-k="${k}">Retirer</button></div>`; }).join("")
+    : `<p class="d-empty">Votre panier est vide.</p>`;
+  const total = cart.reduce((s,r) => s + products[r.i].price * r.q, 0);
+  $("#cartTotal").textContent = fmt(total);
+  $("#orderBtn").href = waURL(cart);
+  $("#orderBtn").style.display = cart.length ? "block" : "none";
+}
+$("#cartItems").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  const r = cart[+b.dataset.k], a = b.dataset.a;
+  if (a === "+") r.q = Math.min(20, r.q + 1);
+  if (a === "-") r.q--;
+  if (a === "x" || r.q < 1) cart.splice(+b.dataset.k, 1);
+  drawCart();
+});
+function toggleCart(o){ document.body.classList.toggle("cart-open", o); }
+$("#cartBtn").onclick = () => toggleCart(true);
+$("#closeCart").onclick = $("#overlay").onclick = () => toggleCart(false);
+drawCart();
+route();
+</script>
+</body>
+</html>

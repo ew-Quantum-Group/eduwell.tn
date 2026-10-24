@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SVT App | EduWell</title>
+    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/styleseek.css">
+</head>
+<body>
+    <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    
+    <div class="floating-element floating-1"></div>
+    <div class="floating-element floating-2"></div>
+    <div class="floating-element floating-3"></div>
+    
+    <a href="../index.html" class="back-btn" id="backBtn">
+        ← Retour
+    </a>
+    
+    <div class="app-container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    SVT
+                </div>
+            </div>
+            <h1>SVT App</h1>
+            <p>Glissez vers la droite pour Vrai, vers la gauche pour Faux</p>
+        </div>
+
+        <div class="card-container">
+            <div class="quiz-card" id="current-card">
+                <div class="card-pattern"></div>
+                <div class="question-number" id="question-number">Question 1/5</div>
+                <h2 id="question-text">Un exemple de question apparaîtra ici</h2>
+                <div class="swipe-hints">
+                    <div class="swipe-hint false">
+                        FAUX
+                    </div>
+                    <div class="swipe-hint true">
+                        VRAI
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="overlay" id="overlay"></div>
+
+        <div class="feedback-popup" id="feedback-popup">
+            <div class="feedback-icon" id="feedback-icon">
+                ✓
+            </div>
+            <h3 id="feedback-title">Correct !</h3>
+            <p id="feedback-message">Vous avez trouvé la bonne réponse !</p>
+            <div class="correct-answer" id="correct-answer">La bonne réponse est : Vrai</div>
+            <div class="explanation" id="explanation">L'explication apparaîtra ici.</div>
+            <button id="continue-btn">
+                Continuer
+            </button>
+        </div>
+
+        <div class="results-screen" id="results-screen">
+            <div class="results-icon">
+                🏆
+            </div>
+            <h2>Quiz Terminé !</h2>
+            <p>Bravo pour avoir terminé le quiz !</p>
+            <div class="percentage" id="final-percentage" data-value="100%">100%</div>
+            <div class="score-container">
+                <div class="score-row">
+                    <span class="score-label">Réponses correctes :</span>
+                    <span class="score-value" id="correct-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Réponses incorrectes :</span>
+                    <span class="score-value" id="incorrect-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Score Total :</span>
+                    <span class="score-value" id="total-score">0/5</span>
+                </div>
+            </div>
+            <button class="retry-btn" id="retry-btn">
+                Recommencer
+            </button>
+        </div>
+    </div>
+
+    <!-- ORIGINAL QUIZ DATA - Only runs if authenticated -->
+    <script>
+        // Données des questions du quiz avec explications
+        const quizQuestions =  [
+  // t
+
+
+ 
+  
+  {
+    "question": "La lyse d’une bactérie peut se faire suite à l’activation du complément, cette activation nécessite la formation de complexes immuns.",
+    "answer": true,
+    "explanation": "Le complément est activé principalement par les complexes antigène-anticorps (RIMH) et provoque la lyse bactérienne."
+  },
+  {
+    "question": "Le complément agit dans la RIMC.",
+    "answer": false,
+    "explanation": "Le complément intervient surtout dans la réponse immunitaire humorale (anticorps), pas dans la RIMC."
+  },
+  {
+    "question": "L’activation du complément nécessite une phagocytose préalable.",
+    "answer": false,
+    "explanation": "Le complément peut lyser directement la bactérie via le complexe d’attaque membranaire sans phagocytose."
+  },
+  {
+    "question": "Le complément fait intervenir l’interleukine 2.",
+    "answer": false,
+    "explanation": "L’IL-2 est impliquée dans l’activation des lymphocytes T, pas directement dans la lyse par complément."
+  },
+  {
+    "question": "Les glandes surrénales libèrent de l’adrénaline et du cortisol pendant la phase d’alarme du stress.",
+    "answer": true,
+    "explanation": "Pendant le stress, la médullosurrénale sécrète l’adrénaline et le cortex surrénalien le cortisol."
+  },
+  {
+    "question": "Les glandes surrénales libèrent de l’aldostérone pendant la phase d’alarme du stress.",
+    "answer": false,
+    "explanation": "L’aldostérone régule la pression artérielle et le sodium, elle n’est pas directement impliquée dans la phase d’alarme du stress."
+  },
+  {
+    "question": "L’acétylcholine est libérée par les glandes surrénales.",
+    "answer": false,
+    "explanation": "L’acétylcholine est un neurotransmetteur, pas une hormone surrénalienne."
+  },
+  {
+    "question": "Le blocage de l’interneurone reliant le centre sensitif bulbaire au centre vasomoteur entraîne la levée de l’inhibition du centre vasomoteur.",
+    "answer": true,
+    "explanation": "L’inhibition du centre vasomoteur est levée, ce qui augmente l’activité sympathique et provoque vasoconstriction et augmentation du rythme cardiaque."
+  },
+  {
+    "question": "Ce blocage entraîne une cardiomodération.",
+    "answer": false,
+    "explanation": "La cardiomodération correspond à une réduction du rythme cardiaque; ici, le blocage augmente l’activité sympathique."
+  },
+  {
+    "question": "L’interleukine 1 (IL1) intervient pendant la phase d’amplification de la réponse immunitaire et dans la RIMH.",
+    "answer": true,
+    "explanation": "L’IL1 est une cytokine qui stimule l’activation des lymphocytes et l’inflammation, amplifiant la réponse immunitaire."
+  },
+  {
+    "question": "L’IL1 intervient uniquement dans la RIMC.",
+    "answer": false,
+    "explanation": "L’IL1 agit surtout dans la réponse immunitaire humorale et cellulaire mais n’est pas limitée à la RIMC."
+  },
+  {
+    "question": "L’agglutination des hématies par le sérum anti-A indique que le groupe sanguin de l’individu peut être A ou AB.",
+    "answer": true,
+    "explanation": "L’anticorps anti-A réagit avec l’antigène A, donc si agglutination, le sang contient l’antigène A."
+  },
+  {
+    "question": "Si le sérum anti-A agglutine les hématies, le groupe sanguin peut être B.",
+    "answer": false,
+    "explanation": "Le groupe B possède uniquement l’antigène B, donc pas d’agglutination avec l’anti-A."
+  },
+  {
+    "question": "Les souris nude naissent sans thymus, donc elles n’ont pas de lymphocytes T.",
+    "answer": true,
+    "explanation": "Le thymus est l’organe de maturation des lymphocytes T; sans thymus, les LT sont absents."
+  },
+  {
+    "question": "Les souris nude n’ont pas de lymphocytes B.",
+    "answer": false,
+    "explanation": "Les lymphocytes B se développent dans la moelle osseuse, indépendamment du thymus."
+  },
+  {
+    "question": "La formation de plasmocytes nécessite une coopération entre LB, LT4 et macrophages.",
+    "answer": true,
+    "explanation": "Les LB produisent des anticorps après activation par LT4 et présentation d’antigènes par macrophages."
+  },
+  {
+    "question": "Les plasmocytes se forment indépendamment des LT4 et macrophages.",
+    "answer": false,
+    "explanation": "La coopération cellulaire est essentielle pour une réponse immunitaire efficace."
+  },
+  {
+    "question": "Les neurones dopaminergiques du système limbique renferment des vésicules de dopamine.",
+    "answer": true,
+    "explanation": "Ces neurones stockent et libèrent de la dopamine, impliquée dans le plaisir et la motivation."
+  },
+  {
+    "question": "Ces neurones renferment des vésicules de cocaïne.",
+    "answer": false,
+    "explanation": "La cocaïne n’est pas synthétisée par le cerveau; elle agit sur la recapture de la dopamine."
+  },
+  {
+    "question": "L’accoutumance conduit à une diminution du plaisir recherché et à l’envie d’augmenter la dose.",
+    "answer": true,
+    "explanation": "L’accoutumance réduit l’effet initial de la drogue, poussant à augmenter la dose pour obtenir le même effet."
+  },
+  {
+    "question": "L’accoutumance signifie qu’on ne peut plus se passer de la drogue.",
+    "answer": false,
+    "explanation": "L’incapacité à se passer de la drogue relève plutôt de la dépendance, pas de l’accoutumance seule."
+  },
+  {
+    "question": "Dans la réponse immunitaire spécifique, l’immunoglobuline peut agir comme récepteur, marqueur ou effecteur.",
+    "answer": true,
+    "explanation": "Selon le contexte, l’Ig peut détecter un antigène (récepteur), signaler la cellule (marqueur) ou neutraliser le pathogène (effecteur)."
+  }
+
+  
+
+
+  
+];
+
+
+    </script>
+    
+    <script src="../assets/js/arcseek.js"></script>
+    
+    <footer class="footer">
+        Eduwell Quantum Group
+    </footer>
+</body>
+</html>

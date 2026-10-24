@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakWell| EduWell</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="./data/imag/speakwell.png" type="image/x-icon">
+   <meta name="google-site-verification" content="7-FD479xFj_8HbH9UlwHCnnMl0gziIaCUqk5R_oU6L4" />
+  <title>EduWell - SpeakWell </title>
+  <link rel="stylesheet" href="./data/css/stylelab.css">
+  
+</head>
+</head>
+<body>
+      <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Mistakes build champions. Keep going</div>
+            <div class="loading-progress">
+                <div class="loading-progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Back Button -->
+    <button class="back-button" onclick="window.history.back()">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Header -->
+<section>
+
+ <div class="header">
+        <div class="progress">Question <span id="current-question">1</span> of <span id="total-questions">5</span></div>
+        <div class="score">Score: <span id="score">0</span></div>
+    </div>
+
+    <div class="quiz-container" id="quiz-container">
+        <div class="question-number">Question <span id="q-number">1</span></div>
+        <div class="question-text" id="question-text">What is the capital of France?</div>
+        
+        <div class="options-container" id="options-container">
+            <!-- Options will be inserted here by JavaScript -->
+        </div>
+        
+        <button class="action-button" id="action-button" disabled>Fix</button>
+        
+        <div class="explanation" id="explanation">
+            <!-- Explanation will be inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <div class="navigation-buttons">
+        <button class="nav-button" id="prev-button" disabled>Previous</button>
+        <button class="nav-button" id="next-button" disabled>Next</button>
+    </div>
+
+    <div class="result-container" id="result-container">
+        <div class="result-title">Quiz Completed</div>
+        <div class="result-score" id="final-score">0/5</div>
+        <div class="result-message" id="result-message">Good effort!</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+        </div>
+        <button class="restart-button" id="restart-button">Start Again</button>
+    </div>
+</section>
+        <div class="logo footer-logo">
+            <div class="logo-text">SpeakWell</div>
+            <div class="logo-dot"></div>
+            <div class="logo-subtext">ew</div>
+        </div>
+    </div>
+ <script>
+
+ const quizData = [
+  {
+    question: "Despite the long journey and harsh weather, the explorers ___ (to continue) their mission with ___ (adjective) courage.",
+    options: ["continued / unwavering", "continue / brave", "had continued / bravely"],
+    correctAnswer: 0,
+    explanation: "الجملة تحكي على حاجة صارت في الماضي → Past Simple → continued، و 'with ___ courage' نحتاجو صفة (adjective) تفسّر courage → unwavering"
+  },
+  {
+    question: "The manager ___ (to announce) the news so ___ (adverb) that everyone felt reassured.",
+    options: [ "announces / calm","announced / calmly", "had announced / calm"],
+    correctAnswer: 1,
+    explanation: "جملة في الماضي → Past Simple → announced، و نحتاجو adverb باش نفسرو كيفاش قالها → calmly"
+  },
+  {
+    question: "No sooner ___ (to the guests / arrive) than the lights went out.",
+    options: ["had the guests arrived", "did the guests arrive", "the guests had arrived"],
+    correctAnswer: 0,
+    explanation: "'No sooner' تجي معاها inversion + Past Perfect → had the guests arrived"
+  },
+  {
+    question: "He ___ (to respond) with a ___ (adjective) tone that surprised everyone.",
+    options: [ "responds / seriously", "had responded / seriously","responded / serious"],
+    correctAnswer: 2,
+    explanation: "جملة في الماضي و tone تتفسر بصفة → responded / serious"
+  },
+  {
+    question: "If they ___ (to follow) the instructions more ___ (adverb), the error wouldn’t have happened.",
+    options: ["had followed / carefully", "followed / careful", "have followed / care"],
+    correctAnswer: 0,
+    explanation: "Third conditional → Past Perfect + adverb → had followed / carefully"
+  },
+  {
+    question: "She ___ (to sing) the anthem with such ___ (noun) that the crowd was moved.",
+    options: [ "sings / passionate", "was singing / passionately","sang / passion"],
+    correctAnswer: 2,
+    explanation: "Past event → sang، و بعد 'such' نحتاج noun → passion"
+  },
+  {
+    question: "The results ___ (to be) so ___ (adjective) that they shocked the entire team.",
+    options: [ "are / unexpectedly","were / unexpected", "had been / expected"],
+    correctAnswer: 1,
+    explanation: "Past description → were، و نحتاج صفة توصف النتائج → unexpected"
+  },
+  {
+    question: "I ___ (to think) you had already ___ (to leave).",
+    options: [ "think / leave", "was thinking / left","thought / left"],
+    correctAnswer: 2,
+    explanation: "ماضي + action صارت قبلها → Past Simple + Past Perfect → thought / left"
+  },
+  {
+    question: "She ___ (to enter) the room looking both ___ (adjective) and determined.",
+    options: ["entered / nervous", "enters / nervously", "had entered / nervous"],
+    correctAnswer: 0,
+    explanation: "جملة وصفية في الماضي → entered، و نحتاج صفة → nervous"
+  },
+  {
+    question: "They ___ (to climb) the mountain more ___ (adverb) this time.",
+    options: [ "climbs / slow","climbed / slowly", "had climbed / slow"],
+    correctAnswer: 1,
+    explanation: "Past action + adverb → climbed / slowly"
+  },
+  {
+    question: "It was clear that he had ___ (to make) a very ___ (adjective) decision.",
+    options: ["made / risky", "make / risk", "made / risk"],
+    correctAnswer: 0,
+    explanation: "Past Perfect + adjective → made / risky"
+  },
+  {
+    question: "After months of planning, they finally ___ (to launch) the project with ___ (noun).",
+    options: [ "launch / confident", "had launched / confidently","launched / confidence"],
+    correctAnswer: 2,
+    explanation: "Past event → launched، و بعد 'with' نحتاج noun → confidence"
+  },
+  {
+    question: "The story ___ (to develop) slowly, revealing a ___ (adjective) truth.",
+    options: [ "develops / hide","developed / hidden", "was developing / hide"],
+    correctAnswer: 1,
+    explanation: "جملة في الماضي → developed، و truth تتوصف بصفة → hidden"
+  },
+  {
+    question: "Even though he ___ (to fail), he handled it very ___ (adverb).",
+    options: [ "fails / graceful","failed / gracefully", "had failed / grace"],
+    correctAnswer: 1,
+    explanation: "Past event → failed، و adverb نفسر بيه كيفاش تعامل → gracefully"
+  },
+  {
+    question: "She ___ (to give) a ___ (adjective) explanation that clarified everything.",
+    options: ["gave / detailed", "gives / detail", "was giving / detail"],
+    correctAnswer: 0,
+    explanation: "ماضي → gave، و explanation تتوصف → detailed"
+  },
+  {
+    question: "The more he ___ (to try), the more ___ (adjective) he became.",
+    options: [ "tries / frustrating", "was trying / frustrate","tried / frustrated"],
+    correctAnswer: 2,
+    explanation: "Past Simple + صفة → tried / frustrated"
+  },
+  {
+    question: "They ___ (to wait) patiently for the results, which came ___ (adverb).",
+    options: ["waited / quickly", "wait / quick", "had waited / quick"],
+    correctAnswer: 0,
+    explanation: "Past + adverb → waited / quickly"
+  },
+  {
+    question: "He had ___ (to forget) his keys again, which was extremely ___ (adjective).",
+    options: [ "forget / annoyed","forgotten / annoying", "forgot / annoy"],
+    correctAnswer: 1,
+    explanation: "Past Perfect + صفة توصف الحالة → forgotten / annoying"
+  },
+  {
+    question: "She ___ (to look) at him with an ___ (adjective) expression on her face.",
+    options: [ "looks / amuse","looked / amused", "had looked / amusing"],
+    correctAnswer: 1,
+    explanation: "Past Simple + صفة توصف expression → looked / amused"
+  },
+  {
+    question: "If you ___ (to listen) more carefully, you would have noticed the ___ (noun).",
+    options: ["had listened / detail", "listened / detailed", "listen / detailing"],
+    correctAnswer: 0,
+    explanation: "Third conditional → had listened / detail (اسم)"
+  }
+
+
+];
+
+
+
+       
+    </script>
+    <script src="./data/js/lab.js"></script>
+    <script src="./data/js/labint.js"></script>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakWell | Sahl</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="../data/img/speakwell.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="../data/css/style.css">
+     
+</head>
+<body>
+        <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    <!-- Back Button -->
+    <button class="back-button" id="backButton" aria-label="Go back to previous page">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading quiz...</div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container hidden" id="appContainer">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="quiz-title">Grammar Quiz</h1>
+                <div class="quiz-subtitle">Present tenses</div>
+                <div class="progress-indicator">
+                    <span id="currentScore">0</span> pts
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content" id="quizContent">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text">
+                    <span>Question <span id="currentQuestionNum">1</span> of <span id="totalQuestions">10</span></span>
+                    <span id="progressPercent">10%</span>
+                </div>
+            </div>
+
+            <!-- Question Container -->
+            <div class="question-container">
+                <div class="question-number">Question <span id="questionNum">1</span></div>
+                <h2 class="question-text" id="questionText">
+                    She usually ___ (to get) up at 7 a.m.
+                </h2>
+                <div class="question-hint">
+                    <i class="fas fa-lightbulb"></i>
+                    <span id="questionHint">Look for time expressions that indicate habits</span>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="options-container" id="optionsContainer">
+                <!-- Options will be inserted here -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="prevButton" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="btn btn-primary" id="submitButton" disabled>
+                    Check Answer
+                </button>
+            </div>
+
+            <!-- Next Button (separate for better flow) -->
+            <button class="btn btn-primary hidden" id="nextButton">
+                Next Question <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <!-- Explanation Panel -->
+            <div class="explanation-panel" id="explanationPanel">
+                <div class="explanation-header">
+                    <i class="fas fa-info-circle"></i>
+                    Explanation
+                </div>
+                <div class="explanation-content" id="explanationText">
+                    <!-- Explanation will be inserted here -->
+                </div>
+                <div class="explanation-tip" id="explanationTip">
+                    <i class="fas fa-tip"></i>
+                    <!-- Tip will be inserted here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Results Screen -->
+        <div class="results-screen hidden" id="resultsScreen">
+            <div class="results-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h2 class="results-title">Quiz Completed!</h2>
+            <div class="results-score" id="finalScore">0/10</div>
+            <p class="results-message" id="resultsMessage">
+                Great effort! Review your answers to improve.
+            </p>
+            
+            <div class="results-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="correctAnswers">0</span>
+                    <span class="stat-label">Correct</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="scorePoints">0</span>
+                    <span class="stat-label">Points</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="completionTime">0:00</span>
+                    <span class="stat-label">Time</span>
+                </div>
+            </div>
+
+            <div class="results-actions">
+                <button class="btn btn-secondary" id="reviewButton">
+                    <i class="fas fa-redo"></i> Review
+                </button>
+                <button class="btn btn-primary" id="restartButton">
+                    <i class="fas fa-play"></i> Try Again
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div>SpeakWell • Eduwell Quantum Group </div>
+        </footer>
+    </div>
+
+    <script>
+  const quizData = [     
+            {
+                question: "She usually ___ (to work) late, but this week she ___ (to leave) early every day.",
+                options: [
+                    { text: "works, leaves", example: "Usually works late but leaves early this week" },
+                    { text: "works, is leaving", example: "Usually works late but is leaving early this week" },
+                    { text: "is working, leaves", example: "Is working late usually but leaves early" }
+                ],
+                correctAnswer: 1,
+                explanation: "'Usually' requires Present Simple. 'This week' (temporary period) with current pattern requires Present Continuous.",
+                hint: "Habit vs. current temporary pattern",
+                tip: "Present Continuous for temporary habits/changes"
+            },
+            {
+                question: "I ___ (to see) that movie three times, but I ___ (to watch) it again right now.",
+                options: [
+                    { text: "see, watch", example: "I see it three times and watch it now" },
+                    { text: "have seen, am watching", example: "I have seen it three times and am watching it now" },
+                    { text: "am seeing, have watched", example: "I am seeing it and have watched it" }
+                ],
+                correctAnswer: 1,
+                explanation: "Life experience with number requires Present Perfect. Action happening now requires Present Continuous.",
+                hint: "Past experience + current action",
+                tip: "Present Perfect for life experiences, Present Continuous for now"
+            },
+            {
+                question: "He ___ (to always, forget) his keys, and today he ___ (to lock) himself out again.",
+                options: [
+                    { text: "always forgets, locks", example: "Always forgets and locks himself out" },
+                    { text: "always forgets, has locked", example: "Always forgets and has locked himself out today" },
+                    { text: "is always forgetting, locks", example: "Is always forgetting and locks" }
+                ],
+                correctAnswer: 1,
+                explanation: "Habit requires Present Simple. Recent completed action with present result requires Present Perfect.",
+                hint: "Habit + recent completed action with result",
+                tip: "Present Perfect for recent actions with current relevance"
+            },
+            {
+                question: "The sun ___ (to rise) in the east, but look! It ___ (to set) in that direction today.",
+                options: [
+                    { text: "rises, is setting", example: "Rises in east but is setting in that direction today" },
+                    { text: "is rising, sets", example: "Is rising in east but sets in that direction" },
+                    { text: "rises, has set", example: "Rises in east but has set in that direction" }
+                ],
+                correctAnswer: 0,
+                explanation: "Scientific fact requires Present Simple. Current observation requires Present Continuous.",
+                hint: "General truth + current observation",
+                tip: "Present Simple for facts, Present Continuous for current observations"
+            },
+            {
+                question: "We ___ (to know) each other since 2010, and we ___ (to have) dinner together tonight.",
+                options: [
+                    { text: "know, have", example: "We know each other and have dinner" },
+                    { text: "have known, are having", example: "We have known each other since 2010 and are having dinner tonight" },
+                    { text: "are knowing, have", example: "We are knowing and have dinner" }
+                ],
+                correctAnswer: 1,
+                explanation: "'Since 2010' requires Present Perfect (know is stative). Future arrangement requires Present Continuous.",
+                hint: "Duration of knowing + future arrangement",
+                tip: "Present Continuous for future arrangements"
+            },
+            {
+                question: "They ___ (to live) in Paris for five years, and they ___ (to move) to London next month.",
+                options: [
+                    { text: "live, move", example: "They live in Paris and move to London" },
+                    { text: "have lived, are moving", example: "They have lived in Paris for 5 years and are moving to London next month" },
+                    { text: "are living, move", example: "They are living in Paris and move to London" }
+                ],
+                correctAnswer: 1,
+                explanation: "'For five years' requires Present Perfect. Future plan requires Present Continuous.",
+                hint: "Past to present duration + future plan",
+                tip: "Present Perfect for duration up to now"
+            },
+            {
+                question: "I ___ (to never, eat) octopus, but I ___ (to try) it at this restaurant now.",
+                options: [
+                    { text: "never eat, try", example: "I never eat octopus but try it now" },
+                    { text: "have never eaten, am trying", example: "I have never eaten octopus but am trying it now" },
+                    { text: "am never eating, have tried", example: "I am never eating but have tried it" }
+                ],
+                correctAnswer: 1,
+                explanation: "'Never' with life experience requires Present Perfect. Action happening now requires Present Continuous.",
+                hint: "Life experience + current action",
+                tip: "'Never' with Present Perfect for life experiences"
+            },
+            {
+                question: "He ___ (to speak) three languages fluently, and he ___ (to learn) Japanese currently.",
+                options: [
+                    { text: "speaks, learns", example: "He speaks three languages and learns Japanese" },
+                    { text: "speaks, is learning", example: "He speaks three languages and is learning Japanese currently" },
+                    { text: "has spoken, learns", example: "He has spoken three languages and learns Japanese" }
+                ],
+                correctAnswer: 1,
+                explanation: "Ability requires Present Simple. Current ongoing activity requires Present Continuous.",
+                hint: "Ability + current learning process",
+                tip: "Present Simple for abilities, Present Continuous for current activities"
+            },
+            {
+                question: "The train ___ (to usually, arrive) on time, but today it ___ (to run) 30 minutes late.",
+                options: [
+                    { text: "usually arrives, is running", example: "Usually arrives on time but is running late today" },
+                    { text: "has usually arrived, runs", example: "Has usually arrived on time but runs late" },
+                    { text: "is usually arriving, has run", example: "Is usually arriving but has run late" }
+                ],
+                correctAnswer: 0,
+                explanation: "Habit/pattern requires Present Simple. Current temporary situation requires Present Continuous.",
+                hint: "Regular pattern + current exception",
+                tip: "Present Continuous for temporary deviations from the norm"
+            },
+            {
+                question: "She ___ (to write) three novels already, and she ___ (to work) on her fourth one now.",
+                options: [
+                    { text: "writes, works", example: "She writes novels and works on one now" },
+                    { text: "has written, is working", example: "She has written three novels and is working on her fourth" },
+                    { text: "is writing, has worked", example: "She is writing novels and has worked on them" }
+                ],
+                correctAnswer: 1,
+                explanation: "'Already' with accomplishment requires Present Perfect. Current activity requires Present Continuous.",
+                hint: "Accomplishment + current project",
+                tip: "Present Perfect for completed achievements"
+            },
+            {
+                question: "Water ___ (to boil) at 100°C, but right now it ___ (to not, boil) even though the stove ___ (to be) on.",
+                options: [
+                    { text: "boils, isn't boiling, is", example: "Boils at 100°C, isn't boiling now though stove is on" },
+                    { text: "has boiled, doesn't boil, has been", example: "Has boiled, doesn't boil, has been on" },
+                    { text: "is boiling, doesn't boil, is being", example: "Is boiling, doesn't boil, is being on" }
+                ],
+                correctAnswer: 0,
+                explanation: "Scientific fact requires Present Simple. Current observation requires Present Continuous. Current state requires Present Simple.",
+                hint: "Fact + current observation + current state",
+                tip: "Three different present aspects in one sentence"
+            },
+            {
+                question: "I ___ (to understand) the theory, but I ___ (to not, understand) this specific problem.",
+                options: [
+                    { text: "understand, don't understand", example: "I understand theory but don't understand this problem" },
+                    { text: "have understood, am not understanding", example: "I have understood theory but am not understanding this problem" },
+                    { text: "am understanding, haven't understood", example: "I am understanding theory but haven't understood problem" }
+                ],
+                correctAnswer: 0,
+                explanation: "Both are states of understanding. States require Present Simple (not Continuous).",
+                hint: "State verbs in both clauses",
+                tip: "State verbs (understand, know, believe) usually take Simple, not Continuous"
+            },
+            {
+                question: "They ___ (to visit) this museum many times, but they ___ (to explore) a new exhibition today.",
+                options: [
+                    { text: "visit, explore", example: "They visit museum and explore exhibition" },
+                    { text: "have visited, are exploring", example: "They have visited many times but are exploring new exhibition today" },
+                    { text: "are visiting, have explored", example: "They are visiting and have explored" }
+                ],
+                correctAnswer: 1,
+                explanation: "Past experience with 'many times' requires Present Perfect. Current activity requires Present Continuous.",
+                hint: "Past experiences + current exploration",
+                tip: "Present Perfect for repeated experiences"
+            },
+            {
+                question: "My phone ___ (to usually, work) perfectly, but today it ___ (to have) some problems.",
+                options: [
+                    { text: "usually works, is having", example: "Usually works perfectly but is having problems today" },
+                    { text: "has usually worked, has", example: "Has usually worked but has problems" },
+                    { text: "is usually working, has had", example: "Is usually working but has had problems" }
+                ],
+                correctAnswer: 0,
+                explanation: "Habit requires Present Simple. Current temporary situation requires Present Continuous.",
+                hint: "Normal function + current issue",
+                tip: "'Have' can be used in Continuous when meaning 'experience'"
+            },
+            {
+                question: "I ___ (to finish) my homework already, so I ___ (to watch) TV now.",
+                options: [
+                    { text: "finish, watch", example: "I finish homework and watch TV" },
+                    { text: "have finished, am watching", example: "I have finished homework so am watching TV now" },
+                    { text: "am finishing, watch", example: "I am finishing homework so watch TV" }
+                ],
+                correctAnswer: 1,
+                explanation: "'Already' with completed action requires Present Perfect. Current activity requires Present Continuous.",
+                hint: "Completed action + current activity",
+                tip: "Present Perfect for recently completed actions"
+            },
+            {
+                question: "He ___ (to own) three restaurants, and he ___ (to open) a new one next month.",
+                options: [
+                    { text: "owns, opens", example: "He owns restaurants and opens a new one" },
+                    { text: "owns, is opening", example: "He owns three restaurants and is opening a new one next month" },
+                    { text: "has owned, opens", example: "He has owned restaurants and opens a new one" }
+                ],
+                correctAnswer: 1,
+                explanation: "Current possession requires Present Simple. Future plan requires Present Continuous.",
+                hint: "Current possession + future plan",
+                tip: "Present Continuous for definite future plans"
+            },
+            {
+                question: "We ___ (to see) that play twice before, but we ___ (to enjoy) it more this time.",
+                options: [
+                    { text: "see, enjoy", example: "We see play and enjoy it" },
+                    { text: "have seen, are enjoying", example: "We have seen it twice before but are enjoying it more this time" },
+                    { text: "are seeing, have enjoyed", example: "We are seeing it and have enjoyed it" }
+                ],
+                correctAnswer: 1,
+                explanation: "Past experience requires Present Perfect. Current experience requires Present Continuous.",
+                hint: "Past experiences + current experience",
+                tip: "Present Continuous for temporary feelings/experiences"
+            },
+            {
+                question: "She ___ (to always, arrive) early for meetings, but today she ___ (to be) late.",
+                options: [
+                    { text: "always arrives, is", example: "Always arrives early but is late today" },
+                    { text: "has always arrived, has been", example: "Has always arrived early but has been late today" },
+                    { text: "is always arriving, is being", example: "Is always arriving early but is being late" }
+                ],
+                correctAnswer: 0,
+                explanation: "Habit requires Present Simple. Current temporary state requires Present Simple (be is stative).",
+                hint: "Habit + current temporary state",
+                tip: "'Be' is usually stative (Simple), not Continuous"
+            },
+            {
+                question: "I ___ (to read) all the books in this series, and I ___ (to wait) for the new one to come out.",
+                options: [
+                    { text: "read, wait", example: "I read books and wait for new one" },
+                    { text: "have read, am waiting", example: "I have read all books and am waiting for new one" },
+                    { text: "am reading, have waited", example: "I am reading books and have waited" }
+                ],
+                correctAnswer: 1,
+                explanation: "Completed achievement requires Present Perfect. Current state of waiting requires Present Continuous.",
+                hint: "Completed action + current waiting",
+                tip: "Present Continuous for temporary states/activities"
+            },
+            {
+                question: "The company ___ (to make) good profits this year, and it ___ (to expand) its operations.",
+                options: [
+                    { text: "makes, expands", example: "Makes profits and expands" },
+                    { text: "has made, is expanding", example: "Has made good profits this year and is expanding operations" },
+                    { text: "is making, has expanded", example: "Is making profits and has expanded" }
+                ],
+                correctAnswer: 1,
+                explanation: "'This year' (period up to now) requires Present Perfect. Current activity requires Present Continuous.",
+                hint: "Recent achievement + current activity",
+                tip: "Present Perfect for period up to now, Present Continuous for ongoing development"
+            }
+        ];
+    </script>
+     <script src="../data/js/script.js"></script>
+</body>
+</html>

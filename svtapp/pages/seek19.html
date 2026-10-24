@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SVT App | EduWell</title>
+    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/styleseek.css">
+</head>
+<body>
+    <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    
+    <div class="floating-element floating-1"></div>
+    <div class="floating-element floating-2"></div>
+    <div class="floating-element floating-3"></div>
+    
+    <a href="../index.html" class="back-btn" id="backBtn">
+        ← Retour
+    </a>
+    
+    <div class="app-container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    SVT
+                </div>
+            </div>
+            <h1>SVT App</h1>
+            <p>Glissez vers la droite pour Vrai, vers la gauche pour Faux</p>
+        </div>
+
+        <div class="card-container">
+            <div class="quiz-card" id="current-card">
+                <div class="card-pattern"></div>
+                <div class="question-number" id="question-number">Question 1/5</div>
+                <h2 id="question-text">Un exemple de question apparaîtra ici</h2>
+                <div class="swipe-hints">
+                    <div class="swipe-hint false">
+                        FAUX
+                    </div>
+                    <div class="swipe-hint true">
+                        VRAI
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="overlay" id="overlay"></div>
+
+        <div class="feedback-popup" id="feedback-popup">
+            <div class="feedback-icon" id="feedback-icon">
+                ✓
+            </div>
+            <h3 id="feedback-title">Correct !</h3>
+            <p id="feedback-message">Vous avez trouvé la bonne réponse !</p>
+            <div class="correct-answer" id="correct-answer">La bonne réponse est : Vrai</div>
+            <div class="explanation" id="explanation">L'explication apparaîtra ici.</div>
+            <button id="continue-btn">
+                Continuer
+            </button>
+        </div>
+
+        <div class="results-screen" id="results-screen">
+            <div class="results-icon">
+                🏆
+            </div>
+            <h2>Quiz Terminé !</h2>
+            <p>Bravo pour avoir terminé le quiz !</p>
+            <div class="percentage" id="final-percentage" data-value="100%">100%</div>
+            <div class="score-container">
+                <div class="score-row">
+                    <span class="score-label">Réponses correctes :</span>
+                    <span class="score-value" id="correct-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Réponses incorrectes :</span>
+                    <span class="score-value" id="incorrect-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Score Total :</span>
+                    <span class="score-value" id="total-score">0/5</span>
+                </div>
+            </div>
+            <button class="retry-btn" id="retry-btn">
+                Recommencer
+            </button>
+        </div>
+    </div>
+
+    <!-- ORIGINAL QUIZ DATA - Only runs if authenticated -->
+    <script>
+        // Données des questions du quiz avec explications
+        const quizQuestions =  [
+  // t
+
+
+
+  
+
+
+
+
+
+  {
+    "question": "La stimulation d’un centre nerveux entraine une cardiomodération et une vasodilatation ; il peut s’agir de la stimulation du noyau moteur des X.",
+    "answer": false,
+    "explanation": "La cardiomodération et la vasodilatation dépendent du centre sensitif bulbaire et non du noyau moteur seul."
+  },
+  {
+    "question": "La stimulation d’un centre nerveux entraine une cardiomodération et une vasodilatation ; il peut s’agir de la stimulation du centre sensitif bulbaire.",
+    "answer": true,
+    "explanation": "Les barorécepteurs envoient des signaux au centre bulbaire, qui active le parasympathique pour ralentir le cœur et dilater les vaisseaux."
+  },
+  {
+    "question": "La section de la racine postérieure du nerf rachidien entraine la paralysie du membre innervé.",
+    "answer": false,
+    "explanation": "La racine postérieure contient des fibres sensitives; la motricité reste possible via la racine antérieure."
+  },
+  {
+    "question": "La section de la racine postérieure du nerf rachidien provoque une dégénérescence des fibres nerveuses du bout central.",
+    "answer": true,
+    "explanation": "Les fibres sensitives du bout central se dégénèrent lorsqu’elles sont sectionnées entre le ganglion et la moelle."
+  },
+  {
+    "question": "Les nerfs splanchniques appartiennent au système nerveux parasympathique.",
+    "answer": false,
+    "explanation": "Les nerfs splanchniques font partie du système sympathique, surtout pour le contrôle viscéral."
+  },
+  {
+    "question": "Les nerfs splanchniques sont activés en cas d'hypotension.",
+    "answer": true,
+    "explanation": "Le sympathique s’active pour augmenter la pression en cas d’hypotension."
+  },
+  {
+    "question": "Dans la régulation hormonale de la pression artérielle, le rein joue le rôle de récepteur.",
+    "answer": false,
+    "explanation": "Le rein agit comme effecteur en sécrétant la rénine pour ajuster la pression."
+  },
+  {
+    "question": "La rénine est une protéine.",
+    "answer": true,
+    "explanation": "La rénine est une enzyme-protéine qui catalyse la formation d’angiotensine I à partir de l’angiotensinogène."
+  },
+  {
+    "question": "La rénine est une hormone cardiomodératrice.",
+    "answer": false,
+    "explanation": "La rénine régule la pression via le système rénine-angiotensine, pas directement le rythme cardiaque."
+  },
+  {
+    "question": "La crosse aortique possède des barorécepteurs sensibles à l’étirement.",
+    "answer": true,
+    "explanation": "Ces barorécepteurs détectent les variations de pression et envoient des signaux au centre bulbaire."
+  },
+  {
+    "question": "L’adrénaline est secrétée par le nerf splanchnique.",
+    "answer": false,
+    "explanation": "L’adrénaline est sécrétée par la médullosurrénale, pas par les nerfs."
+  },
+  {
+    "question": "L’adrénaline a un effet vasodilatateur.",
+    "answer": false,
+    "explanation": "Elle provoque généralement vasoconstriction pour augmenter la pression artérielle, sauf dans certains muscles où elle dilate."
+  },
+  {
+    "question": "L’adrénaline est une neurohormone accélératrice du rythme cardiaque.",
+    "answer": true,
+    "explanation": "Elle augmente le rythme cardiaque et la force de contraction via les récepteurs bêta-adrénergiques."
+  },
+  {
+    "question": "L’expérience de Loewi met en évidence la transmission chimique des messages nerveux vers le cœur.",
+    "answer": true,
+    "explanation": "Loewi a montré que l’influence du nerf vague se fait via l’acétylcholine, pas seulement par impulsions électriques."
+  },
+  {
+    "question": "La stimulation du centre vasomoteur entraîne directement une vasodilatation.",
+    "answer": false,
+    "explanation": "Le centre vasomoteur active surtout le sympathique pour la vasoconstriction, pas la vasodilatation."
+  },
+  {
+    "question": "La stimulation du centre vasomoteur entraîne une vasoconstriction.",
+    "answer": true,
+    "explanation": "Le centre vasomoteur contrôle le tonus artériel via le sympathique pour maintenir la pression."
+  },
+  {
+    "question": "La diminution de l’activité des nerfs de Cyon traduit une hypotension dans la crosse aortique.",
+    "answer": false,
+    "explanation": "Elle traduit une hypertension, car moins de signaux inhibiteurs sont envoyés au centre vasomoteur."
+  },
+  {
+    "question": "La diminution de l’activité des nerfs de Cyon lève l’inhibition sur le centre vasomoteur.",
+    "answer": true,
+    "explanation": "Moins de signal inhibiteur = augmentation de l’activité sympathique = vasoconstriction."
+  },
+  {
+    "question": "L’ADH est synthétisée par l’hypophyse postérieure.",
+    "answer": false,
+    "explanation": "Elle est synthétisée par les neurones hypothalamiques et stockée dans l’hypophyse postérieure."
+  },
+  {
+    "question": "L’ADH stimule le retour de l’eau dans le sang.",
+    "answer": true,
+    "explanation": "Elle augmente la réabsorption d’eau par les tubules rénaux, augmentant la volémie et la pression."
+  },
+  {
+    "question": "Il y a dépendance vis-à-vis d’une drogue quand la privation entraîne des troubles physiques et psychiques.",
+    "answer": true,
+    "explanation": "Les symptômes de sevrage indiquent la dépendance physiologique et psychique."
+  },
+  {
+    "question": "Il y a dépendance vis-à-vis d’une drogue uniquement si on est obligé d’augmenter la dose pour retrouver le même plaisir.",
+    "answer": false,
+    "explanation": "L’augmentation de dose = tolérance, mais la dépendance implique aussi des symptômes de sevrage."
+  },
+  {
+    "question": "L’excitation électrique du centre vasomoteur chez un chien dont les ganglions étoilés sont détruits entraine une vasoconstriction.",
+    "answer": true,
+    "explanation": "Même si les ganglions étoilés sont détruits, l’excitation directe du centre entraîne vasoconstriction par le sympathique restant."
+  },
+  {
+    "question": "La section des deux nerfs pneumogastriques entraine une augmentation de la fréquence cardiaque.",
+    "answer": true,
+    "explanation": "La perte du parasympathique ralentisseur du cœur provoque tachycardie."
+  },
+  {
+    "question": "La section des deux nerfs pneumogastriques entraine une hypotension.",
+    "answer": false,
+    "explanation": "La pression peut même augmenter à cause de la perte du tonus parasympathique, pas diminuer directement."
+  }
+
+
+
+
+
+
+
+
+
+
+
+  
+];
+
+
+    </script>
+    
+    <script src="../assets/js/arcseek.js"></script>
+    
+    <footer class="footer">
+        Eduwell Quantum Group
+    </footer>
+</body>
+</html>

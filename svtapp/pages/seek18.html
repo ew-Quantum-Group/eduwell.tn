@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SVT App | EduWell</title>
+    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/styleseek.css">
+</head>
+<body>
+    <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    
+    <div class="floating-element floating-1"></div>
+    <div class="floating-element floating-2"></div>
+    <div class="floating-element floating-3"></div>
+    
+    <a href="../index.html" class="back-btn" id="backBtn">
+        ← Retour
+    </a>
+    
+    <div class="app-container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    SVT
+                </div>
+            </div>
+            <h1>SVT App</h1>
+            <p>Glissez vers la droite pour Vrai, vers la gauche pour Faux</p>
+        </div>
+
+        <div class="card-container">
+            <div class="quiz-card" id="current-card">
+                <div class="card-pattern"></div>
+                <div class="question-number" id="question-number">Question 1/5</div>
+                <h2 id="question-text">Un exemple de question apparaîtra ici</h2>
+                <div class="swipe-hints">
+                    <div class="swipe-hint false">
+                        FAUX
+                    </div>
+                    <div class="swipe-hint true">
+                        VRAI
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="overlay" id="overlay"></div>
+
+        <div class="feedback-popup" id="feedback-popup">
+            <div class="feedback-icon" id="feedback-icon">
+                ✓
+            </div>
+            <h3 id="feedback-title">Correct !</h3>
+            <p id="feedback-message">Vous avez trouvé la bonne réponse !</p>
+            <div class="correct-answer" id="correct-answer">La bonne réponse est : Vrai</div>
+            <div class="explanation" id="explanation">L'explication apparaîtra ici.</div>
+            <button id="continue-btn">
+                Continuer
+            </button>
+        </div>
+
+        <div class="results-screen" id="results-screen">
+            <div class="results-icon">
+                🏆
+            </div>
+            <h2>Quiz Terminé !</h2>
+            <p>Bravo pour avoir terminé le quiz !</p>
+            <div class="percentage" id="final-percentage" data-value="100%">100%</div>
+            <div class="score-container">
+                <div class="score-row">
+                    <span class="score-label">Réponses correctes :</span>
+                    <span class="score-value" id="correct-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Réponses incorrectes :</span>
+                    <span class="score-value" id="incorrect-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Score Total :</span>
+                    <span class="score-value" id="total-score">0/5</span>
+                </div>
+            </div>
+            <button class="retry-btn" id="retry-btn">
+                Recommencer
+            </button>
+        </div>
+    </div>
+
+    <!-- ORIGINAL QUIZ DATA - Only runs if authenticated -->
+    <script>
+        // Données des questions du quiz avec explications
+        const quizQuestions =  [
+  // t
+
+
+  {
+    "question": "La thyroxine est sécrétée par les glandes surrénales.",
+    "answer": false,
+    "explanation": "La thyroxine est produite par la thyroïde, pas par les glandes surrénales."
+  },
+  {
+    "question": "La stimulation du ganglion étoilé entraîne une vasoconstriction et une cardioaccélération.",
+    "answer": true,
+    "explanation": "Le ganglion étoilé fait partie du système orthosympathique, activant cœur et vaisseaux."
+  },
+  {
+    "question": "La thyroxine affaiblit le système immunitaire.",
+    "answer": false,
+    "explanation": "La thyroxine n’affaiblit pas directement le système immunitaire."
+  },
+  {
+    "question": "La sécrétion d’adrénaline augmente en cas d’hypervolémie.",
+    "answer": false,
+    "explanation": "L’excès de volume sanguin réduit la sécrétion d’adrénaline."
+  },
+  {
+    "question": "La sécrétion d’adrénaline augmente en cas d’hyperglycémie.",
+    "answer": false,
+    "explanation": "L’adrénaline n’est pas directement stimulée par l’hyperglycémie."
+  },
+  {
+    "question": "Au cours du réflexe correcteur de l’hypertension, il y a activation de centres bulbaires.",
+    "answer": true,
+    "explanation": "Les centres bulbaires régulent la fréquence cardiaque et la tension artérielle."
+  },
+  {
+    "question": "La stimulation du bout central du nerf X sectionné entraîne une hypotension.",
+    "answer": false,
+    "explanation": "Le nerf étant sectionné, aucun signal n’est transmis, donc pas d’effet."
+  },
+  {
+    "question": "Les ions Ca2+ interviennent dans la phase de repolarisation du PA.",
+    "answer": false,
+    "explanation": "La repolarisation est due à la sortie de K+, pas à Ca2+."
+  },
+  {
+    "question": "La sécrétion d’adrénaline augmente en cas d’hypotension.",
+    "answer": true,
+    "explanation": "Elle aide à restaurer la pression artérielle par vasoconstriction et stimulation cardiaque."
+  },
+  {
+    "question": "Pendant la repolarisation, des ions négatifs entrent pour rétablir la polarité interne.",
+    "answer": false,
+    "explanation": "Le retour à la polarité est dû à la sortie de K+, pas à l’entrée d’anions."
+  },
+  {
+    "question": "Les canaux ioniques sont de nature lipidique.",
+    "answer": false,
+    "explanation": "Les canaux sont des protéines intégrales, pas des lipides."
+  },
+  {
+    "question": "La thyroxine stimule la néoglucogenèse dans le foie.",
+    "answer": true,
+    "explanation": "Elle augmente le métabolisme du glucose et la néoglucogenèse."
+  },
+  {
+    "question": "La sécrétion d’adrénaline augmente en cas de stress.",
+    "answer": true,
+    "explanation": "L’adrénaline est libérée par la médullosurrénale lors du stress."
+  },
+  
+  
+  {
+    "question": "Tous les canaux ioniques font passer les ions en consommant de l’énergie.",
+    "answer": false,
+    "explanation": "Seule la pompe Na+/K+ utilise de l’énergie; les canaux laissent passer les ions par diffusion."
+  },
+  {
+    "question": "Le caractère unidirectionnel du PA est dû à l’existence de courants locaux.",
+    "answer": false,
+    "explanation": "Les courants locaux favorisent la propagation mais ne déterminent pas l’unidirectionnalité."
+  },
+  {
+    "question": "La thyroxine est sécrétée sous contrôle de l’hypophyse.",
+    "answer": true,
+    "explanation": "La TSH hypophysaire stimule la thyroïde à produire la thyroxine."
+  },
+  
+  {
+    "question": "La stimulation de l’interneurone excitateur bulbaire entraîne une vasodilatation et une hypotension.",
+    "answer": true,
+    "explanation": "Cela inhibe le centre vasomoteur et réduit la pression artérielle."
+  },
+  
+  {
+    "question": "L’ADH est synthétisée par l’hypophyse postérieure et des neurones hypothalamiques.",
+    "answer": true,
+    "explanation": "L’ADH est produite dans l’hypothalamus et libérée par l’hypophyse postérieure."
+  }
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+];
+
+
+    </script>
+    
+    <script src="../assets/js/arcseek.js"></script>
+    
+    <footer class="footer">
+        Eduwell Quantum Group
+    </footer>
+</body>
+</html>

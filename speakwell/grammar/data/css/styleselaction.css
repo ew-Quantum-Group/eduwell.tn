@@ -1,0 +1,203 @@
+
+        :root {
+            --primary: #000000;
+            --text: #1D1D1F;
+            --text-light: #86868B;
+            --bg: #F5F5F7;
+            --card-bg: #FFFFFF;
+            --radius: 14px;
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 36px 28px;
+            margin-bottom: 24px;
+        }
+
+        .header {
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .step-indicator {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-light);
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 0;
+            line-height: 1.3;
+            letter-spacing: -0.3px;
+        }
+
+        .habits-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .habit-item {
+            padding: 18px 20px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            background-color: var(--card-bg);
+        }
+
+        .habit-item:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+            border-color: rgba(0, 0, 0, 0.12);
+        }
+
+        .habit-item.selected {
+            background-color: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.15);
+        }
+
+        .habit-name {
+            font-weight: 500;
+            font-size: 16px;
+            letter-spacing: -0.1px;
+        }
+
+        .checkmark {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1.5px solid var(--text-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .habit-item.selected .checkmark {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .checkmark::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: white;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .habit-item.selected .checkmark::after {
+            opacity: 1;
+        }
+
+        .continue-btn-container {
+            position: relative;
+            margin-top: 16px;
+            height: 0;
+            overflow: hidden;
+            transition: height 0.4s cubic-bezier(0.33, 1, 0.68, 1);
+        }
+
+        .continue-btn {
+            width: 100%;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 50px;
+            background-color: var(--primary);
+            color: white;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            transform: translateY(8px);
+            opacity: 0;
+        }
+
+        .continue-btn.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .continue-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                rgba(255,255,255,0) 0%, 
+                rgba(255,255,255,0.15) 50%, 
+                rgba(255,255,255,0) 100%);
+            transition: transform 0.8s ease;
+        }
+
+        .continue-btn:hover::after {
+            transform: translateX(100%);
+        }
+
+        .continue-btn:active {
+            transform: scale(0.96) translateY(0);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .habit-item {
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        .habit-item:nth-child(1) { animation-delay: 0.1s; }
+        .habit-item:nth-child(2) { animation-delay: 0.2s; }
+        .habit-item:nth-child(3) { animation-delay: 0.3s; }
+        .habit-item:nth-child(4) { animation-delay: 0.4s; }
+   

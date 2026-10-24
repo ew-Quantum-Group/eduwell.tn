@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakWell| EduWell</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="./data/imag/speakwell.png" type="image/x-icon">
+   <meta name="google-site-verification" content="7-FD479xFj_8HbH9UlwHCnnMl0gziIaCUqk5R_oU6L4" />
+  <title>EduWell - SpeakWell </title>
+  <link rel="stylesheet" href="./data/css/stylelab.css">
+  
+</head>
+</head>
+<body>
+      <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Mistakes build champions. Keep going</div>
+            <div class="loading-progress">
+                <div class="loading-progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Back Button -->
+    <button class="back-button" onclick="window.history.back()">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Header -->
+<section>
+
+ <div class="header">
+        <div class="progress">Question <span id="current-question">1</span> of <span id="total-questions">5</span></div>
+        <div class="score">Score: <span id="score">0</span></div>
+    </div>
+
+    <div class="quiz-container" id="quiz-container">
+        <div class="question-number">Question <span id="q-number">1</span></div>
+        <div class="question-text" id="question-text">What is the capital of France?</div>
+        
+        <div class="options-container" id="options-container">
+            <!-- Options will be inserted here by JavaScript -->
+        </div>
+        
+        <button class="action-button" id="action-button" disabled>Fix</button>
+        
+        <div class="explanation" id="explanation">
+            <!-- Explanation will be inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <div class="navigation-buttons">
+        <button class="nav-button" id="prev-button" disabled>Previous</button>
+        <button class="nav-button" id="next-button" disabled>Next</button>
+    </div>
+
+    <div class="result-container" id="result-container">
+        <div class="result-title">Quiz Completed</div>
+        <div class="result-score" id="final-score">0/5</div>
+        <div class="result-message" id="result-message">Good effort!</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+        </div>
+        <button class="restart-button" id="restart-button">Start Again</button>
+    </div>
+</section>
+        <div class="logo footer-logo">
+            <div class="logo-text">SpeakWell</div>
+            <div class="logo-dot"></div>
+            <div class="logo-subtext">ew</div>
+        </div>
+    </div>
+ <script>
+        // Quiz data
+        const quizData = [
+
+
+          
+ 
+  {
+    "question": "Before the city ___ (to take) action, pollution levels ___ (to rise) for years.",
+    "missing": 2,
+    "options": [
+      "took / had been rising",
+      "was taking / rose",
+      "had taken / were rising"
+    ],
+    "correctAnswer": 0,
+    "explanation": "'Had been rising' action trwa w 9bal 'took' li hiya action mo3ayana."
+  },
+  {
+    "question": "While we ___ (to travel) across Europe, we ___ (to see) many polluted rivers.",
+    "missing": 2,
+    "options": [
+      "were traveling / saw",
+      "traveled / were seeing",
+      "had traveled / had seen"
+    ],
+    "correctAnswer": 0,
+    "explanation": "'Were traveling' 7ala continuous, w 'saw' actions mo3ayana 3adeya."
+  },
+  {
+    "question": "By the time the students ___ (to join) the online class, the teacher ___ (to already start).",
+    "missing": 2,
+    "options": [
+      "joined / had already started",
+      "was joining / started",
+      "had joined / was starting"
+    ],
+    "correctAnswer": 0,
+    "explanation": "El teacher bda l’3amal 9bal, houni nasta3mlou Past Perfect lel bda w Past Simple lel students li jaou ba3d."
+  },
+  {
+    "question": "We ___ (to study) online for several months before we ___ (to get) used to it.",
+    "missing": 2,
+    "options": [
+      "had been studying / got",
+      "studied / were getting",
+      "were studying / had got"
+    ],
+    "correctAnswer": 0,
+    "explanation": "'Had been studying' fiha duration, w 'got' hiya result final."
+  },
+  {
+    "question": "I ___ (to never travel) to such a polluted city before my trip to Delhi.",
+    "missing": 1,
+    "options": [
+      "had never traveled",
+      "never traveled",
+      "was never traveling"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Experience 9bal point mo3ayan fil madhi, nasta3mlou Past Perfect."
+  },
+  {
+    "question": "They ___ (to try) several online platforms before they ___ (to choose) one.",
+    "missing": 2,
+    "options": [
+      "had tried / chose",
+      "tried / had chosen",
+      "were trying / were choosing"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Tajribet 9bal action l’akhira, donc Past Perfect lel awel w Past Simple lel thani."
+  },
+  {
+    "question": "We ___ (to fly) over the ocean when the captain ___ (to announce) a delay.",
+    "missing": 2,
+    "options": [
+      "were flying / announced",
+      "had flown / had announced",
+      "flew / was announcing"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Flying kanet action fi progress, w announcement action sudden."
+  },
+  {
+    "question": "The beach ___ (to be) dirty because people ___ (to throw) trash everywhere.",
+    "missing": 2,
+    "options": [
+      "was / had thrown",
+      "was / were throwing",
+      "had been / threw"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Trash throwing 9bal beach kanet dirty → cause w result."
+  },
+  {
+    "question": "He ___ (to complete) his online training just before he ___ (to get) the job offer.",
+    "missing": 2,
+    "options": [
+      "had completed / got",
+      "was completing / had got",
+      "completed / had gotten"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Training finished first, w ba3d job offer → order el a7dath."
+  },
+  {
+    "question": "We ___ (to walk) through the mountains for hours when it suddenly ___ (to start) raining.",
+    "missing": 2,
+    "options": [
+      "had been walking / started",
+      "walked / had started",
+      "were walking / had been starting"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Walking duration w interruption b rain sudden."
+  }
+
+
+];
+
+       
+    </script>
+    <script src="./data/js/lab.js"></script>
+    <script src="./data/js/labint.js"></script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SVT App | EduWell</title>
+    <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/styleseek.css">
+</head>
+<body>
+    <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    
+    <div class="floating-element floating-1"></div>
+    <div class="floating-element floating-2"></div>
+    <div class="floating-element floating-3"></div>
+    
+    <a href="../index.html" class="back-btn" id="backBtn">
+        ← Retour
+    </a>
+    
+    <div class="app-container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    SVT
+                </div>
+            </div>
+            <h1>SVT App</h1>
+            <p>Glissez vers la droite pour Vrai, vers la gauche pour Faux</p>
+        </div>
+
+        <div class="card-container">
+            <div class="quiz-card" id="current-card">
+                <div class="card-pattern"></div>
+                <div class="question-number" id="question-number">Question 1/5</div>
+                <h2 id="question-text">Un exemple de question apparaîtra ici</h2>
+                <div class="swipe-hints">
+                    <div class="swipe-hint false">
+                        FAUX
+                    </div>
+                    <div class="swipe-hint true">
+                        VRAI
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="overlay" id="overlay"></div>
+
+        <div class="feedback-popup" id="feedback-popup">
+            <div class="feedback-icon" id="feedback-icon">
+                ✓
+            </div>
+            <h3 id="feedback-title">Correct !</h3>
+            <p id="feedback-message">Vous avez trouvé la bonne réponse !</p>
+            <div class="correct-answer" id="correct-answer">La bonne réponse est : Vrai</div>
+            <div class="explanation" id="explanation">L'explication apparaîtra ici.</div>
+            <button id="continue-btn">
+                Continuer
+            </button>
+        </div>
+
+        <div class="results-screen" id="results-screen">
+            <div class="results-icon">
+                🏆
+            </div>
+            <h2>Quiz Terminé !</h2>
+            <p>Bravo pour avoir terminé le quiz !</p>
+            <div class="percentage" id="final-percentage" data-value="100%">100%</div>
+            <div class="score-container">
+                <div class="score-row">
+                    <span class="score-label">Réponses correctes :</span>
+                    <span class="score-value" id="correct-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Réponses incorrectes :</span>
+                    <span class="score-value" id="incorrect-count">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Score Total :</span>
+                    <span class="score-value" id="total-score">0/5</span>
+                </div>
+            </div>
+            <button class="retry-btn" id="retry-btn">
+                Recommencer
+            </button>
+        </div>
+    </div>
+
+    <!-- ORIGINAL QUIZ DATA - Only runs if authenticated -->
+    <script>
+        // Données des questions du quiz avec explications
+        const quizQuestions =  [
+  // t
+
+
+  
+  {
+    "question": "Les ions Cl- interviennent dans la transmission synaptique neuro-neuronique.",
+    "answer": true,
+    "explanation": "Cl- participe aux PPS inhibiteurs dans les synapses neuro-neuronales."
+  },
+  {
+    "question": "Les ions Cl- interviennent dans la transmission synaptique neuromusculaire.",
+    "answer": false,
+    "explanation": "La transmission neuromusculaire dépend surtout du Na+ et K+, pas du Cl-."
+  },
+  {
+    "question": "Les ions Cl- interviennent dans l’exocytose des neurotransmetteurs.",
+    "answer": false,
+    "explanation": "L’exocytose dépend du Ca2+, pas du Cl-."
+  },
+  {
+    "question": "Les ions Cl- interviennent dans la phase de repolarisation du potentiel d’action.",
+    "answer": false,
+    "explanation": "La repolarisation implique K+, pas Cl-."
+  },
+  {
+    "question": "Les PPS sont graduables car leur amplitude augmente avec la quantité de neurotransmetteur libéré.",
+    "answer": true,
+    "explanation": "Plus le neurotransmetteur est libéré, plus le potentiel postsynaptique est grand."
+  },
+  {
+    "question": "Les PPS ne sont pas propageables.",
+    "answer": true,
+    "explanation": "Ils se dissipent le long de la membrane, contrairement aux potentiels d’action."
+  },
+  {
+    "question": "Le caractère unidirectionnel du potentiel d’action est dû au blocage momentané des canaux voltage-dépendants.",
+    "answer": true,
+    "explanation": "Après ouverture, les canaux Na+ se bloquent brièvement, empêchant le retour du PA."
+  },
+  {
+    "question": "Le caractère unidirectionnel du potentiel d’action est dû à l’existence d’une période réfractaire.",
+    "answer": true,
+    "explanation": "Pendant la période réfractaire, la membrane ne peut pas générer de nouveau PA dans le sens inverse."
+  },
+  {
+    "question": "La sommation spatiale de PPS s’effectue au niveau du cône axonique.",
+    "answer": true,
+    "explanation": "Les PPS se combinent au cône axonique pour déclencher un PA si le seuil est atteint."
+  },
+  {
+    "question": "La sommation spatiale de PPS se fait suite à l’arrivée simultanée de plusieurs PA dans un même bouton présynaptique.",
+    "answer": false,
+    "explanation": "Cela décrit la sommation temporelle, pas spatiale."
+  },
+  {
+    "question": "Suite à la section d’un nerf rachidien, la région innervée perd la sensibilité et la motricité.",
+    "answer": true,
+    "explanation": "La coupe du nerf bloque les signaux moteurs et sensoriels vers cette région."
+  },
+  {
+    "question": "Suite à la section d’un nerf rachidien, il y a dégénérescence des fibres nerveuses dans le bout central.",
+    "answer": false,
+    "explanation": "La dégénérescence affecte surtout le segment distal (périphérique)."
+  },
+  {
+    "question": "Les fibres sensitives Ia innervent les fibres musculaires intrafusales.",
+    "answer": true,
+    "explanation": "Les fibres Ia détectent l’étirement des fibres intrafusales du muscle."
+  },
+  {
+    "question": "Les fibres sensitives Ia innervent les fibres musculaires extrafusales.",
+    "answer": false,
+    "explanation": "Les fibres extrafusales reçoivent la commande motrice, pas la sensibilité Ia."
+  },
+  {
+    "question": "L’unité motrice est composée de plusieurs cellules musculaires innervées par un même motoneurone.",
+    "answer": true,
+    "explanation": "Un motoneurone contrôle toutes les fibres musculaires de son unité motrice."
+  },
+  {
+    "question": "Les réflexes myotatiques sont médullaires.",
+    "answer": true,
+    "explanation": "Ces réflexes passent par la moelle épinière, sans impliquer le cerveau."
+  },
+  {
+    "question": "Les réflexes myotatiques sont des réflexes d’étirement à point de départ musculaire.",
+    "answer": true,
+    "explanation": "Ils détectent l’étirement du muscle et provoquent sa contraction."
+  }
+
+
+
+  
+];
+
+
+    </script>
+    
+    <script src="../assets/js/arcseek.js"></script>
+    
+    <footer class="footer">
+        Eduwell Quantum Group
+    </footer>
+</body>
+</html>

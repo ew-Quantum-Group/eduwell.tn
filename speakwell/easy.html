@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FNTBT1VQN7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FNTBT1VQN7');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Select Tense • Grammar Master</title>
+    <link rel="shortcut icon" href="./data/img/speakwell.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=SF+Pro+Display:wght@400;500;600;700&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./data/css/level.css">
+</head>
+<body>
+        <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = './login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    <div class="container">
+        <!-- Mobile-optimized Back Button -->
+        <nav class="nav-back">
+            <button class="back-button" id="backButton" aria-label="Go back">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </nav>
+
+        <!-- Responsive Header -->
+        <header class="page-header">
+            <div class="header-background"></div>
+            <h1 class="page-title">SpeakWell</h1>
+            <p class="page-subtitle">Select a tense and master it through focused practice and progress tracking</p>
+        </header>
+
+        <!-- Mobile-first Cards Grid -->
+        <div class="cards-grid">
+            <!-- Past Tense Card -->
+            <div class="tense-card past" id="pastCard" data-tense="past">
+                <div class="card-icon-container">
+                    <i class="fas fa-history card-icon"></i>
+                </div>
+                <h3 class="card-title">Past Tense - Easy Level
+</h3>
+                <p class="card-description">Master actions and states that occurred before now with comprehensive exercises.</p>
+                <span class="tense-tag">
+                    <i class="fas fa-circle" style="font-size: 6px;"></i>
+                    Simple • Continuous • Perfect
+                </span>
+            </div>
+
+            <!-- Present Tense Card -->
+            <div class="tense-card present" id="presentCard" data-tense="present">
+                <div class="card-icon-container">
+                    <i class="fas fa-circle card-icon"></i>
+                </div>
+                <h3 class="card-title">Present Tense - Easy Level
+</h3>
+                <p class="card-description">Learn current actions, habits, and ongoing states with interactive practice.</p>
+                <span class="tense-tag">
+                    <i class="fas fa-circle" style="font-size: 6px;"></i>
+                    Simple • Continuous • Perfect
+                </span>
+            </div>
+
+            <!-- Future Tense Card -->
+            <div class="tense-card future" id="futureCard" data-tense="future">
+                <div class="card-icon-container">
+                    <i class="fas fa-rocket card-icon"></i>
+                </div>
+                <h3 class="card-title">Future Tense - Easy Level
+</h3>
+                <p class="card-description">Practice actions and states that will happen later with future-focused exercises.</p>
+                <span class="tense-tag">
+                    <i class="fas fa-circle" style="font-size: 6px;"></i>
+                    Simple 
+                </span>
+            </div>
+
+            <!-- Mixed Tenses Card -->
+            <div class="tense-card mixed" id="mixedCard" data-tense="mixed">
+                <div class="card-icon-container">
+                    <i class="fas fa-random card-icon"></i>
+                </div>
+                <h3 class="card-title">Mixed Tenses</h3>
+                <p class="card-description">Combine all tenses to achieve complete mastery with comprehensive challenges.</p>
+                <span class="tense-tag">
+                    <i class="fas fa-circle" style="font-size: 6px;"></i>
+                    Comprehensive Practice
+                </span>
+            </div>
+        </div>
+
+        <!-- Mobile Footer -->
+        <footer class="page-footer">
+            <p>SpeakWell • Eduwell Quantum Group </p>
+        </footer>
+    </div>
+
+    <!-- Mobile-optimized Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content" id="modalContent">
+            <div class="swipe-indicator"></div>
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Select Exercise Pack</h3>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="packs-container" id="packsContainer">
+                <!-- Pack items will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced Mobile Interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle safe areas for modern mobile devices
+            document.body.style.paddingTop = 'env(safe-area-inset-top)';
+            document.body.style.paddingBottom = 'env(safe-area-inset-bottom)';
+            
+            // Initialize mobile gestures
+            initMobileGestures();
+            
+            // Add touch feedback
+            initTouchFeedback();
+        });
+
+        // Mobile gesture support
+        function initMobileGestures() {
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalContent = document.getElementById('modalContent');
+            let startY = 0;
+            let currentY = 0;
+            let isDragging = false;
+            
+            modalContent.addEventListener('touchstart', (e) => {
+                if (modalOverlay.classList.contains('active')) {
+                    startY = e.touches[0].clientY;
+                    isDragging = true;
+                }
+            }, { passive: true });
+            
+            modalContent.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                
+                currentY = e.touches[0].clientY;
+                const diff = currentY - startY;
+                
+                // Only allow downward swipe
+                if (diff > 0) {
+                    modalContent.style.transform = `translateY(${diff}px)`;
+                }
+            }, { passive: true });
+            
+            modalContent.addEventListener('touchend', () => {
+                if (!isDragging) return;
+                
+                isDragging = false;
+                const diff = currentY - startY;
+                
+                // Close modal if swiped down enough
+                if (diff > 100) {
+                    closeModal();
+                } else {
+                    modalContent.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // Enhanced touch feedback for mobile
+        function initTouchFeedback() {
+            const touchElements = document.querySelectorAll('.tense-card, .pack-item, .back-button, .modal-close');
+            
+            touchElements.forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    this.classList.add('touch-active');
+                }, { passive: true });
+                
+                element.addEventListener('touchend', function() {
+                    this.classList.remove('touch-active');
+                }, { passive: true });
+                
+                element.addEventListener('touchcancel', function() {
+                    this.classList.remove('touch-active');
+                }, { passive: true });
+            });
+        }
+
+        // Pack data (same as before)
+        const packsData = {
+            past: [
+                {
+                    name: "Past Mastery",
+                    description: "Master regular and irregular verbs in simple past tense with sentence construction exercises.",
+                    exercises: 20,
+                    duration: "1 week",
+                    difficulty: "Beginner",
+                    icon: "fa-clock",
+                    pageUrl: "./tenses/t2s1.html",
+                    color: "var(--past-color)"
+                },
+                {
+                    name: "Past Practice",
+                    description: "Learn to describe ongoing past actions with contextual examples and interactive drills.",
+                    exercises: 20,
+                    duration: "1 week",
+                    difficulty: "Intermediate",
+                    icon: "fa-hourglass-half",
+                    pageUrl: "./tenses/t2s1p1.html",
+                    color: "var(--past-color)"
+                },
+                {
+                    name: "Past Challenge",
+                    description: "Advanced exercises on past perfect tense for describing completed past actions.",
+                    exercises: 20,
+                    duration: "1 week",
+                    difficulty: "Advanced",
+                    icon: "fa-calendar-check",
+                    pageUrl: "./tenses/t2s1p2.html",
+                    color: "var(--past-color)"
+                },
+                {
+                    name: "Past Review",
+                    description: "Comprehensive review of all past tense forms with mixed practice exercises.",
+                    exercises: 31,
+                    duration: "2 weeks",
+                    difficulty: "Mixed",
+                    icon: "fa-clipboard-check",
+                    pageUrl: "./tenses/t2s1p3.html",
+                    color: "var(--past-color)"
+                }
+            ],
+            present: [
+                {
+                    name: "Present Simple vs Continuous",
+                    description: "Build foundation with present simple tense for habits, facts, and routines.",
+                    exercises: 10,
+                    duration: "5 days",
+                    difficulty: "Beginner",
+                    icon: "fa-calendar-day",
+                    pageUrl: "./tenses/t1s1.html",
+                    color: "var(--present-color)"
+                },
+                {
+                    name: "Present Focus",
+                    description: "Practice describing current actions and temporary situations with clear examples.",
+                    exercises: 10,
+                    duration: "5 days",
+                    difficulty: "Beginner",
+                    icon: "fa-play-circle",
+                    pageUrl: "./tenses/t1s1p2.html",
+                    color: "var(--present-color)"
+                },
+                {
+                    name: "Present Practice",
+                    description: "Master the connection between past and present with present perfect exercises.",
+                    exercises: 20,
+                    duration: "1 week",
+                    difficulty: "Intermediate",
+                    icon: "fa-check-circle",
+                    pageUrl: "./tenses/t1s1p3.html",
+                    color: "var(--present-color)"
+                },
+                {
+                    name: "All Present Tenses",
+                    description: "Mixed exercises covering simple, continuous, and perfect present tenses.",
+                    exercises: 49,
+                    duration: "2 weeks",
+                    difficulty: "Intermediate",
+                    icon: "fa-layer-group",
+                    pageUrl: "./tenses/t1s1p4.html",
+                    color: "var(--present-color)"
+                }
+            ],
+            future: [
+                {
+                    name: "Future Simple Introduction",
+                    description: "Learn will and going to for future predictions, plans, and promises.",
+                    exercises: 30,
+                    duration: "2 weeks",
+                    difficulty: "Beginner",
+                    icon: "fa-calendar-plus",
+                    pageUrl: "./tenses/t3s1p1.html",
+                    color: "var(--future-color)"
+                },
+                {
+                    name: "Future Forms Complete",
+                    description: "Comprehensive practice of all future tense variations and uses.",
+                    exercises: 50,
+                    duration: "3 weeks",
+                    difficulty: "Mixed",
+                    icon: "fa-tasks",
+                    pageUrl: "./tenses/t3s1p2.html",
+                    color: "var(--future-color)"
+                }
+            ],
+            mixed: [
+                {
+                    name: "Tense Identification",
+                    description: "Practice identifying different tenses in sentences with immediate feedback.",
+                    exercises: 65,
+                    duration: "2 weeks",
+                    difficulty: "Intermediate",
+                    icon: "fa-search",
+                    pageUrl: "mixed-identification.html",
+                    color: "var(--mixed-color)"
+                },
+                {
+                    name: "Tense Conversion",
+                    description: "Convert sentences between different tenses to build flexibility and understanding.",
+                    exercises: 48,
+                    duration: "10 days",
+                    difficulty: "Intermediate",
+                    icon: "fa-exchange-alt",
+                    pageUrl: "mixed-conversion.html",
+                    color: "var(--mixed-color)"
+                },
+                {
+                    name: "Mixed Tense Paragraphs",
+                    description: "Work with paragraphs containing multiple tenses to improve comprehension.",
+                    exercises: 40,
+                    duration: "8 days",
+                    difficulty: "Advanced",
+                    icon: "fa-file-alt",
+                    pageUrl: "mixed-paragraphs.html",
+                    color: "var(--mixed-color)"
+                },
+                {
+                    name: "Complete Tense Mastery",
+                    description: "Final challenge covering all tenses with complex sentence constructions.",
+                    exercises: 75,
+                    duration: "3 weeks",
+                    difficulty: "Advanced",
+                    icon: "fa-graduation-cap",
+                    pageUrl: "mixed-mastery.html",
+                    color: "var(--mixed-color)"
+                }
+            ]
+        };
+
+      
+    </script>
+     <script src="./data/js/level.js"></script>
+</body>
+</html>
+

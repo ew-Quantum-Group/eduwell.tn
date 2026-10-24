@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakWell | Sahl</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="../data/img/speakwell.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="../data/css/style.css">
+     
+</head>
+<body>
+        <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    <!-- Back Button -->
+    <button class="back-button" id="backButton" aria-label="Go back to previous page">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading quiz...</div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container hidden" id="appContainer">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="quiz-title">Grammar Quiz</h1>
+                <div class="quiz-subtitle">Past tenses</div>
+                <div class="progress-indicator">
+                    <span id="currentScore">0</span> pts
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content" id="quizContent">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text">
+                    <span>Question <span id="currentQuestionNum">1</span> of <span id="totalQuestions">10</span></span>
+                    <span id="progressPercent">10%</span>
+                </div>
+            </div>
+
+            <!-- Question Container -->
+            <div class="question-container">
+                <div class="question-number">Question <span id="questionNum">1</span></div>
+                <h2 class="question-text" id="questionText">
+                    She usually ___ (to get) up at 7 a.m.
+                </h2>
+                <div class="question-hint">
+                    <i class="fas fa-lightbulb"></i>
+                    <span id="questionHint">Look for time expressions that indicate habits</span>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="options-container" id="optionsContainer">
+                <!-- Options will be inserted here -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="prevButton" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="btn btn-primary" id="submitButton" disabled>
+                    Check Answer
+                </button>
+            </div>
+
+            <!-- Next Button (separate for better flow) -->
+            <button class="btn btn-primary hidden" id="nextButton">
+                Next Question <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <!-- Explanation Panel -->
+            <div class="explanation-panel" id="explanationPanel">
+                <div class="explanation-header">
+                    <i class="fas fa-info-circle"></i>
+                    Explanation
+                </div>
+                <div class="explanation-content" id="explanationText">
+                    <!-- Explanation will be inserted here -->
+                </div>
+                <div class="explanation-tip" id="explanationTip">
+                    <i class="fas fa-tip"></i>
+                    <!-- Tip will be inserted here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Results Screen -->
+        <div class="results-screen hidden" id="resultsScreen">
+            <div class="results-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h2 class="results-title">Quiz Completed!</h2>
+            <div class="results-score" id="finalScore">0/10</div>
+            <p class="results-message" id="resultsMessage">
+                Great effort! Review your answers to improve.
+            </p>
+            
+            <div class="results-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="correctAnswers">0</span>
+                    <span class="stat-label">Correct</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="scorePoints">0</span>
+                    <span class="stat-label">Points</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="completionTime">0:00</span>
+                    <span class="stat-label">Time</span>
+                </div>
+            </div>
+
+            <div class="results-actions">
+                <button class="btn btn-secondary" id="reviewButton">
+                    <i class="fas fa-redo"></i> Review
+                </button>
+                <button class="btn btn-primary" id="restartButton">
+                    <i class="fas fa-play"></i> Try Again
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div>SpeakWell • Eduwell Quantum Group </div>
+        </footer>
+    </div>
+
+    <script>
+   const quizData = [
+    {
+        question: "The engineers realized they ___ (to miscalculate) the structural load.",
+        options: [
+            { text: "miscalculated", example: "Engineers miscalculated the load" },
+            { text: "had miscalculated", example: "They realized they had miscalculated the load" },
+            { text: "were miscalculating", example: "Engineers were miscalculating" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows an error completed before realization, requiring Past Perfect.",
+        hint: "Technical errors realized later use Past Perfect",
+        tip: "Past Perfect: for errors discovered after the fact"
+    },
+    {
+        question: "The students ___ (to debate) the topic when the teacher entered the room.",
+        options: [
+            { text: "debated", example: "Students debated the topic" },
+            { text: "had debated", example: "Students had debated earlier" },
+            { text: "were debating", example: "Students were debating when teacher entered" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes a classroom activity in progress, requiring Past Continuous.",
+        hint: "Class discussions interrupted by teacher use Past Continuous",
+        tip: "Past Continuous: for classroom activities during entries"
+    },
+    {
+        question: "The audit revealed that the accountant ___ (to embezzle) funds for months.",
+        options: [
+            { text: "embezzled", example: "The accountant embezzled money" },
+            { text: "had embezzled", example: "Audit revealed he had embezzled for months" },
+            { text: "was embezzling", example: "The accountant was embezzling money" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows ongoing criminal activity discovered later, requiring Past Perfect.",
+        hint: "Financial crimes discovered by audits use Past Perfect",
+        tip: "Past Perfect: for crimes revealed through investigations"
+    },
+    {
+        question: "The volcano ___ (to erupt) while scientists were monitoring it closely.",
+        options: [
+            { text: "erupted", example: "The volcano erupted yesterday" },
+            { text: "had erupted", example: "The volcano had erupted earlier" },
+            { text: "was erupting", example: "The volcano was erupting during monitoring" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes a natural event in progress during observation, requiring Past Continuous.",
+        hint: "Volcanic eruptions during monitoring use Past Continuous",
+        tip: "Past Continuous: for natural events during scientific observation"
+    },
+    {
+        question: "The archives showed that previous administrations ___ (to suppress) the report.",
+        options: [
+            { text: "suppressed", example: "Administrations suppressed reports" },
+            { text: "had suppressed", example: "Archives showed they had suppressed the report" },
+            { text: "were suppressing", example: "Administrations were suppressing reports" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows past suppression revealed by documents, requiring Past Perfect.",
+        hint: "Historical suppression revealed by archives use Past Perfect",
+        tip: "Past Perfect: for historical actions revealed through documents"
+    },
+    {
+        question: "The pilot ___ (to navigate) through turbulence when lightning struck the plane.",
+        options: [
+            { text: "navigated", example: "The pilot navigated carefully" },
+            { text: "had navigated", example: "The pilot had navigated earlier" },
+            { text: "was navigating", example: "The pilot was navigating when lightning struck" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes flight operations in progress during emergencies, requiring Past Continuous.",
+        hint: "Piloting during emergencies use Past Continuous",
+        tip: "Past Continuous: for flight operations during incidents"
+    },
+    {
+        question: "The board members admitted they ___ (to receive) warnings about the risks.",
+        options: [
+            { text: "received", example: "Board members received warnings" },
+            { text: "had received", example: "They admitted they had received warnings" },
+            { text: "were receiving", example: "Board members were receiving warnings" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows warnings received before admission, requiring Past Perfect.",
+        hint: "Warnings admitted later use Past Perfect",
+        tip: "Past Perfect: for information received before admissions"
+    },
+    {
+        question: "The waves ___ (to crash) against the shore as the storm approached.",
+        options: [
+            { text: "crashed", example: "Waves crashed on the shore" },
+            { text: "had crashed", example: "Waves had crashed earlier" },
+            { text: "were crashing", example: "Waves were crashing as storm approached" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes natural phenomena in progress during events, requiring Past Continuous.",
+        hint: "Ocean activity during weather events use Past Continuous",
+        tip: "Past Continuous: for natural phenomena during approaching events"
+    },
+    {
+        question: "The inspection found that workers ___ (to bypass) safety protocols regularly.",
+        options: [
+            { text: "bypassed", example: "Workers bypassed protocols" },
+            { text: "had bypassed", example: "Inspection found they had bypassed protocols" },
+            { text: "were bypassing", example: "Workers were bypassing protocols" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows regular violations discovered by inspection, requiring Past Perfect.",
+        hint: "Safety violations discovered by inspections use Past Perfect",
+        tip: "Past Perfect: for violations found through inspections"
+    },
+    {
+        question: "The orchestra ___ (to tune) their instruments when the conductor appeared.",
+        options: [
+            { text: "tuned", example: "Orchestra tuned instruments" },
+            { text: "had tuned", example: "Orchestra had tuned earlier" },
+            { text: "were tuning", example: "Orchestra were tuning when conductor appeared" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes musical preparation in progress, requiring Past Continuous.",
+        hint: "Instrument tuning during conductor arrival use Past Continuous",
+        tip: "Past Continuous: for musical preparation during arrivals"
+    },
+    {
+        question: "The records indicated that the previous owner ___ (to modify) the property illegally.",
+        options: [
+            { text: "modified", example: "Owner modified property" },
+            { text: "had modified", example: "Records indicated he had modified it illegally" },
+            { text: "was modifying", example: "Owner was modifying property" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows illegal modifications documented in records, requiring Past Perfect.",
+        hint: "Property modifications shown in records use Past Perfect",
+        tip: "Past Perfect: for past actions documented in records"
+    },
+    {
+        question: "The activists ___ (to protest) outside the parliament when police arrived.",
+        options: [
+            { text: "protested", example: "Activists protested yesterday" },
+            { text: "had protested", example: "Activists had protested earlier" },
+            { text: "were protesting", example: "Activists were protesting when police arrived" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes protests in progress during police intervention, requiring Past Continuous.",
+        hint: "Protests during police arrival use Past Continuous",
+        tip: "Past Continuous: for demonstrations during authority interventions"
+    },
+    {
+        question: "The investigation confirmed that the witness ___ (to lie) about his whereabouts.",
+        options: [
+            { text: "lied", example: "The witness lied" },
+            { text: "had lied", example: "Investigation confirmed he had lied" },
+            { text: "was lying", example: "The witness was lying" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows deception confirmed by investigation, requiring Past Perfect.",
+        hint: "Lies confirmed by investigations use Past Perfect",
+        tip: "Past Perfect: for deception confirmed through investigation"
+    },
+    {
+        question: "The journalists ___ (to interview) survivors when the second earthquake hit.",
+        options: [
+            { text: "interviewed", example: "Journalists interviewed survivors" },
+            { text: "had interviewed", example: "Journalists had interviewed earlier" },
+            { text: "were interviewing", example: "Journalists were interviewing when earthquake hit" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes media work in progress during disasters, requiring Past Continuous.",
+        hint: "Journalistic work during disasters use Past Continuous",
+        tip: "Past Continuous: for media activities during emergencies"
+    },
+    {
+        question: "The documents proved that the company ___ (to know) about the defect for years.",
+        options: [
+            { text: "knew", example: "Company knew about defect" },
+            { text: "had known", example: "Documents proved they had known for years" },
+            { text: "was knowing", example: "Company was knowing about defect" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows knowledge that existed before proof, requiring Past Perfect.",
+        hint: "Prior knowledge proven by documents use Past Perfect",
+        tip: "Past Perfect: for knowledge that existed before documentation"
+    },
+    {
+        question: "The children ___ (to build) a sandcastle when the tide came in.",
+        options: [
+            { text: "built", example: "Children built sandcastle" },
+            { text: "had built", example: "Children had built earlier" },
+            { text: "were building", example: "Children were building when tide came" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes play activity in progress during natural events, requiring Past Continuous.",
+        hint: "Children's play during tide changes use Past Continuous",
+        tip: "Past Continuous: for children's activities during natural changes"
+    },
+    {
+        question: "The testimony revealed that officials ___ (to ignore) multiple complaints.",
+        options: [
+            { text: "ignored", example: "Officials ignored complaints" },
+            { text: "had ignored", example: "Testimony revealed they had ignored complaints" },
+            { text: "were ignoring", example: "Officials were ignoring complaints" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows past neglect revealed in testimony, requiring Past Perfect.",
+        hint: "Neglect revealed in court testimony use Past Perfect",
+        tip: "Past Perfect: for failures revealed through legal testimony"
+    },
+    {
+        question: "The firefighters ___ (to battle) the blaze when the roof collapsed.",
+        options: [
+            { text: "battled", example: "Firefighters battled blaze" },
+            { text: "had battled", example: "Firefighters had battled earlier" },
+            { text: "were battling", example: "Firefighters were battling when roof collapsed" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes emergency response in progress during incidents, requiring Past Continuous.",
+        hint: "Firefighting during structural failures use Past Continuous",
+        tip: "Past Continuous: for emergency work during dangerous situations"
+    },
+    {
+        question: "The data analysis showed that sales ___ (to decline) for six consecutive quarters.",
+        options: [
+            { text: "declined", example: "Sales declined" },
+            { text: "had declined", example: "Analysis showed sales had declined for quarters" },
+            { text: "were declining", example: "Sales were declining" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows past trends revealed by analysis, requiring Past Perfect.",
+        hint: "Business trends shown by analysis use Past Perfect",
+        tip: "Past Perfect: for trends revealed through data analysis"
+    },
+    {
+        question: "The tourists ___ (to explore) the ancient ruins when the guide began his explanation.",
+        options: [
+            { text: "explored", example: "Tourists explored ruins" },
+            { text: "had explored", example: "Tourists had explored earlier" },
+            { text: "were exploring", example: "Tourists were exploring when guide spoke" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes tourist activity in progress during guiding, requiring Past Continuous.",
+        hint: "Tourist exploration during guiding use Past Continuous",
+        tip: "Past Continuous: for tourist activities during guiding"
+    },
+    {
+        question: "The review found that previous studies ___ (to overlook) key evidence.",
+        options: [
+            { text: "overlooked", example: "Studies overlooked evidence" },
+            { text: "had overlooked", example: "Review found studies had overlooked evidence" },
+            { text: "were overlooking", example: "Studies were overlooking evidence" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows academic oversights discovered in review, requiring Past Perfect.",
+        hint: "Academic oversights found in reviews use Past Perfect",
+        tip: "Past Perfect: for research errors discovered through review"
+    },
+    {
+        question: "The workers ___ (to install) the new equipment when the accident happened.",
+        options: [
+            { text: "installed", example: "Workers installed equipment" },
+            { text: "had installed", example: "Workers had installed earlier" },
+            { text: "were installing", example: "Workers were installing when accident happened" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes installation work in progress during accidents, requiring Past Continuous.",
+        hint: "Equipment installation during accidents use Past Continuous",
+        tip: "Past Continuous: for installation work during incidents"
+    },
+    {
+        question: "The evidence suggested that the suspect ___ (to plan) the crime for weeks.",
+        options: [
+            { text: "planned", example: "Suspect planned crime" },
+            { text: "had planned", example: "Evidence suggested he had planned for weeks" },
+            { text: "was planning", example: "Suspect was planning crime" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows premeditation suggested by evidence, requiring Past Perfect.",
+        hint: "Criminal planning suggested by evidence use Past Perfect",
+        tip: "Past Perfect: for planning indicated by evidence"
+    },
+    {
+        question: "The students ___ (to conduct) experiments when the lab equipment failed.",
+        options: [
+            { text: "conducted", example: "Students conducted experiments" },
+            { text: "had conducted", example: "Students had conducted earlier" },
+            { text: "were conducting", example: "Students were conducting when equipment failed" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes lab work in progress during failures, requiring Past Continuous.",
+        hint: "Lab experiments during equipment failures use Past Continuous",
+        tip: "Past Continuous: for scientific experiments during technical problems"
+    },
+    {
+        question: "The records confirmed that the organization ___ (to receive) foreign funding illegally.",
+        options: [
+            { text: "received", example: "Organization received funding" },
+            { text: "had received", example: "Records confirmed it had received funding illegally" },
+            { text: "was receiving", example: "Organization was receiving funding" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows illegal funding confirmed by records, requiring Past Perfect.",
+        hint: "Illegal funding confirmed by records use Past Perfect",
+        tip: "Past Perfect: for financial misconduct confirmed by documents"
+    },
+    {
+        question: "The construction crew ___ (to pour) concrete when the rain started suddenly.",
+        options: [
+            { text: "poured", example: "Crew poured concrete" },
+            { text: "had poured", example: "Crew had poured earlier" },
+            { text: "were pouring", example: "Crew were pouring when rain started" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes construction work in progress during weather changes, requiring Past Continuous.",
+        hint: "Concrete work during rain use Past Continuous",
+        tip: "Past Continuous: for construction work during weather interruptions"
+    },
+    {
+        question: "The report indicated that management ___ (to underestimate) the project's complexity.",
+        options: [
+            { text: "underestimated", example: "Management underestimated complexity" },
+            { text: "had underestimated", example: "Report indicated they had underestimated complexity" },
+            { text: "was underestimating", example: "Management was underestimating" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows management errors indicated by reports, requiring Past Perfect.",
+        hint: "Management errors indicated by reports use Past Perfect",
+        tip: "Past Perfect: for business errors documented in reports"
+    },
+    {
+        question: "The birds ___ (to migrate) south when the early cold snap occurred.",
+        options: [
+            { text: "migrated", example: "Birds migrated south" },
+            { text: "had migrated", example: "Birds had migrated earlier" },
+            { text: "were migrating", example: "Birds were migrating when cold snap occurred" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes animal behavior in progress during weather events, requiring Past Continuous.",
+        hint: "Animal migration during weather changes use Past Continuous",
+        tip: "Past Continuous: for animal behavior during environmental changes"
+    },
+    {
+        question: "The investigation established that the employee ___ (to leak) confidential information.",
+        options: [
+            { text: "leaked", example: "Employee leaked information" },
+            { text: "had leaked", example: "Investigation established he had leaked information" },
+            { text: "was leaking", example: "Employee was leaking information" }
+        ],
+        correctAnswer: 1,
+        explanation: "This shows information leaks established by investigation, requiring Past Perfect.",
+        hint: "Information leaks established by investigations use Past Perfect",
+        tip: "Past Perfect: for security breaches established through investigation"
+    },
+    {
+        question: "The rescue team ___ (to search) for survivors when they heard cries for help.",
+        options: [
+            { text: "searched", example: "Team searched for survivors" },
+            { text: "had searched", example: "Team had searched earlier" },
+            { text: "were searching", example: "Team were searching when they heard cries" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes rescue operations in progress during discoveries, requiring Past Continuous.",
+        hint: "Rescue searches during discoveries use Past Continuous",
+        tip: "Past Continuous: for rescue operations during discoveries"
+    }
+];
+    </script>
+     <script src="../data/js/script.js"></script>
+</body>
+</html>

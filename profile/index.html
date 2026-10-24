@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Accueil – E-Book</title>
+<link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--navy:#0b2e6f;--blue:#1556d6;--pink:#e8336d;--ink:#14161a;--muted:#6b7280;--line:#e8eaf0;--bg:#f7f8fb}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{font:15px/1.55 Roboto,system-ui,sans-serif;color:var(--ink);background:var(--bg);min-height:100vh;min-height:100dvh}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.ni{width:22px;height:22px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh;min-height:100dvh}
+
+/* ---- navigation : sidebar (PC) / floating bar (mobile) with a sliding pill ---- */
+.side{position:sticky;top:0;height:100vh;height:100dvh;padding:28px 18px 22px;display:flex;flex-direction:column;gap:30px;background:#fff;border-right:1px solid var(--line)}
+.logo{display:flex;flex-direction:column;line-height:1;color:var(--navy);font:900 24px Roboto,sans-serif;letter-spacing:-.5px;padding:0 12px}
+.logo small{font:500 11px Roboto;color:var(--muted);margin-top:5px;letter-spacing:0}
+.logo small b{color:var(--pink)}
+.nav{position:relative;display:grid;gap:4px}
+.pill{position:absolute;left:0;top:0;z-index:0;border-radius:14px;background:#eef3ff;width:var(--w,0);height:var(--h,0);transform:translate(var(--x,0),var(--y,0))}
+.pill.ready{transition:transform .45s cubic-bezier(.3,1.35,.5,1),width .3s,height .3s}
+.nav button{position:relative;z-index:1;display:flex;align-items:center;gap:14px;height:48px;padding:0 16px;border:0;background:none;color:#5b6272;font-weight:500;border-radius:14px;transition:color .2s}
+.nav button:hover{color:var(--ink)}
+.nav button.on{color:var(--blue);font-weight:700}
+.nav button.on .ni{animation:hop .45s cubic-bezier(.3,1.6,.5,1)}
+@keyframes hop{0%{transform:scale(.7) rotate(-10deg)}100%{transform:none}}
+.out{margin-top:auto;display:flex;align-items:center;gap:14px;height:46px;padding:0 16px;border-radius:14px;color:var(--muted);font-weight:500;transition:color .2s,background .2s}
+.out:hover{color:#dc2626;background:#fef2f2}
+
+/* ---- content ---- */
+.content{padding:34px 40px 48px;max-width:1100px;min-width:0}
+.page{animation:in .35s ease}
+.page[hidden]{display:none}
+@keyframes in{from{opacity:0;transform:translateY(10px)}}
+.ph{margin-bottom:22px}
+.ph h1,.ph h2{font-size:28px;color:var(--navy);font-weight:700;letter-spacing:-.01em}
+.ph p{color:var(--muted)}
+.empty{display:grid;place-items:center;align-content:center;text-align:center;gap:4px;min-height:260px;border:2px dashed #d5dbe8;border-radius:20px;color:var(--muted);padding:24px}
+.eico{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:#eef3ff;color:var(--blue);margin-bottom:8px}
+.empty b{color:var(--ink)}
+
+/* ---- home hero ---- */
+.hero{position:relative;overflow:hidden;display:grid;grid-template-columns:1fr auto;align-items:end;gap:10px;padding:30px 40px 0;margin-bottom:24px;border-radius:26px;background:#e8efff}
+.hero-txt{align-self:center;padding-bottom:30px;position:relative;z-index:1}
+.hero h1{font-size:36px;line-height:1.1;color:var(--navy);font-weight:900;letter-spacing:-.02em}
+.hero h1 span{color:var(--blue)}
+.hero p{color:#4b5a7d;margin:8px 0 20px}
+.me{display:inline-flex;align-items:center;gap:12px;padding:6px 18px 6px 6px;border-radius:99px;background:#fff;box-shadow:0 6px 18px -8px #0b2e6f40}
+.av{display:grid;place-items:center;flex:none;width:40px;height:40px;border-radius:50%;background:var(--navy);color:#fff;font-weight:700;font-size:14px}
+.me strong{display:block;line-height:1.2;font-size:14px}.me small{color:var(--muted);font-size:12px}
+.kid-wrap{position:relative;width:200px;border:0;background:none;padding:0}
+.blob{position:absolute;left:50%;bottom:-70px;width:250px;height:250px;margin-left:-125px;border-radius:50%;background:#fff;opacity:.75}
+.kid{position:relative;display:block;width:100%;overflow:visible}
+.bob{animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px)}}
+.shadow{transform-origin:100px 222px;animation:sh 3s ease-in-out infinite}
+@keyframes sh{50%{transform:scale(.88);opacity:.7}}
+.arm{transform-origin:144px 158px;animation:wv 2.4s ease-in-out infinite}
+@keyframes wv{0%,55%,100%{transform:rotate(0)}10%,30%{transform:rotate(-16deg)}20%,40%{transform:rotate(8deg)}}
+.eyes{transform-origin:100px 106px;animation:bl 4.5s infinite}
+@keyframes bl{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+.say{position:absolute;right:92%;top:4px;width:max-content;max-width:170px;background:#fff;color:var(--navy);font-weight:700;font-size:13px;line-height:1.3;padding:9px 13px;border-radius:14px 14px 3px 14px;box-shadow:0 8px 20px -6px #0b2e6f55;opacity:0;transform:translateY(6px) scale(.92);transition:opacity .25s,transform .25s;pointer-events:none;z-index:2}
+.say.show{opacity:1;transform:none}
+
+/* ---- profile / search ---- */
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;max-width:560px}
+.pr-head{display:flex;align-items:center;gap:16px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.pr-head .av{width:60px;height:60px;font-size:20px}
+.pr-head h2{font-size:20px;color:var(--navy)}.pr-head small{color:var(--muted)}
+.row{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.row span{color:var(--muted)}.row b{font-weight:500;text-align:right;overflow-wrap:anywhere}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:46px;padding:0 24px;border-radius:12px;font-weight:700;color:#fff;background:var(--pink);margin-top:20px;transition:background .15s}
+.btn:hover{background:#d12662}
+.sbar{display:flex;align-items:center;gap:10px;height:52px;padding:0 16px;background:#fff;border:1.5px solid var(--line);border-radius:14px;margin-bottom:18px;color:var(--muted);transition:border-color .2s,box-shadow .2s}
+.sbar:focus-within{border-color:var(--blue);box-shadow:0 0 0 4px #1556d61f}
+.sbar input{flex:1;min-width:0;border:0;outline:0;font:inherit;font-size:16px;background:none;color:var(--ink)}
+
+/* ═══════ Recherche : styles repris de l'ancien tableau de bord ═══════ */
+:root{
+  --surface:#fff; --surface-2:#f7f7fc;
+  --border:rgba(0,0,0,.07); --border-med:rgba(0,0,0,.12);
+  --text-1:#0d0d14; --text-2:#52526a; --text-3:#aaaabc;
+  --blue-soft:rgba(21,86,214,.10);
+  --indigo:#5e5ce6; --green:#28c76f; --orange:#ff9f0a; --red:#ff3b30; --teal:#32ade6; --purple:#bf5af2;
+  --r-sm:12px; --r-md:18px; --r-lg:24px; --r-xl:30px;
+  --sh-xs:0 1px 4px rgba(0,0,0,.06);
+  --sh-sm:0 2px 12px rgba(0,0,0,.08),0 1px 3px rgba(0,0,0,.04);
+  --sh-md:0 6px 28px rgba(0,0,0,.10),0 1px 6px rgba(0,0,0,.04);
+  --sh-lg:0 14px 48px rgba(0,0,0,.13),0 3px 12px rgba(0,0,0,.05);
+  --sh-xl:0 28px 80px rgba(0,0,0,.18),0 6px 20px rgba(0,0,0,.07);
+  --ease-spring:cubic-bezier(.34,1.3,.64,1);
+  --dur:.26s; --safe-bottom:env(safe-area-inset-bottom,0px);
+}
+/* résultats de recherche (dropdown) */
+.dropdown{display:none;background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--sh-lg);border:1.5px solid var(--border);margin-bottom:22px;overflow:hidden}
+.dropdown.show{display:block}
+.drp-row{display:flex;align-items:center;gap:12px;padding:12px 15px;border-bottom:1px solid var(--border);cursor:pointer;transition:background var(--dur);-webkit-tap-highlight-color:transparent}
+.drp-row:last-child{border-bottom:none}
+.drp-row:hover{background:var(--surface-2)}
+.drp-ico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.drp-ico svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.drp-info{flex:1;min-width:0}
+.drp-title{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.drp-sub{font-size:11px;color:var(--text-3);margin-top:1px}
+.drp-count{font-size:10px;font-weight:700;color:var(--blue);background:var(--blue-soft);padding:3px 9px;border-radius:99px;flex-shrink:0}
+.no-results{padding:30px;text-align:center;font-size:13px;color:var(--text-3)}
+/* catégories */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(106px,1fr));gap:8px;margin-bottom:22px}
+.cat-chip{background:var(--surface);border-radius:var(--r-sm);padding:11px 10px;display:flex;align-items:center;gap:8px;cursor:pointer;border:1.5px solid var(--border);box-shadow:var(--sh-xs);transition:all var(--dur) var(--ease-spring);-webkit-tap-highlight-color:transparent}
+.cat-chip:hover{transform:translateY(-2px);box-shadow:var(--sh-md);border-color:var(--blue)}
+.cat-chip:active{transform:scale(.96)}
+.cat-ico{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cat-ico svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cat-chip span{font-size:11px;font-weight:600;color:var(--text-1)}
+/* suggestions */
+.sug-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.sug-card{background:var(--surface);border-radius:var(--r-md);padding:14px;cursor:pointer;border:1.5px solid var(--border);box-shadow:var(--sh-xs);transition:all var(--dur) var(--ease-spring);-webkit-tap-highlight-color:transparent}
+.sug-card:hover{transform:translateY(-3px);box-shadow:var(--sh-md);border-color:rgba(0,113,227,.22)}
+.sug-card:active{transform:scale(.97)}
+.sug-ico{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:9px}
+.sug-ico svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sug-title{font-size:12.5px;font-weight:600;margin-bottom:2px}
+.sug-sub{font-size:10.5px;color:var(--text-3)}
+/* feuille des fichiers (résultats) */
+.overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:flex-end;justify-content:center;padding:0}
+.overlay.open{display:flex;animation:fadeOvl .22s ease}
+@keyframes fadeOvl{from{opacity:0}to{opacity:1}}
+.sheet{background:var(--surface);border-radius:var(--r-xl) var(--r-xl) 0 0;width:100%;max-width:100%;max-height:88dvh;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--sh-xl);border:1px solid var(--border);padding-bottom:var(--safe-bottom);animation:sheetUp .34s var(--ease-spring)}
+@keyframes sheetUp{from{opacity:.6;transform:translateY(64px)}to{opacity:1;transform:translateY(0)}}
+.sheet::before{content:'';display:block;width:36px;height:4px;background:var(--border-med);border-radius:99px;margin:12px auto 0;flex-shrink:0}
+.sheet-head{padding:13px 18px 14px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:13px}
+.sheet-ico{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sheet-ico svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sheet-info{flex:1;min-width:0}
+.sheet-title{font-size:15px;font-weight:700;letter-spacing:-.2px;margin-bottom:2px}
+.sheet-desc{font-size:12px;color:var(--text-2);line-height:1.5}
+.sheet-close{width:30px;height:30px;border-radius:50%;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;margin-top:2px;transition:background var(--dur);-webkit-tap-highlight-color:transparent}
+.sheet-close:active{background:var(--border-med)}
+.sheet-close svg{width:12px;height:12px;fill:none;stroke:var(--text-2);stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
+.sheet-body{overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch}
+.sheet-file{display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid var(--border);text-decoration:none;color:inherit;transition:background var(--dur);-webkit-tap-highlight-color:transparent}
+.sheet-file:last-child{border-bottom:none}
+.sheet-file:active{background:var(--surface-2)}
+.sf-ico{width:34px;height:34px;border-radius:9px;background:var(--blue-soft);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sf-ico svg{width:15px;height:15px;fill:none;stroke:var(--blue);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sf-name{font-size:12.5px;font-weight:500;flex:1;min-width:0;letter-spacing:-.1px}
+.sf-arr svg{width:13px;height:13px;fill:none;stroke:var(--text-3);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+/* couleurs des pastilles */
+.bg-blue{background:rgba(21,86,214,.10)}
+.bg-indigo{background:rgba(94,92,230,.10)}
+.bg-green{background:rgba(40,199,111,.10)}
+.bg-orange{background:rgba(255,159,10,.10)}
+.bg-red{background:rgba(255,59,48,.10)}
+.bg-teal{background:rgba(50,173,230,.10)}
+.bg-purple{background:rgba(191,90,242,.10)}
+.c-blue{color:var(--blue)}
+.c-indigo{color:var(--indigo)}
+.c-green{color:var(--green)}
+.c-orange{color:var(--orange)}
+.c-red{color:var(--red)}
+.c-teal{color:var(--teal)}
+.c-purple{color:var(--purple)}
+@media(min-width:769px){
+  .overlay{align-items:center;padding:16px}
+  .sheet{border-radius:var(--r-xl);max-width:468px;max-height:80vh;padding-bottom:0;animation:sheetCenter .3s var(--ease-spring)}
+  @keyframes sheetCenter{from{opacity:0;transform:scale(.92) translateY(16px)}to{opacity:1;transform:scale(1) translateY(0)}}
+  .sheet::before{display:none}
+}
+
+/* ---- mobile ---- */
+@media(max-width:820px){
+  .app{grid-template-columns:1fr}
+  .side{position:fixed;z-index:20;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));top:auto;height:auto;padding:6px;gap:0;border:1px solid var(--line);border-radius:24px;box-shadow:0 14px 34px -10px #0b2e6f40}
+  .side .logo,.out{display:none}
+  .nav{grid-auto-flow:column;grid-auto-columns:1fr;gap:0;width:100%}
+  .pill{border-radius:18px}
+  .nav button{flex-direction:column;justify-content:center;gap:3px;height:56px;padding:0;font-size:11.5px;border-radius:18px}
+  .content{padding:18px 16px 110px}
+  .hero{padding:24px 20px 0;grid-template-columns:1fr 130px;border-radius:22px}
+  .hero h1{font-size:27px}.hero-txt{padding-bottom:22px}.kid-wrap{width:130px}
+  .blob{width:170px;height:170px;margin-left:-85px;bottom:-50px}
+  .say{right:80%;max-width:140px;font-size:12px}
+  .ph h1,.ph h2{font-size:24px}
+}
+@media(max-width:400px){.hero{grid-template-columns:1fr 108px}.kid-wrap{width:108px}.hero p{font-size:14px}.me small{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* ---- ACTIONS RAPIDES ---- */
+.qa{margin-bottom:24px}
+.qa-sec{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.qa-sec span{font-size:11px;font-weight:700;letter-spacing:.09em;color:#8a90a0;white-space:nowrap}
+.qa-sec i{flex:1;height:1px;background:var(--line)}
+.qa-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.qa-card{--c:#1556d6;--t:#e6efff;--g:#e4eeff;
+  position:relative;overflow:hidden;display:flex;flex-direction:column;min-height:158px;padding:18px 18px 14px;border-radius:20px;
+  background:radial-gradient(120% 150% at 100% 0%,var(--g) 0%,#fff 62%);
+  border:1px solid #fff;box-shadow:0 1px 2px #0b2e6f0d,0 10px 26px -14px #0b2e6f33;
+  opacity:0;transform:translateY(12px);animation:rise .5s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--i)*70ms);
+  transition:transform .25s cubic-bezier(.3,1.3,.5,1),box-shadow .25s}
+@keyframes rise{to{opacity:1;transform:none}}
+.qa-card:hover{transform:translateY(-4px);box-shadow:0 1px 2px #0b2e6f0d,0 18px 34px -14px #0b2e6f4d}
+.qa-card:active{transform:scale(.98)}
+.qa-card:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.qa-ico{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:var(--t);color:var(--c);margin-bottom:14px;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c) 14%,transparent),0 8px 16px -10px var(--c);transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.qa-card:hover .qa-ico{transform:scale(1.1) rotate(-6deg)}
+.qa-ico svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.qa-card h3{font-size:15px;font-weight:700;letter-spacing:-.005em}
+.qa-card p{font-size:13px;line-height:1.45;color:#7a8194;margin-top:3px;max-width:34ch}
+.qa-go{margin-top:auto;align-self:flex-end;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;color:#9aa1b2;background:#f3f4f8;transition:transform .25s,color .25s,background .25s}
+.qa-go svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.qa-card:hover .qa-go{transform:translateX(3px);color:#fff;background:var(--c)}
+.qa-card>*{position:relative;z-index:1}
+/* lumière qui suit le curseur */
+.qa-card::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(200px circle at var(--mx,80%) var(--my,0%),color-mix(in srgb,var(--c) 15%,transparent),transparent 70%)}
+.qa-card:hover::before{opacity:1}
+/* trait de couleur en haut */
+.qa-card::after{content:"";position:absolute;left:18px;right:18px;top:0;height:3px;border-radius:0 0 3px 3px;background:var(--c);transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.3,1.2,.5,1)}
+.qa-card:hover::after,.qa-card:focus-visible::after{transform:scaleX(1)}
+@media(max-width:1000px){.qa-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){
+  .qa-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .qa-card{min-height:106px;padding:14px 14px 11px}
+  .qa-card::after{left:14px;right:14px}
+  .qa-ico{width:34px;height:34px;border-radius:10px;margin-bottom:11px}
+  .qa-ico svg{width:16px;height:16px}
+  .qa-card h3{font-size:12px}
+  .qa-card p{font-size:10px;margin-top:2px}
+  .qa-go{width:22px;height:22px}
+  .qa-go svg{width:13px;height:13px}
+}
+@media(prefers-reduced-motion:reduce){.qa-card{opacity:1;transform:none}}
+
+/* ---- SECTION SAHL ECOSYSTEM (cartes seules) ---- */
+:root{--f:'DM Sans',sans-serif;--f2:'Plus Jakarta Sans',sans-serif;--ease-out:cubic-bezier(0.22,1,0.36,1)}
+@keyframes cardIn{to{opacity:1;transform:translateY(0)}}
+.collection-section{width:100%;flex-shrink:0;font-family:var(--f);line-height:normal;-webkit-font-smoothing:antialiased}
+.collection-scroll{display:flex;gap:14px;padding:0 0 4px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.collection-scroll::-webkit-scrollbar{display:none}
+/* navigation gauche/droite de la bande (bureau uniquement) */
+.ph.coll-head{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.coll-nav{display:flex;gap:8px}
+.coll-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--navy);display:grid;place-items:center;cursor:pointer;font-size:12px;transition:background .2s ease,border-color .2s ease,color .2s ease,transform .15s ease,opacity .2s ease}
+.coll-btn:hover{background:var(--navy);border-color:var(--navy);color:#fff}
+.coll-btn:active{transform:scale(.92)}
+.coll-btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.coll-btn:disabled{opacity:.35;cursor:default;background:#fff;border-color:var(--line);color:var(--navy)}
+.coll-btn:disabled:hover{background:#fff;border-color:var(--line);color:var(--navy)}
+@media(max-width:820px){.coll-nav{display:none}}
+.app-card{flex-shrink:0;width:224px;border-radius:22px;overflow:hidden;scroll-snap-align:start;position:relative;cursor:pointer;text-decoration:none;display:block;transition:transform .35s var(--ease-out),box-shadow .35s;opacity:0;transform:translateY(28px);outline:1px solid rgba(0,0,0,.06)}
+.app-card.in{animation:cardIn .6s var(--ease-out) forwards}
+.app-card:hover{transform:scale(1.025) translateY(-4px);box-shadow:0 28px 70px rgba(0,0,0,.55)}
+.app-card-inner{width:100%;height:336px;position:relative;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.app-card-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease-out);z-index:0}
+.app-card:hover .app-card-bg{transform:scale(1.04)}
+.app-card-overlay{position:absolute;inset:0;z-index:1}
+.card-sahl-ai  .app-card-inner{background:linear-gradient(160deg,#1a3aff,#001080)}
+.card-sahl-ai  .app-card-overlay{background:linear-gradient(180deg,rgba(10,20,80,.45) 0%,rgba(10,20,80,0) 40%,rgba(5,10,50,.82) 100%)}
+.card-svt      .app-card-inner{background:linear-gradient(160deg,#0a2a18,#020d08)}
+.card-svt      .app-card-overlay{background:linear-gradient(180deg,rgba(0,20,10,.50) 0%,rgba(0,20,10,0) 35%,rgba(0,15,8,.88) 100%)}
+.card-physique .app-card-inner{background:linear-gradient(160deg,#071828,#020810)}
+.card-physique .app-card-overlay{background:linear-gradient(180deg,rgba(0,15,30,.55) 0%,rgba(0,15,30,0) 35%,rgba(0,10,25,.88) 100%)}
+.card-maths    .app-card-inner{background:linear-gradient(160deg,#082010,#020c05)}
+.card-maths    .app-card-overlay{background:linear-gradient(180deg,rgba(0,20,5,.55) 0%,rgba(0,20,5,0) 35%,rgba(0,15,3,.88) 100%)}
+.app-card-badge{position:absolute;top:18px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:7px;background:rgba(0,0,0,.32);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.16);border-radius:100px;padding:6px 14px 6px 9px;white-space:nowrap;z-index:10}
+.badge-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.badge-name{font-size:12px;font-weight:600;color:rgba(255,255,255,.92)}
+.app-card-content{position:relative;z-index:5;padding:0 20px 20px}
+.app-card-tag{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:5px}
+.app-card-name{font-size:24px;font-weight:800;letter-spacing:-.035em;color:#FFFFFF;margin-bottom:3px}
+.app-card-desc{font-size:12px;color:rgba(255,255,255,.50);margin-bottom:18px;line-height:1.45}
+.app-card-btn{display:flex;align-items:center;justify-content:space-between;width:100%;height:46px;padding:0 18px;border-radius:14px;background:rgba(255,255,255,.14);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.18);color:#FFFFFF;cursor:pointer;font-family:var(--f2);font-size:14px;font-weight:600;transition:background .2s}
+.app-card-btn:hover{background:rgba(255,255,255,.22)}
+.btn-arrow{width:26px;height:26px;border-radius:8px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:10px}
+@media(prefers-reduced-motion:reduce){.app-card{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 001 1h12a1 1 0 001-1V9.5"/><path d="M9.5 21v-6h5v6"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 4h6a4 4 0 014 4v13a3 3 0 00-3-3H2z"/><path d="M22 4h-6a4 4 0 00-4 4v13a3 3 0 013-3h7z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></symbol>
+</svg>
+
+<div class="app">
+  <aside class="side">
+    <a href="../shop.html" class="logo" aria-label="E-Book">E-Book<small>by <b>sahllearn</b></small></a>
+    <nav class="nav" aria-label="Navigation principale">
+      <i class="pill" id="pill"></i>
+      <button data-page="home"><svg class="ni"><use href="#i-home"/></svg><span>Accueil</span></button>
+      <button data-page="library"><svg class="ni"><use href="#i-book"/></svg><span>Bibliothèque</span></button>
+      <button data-page="search"><svg class="ni"><use href="#i-search"/></svg><span>Recherche</span></button>
+      <button data-page="profile"><svg class="ni"><use href="#i-user"/></svg><span>Profil</span></button>
+    </nav>
+    <a class="out" href="login.html"><svg class="ni"><use href="#i-out"/></svg>Se déconnecter</a>
+  </aside>
+
+  <main class="content">
+
+    <!-- PAGE 1 : ACCUEIL -->
+    <section class="page" id="p-home">
+      <div class="hero">
+        <div class="hero-txt">
+          <h1>Salut, <span data-u="first"></span> !</h1>
+          <p>Prêt à réviser aujourd'hui ?</p>
+          <div class="me"><span class="av" data-u="initials"></span><div><strong data-u="full"></strong><small data-u="email"></small></div></div>
+        </div>
+        <button class="kid-wrap" id="kid" aria-label="Dire bonjour au personnage">
+          <i class="blob"></i>
+          <span class="say" id="say"></span>
+          <svg class="kid" viewBox="0 0 200 230" aria-hidden="true">
+            <ellipse class="shadow" cx="100" cy="222" rx="52" ry="7" fill="#0b2e6f26"/>
+            <g class="bob">
+              <path d="M52 216v-38c0-22 21-36 48-36s48 14 48 36v38z" fill="#e8336d"/>
+              <path d="M82 143q18 18 36 0l-6 -4q-12 10 -24 0z" fill="#fff"/>
+              <path d="M56 162q-16 12 -8 34" stroke="#e8336d" stroke-width="16" stroke-linecap="round" fill="none"/>
+              <rect x="28" y="184" width="36" height="26" rx="4" fill="#1556d6" transform="rotate(-10 46 197)"/>
+              <rect x="33" y="188" width="28" height="4" rx="2" fill="#fff" opacity=".7" transform="rotate(-10 46 197)"/>
+              <g class="arm"><path d="M144 158q24 -6 30 -36" stroke="#e8336d" stroke-width="16" stroke-linecap="round" fill="none"/><circle cx="175" cy="118" r="10" fill="#fcd5b0"/></g>
+              <rect x="90" y="126" width="20" height="18" fill="#f4bf94"/>
+              <circle cx="100" cy="98" r="40" fill="#fcd5b0"/>
+              <path d="M60 98q-2 -46 40 -46t40 46q-10 -24 -40 -24t-40 24z" fill="#2b2d42"/>
+              <g class="eyes"><circle cx="85" cy="106" r="4.5" fill="#14161a"/><circle cx="115" cy="106" r="4.5" fill="#14161a"/></g>
+              <circle cx="76" cy="118" r="6" fill="#e8336d" opacity=".25"/><circle cx="124" cy="118" r="6" fill="#e8336d" opacity=".25"/>
+              <path d="M89 119q11 10 22 0" stroke="#14161a" stroke-width="3" stroke-linecap="round" fill="none"/>
+              <polygon points="100,34 158,58 100,80 42,58" fill="#0b2e6f"/>
+              <path d="M72 68v14q28 14 56 0v-14" fill="#123c8f"/>
+              <path d="M150 61v28" stroke="#f59e0b" stroke-width="3"/><circle cx="150" cy="92" r="4.5" fill="#f59e0b"/>
+            </g>
+          </svg>
+        </button>
+      </div>
+      <!-- ACTIONS RAPIDES -->
+      <section class="qa" aria-labelledby="qa-title">
+        <div class="qa-sec"><span id="qa-title">ACTIONS RAPIDES</span><i></i></div>
+        <div class="qa-grid" id="qa-grid"></div>
+      </section>
+      <div class="ph coll-head">
+        <h2>Sahl Apps</h2>
+        <div class="coll-nav" aria-label="Faire défiler les applications">
+          <button class="coll-btn" id="collPrev" type="button" aria-label="Défiler à gauche"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+          <button class="coll-btn" id="collNext" type="button" aria-label="Défiler à droite"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+        </div>
+      </div>
+      <!-- SAHL ECOSYSTEM : uniquement les cartes -->
+      <div class="collection-section">
+        <div class="collection-scroll" id="collectionScroll">
+         
+          <a class="app-card card-svt" href="../chatphilo/index.html">
+            <div class="app-card-inner">
+              <img class="app-card-bg" src="../assets/images/5.webp" alt="Chat Philo"/>
+              <div class="app-card-overlay"></div>
+              <div class="app-card-badge"><span class="badge-dot" style="background:#30D158;"></span><span class="badge-name">Sahl App</span></div>
+              <div class="app-card-content">
+                <div class="app-card-tag">Sahl Learn · Toujours disponible</div>
+                <div class="app-card-name"><strong>Chat</strong> فيلو</div>
+                <div class="app-card-desc">Ton assistant intelligent pour réviser la philosophie du Bac بسهولة.</div>
+                <button class="app-card-btn"><span>Essayer maintenant</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
+              </div>
+            </div>
+          </a>
+          <a class="app-card card-physique" href="../svtapp/index.html">
+            <div class="app-card-inner">
+              <img class="app-card-bg" src="../assets/images/2.webp" alt="SVT App"/>
+              <div class="app-card-overlay"></div>
+              <div class="app-card-badge"><span class="badge-dot" style="background:#0A84FF;"></span><span class="badge-name">SVT App</span></div>
+              <div class="app-card-content">
+                <div class="app-card-tag">SVT · Révision Bac</div>
+                <div class="app-card-name">SVT <strong>App</strong></div>
+                <div class="app-card-desc">Apprends la SVT facilement avec des cours interactifs.</div>
+                <button class="app-card-btn"><span>Découvrir l'application</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
+              </div>
+            </div>
+          </a>
+          <a class="app-card card-maths" href="../Sahl Haven/index.html">
+            <div class="app-card-inner">
+              <img class="app-card-bg" src="../assets/images/3.webp" alt="E-Books"/>
+              <div class="app-card-overlay"></div>
+              <div class="app-card-badge"><span class="badge-dot" style="background:#30D158;"></span><span class="badge-name">E-Books</span></div>
+              <div class="app-card-content">
+                <div class="app-card-tag">Bibliothèque · BAC</div>
+                <div class="app-card-name">E-Book</div>
+                <div class="app-card-desc">Accède à une collection complète de séries, cours et devoirs.</div>
+                <button class="app-card-btn"><span>Explorer la bibliothèque</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
+              </div>
+            </div>
+          </a>
+          <a class="app-card card-svt" href="../info/index.html">
+            <div class="app-card-inner">
+              <img class="app-card-bg" src="../assets/images/6.webp" alt="Formatik"/>
+              <div class="app-card-overlay"></div>
+              <div class="app-card-badge"><span class="badge-dot" style="background:#30D158;"></span><span class="badge-name">Sahl Learn</span></div>
+              <div class="app-card-content">
+                <div class="app-card-tag">Outils intelligents · Bac pratique</div>
+                <div class="app-card-name"><strong>Formatik</strong> App</div>
+                <div class="app-card-desc">Des outils simples et efficaces pour réviser l'informatique du Bac pratique.</div>
+                <button class="app-card-btn"><span>Essayer maintenant</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
+              </div>
+            </div>
+          </a>
+         
+          <a class="app-card card-svt" href="../svtapp/index.html">
+            <div class="app-card-inner">
+              <img class="app-card-bg" src="../assets/images/l2.webp" alt="QUIZ QCM"/>
+              <div class="app-card-overlay"></div>
+              <div class="app-card-badge"><span class="badge-dot" style="background:#30D158;"></span><span class="badge-name">Sahl Learn</span></div>
+              <div class="app-card-content">
+                <div class="app-card-tag">SVT · Bac sciences</div>
+                <div class="app-card-name"><strong>QUIZ QCM</strong></div>
+                <div class="app-card-desc">Teste tes connaissances en SVT avec des QCM interactifs.</div>
+                <button class="app-card-btn"><span>Essayer maintenant</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
+              </div>
+            </div>
+          </a>
+          <a class="app-card card-svt" href="../Sahl Haven/index.html">
+            <div class="app-card-inner">
+              <img class="app-card-bg" src="../assets/images/img_1772682079623.webp" alt="Bibliothèque Sahl"/>
+              <div class="app-card-overlay"></div>
+              <div class="app-card-badge"><span class="badge-dot" style="background:#30D158;"></span><span class="badge-name">Sahl Learn</span></div>
+              <div class="app-card-content">
+                <div class="app-card-tag">Cours · Exercices · Corrections</div>
+                <div class="app-card-name"><strong>Bibliothèque Sahl</strong></div>
+                <div class="app-card-desc">Accède à des cours, exercices, sujets pilote, bac et réo avec correction.</div>
+                <button class="app-card-btn"><span>Essayer maintenant</span><span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span></button>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 2 : BIBLIOTHÈQUE -->
+    <section class="page" id="p-library" hidden>
+      <div class="ph"><h1>Bibliothèque</h1><p>Retrouve tous tes packs et e-books.</p></div>
+      <!-- CONTENU DE LA BIBLIOTHÈQUE ici -->
+      <div class="empty"><i class="eico"><svg class="ni"><use href="#i-book"/></svg></i><b>Page vide</b>Le contenu arrive bientôt.</div>
+    </section>
+
+    <!-- PAGE 3 : RECHERCHE (comportement repris de l'ancien tableau de bord) -->
+    <section class="page" id="p-search" hidden>
+      <div class="ph"><h1>Recherche</h1><p>Trouve un cours, un pack ou une matière.</p></div>
+      <label class="sbar"><svg class="ni"><use href="#i-search"/></svg><input type="search" id="search-input" placeholder="Rechercher..." aria-label="Rechercher" autocomplete="off" oninput="handleSearch(this.value)"></label>
+      <div class="dropdown" id="search-dropdown"></div>
+      <div id="search-default">
+        <div style="font-size:14px;font-weight:700;letter-spacing:-0.3px;margin-bottom:10px;">Catégories</div>
+        <div class="cat-grid">
+          <div class="cat-chip" onclick="searchCat('Physique')">
+            <div class="cat-ico bg-blue">
+              <svg class="c-blue" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </div>
+            <span>Physique</span>
+          </div>
+
+          <div class="cat-chip" onclick="searchCat('Complexe')">
+            <div class="cat-ico bg-indigo">
+              <svg class="c-indigo" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M8 12h8M12 8v8"/>
+              </svg>
+            </div>
+            <span>Complex..</span>
+          </div>
+
+          <div class="cat-chip" onclick="searchCat('Neuro')">
+            <div class="cat-ico bg-orange">
+              <svg class="c-orange" viewBox="0 0 24 24">
+                <path d="M12 3a4 4 0 0 1 4 4c0 1.5-1 2.5-2 3.5s-2 2-2 3.5"/>
+                <circle cx="12" cy="17" r="2"/>
+              </svg>
+            </div>
+            <span>Neuro</span>
+          </div>
+
+          <div class="cat-chip" onclick="searchCat('Analyse')">
+            <div class="cat-ico bg-teal">
+              <svg class="c-teal" viewBox="0 0 24 24">
+                <path d="M3 17l6-6 4 4 7-7"/>
+              </svg>
+            </div>
+            <span>Analyse</span>
+          </div>
+
+          <div class="cat-chip" onclick="searchCat('Bac Pratique')">
+            <div class="cat-ico bg-red">
+              <svg class="c-red" viewBox="0 0 24 24">
+                <path d="M12 3l9 4-9 4-9-4 9-4z"/>
+                <path d="M12 11v10"/>
+              </svg>
+            </div>
+            <span>Bac pratique</span>
+          </div>
+
+          <div class="cat-chip" onclick="searchCat('Pression intérieure')">
+            <div class="cat-ico bg-green">
+              <svg class="c-green" viewBox="0 0 24 24">
+                <!-- Conteneur (cellule / récipient) -->
+                <path d="M7 3h10v18H7z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <!-- Pression (bulles / particules) -->
+                <circle cx="10" cy="8" r="1"/>
+                <circle cx="14" cy="10" r="1"/>
+                <circle cx="11" cy="14" r="1"/>
+                <circle cx="15" cy="16" r="1"/>
+                <!-- Force / pression arrows -->
+                <path d="M4 12h3"/>
+                <path d="M4 12l1.5-1.5"/>
+                <path d="M4 12l1.5 1.5"/>
+                <path d="M20 12h-3"/>
+                <path d="M20 12l-1.5-1.5"/>
+                <path d="M20 12l-1.5 1.5"/>
+              </svg>
+            </div>
+            <span>Pression intérieure</span>
+          </div>
+
+          <div class="cat-chip" onclick="searchCat('Philosophie')">
+            <div class="cat-ico bg-green">
+              <svg class="c-green" viewBox="0 0 24 24">
+                <path d="M4 19h16M4 15h16M4 11h16"/>
+              </svg>
+            </div>
+            <span>فلسفة</span>
+          </div>
+
+          <div class="cat-chip" onclick="searchCat('Exponentielle')">
+            <div class="cat-ico bg-green">
+              <svg class="c-green" viewBox="0 0 24 24">
+                <!-- curve exponentielle -->
+                <path d="M4 18c3-10 6-12 16-12"/>
+                <path d="M4 18h16"/>
+              </svg>
+            </div>
+            <span>Expone..</span>
+          </div>
+
+          <div class="cat-chip" onclick="searchCat('Logarithme')">
+            <div class="cat-ico bg-green">
+              <svg class="c-green" viewBox="0 0 24 24">
+                <!-- log curve -->
+                <path d="M5 18V6"/>
+                <path d="M5 18h14"/>
+                <path d="M7 16c2-6 6-8 12-8"/>
+              </svg>
+            </div>
+            <span>Log..</span>
+          </div>
+
+          <div class="cat-chip" onclick="searchCat('Suites')">
+            <div class="cat-ico bg-green">
+              <svg class="c-green" viewBox="0 0 24 24">
+                <!-- progression -->
+                <circle cx="5" cy="18" r="1.5"/>
+                <circle cx="10" cy="14" r="1.5"/>
+                <circle cx="15" cy="10" r="1.5"/>
+                <circle cx="20" cy="6" r="1.5"/>
+                <path d="M5 18l5-4 5-4 5-4"/>
+              </svg>
+            </div>
+            <span>Suites num..</span>
+          </div>
+
+          <div class="cat-chip" onclick="searchCat('Anglais')">
+            <div class="cat-ico bg-purple">
+              <svg class="c-purple" viewBox="0 0 24 24">
+                <path d="M4 4h16v16H4z"/>
+                <path d="M8 8h8M8 12h8M8 16h6"/>
+              </svg>
+            </div>
+            <span>Anglais Bac</span>
+          </div>
+
+          <div class="cat-chip" onclick="searchCat('Genetique')">
+            <div class="cat-ico bg-green">
+              <svg class="c-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <!-- ADN (hélice) -->
+                <path d="M6 3c4 4 4 14 0 18"/>
+                <path d="M18 3c-4 4-4 14 0 18"/>
+                <!-- liaisons génétiques -->
+                <path d="M8 7h8"/>
+                <path d="M8 11h8"/>
+                <path d="M8 15h8"/>
+              </svg>
+            </div>
+            <span>Genétique</span>
+          </div>
+
+          <div class="cat-chip" onclick="searchCat('Les muscles squelettiques')">
+            <div class="cat-ico bg-red">
+              <svg class="c-red" viewBox="0 0 24 24">
+                <path d="M12 3l9 4-9 4-9-4 9-4z"/>
+                <path d="M12 11v10"/>
+              </svg>
+            </div>
+            <span>muscles</span>
+          </div>
+        </div>
+
+        <div style="font-size:14px;font-weight:700;margin:10px 0;">
+          Suggestions
+        </div>
+
+        <div class="sug-grid">
+          <div class="sug-card" onclick="openSheet(29)">
+            <div class="sug-ico bg-blue">
+              <svg class="c-blue" viewBox="0 0 24 24">
+                <path d="M12 3l9 4-9 4-9-4 9-4z"/>
+              </svg>
+            </div>
+            <div class="sug-title">Bac pratique</div>
+            <div class="sug-sub">Pack</div>
+          </div>
+
+          <div class="sug-card" onclick="openSheet(40)">
+            <div class="sug-ico bg-indigo">
+              <svg class="c-indigo" viewBox="0 0 24 24">
+                <path d="M4 4h16v16H4z"/>
+              </svg>
+            </div>
+            <div class="sug-title">Intégrale</div>
+            <div class="sug-sub">Fiche</div>
+          </div>
+
+          <div class="sug-card" onclick="openSheet(18)">
+            <div class="sug-ico bg-green">
+              <svg class="c-green" viewBox="0 0 24 24">
+                <path d="M3 17l6-6 4 4 7-7"/>
+              </svg>
+            </div>
+            <div class="sug-title">Révision Force</div>
+            <div class="sug-sub">Fiche</div>
+          </div>
+
+          <div class="sug-card" onclick="openSheet(13)">
+            <div class="sug-ico bg-orange">
+              <svg class="c-orange" viewBox="0 0 24 24">
+                <path d="M8 6h13M8 12h13M8 18h13"/>
+              </svg>
+            </div>
+            <div class="sug-title">Mécanique – Force</div>
+            <div class="sug-sub">Fiche</div>
+          </div>
+
+          <div class="sug-card" onclick="openSheet(30)">
+            <div class="sug-ico bg-teal">
+              <svg class="c-teal" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"/>
+              </svg>
+            </div>
+            <div class="sug-title">English Revision</div>
+            <div class="sug-sub">English</div>
+          </div>
+
+          <div class="sug-card" onclick="openSheet(31)">
+            <div class="sug-ico bg-blue">
+              <svg class="c-blue" viewBox="0 0 24 24">
+                <path d="M8 6h13M8 12h13M8 18h13"/>
+              </svg>
+            </div>
+            <div class="sug-title">SVT – Immunité</div>
+            <div class="sug-sub">Fiche</div>
+          </div>
+
+          <div class="sug-card" onclick="openSheet(37)">
+            <div class="sug-ico bg-blue">
+              <svg class="c-blue" viewBox="0 0 24 24">
+                <!-- revision / checklist icon -->
+                <path d="M9 3h9v18H6V6l3-3z"/>
+                <path d="M9 3v3H6"/>
+                <path d="M8 10h8"/>
+                <path d="M8 14h8"/>
+                <path d="M8 18h5"/>
+              </svg>
+            </div>
+            <div class="sug-title">Maths – Révision Générale</div>
+            <div class="sug-sub">Fiche</div>
+          </div>
+
+          <div class="sug-card" onclick="openSheet(39)">
+            <div class="sug-ico bg-indigo">
+              <svg class="c-indigo" viewBox="0 0 24 24">
+                <!-- wave icon -->
+                <path d="M2 12c2-4 4-4 6 0s4 4 6 0 4-4 6 0 4 4 6 0"/>
+              </svg>
+            </div>
+            <div class="sug-title">Ondes & Interaction matière</div>
+            <div class="sug-sub">Fiche</div>
+          </div>
+
+          <div class="sug-card" onclick="openSheet(33)">
+            <div class="sug-ico bg-green">
+              <svg class="c-blue" viewBox="0 0 24 24">
+                <path d="M3 17l6-6 4 4 7-7"/>
+              </svg>
+            </div>
+            <div class="sug-title">Complexes & Analyse</div>
+            <div class="sug-sub">Fiche</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 4 : PROFIL -->
+    <section class="page" id="p-profile" hidden>
+      <div class="ph"><h1>Profil</h1><p>Les informations de ton compte E-Book.</p></div>
+      <div class="card">
+        <div class="pr-head"><span class="av" data-u="initials"></span><div><h2 data-u="full"></h2><small data-u="email"></small></div></div>
+        <div class="row"><span>Prénom</span><b data-u="first"></b></div>
+        <div class="row"><span>Nom</span><b data-u="last"></b></div>
+        <div class="row"><span>Email</span><b data-u="email"></b></div>
+        <div class="row" style="border:0"><span>Téléphone</span><b data-u="phone"></b></div>
+        <a class="btn" href="login.html">Se déconnecter</a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- FEUILLE DES FICHIERS (résultats de recherche) -->
+<div class="overlay" id="overlay" onclick="handleOverlayClick(event)">
+  <div class="sheet" id="sheet">
+    <div class="sheet-head">
+      <div class="sheet-ico bg-blue" id="sheet-ico"><svg class="c-blue" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/></svg></div>
+      <div class="sheet-info">
+        <div class="sheet-title" id="sheet-title">Cours</div>
+        <div class="sheet-desc" id="sheet-desc">Description</div>
+      </div>
+      <div class="sheet-close" onclick="closeSheet()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+    </div>
+    <div class="sheet-body" id="sheet-body"></div>
+  </div>
+</div>
+
+<script src="../Sahl Haven/assets/js/data.js"></script>
+<script>
+/* ═══════════════════════════════════════════════
+   SESSION E-Book (mêmes clés que la page login)
+   ═══════════════════════════════════════════════ */
+const AUTH_KEYS = {
+  isLoggedIn:   'eduwell_svt_isLoggedIn',
+  username:     'eduwell_svt_username',
+  lastActivity: 'eduwell_svt_lastActivity',
+  email:        'eduwell_svt_email'
+};
+function isAuthenticated(){
+  if (localStorage.getItem(AUTH_KEYS.isLoggedIn) !== 'true') return false;
+  const last = parseInt(localStorage.getItem(AUTH_KEYS.lastActivity) || '0', 10);
+  if (last && (Date.now() - last) / 60000 >= 30){
+    // session expirée (30 min d'inactivité) → on efface tout
+    Object.values(AUTH_KEYS).forEach(k => localStorage.removeItem(k));
+    return false;
+  }
+  return true;
+}
+function goLogin(expired){
+  sessionStorage.setItem('eduwell_redirect_url', location.href);
+  location.replace(expired ? 'login.html?message=session_expired' : 'login.html');
+}
+const hadSession = localStorage.getItem(AUTH_KEYS.isLoggedIn) === 'true';
+if (!isAuthenticated()) goLogin(hadSession);
+
+/* ═══════════════════════════════════════════════
+   INFOS DU COMPTE CONNECTÉ
+   ═══════════════════════════════════════════════ */
+const storedName = (localStorage.getItem(AUTH_KEYS.username) || '').trim();
+const nameWords = storedName ? storedName.split(/\s+/) : [];
+const USER = {
+  first: nameWords[0] || 'Étudiant',
+  last:  nameWords.slice(1).join(' '),
+  email: localStorage.getItem(AUTH_KEYS.email) || '—',
+  phone: '—'
+};
+
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+
+const info = {...USER, full:`${USER.first} ${USER.last}`.trim(), initials:((USER.first[0] || 'E') + (USER.last ? USER.last[0] : '')).toUpperCase()};
+$$("[data-u]").forEach(el => el.textContent = info[el.dataset.u] || (el.dataset.u === 'last' ? '—' : ''));
+
+/* suivi d'activité (expiration 30 min) */
+if (isAuthenticated()){
+  const touch = () => { if (localStorage.getItem(AUTH_KEYS.isLoggedIn) === 'true') localStorage.setItem(AUTH_KEYS.lastActivity, Date.now().toString()); };
+  ['click','mousemove','keypress','scroll','touchstart'].forEach(ev => document.addEventListener(ev, touch, {passive:true}));
+  setInterval(() => { if (!isAuthenticated()) goLogin(true); }, 60000);
+}
+
+/* navigation + sliding pill */
+const pages = {home:"Accueil", library:"Bibliothèque", search:"Recherche", profile:"Profil"}, pill = $("#pill");
+function place(){
+  const b = $(".nav button.on"); if (!b) return;
+  pill.style.setProperty("--x", b.offsetLeft + "px"); pill.style.setProperty("--y", b.offsetTop + "px");
+  pill.style.setProperty("--w", b.offsetWidth + "px"); pill.style.setProperty("--h", b.offsetHeight + "px");
+}
+function show(p){
+  if (!pages[p]) p = "home";
+  Object.keys(pages).forEach(k => $("#p-" + k).hidden = k !== p);
+  $$(".nav button").forEach(b => { const on = b.dataset.page === p; b.classList.toggle("on", on); b.setAttribute("aria-current", on ? "page" : "false"); });
+  document.title = pages[p] + " – E-Book";
+  place(); scrollTo(0, 0);
+}
+$$(".nav button").forEach(b => b.onclick = () => { location.hash = b.dataset.page; });
+addEventListener("hashchange", () => show(location.hash.slice(1)));
+addEventListener("resize", place);
+show(location.hash.slice(1));
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(() => { place(); requestAnimationFrame(() => pill.classList.add("ready")); });
+
+/* character */
+const say = $("#say"), msgs = ["Salut champion !", "Tu vas assurer au Bac !", "Une page à la fois.", "Courage, tu y es presque !", "Allez, on révise ?"];
+let t, n = 0;
+function talk(m){ say.textContent = m; say.classList.add("show"); clearTimeout(t); t = setTimeout(() => say.classList.remove("show"), 2600); }
+$("#kid").onclick = e => {
+  talk(msgs[n++ % msgs.length]);
+  if (!matchMedia("(prefers-reduced-motion:reduce)").matches) e.currentTarget.animate([{transform:"translateY(0)"},{transform:"translateY(-16px)"},{transform:"translateY(0)"}], {duration:380, easing:"ease-out"});
+};
+setTimeout(() => talk("Prêt à réviser ?"), 900);
+
+/* ═══════════════════════════════════════════════
+   RECHERCHE (reprise de l'ancien tableau de bord)
+   ═══════════════════════════════════════════════ */
+const DOC_ICO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>';
+const list = () => (typeof resources !== 'undefined' && Array.isArray(resources)) ? resources : [];
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function handleSearch(val){
+  const q = val.toLowerCase().trim();
+  const drop = document.getElementById('search-dropdown');
+  const def = document.getElementById('search-default');
+  if(!q){ drop.innerHTML=''; drop.classList.remove('show'); def.style.display=''; return; }
+  def.style.display='none';
+  const hits = list().filter(r => r.title.toLowerCase().includes(q) || r.description.toLowerCase().includes(q));
+  if(!hits.length){
+    drop.innerHTML = `<div class="no-results">No results for "<strong>${esc(val)}</strong>"</div>`;
+    drop.classList.add('show');
+    return;
+  }
+  drop.innerHTML = hits.map(r => {
+    const idx = list().indexOf(r);
+    return `<div class="drp-row" onclick="openSheet(${idx})">
+      <div class="drp-ico bg-blue"><span class="c-blue">${DOC_ICO}</span></div>
+      <div class="drp-info"><div class="drp-title">${esc(r.title)}</div><div class="drp-sub">${esc(r.description)}</div></div>
+      <div class="drp-count">${r.files.length} files</div>
+    </div>`;
+  }).join('');
+  drop.classList.add('show');
+}
+
+function searchCat(cat){
+  const inp = document.getElementById('search-input');
+  inp.value = cat;
+  handleSearch(cat);
+  inp.focus();
+}
+
+/* ─── Feuille (fichiers d'un résultat) ─── */
+function openSheet(idx){
+  const r = list()[idx]; if(!r) return;
+  document.getElementById('sheet-title').textContent = r.title;
+  document.getElementById('sheet-desc').textContent = r.description;
+  const icoEl = document.getElementById('sheet-ico');
+  icoEl.className = 'sheet-ico bg-blue';
+  icoEl.innerHTML = `<span class="c-blue">${DOC_ICO}</span>`;
+  document.getElementById('sheet-body').innerHTML = r.files.map(f => `
+    <a class="sheet-file" href="${f.url}" target="_blank" rel="noopener noreferrer">
+      <div class="sf-ico">${DOC_ICO}</div>
+      <div class="sf-name">${esc(f.name)}</div>
+      <div class="sf-arr"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </a>`).join('');
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeSheet(){
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function handleOverlayClick(e){ if(e.target === document.getElementById('overlay')) closeSheet(); }
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeSheet(); });
+
+/* ═══════════════════════════════════════════════
+   DÉCONNEXION
+   ═══════════════════════════════════════════════ */
+$$('a.out, #p-profile .btn').forEach(a => a.addEventListener('click', e => {
+  e.preventDefault();
+  Object.values(AUTH_KEYS).forEach(k => localStorage.removeItem(k));
+  sessionStorage.removeItem('eduwell_redirect_url');
+  location.href = 'login.html';
+}));
+
+/* ═══════════════════════════════════════════════
+   SECTION SAHL ECOSYSTEM (cartes)
+   ═══════════════════════════════════════════════ */
+const collCards = $$('.app-card');
+const collSection = document.querySelector('.collection-section');
+if (collCards.length && collSection){
+  let collDone = false;
+  function activateColl(){
+    if (collDone || !collSection.getClientRects().length) return;       /* section masquée */
+    if (collSection.getBoundingClientRect().top >= innerHeight) return;  /* pas encore visible */
+    collDone = true;
+    collCards.forEach((c, i) => setTimeout(() => c.classList.add('in'), 280 + i * 75)); /* même rythme que la page d'accueil */
+    ['load','scroll','resize','hashchange'].forEach(ev => removeEventListener(ev, activateColl));
+  }
+  ['load','scroll','resize','hashchange'].forEach(ev => addEventListener(ev, activateColl, {passive:true}));
+  activateColl();
+}
+
+/* ═══════════════════════════════════════════════
+   ACTIONS RAPIDES
+   ═══════════════════════════════════════════════ */
+const QA_ACTIONS = [
+  {title:"Recherche",    text:"Trouvez cours, packs et vidéos instantanément",       href:"#search",  icon:"search", c:"#1556d6", t:"#e6efff", g:"#e1ecff"},
+  {title:"SVT App",      text:"Toutes vos ressources scientifiques mises à jour",    href:"../svtapp/index.html",  icon:"layout", c:"#6d5bd0", t:"#ece9fb", g:"#ebe8fa"},
+  {title:"ChatPhilo",    text:"Discutez et révisez vos concepts philosophiques",     href:"../chatphilo/index.html", icon:"cap",    c:"#f59e0b", t:"#fdf0dc", g:"#fdeed6"}
+];
+const QA_ICONS = {
+  search:'<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
+  layout:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>',
+  cap:'<path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>',
+  heart:'<path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 00-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 000-7.8z"/>'
+};
+document.getElementById("qa-grid").innerHTML = QA_ACTIONS.map((a, i) => `
+  <a class="qa-card" href="${esc(a.href)}" style="--i:${i};--c:${a.c};--t:${a.t};--g:${a.g}">
+    <span class="qa-ico"><svg viewBox="0 0 24 24" aria-hidden="true">${QA_ICONS[a.icon] || QA_ICONS.search}</svg></span>
+    <h3>${esc(a.title)}</h3>
+    <p>${esc(a.text)}</p>
+    <span class="qa-go"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span>
+  </a>`).join("");
+document.querySelectorAll(".qa-card").forEach(c => c.addEventListener("pointermove", e => {
+  const r = c.getBoundingClientRect();
+  c.style.setProperty("--mx", e.clientX - r.left + "px"); c.style.setProperty("--my", e.clientY - r.top + "px");
+}));
+
+/* ═══════════════════════════════════════════════
+   SAHL APPS : défilement gauche / droite (bureau)
+   ═══════════════════════════════════════════════ */
+const collStrip = document.getElementById('collectionScroll');
+const collPrev = document.getElementById('collPrev');
+const collNext = document.getElementById('collNext');
+if (collStrip && collPrev && collNext){
+  const collStep = () => {
+    const card = collStrip.querySelector('.app-card');
+    return (card ? card.getBoundingClientRect().width : 224) + 14; /* une carte + le gap */
+  };
+  function collSync(){
+    const max = collStrip.scrollWidth - collStrip.clientWidth;
+    collPrev.disabled = collStrip.scrollLeft <= 2;
+    collNext.disabled = max - collStrip.scrollLeft <= 2;
+  }
+  collPrev.addEventListener('click', () => collStrip.scrollBy({left: -collStep(), behavior:'smooth'}));
+  collNext.addEventListener('click', () => collStrip.scrollBy({left: collStep(), behavior:'smooth'}));
+  collStrip.addEventListener('scroll', collSync, {passive:true});
+  ['load','resize','hashchange'].forEach(ev => addEventListener(ev, collSync));
+  collSync();
+  setTimeout(collSync, 800); /* quand les cartes sont entrées en scène */
+}
+</script>
+</body>
+</html>

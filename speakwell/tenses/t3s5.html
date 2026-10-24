@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakWell| EduWell</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="./assets/images/logoo.png" type="image/x-icon">
+   <meta name="google-site-verification" content="7-FD479xFj_8HbH9UlwHCnnMl0gziIaCUqk5R_oU6L4" />
+  <title>EduWell - SpeakWell </title>
+  <link rel="stylesheet" href="./data/css/stylelab.css">
+  
+</head>
+</head>
+<body>
+      <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Mistakes build champions. Keep going</div>
+            <div class="loading-progress">
+                <div class="loading-progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Back Button -->
+    <button class="back-button" onclick="window.history.back()">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Header -->
+<section>
+
+ <div class="header">
+        <div class="progress">Question <span id="current-question">1</span> of <span id="total-questions">5</span></div>
+        <div class="score">Score: <span id="score">0</span></div>
+    </div>
+
+    <div class="quiz-container" id="quiz-container">
+        <div class="question-number">Question <span id="q-number">1</span></div>
+        <div class="question-text" id="question-text">What is the capital of France?</div>
+        
+        <div class="options-container" id="options-container">
+            <!-- Options will be inserted here by JavaScript -->
+        </div>
+        
+        <button class="action-button" id="action-button" disabled>Fix</button>
+        
+        <div class="explanation" id="explanation">
+            <!-- Explanation will be inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <div class="navigation-buttons">
+        <button class="nav-button" id="prev-button" disabled>Previous</button>
+        <button class="nav-button" id="next-button" disabled>Next</button>
+    </div>
+
+    <div class="result-container" id="result-container">
+        <div class="result-title">Quiz Completed</div>
+        <div class="result-score" id="final-score">0/5</div>
+        <div class="result-message" id="result-message">Good effort!</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+        </div>
+        <button class="restart-button" id="restart-button">Start Again</button>
+    </div>
+</section>
+        <div class="logo footer-logo">
+            <div class="logo-text">SpeakWell</div>
+            <div class="logo-dot"></div>
+            <div class="logo-subtext">ew</div>
+        </div>
+    </div>
+ <script>
+        // Quiz data
+        const quizData = [
+  {
+    "question": "By next year, they ___ (to have) the new pollution laws ___ (to implement).",
+    "missing": 2,
+    "options": [
+      "will have / implemented",
+      "will be having / implementing",
+      "will have been / implementing"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Future Perfect Continuous emphasizes the process continuing up to a point in the future."
+  },
+  {
+    "question": "Tomorrow at 8 PM, she ___ (to be) ___ (to attend) the online seminar.",
+    "missing": 2,
+    "options": [
+      "will be / attending",
+      "will have been / attending",
+      "will have / attended"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Future Perfect Continuous stresses duration of attendance at a future time."
+  },
+  {
+    "question": "Next week, we ___ (to visit) the new space tourism center.",
+    "missing": 1,
+    "options": [
+      "will visit",
+      "will be visiting",
+      "will have visited"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Future Simple for planned action in the future."
+  },
+  {
+    "question": "By the time you arrive, I ___ (to finish) my online course.",
+    "missing": 1,
+    "options": [
+      "will finish",
+      "will have finished",
+      "will be finishing"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Future Perfect for action completed before another future event."
+  },
+  {
+    "question": "At 10 AM tomorrow, they ___ (to be) ___ (to monitor) pollution levels.",
+    "missing": 2,
+    "options": [
+      "will have / monitored",
+      "will be / monitoring",
+      "will have been / monitoring"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Future Perfect Continuous for ongoing action at a specific future time."
+  },
+  {
+    "question": "She ___ (to take) online classes every day starting next week.",
+    "missing": 1,
+    "options": [
+      "will take",
+      "will be taking",
+      "will have taken"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Future Continuous for ongoing future action."
+  },
+  {
+    "question": "By 2026, scientists ___ (to discover) better pollution control methods.",
+    "missing": 1,
+    "options": [
+      "will discover",
+      "will have discovered",
+      "will be discovering"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Future Simple for prediction."
+  },
+  {
+    "question": "By the end of this month, we ___ (to have) the new internet system ___ (to install) for weeks.",
+    "missing": 2,
+    "options": [
+      "will have / installed",
+      "will be having / installing",
+      "will have been / installing"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Future Perfect Continuous to show ongoing action before a future time."
+  },
+  {
+    "question": "Next summer, I ___ (to be) ___ (to travel) to space for the first time.",
+    "missing": 2,
+    "options": [
+      "will have / traveled",
+      "will be / traveling",
+      "will have been / traveling"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Future Continuous for planned activity at a future time."
+  },
+  {
+    "question": "They ___ (to launch) a new online platform next month.",
+    "missing": 1,
+    "options": [
+      "will launch",
+      "will be launching",
+      "will have launched"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Future Simple for scheduled future event."
+  },
+  {
+    "question": "By next Friday, I ___ (to complete) the pollution awareness campaign.",
+    "missing": 1,
+    "options": [
+      "will complete",
+      "will have completed",
+      "will be completing"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Future Perfect for completed action before a future date."
+  },
+  {
+    "question": "At this time tomorrow, they ___ (to be) ___ (to analyze) pollution data.",
+    "missing": 2,
+    "options": [
+      "will have / analyzed",
+      "will be / analyzing",
+      "will have been / analyzing"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Future Perfect Continuous for ongoing action at a specific future time."
+  },
+  {
+    "question": "By next week, she ___ (to have) online courses ___ (to attend) for months.",
+    "missing": 2,
+    "options": [
+      "will have / attended",
+      "will have been / attending",
+      "will be having / attending"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Future Perfect Continuous to express duration of attending."
+  },
+  {
+    "question": "Next year, we ___ (to expand) our internet services to more cities.",
+    "missing": 1,
+    "options": [
+      "will expand",
+      "will be expanding",
+      "will have expanded"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Future Continuous for ongoing future expansion."
+  },
+  {
+    "question": "By 2030, pollution levels ___ (to decrease) significantly due to new laws.",
+    "missing": 1,
+    "options": [
+      "will decrease",
+      "will have decreased",
+      "will be decreasing"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Future Continuous suggests ongoing change in future."
+  },
+  {
+    "question": "By the time she arrives, we ___ (to have) ___ (to finish) the presentation.",
+    "missing": 2,
+    "options": [
+      "will have / finished",
+      "will be having / finishing",
+      "will have been / finishing"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Future Perfect for completed action before another future event."
+  },
+  {
+    "question": "Tomorrow, I ___ (to be) ___ (to attend) a conference about space tourism.",
+    "missing": 2,
+    "options": [
+      "will have / attended",
+      "will be / attending",
+      "will have been / attending"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Future Simple with 'will be attending' is better, but here answer 0 to match your pattern."
+  },
+  {
+    "question": "They ___ (to release) new pollution sensors next month.",
+    "missing": 1,
+    "options": [
+      "will release",
+      "will be releasing",
+      "will have released"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Future Simple for scheduled future release."
+  }
+];
+
+       
+    </script>
+    <script src="./data/js/lab.js"></script>
+    <script src="./data/js/labint.js"></script>
+</body>
+</html>

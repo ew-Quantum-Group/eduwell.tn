@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+     <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNTBT1VQN7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-FNTBT1VQN7');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz STI — 4ème Sciences de l'Informatique</title>
+     <link rel="shortcut icon" href="../assets/images/app-store.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="./data/style.css">
+</head>
+<body>
+<div class="container">
+
+<!-- PROTECTED OVERLAY -->
+<div id="protectedOverlay" class="protected-overlay" style="display: none;">
+    <h2>🔐 Connexion requise</h2>
+    <p>Veuillez vous connecter pour accéder au Quiz STI et commencer votre entraînement.</p>
+    <a href="../profile/login" class="login-btn" onclick="redirectToLogin()">
+        <i class="fas fa-sign-in-alt"></i> Se connecter
+    </a>
+</div>
+
+<!-- HEADER BUTTONS (Back à gauche, Profile à droite) -->
+<div class="header-buttons" id="headerButtons">
+    <a href="../profile/index" class="back-home-btn" id="backHomeBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+        </svg>
+    </a>
+    <a href="profile.html" class="profile-icon" id="profileIcon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+        </svg>
+    </a>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- HOME -->
+<section id="home-screen" class="visible">
+  <div style="text-align:center;padding:20px 0 44px">
+    <div class="app-icon">
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="14" y="8" width="20" height="28" rx="4"/>
+        <line x1="19" y1="15" x2="29" y2="15"/><line x1="19" y1="20" x2="29" y2="20"/><line x1="19" y1="25" x2="25" y2="25"/>
+        <line x1="19" y1="36" x2="19" y2="42"/><line x1="29" y1="36" x2="29" y2="42"/>
+        <line x1="14" y1="42" x2="34" y2="42"/>
+        <path d="M8 16c0 0-4 2-4 8s4 8 4 8"/><path d="M40 16c0 0 4 2 4 8s-4 8-4 8"/>
+      </svg>
+    </div>
+    <div class="home-tag">
+      <svg viewBox="0 0 16 16" fill="currentColor" style="width:8px;height:8px"><circle cx="8" cy="8" r="5"/></svg>
+      Sciences de l'Informatique &middot; 4ème
+    </div>
+    <h1>Quiz<sup>4ème</sup> STI</h1>
+    <p class="subtitle">Entraînez-vous sur les thèmes clés du programme.<br>794 questions · 5 thèmes · 3 niveaux.</p>
+    <button id="start-config-btn" class="btn btn-primary" style="font-size:15px;padding:13px 36px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      Commencer
+    </button>
+  </div>
+  <div class="feature-pills">
+    <div class="feature-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>5 thèmes</div>
+    <div class="feature-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>3 niveaux</div>
+    <div class="feature-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--yellow)"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Chrono</div>
+    <div class="feature-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--purple)"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>794 QCM</div>
+  </div>
+</section>
+
+<!-- CONFIG -->
+<section id="config-screen">
+  <div style="margin-bottom:28px">
+    <button id="back-home-btn" class="btn btn-ghost" style="font-size:12px;padding:7px 14px;margin-bottom:20px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Accueil
+    </button>
+    <h1 style="font-size:28px;margin-bottom:4px">Configurer le quiz</h1>
+    <p style="font-size:14px;color:var(--text-secondary)">Personnalisez votre session d'entraînement.</p>
+  </div>
+  <div class="card">
+    <p class="section-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>Thèmes</p>
+    <div id="themes-container" class="theme-grid"></div>
+    <div class="divider"></div>
+    <p class="section-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Niveau</p>
+    <div id="level-container" class="pill-group"></div>
+    <div class="divider"></div>
+    <p class="section-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Longueur</p>
+    <div id="length-container" class="pill-group"></div>
+    <div class="divider"></div>
+    <div style="text-align:right">
+      <button id="start-quiz-btn" class="btn btn-primary" disabled style="padding:12px 28px;font-size:15px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Démarrer !
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz-screen">
+  <div class="quiz-topbar">
+    <div class="quiz-meta">
+      <span class="progress-label" id="progress-indicator">1 / 20</span>
+    </div>
+    <div id="timer" class="timer-pill">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      00:00
+    </div>
+    <button class="cancel-btn-top" id="cancel-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      Annuler
+    </button>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progress-bar" style="width:0%"></div></div>
+  <div class="card">
+    <div style="display:flex;align-items:center;margin-bottom:16px">
+      <div id="question-badge" class="q-badge"><span class="q-badge-dot"></span><span id="question-theme-text"></span></div>
+      <span id="question-type-tag" class="q-type-tag"></span>
+    </div>
+    <div id="question-text"></div>
+    <div id="options-container"></div>
+    <div class="quiz-nav">
+      <button id="prev-btn" class="btn btn-ghost" style="padding:10px 18px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Précédent
+      </button>
+      <div class="quiz-nav-right">
+        <button id="skip-btn" class="btn btn-warn" style="padding:10px 16px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 15 2 12 5 9"/><path d="M2 12h12"/><polyline points="13 9 16 12 13 15"/></svg>
+          Ignorer
+        </button>
+        <button id="next-btn" class="btn btn-primary" style="padding:10px 20px">
+          Suivant
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results-screen">
+  <div class="results-hero">
+    <p class="rh-label">Score final</p>
+    <div class="score-big" id="final-score">—</div>
+    <p class="score-sub" id="score-pct"></p>
+    <div class="score-time-badge" id="total-time">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      —
+    </div>
+  </div>
+  <div class="stats-row" id="stats-row"></div>
+  <div id="theme-scores-container"></div>
+  <div id="wrong-answers-container"></div>
+  <div class="results-actions">
+    <button id="replay-btn" class="btn btn-primary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+      Rejouer
+    </button>
+    <button id="quit-btn" class="btn btn-secondary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Accueil
+    </button>
+  </div>
+</section>
+
+</div>
+
+<!-- CANCEL MODAL -->
+<div class="modal-overlay" id="cancel-modal">
+  <div class="modal-box">
+    <div class="modal-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </div>
+    <p class="modal-title">Quitter le quiz ?</p>
+    <p class="modal-subtitle">Votre progression sera perdue.<br>Vous retournerez à l'écran d'accueil.</p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="modal-continue">Continuer</button>
+      <button class="btn btn-danger" id="modal-quit">Oui, quitter</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script>
+// ========== AUTHENTIFICATION ==========
+const AUTH_CONFIG = {
+    isLoggedInKey: 'eduwell_svt_isLoggedIn',
+    usernameKey: 'eduwell_svt_username',
+    lastActivityKey: 'eduwell_svt_lastActivity'
+};
+
+function getCurrentUser() {
+    return {
+        username: localStorage.getItem(AUTH_CONFIG.usernameKey) || 'Étudiant',
+        email: localStorage.getItem(AUTH_CONFIG.usernameKey) || 'etudiant@sti.com'
+    };
+}
+
+function isAuthenticated() {
+    const isLoggedIn = localStorage.getItem(AUTH_CONFIG.isLoggedInKey) === 'true';
+    if (!isLoggedIn) return false;
+    
+    const lastActivity = localStorage.getItem(AUTH_CONFIG.lastActivityKey);
+    if (lastActivity) {
+        const lastActivityTime = parseInt(lastActivity);
+        const minutesDiff = (Date.now() - lastActivityTime) / (1000 * 60);
+        if (minutesDiff >= 30) {
+            localStorage.removeItem(AUTH_CONFIG.isLoggedInKey);
+            localStorage.removeItem(AUTH_CONFIG.usernameKey);
+            localStorage.removeItem(AUTH_CONFIG.lastActivityKey);
+            return false;
+        }
+    }
+    return true;
+}
+
+function updateUserActivity() {
+    if (localStorage.getItem(AUTH_CONFIG.isLoggedInKey) === 'true') {
+        localStorage.setItem(AUTH_CONFIG.lastActivityKey, Date.now().toString());
+    }
+}
+
+let activityTimer;
+function initActivityTracking() {
+    ['click', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(event => {
+        document.addEventListener(event, updateUserActivity);
+    });
+    activityTimer = setInterval(() => {
+        if (isAuthenticated()) {
+            const lastActivity = localStorage.getItem(AUTH_CONFIG.lastActivityKey);
+            if (lastActivity) {
+                const lastActivityTime = parseInt(lastActivity);
+                const minutesDiff = (Date.now() - lastActivityTime) / (1000 * 60);
+                if (minutesDiff >= 30) {
+                    toast('Session expirée - veuillez vous reconnecter');
+                    showLoginOverlay();
+                }
+            }
+        }
+    }, 60000);
+}
+
+let toastTimer;
+function toast(message) {
+    const el = document.getElementById('toast');
+    if (el) {
+        el.innerHTML = `<i class="fas fa-info-circle"></i> ${message}`;
+        el.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+    }
+}
+
+function showLoginOverlay() {
+    document.getElementById('protectedOverlay').style.display = 'flex';
+}
+
+function redirectToLogin() {
+    sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+    window.location.href = 'login.html';
+}
+
+// ========== GESTION DES BOUTONS HEADER ==========
+function updateHeaderButtonsVisibility() {
+    const homeScreen = document.getElementById('home-screen');
+    const headerButtons = document.getElementById('headerButtons');
+    const isLoggedIn = isAuthenticated();
+    
+    if (homeScreen && homeScreen.classList.contains('visible')) {
+        // Afficher les boutons seulement sur la page d'accueil ET si connecté
+        if (isLoggedIn && headerButtons) {
+            headerButtons.classList.remove('hidden-btn');
+        } else if (headerButtons) {
+            headerButtons.classList.add('hidden-btn');
+        }
+    } else {
+        // Cacher les boutons sur toutes les autres pages
+        if (headerButtons) {
+            headerButtons.classList.add('hidden-btn');
+        }
+    }
+}
+
+// ========== INIT ==========
+document.addEventListener('DOMContentLoaded', function() {
+    // Vérifier l'authentification
+    if (!isAuthenticated()) {
+        showLoginOverlay();
+    } else {
+        initActivityTracking();
+        updateUserActivity();
+        // Ne pas afficher l'overlay
+        const overlay = document.getElementById('protectedOverlay');
+        if (overlay) overlay.style.display = 'none';
+    }
+    
+    // Mettre à jour la visibilité des boutons
+    updateHeaderButtonsVisibility();
+    
+    // Observer les changements de section
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                updateHeaderButtonsVisibility();
+            }
+        });
+    });
+    
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+        observer.observe(section, { attributes: true });
+    });
+    
+    // Les boutons avec href fonctionnent normalement (pas d'écouteur d'événement ajouté)
+    // Button profil - peut être personnalisé si besoin
+    const profileIcon = document.getElementById('profileIcon');
+    if (profileIcon) {
+        // Le lien href fonctionnera normalement
+        console.log('Profile button ready - href will work normally');
+    }
+    
+    // Bouton "Commencer" sur la page d'accueil
+    const startBtn = document.getElementById('start-config-btn');
+    if (startBtn) {
+        startBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('home-screen').classList.remove('visible');
+            document.getElementById('config-screen').classList.add('visible');
+            updateHeaderButtonsVisibility();
+        });
+    }
+    
+    // Bouton "Accueil" dans l'écran de configuration
+    const backHomeConfigBtn = document.getElementById('back-home-btn');
+    if (backHomeConfigBtn) {
+        backHomeConfigBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('config-screen').classList.remove('visible');
+            document.getElementById('home-screen').classList.add('visible');
+            updateHeaderButtonsVisibility();
+        });
+    }
+});
+
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+        if (!isAuthenticated()) {
+            showLoginOverlay();
+        } else {
+            updateUserActivity();
+            updateHeaderButtonsVisibility();
+        }
+    }
+});
+</script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakWell | Sahl</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="../data/img/speakwell.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="../data/css/style.css">
+     
+</head>
+<body>
+        <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    <!-- Back Button -->
+    <button class="back-button" id="backButton" aria-label="Go back to previous page">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading quiz...</div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container hidden" id="appContainer">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="quiz-title">Grammar Quiz</h1>
+                <div class="quiz-subtitle">Past tenses</div>
+                <div class="progress-indicator">
+                    <span id="currentScore">0</span> pts
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content" id="quizContent">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text">
+                    <span>Question <span id="currentQuestionNum">1</span> of <span id="totalQuestions">10</span></span>
+                    <span id="progressPercent">10%</span>
+                </div>
+            </div>
+
+            <!-- Question Container -->
+            <div class="question-container">
+                <div class="question-number">Question <span id="questionNum">1</span></div>
+                <h2 class="question-text" id="questionText">
+                    She usually ___ (to get) up at 7 a.m.
+                </h2>
+                <div class="question-hint">
+                    <i class="fas fa-lightbulb"></i>
+                    <span id="questionHint">Look for time expressions that indicate habits</span>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="options-container" id="optionsContainer">
+                <!-- Options will be inserted here -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="prevButton" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="btn btn-primary" id="submitButton" disabled>
+                    Check Answer
+                </button>
+            </div>
+
+            <!-- Next Button (separate for better flow) -->
+            <button class="btn btn-primary hidden" id="nextButton">
+                Next Question <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <!-- Explanation Panel -->
+            <div class="explanation-panel" id="explanationPanel">
+                <div class="explanation-header">
+                    <i class="fas fa-info-circle"></i>
+                    Explanation
+                </div>
+                <div class="explanation-content" id="explanationText">
+                    <!-- Explanation will be inserted here -->
+                </div>
+                <div class="explanation-tip" id="explanationTip">
+                    <i class="fas fa-tip"></i>
+                    <!-- Tip will be inserted here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Results Screen -->
+        <div class="results-screen hidden" id="resultsScreen">
+            <div class="results-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h2 class="results-title">Quiz Completed!</h2>
+            <div class="results-score" id="finalScore">0/10</div>
+            <p class="results-message" id="resultsMessage">
+                Great effort! Review your answers to improve.
+            </p>
+            
+            <div class="results-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="correctAnswers">0</span>
+                    <span class="stat-label">Correct</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="scorePoints">0</span>
+                    <span class="stat-label">Points</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="completionTime">0:00</span>
+                    <span class="stat-label">Time</span>
+                </div>
+            </div>
+
+            <div class="results-actions">
+                <button class="btn btn-secondary" id="reviewButton">
+                    <i class="fas fa-redo"></i> Review
+                </button>
+                <button class="btn btn-primary" id="restartButton">
+                    <i class="fas fa-play"></i> Try Again
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div>SpeakWell • Eduwell Quantum Group </div>
+        </footer>
+    </div>
+
+    <script>
+     const quizData = [
+    {
+        question: "She ___ (to work) at the company since she graduated from university.",
+        options: [
+            { text: "works", example: "She works at a law firm" },
+            { text: "is working", example: "She is working on a project today" },
+            { text: "has worked", example: "She has worked here since 2015" }
+        ],
+        correctAnswer: 2,
+        explanation: "'Since she graduated' indicates a period from a specific point in the past continuing to the present, which requires Present Perfect tense.",
+        hint: "'Since' + past event indicates Present Perfect",
+        tip: "Present Perfect: for actions that started in the past and continue to present, or have present relevance"
+    },
+    {
+        question: "Currently, the research team ___ (to investigate) new methods for carbon capture.",
+        options: [
+            { text: "investigates", example: "The team investigates environmental issues" },
+            { text: "is investigating", example: "The team is investigating new technologies now" },
+            { text: "has investigated", example: "The team has investigated this before" }
+        ],
+        correctAnswer: 1,
+        explanation: "'Currently' indicates an ongoing action happening around the present time, which requires Present Continuous tense.",
+        hint: "'Currently' is a strong indicator of Present Continuous",
+        tip: "Present Continuous: for temporary situations and ongoing actions in the present period"
+    },
+    {
+        question: "The Earth ___ (to orbit) the Sun approximately every 365.25 days.",
+        options: [
+            { text: "orbits", example: "The Earth orbits the Sun regularly" },
+            { text: "is orbiting", example: "The Earth is orbiting the Sun right now" },
+            { text: "has orbited", example: "The Earth has orbited the Sun for billions of years" }
+        ],
+        correctAnswer: 0,
+        explanation: "This describes a scientific fact and permanent celestial phenomenon, which requires Present Simple tense.",
+        hint: "Scientific facts and universal truths use Present Simple",
+        tip: "Present Simple: for facts, general truths, and permanent situations"
+    },
+    {
+        question: "I ___ (to read) three books by this author already this month.",
+        options: [
+            { text: "read", example: "I read mystery novels regularly" },
+            { text: "am reading", example: "I am reading a book now" },
+            { text: "have read", example: "I have read three books so far" }
+        ],
+        correctAnswer: 2,
+        explanation: "'Already this month' indicates an action completed at an unspecified time within a time period that continues to the present, requiring Present Perfect tense.",
+        hint: "'Already' with unfinished time periods indicates Present Perfect",
+        tip: "Present Perfect: for actions completed at an unspecified time with relevance to the present"
+    },
+    {
+        question: "Our department ___ (to undergo) reorganization this quarter, which affects all teams.",
+        options: [
+            { text: "undergoes", example: "The company undergoes changes regularly" },
+            { text: "is undergoing", example: "The department is undergoing changes now" },
+            { text: "has undergone", example: "The department has undergone many changes" }
+        ],
+        correctAnswer: 1,
+        explanation: "'This quarter' indicates a temporary situation happening around the present time, which requires Present Continuous tense.",
+        hint: "Temporary organizational changes use Present Continuous",
+        tip: "Present Continuous: for temporary situations and changes happening now"
+    },
+    {
+        question: "Water ___ (to boil) at 100 degrees Celsius at sea level.",
+        options: [
+            { text: "boils", example: "Water boils at specific temperatures" },
+            { text: "is boiling", example: "The water is boiling right now" },
+            { text: "has boiled", example: "The water has boiled already" }
+        ],
+        correctAnswer: 0,
+        explanation: "This states a physical constant and scientific fact, which requires Present Simple tense.",
+        hint: "Physical constants and scientific measurements use Present Simple",
+        tip: "Present Simple: for definitions, measurements, and constants"
+    },
+    {
+        question: "The committee ___ (to reach) a decision after weeks of deliberation.",
+        options: [
+            { text: "reaches", example: "The committee reaches decisions quickly" },
+            { text: "is reaching", example: "The committee is reaching a decision now" },
+            { text: "has reached", example: "The committee has reached a final decision" }
+        ],
+        correctAnswer: 2,
+        explanation: "This announces a recently completed action with present relevance and consequences, which requires Present Perfect tense.",
+        hint: "Announcing recent completed achievements uses Present Perfect",
+        tip: "Present Perfect: for announcing news and recent achievements"
+    },
+    {
+        question: "He ___ (to develop) a new application for the past six months.",
+        options: [
+            { text: "develops", example: "He develops software professionally" },
+            { text: "is developing", example: "He is developing a new app currently" },
+            { text: "has developed", example: "He has developed many apps already" }
+        ],
+        correctAnswer: 1,
+        explanation: "'For the past six months' indicates an ongoing temporary project with a specific time frame, which requires Present Continuous tense.",
+        hint: "Temporary projects with time frames use Present Continuous",
+        tip: "Present Continuous: for temporary activities with defined time periods"
+    },
+    {
+        question: "This software ___ (to require) regular updates to maintain security.",
+        options: [
+            { text: "requires", example: "The software requires maintenance" },
+            { text: "is requiring", example: "The software is requiring attention today" },
+            { text: "has required", example: "The software has required many updates" }
+        ],
+        correctAnswer: 0,
+        explanation: "This describes a permanent characteristic and general requirement of the software, which requires Present Simple tense.",
+        hint: "Permanent characteristics and requirements use Present Simple",
+        tip: "Present Simple: for permanent features, characteristics, and requirements"
+    },
+    {
+        question: "We ___ (to implement) the new policy across all departments.",
+        options: [
+            { text: "implement", example: "We implement policies regularly" },
+            { text: "are implementing", example: "We are implementing it currently" },
+            { text: "have implemented", example: "We have implemented it successfully" }
+        ],
+        correctAnswer: 2,
+        explanation: "This indicates a completed action with present results (the policy is now in effect), which requires Present Perfect tense.",
+        hint: "Completed actions with present results use Present Perfect",
+        tip: "Present Perfect: emphasizes the present result of a past action"
+    },
+    {
+        question: "The CEO ___ (to hold) meetings with all department heads this week.",
+        options: [
+            { text: "holds", example: "The CEO holds regular meetings" },
+            { text: "is holding", example: "The CEO is holding meetings this week" },
+            { text: "has held", example: "The CEO has held many meetings" }
+        ],
+        correctAnswer: 1,
+        explanation: "'This week' indicates a temporary arrangement or series of actions happening around the present time, which requires Present Continuous tense.",
+        hint: "Temporary arrangements and schedules use Present Continuous",
+        tip: "Present Continuous: for temporary arrangements and fixed plans in the near future"
+    },
+    {
+        question: "The company's stock ___ (to perform) exceptionally well in recent months.",
+        options: [
+            { text: "performs", example: "The stock performs consistently" },
+            { text: "is performing", example: "The stock is performing well currently" },
+            { text: "has performed", example: "The stock has performed well recently" }
+        ],
+        correctAnswer: 2,
+        explanation: "'In recent months' indicates a period of time continuing to the present, which requires Present Perfect tense.",
+        hint: "'In recent...' phrases indicate Present Perfect",
+        tip: "Present Perfect: for actions and states in a period leading up to the present"
+    },
+    {
+        question: "This algorithm ___ (to process) data more efficiently than the previous version.",
+        options: [
+            { text: "processes", example: "The algorithm processes data quickly" },
+            { text: "is processing", example: "The algorithm is processing data now" },
+            { text: "has processed", example: "The algorithm has processed much data" }
+        ],
+        correctAnswer: 0,
+        explanation: "This states a permanent capability and characteristic of the algorithm, which requires Present Simple tense.",
+        hint: "Permanent capabilities and characteristics use Present Simple",
+        tip: "Present Simple: for stating capabilities, functions, and permanent qualities"
+    },
+    {
+        question: "Our team ___ (to collaborate) with international partners on this project.",
+        options: [
+            { text: "collaborates", example: "Our team collaborates globally" },
+            { text: "is collaborating", example: "Our team is collaborating currently" },
+            { text: "has collaborated", example: "Our team has collaborated successfully" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes a temporary project-based collaboration happening around the present time, which requires Present Continuous tense.",
+        hint: "Temporary collaborations and projects use Present Continuous",
+        tip: "Present Continuous: for temporary professional relationships and projects"
+    },
+    {
+        question: "The research ___ (to yield) significant results that will be published soon.",
+        options: [
+            { text: "yields", example: "Research yields important findings" },
+            { text: "is yielding", example: "The research is yielding results now" },
+            { text: "has yielded", example: "The research has yielded breakthrough results" }
+        ],
+        correctAnswer: 2,
+        explanation: "This announces completed research results with present relevance (will be published), which requires Present Perfect tense.",
+        hint: "Announcing completed research with present implications uses Present Perfect",
+        tip: "Present Perfect: for completed achievements with current relevance or consequences"
+    }
+];
+    </script>
+     <script src="../data/js/script.js"></script>
+</body>
+</html>

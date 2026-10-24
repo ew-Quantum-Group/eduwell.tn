@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakWell | Sahl</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="../data/img/speakwell.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="../data/css/style.css">
+     
+</head>
+<body>
+        <!-- SIMPLE AUTHENTICATION CHECK - RUNS FIRST -->
+    <script>
+        // Run IMMEDIATELY when page loads (before anything else)
+        (function() {
+            // Check if user is authenticated
+            const isLoggedIn = localStorage.getItem('eduwell_svt_isLoggedIn') === 'true';
+            
+            // If NOT logged in, redirect to login page
+            if (!isLoggedIn) {
+                // Store current page for redirect back
+                sessionStorage.setItem('eduwell_redirect_url', window.location.href);
+                // Redirect immediately
+                window.location.href = '../login.html';
+                // Stop all further execution
+                throw new Error('Authentication required');
+            }
+        })();
+    </script>
+    <!-- Back Button -->
+    <button class="back-button" id="backButton" aria-label="Go back to previous page">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading quiz...</div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container hidden" id="appContainer">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="quiz-title">Grammar Quiz</h1>
+                <div class="quiz-subtitle">Present tenses</div>
+                <div class="progress-indicator">
+                    <span id="currentScore">0</span> pts
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content" id="quizContent">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text">
+                    <span>Question <span id="currentQuestionNum">1</span> of <span id="totalQuestions">10</span></span>
+                    <span id="progressPercent">10%</span>
+                </div>
+            </div>
+
+            <!-- Question Container -->
+            <div class="question-container">
+                <div class="question-number">Question <span id="questionNum">1</span></div>
+                <h2 class="question-text" id="questionText">
+                    She usually ___ (to get) up at 7 a.m.
+                </h2>
+                <div class="question-hint">
+                    <i class="fas fa-lightbulb"></i>
+                    <span id="questionHint">Look for time expressions that indicate habits</span>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="options-container" id="optionsContainer">
+                <!-- Options will be inserted here -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="prevButton" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="btn btn-primary" id="submitButton" disabled>
+                    Check Answer
+                </button>
+            </div>
+
+            <!-- Next Button (separate for better flow) -->
+            <button class="btn btn-primary hidden" id="nextButton">
+                Next Question <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <!-- Explanation Panel -->
+            <div class="explanation-panel" id="explanationPanel">
+                <div class="explanation-header">
+                    <i class="fas fa-info-circle"></i>
+                    Explanation
+                </div>
+                <div class="explanation-content" id="explanationText">
+                    <!-- Explanation will be inserted here -->
+                </div>
+                <div class="explanation-tip" id="explanationTip">
+                    <i class="fas fa-tip"></i>
+                    <!-- Tip will be inserted here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Results Screen -->
+        <div class="results-screen hidden" id="resultsScreen">
+            <div class="results-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h2 class="results-title">Quiz Completed!</h2>
+            <div class="results-score" id="finalScore">0/10</div>
+            <p class="results-message" id="resultsMessage">
+                Great effort! Review your answers to improve.
+            </p>
+            
+            <div class="results-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="correctAnswers">0</span>
+                    <span class="stat-label">Correct</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="scorePoints">0</span>
+                    <span class="stat-label">Points</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="completionTime">0:00</span>
+                    <span class="stat-label">Time</span>
+                </div>
+            </div>
+
+            <div class="results-actions">
+                <button class="btn btn-secondary" id="reviewButton">
+                    <i class="fas fa-redo"></i> Review
+                </button>
+                <button class="btn btn-primary" id="restartButton">
+                    <i class="fas fa-play"></i> Try Again
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div>SpeakWell • Eduwell Quantum Group </div>
+        </footer>
+    </div>
+
+    <script>
+      const quizData = [
+    {
+        question: "The athletes ___ (to train) for the upcoming competition every morning.",
+        options: [
+            { text: "train", example: "Athletes train regularly" },
+            { text: "trains", example: "The athlete trains hard" },
+            { text: "are training", example: "They are training right now" }
+        ],
+        correctAnswer: 0,
+        explanation: "'Every morning' indicates a regular routine, which requires Present Simple.",
+        hint: "Regular training schedules use Present Simple",
+        tip: "Present Simple: regular practice routines"
+    },
+    {
+        question: "Look! The magician ___ (to perform) an amazing trick.",
+        options: [
+            { text: "perform", example: "Magicians perform tricks" },
+            { text: "performs", example: "He performs well" },
+            { text: "is performing", example: "He's performing right now" }
+        ],
+        correctAnswer: 2,
+        explanation: "'Look!' indicates an action happening at this moment, requiring Present Continuous.",
+        hint: "Actions you can see happening use Present Continuous",
+        tip: "Present Continuous: observable actions"
+    },
+    {
+        question: "The library ___ (to close) at 8 PM on weekdays.",
+        options: [
+            { text: "close", example: "Libraries close at night" },
+            { text: "closes", example: "The library closes at 8" },
+            { text: "is closing", example: "The library is closing now" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes a fixed schedule, which requires Present Simple.",
+        hint: "Fixed closing times use Present Simple",
+        tip: "Present Simple: schedules and timetables"
+    },
+    {
+        question: "I ___ (to write) a novel about ancient civilizations.",
+        options: [
+            { text: "write", example: "I write historical fiction" },
+            { text: "writes", example: "She writes novels" },
+            { text: "am writing", example: "I'm writing a novel currently" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes a current creative project, which requires Present Continuous.",
+        hint: "Current writing projects use Present Continuous",
+        tip: "Present Continuous: creative projects in progress"
+    },
+    {
+        question: "Dolphins ___ (to communicate) with each other using clicks and whistles.",
+        options: [
+            { text: "communicate", example: "Dolphins communicate effectively" },
+            { text: "communicates", example: "The dolphin communicates" },
+            { text: "are communicating", example: "The dolphins are communicating now" }
+        ],
+        correctAnswer: 0,
+        explanation: "This describes animal behavior patterns, which require Present Simple.",
+        hint: "Animal communication patterns use Present Simple",
+        tip: "Present Simple: animal behaviors and abilities"
+    },
+    {
+        question: "The gardener ___ (to plant) new flowers in the park today.",
+        options: [
+            { text: "plant", example: "Gardeners plant flowers" },
+            { text: "plants", example: "He plants roses" },
+            { text: "is planting", example: "He's planting flowers today" }
+        ],
+        correctAnswer: 2,
+        explanation: "'Today' indicates a current temporary activity, requiring Present Continuous.",
+        hint: "Gardening activities happening today use Present Continuous",
+        tip: "Present Continuous: temporary outdoor activities"
+    },
+    {
+        question: "My grandfather ___ (to collect) vintage stamps since he was young.",
+        options: [
+            { text: "collect", example: "He collects stamps" },
+            { text: "collects", example: "Grandfather collects stamps" },
+            { text: "is collecting", example: "He's collecting stamps today" }
+        ],
+        correctAnswer: 1,
+        explanation: "'Since he was young' describes a long-term hobby, which requires Present Simple.",
+        hint: "Long-term hobbies use Present Simple",
+        tip: "Present Simple: permanent hobbies and interests"
+    },
+    {
+        question: "Shh! The students ___ (to take) an important exam.",
+        options: [
+            { text: "take", example: "Students take exams" },
+            { text: "takes", example: "The student takes tests" },
+            { text: "are taking", example: "They're taking an exam now" }
+        ],
+        correctAnswer: 2,
+        explanation: "'Shh!' indicates an action happening right now, requiring Present Continuous.",
+        hint: "Quiet requests indicate ongoing activities",
+        tip: "Present Continuous: activities requiring silence"
+    },
+    {
+        question: "The company ___ (to export) products to over 50 countries.",
+        options: [
+            { text: "export", example: "They export goods" },
+            { text: "exports", example: "The company exports worldwide" },
+            { text: "is exporting", example: "They're exporting this month" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes the company's regular business activity, which requires Present Simple.",
+        hint: "Regular business operations use Present Simple",
+        tip: "Present Simple: regular business activities"
+    },
+    {
+        question: "We ___ (to organize) a surprise party for our manager's birthday.",
+        options: [
+            { text: "organize", example: "We organize events" },
+            { text: "organizes", example: "She organizes parties" },
+            { text: "are organizing", example: "We're organizing a party now" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes a current temporary project, which requires Present Continuous.",
+        hint: "Current party planning uses Present Continuous",
+        tip: "Present Continuous: temporary social arrangements"
+    },
+    {
+        question: "Mount Everest ___ (to be) the highest mountain in the world.",
+        options: [
+            { text: "is", example: "It is the highest" },
+            { text: "was", example: "It was discovered in 1852" },
+            { text: "is being", example: "It is being climbed now" }
+        ],
+        correctAnswer: 0,
+        explanation: "This is a geographical fact, which requires Present Simple.",
+        hint: "Geographical records use Present Simple",
+        tip: "Present Simple: geographical facts and records"
+    },
+    {
+        question: "The mechanic ___ (to repair) my car at this very moment.",
+        options: [
+            { text: "repair", example: "Mechanics repair cars" },
+            { text: "repairs", example: "He repairs vehicles" },
+            { text: "is repairing", example: "He's repairing it right now" }
+        ],
+        correctAnswer: 2,
+        explanation: "'At this very moment' emphasizes the exact present time, requiring Present Continuous.",
+        hint: "Emphatic time expressions use Present Continuous",
+        tip: "Present Continuous: actions happening at this exact moment"
+    },
+    {
+        question: "Professional musicians ___ (to practice) for several hours daily.",
+        options: [
+            { text: "practice", example: "Musicians practice regularly" },
+            { text: "practices", example: "The musician practices daily" },
+            { text: "are practicing", example: "They're practicing now" }
+        ],
+        correctAnswer: 0,
+        explanation: "'Daily' indicates a regular habit, which requires Present Simple.",
+        hint: "Daily routines use Present Simple",
+        tip: "Present Simple: daily professional routines"
+    },
+    {
+        question: "The children ___ (to build) a sandcastle on the beach.",
+        options: [
+            { text: "build", example: "Children build things" },
+            { text: "builds", example: "The child builds castles" },
+            { text: "are building", example: "They're building a castle now" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes an activity happening now, which requires Present Continuous.",
+        hint: "Current beach activities use Present Continuous",
+        tip: "Present Continuous: current recreational activities"
+    },
+    {
+        question: "This smartphone ___ (to have) an excellent camera.",
+        options: [
+            { text: "have", example: "Phones have features" },
+            { text: "has", example: "This phone has a great camera" },
+            { text: "is having", example: "The phone is having issues" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes a permanent feature, which requires Present Simple. 'Have' is a stative verb.",
+        hint: "Product features use Present Simple",
+        tip: "Present Simple: features and characteristics"
+    },
+    {
+        question: "The research team ___ (to conduct) experiments in the laboratory.",
+        options: [
+            { text: "conduct", example: "Teams conduct research" },
+            { text: "conducts", example: "The team conducts experiments" },
+            { text: "is conducting", example: "They're conducting experiments now" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes current scientific work, which requires Present Continuous.",
+        hint: "Current laboratory work uses Present Continuous",
+        tip: "Present Continuous: current scientific research"
+    },
+    {
+        question: "Spanish ___ (to be) the official language of 21 countries.",
+        options: [
+            { text: "is", example: "Spanish is widely spoken" },
+            { text: "was", example: "Spanish was spread by colonization" },
+            { text: "is being", example: "Spanish is being learned" }
+        ],
+        correctAnswer: 0,
+        explanation: "This is a linguistic fact, which requires Present Simple.",
+        hint: "Language facts use Present Simple",
+        tip: "Present Simple: language and cultural facts"
+    },
+    {
+        question: "The journalist ___ (to interview) the president at the moment.",
+        options: [
+            { text: "interview", example: "Journalists interview people" },
+            { text: "interviews", example: "She interviews politicians" },
+            { text: "is interviewing", example: "She's interviewing the president now" }
+        ],
+        correctAnswer: 2,
+        explanation: "'At the moment' indicates a current activity, requiring Present Continuous.",
+        hint: "Current interviews use Present Continuous",
+        tip: "Present Continuous: media activities happening now"
+    },
+    {
+        question: "Firefighters ___ (to risk) their lives to save others.",
+        options: [
+            { text: "risk", example: "Firefighters risk their lives" },
+            { text: "risks", example: "The firefighter risks danger" },
+            { text: "are risking", example: "They're risking their lives now" }
+        ],
+        correctAnswer: 0,
+        explanation: "This describes a general truth about the profession, which requires Present Simple.",
+        hint: "General professional truths use Present Simple",
+        tip: "Present Simple: general truths about professions"
+    },
+    {
+        question: "My neighbor ___ (to paint) his house this weekend.",
+        options: [
+            { text: "paint", example: "He paints houses" },
+            { text: "paints", example: "The neighbor paints regularly" },
+            { text: "is painting", example: "He's painting this weekend" }
+        ],
+        correctAnswer: 2,
+        explanation: "'This weekend' indicates a future planned activity, which uses Present Continuous.",
+        hint: "Future home improvement plans use Present Continuous",
+        tip: "Present Continuous: future home projects"
+    },
+    {
+        question: "Chocolate ___ (to come) from cocoa beans.",
+        options: [
+            { text: "come", example: "Good things come to those who wait" },
+            { text: "comes", example: "Chocolate comes from beans" },
+            { text: "is coming", example: "More chocolate is coming" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes the origin of a product, which requires Present Simple.",
+        hint: "Product origins use Present Simple",
+        tip: "Present Simple: origins and sources"
+    },
+    {
+        question: "The director ___ (to film) a new movie in Hollywood.",
+        options: [
+            { text: "film", example: "Directors film movies" },
+            { text: "films", example: "The director films often" },
+            { text: "is filming", example: "He's filming a movie currently" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes a current production project, which requires Present Continuous.",
+        hint: "Current film production uses Present Continuous",
+        tip: "Present Continuous: current entertainment industry projects"
+    },
+    {
+        question: "Penguins ___ (to swim) very well but cannot fly.",
+        options: [
+            { text: "swim", example: "Penguins swim expertly" },
+            { text: "swims", example: "The penguin swims quickly" },
+            { text: "are swimming", example: "The penguins are swimming now" }
+        ],
+        correctAnswer: 0,
+        explanation: "This describes animal abilities, which require Present Simple.",
+        hint: "Animal abilities use Present Simple",
+        tip: "Present Simple: animal capabilities"
+    },
+    {
+        question: "I ___ (to prepare) for my final exams this month.",
+        options: [
+            { text: "prepare", example: "I prepare for exams" },
+            { text: "prepares", example: "She prepares thoroughly" },
+            { text: "am preparing", example: "I'm preparing for exams this month" }
+        ],
+        correctAnswer: 2,
+        explanation: "'This month' indicates a temporary studying period, requiring Present Continuous.",
+        hint: "Temporary exam preparation uses Present Continuous",
+        tip: "Present Continuous: temporary academic preparation"
+    },
+    {
+        question: "The internet ___ (to connect) people around the world.",
+        options: [
+            { text: "connect", example: "Technologies connect us" },
+            { text: "connects", example: "The internet connects everyone" },
+            { text: "is connecting", example: "It's connecting people now" }
+        ],
+        correctAnswer: 1,
+        explanation: "This describes a general function, which requires Present Simple.",
+        hint: "Technology functions use Present Simple",
+        tip: "Present Simple: functions and purposes"
+    },
+    {
+        question: "The chef ___ (to create) a new menu for the restaurant.",
+        options: [
+            { text: "create", example: "Chefs create dishes" },
+            { text: "creates", example: "The chef creates menus" },
+            { text: "is creating", example: "He's creating a new menu now" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes a current creative process, which requires Present Continuous.",
+        hint: "Current menu development uses Present Continuous",
+        tip: "Present Continuous: current culinary development"
+    },
+    {
+        question: "Most birds ___ (to migrate) during winter months.",
+        options: [
+            { text: "migrate", example: "Birds migrate seasonally" },
+            { text: "migrates", example: "The bird migrates annually" },
+            { text: "are migrating", example: "The birds are migrating now" }
+        ],
+        correctAnswer: 0,
+        explanation: "This describes seasonal animal behavior, which requires Present Simple.",
+        hint: "Seasonal animal patterns use Present Simple",
+        tip: "Present Simple: seasonal behaviors"
+    },
+    {
+        question: "We ___ (to install) new software on our computers.",
+        options: [
+            { text: "install", example: "We install updates" },
+            { text: "installs", example: "The technician installs software" },
+            { text: "are installing", example: "We're installing new software now" }
+        ],
+        correctAnswer: 2,
+        explanation: "This describes a current technical activity, which requires Present Continuous.",
+        hint: "Current computer activities use Present Continuous",
+        tip: "Present Continuous: current technical processes"
+    },
+    {
+        question: "The moon ___ (to orbit) the Earth approximately every 27 days.",
+        options: [
+            { text: "orbit", example: "Moons orbit planets" },
+            { text: "orbits", example: "The moon orbits the Earth" },
+            { text: "is orbiting", example: "The moon is orbiting now" }
+        ],
+        correctAnswer: 1,
+        explanation: "This is an astronomical fact, which requires Present Simple.",
+        hint: "Orbital facts use Present Simple",
+        tip: "Present Simple: astronomical movements"
+    },
+    {
+        question: "The students ___ (to present) their projects in class right now.",
+        options: [
+            { text: "present", example: "Students present projects" },
+            { text: "presents", example: "The student presents well" },
+            { text: "are presenting", example: "They're presenting now" }
+        ],
+        correctAnswer: 2,
+        explanation: "'Right now' clearly indicates a current activity, requiring Present Continuous.",
+        hint: "Current classroom presentations use Present Continuous",
+        tip: "Present Continuous: current educational activities"
+    },
+    {
+        question: "This factory ___ (to produce) over 1,000 cars each day.",
+        options: [
+            { text: "produce", example: "Factories produce goods" },
+            { text: "produces", example: "The factory produces many cars" },
+            { text: "is producing", example: "It's producing cars today" }
+        ],
+        correctAnswer: 1,
+        explanation: "'Each day' indicates regular production, which requires Present Simple.",
+        hint: "Regular production rates use Present Simple",
+        tip: "Present Simple: regular manufacturing outputs"
+    }
+];
+
+    </script>
+     <script src="../data/js/script.js"></script>
+</body>
+</html>
